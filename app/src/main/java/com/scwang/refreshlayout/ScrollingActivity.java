@@ -3,6 +3,7 @@ package com.scwang.refreshlayout;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -26,6 +27,12 @@ public class ScrollingActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        View view = findViewById(R.id.refresh);
+        if (view instanceof SwipeRefreshLayout) {
+            SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) view;
+            refreshLayout.setOnRefreshListener(() -> refreshLayout.postDelayed(() -> refreshLayout.setRefreshing(false), 3000));
+        }
     }
 
     @Override

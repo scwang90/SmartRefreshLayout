@@ -8,4 +8,6 @@ package com.scwang.smartrefreshlayout.constant;
 public enum SpinnerStyle {
     Translate,//平行移动
     Scale,//拉伸形变
+    FixedFront,//固定在前面
+    FixedBehind,//固定在背后
 }

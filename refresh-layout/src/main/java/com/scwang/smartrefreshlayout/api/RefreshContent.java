@@ -17,6 +17,8 @@ public interface RefreshContent {
     int getMeasuredHeight();
     void layout(int left, int top, int right, int bottom);
 
+    View getView();
     View getScrollableView();
     ViewGroup.LayoutParams getLayoutParams();
+
 }

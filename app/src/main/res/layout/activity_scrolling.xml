@@ -33,16 +33,21 @@
     </android.support.design.widget.AppBarLayout>
 
     <com.scwang.smartrefreshlayout.SmartRefreshLayout
+        android:id="@+id/refresh"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        app:srlEnableTranslationContent="false"
         app:srlPrimaryColor="@color/colorPrimary"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        <com.scwang.smartrefreshheader.PhoenixHeader
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        <!--<com.scwang.smartrefreshheader.PhoenixHeader-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content" />-->
         <!--<com.scwang.smartrefreshheader.TaurusHeader-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="wrap_content" />-->
+        <com.scwang.smartrefreshheader.material.MaterialHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
         <include layout="@layout/content_scrolling" />
     </com.scwang.smartrefreshlayout.SmartRefreshLayout>
 
