@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="srlPrimaryColor" format="color"/>
+    <attr name="srlAccentColor" format="color"/>
+
+    <declare-styleable name="SmartRefreshLayout">
+        <attr name="srlPrimaryColor"/>
+        <attr name="srlAccentColor"/>
+        <attr name="srlReboundDuration" format="integer"/>
+        <attr name="srlHeaderHeight" format="dimension"/>
+        <attr name="srlFooterHeight" format="dimension"/>
+        <attr name="srlHeaderExtendHeight" format="dimension"/>
+        <attr name="srlFooterExtendHeight" format="dimension"/>
+        <attr name="srlEnableRefresh" format="boolean"/>
+        <attr name="srlEnableLoadmore" format="boolean"/>
+        <attr name="srlEnableTranslationContent" format="boolean"/>
+        <attr name="srlDisableContentWhenRefresh" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="BezierHeader">
+        <attr name="srlPrimaryColor"/>
+        <attr name="srlAccentColor"/>
+    </declare-styleable>
+
+    <declare-styleable name="BallPulseFooter">
+        <attr name="srlPrimaryColor"/>
+        <attr name="srlAccentColor"/>
+    </declare-styleable>
+
+</resources>
