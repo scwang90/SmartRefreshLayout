@@ -33,6 +33,7 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
     @VisibleForTesting
     private static final int CIRCLE_DIAMETER_LARGE = 56;
 
+    private boolean mFinished;
     private int mCircleDiameter;
     private int mOriginalOffsetTop;
     private CircleImageView mCircleView;
@@ -154,7 +155,7 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
 
     @Override
     public void onReleasing(int offset, int headHeight, int extendHeight) {
-        if (!mProgress.isRunning()) {
+        if (!mProgress.isRunning() && !mFinished) {
             onPullingDown(offset, headHeight, extendHeight);
         }
     }
@@ -173,6 +174,7 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
             case None:
                 break;
             case PullDownRefresh:
+                mFinished = false;
                 mCircleView.setVisibility(VISIBLE);
                 mCircleView.setScaleX(1);
                 mCircleView.setScaleY(1);
@@ -188,6 +190,7 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
     public void onFinish() {
         mProgress.stop();
         mCircleView.animate().scaleX(0).scaleY(0);
+        mFinished = true;
     }
 
     @Override
@@ -203,7 +206,7 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
 
     @Override
     public SpinnerStyle getSpinnerStyle() {
-        return SpinnerStyle.Scale;
+        return SpinnerStyle.FixedFront;
     }
     //</editor-fold>
 

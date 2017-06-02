@@ -752,8 +752,16 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
         }
         if (spinner >= 0 && mRefreshHeader != null) {
             if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale) {
-                mRefreshHeader.getView().getLayoutParams().height = spinner;
-                mRefreshHeader.getView().requestLayout();
+//                mRefreshHeader.getView().getLayoutParams().height = spinner;
+//                mRefreshHeader.getView().requestLayout();
+                View view = mRefreshHeader.getView();
+                view.layout(view.getLeft(), view.getTop(), view.getRight(), view.getTop() + spinner);
+            } else if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.FixedFront
+                    || mRefreshHeader.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
+//                mRefreshHeader.getView().getLayoutParams().height = Math.max(spinner, mHeaderHeight);
+//                mRefreshHeader.getView().requestLayout();
+                View view = mRefreshHeader.getView();
+                view.layout(view.getLeft(), view.getTop(), view.getRight(), view.getTop() + Math.max(spinner, mHeaderHeight));
             } else if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Translate) {
                 mRefreshHeader.getView().setTranslationY(spinner);
             }
@@ -771,9 +779,18 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
         }
         if (spinner <= 0 && mRefreshFooter != null) {
             if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Scale) {
-                mRefreshFooter.getView().getLayoutParams().height = -spinner;
-                mRefreshFooter.getView().requestLayout();
+//                mRefreshFooter.getView().getLayoutParams().height = Math.abs(spinner);
+//                mRefreshFooter.getView().requestLayout();
+                View view = mRefreshFooter.getView();
+                view.layout(view.getLeft(), view.getTop(), view.getRight(), view.getTop() + Math.abs(spinner));
                 mRefreshFooter.getView().setTranslationY(spinner);
+            } else if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.FixedFront
+                    || mRefreshFooter.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
+//                mRefreshFooter.getView().getLayoutParams().height = Math.max(Math.abs(spinner), mHeaderHeight);
+//                mRefreshFooter.getView().requestLayout();
+//                mRefreshFooter.getView().setTranslationY(spinner);
+                View view = mRefreshFooter.getView();
+                view.layout(view.getLeft(), view.getTop() + spinner, view.getRight(), view.getTop() + Math.max(Math.abs(spinner), mHeaderHeight));
             } else if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Translate) {
                 mRefreshFooter.getView().setTranslationY(spinner);
             }

@@ -47,7 +47,8 @@
             <!--android:layout_height="wrap_content" />-->
         <!--<com.scwang.smartrefreshheader.material.MaterialHeader-->
             <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"/>-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@color/colorAccent"/>-->
         <include layout="@layout/content_scrolling" />
     </com.scwang.smartrefreshlayout.SmartRefreshLayout>
 
