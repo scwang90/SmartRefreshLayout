@@ -39,15 +39,15 @@
         app:srlEnableHeaderTranslationContent="false"
         app:srlPrimaryColor="@color/colorPrimary"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        <!--<com.scwang.smartrefreshheader.PhoenixHeader-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content" />-->
+        <com.scwang.smartrefreshheader.PhoenixHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         <!--<com.scwang.smartrefreshheader.TaurusHeader-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="wrap_content" />-->
-        <com.scwang.smartrefreshheader.material.MaterialHeader
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+        <!--<com.scwang.smartrefreshheader.material.MaterialHeader-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"/>-->
         <include layout="@layout/content_scrolling" />
     </com.scwang.smartrefreshlayout.SmartRefreshLayout>
 

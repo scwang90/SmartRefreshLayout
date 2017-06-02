@@ -302,6 +302,11 @@ public class TaurusHeader extends View implements RefreshHeader, SizeDefinition 
         // Drag percent will newer get more then 1 here
         float dragPercent = Math.min(1f, Math.abs(mPercent));
 
+        if (isInEditMode()) {
+            dragPercent = 1;
+            mHeaderHeight = height;
+        }
+
         float scale;
         float scalePercentDelta = dragPercent - SCALE_START_PERCENT;
         if (scalePercentDelta > 0) {
@@ -315,7 +320,7 @@ public class TaurusHeader extends View implements RefreshHeader, SizeDefinition 
         float dragYOffset = mHeaderHeight * (1.0f - dragPercent);
 
         // Position where clouds fully visible on screen and we should drag them with content of listView
-        int cloudsVisiblePosition = mHeaderHeight / 2 - mCloudCenter.height() / 2;
+//        int cloudsVisiblePosition = mHeaderHeight / 2 - mCloudCenter.height() / 2;
 
 //        boolean needMoveCloudsWithContent = false;
 //        if (dragYOffset < cloudsVisiblePosition) {
@@ -375,6 +380,11 @@ public class TaurusHeader extends View implements RefreshHeader, SizeDefinition 
         Matrix matrix = mMatrix;
         matrix.reset();
         float dragPercent = Math.min(1f, Math.abs(mPercent));
+
+        if (isInEditMode()) {
+            dragPercent = 1;
+            mHeaderHeight = height;
+        }
 
         float scale;
         float overdragPercent = 0;
@@ -450,6 +460,7 @@ public class TaurusHeader extends View implements RefreshHeader, SizeDefinition 
 
         if (isInEditMode()) {
             dragPercent = 1;
+            mHeaderHeight = height;
         }
 
         // Check overdrag
