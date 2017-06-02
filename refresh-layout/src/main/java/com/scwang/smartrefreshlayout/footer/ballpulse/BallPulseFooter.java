@@ -65,12 +65,13 @@ public class BallPulseFooter extends ViewGroup implements RefreshFooter {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         if (mBallPulseView != null) {
             int heightSpec = makeMeasureSpec(getSize(heightMeasureSpec), AT_MOST);
             int widthSpec = makeMeasureSpec(getSize(widthMeasureSpec), AT_MOST);
             mBallPulseView.measure(widthSpec, heightSpec);
         }
+        setMeasuredDimension(resolveSize(getSuggestedMinimumWidth(), widthMeasureSpec),
+                resolveSize(getSuggestedMinimumHeight(), heightMeasureSpec));
     }
 
     @Override
@@ -114,6 +115,9 @@ public class BallPulseFooter extends ViewGroup implements RefreshFooter {
     @Override
     public void setPrimaryColors(int... colors) {
         mBallPulseView.setPrimaryColors(colors);
+        if (colors.length > 0) {
+            setBackgroundColor(colors[0]);
+        }
     }
 
     @NonNull
