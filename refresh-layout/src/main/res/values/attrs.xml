@@ -13,7 +13,8 @@
         <attr name="srlFooterExtendHeight" format="dimension"/>
         <attr name="srlEnableRefresh" format="boolean"/>
         <attr name="srlEnableLoadmore" format="boolean"/>
-        <attr name="srlEnableTranslationContent" format="boolean"/>
+        <attr name="srlEnableHeaderTranslationContent" format="boolean"/>
+        <attr name="srlEnableFooterTranslationContent" format="boolean"/>
         <attr name="srlDisableContentWhenRefresh" format="boolean"/>
     </declare-styleable>
 

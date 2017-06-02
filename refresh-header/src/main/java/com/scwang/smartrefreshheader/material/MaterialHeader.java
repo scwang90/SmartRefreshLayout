@@ -85,8 +85,21 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
         }
         int circleWidth = mCircleView.getMeasuredWidth();
         int circleHeight = mCircleView.getMeasuredHeight();
-        mCircleView.layout((width / 2 - circleWidth / 2), mOriginalOffsetTop,
-                (width / 2 + circleWidth / 2), mOriginalOffsetTop + circleHeight);
+
+        if (isInEditMode()) {
+            int circleTop = getMeasuredHeight() / 2 - circleHeight / 2;
+            mCircleView.layout((width / 2 - circleWidth / 2), circleTop,
+                    (width / 2 + circleWidth / 2), circleTop + circleHeight);
+
+            mProgress.showArrow(true);
+            mProgress.setStartEndTrim(0f, MAX_PROGRESS_ANGLE);
+            mProgress.setArrowScale(1);
+            mCircleView.setAlpha(255);
+            mCircleView.setVisibility(VISIBLE);
+        } else {
+            mCircleView.layout((width / 2 - circleWidth / 2), mOriginalOffsetTop,
+                    (width / 2 + circleWidth / 2), mOriginalOffsetTop + circleHeight);
+        }
     }
 
     //</editor-fold>
@@ -135,7 +148,8 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
         mProgress.setProgressRotation(rotation);
         mCircleView.setAlpha(Math.min(1f, originalDragPercent*2));
 
-        mCircleView.setTranslationY(offset / 2 + mCircleDiameter / 2);//setTargetOffsetTopAndBottom(targetY - mCurrentTargetOffsetTop, true /* requires update */);
+        float targetY = offset / 2 + mCircleDiameter / 2;
+        mCircleView.setTranslationY(Math.min(offset, targetY));//setTargetOffsetTopAndBottom(targetY - mCurrentTargetOffsetTop, true /* requires update */);
     }
 
     @Override

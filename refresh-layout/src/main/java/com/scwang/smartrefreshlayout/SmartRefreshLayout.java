@@ -77,8 +77,9 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
     protected int[] mPrimaryColors;
     protected boolean mEnableRefresh = true;
     protected boolean mEnableLoadmore = true;
-    protected boolean mEnableTranslationContent = true;//是否启用内容视图拖动效果
     protected boolean mDisableContentWhenRefresh = false;//是否开启在刷新时候禁止操作内容视图
+    protected boolean mEnableHeaderTranslationContent = true;//是否启用内容视图拖动效果
+    protected boolean mEnableFooterTranslationContent = true;//是否启用内容视图拖动效果
     //</editor-fold>
 
     protected Interpolator mReboundInterpolator;
@@ -166,8 +167,9 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
         mReboundDuration = ta.getInt(R.styleable.SmartRefreshLayout_srlReboundDuration, mReboundDuration);
         mEnableRefresh = ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnableRefresh, mEnableRefresh);
         mEnableLoadmore = ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnableLoadmore, mEnableLoadmore);
-        mEnableTranslationContent = ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnableTranslationContent, mEnableTranslationContent);
         mDisableContentWhenRefresh = ta.getBoolean(R.styleable.SmartRefreshLayout_srlDisableContentWhenRefresh, mDisableContentWhenRefresh);
+        mEnableHeaderTranslationContent = ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnableHeaderTranslationContent, mEnableHeaderTranslationContent);
+        mEnableFooterTranslationContent = ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnableFooterTranslationContent, mEnableFooterTranslationContent);
 
         int primaryColor = ta.getColor(R.styleable.SmartRefreshLayout_srlPrimaryColor, 0);
         int accentColor = ta.getColor(R.styleable.SmartRefreshLayout_srlAccentColor, 0);
@@ -220,14 +222,37 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
                 mRefreshContent = new RefreshContentWrapper(view);
             }
         }
-        if (mPrimaryColors != null && isInEditMode()) {
-            if (mRefreshHeader != null) {
-                mRefreshHeader.setPrimaryColors(mPrimaryColors);
+
+        if (isInEditMode()) {
+            if (mPrimaryColors != null) {
+                if (mRefreshHeader != null) {
+                    mRefreshHeader.setPrimaryColors(mPrimaryColors);
+                }
+                if (mRefreshFooter != null) {
+                    mRefreshFooter.setPrimaryColors(mPrimaryColors);
+                }
             }
-            if (mRefreshFooter != null) {
-                mRefreshFooter.setPrimaryColors(mPrimaryColors);
+            //重新排序
+            removeAllViews();
+
+            if (mRefreshHeader != null && mRefreshHeader.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
+                addView(mRefreshHeader.getView());
             }
+            if (mRefreshFooter != null && mRefreshFooter.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
+                addView(mRefreshFooter.getView());
+            }
+            if (mRefreshContent != null) {
+                addView(mRefreshContent.getView());
+            }
+            if (mRefreshHeader != null && mRefreshHeader.getSpinnerStyle() != SpinnerStyle.FixedBehind) {
+                addView(mRefreshHeader.getView());
+            }
+            if (mRefreshFooter != null && mRefreshFooter.getSpinnerStyle() != SpinnerStyle.FixedBehind) {
+                addView(mRefreshFooter.getView());
+            }
+
         }
+
     }
 
     @Override
@@ -404,8 +429,8 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
             final int heightSpec = getChildMeasureSpec(heightMeasureSpec,
                     getPaddingTop() + getPaddingBottom() +
                             lp.topMargin + lp.bottomMargin +
-                            ((isInEditMode && mRefreshHeader != null) ? mHeaderHeight : 0) +
-                            ((isInEditMode && mRefreshFooter != null) ? mFooterHeight : 0), lp.height);
+                            ((isInEditMode && mRefreshHeader != null && (mEnableHeaderTranslationContent||mRefreshHeader.getSpinnerStyle() == SpinnerStyle.FixedBehind)) ? mHeaderHeight : 0) +
+                            ((isInEditMode && mRefreshFooter != null && (mEnableFooterTranslationContent||mRefreshFooter.getSpinnerStyle() == SpinnerStyle.FixedBehind)) ? mFooterHeight : 0), lp.height);
             mRefreshContent.measure(widthSpec, heightSpec);
             minimumHeight += mRefreshContent.getMeasuredHeight();
         }
@@ -426,7 +451,7 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
             int top = paddingTop + lp.topMargin;
             int right = left + mRefreshContent.getMeasuredWidth();
             int bottom = top + mRefreshContent.getMeasuredHeight();
-            if (isInEditMode && mRefreshHeader != null) {
+            if (isInEditMode && mRefreshHeader != null && (mEnableHeaderTranslationContent||mRefreshHeader.getSpinnerStyle() == SpinnerStyle.FixedBehind)) {
                 top = top + mHeaderHeight;
                 bottom = bottom + mHeaderHeight;
             }
@@ -715,8 +740,14 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
             setStatePullUpLoad();
         }
         if (mRefreshContent != null) {
-            if (mEnableTranslationContent || mRefreshHeader.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
-                mRefreshContent.moveSpinner(spinner);
+            if (spinner >= 0) {
+                if (mEnableHeaderTranslationContent || mRefreshHeader.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
+                    mRefreshContent.moveSpinner(spinner);
+                }
+            } else {
+                if (mEnableFooterTranslationContent || mRefreshFooter.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
+                    mRefreshContent.moveSpinner(spinner);
+                }
             }
         }
         if (spinner >= 0 && mRefreshHeader != null) {
@@ -1047,8 +1078,16 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
     /**
      * 设置是否启用内容视图拖动效果
      */
-    public SmartRefreshLayout setEnableTranslationContent(boolean enable) {
-        this.mEnableTranslationContent = enable;
+    public SmartRefreshLayout setEnableHeaderTranslationContent(boolean enable) {
+        this.mEnableHeaderTranslationContent = enable;
+        return this;
+    }
+
+    /**
+     * 设置是否启用内容视图拖动效果
+     */
+    public SmartRefreshLayout setEnableFooterTranslationContent(boolean enable) {
+        this.mEnableFooterTranslationContent = enable;
         return this;
     }
 
