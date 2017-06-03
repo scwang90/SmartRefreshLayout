@@ -22,7 +22,7 @@ import com.scwang.smartrefreshlayout.internal.pathview.PathsDrawable;
 import com.scwang.smartrefreshlayout.util.DensityUtil;
 
 /**
- *
+ * Phoenix
  * Created by SCWANG on 2017/5/31.
  */
 
@@ -175,13 +175,13 @@ public class PhoenixHeader extends View implements RefreshHeader, SizeDefinition
     }
 
     @Override
-    public void onPullingDown(int offset, int headHeight, int extendHeight) {
+    public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
         mRotate = mPercent = 1f * offset / headHeight;
         mHeaderHeight = headHeight;
     }
 
     @Override
-    public void onReleasing(int offset, int headHeight, int extendHeight) {
+    public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
         mRotate = mPercent = 1f * offset / headHeight;
         mHeaderHeight = headHeight;
     }

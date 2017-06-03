@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.Random;
 
 /**
- *
+ * Taurus
  * Created by SCWANG on 2017/5/31.
  */
 
@@ -163,14 +163,14 @@ public class TaurusHeader extends View implements RefreshHeader, SizeDefinition 
     }
 
     @Override
-    public void onPullingDown(int offset, int headHeight, int extendHeight) {
+    public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
         mEndOfRefreshing = false;
         mPercent = 1f * offset / headHeight;
         mHeaderHeight = headHeight;
     }
 
     @Override
-    public void onReleasing(int offset, int headHeight, int extendHeight) {
+    public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
         mPercent = 1f * offset / headHeight;
         mHeaderHeight = headHeight;
     }

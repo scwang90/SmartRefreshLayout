@@ -52,12 +52,12 @@ public class RefreshHeaderWrapper implements RefreshHeader {
     }
 
     @Override
-    public void onPullingDown(int offset, int headHeight, int extendHeight) {
+    public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
 
     }
 
     @Override
-    public void onReleasing(int offset, int headHeight, int extendHeight) {
+    public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
 
     }
 

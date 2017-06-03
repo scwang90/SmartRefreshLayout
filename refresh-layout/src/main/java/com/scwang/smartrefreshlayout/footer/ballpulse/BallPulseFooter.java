@@ -88,13 +88,13 @@ public class BallPulseFooter extends ViewGroup implements RefreshFooter {
     }
 
     @Override
-    public void onPullingUp(int offset, int bottomHeight, int extendHeight) {
-        mBallPulseView.onPullingUp(offset,bottomHeight,extendHeight);
+    public void onPullingUp(float percent, int offset, int bottomHeight, int extendHeight) {
+        mBallPulseView.onPullingUp(percent, offset, bottomHeight, extendHeight);
     }
 
     @Override
-    public void onPullReleasing(int offset, int bottomHeight, int extendHeight) {
-        mBallPulseView.onPullReleasing(offset,bottomHeight,extendHeight);
+    public void onPullReleasing(float percent, int offset, int bottomHeight, int extendHeight) {
+        mBallPulseView.onPullReleasing(percent, offset, bottomHeight, extendHeight);
     }
 
     @Override

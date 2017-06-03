@@ -39,7 +39,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     private TextView mLastUpdateText;
     private PathsView mArrowView;
     private PathsView mProgressView;
-    private DateFormat mFormat = new SimpleDateFormat("上次更新 HH:mm", Locale.CHINA);
+    private DateFormat mFormat = new SimpleDateFormat("上次更新 M-d HH:mm", Locale.CHINA);
     private SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
 
     public ClassicsHeader(Context context) {
@@ -132,11 +132,11 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     }
 
     @Override
-    public void onPullingDown(int offset, int headHeight, int extendHeight) {
+    public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
     }
 
     @Override
-    public void onReleasing(int offset, int headHeight, int extendHeight) {
+    public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
 
     }
 

@@ -36,16 +36,22 @@
         android:id="@+id/refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary"
-        app:srlHeaderHeight="200dp"
-        app:srlPrimaryColor="#555555"
-        app:srlAccentColor="#ffff"
+        android:background="#ffffff"
+        app:srlPrimaryColor="@color/colorPrimary"
+        app:srlAccentColor="#ffffff"
+        app:srlHeaderHeight="100dp"
         app:srlEnableHeaderTranslationContent="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        <com.scwang.smartrefreshlayout.header.classics.ClassicsHeader
+        <com.scwang.smartrefreshheader.drop.DropHeader
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srlClassicsSpinnerStyle="FixedBehind"/>
+            android:layout_height="match_parent" />
+        <!--<com.scwang.smartrefreshlayout.header.bezier.BezierHeader-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"/>-->
+        <!--<com.scwang.smartrefreshlayout.header.classics.ClassicsHeader-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--app:srlClassicsSpinnerStyle="FixedBehind"/>-->
         <!--<com.scwang.smartrefreshheader.PhoenixHeader-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="200dp" />-->
@@ -54,8 +60,7 @@
             <!--android:layout_height="200dp" />-->
         <!--<com.scwang.smartrefreshheader.material.MaterialHeader-->
             <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="@color/colorAccent"/>-->
+            <!--android:layout_height="wrap_content"/>-->
         <include layout="@layout/content_scrolling"
             android:id="@+id/content"/>
     </com.scwang.smartrefreshlayout.SmartRefreshLayout>
@@ -65,8 +70,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
-        app:layout_anchor="@id/app_bar"
-        app:layout_anchorGravity="bottom|end"
+        app:layout_anchor="@id/content"
+        app:layout_anchorGravity="top|end"
         app:srcCompat="@android:drawable/ic_dialog_email" />
 
 </android.support.design.widget.CoordinatorLayout>

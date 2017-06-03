@@ -6,7 +6,7 @@ package com.scwang.smartrefreshlayout.api;
  */
 
 public interface RefreshFooter extends RefreshInternal {
-    void onPullingUp(int offset, int bottomHeight, int extendHeight);
-    void onPullReleasing(int offset, int bottomHeight, int extendHeight);
+    void onPullingUp(float percent,int offset, int bottomHeight, int extendHeight);
+    void onPullReleasing(float percent,int offset, int bottomHeight, int extendHeight);
     void startAnimator(int bottomHeight, int extendHeight);
 }

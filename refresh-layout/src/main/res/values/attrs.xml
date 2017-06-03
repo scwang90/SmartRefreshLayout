@@ -12,6 +12,7 @@
 
     <attr name="srlClassicsSpinnerStyle" format="enum">
         <enum name="Translate" value="0"/><!--平行移动-->
+        <enum name="Scale" value="1"/><!--拉伸形变-->
         <enum name="FixedBehind" value="3"/><!--固定在背后-->
     </attr>
 

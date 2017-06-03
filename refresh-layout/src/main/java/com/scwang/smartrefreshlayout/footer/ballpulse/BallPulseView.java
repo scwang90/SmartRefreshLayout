@@ -179,12 +179,12 @@ public class BallPulseView extends View implements RefreshFooter {
     }
 
     @Override
-    public void onPullingUp(int offset, int bottomHeight, int extendHeight) {
+    public void onPullingUp(float percent, int offset, int bottomHeight, int extendHeight) {
 
     }
 
     @Override
-    public void onPullReleasing(int offset, int bottomHeight, int extendHeight) {
+    public void onPullReleasing(float percent, int offset, int bottomHeight, int extendHeight) {
 
     }
 

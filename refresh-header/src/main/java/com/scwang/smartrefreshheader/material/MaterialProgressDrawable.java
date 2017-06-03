@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.scwang.smartrefreshlayout.internal;
+package com.scwang.smartrefreshheader.material;
 
 import android.content.Context;
 import android.content.res.Resources;

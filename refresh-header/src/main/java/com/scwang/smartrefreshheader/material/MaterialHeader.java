@@ -11,11 +11,10 @@ import android.view.ViewGroup;
 import com.scwang.smartrefreshlayout.api.RefreshHeader;
 import com.scwang.smartrefreshlayout.constant.RefreshState;
 import com.scwang.smartrefreshlayout.constant.SpinnerStyle;
-import com.scwang.smartrefreshlayout.internal.MaterialProgressDrawable;
 import com.scwang.smartrefreshlayout.util.DensityUtil;
 
 /**
- *
+ * Material 主题下拉头
  * Created by SCWANG on 2017/6/2.
  */
 
@@ -57,6 +56,7 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
         mProgress = new MaterialProgressDrawable(context, this);
         mProgress.setBackgroundColor(CIRCLE_BG_LIGHT);
         mProgress.setAlpha(255);
+        mProgress.setColorSchemeColors(0xff0099cc,0xffff4444,0xff669900,0xffaa66cc,0xffff8800);
         mCircleView = new CircleImageView(context,CIRCLE_BG_LIGHT);
         mCircleView.setImageDrawable(mProgress);
         mCircleView.setVisibility(View.GONE);
@@ -129,7 +129,7 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
 
     //<editor-fold desc="RefreshHeader">
     @Override
-    public void onPullingDown(int offset, int headHeight, int extendHeight) {
+    public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
 
         float originalDragPercent = 1f * offset / headHeight;
 
@@ -154,9 +154,9 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override
-    public void onReleasing(int offset, int headHeight, int extendHeight) {
+    public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
         if (!mProgress.isRunning() && !mFinished) {
-            onPullingDown(offset, headHeight, extendHeight);
+            onPullingDown(percent, offset, headHeight, extendHeight);
         }
     }
 
@@ -195,6 +195,10 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
 
     @Override
     public void setPrimaryColors(int... colors) {
+        //mProgress.setColorSchemeColors(colors);
+    }
+
+    public void setColorSchemeColors(int... colors) {
         mProgress.setColorSchemeColors(colors);
     }
 

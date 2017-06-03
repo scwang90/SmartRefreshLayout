@@ -81,7 +81,9 @@ public class BezierHeader extends FrameLayout implements RefreshHeader {
             this.addView(mDotView, MATCH_PARENT, WRAP_CONTENT);
             this.addView(mProgressView, MATCH_PARENT, WRAP_CONTENT);
             this.addView(mRippleView, MATCH_PARENT, WRAP_CONTENT);
-            mProgressView.setVisibility(View.GONE);
+            //mProgressView.setVisibility(View.INVISIBLE);
+            mProgressView.setScaleX(0);
+            mProgressView.setScaleY(0);
         }
 
 
@@ -139,7 +141,7 @@ public class BezierHeader extends FrameLayout implements RefreshHeader {
     }
 
     @Override
-    public void onPullingDown(int offset, int headHeight, int extendHeight) {
+    public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
         float fraction = 1f * offset / headHeight;
         mWaveView.setHeadHeight(Math.min(headHeight, offset));
         mWaveView.setWaveHeight((int)(1.8f*Math.max(0, offset - headHeight)));
@@ -147,7 +149,7 @@ public class BezierHeader extends FrameLayout implements RefreshHeader {
     }
 
     @Override
-    public void onReleasing(int offset, int headHeight, int extendHeight) {
+    public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
         float fraction = 1f * offset / headHeight;
         mWaveView.setHeadHeight(Math.min(headHeight, offset));
         mWaveView.setWaveHeight((int)(1.8f*Math.max(0, offset - headHeight)));
@@ -174,9 +176,9 @@ public class BezierHeader extends FrameLayout implements RefreshHeader {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                mDotView.setVisibility(GONE);
-                mProgressView.setVisibility(View.VISIBLE);
-                mProgressView.animate().setDuration(300);
+                mDotView.setVisibility(INVISIBLE);
+                //mProgressView.setVisibility(View.VISIBLE);
+                //mProgressView.animate().setDuration(300);
                 mProgressView.animate().scaleX((float) 1.0);
                 mProgressView.animate().scaleY((float) 1.0);
                 mProgressView.postDelayed(() -> {
@@ -207,7 +209,9 @@ public class BezierHeader extends FrameLayout implements RefreshHeader {
             case PullDownRefresh:
                 mDotView.setAlpha(1);
                 mDotView.setVisibility(View.VISIBLE);
-                mProgressView.setVisibility(View.GONE);
+                mProgressView.setScaleX(0);
+                mProgressView.setScaleY(0);
+                //mProgressView.setVisibility(View.INVISIBLE);
                 break;
             case PullUpLoad:
                 break;

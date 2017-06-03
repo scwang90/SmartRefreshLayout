@@ -99,12 +99,12 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
     }
 
     @Override
-    public void onPullingUp(int offset, int bottomHeight, int extendHeight) {
+    public void onPullingUp(float percent, int offset, int bottomHeight, int extendHeight) {
 
     }
 
     @Override
-    public void onPullReleasing(int offset, int headHeight, int extendHeight) {
+    public void onPullReleasing(float percent, int offset, int headHeight, int extendHeight) {
 
     }
 
