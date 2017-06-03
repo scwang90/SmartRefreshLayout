@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="srlPrimaryColor" format="color"/>
-    <attr name="srlAccentColor" format="color"/>
+    <attr name="srlPrimaryColor" format="color"/><!--主要颜色-->
+    <attr name="srlAccentColor" format="color"/><!--强调颜色-->
+
+    <attr name="srlSpinnerStyle" format="enum">
+        <enum name="Translate" value="0"/><!--平行移动-->
+        <enum name="Scale" value="1"/><!--拉伸形变-->
+        <enum name="FixedFront" value="2"/><!--固定在前面-->
+        <enum name="FixedBehind" value="3"/><!--固定在背后-->
+    </attr>
+
+    <attr name="srlClassicsSpinnerStyle" format="enum">
+        <enum name="Translate" value="0"/><!--平行移动-->
+        <enum name="FixedBehind" value="3"/><!--固定在背后-->
+    </attr>
 
     <declare-styleable name="SmartRefreshLayout">
         <attr name="srlPrimaryColor"/>
@@ -16,6 +28,7 @@
         <attr name="srlEnableHeaderTranslationContent" format="boolean"/>
         <attr name="srlEnableFooterTranslationContent" format="boolean"/>
         <attr name="srlDisableContentWhenRefresh" format="boolean"/>
+        <attr name="srlDisableContentWhenLoading" format="boolean"/>
     </declare-styleable>
 
     <declare-styleable name="BezierHeader">
@@ -28,4 +41,15 @@
         <attr name="srlAccentColor"/>
     </declare-styleable>
 
+    <declare-styleable name="ClassicsHeader">
+        <attr name="srlClassicsSpinnerStyle"/>
+        <attr name="srlPrimaryColor"/>
+        <attr name="srlAccentColor"/>
+    </declare-styleable>
+
+    <declare-styleable name="ClassicsFooter">
+        <attr name="srlClassicsSpinnerStyle"/>
+        <attr name="srlPrimaryColor"/>
+        <attr name="srlAccentColor"/>
+    </declare-styleable>
 </resources>

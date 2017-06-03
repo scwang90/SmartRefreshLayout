@@ -1,6 +1,7 @@
 package com.scwang.smartrefreshlayout.footer.classics;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
@@ -10,6 +11,7 @@ import android.view.animation.LinearInterpolator;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.scwang.smartrefreshlayout.R;
 import com.scwang.smartrefreshlayout.api.RefreshFooter;
 import com.scwang.smartrefreshlayout.constant.RefreshState;
 import com.scwang.smartrefreshlayout.constant.SpinnerStyle;
@@ -31,6 +33,7 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
 
     private TextView mBottomText;
     private PathsView mProgressView;
+    private SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
 
     public ClassicsFooter(Context context) {
         super(context);
@@ -74,6 +77,25 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
         if (!isInEditMode()) {
             mProgressView.setVisibility(GONE);
         }
+
+
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ClassicsFooter);
+
+        mSpinnerStyle = SpinnerStyle.values()[ta.getInt(R.styleable.ClassicsFooter_srlClassicsSpinnerStyle, mSpinnerStyle.ordinal())];
+
+        int primaryColor = ta.getColor(R.styleable.ClassicsFooter_srlPrimaryColor, 0);
+        int accentColor = ta.getColor(R.styleable.ClassicsFooter_srlAccentColor, 0);
+        if (primaryColor != 0) {
+            if (accentColor != 0) {
+                setPrimaryColors(primaryColor, accentColor);
+            } else {
+                setPrimaryColors(primaryColor);
+            }
+        } else if (accentColor != 0) {
+            setPrimaryColors(0, accentColor);
+        }
+
+        ta.recycle();
     }
 
     @Override
@@ -89,12 +111,12 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
     @Override
     public void startAnimator(int headHeight, int extendHeight) {
         mProgressView.setVisibility(VISIBLE);
-        mProgressView.animate().rotation(36000).setDuration(100000).start();
+        mProgressView.animate().rotation(36000).setDuration(100000);
     }
 
     @Override
     public void onFinish() {
-        mProgressView.animate().rotation(0).setDuration(300).start();
+        mProgressView.animate().rotation(0).setDuration(300);
         mProgressView.setVisibility(GONE);
     }
 
@@ -117,7 +139,7 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
 
     @Override
     public SpinnerStyle getSpinnerStyle() {
-        return SpinnerStyle.Translate;
+        return mSpinnerStyle;
     }
 
     @Override

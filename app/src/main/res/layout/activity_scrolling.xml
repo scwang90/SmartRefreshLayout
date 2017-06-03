@@ -36,20 +36,28 @@
         android:id="@+id/refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        app:srlHeaderHeight="200dp"
+        app:srlPrimaryColor="#555555"
+        app:srlAccentColor="#ffff"
         app:srlEnableHeaderTranslationContent="true"
-        app:srlPrimaryColor="@color/colorPrimary"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        <com.scwang.smartrefreshheader.PhoenixHeader
+        <com.scwang.smartrefreshlayout.header.classics.ClassicsHeader
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            app:srlClassicsSpinnerStyle="FixedBehind"/>
+        <!--<com.scwang.smartrefreshheader.PhoenixHeader-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="200dp" />-->
         <!--<com.scwang.smartrefreshheader.TaurusHeader-->
             <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content" />-->
+            <!--android:layout_height="200dp" />-->
         <!--<com.scwang.smartrefreshheader.material.MaterialHeader-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="wrap_content"-->
             <!--android:background="@color/colorAccent"/>-->
-        <include layout="@layout/content_scrolling" />
+        <include layout="@layout/content_scrolling"
+            android:id="@+id/content"/>
     </com.scwang.smartrefreshlayout.SmartRefreshLayout>
 
     <android.support.design.widget.FloatingActionButton
