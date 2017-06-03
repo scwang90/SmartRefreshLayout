@@ -1,5 +1,6 @@
 package com.scwang.smartrefreshheader.drop;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -9,6 +10,7 @@ import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 
@@ -65,7 +67,6 @@ public class DropHeader extends ViewGroup implements RefreshHeader {
     }
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
-        setBackgroundColor(0x55ffbb11);
         addView(mWaveView = new WaveView(context));
         addView(mCircleView = new ProgressAnimationImageView(getContext()));
     }
@@ -164,20 +165,24 @@ public class DropHeader extends ViewGroup implements RefreshHeader {
 
     @Override
     public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
-        if (mEventPhase == EVENT_PHASE.WAITING) {
-            mCircleView.setTranslationY(
-                    mWaveView.getCurrentCircleCenterY() + mCircleView.getHeight() / 2.f);
-        } else {
+        if (mEventPhase != EVENT_PHASE.WAITING) {
             onPullingDown(percent, offset, headHeight, extendHeight);
         }
     }
 
     @Override
     public void startAnimator(int headHeight, int extendHeight) {
+        mWaveView.animationDropCircle();
         mWaveView.startDropAnimation();
         mCircleView.makeProgressTransparent();
         mCircleView.startProgress();
         setEventPhase(EVENT_PHASE.WAITING);
+        ValueAnimator animator = ValueAnimator.ofFloat(0, 0);
+        animator.setDuration(500);
+        animator.setInterpolator(new AccelerateDecelerateInterpolator());
+        animator.addUpdateListener(valueAnimator -> mCircleView.setTranslationY(
+                mWaveView.getCurrentCircleCenterY() + mCircleView.getHeight() / 2.f));
+        animator.start();
     }
 
     @Override
@@ -211,7 +216,12 @@ public class DropHeader extends ViewGroup implements RefreshHeader {
 
     @Override
     public void setPrimaryColors(int... colors) {
-
+        if (colors.length > 0) {
+            mWaveView.setWaveColor(colors[0]);
+            if (colors.length > 1) {
+                mCircleView.setProgressColorSchemeColors(colors[1]);
+            }
+        }
     }
 
     @NonNull

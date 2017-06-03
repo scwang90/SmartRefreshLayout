@@ -42,9 +42,9 @@
         app:srlHeaderHeight="100dp"
         app:srlEnableHeaderTranslationContent="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        <com.scwang.smartrefreshheader.drop.DropHeader
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+        <!--<com.scwang.smartrefreshheader.drop.DropHeader-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent" />-->
         <!--<com.scwang.smartrefreshlayout.header.bezier.BezierHeader-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="wrap_content"/>-->
@@ -52,9 +52,9 @@
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="wrap_content"-->
             <!--app:srlClassicsSpinnerStyle="FixedBehind"/>-->
-        <!--<com.scwang.smartrefreshheader.PhoenixHeader-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="200dp" />-->
+        <com.scwang.smartrefreshheader.PhoenixHeader
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
         <!--<com.scwang.smartrefreshheader.TaurusHeader-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="200dp" />-->
