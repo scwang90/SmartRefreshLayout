@@ -2,6 +2,10 @@
 <resources>
     <!--<attr name="srlPrimaryColor" format="color"/>-->
     <!--<attr name="srlAccentColor" format="color"/>-->
+
+    <attr name="srlShadowColor" format="color"/>
+    <attr name="srlShadowRadius" format="dimension"/>
+
     <declare-styleable name="PhoenixHeader">
         <attr name="srlPrimaryColor"/>
         <attr name="srlAccentColor"/>
@@ -9,6 +13,20 @@
 
     <declare-styleable name="TaurusHeader">
         <attr name="srlPrimaryColor"/>
+    </declare-styleable>
+
+    <declare-styleable name="WaterDropHeader">
+        <attr name="srlPrimaryColor"/>
+        <attr name="srlAccentColor"/>
+        <attr name="srlShadowColor"/>
+        <attr name="srlShadowRadius"/>
+    </declare-styleable>
+
+    <declare-styleable name="MaterialHeader">
+        <attr name="srlPrimaryColor"/>
+        <attr name="srlShadowColor"/>
+        <attr name="srlShadowRadius"/>
+        <attr name="srlShowBezierWave" format="boolean"/>
     </declare-styleable>
 
 </resources>

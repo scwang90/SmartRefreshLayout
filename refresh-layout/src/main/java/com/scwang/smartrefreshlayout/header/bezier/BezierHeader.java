@@ -142,18 +142,16 @@ public class BezierHeader extends FrameLayout implements RefreshHeader {
 
     @Override
     public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
-        float fraction = 1f * offset / headHeight;
         mWaveView.setHeadHeight(Math.min(headHeight, offset));
-        mWaveView.setWaveHeight((int)(1.8f*Math.max(0, offset - headHeight)));
-        mDotView.setFraction(fraction);
+        mWaveView.setWaveHeight((int)(1.9f*Math.max(0, offset - headHeight)));
+        mDotView.setFraction(percent);
     }
 
     @Override
     public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
-        float fraction = 1f * offset / headHeight;
         mWaveView.setHeadHeight(Math.min(headHeight, offset));
-        mWaveView.setWaveHeight((int)(1.8f*Math.max(0, offset - headHeight)));
-        mDotView.setFraction(fraction);
+        mWaveView.setWaveHeight((int)(1.9f*Math.max(0, offset - headHeight)));
+        mDotView.setFraction(percent);
     }
 
     @Override

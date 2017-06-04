@@ -61,12 +61,13 @@ public class WaveView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        final int width = getWidth();
         //重置画笔
         path.reset();
-        path.lineTo(0, headHeight);
         //绘制贝塞尔曲线
-        path.quadTo(getMeasuredWidth() / 2, headHeight + waveHeight, getMeasuredWidth(), headHeight);
-        path.lineTo(getMeasuredWidth(), 0);
+        path.lineTo(0, headHeight);
+        path.quadTo(width / 2, headHeight + waveHeight, width, headHeight);
+        path.lineTo(width, 0);
         canvas.drawPath(path, paint);
     }
 

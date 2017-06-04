@@ -30,6 +30,7 @@ import com.scwang.smartrefreshlayout.api.RefreshContent;
 import com.scwang.smartrefreshlayout.api.RefreshFooter;
 import com.scwang.smartrefreshlayout.api.RefreshHeader;
 import com.scwang.smartrefreshlayout.api.SizeDefinition;
+import com.scwang.smartrefreshlayout.api.SizeObserver;
 import com.scwang.smartrefreshlayout.constant.RefreshState;
 import com.scwang.smartrefreshlayout.constant.SpinnerStyle;
 import com.scwang.smartrefreshlayout.footer.ballpulse.BallPulseFooter;
@@ -371,6 +372,9 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
             } else {
                 headerView.measure(widthSpec, heightSpec);
             }
+            if (mRefreshHeader instanceof SizeObserver) {
+                ((SizeObserver) mRefreshHeader).onSizeDefined(mHeaderHeight, mExtendHeaderHeight);
+            }
             if (isInEditMode) {
                 minimumHeight += headerView.getMeasuredHeight();
             }
@@ -410,6 +414,9 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
                 footerView.measure(widthSpec, heightSpec);
             } else {
                 footerView.measure(widthSpec, heightSpec);
+            }
+            if (mRefreshFooter instanceof SizeObserver) {
+                ((SizeObserver) mRefreshFooter).onSizeDefined(mFooterHeight, mExtendFooterHeight);
             }
             if (isInEditMode) {
                 minimumHeight += footerView.getMeasuredHeight();

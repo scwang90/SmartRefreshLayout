@@ -1,8 +1,9 @@
-package com.scwang.smartrefreshheader.drop;
+package com.scwang.smartrefreshheader;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
@@ -14,9 +15,14 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 
+import com.scwang.smartrefreshheader.drop.AnimationImageView;
+import com.scwang.smartrefreshheader.drop.DisplayUtil;
+import com.scwang.smartrefreshheader.drop.MaterialProgressDrawable;
+import com.scwang.smartrefreshheader.drop.WaveView;
 import com.scwang.smartrefreshlayout.api.RefreshHeader;
 import com.scwang.smartrefreshlayout.constant.RefreshState;
 import com.scwang.smartrefreshlayout.constant.SpinnerStyle;
+import com.scwang.smartrefreshlayout.util.DensityUtil;
 
 import static android.view.View.MeasureSpec.EXACTLY;
 import static android.view.View.MeasureSpec.getSize;
@@ -27,7 +33,7 @@ import static android.view.View.MeasureSpec.makeMeasureSpec;
  * Created by SCWANG on 2017/6/4.
  */
 
-public class DropHeader extends ViewGroup implements RefreshHeader {
+public class WaterDropHeader extends ViewGroup implements RefreshHeader {
 
     /**
      * 落ちる前の回転の最大のAngle値
@@ -37,15 +43,10 @@ public class DropHeader extends ViewGroup implements RefreshHeader {
     private enum VERTICAL_DRAG_THRESHOLD {
         FIRST(0.1f), SECOND(0.16f + FIRST.val), THIRD(0.5f + FIRST.val);
 //        FIRST(0.2f), SECOND(0.26f + FIRST.val), THIRD(0.7f + FIRST.val);
-
         final float val;
-
         VERTICAL_DRAG_THRESHOLD(float val) {
             this.val = val;
         }
-    }
-    private enum EVENT_PHASE {
-        WAITING, BEGINNING, APPEARING, EXPANDING, DROPPING;
     }
 
     //<editor-fold desc="DropHeader">
@@ -53,15 +54,15 @@ public class DropHeader extends ViewGroup implements RefreshHeader {
     private ProgressAnimationImageView mCircleView;
     private float mLastFirstBounds;
 
-    public DropHeader(Context context) {
+    public WaterDropHeader(Context context) {
         this(context, null);
     }
 
-    public DropHeader(Context context, AttributeSet attrs) {
+    public WaterDropHeader(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public DropHeader(Context context, AttributeSet attrs, int defStyleAttr) {
+    public WaterDropHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs, defStyleAttr);
     }
@@ -69,6 +70,24 @@ public class DropHeader extends ViewGroup implements RefreshHeader {
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
         addView(mWaveView = new WaveView(context));
         addView(mCircleView = new ProgressAnimationImageView(getContext()));
+
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.WaterDropHeader);
+
+        int primaryColor = ta.getColor(R.styleable.WaterDropHeader_srlPrimaryColor, 0);
+        int accentColor = ta.getColor(R.styleable.WaterDropHeader_srlAccentColor, 0);
+        if (primaryColor != 0) {
+            mWaveView.setWaveColor(primaryColor);
+        }
+        if (accentColor != 0) {
+            mCircleView.setProgressColorSchemeColors(accentColor);
+        }
+        if (ta.hasValue(R.styleable.WaterDropHeader_srlShadowRadius)) {
+            int radius = ta.getDimensionPixelOffset(R.styleable.WaterDropHeader_srlShadowRadius, 0);
+            int color = ta.getColor(R.styleable.WaterDropHeader_srlShadowColor, 0xff000000);
+            mWaveView.setShadow(radius, color);
+        }
+
+        ta.recycle();
     }
 
     @Override
@@ -92,6 +111,10 @@ public class DropHeader extends ViewGroup implements RefreshHeader {
         final int circleWidth = mCircleView.getMeasuredWidth();
         final int circleHeight = mCircleView.getMeasuredHeight();
         mCircleView.layout((thisWidth - circleWidth) / 2, -circleHeight , (thisWidth + circleWidth) / 2, 0);
+
+        if (isInEditMode()) {
+            onPullingDown(0.99f, DensityUtil.dp2px(99), DensityUtil.dp2px(100), DensityUtil.dp2px(100));
+        }
     }
 
 
@@ -111,12 +134,6 @@ public class DropHeader extends ViewGroup implements RefreshHeader {
 
     @Override
     public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
-        if (mCircleView.getVisibility() != View.VISIBLE) {
-            mCircleView.setVisibility(View.VISIBLE);
-
-        }
-        mCircleView.scaleWithKeepingAspectRatio(1f);
-        mCircleView.makeProgressTransparent();
 
         float dragPercent = Math.min(1f, percent);
         float adjustedPercent = (float) Math.max(dragPercent - .4, 0) * 5 / 3;
@@ -148,11 +165,11 @@ public class DropHeader extends ViewGroup implements RefreshHeader {
         } else if (firstBounds < VERTICAL_DRAG_THRESHOLD.SECOND.val) {
             // draw a circle with a wave
             mWaveView.appearPhase(firstBounds, secondBounds);
-        } else if (firstBounds < VERTICAL_DRAG_THRESHOLD.THIRD.val) {
+        } else /*if (firstBounds < VERTICAL_DRAG_THRESHOLD.THIRD.val)*/ {
             // draw a circle with expanding a wave
             mWaveView.expandPhase(firstBounds, secondBounds, finalBounds);
-        } else {
-            // stop to draw a wave and drop a circle
+//        } else {
+//            // stop to draw a wave and drop a circle
 //            onDropPhase();
         }
     }
@@ -179,16 +196,14 @@ public class DropHeader extends ViewGroup implements RefreshHeader {
     public void onStateChanged(RefreshState state) {
         switch (state) {
             case None:
-//                mCircleView.setProgressStartEndTrim(0f, 0f);
-//                mCircleView.showArrow(false);
-//                mCircleView.setVisibility(GONE);
                 break;
             case PullDownRefresh:
                 mCircleView.showArrow(true);
+                mCircleView.scaleWithKeepingAspectRatio(1f);
+                mCircleView.makeProgressTransparent();
                 break;
             case PullDownCanceled:
                 mCircleView.setProgressStartEndTrim(0f, 0f);
-                mCircleView.setVisibility(GONE);
                 mWaveView.startWaveAnimation(mLastFirstBounds);
                 mLastFirstBounds = 0;
                 break;
@@ -213,7 +228,6 @@ public class DropHeader extends ViewGroup implements RefreshHeader {
             public void onAnimationRepeat(Animation animation) {}
             public void onAnimationEnd(Animation animation) {
                 mCircleView.stopProgress();
-                mCircleView.setVisibility(View.GONE);
                 mCircleView.makeProgressTransparent();
                 mWaveView.startDisappearCircleAnimation();
             }
@@ -244,7 +258,6 @@ public class DropHeader extends ViewGroup implements RefreshHeader {
     }
     //</editor-fold>
 
-
     //<editor-fold desc="ProgressAnimationImageView">
     /**
      * Custom view has progress drawable.
@@ -261,18 +274,12 @@ public class DropHeader extends ViewGroup implements RefreshHeader {
          */
         public ProgressAnimationImageView(Context context) {
             super(context);
-            mProgress = new MaterialProgressDrawable(context, DropHeader.this);
+            mProgress = new MaterialProgressDrawable(context, WaterDropHeader.this);
+            mProgress.setBackgroundColor(Color.TRANSPARENT);
             if (DisplayUtil.isOver600dp(getContext())) { // Make the progress be big
                 mProgress.updateSizes(MaterialProgressDrawable.LARGE);
             }
-            initialize();
-        }
-
-        private void initialize() {
-            setImageDrawable(null);
-            mProgress.setBackgroundColor(Color.TRANSPARENT);
             setImageDrawable(mProgress);
-            setVisibility(View.GONE);
         }
 
         public void measure() {

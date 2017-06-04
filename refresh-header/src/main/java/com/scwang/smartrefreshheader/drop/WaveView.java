@@ -250,14 +250,16 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
   }
 
   @Override protected void onDraw(Canvas canvas) {
+    super.onDraw(canvas);
     //引っ張ってる最中の波と終わったあとの波
 //    canvas.drawPath(mWavePath, mShadowPaint);
     canvas.drawPath(mWavePath, mPaint);
-    mWavePath.rewind();
-
-    //円が落ちる部分の描画
-    mDropTangentPath.rewind();
-    mDropCirclePath.rewind();
+    if (!isInEditMode()) {
+      mWavePath.rewind();
+      //円が落ちる部分の描画
+      mDropTangentPath.rewind();
+      mDropCirclePath.rewind();
+    }
     float circleCenterY = (Float) mDropCircleAnimator.getAnimatedValue();
     float circleCenterX = mWidth / 2.f;
     mDropRect.setEmpty();
@@ -639,6 +641,13 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
   public void setShadowRadius(int radius) {
 //    mShadowPaint.setShadowLayer(radius, 0.0f, 2.0f, SHADOW_COLOR);
     mPaint.setShadowLayer(radius, 0f, 0f, SHADOW_COLOR);
+  }
+
+  /**
+   * @param radius 影の深さ
+   */
+  public void setShadow(int radius, int color) {
+    mPaint.setShadowLayer(radius, 0f, 0f, color);
   }
 
   /**

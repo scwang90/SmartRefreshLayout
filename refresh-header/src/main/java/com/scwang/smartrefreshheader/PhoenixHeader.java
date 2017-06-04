@@ -167,8 +167,6 @@ public class PhoenixHeader extends View implements RefreshHeader, SizeDefinition
         bounds = mDrawableSky.getBounds();
         mDrawableSky.setBounds(0, 0, widthPixels, widthPixels * bounds.height() / bounds.width());
 
-
-
         mDrawableSun = new PathsDrawable();
         mDrawableSun.parserPaths(sunPaths);
         mDrawableSun.parserColors(sunColors);
@@ -226,6 +224,17 @@ public class PhoenixHeader extends View implements RefreshHeader, SizeDefinition
     @Override
     public SpinnerStyle getSpinnerStyle() {
         return SpinnerStyle.Scale;
+    }
+
+
+    @Override
+    public int defineHeight() {
+        return (int)(Resources.getSystem().getDisplayMetrics().widthPixels * 0.27);
+    }
+
+    @Override
+    public int defineExtendHeight() {
+        return (int) (defineHeight() * 0.3f);
     }
 
     @Override
@@ -327,15 +336,6 @@ public class PhoenixHeader extends View implements RefreshHeader, SizeDefinition
         canvas.restoreToCount(saveCount);
     }
 
-    @Override
-    public int defineHeight() {
-        return (int)(Resources.getSystem().getDisplayMetrics().widthPixels * 0.27);
-    }
-
-    @Override
-    public int defineExtendHeight() {
-        return (int) (defineHeight() * 0.3f);
-    }
 }
 
 

@@ -1,6 +1,10 @@
-package com.scwang.smartrefreshheader.material;
+package com.scwang.smartrefreshheader;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Path;
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 import android.util.AttributeSet;
@@ -8,17 +12,22 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.scwang.smartrefreshheader.material.CircleImageView;
+import com.scwang.smartrefreshheader.material.MaterialProgressDrawable;
 import com.scwang.smartrefreshlayout.api.RefreshHeader;
+import com.scwang.smartrefreshlayout.api.SizeObserver;
 import com.scwang.smartrefreshlayout.constant.RefreshState;
 import com.scwang.smartrefreshlayout.constant.SpinnerStyle;
 import com.scwang.smartrefreshlayout.util.DensityUtil;
+
+import static android.view.View.MeasureSpec.getSize;
 
 /**
  * Material 主题下拉头
  * Created by SCWANG on 2017/6/2.
  */
 
-public class MaterialHeader extends ViewGroup implements RefreshHeader {
+public class MaterialHeader extends ViewGroup implements RefreshHeader, SizeObserver {
 
     // Maps to ProgressBar.Large style
     public static final int SIZE_LARGE = 0;
@@ -34,9 +43,17 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
 
     private boolean mFinished;
     private int mCircleDiameter;
-    private int mOriginalOffsetTop;
     private CircleImageView mCircleView;
     private MaterialProgressDrawable mProgress;
+
+    /**
+     * 贝塞尔背景
+     */
+    private int mWaveHeight;
+    private int mHeadHeight;
+    private Path mBezierPath;
+    private Paint mBezierPaint;
+    private boolean mShowBezierWave = false;
 
     //<editor-fold desc="MaterialHeader">
     public MaterialHeader(Context context) {
@@ -53,6 +70,8 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
     }
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
+        setMinimumHeight(DensityUtil.dp2px(100));
+
         mProgress = new MaterialProgressDrawable(context, this);
         mProgress.setBackgroundColor(CIRCLE_BG_LIGHT);
         mProgress.setAlpha(255);
@@ -62,45 +81,79 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
         mCircleView.setVisibility(View.GONE);
         addView(mCircleView);
 
-
         final DisplayMetrics metrics = getResources().getDisplayMetrics();
         mCircleDiameter = (int) (CIRCLE_DIAMETER * metrics.density);
-        mOriginalOffsetTop = -mCircleDiameter;
 
-        setMinimumHeight(DensityUtil.dp2px(100));
+        mBezierPath = new Path();
+        mBezierPaint = new Paint();
+        mBezierPaint.setAntiAlias(true);
+        mBezierPaint.setStyle(Paint.Style.FILL);
+
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.MaterialHeader);
+        mShowBezierWave = ta.getBoolean(R.styleable.MaterialHeader_srlShowBezierWave, mShowBezierWave);
+        mBezierPaint.setColor(ta.getColor(R.styleable.WaterDropHeader_srlPrimaryColor, 0xff11bbff));
+        if (ta.hasValue(R.styleable.WaterDropHeader_srlShadowRadius)) {
+            int radius = ta.getDimensionPixelOffset(R.styleable.MaterialHeader_srlShadowRadius, 0);
+            int color = ta.getColor(R.styleable.MaterialHeader_srlShadowColor, 0xff000000);
+            mBezierPaint.setShadowLayer(radius, 0, 0, color);
+            setLayerType(LAYER_TYPE_SOFTWARE, null);
+        }
+        ta.recycle();
+
+    }
+
+    @Override
+    public void setLayoutParams(ViewGroup.LayoutParams params) {
+        super.setLayoutParams(params);
+        params.height = -3;
     }
 
     @Override
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        setMeasuredDimension(getSize(widthMeasureSpec), getSize(heightMeasureSpec));
         mCircleView.measure(MeasureSpec.makeMeasureSpec(mCircleDiameter, MeasureSpec.EXACTLY),
                 MeasureSpec.makeMeasureSpec(mCircleDiameter, MeasureSpec.EXACTLY));
-        setMeasuredDimension(resolveSize(getSuggestedMinimumWidth(), widthMeasureSpec),
-                resolveSize(getSuggestedMinimumHeight(), heightMeasureSpec));
+//        setMeasuredDimension(resolveSize(getSuggestedMinimumWidth(), widthMeasureSpec),
+//                resolveSize(getSuggestedMinimumHeight(), heightMeasureSpec));
     }
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        final int width = getMeasuredWidth();
         if (getChildCount() == 0) {
             return;
         }
+        final int width = getMeasuredWidth();
         int circleWidth = mCircleView.getMeasuredWidth();
         int circleHeight = mCircleView.getMeasuredHeight();
 
-        if (isInEditMode()) {
-            int circleTop = getMeasuredHeight() / 2 - circleHeight / 2;
+        if (isInEditMode() && mHeadHeight > 0) {
+            int circleTop = mHeadHeight - circleHeight / 2;
             mCircleView.layout((width / 2 - circleWidth / 2), circleTop,
                     (width / 2 + circleWidth / 2), circleTop + circleHeight);
 
             mProgress.showArrow(true);
             mProgress.setStartEndTrim(0f, MAX_PROGRESS_ANGLE);
             mProgress.setArrowScale(1);
-            mCircleView.setAlpha(255);
+            mCircleView.setAlpha(1f);
             mCircleView.setVisibility(VISIBLE);
         } else {
-            mCircleView.layout((width / 2 - circleWidth / 2), mOriginalOffsetTop,
-                    (width / 2 + circleWidth / 2), mOriginalOffsetTop + circleHeight);
+            mCircleView.layout((width / 2 - circleWidth / 2), -mCircleDiameter,
+                    (width / 2 + circleWidth / 2), circleHeight - mCircleDiameter);
         }
+    }
+
+    @Override
+    protected void dispatchDraw(Canvas canvas) {
+        if (mShowBezierWave) {
+            //重置画笔
+            mBezierPath.reset();
+            mBezierPath.lineTo(0, mHeadHeight);
+            //绘制贝塞尔曲线
+            mBezierPath.quadTo(getMeasuredWidth() / 2, mHeadHeight + mWaveHeight * 1.9f, getMeasuredWidth(), mHeadHeight);
+            mBezierPath.lineTo(getMeasuredWidth(), 0);
+            canvas.drawPath(mBezierPath, mBezierPaint);
+        }
+        super.dispatchDraw(canvas);
     }
 
     //</editor-fold>
@@ -129,7 +182,19 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
 
     //<editor-fold desc="RefreshHeader">
     @Override
+    public void onSizeDefined(int height, int extendHeight) {
+        if (isInEditMode()) {
+            mWaveHeight = mHeadHeight = height / 2;
+        }
+    }
+
+    @Override
     public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
+        if (mShowBezierWave) {
+            mHeadHeight = Math.min(offset, headHeight);
+            mWaveHeight = Math.max(0, offset - headHeight);
+            postInvalidate();
+        }
 
         float originalDragPercent = 1f * offset / headHeight;
 
@@ -157,6 +222,12 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
     public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
         if (!mProgress.isRunning() && !mFinished) {
             onPullingDown(percent, offset, headHeight, extendHeight);
+        } else {
+            if (mShowBezierWave) {
+                mHeadHeight = Math.min(offset, headHeight);
+                mWaveHeight = Math.max(0, offset - headHeight);
+                postInvalidate();
+            }
         }
     }
 
@@ -195,6 +266,9 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
 
     @Override
     public void setPrimaryColors(int... colors) {
+        if (colors.length > 0) {
+            mBezierPaint.setColor(colors[0]);
+        }
         //mProgress.setColorSchemeColors(colors);
     }
 
