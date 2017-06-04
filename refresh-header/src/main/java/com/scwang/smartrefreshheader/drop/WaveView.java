@@ -101,7 +101,7 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
   /**
    * 影のPaint
    */
-  private Paint mShadowPaint;
+//  private Paint mShadowPaint;
 
   /**
    * 影のPath
@@ -251,7 +251,7 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
 
   @Override protected void onDraw(Canvas canvas) {
     //引っ張ってる最中の波と終わったあとの波
-    canvas.drawPath(mWavePath, mShadowPaint);
+//    canvas.drawPath(mWavePath, mShadowPaint);
     canvas.drawPath(mWavePath, mPaint);
     mWavePath.rewind();
 
@@ -293,9 +293,9 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
     mShadowPath.addOval(mDropRect, Path.Direction.CCW);
     mDropCirclePath.addOval(mDropRect, Path.Direction.CCW);
     if (mDropVertexAnimator.isRunning()) {
-      canvas.drawPath(mShadowPath, mShadowPaint);
+//      canvas.drawPath(mShadowPath, mShadowPaint);
     } else {
-      canvas.drawPath(mDropCirclePath, mShadowPaint);
+//      canvas.drawPath(mDropCirclePath, mShadowPaint);
     }
     canvas.drawPath(mDropTangentPath, mPaint);
     canvas.drawPath(mDropCirclePath, mPaint);
@@ -339,15 +339,17 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
   }
 
   private void setUpPaint() {
+    float density = getResources().getDisplayMetrics().density;
     mPaint = new Paint();
     mPaint.setColor(0xff2196F3);
     mPaint.setAntiAlias(true);
     mPaint.setStyle(Paint.Style.FILL);
+    mPaint.setShadowLayer((int) (0.5f + 2.0f * density), 0f, 0f, SHADOW_COLOR);
 
-    float density = getResources().getDisplayMetrics().density;
-    mShadowPaint = new Paint();
-    mShadowPaint.setAntiAlias(true);
-    mShadowPaint.setShadowLayer((int) (0.5f + 2.0f * density), 0f, 0f, SHADOW_COLOR);
+//    float density = getResources().getDisplayMetrics().density;
+//    mShadowPaint = new Paint();
+//    mShadowPaint.setAntiAlias(true);
+//    mShadowPaint.setShadowLayer((int) (0.5f + 2.0f * density), 0f, 0f, SHADOW_COLOR);
   }
 
   private void setUpPath() {
@@ -635,7 +637,8 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
    * @param radius 影の深さ
    */
   public void setShadowRadius(int radius) {
-    mShadowPaint.setShadowLayer(radius, 0.0f, 2.0f, SHADOW_COLOR);
+//    mShadowPaint.setShadowLayer(radius, 0.0f, 2.0f, SHADOW_COLOR);
+    mPaint.setShadowLayer(radius, 0f, 0f, SHADOW_COLOR);
   }
 
   /**

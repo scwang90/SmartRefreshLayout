@@ -510,7 +510,7 @@ public class TaurusHeader extends View implements RefreshHeader, SizeDefinition 
 
     @Override
     public int defineExtendHeight() {
-        return (int) (defineHeight() * 0.8f);
+        return (int) (defineHeight() * 0.3f);
     }
 
     public float random(int min, int max) {

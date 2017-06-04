@@ -36,6 +36,7 @@ public class DropHeader extends ViewGroup implements RefreshHeader {
 
     private enum VERTICAL_DRAG_THRESHOLD {
         FIRST(0.1f), SECOND(0.16f + FIRST.val), THIRD(0.5f + FIRST.val);
+//        FIRST(0.2f), SECOND(0.26f + FIRST.val), THIRD(0.7f + FIRST.val);
 
         final float val;
 
@@ -48,10 +49,9 @@ public class DropHeader extends ViewGroup implements RefreshHeader {
     }
 
     //<editor-fold desc="DropHeader">
-    private EVENT_PHASE mEventPhase = EVENT_PHASE.WAITING;
-
     private WaveView mWaveView;
     private ProgressAnimationImageView mCircleView;
+    private float mLastFirstBounds;
 
     public DropHeader(Context context) {
         this(context, null);
@@ -105,20 +105,16 @@ public class DropHeader extends ViewGroup implements RefreshHeader {
         mCircleView.setProgressColorSchemeColors(colors);
     }
 
-    private void setEventPhase(EVENT_PHASE eventPhase) {
-        mEventPhase = eventPhase;
-    }
     //</editor-fold>
 
     //<editor-fold desc="RefreshHeader">
 
     @Override
     public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
-        mCircleView.showArrow(true);
         if (mCircleView.getVisibility() != View.VISIBLE) {
             mCircleView.setVisibility(View.VISIBLE);
-        }
 
+        }
         mCircleView.scaleWithKeepingAspectRatio(1f);
         mCircleView.makeProgressTransparent();
 
@@ -144,19 +140,17 @@ public class DropHeader extends ViewGroup implements RefreshHeader {
         float firstBounds = seed * (5f - 2 * seed) / 3.5f;
         float secondBounds = firstBounds - VERTICAL_DRAG_THRESHOLD.FIRST.val;
         float finalBounds = (firstBounds - VERTICAL_DRAG_THRESHOLD.SECOND.val) / 5;
+        mLastFirstBounds = firstBounds;
 
         if (firstBounds < VERTICAL_DRAG_THRESHOLD.FIRST.val) {
             // draw a wave and not draw a circle
             mWaveView.beginPhase(firstBounds);
-            setEventPhase(EVENT_PHASE.BEGINNING);
         } else if (firstBounds < VERTICAL_DRAG_THRESHOLD.SECOND.val) {
             // draw a circle with a wave
             mWaveView.appearPhase(firstBounds, secondBounds);
-            setEventPhase(EVENT_PHASE.APPEARING);
         } else if (firstBounds < VERTICAL_DRAG_THRESHOLD.THIRD.val) {
             // draw a circle with expanding a wave
             mWaveView.expandPhase(firstBounds, secondBounds, finalBounds);
-            setEventPhase(EVENT_PHASE.EXPANDING);
         } else {
             // stop to draw a wave and drop a circle
 //            onDropPhase();
@@ -165,18 +159,14 @@ public class DropHeader extends ViewGroup implements RefreshHeader {
 
     @Override
     public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
-        if (mEventPhase != EVENT_PHASE.WAITING) {
-            onPullingDown(percent, offset, headHeight, extendHeight);
-        }
     }
 
     @Override
     public void startAnimator(int headHeight, int extendHeight) {
+        mLastFirstBounds = 0;
         mWaveView.animationDropCircle();
-        mWaveView.startDropAnimation();
         mCircleView.makeProgressTransparent();
         mCircleView.startProgress();
-        setEventPhase(EVENT_PHASE.WAITING);
         ValueAnimator animator = ValueAnimator.ofFloat(0, 0);
         animator.setDuration(500);
         animator.setInterpolator(new AccelerateDecelerateInterpolator());
@@ -187,7 +177,26 @@ public class DropHeader extends ViewGroup implements RefreshHeader {
 
     @Override
     public void onStateChanged(RefreshState state) {
-
+        switch (state) {
+            case None:
+//                mCircleView.setProgressStartEndTrim(0f, 0f);
+//                mCircleView.showArrow(false);
+//                mCircleView.setVisibility(GONE);
+                break;
+            case PullDownRefresh:
+                mCircleView.showArrow(true);
+                break;
+            case PullDownCanceled:
+                mCircleView.setProgressStartEndTrim(0f, 0f);
+                mCircleView.setVisibility(GONE);
+                mWaveView.startWaveAnimation(mLastFirstBounds);
+                mLastFirstBounds = 0;
+                break;
+            case ReleaseRefresh:
+                break;
+            case Refreshing:
+                break;
+        }
     }
 
     @Override
@@ -200,7 +209,6 @@ public class DropHeader extends ViewGroup implements RefreshHeader {
         };
         scaleDownAnimation.setDuration(200);
         mCircleView.setAnimationListener(new Animation.AnimationListener() {
-            @Override
             public void onAnimationStart(Animation animation) {}
             public void onAnimationRepeat(Animation animation) {}
             public void onAnimationEnd(Animation animation) {
@@ -254,7 +262,6 @@ public class DropHeader extends ViewGroup implements RefreshHeader {
         public ProgressAnimationImageView(Context context) {
             super(context);
             mProgress = new MaterialProgressDrawable(context, DropHeader.this);
-
             if (DisplayUtil.isOver600dp(getContext())) { // Make the progress be big
                 mProgress.updateSizes(MaterialProgressDrawable.LARGE);
             }
@@ -263,9 +270,7 @@ public class DropHeader extends ViewGroup implements RefreshHeader {
 
         private void initialize() {
             setImageDrawable(null);
-
             mProgress.setBackgroundColor(Color.TRANSPARENT);
-
             setImageDrawable(mProgress);
             setVisibility(View.GONE);
         }

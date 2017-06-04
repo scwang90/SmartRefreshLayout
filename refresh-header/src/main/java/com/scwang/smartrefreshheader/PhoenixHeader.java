@@ -128,6 +128,7 @@ public class PhoenixHeader extends View implements RefreshHeader, SizeDefinition
         int primaryColor = ta.getColor(R.styleable.PhoenixHeader_srlPrimaryColor, 0);
         int accentColor = ta.getColor(R.styleable.PhoenixHeader_srlAccentColor, 0);
         if (primaryColor != 0) {
+            setBackgroundColor(primaryColor);
             if (accentColor != 0) {
                 mDrawableSky.parserColors(primaryColor, accentColor);
             } else {
@@ -207,8 +208,10 @@ public class PhoenixHeader extends View implements RefreshHeader, SizeDefinition
     public void setPrimaryColors(int... colors) {
         if (mDrawableSky != null) {
             if (colors.length > 1) {
+                setBackgroundColor(colors[0]);
                 mDrawableSky.parserColors(colors);
             } else if (colors.length > 0) {
+                setBackgroundColor(colors[0]);
                 mDrawableSky.parserColors(colors[0], skyColors[1]);
             }
         }
@@ -331,7 +334,7 @@ public class PhoenixHeader extends View implements RefreshHeader, SizeDefinition
 
     @Override
     public int defineExtendHeight() {
-        return (int) (defineHeight() * 0.8f);
+        return (int) (defineHeight() * 0.3f);
     }
 }
 
