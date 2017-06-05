@@ -49,7 +49,7 @@ public class WaterDropView extends View {
     }
 
     private void init(Context context, AttributeSet attrs) {
-        setBackgroundColor(0xffbbff11);
+//        setBackgroundColor(0xffbbff11);
         topCircle = new Circle();
         bottomCircle = new Circle();
         mPath = new Path();
@@ -175,9 +175,12 @@ public class WaterDropView extends View {
      * 圆心距减速从最大值减到0(下圆Y从当前位置移动到上圆Y)。
      */
     public Animator createAnimator() {
-        ValueAnimator valueAnimator = ValueAnimator.ofFloat(1, 0).setDuration(BACK_ANIM_DURATION);
+        ValueAnimator valueAnimator = ValueAnimator.ofFloat(1, 0.001f).setDuration(BACK_ANIM_DURATION);
         valueAnimator.setInterpolator(new DecelerateInterpolator());
-        valueAnimator.addUpdateListener(valueAnimator1 -> updateComleteState((float) valueAnimator1.getAnimatedValue()));
+        valueAnimator.addUpdateListener(valueAnimator1 -> {
+            updateComleteState((float) valueAnimator1.getAnimatedValue());
+            postInvalidate();
+        });
         return valueAnimator;
     }
 

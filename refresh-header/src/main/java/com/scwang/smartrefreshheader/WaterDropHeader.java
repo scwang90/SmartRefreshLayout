@@ -13,8 +13,9 @@ import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
+import android.widget.ImageView;
 
+import com.scwang.smartrefreshheader.internal.MaterialProgressDrawable;
 import com.scwang.smartrefreshheader.waterdrop.WaterDropView;
 import com.scwang.smartrefreshlayout.api.RefreshHeader;
 import com.scwang.smartrefreshlayout.api.SizeObserver;
@@ -31,10 +32,12 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 public class WaterDropHeader extends ViewGroup implements RefreshHeader, SizeObserver {
 
-    private ProgressBar mProgressBar;
+    private static final float MAX_PROGRESS_ANGLE = 0.8f;
+
     private WaterDropView mWaterDropView;
+    private ImageView mImageView;
+    private MaterialProgressDrawable mProgress;
     private RefreshState mState;
-    private int mOffset;
     private int mWaterPadding;
 
     public WaterDropHeader(Context context) {
@@ -48,7 +51,7 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader, SizeObs
     }
 
     private void initView(Context context) {
-        setBackgroundColor(0xff11bbff);
+//        setBackgroundColor(0xff11bbff);
         DensityUtil density = new DensityUtil();
         mWaterDropView = new WaterDropView(context);
 //        mWaterDropView.setMaxCircleRadius(density.dip2px(20));
@@ -57,26 +60,31 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader, SizeObs
         addView(mWaterDropView, MATCH_PARENT, MATCH_PARENT);
         mWaterDropView.updateComleteState(0);
 
-        mProgressBar = new ProgressBar(context);
-        addView(mProgressBar, density.dip2px(27), density.dip2px(27));
-
         mWaterPadding = density.dip2px(4);
+
+        mImageView = new ImageView(context);
+        mProgress = new MaterialProgressDrawable(context, mImageView);
+        mProgress.setBackgroundColor(0xffffffff);
+        mProgress.setAlpha(255);
+        mProgress.setColorSchemeColors(0xffffffff,0xff0099cc,0xffff4444,0xff669900,0xffaa66cc,0xffff8800);
+        mImageView.setImageDrawable(mProgress);
+        addView(mImageView, density.dip2px(30), density.dip2px(30));
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        LayoutParams lpProgress = mProgressBar.getLayoutParams();
-        mProgressBar.measure(
-                makeMeasureSpec(lpProgress.width, EXACTLY),
-                makeMeasureSpec(lpProgress.height, EXACTLY)
+        LayoutParams lpImage = mImageView.getLayoutParams();
+        mImageView.measure(
+                makeMeasureSpec(lpImage.width, EXACTLY),
+                makeMeasureSpec(lpImage.height, EXACTLY)
         );
         mWaterDropView.measure(
                 makeMeasureSpec(getSize(widthMeasureSpec), AT_MOST),
                 makeMeasureSpec(Math.max(0, getSize(heightMeasureSpec) - 2 * mWaterPadding), EXACTLY)
         );
-        int maxWidth = Math.max(mProgressBar.getMeasuredWidth(), mWaterDropView.getMeasuredHeight());
-        int maxHeight = Math.max(mProgressBar.getMeasuredHeight(), mWaterDropView.getMeasuredHeight());
+        int maxWidth = Math.max(mImageView.getMeasuredWidth(), mWaterDropView.getMeasuredHeight());
+        int maxHeight = Math.max(mImageView.getMeasuredHeight(), mWaterDropView.getMeasuredHeight());
         setMeasuredDimension(resolveSize(maxWidth, widthMeasureSpec), resolveSize(maxHeight, heightMeasureSpec));
     }
 
@@ -88,19 +96,22 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader, SizeObs
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         final int measuredWidth = getMeasuredWidth();
-        final int measuredHeight = getMeasuredHeight();
-        final int widthProgress = mProgressBar.getMeasuredWidth();
-        final int heightProgress = mProgressBar.getMeasuredHeight();
-        final int leftProgress = measuredWidth / 2 - widthProgress / 2;
-        final int topProgress = measuredHeight / 2 - heightProgress / 2;
-        mProgressBar.layout(leftProgress, topProgress, leftProgress + widthProgress, topProgress + heightProgress);
+//        final int measuredHeight = getMeasuredHeight();
 
         final int widthWaterDrop = mWaterDropView.getMeasuredWidth();
         final int heightWaterDrop = mWaterDropView.getMeasuredHeight();
         final int leftWaterDrop = measuredWidth / 2 - widthWaterDrop / 2;
         final int topWaterDrop = mWaterPadding;
-
         mWaterDropView.layout(leftWaterDrop, topWaterDrop, leftWaterDrop + widthWaterDrop, topWaterDrop + heightWaterDrop);
+
+        final int widthImage = mImageView.getMeasuredWidth();
+        final int heightImage = mImageView.getMeasuredHeight();
+        final int leftImage = measuredWidth / 2 - widthImage / 2;
+        int topImage = mWaterPadding + widthWaterDrop / 2 - widthImage / 2;
+        if (topImage + heightImage > mWaterDropView.getBottom() - (widthWaterDrop - widthImage) / 2) {
+            topImage = mWaterDropView.getBottom() - (widthWaterDrop - widthImage) / 2 - heightImage;
+        }
+        mImageView.layout(leftImage, topImage, leftImage + widthImage, topImage + heightImage);
     }
 
     /**
@@ -108,7 +119,6 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader, SizeObs
      */
     private void handleStateNormal() {
         mWaterDropView.setVisibility(View.VISIBLE);
-        mProgressBar.setVisibility(View.GONE);
     }
 
     /**
@@ -116,7 +126,6 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader, SizeObs
      */
     private void handleStateStretch() {
         mWaterDropView.setVisibility(View.VISIBLE);
-        mProgressBar.setVisibility(View.GONE);
     }
 
     /**
@@ -124,7 +133,6 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader, SizeObs
      */
     private void handleStateReady() {
         mWaterDropView.setVisibility(View.VISIBLE);
-        mProgressBar.setVisibility(View.GONE);
     }
 
     /**
@@ -132,7 +140,6 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader, SizeObs
      */
     private void handleStateRefreshing() {
 //        mWaterDropView.setVisibility(View.GONE);
-        mProgressBar.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -140,19 +147,32 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader, SizeObs
      */
     private void handleStateEnd() {
         mWaterDropView.setVisibility(View.GONE);
-        mProgressBar.setVisibility(View.GONE);
     }
 
     @Override
     public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
-        mOffset = offset;
         mWaterDropView.updateComleteState(Math.max(offset - 2 * mWaterPadding, 0), headHeight + extendHeight - 2 * mWaterPadding);
         mWaterDropView.postInvalidate();
+
+        float originalDragPercent = 1f * offset / headHeight;
+
+        float dragPercent = Math.min(1f, Math.abs(originalDragPercent));
+        float adjustedPercent = (float) Math.max(dragPercent - .4, 0) * 5 / 3;
+        float extraOS = Math.abs(offset) - headHeight;
+        float tensionSlingshotPercent = Math.max(0, Math.min(extraOS, (float) headHeight * 2)
+                / (float) headHeight);
+        float tensionPercent = (float) ((tensionSlingshotPercent / 4) - Math.pow(
+                (tensionSlingshotPercent / 4), 2)) * 2f;
+        float strokeStart = adjustedPercent * .8f;
+        float rotation = (-0.25f + .4f * adjustedPercent + tensionPercent * 2) * .5f;
+        mProgress.showArrow(true);
+        mProgress.setStartEndTrim(0f, Math.min(MAX_PROGRESS_ANGLE, strokeStart));
+        mProgress.setArrowScale(Math.min(1f, adjustedPercent));
+        mProgress.setProgressRotation(rotation);
     }
 
     @Override
     public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
-        mOffset = offset;
         if (mState != RefreshState.Refreshing) {
             mWaterDropView.updateComleteState(Math.max(offset - 2 * mWaterPadding, 0), headHeight + extendHeight - 2 * mWaterPadding);
             mWaterDropView.postInvalidate();
@@ -185,11 +205,17 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader, SizeObs
 
     @Override
     public void startAnimator(int headHeight, int extendHeight) {
+        mProgress.start();
         Animator animator = mWaterDropView.createAnimator();
         animator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                mWaterDropView.setVisibility(GONE);
+                mWaterDropView.animate().alpha(0).setListener(new AnimatorListenerAdapter() {
+                    public void onAnimationEnd(Animator animation) {
+                        mWaterDropView.setVisibility(GONE);
+                        mWaterDropView.setAlpha(1);
+                    }
+                });
             }
         });
         animator.start();//开始回弹
@@ -197,7 +223,7 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader, SizeObs
 
     @Override
     public void onFinish() {
-
+        mProgress.stop();
     }
 
     @Override
