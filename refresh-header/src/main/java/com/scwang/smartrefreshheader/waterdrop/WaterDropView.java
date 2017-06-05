@@ -92,10 +92,15 @@ public class WaterDropView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        makeBezierPath();
+        int height = getHeight();
+        if (height <= 2 * mMaxCircleRadius) {
+            canvas.translate(0, height - 2 * mMaxCircleRadius);
+            canvas.drawCircle(topCircle.x, topCircle.y, topCircle.radius, mPaint);
+        } else {
+            makeBezierPath();
 //        mPaint.setColor(Color.RED);
 //        mPaint.setAlpha(200);
-        canvas.drawPath(mPath, mPaint);
+            canvas.drawPath(mPath, mPaint);
 //        mPaint.setColor(Color.GRAY);
 //        mPaint.setAlpha(50);
 //        canvas.drawCircle(topCircle.x, topCircle.y, topCircle.radius, mPaint);
@@ -109,7 +114,8 @@ public class WaterDropView extends View {
 //                (int)(topCircle.x + 0.5f * topCircle.radius),
 //                (int)(topCircle.y + 0.5f * topCircle.radius));
 //        mProgress.draw(canvas);
-        super.onDraw(canvas);
+//        super.onDraw(canvas);
+        }
     }
 
 
