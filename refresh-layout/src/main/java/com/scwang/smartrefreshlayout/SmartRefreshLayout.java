@@ -353,7 +353,8 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
                 heightSpec = makeMeasureSpec(mHeaderHeight - lp.topMargin - lp.bottomMargin, EXACTLY);
                 headerView.measure(widthSpec, heightSpec);
             } else if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale) {
-                heightSpec = makeMeasureSpec(mHeaderHeight - lp.topMargin - lp.bottomMargin, EXACTLY);
+                final int height = isInEditMode ? mHeaderHeight : Math.max(0, mSpinner);
+                heightSpec = makeMeasureSpec(height - lp.topMargin - lp.bottomMargin, EXACTLY);
                 headerView.measure(widthSpec, heightSpec);
             } else if (lp.height == WRAP_CONTENT) {
                 heightSpec = makeMeasureSpec(getSize(heightMeasureSpec) - lp.topMargin - lp.bottomMargin, AT_MOST);
@@ -396,7 +397,8 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
                 heightSpec = makeMeasureSpec(mFooterHeight - lp.topMargin - lp.bottomMargin, EXACTLY);
                 footerView.measure(widthSpec, heightSpec);
             } else if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Scale) {
-                heightSpec = makeMeasureSpec(mFooterHeight - lp.topMargin - lp.bottomMargin, EXACTLY);
+                final int height = isInEditMode ? mFooterHeight : Math.max(0, mSpinner);
+                heightSpec = makeMeasureSpec(height - lp.topMargin - lp.bottomMargin, EXACTLY);
                 footerView.measure(widthSpec, heightSpec);
             } else if (lp.height == WRAP_CONTENT) {
                 heightSpec = makeMeasureSpec(getSize(heightMeasureSpec) - lp.topMargin - lp.bottomMargin, AT_MOST);
@@ -469,10 +471,10 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
             int bottom = top + headerView.getMeasuredHeight();
             if (!isInEditMode) {
                 if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Translate) {
-                    top = lp.topMargin - mHeaderHeight;
+                    top = top - mHeaderHeight;// + Math.max(0, mSpinner);
                     bottom = top + headerView.getMeasuredHeight();
                 } else if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale) {
-                    bottom = top;
+                    bottom = top + Math.max(0, mSpinner);
 //                } else if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.FixedBehind
 //                        || mRefreshHeader.getSpinnerStyle() == SpinnerStyle.FixedFront) {
 //                    bottom = top + Math.max(headerView.getMeasuredHeight(), mSpinner);
@@ -484,16 +486,20 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
         if (mRefreshFooter != null) {
             final View footerView = mRefreshFooter.getView();
             final LayoutParams lp = (LayoutParams) footerView.getLayoutParams();
+            final SpinnerStyle style = mRefreshFooter.getSpinnerStyle();
             int left = lp.leftMargin;
             int top = lp.topMargin + getMeasuredHeight();
+
+            if (isInEditMode
+                    || style == SpinnerStyle.FixedFront
+                    || style == SpinnerStyle.FixedBehind) {
+                top = top - mFooterHeight;
+            } else if (style == SpinnerStyle.Scale) {
+                top = top + Math.min(mSpinner, 0);
+            }
+
             int right = left + footerView.getMeasuredWidth();
             int bottom = top + footerView.getMeasuredHeight();
-            if (isInEditMode
-                    || mRefreshFooter.getSpinnerStyle() == SpinnerStyle.FixedFront
-                    || mRefreshFooter.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
-                top = top - mFooterHeight;
-                bottom = top + footerView.getMeasuredHeight();
-            }
             footerView.layout(left, top, right, bottom);
         }
     }
@@ -544,8 +550,8 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
                     }
                 }
                 final float spinner = dy + mTouchY - mInitialMotionY;
-                if (((state == RefreshState.PullDownRefresh || state == RefreshState.ReleaseRefresh) && spinner < 0)
-                    ||((state == RefreshState.PullUpLoad || state == RefreshState.ReleaseLoad) && spinner > 0)) {
+                if (((state == RefreshState.PullDownRefresh || state == RefreshState.ReleaseToRefresh) && spinner < 0)
+                    ||((state == RefreshState.PullUpLoad || state == RefreshState.ReleaseToLoad) && spinner > 0)) {
                     long time = System.currentTimeMillis();
                     if (mEventDown == null) {
                         mEventDown = MotionEvent.obtain(time, time, MotionEvent.ACTION_DOWN, mTouchX + dx, mInitialMotionY, 0);
@@ -614,11 +620,11 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
     }
 
     protected void setStateReleaseLoad() {
-        notifyStateChanged(state = RefreshState.ReleaseLoad);
+        notifyStateChanged(state = RefreshState.ReleaseToLoad);
     }
 
     protected void setStateReleaseRefresh() {
-        notifyStateChanged(state = RefreshState.ReleaseRefresh);
+        notifyStateChanged(state = RefreshState.ReleaseToRefresh);
     }
     protected void setStatePullDownRefresh() {
         notifyStateChanged(state = RefreshState.PullDownRefresh);
@@ -710,14 +716,14 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
     //</editor-fold>
 
     protected boolean moveSpinnerInfinitely(float dy) {
-        if (state == RefreshState.PullDownRefresh || state == RefreshState.ReleaseRefresh) {
+        if (state == RefreshState.PullDownRefresh || state == RefreshState.ReleaseToRefresh) {
             final double M = mExtendHeaderHeight + mHeaderHeight;
             final double H = Math.max(mScreenHeightPixels/2, getHeight());
             final double x = Math.max(0, dy);
             final double y = Math.min(M*(1-Math.pow(100,-x/H)),x);// 公式 y = M(1-40^(-x/H))
             moveSpinner((int) y, false);
             return true;
-        } else if (state == RefreshState.PullUpLoad || state == RefreshState.ReleaseLoad) {
+        } else if (state == RefreshState.PullUpLoad || state == RefreshState.ReleaseToLoad) {
             final double M = mExtendFooterHeight + mFooterHeight;
             final double H = Math.max(mScreenHeightPixels/2, getHeight());
             final double x = -Math.min(0, dy);
@@ -746,10 +752,10 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
         } else if (state == RefreshState.PullUpLoad) {
             setStatePullUpCanceled();
             return true;
-        } else if (state == RefreshState.ReleaseRefresh) {
+        } else if (state == RefreshState.ReleaseToRefresh) {
             setStateRefresing();
             return true;
-        } else if (state == RefreshState.ReleaseLoad) {
+        } else if (state == RefreshState.ReleaseToLoad) {
             setStateLoding();
             return true;
         }
@@ -760,11 +766,11 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
         this.mSpinner = spinner;
         if (state == RefreshState.PullDownRefresh && Math.abs(mSpinner) > mHeaderHeight) {
             setStateReleaseRefresh();
-        } else if (state == RefreshState.ReleaseRefresh && Math.abs(mSpinner) < mHeaderHeight) {
+        } else if (state == RefreshState.ReleaseToRefresh && Math.abs(mSpinner) < mHeaderHeight) {
             setStatePullDownRefresh();
         } else if (state == RefreshState.PullUpLoad && Math.abs(mSpinner) > mFooterHeight) {
             setStateReleaseLoad();
-        } else if (state == RefreshState.ReleaseLoad && Math.abs(mSpinner) < mFooterHeight) {
+        } else if (state == RefreshState.ReleaseToLoad && Math.abs(mSpinner) < mFooterHeight) {
             setStatePullUpLoad();
         }
         if (mRefreshContent != null) {
@@ -782,11 +788,13 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
             if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale) {
 //                mRefreshHeader.getView().getLayoutParams().height = spinner;
 //                mRefreshHeader.getView().requestLayout();
-                View view = mRefreshHeader.getView();
-                int widthSpec = makeMeasureSpec(view.getWidth(), EXACTLY);
-                int heightSpec = makeMeasureSpec(spinner, EXACTLY);
-                view.measure(widthSpec, heightSpec);
-                view.layout(view.getLeft(), view.getTop(), view.getRight(), view.getTop() + spinner);
+//                View view = mRefreshHeader.getView();
+//                LayoutParams lp = (LayoutParams)view.getLayoutParams();
+//                int width = view.getWidth() - lp.leftMargin - lp.rightMargin;
+//                int height = spinner - lp.topMargin - lp.bottomMargin;
+//                view.measure(makeMeasureSpec(width, EXACTLY), makeMeasureSpec(height, EXACTLY));
+//                view.layout(lp.leftMargin, lp.topMargin, lp.leftMargin + width, lp.topMargin + height);
+                requestLayout();
             } else if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.FixedFront
                     || mRefreshHeader.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
 //                mRefreshHeader.getView().getLayoutParams().height = Math.max(spinner, mHeaderHeight);
@@ -1282,7 +1290,7 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
                 animator.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
-                        state = RefreshState.ReleaseRefresh;
+                        state = RefreshState.ReleaseToRefresh;
                         overSpinner(0);
                     }
                 });

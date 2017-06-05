@@ -37,8 +37,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#ffffff"
-        app:srlPrimaryColor="@color/colorPrimary"
-        app:srlAccentColor="#ffffff"
         app:srlHeaderHeight="100dp"
         app:srlExtendRate="2"
         app:srlEnableHeaderTranslationContent="true"
@@ -49,24 +47,30 @@
         <!--<com.scwang.smartrefreshlayout.header.bezier.BezierHeader-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="wrap_content"/>-->
-        <!--<com.scwang.smartrefreshlayout.header.classics.ClassicsHeader-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--app:srlClassicsSpinnerStyle="FixedBehind"/>-->
         <!--<com.scwang.smartrefreshheader.PhoenixHeader-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="200dp" />-->
-        <!--<com.scwang.smartrefreshheader.WaterDropHeader-->
+        <!--<com.scwang.smartrefreshheader.WaveSwipeHeader-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="match_parent"-->
             <!--app:srlShadowRadius="0dp"/>-->
         <!--<com.scwang.smartrefreshheader.TaurusHeader-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="200dp" />-->
-        <com.scwang.smartrefreshheader.MaterialHeader
+        <!--<com.scwang.smartrefreshheader.MaterialHeader-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--app:srlShowBezierWave="true"/>-->
+        <!--<com.scwang.smartrefreshheader.WaterDropHeader-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:background="#ffbb11"/>-->
+        <!--<com.scwang.smartrefreshlayout.header.classics.ClassicsHeader-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"/>-->
+        <com.scwang.smartrefreshheader.WaterDropHeader
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srlShowBezierWave="true"/>
+            android:layout_height="wrap_content"/>
         <include layout="@layout/content_scrolling"
             android:id="@+id/content"/>
     </com.scwang.smartrefreshlayout.SmartRefreshLayout>

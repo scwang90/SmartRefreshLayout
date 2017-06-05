@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.scwang.smartrefreshheader.material.CircleImageView;
-import com.scwang.smartrefreshheader.material.MaterialProgressDrawable;
+import com.scwang.smartrefreshheader.internal.MaterialProgressDrawable;
 import com.scwang.smartrefreshlayout.api.RefreshHeader;
 import com.scwang.smartrefreshlayout.api.SizeObserver;
 import com.scwang.smartrefreshlayout.constant.RefreshState;
@@ -91,8 +91,8 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader, SizeObse
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.MaterialHeader);
         mShowBezierWave = ta.getBoolean(R.styleable.MaterialHeader_srlShowBezierWave, mShowBezierWave);
-        mBezierPaint.setColor(ta.getColor(R.styleable.WaterDropHeader_srlPrimaryColor, 0xff11bbff));
-        if (ta.hasValue(R.styleable.WaterDropHeader_srlShadowRadius)) {
+        mBezierPaint.setColor(ta.getColor(R.styleable.WaveSwipeHeader_srlPrimaryColor, 0xff11bbff));
+        if (ta.hasValue(R.styleable.WaveSwipeHeader_srlShadowRadius)) {
             int radius = ta.getDimensionPixelOffset(R.styleable.MaterialHeader_srlShadowRadius, 0);
             int color = ta.getColor(R.styleable.MaterialHeader_srlShadowColor, 0xff000000);
             mBezierPaint.setShadowLayer(radius, 0, 0, color);
@@ -250,7 +250,7 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader, SizeObse
                 mCircleView.setScaleX(1);
                 mCircleView.setScaleY(1);
                 break;
-            case ReleaseRefresh:
+            case ReleaseToRefresh:
                 break;
             case Refreshing:
                 break;

@@ -1,4 +1,4 @@
-package com.scwang.smartrefreshheader.drop;
+package com.scwang.smartrefreshheader.waveswipe;
 /*
  * Copyright (C) 2015 RECRUIT LIFESTYLE CO., LTD.
  *

@@ -43,8 +43,8 @@ public class PathsView extends View {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(getDefaultSize(mPathsDrawable.width()+getPaddingLeft()+getPaddingRight(), widthMeasureSpec),
-                getDefaultSize(mPathsDrawable.height()+getPaddingTop()+getPaddingBottom(), heightMeasureSpec));
+        setMeasuredDimension(resolveSize(mPathsDrawable.width()+getPaddingLeft()+getPaddingRight(), widthMeasureSpec),
+                resolveSize(mPathsDrawable.height()+getPaddingTop()+getPaddingBottom(), heightMeasureSpec));
     }
 
     @Override

@@ -152,7 +152,7 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
             case Loading:
                 mBottomText.setText(REFRESH_BOTTOM_LOADING);
                 break;
-            case ReleaseLoad:
+            case ReleaseToLoad:
                 mBottomText.setText(REFRESH_BOTTOM_RELEASE);
                 break;
         }

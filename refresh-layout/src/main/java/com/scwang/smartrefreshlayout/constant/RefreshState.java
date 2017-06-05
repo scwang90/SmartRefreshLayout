@@ -4,7 +4,7 @@ public enum RefreshState {
     None,
     PullDownRefresh, PullUpLoad,
     PullDownCanceled, PullUpCanceled,
-    ReleaseRefresh, ReleaseLoad,
+    ReleaseToRefresh, ReleaseToLoad,
     Refreshing, Loading,
     RefreshFinish, LoadingFinish,
 }

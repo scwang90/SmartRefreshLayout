@@ -15,7 +15,7 @@
         <attr name="srlPrimaryColor"/>
     </declare-styleable>
 
-    <declare-styleable name="WaterDropHeader">
+    <declare-styleable name="WaveSwipeHeader">
         <attr name="srlPrimaryColor"/>
         <attr name="srlAccentColor"/>
         <attr name="srlShadowColor"/>

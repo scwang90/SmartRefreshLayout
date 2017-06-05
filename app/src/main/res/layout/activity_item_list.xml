@@ -8,7 +8,7 @@
     app:srlPrimaryColor="@color/colorPrimary"
     app:srlAccentColor="#ffffff"
     tools:context="com.scwang.refreshlayout.ItemActivity">
-    <com.scwang.smartrefreshheader.WaterDropHeader
+    <com.scwang.smartrefreshheader.WaveSwipeHeader
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
     <ListView

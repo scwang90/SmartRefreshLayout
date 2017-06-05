@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.scwang.smartrefreshheader.drop;
+package com.scwang.smartrefreshheader.waveswipe;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;

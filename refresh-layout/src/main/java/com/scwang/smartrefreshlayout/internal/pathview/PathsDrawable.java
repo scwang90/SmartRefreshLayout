@@ -27,6 +27,8 @@ public class PathsDrawable extends Drawable {
     private List<Integer> mColors;
     private int mWidth = 1,mHeight = 1;
     private int mStartX = 0,mStartY = 0;
+    private int mOrginWidth;
+    private int mOrginHeight;
     private static final Region REGION = new Region();
     private static final Region MAX_CLIP = new Region(Integer.MIN_VALUE,
             Integer.MIN_VALUE,Integer.MAX_VALUE, Integer.MAX_VALUE);
@@ -67,6 +69,12 @@ public class PathsDrawable extends Drawable {
         if (mStartY == -1) {
             mStartY = 0;
         }
+        if (mOrginWidth == 0) {
+            mOrginWidth = mWidth;
+        }
+        if (mOrginHeight == 0) {
+            mOrginHeight = mHeight;
+        }
         super.setBounds(0, 0, mWidth, mHeight);
     }
 
@@ -79,8 +87,8 @@ public class PathsDrawable extends Drawable {
     public void setBounds(@NonNull Rect bounds) {
         if (mOrginPaths != null && mOrginPaths.length > 0) {
             if (bounds.width() != mWidth || bounds.height() != mHeight) {
-                float ratioWidth = 1f * bounds.width() / mWidth;
-                float ratioHeight = 1f * bounds.height() / mHeight;
+                float ratioWidth = 1f * bounds.width() / mOrginWidth;
+                float ratioHeight = 1f * bounds.height() / mOrginHeight;
                 String[] paths = zoomPaths(mOrginPaths, ratioWidth, ratioHeight);
                 mPaths = new ArrayList<>();
                 for (String path : paths) {
@@ -106,6 +114,7 @@ public class PathsDrawable extends Drawable {
 
     public void parserPaths(String... paths) {
         mOrginPaths = paths;
+        mOrginWidth = mOrginHeight = 0;
         mPaths = new ArrayList<>();
         for (String path : paths) {
             Path parser = parserPath(path);
