@@ -39,7 +39,7 @@
         android:background="#ffffff"
         app:srlHeaderHeight="100dp"
         app:srlExtendRate="2"
-        app:srlEnableHeaderTranslationContent="true"
+        app:srlEnableHeaderTranslationContent="false"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
         <!--<com.scwang.smartrefreshheader.DropHeader-->
             <!--android:layout_width="match_parent"-->

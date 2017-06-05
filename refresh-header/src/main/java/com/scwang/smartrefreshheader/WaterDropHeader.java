@@ -18,7 +18,6 @@ import android.widget.ImageView;
 import com.scwang.smartrefreshheader.internal.MaterialProgressDrawable;
 import com.scwang.smartrefreshheader.waterdrop.WaterDropView;
 import com.scwang.smartrefreshlayout.api.RefreshHeader;
-import com.scwang.smartrefreshlayout.api.SizeObserver;
 import com.scwang.smartrefreshlayout.constant.RefreshState;
 import com.scwang.smartrefreshlayout.constant.SpinnerStyle;
 import com.scwang.smartrefreshlayout.util.DensityUtil;
@@ -30,7 +29,7 @@ import static android.view.View.MeasureSpec.makeMeasureSpec;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 
-public class WaterDropHeader extends ViewGroup implements RefreshHeader, SizeObserver {
+public class WaterDropHeader extends ViewGroup implements RefreshHeader {
 
     private static final float MAX_PROGRESS_ANGLE = 0.8f;
 
@@ -71,6 +70,12 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader, SizeObs
         addView(mImageView, density.dip2px(30), density.dip2px(30));
     }
 
+//    @Override
+//    public void setLayoutParams(LayoutParams params) {
+//        params.height = -3;
+//        super.setLayoutParams(params);
+//    }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -86,11 +91,6 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader, SizeObs
         int maxWidth = Math.max(mImageView.getMeasuredWidth(), mWaterDropView.getMeasuredHeight());
         int maxHeight = Math.max(mImageView.getMeasuredHeight(), mWaterDropView.getMeasuredHeight());
         setMeasuredDimension(resolveSize(maxWidth, widthMeasureSpec), resolveSize(maxHeight, heightMeasureSpec));
-    }
-
-    @Override
-    public void onSizeDefined(int height, int extendHeight) {
-
     }
 
     @Override
