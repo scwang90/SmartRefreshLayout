@@ -73,9 +73,8 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader, SizeObs
         );
         mWaterDropView.measure(
                 makeMeasureSpec(getSize(widthMeasureSpec), AT_MOST),
-                heightMeasureSpec
+                makeMeasureSpec(Math.max(0, getSize(heightMeasureSpec) - 2 * mWaterPadding), EXACTLY)
         );
-
         int maxWidth = Math.max(mProgressBar.getMeasuredWidth(), mWaterDropView.getMeasuredHeight());
         int maxHeight = Math.max(mProgressBar.getMeasuredHeight(), mWaterDropView.getMeasuredHeight());
         setMeasuredDimension(resolveSize(maxWidth, widthMeasureSpec), resolveSize(maxHeight, heightMeasureSpec));
@@ -97,9 +96,11 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader, SizeObs
         mProgressBar.layout(leftProgress, topProgress, leftProgress + widthProgress, topProgress + heightProgress);
 
         final int widthWaterDrop = mWaterDropView.getMeasuredWidth();
+        final int heightWaterDrop = mWaterDropView.getMeasuredHeight();
         final int leftWaterDrop = measuredWidth / 2 - widthWaterDrop / 2;
-        int topWaterDrop = measuredHeight - Math.max(measuredHeight, widthWaterDrop + mWaterPadding * 2) + mWaterPadding;
-        mWaterDropView.layout(leftWaterDrop, topWaterDrop, leftWaterDrop + widthWaterDrop, measuredHeight - mWaterPadding);
+        final int topWaterDrop = mWaterPadding;
+
+        mWaterDropView.layout(leftWaterDrop, topWaterDrop, leftWaterDrop + widthWaterDrop, topWaterDrop + heightWaterDrop);
     }
 
     /**
@@ -145,16 +146,16 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader, SizeObs
     @Override
     public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
         mOffset = offset;
-//        mWaterDropView.updateComleteState(Math.max(offset - 2 * mWaterPadding, 0), headHeight + extendHeight - 2 * mWaterPadding);
-//        mWaterDropView.postInvalidate();
+        mWaterDropView.updateComleteState(Math.max(offset - 2 * mWaterPadding, 0), headHeight + extendHeight - 2 * mWaterPadding);
+        mWaterDropView.postInvalidate();
     }
 
     @Override
     public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
         mOffset = offset;
         if (mState != RefreshState.Refreshing) {
-//            mWaterDropView.updateComleteState(Math.max(offset - 2 * mWaterPadding, 0), headHeight + extendHeight - 2 * mWaterPadding);
-//            mWaterDropView.postInvalidate();
+            mWaterDropView.updateComleteState(Math.max(offset - 2 * mWaterPadding, 0), headHeight + extendHeight - 2 * mWaterPadding);
+            mWaterDropView.postInvalidate();
         }
     }
 
