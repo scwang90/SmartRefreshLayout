@@ -94,6 +94,7 @@ public class WaterDropView extends View {
 
         int height = getHeight();
         if (height <= 2 * mMaxCircleRadius) {
+            canvas.restore();
             canvas.translate(0, height - 2 * mMaxCircleRadius);
             canvas.drawCircle(topCircle.x, topCircle.y, topCircle.radius, mPaint);
         } else {
