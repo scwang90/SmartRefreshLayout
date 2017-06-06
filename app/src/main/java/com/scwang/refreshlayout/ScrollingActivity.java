@@ -71,12 +71,12 @@ public class ScrollingActivity extends AppCompatActivity {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(SmartRefreshLayout refreshlayout) {
-//                refreshLayout.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        refreshHeader.finishRefresh();
-//                    }
-//                },2000);
+                refreshLayout.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        refreshHeader.finishRefresh(null);
+                    }
+                },2000);
             }
         });
 //

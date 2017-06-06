@@ -41,6 +41,7 @@ public class FlyRefreshHeader implements RefreshHeader, SizeObserver {
     private AnimatorSet mFlyAnimator;
     private RefreshLayout mRefreshLayout;
     private boolean mIsRefreshing = false;
+    private int mOffset = 0;
 
     public FlyRefreshHeader(Context context) {
         mFalsifyHeaderView = new View(context);
@@ -50,6 +51,7 @@ public class FlyRefreshHeader implements RefreshHeader, SizeObserver {
     //<editor-fold desc="RefreshHeader">
     @Override
     public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
+        mOffset = offset;
         if (mScenceView != null) {
             mScenceView.updatePercent(percent);
             mScenceView.postInvalidate();
@@ -85,20 +87,22 @@ public class FlyRefreshHeader implements RefreshHeader, SizeObserver {
             mIsRefreshing = true;
 
             AnimatorSet flyUpAnim = new AnimatorSet();
-            flyUpAnim.setDuration(8000);
+            flyUpAnim.setDuration(800);
 
-            ObjectAnimator transX = ObjectAnimator.ofFloat(mFlyView, "translationX", 0, ((View) mRefreshLayout).getWidth()/2);
-            ObjectAnimator transY = ObjectAnimator.ofFloat(mFlyView, "translationY", 0, -mFlyView.getTop() + mFlyView.getWidth()*4);
+            ObjectAnimator transX = ObjectAnimator.ofFloat(mFlyView, "translationX", 0, ((View) mRefreshLayout).getWidth()-mFlyView.getLeft());
+            ObjectAnimator transY = ObjectAnimator.ofFloat(mFlyView, "translationY", 0, -(mFlyView.getTop() - mOffset) * 2 / 3);
             transY.setInterpolator(PathInterpolatorCompat.create(0.7f, 1f));
             ObjectAnimator rotation = ObjectAnimator.ofFloat(mFlyView, "rotation", -45, 0);
             rotation.setInterpolator(new DecelerateInterpolator());
             ObjectAnimator rotationX = ObjectAnimator.ofFloat(mFlyView, "rotationX", 0, 60);
             rotationX.setInterpolator(new DecelerateInterpolator());
 
-            flyUpAnim.playTogether(transX, transY, rotationX,
-                    ObjectAnimator.ofFloat(mFlyView, "scaleX", 1, 0.5f),
-                    ObjectAnimator.ofFloat(mFlyView, "scaleY", 1, 0.5f),
-                    rotation
+            flyUpAnim.playTogether(transX
+                    ,transY
+                    ,rotation
+                    ,rotationX
+                    ,ObjectAnimator.ofFloat(mFlyView, "scaleX", 1, 0.5f)
+                    ,ObjectAnimator.ofFloat(mFlyView, "scaleY", 1, 0.5f)
             );
 
             mFlyAnimator = flyUpAnim;
@@ -172,7 +176,7 @@ public class FlyRefreshHeader implements RefreshHeader, SizeObserver {
         ViewCompat.animate(v).setInterpolator(null);
     }
 
-    public void finishRefresh() {
+    public void finishRefresh(AnimatorListenerAdapter listenerAdapter) {
         if (mFlyView == null) {
             return;
         }
@@ -187,8 +191,8 @@ public class FlyRefreshHeader implements RefreshHeader, SizeObserver {
         final int offDistY = -DensityUtil.dp2px(10);
         AnimatorSet flyDownAnim = new AnimatorSet();
         flyDownAnim.setDuration(800);
-        ObjectAnimator transX1 = ObjectAnimator.ofFloat(mFlyView, "translationX", ((View) mRefreshLayout).getWidth(), offDistX);
-        ObjectAnimator transY1 = ObjectAnimator.ofFloat(mFlyView, "translationY", -mFlyView.getTop(), offDistY);
+        ObjectAnimator transX1 = ObjectAnimator.ofFloat(mFlyView, "translationX", ((View) mRefreshLayout).getWidth() - mFlyView.getLeft(), offDistX);
+        ObjectAnimator transY1 = ObjectAnimator.ofFloat(mFlyView, "translationY", -(mFlyView.getTop() - mOffset) * 2 / 3, offDistY);
         transY1.setInterpolator(PathInterpolatorCompat.create(0.1f, 1f));
         ObjectAnimator rotation1 = ObjectAnimator.ofFloat(mFlyView, "rotation", mFlyView.getRotation(), 0);
         rotation1.setInterpolator(new AccelerateInterpolator());
@@ -223,11 +227,9 @@ public class FlyRefreshHeader implements RefreshHeader, SizeObserver {
         flyDownAnim.start();
         mFlyAnimator = new AnimatorSet();
         mFlyAnimator.playSequentially(flyDownAnim, flyInAnim);
-        mFlyAnimator.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-            }
-        });
+        if (listenerAdapter != null) {
+            mFlyAnimator.addListener(listenerAdapter);
+        }
         mFlyAnimator.start();
     }
 }
