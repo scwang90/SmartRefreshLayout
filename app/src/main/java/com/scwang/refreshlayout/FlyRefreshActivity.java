@@ -76,6 +76,7 @@ public class FlyRefreshActivity extends AppCompatActivity implements OnRefreshLi
         mFlylayout = (SmartRefreshLayout) findViewById(R.id.smart);
         mFlylayout.setOnRefreshListener(this);
         mFlylayout.setRefreshHeader(mFlyRefreshHeader);
+        mFlylayout.autoRefresh();
         mListView = (RecyclerView) findViewById(R.id.recycler);
         mListView.setLayoutManager(mLayoutManager);
         mListView.setAdapter(mAdapter);
