@@ -6,5 +6,5 @@ package com.scwang.smartrefreshlayout.api;
  */
 
 public interface SizeObserver {
-    void onSizeDefined(int height, int extendHeight);
+    void onSizeDefined(RefreshLayout layout, int height, int extendHeight);
 }

@@ -13,7 +13,7 @@ import com.scwang.smartrefreshlayout.listener.OnStateChangedListener;
  */
 
 public interface RefreshInternal extends OnStateChangedListener {
-    void onFinish();
+    void onFinish(RefreshLayout layout);
     void setPrimaryColors(int... colors);
     @NonNull
     View getView();

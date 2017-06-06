@@ -29,7 +29,7 @@ import android.widget.ScrollView;
 import com.scwang.smartrefreshlayout.api.RefreshContent;
 import com.scwang.smartrefreshlayout.api.RefreshFooter;
 import com.scwang.smartrefreshlayout.api.RefreshHeader;
-import com.scwang.smartrefreshlayout.api.SizeDefinition;
+import com.scwang.smartrefreshlayout.api.RefreshLayout;
 import com.scwang.smartrefreshlayout.api.SizeObserver;
 import com.scwang.smartrefreshlayout.constant.RefreshState;
 import com.scwang.smartrefreshlayout.constant.SpinnerStyle;
@@ -58,7 +58,7 @@ import static com.scwang.smartrefreshlayout.util.DensityUtil.dp2px;
  * Created by SCWANG on 2017/5/26.
  */
 @SuppressWarnings({"unused","WeakerAccess"})
-public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingParent, NestedScrollingChild {
+public class SmartRefreshLayout extends ViewGroup implements NestedScrollingParent, NestedScrollingChild, RefreshLayout {
 
     //<editor-fold desc="属性变量 property and variable">
 
@@ -260,9 +260,7 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
             if (mRefreshFooter != null && mRefreshFooter.getSpinnerStyle() != SpinnerStyle.FixedBehind) {
                 addView(mRefreshFooter.getView());
             }
-
         }
-
     }
 
     @Override
@@ -321,10 +319,10 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
 
 
         if (mRefreshListener == null) {
-            mRefreshListener = refresh -> postDelayed(refresh::resetStatus,2000);
+            mRefreshListener = refresh -> postDelayed(refresh::resetStatus,3000);
         }
         if (mLoadmoreListener == null) {
-            mLoadmoreListener = refresh -> postDelayed(refresh::resetStatus,2000);
+            mLoadmoreListener = refresh -> postDelayed(refresh::resetStatus,3000);
         }
         if (mPrimaryColors != null) {
             mRefreshHeader.setPrimaryColors(mPrimaryColors);
@@ -375,7 +373,7 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
                 headerView.measure(widthSpec, heightSpec);
             }
             if (mRefreshHeader instanceof SizeObserver) {
-                ((SizeObserver) mRefreshHeader).onSizeDefined(mHeaderHeight, mExtendHeaderHeight);
+                ((SizeObserver) mRefreshHeader).onSizeDefined(this, mHeaderHeight, mExtendHeaderHeight);
             }
             if (isInEditMode) {
                 minimumHeight += headerView.getMeasuredHeight();
@@ -392,16 +390,12 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
                 mExtendFooterHeight = (int) (mFooterHeight * (mExtendRate - 1));
                 heightSpec = makeMeasureSpec(lp.height, EXACTLY);
                 footerView.measure(widthSpec, heightSpec);
-            } else if (mRefreshFooter instanceof SizeDefinition) {
+            } else /*if (mRefreshFooter instanceof SizeDefinition) {
                 mFooterHeight = ((SizeDefinition) mRefreshFooter).defineHeight();
                 mExtendFooterHeight = ((SizeDefinition) mRefreshFooter).defineExtendHeight();
                 heightSpec = makeMeasureSpec(mFooterHeight - lp.topMargin - lp.bottomMargin, EXACTLY);
                 footerView.measure(widthSpec, heightSpec);
-            } else if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Scale) {
-                final int height = isInEditMode ? mFooterHeight : Math.max(0, mSpinner);
-                heightSpec = makeMeasureSpec(height - lp.topMargin - lp.bottomMargin, EXACTLY);
-                footerView.measure(widthSpec, heightSpec);
-            } else if (lp.height == WRAP_CONTENT) {
+            } else */if (lp.height == WRAP_CONTENT) {
                 heightSpec = makeMeasureSpec(getSize(heightMeasureSpec) - lp.topMargin - lp.bottomMargin, AT_MOST);
                 footerView.measure(widthSpec, heightSpec);
                 int measuredHeight = footerView.getMeasuredHeight();
@@ -418,8 +412,13 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
             } else {
                 footerView.measure(widthSpec, heightSpec);
             }
+            if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Scale && !isInEditMode) {
+                final int height = Math.max(0, mSpinner);
+                heightSpec = makeMeasureSpec(height - lp.topMargin - lp.bottomMargin, EXACTLY);
+                footerView.measure(widthSpec, heightSpec);
+            }
             if (mRefreshFooter instanceof SizeObserver) {
-                ((SizeObserver) mRefreshFooter).onSizeDefined(mFooterHeight, mExtendFooterHeight);
+                ((SizeObserver) mRefreshFooter).onSizeDefined(this, mFooterHeight, mExtendFooterHeight);
             }
             if (isInEditMode) {
                 minimumHeight += footerView.getMeasuredHeight();
@@ -648,7 +647,7 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
             mLoadmoreListener.onLoadmore(this);
         }
         if (mRefreshFooter != null) {
-            mRefreshFooter.startAnimator(mFooterHeight, mExtendFooterHeight);
+            mRefreshFooter.startAnimator(this, mFooterHeight, mExtendFooterHeight);
         }
         if (mOnMultiPurposeListener != null) {
             mOnMultiPurposeListener.onLoadmore(this);
@@ -663,7 +662,7 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
             mRefreshListener.onRefresh(this);
         }
         if (mRefreshHeader != null) {
-            mRefreshHeader.startAnimator(mHeaderHeight, mExtendHeaderHeight);
+            mRefreshHeader.startAnimator(this, mHeaderHeight, mExtendHeaderHeight);
         }
         if (mOnMultiPurposeListener != null) {
             mOnMultiPurposeListener.onRefresh(this);
@@ -678,13 +677,13 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
         if (state != RefreshState.None) {
             if (state == RefreshState.Refreshing && mRefreshHeader != null) {
                 notifyStateChanged(state = RefreshState.RefreshFinish);
-                mRefreshHeader.onFinish();
+                mRefreshHeader.onFinish(this);
                 if (mOnMultiPurposeListener != null) {
                     mOnMultiPurposeListener.onHeaderFinish(mRefreshHeader);
                 }
             } else if (state == RefreshState.Loading && mRefreshFooter != null) {
                 notifyStateChanged(state = RefreshState.LoadingFinish);
-                mRefreshFooter.onFinish();
+                mRefreshFooter.onFinish(this);
                 if (mOnMultiPurposeListener != null) {
                     mOnMultiPurposeListener.onFooterFinish(mRefreshFooter);
                 }
@@ -1045,34 +1044,42 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
     //</editor-fold>
 
     //<editor-fold desc="开放接口 open interface">
+    @Override
     public SmartRefreshLayout setFooterHeightDp(float height) {
         this.mFooterHeight = dp2px(height);
         return this;
     }
+    @Override
     public SmartRefreshLayout setFooterHeightPx(int height) {
         this.mFooterHeight = height;
         return this;
     }
+    @Override
     public SmartRefreshLayout setHeaderHeightDp(float height) {
         this.mHeaderHeight = dp2px(height);
         return this;
     }
+    @Override
     public SmartRefreshLayout setHeaderHeightPx(int height) {
         this.mHeaderHeight = height;
         return this;
     }
+    @Override
     public SmartRefreshLayout setExtendHeaderHeightDp(float height) {
         this.mExtendHeaderHeight = dp2px(height);
         return this;
     }
+    @Override
     public SmartRefreshLayout setExtendHeaderHeightPx(int height) {
         this.mExtendHeaderHeight = height;
         return this;
     }
+    @Override
     public SmartRefreshLayout setExtendFooterHeightDp(float height) {
         this.mExtendFooterHeight = dp2px(height);
         return this;
     }
+    @Override
     public SmartRefreshLayout setExtendFooterHeightPx(int height) {
         this.mExtendFooterHeight = height;
         return this;
@@ -1081,6 +1088,7 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
     /**
      * 设置回弹显示插值器
      */
+    @Override
     public SmartRefreshLayout setReboundInterpolator(Interpolator interpolator) {
         this.mReboundInterpolator = interpolator;
         return this;
@@ -1089,6 +1097,7 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
     /**
      * 设置是否启用上啦加载更多（默认启用）
      */
+    @Override
     public SmartRefreshLayout setEnableLoadmore(boolean enable) {
         this.mEnableLoadmore = enable;
         return this;
@@ -1097,6 +1106,7 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
     /**
      * 是否启用下拉刷新（默认启用）
      */
+    @Override
     public SmartRefreshLayout setEnableRefresh(boolean enable) {
         this.mEnableRefresh = enable;
         return this;
@@ -1105,6 +1115,7 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
     /**
      * 设置是否启用内容视图拖动效果
      */
+    @Override
     public SmartRefreshLayout setEnableHeaderTranslationContent(boolean enable) {
         this.mEnableHeaderTranslationContent = enable;
         return this;
@@ -1113,6 +1124,7 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
     /**
      * 设置是否启用内容视图拖动效果
      */
+    @Override
     public SmartRefreshLayout setEnableFooterTranslationContent(boolean enable) {
         this.mEnableFooterTranslationContent = enable;
         return this;
@@ -1121,6 +1133,7 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
     /**
      * 设置是否开启在刷新时候禁止操作内容视图
      */
+    @Override
     public SmartRefreshLayout setDisableContentWhenRefresh(boolean disable) {
         this.mDisableContentWhenRefresh = disable;
         return this;
@@ -1129,6 +1142,7 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
     /**
      * 设置是否开启在刷新时候禁止操作内容视图
      */
+    @Override
     public SmartRefreshLayout setDisableContentWhenLoading(boolean disable) {
         this.mDisableContentWhenLoading = disable;
         return this;
@@ -1137,6 +1151,7 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
     /**
      * 设置底部上啦组件的实现
      */
+    @Override
     public SmartRefreshLayout setRefreshBottom(RefreshFooter bottom) {
         if (mRefreshFooter != null) {
             removeView(mRefreshFooter.getView());
@@ -1149,6 +1164,7 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
     /**
      * 设置顶部下拉组件的实现
      */
+    @Override
     public SmartRefreshLayout setRefreshHeader(RefreshHeader header) {
         if (mRefreshHeader != null) {
             removeView(mRefreshHeader.getView());
@@ -1161,6 +1177,7 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
     /**
      * 单独设置刷新监听器
      */
+    @Override
     public SmartRefreshLayout setOnRefreshListener(OnRefreshListener listener) {
         this.mRefreshListener = listener;
         return this;
@@ -1169,6 +1186,7 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
     /**
      * 单独设置加载监听器
      */
+    @Override
     public SmartRefreshLayout setOnLoadmoreListener(OnLoadmoreListener listener) {
         this.mLoadmoreListener = listener;
         return this;
@@ -1177,6 +1195,7 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
     /**
      * 同时设置刷新和加载监听器
      */
+    @Override
     public SmartRefreshLayout setOnRefreshLoadmoreListener(OnRefreshLoadmoreListener listener) {
         this.mRefreshListener = listener;
         this.mLoadmoreListener = listener;
@@ -1186,6 +1205,7 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
     /**
      * 设置多功能监听器
      */
+    @Override
     public SmartRefreshLayout setOnMultiPurposeListener(OnMultiPurposeListener listener) {
         this.mOnMultiPurposeListener = listener;
         return this;
@@ -1194,6 +1214,7 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
     /**
      * 设置主题颜色
      */
+    @Override
     public SmartRefreshLayout setPrimaryColorsId(int... primaryColorId) {
         int[] colors = new int[primaryColorId.length];
         for (int i = 0; i < primaryColorId.length; i++) {
@@ -1206,6 +1227,7 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
     /**
      * 设置主题颜色
      */
+    @Override
     public SmartRefreshLayout setPrimaryColors(int... colors) {
         if (mRefreshHeader != null) {
             mRefreshHeader.setPrimaryColors(colors);
@@ -1220,39 +1242,60 @@ public class SmartRefreshLayout extends ViewGroup  implements NestedScrollingPar
     /**
      * 是否正在刷新
      */
+    @Override
     public boolean isRefreshing() {
         return state == RefreshState.Refreshing;
     }
     /**
      * 是否正在加载
      */
+    @Override
     public boolean isLoading() {
         return state == RefreshState.Loading;
     }
     /**
      * 完成刷新
      */
+    @Override
     public SmartRefreshLayout finisRefresh(){
-        postDelayed(this::resetStatus, 1000);
+        return finisRefresh(1000);
+    }
+
+    /**
+     * 完成加载
+     */
+    @Override
+    public SmartRefreshLayout finisLoadmore(){
+        return finisLoadmore(1000);
+    }
+    /**
+     * 完成刷新
+     */
+    @Override
+    public SmartRefreshLayout finisRefresh(int delayed){
+        postDelayed(this::resetStatus, delayed);
         return this;
     }
     /**
      * 完成加载
      */
-    public SmartRefreshLayout finisLoadmore(){
-        postDelayed(this::resetStatus, 1000);
+    @Override
+    public SmartRefreshLayout finisLoadmore(int delayed){
+        postDelayed(this::resetStatus, delayed);
         return this;
     }
 
     /**
      * 自动刷新
      */
+    @Override
     public boolean autoRefresh() {
         return autoRefresh(500);
     }
     /**
      * 自动刷新
      */
+    @Override
     public boolean autoRefresh(int delayed) {
         if (state == RefreshState.None) {
             postDelayed(()->{

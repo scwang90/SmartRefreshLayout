@@ -35,6 +35,9 @@ public class ItemActivity extends AppCompatActivity {
                 ((SmartRefreshLayout) view.getParent()).setReboundInterpolator(new OvershootInterpolator());
             }
         }
+//        MountanScenceView scenceView = (MountanScenceView) findViewById(R.id.flyrefresh);
+//        SmartRefreshLayout refreshLayout = (SmartRefreshLayout) findViewById(R.id.refreshlayout);
+//        refreshLayout.setRefreshHeader(scenceView);
     }
 
     /**

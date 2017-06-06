@@ -20,6 +20,7 @@ import com.scwang.smartrefreshheader.waveswipe.AnimationImageView;
 import com.scwang.smartrefreshheader.waveswipe.DisplayUtil;
 import com.scwang.smartrefreshheader.waveswipe.WaveView;
 import com.scwang.smartrefreshlayout.api.RefreshHeader;
+import com.scwang.smartrefreshlayout.api.RefreshLayout;
 import com.scwang.smartrefreshlayout.constant.RefreshState;
 import com.scwang.smartrefreshlayout.constant.SpinnerStyle;
 import com.scwang.smartrefreshlayout.util.DensityUtil;
@@ -179,7 +180,7 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override
-    public void startAnimator(int headHeight, int extendHeight) {
+    public void startAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
         mLastFirstBounds = 0;
         mWaveView.animationDropCircle();
         mCircleView.makeProgressTransparent();
@@ -215,7 +216,7 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override
-    public void onFinish() {
+    public void onFinish(RefreshLayout layout) {
         Animation scaleDownAnimation = new Animation() {
             @Override
             public void applyTransformation(float interpolatedTime, Transformation t) {

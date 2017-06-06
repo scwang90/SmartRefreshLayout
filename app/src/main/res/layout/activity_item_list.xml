@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:srlEnableHeaderTranslationContent="true"
+    app:srlEnableHeaderTranslationContent="false"
     app:srlPrimaryColor="@color/colorPrimary"
     app:srlAccentColor="#ffffff"
     tools:context="com.scwang.refreshlayout.ItemActivity">

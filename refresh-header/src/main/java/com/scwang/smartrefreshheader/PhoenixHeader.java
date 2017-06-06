@@ -15,6 +15,7 @@ import android.view.animation.LinearInterpolator;
 import android.view.animation.Transformation;
 
 import com.scwang.smartrefreshlayout.api.RefreshHeader;
+import com.scwang.smartrefreshlayout.api.RefreshLayout;
 import com.scwang.smartrefreshlayout.api.SizeDefinition;
 import com.scwang.smartrefreshlayout.constant.RefreshState;
 import com.scwang.smartrefreshlayout.constant.SpinnerStyle;
@@ -186,7 +187,7 @@ public class PhoenixHeader extends View implements RefreshHeader, SizeDefinition
     }
 
     @Override
-    public void startAnimator(int headHeight, int extendHeight) {
+    public void startAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
         isRefreshing = true;
         startAnimation(mAnimation);
     }
@@ -197,7 +198,7 @@ public class PhoenixHeader extends View implements RefreshHeader, SizeDefinition
     }
 
     @Override
-    public void onFinish() {
+    public void onFinish(RefreshLayout layout) {
         isRefreshing = false;
         clearAnimation();
     }

@@ -4,13 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     tools:context="com.scwang.refreshlayout.ScrollingActivity">
+
+    <com.scwang.smartrefreshheader.flyrefresh.MountanScenceView
+        android:id="@+id/flyrefresh"
+        android:layout_width="match_parent"
+        android:layout_height="340dp" />
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_bar_height"
+        android:background="@android:color/transparent"
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay">
 
@@ -19,6 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
+            app:expandedTitleMarginBottom="120dp"
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
@@ -36,41 +42,10 @@
         android:id="@+id/refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ffffff"
         app:srlHeaderHeight="100dp"
         app:srlExtendRate="2"
         app:srlEnableHeaderTranslationContent="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        <!--<com.scwang.smartrefreshheader.DropHeader-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent" />-->
-        <!--<com.scwang.smartrefreshlayout.header.bezier.BezierHeader-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"/>-->
-        <!--<com.scwang.smartrefreshheader.PhoenixHeader-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="200dp" />-->
-        <!--<com.scwang.smartrefreshheader.WaveSwipeHeader-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--app:srlShadowRadius="0dp"/>-->
-        <!--<com.scwang.smartrefreshheader.TaurusHeader-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="200dp" />-->
-        <!--<com.scwang.smartrefreshheader.MaterialHeader-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--app:srlShowBezierWave="true"/>-->
-        <!--<com.scwang.smartrefreshheader.WaterDropHeader-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="0dp"-->
-            <!--android:background="#ffbb11"/>-->
-        <!--<com.scwang.smartrefreshlayout.header.classics.ClassicsHeader-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"/>-->
-        <com.scwang.smartrefreshheader.WaterDropHeader
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
         <include layout="@layout/content_scrolling"
             android:id="@+id/content"/>
     </com.scwang.smartrefreshlayout.SmartRefreshLayout>
@@ -81,7 +56,16 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
         app:layout_anchor="@id/content"
-        app:layout_anchorGravity="top|end"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        app:layout_anchorGravity="top"
+        app:fabSize="normal"
+        app:elevation="0dp" />
+
+    <com.scwang.smartrefreshheader.flyrefresh.FlyView
+        android:id="@+id/flyview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@id/fab"
+        app:layout_anchorGravity="center"
+        app:elevation="3dp" />
 
 </android.support.design.widget.CoordinatorLayout>

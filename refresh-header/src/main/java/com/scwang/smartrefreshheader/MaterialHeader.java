@@ -12,9 +12,10 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.scwang.smartrefreshheader.material.CircleImageView;
 import com.scwang.smartrefreshheader.internal.MaterialProgressDrawable;
+import com.scwang.smartrefreshheader.material.CircleImageView;
 import com.scwang.smartrefreshlayout.api.RefreshHeader;
+import com.scwang.smartrefreshlayout.api.RefreshLayout;
 import com.scwang.smartrefreshlayout.api.SizeObserver;
 import com.scwang.smartrefreshlayout.constant.RefreshState;
 import com.scwang.smartrefreshlayout.constant.SpinnerStyle;
@@ -182,7 +183,7 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader, SizeObse
 
     //<editor-fold desc="RefreshHeader">
     @Override
-    public void onSizeDefined(int height, int extendHeight) {
+    public void onSizeDefined(RefreshLayout layout, int height, int extendHeight) {
         if (isInEditMode()) {
             mWaveHeight = mHeadHeight = height / 2;
         }
@@ -232,7 +233,7 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader, SizeObse
     }
 
     @Override
-    public void startAnimator(int headHeight, int extendHeight) {
+    public void startAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
         mProgress.start();
         if ((int) mCircleView.getTranslationY() != headHeight / 2 + mCircleDiameter / 2) {
             mCircleView.animate().translationY(headHeight / 2 + mCircleDiameter / 2);
@@ -258,7 +259,7 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader, SizeObse
     }
 
     @Override
-    public void onFinish() {
+    public void onFinish(RefreshLayout layout) {
         mProgress.stop();
         mCircleView.animate().scaleX(0).scaleY(0);
         mFinished = true;

@@ -29,4 +29,8 @@
         <attr name="srlShowBezierWave" format="boolean"/>
     </declare-styleable>
 
+    <declare-styleable name="MountanScenceView">
+        <attr name="srlPrimaryColor"/>
+    </declare-styleable>
+
 </resources>

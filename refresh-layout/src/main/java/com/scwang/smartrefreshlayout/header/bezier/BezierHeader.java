@@ -15,6 +15,7 @@ import android.widget.FrameLayout;
 
 import com.scwang.smartrefreshlayout.R;
 import com.scwang.smartrefreshlayout.api.RefreshHeader;
+import com.scwang.smartrefreshlayout.api.RefreshLayout;
 import com.scwang.smartrefreshlayout.constant.RefreshState;
 import com.scwang.smartrefreshlayout.constant.SpinnerStyle;
 
@@ -155,7 +156,7 @@ public class BezierHeader extends FrameLayout implements RefreshHeader {
     }
 
     @Override
-    public void startAnimator(int headHeight, int extendHeight) {
+    public void startAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
         mWaveView.setHeadHeight(headHeight);
         ValueAnimator animator = ValueAnimator.ofInt(
                 mWaveView.getWaveHeight(), 0,
@@ -192,7 +193,7 @@ public class BezierHeader extends FrameLayout implements RefreshHeader {
     }
 
     @Override
-    public void onFinish() {
+    public void onFinish(RefreshLayout layout) {
         mProgressView.stopAnim();
         mProgressView.animate().scaleX(0f);
         mProgressView.animate().scaleY(0f);

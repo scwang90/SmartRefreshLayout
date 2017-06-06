@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.scwang.smartrefreshlayout.api.RefreshHeader;
+import com.scwang.smartrefreshlayout.api.RefreshLayout;
 import com.scwang.smartrefreshlayout.constant.RefreshState;
 import com.scwang.smartrefreshlayout.constant.SpinnerStyle;
 
@@ -27,7 +28,7 @@ public class RefreshHeaderWrapper implements RefreshHeader {
     }
 
     @Override
-    public void onFinish() {
+    public void onFinish(RefreshLayout layout) {
 
     }
 
@@ -62,7 +63,7 @@ public class RefreshHeaderWrapper implements RefreshHeader {
     }
 
     @Override
-    public void startAnimator(int headHeight, int extendHeight) {
+    public void startAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
 
     }
 

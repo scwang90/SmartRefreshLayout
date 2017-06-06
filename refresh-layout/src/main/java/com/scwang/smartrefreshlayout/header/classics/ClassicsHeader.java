@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.scwang.smartrefreshlayout.R;
 import com.scwang.smartrefreshlayout.api.RefreshHeader;
+import com.scwang.smartrefreshlayout.api.RefreshLayout;
 import com.scwang.smartrefreshlayout.constant.RefreshState;
 import com.scwang.smartrefreshlayout.constant.SpinnerStyle;
 import com.scwang.smartrefreshlayout.internal.pathview.PathsView;
@@ -147,12 +148,12 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     }
 
     @Override
-    public void startAnimator(int headHeight, int extendHeight) {
+    public void startAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
         mProgressView.animate().rotation(36000).setDuration(100000);
     }
 
     @Override
-    public void onFinish() {
+    public void onFinish(RefreshLayout layout) {
         mProgressView.animate().rotation(0).setDuration(300);
     }
 

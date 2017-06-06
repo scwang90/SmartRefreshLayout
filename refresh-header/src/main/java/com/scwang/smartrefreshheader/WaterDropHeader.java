@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import com.scwang.smartrefreshheader.internal.MaterialProgressDrawable;
 import com.scwang.smartrefreshheader.waterdrop.WaterDropView;
 import com.scwang.smartrefreshlayout.api.RefreshHeader;
+import com.scwang.smartrefreshlayout.api.RefreshLayout;
 import com.scwang.smartrefreshlayout.constant.RefreshState;
 import com.scwang.smartrefreshlayout.constant.SpinnerStyle;
 import com.scwang.smartrefreshlayout.util.DensityUtil;
@@ -201,7 +202,7 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override
-    public void startAnimator(int headHeight, int extendHeight) {
+    public void startAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
         mProgress.start();
         Animator animator = mWaterDropView.createAnimator();
         animator.addListener(new AnimatorListenerAdapter() {
@@ -219,7 +220,7 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override
-    public void onFinish() {
+    public void onFinish(RefreshLayout layout) {
         mProgress.stop();
     }
 
