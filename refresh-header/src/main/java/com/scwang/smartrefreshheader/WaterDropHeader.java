@@ -112,41 +112,6 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
         mImageView.layout(leftImage, topImage, leftImage + widthImage, topImage + heightImage);
     }
 
-    /**
-     * 处理处于normal状态的值
-     */
-    private void handleStateNormal() {
-        mWaterDropView.setVisibility(View.VISIBLE);
-    }
-
-    /**
-     * 处理水滴拉伸状态
-     */
-    private void handleStateStretch() {
-        mWaterDropView.setVisibility(View.VISIBLE);
-    }
-
-    /**
-     * 处理水滴ready状态，回弹效果
-     */
-    private void handleStateReady() {
-        mWaterDropView.setVisibility(View.VISIBLE);
-    }
-
-    /**
-     * 处理正在进行刷新状态
-     */
-    private void handleStateRefreshing() {
-//        mWaterDropView.setVisibility(View.GONE);
-    }
-
-    /**
-     * 处理刷新完毕状态
-     */
-    private void handleStateEnd() {
-        mWaterDropView.setVisibility(View.GONE);
-    }
-
     @Override
     public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
         mWaterDropView.updateComleteState((offset), headHeight + extendHeight);
@@ -182,21 +147,21 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
         mState = state;
         switch (state) {
             case None:
-                handleStateNormal();
+                mWaterDropView.setVisibility(View.VISIBLE);
                 break;
             case PullDownRefresh:
-                handleStateStretch();
+                mWaterDropView.setVisibility(View.VISIBLE);
                 break;
             case PullDownCanceled:
                 break;
             case ReleaseToRefresh:
-                handleStateReady();
+                mWaterDropView.setVisibility(View.VISIBLE);
                 break;
             case Refreshing:
-                handleStateRefreshing();
+//              mWaterDropView.setVisibility(View.GONE);
                 break;
             case RefreshFinish:
-                handleStateEnd();
+                mWaterDropView.setVisibility(View.GONE);
                 break;
         }
     }

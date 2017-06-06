@@ -23,13 +23,19 @@ import java.util.Map;
 public class BallPulseView extends View implements RefreshFooter {
 
     public static final int DEFAULT_SIZE = 50; //dp
-    private float circleSpacing;
 
+    private Paint mPaint;
+
+    private int normalColor = 0xffeeeeee;
+    private int animatingColor = 0xffe75946;
+
+    private float circleSpacing;
     private float[] scaleFloats = new float[]{1f, 1f, 1f};
 
+
+    private boolean mIsStarted = false;
     private ArrayList<ValueAnimator> mAnimators;
-    private Map<ValueAnimator, ValueAnimator.AnimatorUpdateListener> mUpdateListeners = new HashMap<>();
-    private Paint mPaint;
+    private Map<ValueAnimator, ValueAnimator.AnimatorUpdateListener> mUpdateListeners = new HashMap<>();;
 
     public BallPulseView(Context context) {
         this(context, null);
@@ -60,9 +66,6 @@ public class BallPulseView extends View implements RefreshFooter {
     public void setIndicatorColor(int color) {
         mPaint.setColor(color);
     }
-
-    private int normalColor = 0xffeeeeee;
-    private int animatingColor = 0xffe75946;
 
     public void setNormalColor(@ColorInt int color) {
         normalColor = color;
@@ -121,26 +124,29 @@ public class BallPulseView extends View implements RefreshFooter {
             }
             animator.start();
         }
+        mIsStarted = true;
         setIndicatorColor(animatingColor);
     }
 
     public void stopAnim() {
-        if (mAnimators != null) {
+        if (mAnimators != null && mIsStarted) {
+            mIsStarted = false;
             for (ValueAnimator animator : mAnimators) {
-                if (animator != null && animator.isStarted()) {
+                if (animator != null /*&& animator.isStarted()*/) {
                     animator.removeAllUpdateListeners();
                     animator.end();
                 }
             }
+            scaleFloats = new float[]{1f, 1f, 1f};
         }
         setIndicatorColor(normalColor);
     }
 
     private boolean isStarted() {
-        for (ValueAnimator animator : mAnimators) {
-            return animator.isStarted();
-        }
-        return false;
+//        for (ValueAnimator animator : mAnimators) {
+//            return animator.isStarted();
+//        }
+        return mIsStarted;
     }
 
     private void createAnimators() {

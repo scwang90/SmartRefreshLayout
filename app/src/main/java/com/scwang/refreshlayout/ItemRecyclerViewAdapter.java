@@ -34,7 +34,7 @@ public class ItemRecyclerViewAdapter extends BaseAdapter {
             convertView.setTag(new ViewHolder(convertView));
         }
         if (convertView.getTag() instanceof ViewHolder) {
-            ViewHolder holder = (ViewHolder) convertView.getTag();
+            final ViewHolder holder = (ViewHolder) convertView.getTag();
             holder.mItem = mValues.get(position);
             holder.mIdView.setText(mValues.get(position).content);
             holder.mContentView.setText(mValues.get(position).details);

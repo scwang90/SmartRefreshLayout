@@ -1,17 +1,24 @@
 package com.scwang.refreshlayout;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.scwang.smartrefreshheader.FlyRefreshHeader;
 import com.scwang.smartrefreshheader.flyrefresh.FlyView;
 import com.scwang.smartrefreshheader.flyrefresh.MountanScenceView;
 import com.scwang.smartrefreshlayout.SmartRefreshLayout;
+import com.scwang.smartrefreshlayout.api.DefaultRefreshFooterCreater;
+import com.scwang.smartrefreshlayout.api.RefreshFooter;
 import com.scwang.smartrefreshlayout.api.RefreshHeader;
+import com.scwang.smartrefreshlayout.api.RefreshLayout;
+import com.scwang.smartrefreshlayout.footer.classics.ClassicsFooter;
 import com.scwang.smartrefreshlayout.listener.OnRefreshListener;
 import com.scwang.smartrefreshlayout.listener.SimpleMultiPurposeListener;
 
@@ -26,23 +33,31 @@ public class ScrollingActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(view -> {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-            startActivity(new Intent(this, ItemActivity.class));
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ScrollingActivity.this, FlyRefreshActivity.class));
+            }
         });
 
+        SmartRefreshLayout.setDefaultRefreshFooterCreater(new DefaultRefreshFooterCreater() {
+            @NonNull
+            @Override
+            public RefreshFooter createRefreshFooter(Context context, RefreshLayout layout) {
+                return new ClassicsFooter(context);
+            }
+        });
 
-        FlyView flyView = (FlyView) findViewById(R.id.flyview);
-        FlyRefreshHeader refreshHeader = new FlyRefreshHeader(this);
-        MountanScenceView scenceView = (MountanScenceView) findViewById(R.id.flyrefresh);
-        SmartRefreshLayout refreshLayout = (SmartRefreshLayout) findViewById(R.id.refresh);
+        final FlyView flyView = (FlyView) findViewById(R.id.flyview);
+        final FlyRefreshHeader refreshHeader = new FlyRefreshHeader(this);
+        final MountanScenceView scenceView = (MountanScenceView) findViewById(R.id.flyrefresh);
+        final SmartRefreshLayout refreshLayout = (SmartRefreshLayout) findViewById(R.id.refresh);
         refreshHeader.setUp(scenceView, flyView);
         refreshLayout.setRefreshHeader(refreshHeader);
         refreshLayout.setPrimaryColorsId(R.color.colorPrimary);
 
-        AppBarLayout appBar = (AppBarLayout) findViewById(R.id.app_bar);
+        final AppBarLayout appBar = (AppBarLayout) findViewById(R.id.app_bar);
         refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
             @Override
             public void onHeaderPulling(RefreshHeader header, float percent, int offset, int bottomHeight, int extendHeight) {
@@ -53,24 +68,27 @@ public class ScrollingActivity extends AppCompatActivity {
                 appBar.setTranslationY(offset);
             }
         });
-        appBar.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
-            int scrollRange = appBarLayout.getTotalScrollRange();
-            float fraction = 1f * (scrollRange + verticalOffset) / scrollRange;
-            if (fraction < 0.1 && isAppbarExpand) {
-                isAppbarExpand = false;
-                fab.animate().scaleX(0).scaleY(0);
-                flyView.animate().scaleX(0).scaleY(0);
-            }
-            if (fraction > 0.8 && !isAppbarExpand) {
-                isAppbarExpand = true;
-                fab.animate().scaleX(1).scaleY(1);
-                flyView.animate().scaleX(1).scaleY(1);
+        appBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                int scrollRange = appBarLayout.getTotalScrollRange();
+                float fraction = 1f * (scrollRange + verticalOffset) / scrollRange;
+                if (fraction < 0.1 && isAppbarExpand) {
+                    isAppbarExpand = false;
+                    fab.animate().scaleX(0).scaleY(0);
+                    flyView.animate().scaleX(0).scaleY(0);
+                }
+                if (fraction > 0.8 && !isAppbarExpand) {
+                    isAppbarExpand = true;
+                    fab.animate().scaleX(1).scaleY(1);
+                    flyView.animate().scaleX(1).scaleY(1);
+                }
             }
         });
 
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh(SmartRefreshLayout refreshlayout) {
+            public void onRefresh(RefreshLayout refreshlayout) {
                 refreshLayout.postDelayed(new Runnable() {
                     @Override
                     public void run() {

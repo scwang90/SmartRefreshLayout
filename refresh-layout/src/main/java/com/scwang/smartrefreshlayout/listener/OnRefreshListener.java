@@ -1,6 +1,6 @@
 package com.scwang.smartrefreshlayout.listener;
 
-import com.scwang.smartrefreshlayout.SmartRefreshLayout;
+import com.scwang.smartrefreshlayout.api.RefreshLayout;
 
 /**
  * 刷新监听器
@@ -8,5 +8,5 @@ import com.scwang.smartrefreshlayout.SmartRefreshLayout;
  */
 
 public interface OnRefreshListener {
-    void onRefresh(SmartRefreshLayout refreshlayout);
+    void onRefresh(RefreshLayout refreshlayout);
 }

@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.support.annotation.AttrRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.graphics.ColorUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -115,9 +116,12 @@ public class BallPulseFooter extends ViewGroup implements RefreshFooter {
 
     @Override
     public void setPrimaryColors(int... colors) {
-        mBallPulseView.setPrimaryColors(colors);
-        if (colors.length > 0) {
+        if (colors.length > 1) {
             setBackgroundColor(colors[0]);
+            mBallPulseView.setPrimaryColors(colors);
+        } else if (colors.length > 0) {
+            mBallPulseView.setNormalColor(ColorUtils.compositeColors(0x99ffffff,colors[0]));
+            mBallPulseView.setAnimatingColor(colors[0]);
         }
     }
 

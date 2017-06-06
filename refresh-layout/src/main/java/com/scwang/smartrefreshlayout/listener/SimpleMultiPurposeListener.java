@@ -3,6 +3,7 @@ package com.scwang.smartrefreshlayout.listener;
 import com.scwang.smartrefreshlayout.SmartRefreshLayout;
 import com.scwang.smartrefreshlayout.api.RefreshFooter;
 import com.scwang.smartrefreshlayout.api.RefreshHeader;
+import com.scwang.smartrefreshlayout.api.RefreshLayout;
 import com.scwang.smartrefreshlayout.constant.RefreshState;
 
 /**
@@ -58,7 +59,7 @@ public class SimpleMultiPurposeListener implements OnMultiPurposeListener {
     }
 
     @Override
-    public void onRefresh(SmartRefreshLayout refreshlayout) {
+    public void onRefresh(RefreshLayout refreshlayout) {
 
     }
 

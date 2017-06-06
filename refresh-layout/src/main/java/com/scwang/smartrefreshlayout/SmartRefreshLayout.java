@@ -7,6 +7,7 @@ import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.NestedScrollingChild;
 import android.support.v4.view.NestedScrollingChildHelper;
@@ -26,6 +27,8 @@ import android.webkit.WebView;
 import android.widget.AbsListView;
 import android.widget.ScrollView;
 
+import com.scwang.smartrefreshlayout.api.DefaultRefreshFooterCreater;
+import com.scwang.smartrefreshlayout.api.DefaultRefreshHeaderCreater;
 import com.scwang.smartrefreshlayout.api.RefreshContent;
 import com.scwang.smartrefreshlayout.api.RefreshFooter;
 import com.scwang.smartrefreshlayout.api.RefreshHeader;
@@ -72,6 +75,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     protected float mTouchX;
     protected float mTouchY;
     protected float mInitialMotionY;
+    protected Interpolator mReboundInterpolator;
     //</editor-fold>
 
     //<editor-fold desc="功能属性">
@@ -84,8 +88,6 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     protected boolean mEnableFooterTranslationContent = true;//是否启用内容视图拖动效果
     //</editor-fold>
 
-    protected Interpolator mReboundInterpolator;
-
     //<editor-fold desc="监听属性">
     protected OnRefreshListener mRefreshListener;
     protected OnLoadmoreListener mLoadmoreListener;
@@ -93,12 +95,12 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     //</editor-fold>
 
     //<editor-fold desc="嵌套滚动">
-    protected float mTotalUnconsumed;
-    protected NestedScrollingParentHelper mNestedScrollingParentHelper;
-    protected NestedScrollingChildHelper mNestedScrollingChildHelper;
     protected int[] mParentScrollConsumed = new int[2];
     protected int[] mParentOffsetInWindow = new int[2];
+    protected float mTotalUnconsumed;
     protected boolean mNestedScrollInProgress;
+    protected NestedScrollingChildHelper mNestedScrollingChildHelper;
+    protected NestedScrollingParentHelper mNestedScrollingParentHelper;
     //</editor-fold>
 
     //<editor-fold desc="内部视图">
@@ -135,6 +137,9 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
      */
     protected float mExtendRate = 2.0f;
     //</editor-fold>
+
+    protected static DefaultRefreshFooterCreater mFooterCreater = (context, l) -> new BallPulseFooter(context);
+    protected static DefaultRefreshHeaderCreater mHeaderCreater = (context, l) -> new BezierHeader(context);
 
     //</editor-fold>
 
@@ -242,24 +247,16 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                     mRefreshFooter.setPrimaryColors(mPrimaryColors);
                 }
             }
-            //重新排序
-            removeAllViews();
 
-            if (mRefreshHeader != null && mRefreshHeader.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
-                addView(mRefreshHeader.getView());
+            //重新排序
+            bringChildToFront(mRefreshContent.getView());
+            if (mRefreshHeader.getSpinnerStyle() != SpinnerStyle.FixedBehind) {
+                bringChildToFront(mRefreshHeader.getView());
             }
-            if (mRefreshFooter != null && mRefreshFooter.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
-                addView(mRefreshFooter.getView());
+            if (mRefreshFooter.getSpinnerStyle() != SpinnerStyle.FixedBehind) {
+                bringChildToFront(mRefreshFooter.getView());
             }
-            if (mRefreshContent != null) {
-                addView(mRefreshContent.getView());
-            }
-            if (mRefreshHeader != null && mRefreshHeader.getSpinnerStyle() != SpinnerStyle.FixedBehind) {
-                addView(mRefreshHeader.getView());
-            }
-            if (mRefreshFooter != null && mRefreshFooter.getSpinnerStyle() != SpinnerStyle.FixedBehind) {
-                addView(mRefreshFooter.getView());
-            }
+
         }
     }
 
@@ -281,48 +278,41 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
             }
         }
         if (mRefreshHeader == null) {
-            mRefreshHeader = new BezierHeader(getContext());
+            mRefreshHeader = mHeaderCreater.createRefreshHeader(getContext(), this);
             if (!(mRefreshHeader.getView().getLayoutParams() instanceof MarginLayoutParams)) {
                 if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale) {
-                    mRefreshHeader.getView().setLayoutParams(new LayoutParams(MATCH_PARENT, MATCH_PARENT));
+                    addView(mRefreshHeader.getView(), MATCH_PARENT, MATCH_PARENT);
                 } else {
-                    mRefreshHeader.getView().setLayoutParams(new LayoutParams(MATCH_PARENT, WRAP_CONTENT));
+                    addView(mRefreshHeader.getView(), MATCH_PARENT, WRAP_CONTENT);
                 }
             }
         }
         if (mRefreshFooter == null) {
-            mRefreshFooter = new BallPulseFooter(getContext());
+            mRefreshFooter = mFooterCreater.createRefreshFooter(getContext(), this);
             if (!(mRefreshFooter.getView().getLayoutParams() instanceof MarginLayoutParams)) {
                 if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Scale) {
-                    mRefreshFooter.getView().setLayoutParams(new LayoutParams(MATCH_PARENT, MATCH_PARENT));
+                    addView(mRefreshFooter.getView(), MATCH_PARENT, MATCH_PARENT);
                 } else {
-                    mRefreshFooter.getView().setLayoutParams(new LayoutParams(MATCH_PARENT, WRAP_CONTENT));
+                    addView(mRefreshFooter.getView(), MATCH_PARENT, WRAP_CONTENT);
                 }
             }
         }
 
         //重新排序
-        removeAllViews();
-        if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
-            addView(mRefreshHeader.getView());
-        }
-        if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
-            addView(mRefreshFooter.getView());
-        }
-        addView(mRefreshContent.getView());
+        bringChildToFront(mRefreshContent.getView());
         if (mRefreshHeader.getSpinnerStyle() != SpinnerStyle.FixedBehind) {
-            addView(mRefreshHeader.getView());
+            bringChildToFront(mRefreshHeader.getView());
         }
         if (mRefreshFooter.getSpinnerStyle() != SpinnerStyle.FixedBehind) {
-            addView(mRefreshFooter.getView());
+            bringChildToFront(mRefreshFooter.getView());
         }
 
 
         if (mRefreshListener == null) {
-            mRefreshListener = refresh -> postDelayed(refresh::resetStatus,3000);
+            mRefreshListener = refresh -> refresh.finisRefresh(3000);
         }
         if (mLoadmoreListener == null) {
-            mLoadmoreListener = refresh -> postDelayed(refresh::resetStatus,3000);
+            mLoadmoreListener = refresh -> refresh.finisLoadmore(3000);
         }
         if (mPrimaryColors != null) {
             mRefreshHeader.setPrimaryColors(mPrimaryColors);
@@ -1086,6 +1076,15 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     }
 
     /**
+     * 设置下拉最大高度和真实高度的比率（将会影响可以下拉的最大高度）
+     */
+    @Override
+    public SmartRefreshLayout setExtendRate(float rate) {
+        this.mExtendRate = rate;
+        return this;
+    }
+
+    /**
      * 设置回弹显示插值器
      */
     @Override
@@ -1238,21 +1237,6 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         mPrimaryColors = colors;
         return this;
     }
-
-    /**
-     * 是否正在刷新
-     */
-    @Override
-    public boolean isRefreshing() {
-        return state == RefreshState.Refreshing;
-    }
-    /**
-     * 是否正在加载
-     */
-    @Override
-    public boolean isLoading() {
-        return state == RefreshState.Loading;
-    }
     /**
      * 完成刷新
      */
@@ -1284,7 +1268,20 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         postDelayed(this::resetStatus, delayed);
         return this;
     }
-
+    /**
+     * 是否正在刷新
+     */
+    @Override
+    public boolean isRefreshing() {
+        return state == RefreshState.Refreshing;
+    }
+    /**
+     * 是否正在加载
+     */
+    @Override
+    public boolean isLoading() {
+        return state == RefreshState.Loading;
+    }
     /**
      * 自动刷新
      */
@@ -1298,9 +1295,9 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     @Override
     public boolean autoRefresh(int delayed) {
         if (state == RefreshState.None) {
-            postDelayed(()->{
-                ValueAnimator animator = ValueAnimator.ofInt(mSpinner, (int)(mHeaderHeight*(mExtendRate - 1)));
-                animator.setDuration(mReboundDuration*2);
+            postDelayed(() -> {
+                ValueAnimator animator = ValueAnimator.ofInt(mSpinner, (int) (mHeaderHeight * (mExtendRate - 1)));
+                animator.setDuration(mReboundDuration);
                 animator.setInterpolator(mReboundInterpolator);
                 animator.addUpdateListener(animation -> moveSpinner((int) animation.getAnimatedValue(), false));
                 animator.addListener(new AnimatorListenerAdapter() {
@@ -1311,11 +1308,25 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                     }
                 });
                 animator.start();
-            },delayed);
+            }, delayed);
             return true;
         } else {
             return false;
         }
+    }
+
+    /**
+     * 设置默认Header构建器
+     */
+    public static void setDefaultRefreshHeaderCreater(@NonNull DefaultRefreshHeaderCreater creater) {
+        mHeaderCreater = creater;
+    }
+
+    /**
+     * 设置默认Footer构建器
+     */
+    public static void setDefaultRefreshFooterCreater(@NonNull DefaultRefreshFooterCreater creater) {
+        mFooterCreater = creater;
     }
 
     //</editor-fold>

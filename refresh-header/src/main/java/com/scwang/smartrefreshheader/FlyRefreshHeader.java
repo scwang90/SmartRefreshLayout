@@ -79,12 +79,13 @@ public class FlyRefreshHeader implements RefreshHeader, SizeObserver {
             valueAnimator.start();
             mCurrentPercent = 0;
         }
-        if (mFlyView != null) {
+        if (mFlyView != null && !mIsRefreshing) {
             if (mFlyAnimator != null) {
                 mFlyAnimator.end();
                 mFlyView.clearAnimation();
             }
             mIsRefreshing = true;
+            layout.setEnableRefresh(false);
 
             AnimatorSet flyUpAnim = new AnimatorSet();
             flyUpAnim.setDuration(800);
@@ -177,7 +178,7 @@ public class FlyRefreshHeader implements RefreshHeader, SizeObserver {
     }
 
     public void finishRefresh(AnimatorListenerAdapter listenerAdapter) {
-        if (mFlyView == null) {
+        if (mFlyView == null || !mIsRefreshing) {
             return;
         }
         if (mFlyAnimator != null) {
@@ -186,6 +187,7 @@ public class FlyRefreshHeader implements RefreshHeader, SizeObserver {
         }
 
         mIsRefreshing = false;
+        mRefreshLayout.setEnableRefresh(true);
 
         final int offDistX = -mFlyView.getRight();
         final int offDistY = -DensityUtil.dp2px(10);
@@ -224,12 +226,11 @@ public class FlyRefreshHeader implements RefreshHeader, SizeObserver {
             }
         });
 
-        flyDownAnim.start();
+        if (listenerAdapter != null) {
+            flyInAnim.addListener(listenerAdapter);
+        }
         mFlyAnimator = new AnimatorSet();
         mFlyAnimator.playSequentially(flyDownAnim, flyInAnim);
-        if (listenerAdapter != null) {
-            mFlyAnimator.addListener(listenerAdapter);
-        }
         mFlyAnimator.start();
     }
 }

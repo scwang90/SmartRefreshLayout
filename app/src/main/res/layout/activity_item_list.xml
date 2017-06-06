@@ -8,6 +8,7 @@
     app:srlPrimaryColor="@color/colorPrimary"
     app:srlAccentColor="#ffffff"
     tools:context="com.scwang.refreshlayout.ItemActivity">
+
     <com.scwang.smartrefreshheader.WaveSwipeHeader
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
@@ -16,5 +17,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/fragment_item" />
+
+    <com.scwang.smartrefreshlayout.footer.ballpulse.BallPulseFooter
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </com.scwang.smartrefreshlayout.SmartRefreshLayout>

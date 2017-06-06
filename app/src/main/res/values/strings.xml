@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RefreshLayout</string>
+    <string name="app_name">SmartRefreshLayout</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
@@ -163,4 +163,5 @@
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
+    <string name="title_activity_fly_refresh">FlyRefresh</string>
 </resources>

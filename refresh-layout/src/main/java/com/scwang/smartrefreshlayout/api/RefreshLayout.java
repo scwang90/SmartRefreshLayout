@@ -60,6 +60,8 @@ public interface RefreshLayout {
 
     RefreshLayout setPrimaryColors(int... colors);
 
+    RefreshLayout setExtendRate(float rate);
+
     RefreshLayout finisRefresh();
 
     RefreshLayout finisLoadmore();
