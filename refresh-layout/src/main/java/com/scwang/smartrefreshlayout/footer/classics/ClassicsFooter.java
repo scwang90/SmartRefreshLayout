@@ -123,12 +123,19 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
 
     @Override
     public void setPrimaryColors(int... colors) {
-        if (colors.length > 0) {
-            setBackgroundColor(colors[0]);
-        }
         if (colors.length > 1) {
+            setBackgroundColor(colors[0]);
             mBottomText.setTextColor(colors[1]);
             mProgressView.parserColors(colors[1]);
+        } else if (colors.length > 0) {
+            setBackgroundColor(colors[0]);
+            if (colors[0] == 0xffffffff) {
+                mBottomText.setTextColor(0xff666666);
+                mProgressView.parserColors(0xff666666);
+            } else {
+                mBottomText.setTextColor(0xffffffff);
+                mProgressView.parserColors(0xffffffff);
+            }
         }
     }
 

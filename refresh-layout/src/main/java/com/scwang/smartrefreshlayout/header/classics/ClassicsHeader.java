@@ -159,14 +159,25 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
 
     @Override
     public void setPrimaryColors(int... colors) {
-        if (colors.length > 0) {
-            setBackgroundColor(colors[0]);
-        }
         if (colors.length > 1) {
-            mHeaderText.setTextColor(colors[1]);
+            setBackgroundColor(colors[0]);
             mArrowView.parserColors(colors[1]);
+            mHeaderText.setTextColor(colors[1]);
             mProgressView.parserColors(colors[1]);
             mLastUpdateText.setTextColor(colors[1]&0x00ffffff|0x99000000);
+        } else if (colors.length > 0) {
+            setBackgroundColor(colors[0]);
+            if (colors[0] == 0xffffffff) {
+                mArrowView.parserColors(0xff666666);
+                mHeaderText.setTextColor(0xff666666);
+                mProgressView.parserColors(0xff666666);
+                mLastUpdateText.setTextColor(0xff666666&0x00ffffff|0x99000000);
+            } else {
+                mArrowView.parserColors(0xffffffff);
+                mHeaderText.setTextColor(0xffffffff);
+                mProgressView.parserColors(0xffffffff);
+                mLastUpdateText.setTextColor(0xaaffffff);
+            }
         }
     }
 

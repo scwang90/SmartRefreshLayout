@@ -12,6 +12,7 @@ import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -80,6 +81,7 @@ public class FlyRefreshActivity extends AppCompatActivity implements OnRefreshLi
         mListView.setAdapter(mAdapter);
         mListView.setItemAnimator(new SampleItemAnimator());
 
+        final CollapsingToolbarLayout layout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             int index = 0;
@@ -91,10 +93,12 @@ public class FlyRefreshActivity extends AppCompatActivity implements OnRefreshLi
             };
             @Override
             public void onClick(View v) {
+                int color = ContextCompat.getColor(getApplication(), ids[index % ids.length]);
                 mFlylayout.autoRefresh();
-                mFlylayout.setPrimaryColorsId(ids[index%ids.length]);
-                fab.setBackgroundColor(ContextCompat.getColor(getApplication(),ids[index%ids.length]));
-                fab.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(getApplication(),ids[index%ids.length])));
+                mFlylayout.setPrimaryColors(color);
+                fab.setBackgroundColor(color);
+                fab.setBackgroundTintList(ColorStateList.valueOf(color));
+                layout.setContentScrimColor(color);
                 index++;
             }
         });
