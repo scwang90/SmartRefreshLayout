@@ -11,7 +11,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
-import com.scwang.smartrefreshheader.internal.MaterialProgressDrawable;
 import com.scwang.smartrefreshlayout.util.DensityUtil;
 
 
@@ -28,9 +27,7 @@ public class WaterDropView extends View {
     private Paint mPaint;
     private float mMaxCircleRadius;//圆半径最大值
     private float mMinCircleRaidus;//圆半径最小值
-//    private Bitmap arrowBitmap;//箭头
-    private MaterialProgressDrawable mProgress;
-    private static float STROKE_WIDTH = 2;//边线宽度
+    private static int STROKE_WIDTH = 2;//边线宽度
     private final static int BACK_ANIM_DURATION = 180;
 
     public WaterDropView(Context context) {
@@ -61,9 +58,8 @@ public class WaterDropView extends View {
         mPaint.setShadowLayer(STROKE_WIDTH, 0, 0, 0xff000000);
         setLayerType(LAYER_TYPE_SOFTWARE, null);
 
-        mProgress = new MaterialProgressDrawable(context, this);
-//        Drawable drawable = getResources().getDrawable(R.drawable.refresh_arrow);
-//        arrowBitmap = Utils.drawableToBitmap(drawable);
+        int padding = 4 * STROKE_WIDTH;
+        setPadding(padding, padding, padding, padding);
 
         mPaint.setColor(Color.GRAY);
         mMaxCircleRadius = DensityUtil.dp2px(20);
@@ -85,77 +81,76 @@ public class WaterDropView extends View {
         int width = (int) ((mMaxCircleRadius + STROKE_WIDTH) * 2);
         //高度：上圆半径 + 圆心距 + 下圆半径
         int height = (int) Math.ceil(bottomCircle.y+bottomCircle.radius + STROKE_WIDTH * 2);
-        setMeasuredDimension(width, resolveSize(height, heightMeasureSpec));
+        setMeasuredDimension(width + getPaddingLeft() + getPaddingRight(),
+                resolveSize(height + getPaddingTop() + getPaddingBottom(), heightMeasureSpec));
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+        updateComleteState(getHeight());
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        int height = getHeight();
-        if (height <= 2 * mMaxCircleRadius) {
-            canvas.restore();
-            canvas.translate(0, height - 2 * mMaxCircleRadius);
+        final int paddingTop = getPaddingTop();
+        final int paddingLeft = getPaddingLeft();
+        final int paddingBottom = getPaddingBottom();
+        final int height = getHeight();
+        canvas.save();
+        if (height <= topCircle.radius * 2 + paddingTop + paddingBottom) {
+            canvas.translate(paddingLeft, height - topCircle.radius * 2 - paddingBottom);
             canvas.drawCircle(topCircle.x, topCircle.y, topCircle.radius, mPaint);
         } else {
+            canvas.translate(paddingLeft, paddingTop);
             makeBezierPath();
-//        mPaint.setColor(Color.RED);
-//        mPaint.setAlpha(200);
             canvas.drawPath(mPath, mPaint);
-//        mPaint.setColor(Color.GRAY);
-//        mPaint.setAlpha(50);
 //        canvas.drawCircle(topCircle.x, topCircle.y, topCircle.radius, mPaint);
 //        canvas.drawCircle(bottomCircle.x, bottomCircle.y, bottomCircle.radius, mPaint);
-//        canvas.drawBitmap(arrowBitmap, topCircle.x - topCircle.radius, topCircle.y - topCircle.radius, mPaint);
-//        RectF bitmapArea = new RectF(topCircle.x-0.5f*topCircle.radius,topCircle.y-0.5f*topCircle.radius,topCircle.x+ 0.5f*topCircle.radius,topCircle.y+0.5f*topCircle.radius);
-//        canvas.drawBitmap(arrowBitmap,null,bitmapArea,mPaint);
-//        mProgress.setBounds(
-//                (int)(topCircle.x - 0.5f * topCircle.radius),
-//                (int)(topCircle.y - 0.5f * topCircle.radius),
-//                (int)(topCircle.x + 0.5f * topCircle.radius),
-//                (int)(topCircle.y + 0.5f * topCircle.radius));
-//        mProgress.draw(canvas);
-//        super.onDraw(canvas);
         }
+        canvas.restore();
     }
 
 
     private void makeBezierPath() {
         mPath.reset();
-        //获取两圆的两个切线形成的四个切点
-        double angle = getAngle();
-        float top_x1 = (float) (topCircle.x - topCircle.radius * Math.cos(angle));
-        float top_y1 = (float) (topCircle.y + topCircle.radius * Math.sin(angle));
-
-        float top_x2 = (float) (topCircle.x + topCircle.radius * Math.cos(angle));
-        float top_y2 = top_y1;
-
-        float bottom_x1 = (float) (bottomCircle.x - bottomCircle.radius * Math.cos(angle));
-        float bottom_y1 = (float) (bottomCircle.y + bottomCircle.radius * Math.sin(angle));
-
-        float bottom_x2 = (float) (bottomCircle.x + bottomCircle.radius * Math.cos(angle));
-        float bottom_y2 = bottom_y1;
-
-        mPath.moveTo(topCircle.x, topCircle.y);
-
-        mPath.lineTo(top_x1, top_y1);
-
-        mPath.quadTo((bottomCircle.x - bottomCircle.radius),
-                (bottomCircle.y + topCircle.y) / 2,
-
-                bottom_x1,
-                bottom_y1);
-        mPath.lineTo(bottom_x2, bottom_y2);
-
-        mPath.quadTo((bottomCircle.x + bottomCircle.radius),
-                (bottomCircle.y + top_y2) / 2,
-                top_x2,
-                top_y2);
-
-        mPath.addCircle(topCircle.x, topCircle.y, topCircle.radius, Path.Direction.CCW);
         mPath.addCircle(bottomCircle.x, bottomCircle.y, bottomCircle.radius, Path.Direction.CCW);
+        if (bottomCircle.radius < topCircle.radius) {
+            mPath.addCircle(topCircle.x, topCircle.y, topCircle.radius, Path.Direction.CCW);
+            //获取两圆的两个切线形成的四个切点
+            double angle = getAngle();
+            float top_x1 = (float) (topCircle.x - topCircle.radius * Math.cos(angle));
+            float top_y1 = (float) (topCircle.y + topCircle.radius * Math.sin(angle));
 
-        mPath.close();
+            float top_x2 = (float) (topCircle.x + topCircle.radius * Math.cos(angle));
+            float top_y2 = top_y1;
+
+            float bottom_x1 = (float) (bottomCircle.x - bottomCircle.radius * Math.cos(angle));
+            float bottom_y1 = (float) (bottomCircle.y + bottomCircle.radius * Math.sin(angle));
+
+            float bottom_x2 = (float) (bottomCircle.x + bottomCircle.radius * Math.cos(angle));
+            float bottom_y2 = bottom_y1;
+
+            mPath.moveTo(topCircle.x, topCircle.y);
+
+            mPath.lineTo(top_x1, top_y1);
+
+            mPath.quadTo((bottomCircle.x - bottomCircle.radius),
+                    (bottomCircle.y + topCircle.y) / 2,
+
+                    bottom_x1,
+                    bottom_y1);
+            mPath.lineTo(bottom_x2, bottom_y2);
+
+            mPath.quadTo((bottomCircle.x + bottomCircle.radius),
+                    (bottomCircle.y + top_y2) / 2,
+                    top_x2,
+                    top_y2);
+
+            mPath.close();
+        }
     }
 
     /**
@@ -188,7 +183,8 @@ public class WaterDropView extends View {
      * 完成的百分比
      */
     public void updateComleteState(int offset, int maxHeight) {
-        updateComleteState(Math.max(0, 1f * (offset - mMaxCircleRadius * 2) / maxHeight));
+//        float space = mMaxCircleRadius * 2 + getPaddingTop() + getPaddingBottom();
+//        updateComleteState(Math.max(0, 1f * (offset - space) / (maxHeight - space)));
     }
 
     /**
@@ -199,16 +195,31 @@ public class WaterDropView extends View {
         float bottom_r = (mMinCircleRaidus - mMaxCircleRadius) * percent + mMaxCircleRadius;
         float bottomCricleOffset = 4 * percent * mMaxCircleRadius;
 
-//        float max = getHeight() - bottom_r;
-//        if (bottomCricleOffset > max) {
-//            bottomCricleOffset = max;
-//        }
-
         topCircle.radius = (top_r);
         bottomCircle.radius = (bottom_r);
         bottomCircle.y = (topCircle.y + bottomCricleOffset);
-//        requestLayout();
-//        postInvalidate();
+    }
+
+    /**
+     * 完成的百分比
+     */
+    public void updateComleteState(int height) {
+        final int paddingTop = getPaddingTop();
+        final int paddingBottom = getPaddingBottom();
+        float space = mMaxCircleRadius * 2 + paddingTop + paddingBottom;
+        if (height < space) {
+            topCircle.radius = mMaxCircleRadius;
+            bottomCircle.radius = mMaxCircleRadius;
+            bottomCircle.y = topCircle.y;
+        } else {
+            float limit = mMaxCircleRadius - mMinCircleRaidus;
+            float x = Math.max(0, height - space);
+            float y = (float) (limit * (1 - Math.pow(100, -x / DensityUtil.dp2px(200))));
+            topCircle.radius = mMaxCircleRadius - y / 4;
+            bottomCircle.radius = mMaxCircleRadius - y;
+            int validHeight = height - paddingTop - paddingBottom;
+            bottomCircle.y = validHeight - bottomCircle.radius;
+        }
     }
 
     public Circle getTopCircle() {

@@ -37,7 +37,6 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
     private ImageView mImageView;
     private MaterialProgressDrawable mProgress;
     private RefreshState mState;
-    private int mWaterPadding;
 
     public WaterDropHeader(Context context) {
         super(context);
@@ -58,8 +57,6 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
 //        mWaterDropView.setWaterDropColor(0xff9ba2ab);
         addView(mWaterDropView, MATCH_PARENT, MATCH_PARENT);
         mWaterDropView.updateComleteState(0);
-
-        mWaterPadding = density.dip2px(4);
 
         mImageView = new ImageView(context);
         mProgress = new MaterialProgressDrawable(context, mImageView);
@@ -86,7 +83,7 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
         );
         mWaterDropView.measure(
                 makeMeasureSpec(getSize(widthMeasureSpec), AT_MOST),
-                makeMeasureSpec(Math.max(0, getSize(heightMeasureSpec) - 2 * mWaterPadding), EXACTLY)
+                heightMeasureSpec
         );
         int maxWidth = Math.max(mImageView.getMeasuredWidth(), mWaterDropView.getMeasuredHeight());
         int maxHeight = Math.max(mImageView.getMeasuredHeight(), mWaterDropView.getMeasuredHeight());
@@ -101,13 +98,13 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
         final int widthWaterDrop = mWaterDropView.getMeasuredWidth();
         final int heightWaterDrop = mWaterDropView.getMeasuredHeight();
         final int leftWaterDrop = measuredWidth / 2 - widthWaterDrop / 2;
-        final int topWaterDrop = mWaterPadding;
+        final int topWaterDrop = 0;
         mWaterDropView.layout(leftWaterDrop, topWaterDrop, leftWaterDrop + widthWaterDrop, topWaterDrop + heightWaterDrop);
 
         final int widthImage = mImageView.getMeasuredWidth();
         final int heightImage = mImageView.getMeasuredHeight();
         final int leftImage = measuredWidth / 2 - widthImage / 2;
-        int topImage = mWaterPadding + widthWaterDrop / 2 - widthImage / 2;
+        int topImage = widthWaterDrop / 2 - widthImage / 2;
         if (topImage + heightImage > mWaterDropView.getBottom() - (widthWaterDrop - widthImage) / 2) {
             topImage = mWaterDropView.getBottom() - (widthWaterDrop - widthImage) / 2 - heightImage;
         }
@@ -151,7 +148,7 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
 
     @Override
     public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
-        mWaterDropView.updateComleteState(Math.max(offset - 2 * mWaterPadding, 0), headHeight + extendHeight - 2 * mWaterPadding);
+        mWaterDropView.updateComleteState((offset), headHeight + extendHeight);
         mWaterDropView.postInvalidate();
 
         float originalDragPercent = 1f * offset / headHeight;
@@ -174,7 +171,7 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
     @Override
     public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
         if (mState != RefreshState.Refreshing) {
-            mWaterDropView.updateComleteState(Math.max(offset - 2 * mWaterPadding, 0), headHeight + extendHeight - 2 * mWaterPadding);
+            mWaterDropView.updateComleteState(Math.max(offset, 0), headHeight + extendHeight);
             mWaterDropView.postInvalidate();
         }
     }
