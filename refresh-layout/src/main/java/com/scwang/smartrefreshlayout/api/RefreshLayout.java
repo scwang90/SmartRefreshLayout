@@ -32,6 +32,8 @@ public interface RefreshLayout {
 
     RefreshLayout setReboundInterpolator(Interpolator interpolator);
 
+    RefreshLayout setReboundDuration(int duration);
+
     RefreshLayout setEnableLoadmore(boolean enable);
 
     RefreshLayout setEnableRefresh(boolean enable);
@@ -78,4 +80,7 @@ public interface RefreshLayout {
 
     boolean autoRefresh(int delayed);
 
+    boolean autoLoadmore();
+
+    boolean autoLoadmore(int delayed);
 }

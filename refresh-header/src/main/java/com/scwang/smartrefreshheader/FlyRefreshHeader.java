@@ -33,7 +33,6 @@ import static com.scwang.smartrefreshlayout.util.DensityUtil.dp2px;
 
 public class FlyRefreshHeader implements RefreshHeader, SizeObserver {
 
-    private RefreshState mState;
     private View mFalsifyHeaderView;
     private float mCurrentPercent;
     private FlyView mFlyView;
@@ -51,7 +50,16 @@ public class FlyRefreshHeader implements RefreshHeader, SizeObserver {
     //<editor-fold desc="RefreshHeader">
     @Override
     public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
+        if (offset < 0) {
+            if (mOffset > 0) {
+                offset = 0;
+                percent = 0;
+            } else {
+                return;
+            }
+        }
         mOffset = offset;
+        mCurrentPercent = percent;
         if (mScenceView != null) {
             mScenceView.updatePercent(percent);
             mScenceView.postInvalidate();
@@ -64,7 +72,7 @@ public class FlyRefreshHeader implements RefreshHeader, SizeObserver {
 
     @Override
     public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
-        if (mState != RefreshState.Refreshing) {
+        if (!mIsRefreshing) {
             onPullingDown(percent, offset, headHeight, extendHeight);
         }
     }
@@ -87,8 +95,6 @@ public class FlyRefreshHeader implements RefreshHeader, SizeObserver {
             mIsRefreshing = true;
             layout.setEnableRefresh(false);
 
-            AnimatorSet flyUpAnim = new AnimatorSet();
-            flyUpAnim.setDuration(800);
 
             ObjectAnimator transX = ObjectAnimator.ofFloat(mFlyView, "translationX", 0, ((View) mRefreshLayout).getWidth()-mFlyView.getLeft());
             ObjectAnimator transY = ObjectAnimator.ofFloat(mFlyView, "translationY", 0, -(mFlyView.getTop() - mOffset) * 2 / 3);
@@ -98,6 +104,8 @@ public class FlyRefreshHeader implements RefreshHeader, SizeObserver {
             ObjectAnimator rotationX = ObjectAnimator.ofFloat(mFlyView, "rotationX", 0, 60);
             rotationX.setInterpolator(new DecelerateInterpolator());
 
+            AnimatorSet flyUpAnim = new AnimatorSet();
+            flyUpAnim.setDuration(800);
             flyUpAnim.playTogether(transX
                     ,transY
                     ,rotation
@@ -113,7 +121,6 @@ public class FlyRefreshHeader implements RefreshHeader, SizeObserver {
 
     @Override
     public void onStateChanged(RefreshState state) {
-        mState = state;
     }
 
     @Override

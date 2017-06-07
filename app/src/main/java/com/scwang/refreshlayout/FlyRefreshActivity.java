@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.view.animation.Interpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -46,10 +47,10 @@ import java.util.Locale;
 
 import jp.wasabeef.recyclerview.animators.BaseItemAnimator;
 
-public class FlyRefreshActivity extends AppCompatActivity implements OnRefreshListener {
+public class FlyRefreshActivity extends AppCompatActivity {
 
     private RecyclerView mListView;
-    private SmartRefreshLayout mFlylayout;
+    private RefreshLayout mFlylayout;
 
     private ItemAdapter mAdapter;
 
@@ -57,6 +58,7 @@ public class FlyRefreshActivity extends AppCompatActivity implements OnRefreshLi
     private ArrayList<ItemData> mDataSet = new ArrayList<>();
     private LinearLayoutManager mLayoutManager;
     private FlyRefreshHeader mFlyRefreshHeader;
+    private MountanScenceView mScenceView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,25 +67,72 @@ public class FlyRefreshActivity extends AppCompatActivity implements OnRefreshLi
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        initDataSet();
 
+        /************************************************************
+         * 关键代码-开始
+         ************************************************************/
+        mFlyRefreshHeader = new FlyRefreshHeader(this);//创建Header
+
+        mFlyView = (FlyView) findViewById(R.id.flyview);
+        mScenceView = (MountanScenceView) findViewById(R.id.flyrefresh);
+        mFlyRefreshHeader.setUp(mScenceView, mFlyView);
+        mFlylayout = (SmartRefreshLayout) findViewById(R.id.smart);
+        mFlylayout.setRefreshHeader(mFlyRefreshHeader);//设置Header
+        mFlylayout.setReboundInterpolator(new ElasticOutInterpolator());//设置回弹插值器，会带有弹簧震动效果
+        mFlylayout.setReboundDuration(500);//设置回弹动画时长
+        mFlylayout.autoRefresh();//触发自动刷新
+        mFlylayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                View child = mListView.getChildAt(0);
+                if (child != null) {
+                    //开始刷新的时候个第一个item设置动画效果
+                    bounceAnimateView(child.findViewById(R.id.icon));
+                }
+                mListView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //通知刷新完成，这里改为通知Header(在FlyHeader内部实现中早已通知RefreshLayout刷新完成)，让纸飞机飞回来
+                        mFlyRefreshHeader.finishRefresh(new AnimatorListenerAdapter() {
+                            public void onAnimationEnd(Animator animation) {
+                                addItemData();//在纸飞机回到原位之后添加数据效果更真实
+                            }
+                        });
+                    }
+                }, 2000);//模拟两秒的后台数据加载
+            }
+        });
+        //设置 让 AppBarLayout 和 RefreshLayout 的滚动同步
+        final AppBarLayout appBar = (AppBarLayout) findViewById(R.id.app_bar);
+        mFlylayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
+            @Override
+            public void onHeaderPulling(RefreshHeader header, float percent, int offset, int bottomHeight, int extendHeight) {
+                appBar.setTranslationY(offset);
+            }
+            @Override
+            public void onHeaderReleasing(RefreshHeader header, float percent, int offset, int bottomHeight, int extendHeight) {
+                appBar.setTranslationY(offset);
+            }
+        });
+        /************************************************************
+         * 关键代码-结束
+         ************************************************************/
+
+        /**
+         * 初始化列表数据
+         */
+        initDataSet();
         mAdapter = new ItemAdapter(this);
         mLayoutManager = new LinearLayoutManager(this);
-        mFlyRefreshHeader = new FlyRefreshHeader(this);
-        mFlyView = (FlyView) findViewById(R.id.flyview);
-        mFlyRefreshHeader.setUp((MountanScenceView) findViewById(R.id.flyrefresh), mFlyView);
-
-        mFlylayout = (SmartRefreshLayout) findViewById(R.id.smart);
-        mFlylayout.setOnRefreshListener(this);
-        mFlylayout.setRefreshHeader(mFlyRefreshHeader);
-        mFlylayout.autoRefresh();
         mListView = (RecyclerView) findViewById(R.id.recycler);
         mListView.setLayoutManager(mLayoutManager);
         mListView.setAdapter(mAdapter);
         mListView.setItemAnimator(new SampleItemAnimator());
-
         final CollapsingToolbarLayout layout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        /**
+         * 设置点击 ActionButton 时候触发自动刷新 并改变主题颜色
+         */
         fab.setOnClickListener(new View.OnClickListener() {
             int index = 0;
             int[] ids = new int[]{
@@ -103,17 +152,9 @@ public class FlyRefreshActivity extends AppCompatActivity implements OnRefreshLi
                 index++;
             }
         });
-        final AppBarLayout appBar = (AppBarLayout) findViewById(R.id.app_bar);
-        mFlylayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
-            @Override
-            public void onHeaderPulling(RefreshHeader header, float percent, int offset, int bottomHeight, int extendHeight) {
-                appBar.setTranslationY(offset);
-            }
-            @Override
-            public void onHeaderReleasing(RefreshHeader header, float percent, int offset, int bottomHeight, int extendHeight) {
-                appBar.setTranslationY(offset);
-            }
-        });
+        /**
+         * 监听 AppBarLayout 的关闭和开启 给 FlyView（纸飞机） 和 ActionButton 设置关闭隐藏动画
+         */
         appBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean misAppbarExpand = true;
             @Override
@@ -163,25 +204,6 @@ public class FlyRefreshActivity extends AppCompatActivity implements OnRefreshLi
         mDataSet.add(0, itemData);
         mAdapter.notifyItemInserted(0);
         mLayoutManager.scrollToPosition(0);
-    }
-
-    @Override
-    public void onRefresh(RefreshLayout refreshlayout) {
-        View child = mListView.getChildAt(0);
-        if (child != null) {
-            bounceAnimateView(child.findViewById(R.id.icon));
-        }
-
-        mListView.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mFlyRefreshHeader.finishRefresh(new AnimatorListenerAdapter() {
-                    public void onAnimationEnd(Animator animation) {
-                        addItemData();
-                    }
-                });
-            }
-        }, 2000);
     }
 
     private void bounceAnimateView(final View view) {
@@ -248,9 +270,7 @@ public class FlyRefreshActivity extends AppCompatActivity implements OnRefreshLi
         }
 
     }
-    /**
-     * Created by Jing on 15/5/27.
-     */
+
     public class ItemData {
         int color;
         public int icon;
@@ -304,4 +324,17 @@ public class FlyRefreshActivity extends AppCompatActivity implements OnRefreshLi
         }
 
     }
+
+    public class ElasticOutInterpolator implements Interpolator {
+
+        @Override
+        public float getInterpolation(float t) {
+            if (t == 0) return 0;
+            if (t >= 1) return 1;
+            float p=.3f;
+            float s=p/4;
+            return ((float)Math.pow(2,-10*t) * (float)Math.sin( (t-s)*(2*(float)Math.PI)/p) + 1);
+        }
+    }
+
 }

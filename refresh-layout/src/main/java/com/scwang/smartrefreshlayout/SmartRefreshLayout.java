@@ -1094,6 +1094,15 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     }
 
     /**
+     * 设置回弹动画时长
+     */
+    @Override
+    public SmartRefreshLayout setReboundDuration(int duration) {
+        this.mReboundDuration = duration;
+        return this;
+    }
+
+    /**
      * 设置是否启用上啦加载更多（默认启用）
      */
     @Override
@@ -1296,14 +1305,46 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     public boolean autoRefresh(int delayed) {
         if (state == RefreshState.None) {
             postDelayed(() -> {
-                ValueAnimator animator = ValueAnimator.ofInt(mSpinner, (int) (mHeaderHeight * (mExtendRate - 1)));
+                ValueAnimator animator = ValueAnimator.ofInt(mSpinner, mHeaderHeight + mExtendHeaderHeight / 2);
                 animator.setDuration(mReboundDuration);
-                animator.setInterpolator(mReboundInterpolator);
+                animator.setInterpolator(new DecelerateInterpolator());
                 animator.addUpdateListener(animation -> moveSpinner((int) animation.getAnimatedValue(), false));
                 animator.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         state = RefreshState.ReleaseToRefresh;
+                        overSpinner(0);
+                    }
+                });
+                animator.start();
+            }, delayed);
+            return true;
+        } else {
+            return false;
+        }
+    }
+    /**
+     * 自动加载
+     */
+    @Override
+    public boolean autoLoadmore() {
+        return autoLoadmore(500);
+    }
+    /**
+     * 自动加载
+     */
+    @Override
+    public boolean autoLoadmore(int delayed) {
+        if (state == RefreshState.None) {
+            postDelayed(() -> {
+                ValueAnimator animator = ValueAnimator.ofInt(mSpinner, -mHeaderHeight - mExtendFooterHeight / 2);
+                animator.setDuration(mReboundDuration);
+                animator.setInterpolator(new DecelerateInterpolator());
+                animator.addUpdateListener(animation -> moveSpinner((int) animation.getAnimatedValue(), false));
+                animator.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        state = RefreshState.ReleaseToLoad;
                         overSpinner(0);
                     }
                 });
