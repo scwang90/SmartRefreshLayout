@@ -279,7 +279,7 @@ public class PhoenixHeader extends View implements RefreshHeader, SizeDefinition
         int bWidth = mDrawableTown.width();//mTown.getWidth();
         int bHeight = mDrawableTown.height();//mTown.getHeight();
         float townScale = 1f * width / bWidth;
-        float amplification = (0.7f * Math.max(mPercent - 1, 0) + 1);
+        float amplification = (0.3f * Math.max(mPercent - 1, 0) + 1);
         float offsetx = width / 2 - (int) (width * amplification) / 2;
         float offsety = mHeaderHeight * 0.1f * mPercent;
         townScale = amplification * townScale;
