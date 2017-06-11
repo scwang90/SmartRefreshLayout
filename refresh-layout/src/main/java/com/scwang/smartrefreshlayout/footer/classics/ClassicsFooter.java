@@ -153,7 +153,7 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
     @Override
     public void onStateChanged(RefreshState state) {
         switch (state) {
-            case PullUpLoad:
+            case PullToUpLoad:
             case None:
                 mBottomText.setText(REFRESH_BOTTOM_PULLUP);
                 break;

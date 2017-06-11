@@ -1,5 +1,6 @@
 package com.scwang.smartrefreshlayout.api;
 
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -21,4 +22,6 @@ public interface RefreshContent {
     View getScrollableView();
     ViewGroup.LayoutParams getLayoutParams();
 
+    void onActionDown(MotionEvent e);
+    void onActionUpOrCancel(MotionEvent e);
 }

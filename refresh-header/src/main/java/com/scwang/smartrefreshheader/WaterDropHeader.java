@@ -149,7 +149,7 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
             case None:
                 mWaterDropView.setVisibility(View.VISIBLE);
                 break;
-            case PullDownRefresh:
+            case PullDownToRefresh:
                 mWaterDropView.setVisibility(View.VISIBLE);
                 break;
             case PullDownCanceled:
@@ -191,7 +191,9 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
 
     @Override
     public void setPrimaryColors(int... colors) {
-
+        if (colors.length > 0) {
+            mWaterDropView.setIndicatorColor(colors[0]);
+        }
     }
 
     @NonNull

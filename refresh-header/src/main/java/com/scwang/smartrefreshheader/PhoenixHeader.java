@@ -123,6 +123,7 @@ public class PhoenixHeader extends View implements RefreshHeader, SizeDefinition
         mSunSize = density.dip2px(40);
         setupAnimation();
         setupPathsDrawable();
+        setMinimumHeight(density.dip2px(100));
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.PhoenixHeader);
 

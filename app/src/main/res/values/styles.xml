@@ -1,22 +1,86 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppThemeBase" parent="Theme.AppCompat.Light.DarkActionBar"></style>
-
-    <style name="AppTheme" parent="AppThemeBase">
-        <!-- Customize your theme here. -->
+    <style name="AppThemeBase" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:listDivider">@color/colorDivison</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+    <style name="AppTheme" parent="AppThemeBase">
+        <!-- Customize your theme here. -->
     </style>
+
+    <style name="AppTheme.TranslucentStatus"></style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <style name="AppTheme.Toolbar" parent="Widget.AppCompat.ActionBar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+    </style>
+
+
+    <style name="AppTheme.Divison">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/division_line</item>
+        <item name="android:dividerHeight">@dimen/division_line</item>
+        <item name="android:divider">@color/colorDivison</item>
+        <item name="android:background">@color/colorDivison</item>
+    </style>
+
+
+    <style name="AppTheme.Label">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">@dimen/textsize_content</item>
+        <item name="android:textColor">@color/colorTextContent</item>
+    </style>
+
+    <style name="AppTheme.Label.Layout">
+        <item name="android:paddingTop">@dimen/padding_common_v</item>
+        <item name="android:paddingBottom">@dimen/padding_common_v</item>
+        <item name="android:paddingLeft">@dimen/padding_common_h</item>
+        <item name="android:paddingRight">@dimen/padding_common_h</item>
+    </style>
+
+    <style name="AppTheme.Label.Title">
+        <item name="android:textColor">@color/colorTextTitle</item>
+        <item name="android:textSize">@dimen/textsize_title</item>
+    </style>
+
+    <style name="AppTheme.Label.Title.Large">
+        <item name="android:textSize">@dimen/textsize_titlelarge</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="AppTheme.Label.Title.Small">
+        <item name="android:textSize">@dimen/textsize_titlesmall</item>
+    </style>
+
+    <style name="AppTheme.Label.Small">
+        <item name="android:textSize">@dimen/textsize_small</item>
+    </style>
+
+    <style name="AppTheme.Label.Discription">
+        <item name="android:gravity">top</item>
+        <item name="android:lineSpacingExtra">5dp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">@dimen/textsize_content</item>
+        <item name="android:singleLine">false</item>
+    </style>
+
+    <style name="AppTheme.Label.Assistant">
+        <item name="android:textColor">@color/colorTextAssistant</item>
+        <item name="android:textSize">@dimen/textsize_content</item>
+    </style>
 
 </resources>

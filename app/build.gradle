@@ -38,6 +38,7 @@ dependencies {
     compile 'com.android.support:support-v4:25.3.1'
     compile 'com.android.support:support-vector-drawable:25.3.1'
     compile 'com.android.support:recyclerview-v7:25.3.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'jp.wasabeef:recyclerview-animators:2.2.6'
     testCompile 'junit:junit:4.12'
 }

@@ -1,4 +1,4 @@
-package com.scwang.smartrefreshlayout.header.classics;
+package com.scwang.smartrefreshlayout.header;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -194,7 +194,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     @Override
     public void onStateChanged(RefreshState state) {
         switch (state) {
-            case PullDownRefresh:
+            case PullDownToRefresh:
             case None:
                 mHeaderText.setText(REFRESH_HEADER_PULLDOWN);
                 mArrowView.setVisibility(VISIBLE);
@@ -212,4 +212,9 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
                 break;
         }
     }
+
+    public void setSpinnerStyle(SpinnerStyle style) {
+        this.mSpinnerStyle = style;
+    }
+
 }

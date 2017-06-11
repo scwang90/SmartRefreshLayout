@@ -198,7 +198,7 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
         switch (state) {
             case None:
                 break;
-            case PullDownRefresh:
+            case PullDownToRefresh:
                 mCircleView.showArrow(true);
                 mCircleView.scaleWithKeepingAspectRatio(1f);
                 mCircleView.makeProgressTransparent();

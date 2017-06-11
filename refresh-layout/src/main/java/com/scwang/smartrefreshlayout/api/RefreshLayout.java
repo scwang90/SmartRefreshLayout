@@ -1,5 +1,6 @@
 package com.scwang.smartrefreshlayout.api;
 
+import android.support.annotation.Nullable;
 import android.view.animation.Interpolator;
 
 import com.scwang.smartrefreshlayout.listener.OnLoadmoreListener;
@@ -46,7 +47,7 @@ public interface RefreshLayout {
 
     RefreshLayout setDisableContentWhenLoading(boolean disable);
 
-    RefreshLayout setRefreshBottom(RefreshFooter bottom);
+    RefreshLayout setRefreshFooter(RefreshFooter bottom);
 
     RefreshLayout setRefreshHeader(RefreshHeader header);
 
@@ -71,6 +72,12 @@ public interface RefreshLayout {
     RefreshLayout finisRefresh(int delayed);
 
     RefreshLayout finisLoadmore(int delayed);
+
+    @Nullable
+    RefreshFooter getRefreshFooter();
+
+    @Nullable
+    RefreshHeader getRefreshHeader();
 
     boolean isRefreshing();
 

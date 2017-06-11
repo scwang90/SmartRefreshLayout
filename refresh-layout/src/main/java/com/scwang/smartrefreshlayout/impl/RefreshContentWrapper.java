@@ -2,6 +2,7 @@ package com.scwang.smartrefreshlayout.impl;
 
 import android.content.Context;
 import android.database.DataSetObserver;
+import android.graphics.PointF;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.NestedScrollingChild;
@@ -10,6 +11,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.PagerAdapterWrapper;
 import android.support.v4.view.ScrollingView;
 import android.support.v4.view.ViewPager;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
@@ -31,6 +33,7 @@ public class RefreshContentWrapper implements RefreshContent {
 
     private View mContentView;
     private View mScrollableView;
+    private MotionEvent mMotionEvent;
 
     public RefreshContentWrapper(View view) {
         this.mContentView = view;
@@ -51,20 +54,6 @@ public class RefreshContentWrapper implements RefreshContent {
         if (mScrollableView instanceof ViewPager) {
             wrapperViewPager((ViewPager) this.mScrollableView);
         }
-//        if (content instanceof CoordinatorLayout) {
-//            AppBarLayout layout = $.query(content).$(AppBarLayout.class).view();
-//            if (layout != null) {
-////                setRealContentView(new AppBarLayoutWrapper(layout, contentView));
-//                layout.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
-//                    if (verticalOffset >= 0) {
-//                        mTwinkling.setTwinklingEnabled(true);
-//                    } else {
-//                        mTwinkling.setTwinklingEnabled(false);
-//                    }
-//                });
-//                return;
-//            }
-//        }
     }
 
     private void wrapperViewPager(final ViewPager viewPager) {
@@ -136,28 +125,103 @@ public class RefreshContentWrapper implements RefreshContent {
 
     @Override
     public boolean canScrollUp() {
-        if (mScrollableView == null) {
-            mScrollableView = mContentView;
+//        if (mScrollableView == null) {
+//            mScrollableView = mContentView;
+//        }
+        return canScrollUp(mContentView, mMotionEvent);
+    }
+
+    private static boolean canScrollUp(View targetView, MotionEvent event) {
+        if (canScrollUp(targetView)) {
+            return true;
         }
+        if (targetView instanceof ViewGroup && event != null) {
+            ViewGroup viewGroup = (ViewGroup) targetView;
+            final int childCount = viewGroup.getChildCount();
+            PointF point = new PointF();
+            for (int i = 0; i < childCount; i++) {
+                View child = viewGroup.getChildAt(i);
+                if (isTransformedTouchPointInView(viewGroup,child, event.getX(), event.getY() , point)) {
+                    event = MotionEvent.obtain(event);
+                    event.offsetLocation(point.x, point.y);
+                    return canScrollUp(child, event);
+                }
+            }
+        }
+        return false;
+    }
+
+    private static boolean isTransformedTouchPointInView(ViewGroup group, View child, float x, float y,
+                                                    PointF outLocalPoint) {
+        final float[] point = new float[2];
+        point[0] = x;
+        point[1] = y;
+        transformPointToViewLocal(group, child, point);
+        final boolean isInView = pointInView(child, point[0], point[1], 0);
+        if (isInView && outLocalPoint != null) {
+            outLocalPoint.set(point[0]-x, point[1]-y);
+        }
+        return isInView;
+    }
+
+    private static void transformPointToViewLocal(ViewGroup group, View child, float[] point) {
+        point[0] += group.getScrollX() - child.getLeft();
+        point[1] += group.getScrollY() - child.getTop();
+//        if (!child.hasIdentityMatrix()) {
+//            child.getInverseMatrix().mapPoints(point);
+//        }
+    }
+
+    private static boolean pointInView(View view, float localX, float localY, float slop) {
+        return localX >= -slop && localY >= -slop && localX < ((view.getWidth()) + slop) &&
+                localY < ((view.getHeight()) + slop);
+    }
+
+
+    private static boolean canScrollUp(View targetView) {
         if (android.os.Build.VERSION.SDK_INT < 14) {
-            if (mScrollableView instanceof AbsListView) {
-                final AbsListView absListView = (AbsListView) mScrollableView;
+            if (targetView instanceof AbsListView) {
+                final AbsListView absListView = (AbsListView) targetView;
                 return absListView.getChildCount() > 0
                         && (absListView.getFirstVisiblePosition() > 0 || absListView.getChildAt(0)
                         .getTop() < absListView.getPaddingTop());
             } else {
-                return mScrollableView.getScrollY() > 0;
+                return targetView.getScrollY() > 0;
             }
         } else {
-            return mScrollableView.canScrollVertically(-1);
+            return targetView.canScrollVertically(-1);
         }
     }
 
     @Override
     public boolean canScrollDown() {
-        if (mScrollableView == null) {
-            mScrollableView = mContentView;
+//        if (mScrollableView == null) {
+//            mScrollableView = mContentView;
+//        }
+        return canScrollDown(mContentView, mMotionEvent);
+    }
+
+    private static boolean canScrollDown(View targetView, MotionEvent event) {
+        if (canScrollDown(targetView)) {
+            return true;
         }
+        if (targetView instanceof ViewGroup && event != null) {
+            ViewGroup viewGroup = (ViewGroup) targetView;
+            final int childCount = viewGroup.getChildCount();
+            PointF point = new PointF();
+            for (int i = 0; i < childCount; i++) {
+                View child = viewGroup.getChildAt(i);
+                if (isTransformedTouchPointInView(viewGroup,child, event.getX(), event.getY() , point)) {
+                    event = MotionEvent.obtain(event);
+                    event.offsetLocation(point.x, point.y);
+                    return canScrollDown(child, event);
+                }
+            }
+        }
+        return false;
+    }
+
+    private static boolean canScrollDown(View mScrollableView) {
         if (android.os.Build.VERSION.SDK_INT < 14) {
             if (mScrollableView instanceof AbsListView) {
                 final AbsListView absListView = (AbsListView) mScrollableView;
@@ -200,6 +264,17 @@ public class RefreshContentWrapper implements RefreshContent {
     @Override
     public View getScrollableView() {
         return mScrollableView;
+    }
+
+    @Override
+    public void onActionDown(MotionEvent e) {
+        mMotionEvent = MotionEvent.obtain(e);
+        mMotionEvent.offsetLocation(-mContentView.getLeft(), -mContentView.getTop());
+    }
+
+    @Override
+    public void onActionUpOrCancel(MotionEvent e) {
+        mMotionEvent = null;
     }
 
     private class PagerPrimaryAdapter extends PagerAdapterWrapper {

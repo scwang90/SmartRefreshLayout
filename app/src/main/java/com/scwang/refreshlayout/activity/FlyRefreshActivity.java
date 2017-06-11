@@ -1,4 +1,4 @@
-package com.scwang.refreshlayout;
+package com.scwang.refreshlayout.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -29,6 +29,7 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.scwang.refreshlayout.R;
 import com.scwang.smartrefreshheader.FlyRefreshHeader;
 import com.scwang.smartrefreshheader.flyrefresh.FlyView;
 import com.scwang.smartrefreshheader.flyrefresh.MountanScenceView;
@@ -66,6 +67,12 @@ public class FlyRefreshActivity extends AppCompatActivity {
         setContentView(R.layout.activity_fly_refresh);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
 
         /************************************************************
@@ -79,7 +86,7 @@ public class FlyRefreshActivity extends AppCompatActivity {
         mFlylayout = (SmartRefreshLayout) findViewById(R.id.smart);
         mFlylayout.setRefreshHeader(mFlyRefreshHeader);//设置Header
         mFlylayout.setReboundInterpolator(new ElasticOutInterpolator());//设置回弹插值器，会带有弹簧震动效果
-        mFlylayout.setReboundDuration(500);//设置回弹动画时长
+        mFlylayout.setReboundDuration(800);//设置回弹动画时长
         mFlylayout.autoRefresh();//触发自动刷新
         mFlylayout.setOnRefreshListener(new OnRefreshListener() {
             @Override

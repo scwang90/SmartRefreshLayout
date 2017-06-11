@@ -92,8 +92,8 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader, SizeObse
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.MaterialHeader);
         mShowBezierWave = ta.getBoolean(R.styleable.MaterialHeader_srlShowBezierWave, mShowBezierWave);
-        mBezierPaint.setColor(ta.getColor(R.styleable.WaveSwipeHeader_srlPrimaryColor, 0xff11bbff));
-        if (ta.hasValue(R.styleable.WaveSwipeHeader_srlShadowRadius)) {
+        mBezierPaint.setColor(ta.getColor(R.styleable.MaterialHeader_srlPrimaryColor, 0xff11bbff));
+        if (ta.hasValue(R.styleable.MaterialHeader_srlShadowRadius)) {
             int radius = ta.getDimensionPixelOffset(R.styleable.MaterialHeader_srlShadowRadius, 0);
             int color = ta.getColor(R.styleable.MaterialHeader_srlShadowColor, 0xff000000);
             mBezierPaint.setShadowLayer(radius, 0, 0, color);
@@ -159,6 +159,7 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader, SizeObse
 
     //</editor-fold>
 
+    //<editor-fold desc="API">
     /**
      * One of DEFAULT, or LARGE.
      */
@@ -179,6 +180,12 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader, SizeObse
         mProgress.updateSizes(size);
         mCircleView.setImageDrawable(mProgress);
     }
+
+    public void setShowBezierWave(boolean show) {
+        this.mShowBezierWave = show;
+    }
+
+    //</editor-fold>
 
 
     //<editor-fold desc="RefreshHeader">
@@ -245,7 +252,7 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader, SizeObse
         switch (state) {
             case None:
                 break;
-            case PullDownRefresh:
+            case PullDownToRefresh:
                 mFinished = false;
                 mCircleView.setVisibility(VISIBLE);
                 mCircleView.setScaleX(1);

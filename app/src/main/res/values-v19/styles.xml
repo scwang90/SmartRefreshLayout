@@ -1,8 +1,10 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppThemeBase" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:windowTranslucentStatus">true</item>
+    <style name="AppTheme" parent="AppThemeBase">
     </style>
 
+    <style name="AppTheme.TranslucentStatus">
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
 </resources>

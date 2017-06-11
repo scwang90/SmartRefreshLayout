@@ -2,4 +2,23 @@
     <dimen name="app_bar_height">240dp</dimen><!--180dp-->
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+
+    <dimen name="division_line">0.5dp</dimen>
+
+    <dimen name="padding_common">10dp</dimen>
+    <dimen name="padding_common_h">15dp</dimen>
+    <dimen name="padding_common_v">10dp</dimen>
+    <dimen name="padding_common_d">5dp</dimen>
+
+    <dimen name="textsize_small">12sp</dimen>
+    <dimen name="textsize_content">14sp</dimen>
+    <dimen name="textsize_titlesmall">16sp</dimen>
+    <dimen name="textsize_title">17sp</dimen>
+    <dimen name="textsize_titlelarge">19sp</dimen>
+    <dimen name="textsize_titlebar">20sp</dimen>
+
 </resources>

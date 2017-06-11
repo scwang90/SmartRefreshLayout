@@ -2,7 +2,7 @@ package com.scwang.smartrefreshlayout.constant;
 
 public enum RefreshState {
     None,
-    PullDownRefresh, PullUpLoad,
+    PullDownToRefresh, PullToUpLoad,
     PullDownCanceled, PullUpCanceled,
     ReleaseToRefresh, ReleaseToLoad,
     Refreshing, Loading,

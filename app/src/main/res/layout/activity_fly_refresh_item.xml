@@ -9,7 +9,8 @@
     android:paddingBottom="4dp"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    android:paddingTop="4dp">
+    android:paddingTop="4dp"
+    tools:showIn="@layout/activity_fly_refresh">
 
     <ImageView
         android:id="@+id/icon"

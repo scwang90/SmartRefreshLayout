@@ -1,4 +1,4 @@
-package com.scwang.smartrefreshlayout.header.bezier;
+package com.scwang.smartrefreshlayout.header;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -18,6 +18,10 @@ import com.scwang.smartrefreshlayout.api.RefreshHeader;
 import com.scwang.smartrefreshlayout.api.RefreshLayout;
 import com.scwang.smartrefreshlayout.constant.RefreshState;
 import com.scwang.smartrefreshlayout.constant.SpinnerStyle;
+import com.scwang.smartrefreshlayout.header.bezier.RippleView;
+import com.scwang.smartrefreshlayout.header.bezier.RoundDotView;
+import com.scwang.smartrefreshlayout.header.bezier.RoundProgressView;
+import com.scwang.smartrefreshlayout.header.bezier.WaveView;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
@@ -205,14 +209,14 @@ public class BezierHeader extends FrameLayout implements RefreshHeader {
         switch (state) {
             case None:
                 break;
-            case PullDownRefresh:
+            case PullDownToRefresh:
                 mDotView.setAlpha(1);
                 mDotView.setVisibility(View.VISIBLE);
                 mProgressView.setScaleX(0);
                 mProgressView.setScaleY(0);
                 //mProgressView.setVisibility(View.INVISIBLE);
                 break;
-            case PullUpLoad:
+            case PullToUpLoad:
                 break;
             case Refreshing:
                 break;

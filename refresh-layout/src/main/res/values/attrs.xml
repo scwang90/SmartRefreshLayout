@@ -22,6 +22,7 @@
         <attr name="srlReboundDuration" format="integer"/>
         <attr name="srlHeaderHeight" format="dimension"/>
         <attr name="srlFooterHeight" format="dimension"/>
+        <attr name="srlDragRate" format="float"/>
         <attr name="srlExtendRate" format="float"/>
         <attr name="srlHeaderExtendHeight" format="dimension"/>
         <attr name="srlFooterExtendHeight" format="dimension"/>

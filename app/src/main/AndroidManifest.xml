@@ -3,6 +3,7 @@
     package="com.scwang.refreshlayout">
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -10,20 +11,49 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ScrollingActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name=".activity.IndexMainActivity"
+            android:label="@string/title_activity_index_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ScrollingActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.TranslucentStatus" />
         <activity android:name=".ItemActivity" />
         <activity
-            android:name=".FlyRefreshActivity"
+            android:name=".activity.FlyRefreshActivity"
             android:label="@string/title_activity_fly_refresh"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.TranslucentStatus" />
+        <activity android:name=".activity.SelectRegionActivity" />
+        <activity android:name=".activity.style.WaveSwipStyleActivity" />
+        <activity
+            android:name=".activity.style.MaterialStyleActivity"
+            android:label="@string/title_activity_style_material"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activity.style.WaterDropStyleActivity"
+            android:label="@string/title_activity_style_water_drop"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activity.style.PhoenixStyleActivity"
+            android:label="@string/title_activity_style_phoenix"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activity.style.TaurusStyleActivity"
+            android:label="@string/title_activity_style_taurus"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activity.style.BezierStyleActivity"
+            android:label="@string/title_activity_style_bezier"
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".activity.style.ClassicsStyleActivity"
+            android:label="@string/title_activity_style_classics"
+            android:theme="@style/AppTheme"/>
     </application>
 
 </manifest>
