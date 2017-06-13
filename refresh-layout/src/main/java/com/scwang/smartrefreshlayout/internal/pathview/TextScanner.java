@@ -1,9 +1,12 @@
 package com.scwang.smartrefreshlayout.internal.pathview;
 
+import android.graphics.Matrix;
 import android.graphics.Path;
-import android.graphics.RectF;
+import android.util.Log;
 
 import java.util.Locale;
+
+import static android.content.ContentValues.TAG;
 
 class TextScanner {
 
@@ -507,21 +510,17 @@ class TextScanner {
                     xAxisRotation = scan.checkedNextFloat(ry);
                     largeArcFlag = scan.checkedNextFlag(xAxisRotation);
                     sweepFlag = scan.checkedNextFlag(largeArcFlag);
-                    if (sweepFlag == null)
-                        x = y = Float.NaN;
-                    else {
-                        x = scan.possibleNextFloat();
-                        y = scan.checkedNextFloat(x);
-                    }
+                    x = scan.checkedNextFloat(0);
+                    y = scan.checkedNextFloat(x);
                     if (Float.isNaN(y) || rx < 0 || ry < 0) {
-                        //Log.e(TAG, "Bad path coords for "+((char)pathCommand)+" path segment");
+                        Log.e(TAG, "Bad path coords for "+((char)pathCommand)+" path segment");
                         return path;
                     }
-                    if (pathCommand == 'a') {
+                    if (pathCommand=='a') {
                         x += currentX;
                         y += currentY;
                     }
-                    path.arcTo(new RectF(rx, ry, x, y), xAxisRotation, xAxisRotation);
+                    arcTo(currentX, currentY, rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y, path);
                     //path.arcTo(rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y);
                     currentX = lastControlX = x;
                     currentY = lastControlY = y;
@@ -542,6 +541,154 @@ class TextScanner {
             }
         }
         return path;
+    }
+
+    private static void arcTo(float lastX, float lastY, float rx, float ry, float angle, boolean largeArcFlag, boolean sweepFlag, float x, float y, Path pather)
+    {
+        if(lastX != x || lastY != y) {
+            if(rx != 0.0F && ry != 0.0F) {
+                rx = Math.abs(rx);
+                ry = Math.abs(ry);
+                float angleRad = (float)Math.toRadians((double)angle % 360.0D);
+                double cosAngle = Math.cos((double)angleRad);
+                double sinAngle = Math.sin((double)angleRad);
+                double dx2 = (double)(lastX - x) / 2.0D;
+                double dy2 = (double)(lastY - y) / 2.0D;
+                double x1 = cosAngle * dx2 + sinAngle * dy2;
+                double y1 = -sinAngle * dx2 + cosAngle * dy2;
+                double rx_sq = (double)(rx * rx);
+                double ry_sq = (double)(ry * ry);
+                double x1_sq = x1 * x1;
+                double y1_sq = y1 * y1;
+                double radiiCheck = x1_sq / rx_sq + y1_sq / ry_sq;
+                if(radiiCheck > 1.0D) {
+                    rx = (float)Math.sqrt(radiiCheck) * rx;
+                    ry = (float)Math.sqrt(radiiCheck) * ry;
+                    rx_sq = (double)(rx * rx);
+                    ry_sq = (double)(ry * ry);
+                }
+
+                double sign = (double)(largeArcFlag == sweepFlag?-1:1);
+                double sq = (rx_sq * ry_sq - rx_sq * y1_sq - ry_sq * x1_sq) / (rx_sq * y1_sq + ry_sq * x1_sq);
+                sq = sq < 0.0D?0.0D:sq;
+                double coef = sign * Math.sqrt(sq);
+                double cx1 = coef * ((double)rx * y1 / (double)ry);
+                double cy1 = coef * -((double)ry * x1 / (double)rx);
+                double sx2 = (double)(lastX + x) / 2.0D;
+                double sy2 = (double)(lastY + y) / 2.0D;
+                double cx = sx2 + (cosAngle * cx1 - sinAngle * cy1);
+                double cy = sy2 + sinAngle * cx1 + cosAngle * cy1;
+                double ux = (x1 - cx1) / (double)rx;
+                double uy = (y1 - cy1) / (double)ry;
+                double vx = (-x1 - cx1) / (double)rx;
+                double vy = (-y1 - cy1) / (double)ry;
+                double n = Math.sqrt(ux * ux + uy * uy);
+                sign = uy < 0.0D?-1.0D:1.0D;
+                double angleStart = Math.toDegrees(sign * Math.acos(ux / n));
+                n = Math.sqrt((ux * ux + uy * uy) * (vx * vx + vy * vy));
+                double p = ux * vx + uy * vy;
+                sign = ux * vy - uy * vx < 0.0D?-1.0D:1.0D;
+                double angleExtent = Math.toDegrees(sign * Math.acos(p / n));
+                if(!sweepFlag && angleExtent > 0.0D) {
+                    angleExtent -= 360.0D;
+                } else if(sweepFlag && angleExtent < 0.0D) {
+                    angleExtent += 360.0D;
+                }
+
+                angleExtent %= 360.0D;
+                angleStart %= 360.0D;
+                float[] bezierPoints = arcToBeziers(angleStart, angleExtent);
+                Matrix m = new Matrix();
+                m.postScale(rx, ry);
+                m.postRotate(angle);
+                m.postTranslate((float)cx, (float)cy);
+                m.mapPoints(bezierPoints);
+                bezierPoints[bezierPoints.length - 2] = x;
+                bezierPoints[bezierPoints.length - 1] = y;
+
+                for(int i = 0; i < bezierPoints.length; i += 6) {
+                    pather.cubicTo(bezierPoints[i], bezierPoints[i + 1], bezierPoints[i + 2], bezierPoints[i + 3], bezierPoints[i + 4], bezierPoints[i + 5]);
+                }
+
+            } else {
+                pather.lineTo(x, y);
+            }
+        }
+    }
+
+
+    /*
+     * Generate the control points and endpoints for a set of bezier curves that match
+     * a circular arc starting from angle 'angleStart' and sweep the angle 'angleExtent'.
+     * The circle the arc follows will be centred on (0,0) and have a radius of 1.0.
+     *
+     * Each bezier can cover no more than 90 degrees, so the arc will be divided evenly
+     * into a maximum of four curves.
+     *
+     * The resulting control points will later be scaled and rotated to match the final
+     * arc required.
+     *
+     * The returned array has the format [x0,y0, x1,y1,...] and excludes the start point
+     * of the arc.
+     */
+    private static float[]  arcToBeziers(double angleStart, double angleExtent)
+    {
+//        int numSegments = (int)Math.ceil(Math.abs(angleExtent) / 90.0D);
+//        angleStart = Math.toRadians(angleStart);
+//        angleExtent = Math.toRadians(angleExtent);
+//        float angleIncrement = (float)(angleExtent / (double)numSegments);
+//        double controlLength = 1.3333333333333333D * Math.sin((double)angleIncrement / 2.0D) / (1.0D + Math.cos((double)angleIncrement / 2.0D));
+//        float[] coords = new float[numSegments * 6];
+//        int pos = 0;
+//
+//        for(int i = 0; i < numSegments; ++i) {
+//            double angle = angleStart + (double)((float)i * angleIncrement);
+//            double dx = Math.cos(angle);
+//            double dy = Math.sin(angle);
+//            coords[pos++] = (float)(dx - controlLength * dy);
+//            coords[pos++] = (float)(dy + controlLength * dx);
+//            angle += (double)angleIncrement;
+//            dx = Math.cos(angle);
+//            dy = Math.sin(angle);
+//            coords[pos++] = (float)(dx + controlLength * dy);
+//            coords[pos++] = (float)(dy - controlLength * dx);
+//            coords[pos++] = (float)dx;
+//            coords[pos++] = (float)dy;
+//        }
+//
+//        return coords;
+        int    numSegments = (int) Math.ceil(Math.abs(angleExtent) / 90.0);
+
+        angleStart = Math.toRadians(angleStart);
+        angleExtent = Math.toRadians(angleExtent);
+        float  angleIncrement = (float) (angleExtent / numSegments);
+
+        // The length of each control point vector is given by the following formula.
+        double  controlLength = 4.0 / 3.0 * Math.sin(angleIncrement / 2.0) / (1.0 + Math.cos(angleIncrement / 2.0));
+
+        float[] coords = new float[numSegments * 6];
+        int     pos = 0;
+
+        for (int i=0; i<numSegments; i++)
+        {
+            double  angle = angleStart + i * angleIncrement;
+            // Calculate the control vector at this angle
+            double  dx = Math.cos(angle);
+            double  dy = Math.sin(angle);
+            // First control point
+            coords[pos++]   = (float) (dx - controlLength * dy);
+            coords[pos++] = (float) (dy + controlLength * dx);
+            // Second control point
+            angle += angleIncrement;
+            dx = Math.cos(angle);
+            dy = Math.sin(angle);
+            coords[pos++] = (float) (dx + controlLength * dy);
+            coords[pos++] = (float) (dy - controlLength * dx);
+            // Endpoint of bezier
+            coords[pos++] = (float) dx;
+            coords[pos++] = (float) dy;
+        }
+        return coords;
     }
 
     public static CharSequence zoomPath(String val, float ratioWidth, float ratioHeight) {

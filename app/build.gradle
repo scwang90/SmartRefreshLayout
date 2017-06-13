@@ -40,5 +40,6 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'jp.wasabeef:recyclerview-animators:2.2.6'
+    compile 'com.eftimoff:android-pathview:1.0.8@aar'
     testCompile 'junit:junit:4.12'
 }

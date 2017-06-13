@@ -65,7 +65,6 @@ public class IndexMainActivity extends AppCompatActivity implements OnNavigation
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this);
         navigation.setSelectedItemId(R.id.navigation_home);
-
     }
 
     @Override
