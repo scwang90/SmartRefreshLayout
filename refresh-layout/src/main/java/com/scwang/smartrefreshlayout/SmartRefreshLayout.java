@@ -716,12 +716,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         }
     };
 
-    protected AnimatorUpdateListener reboundUpdateListener = new AnimatorUpdateListener() {
-        @Override
-        public void onAnimationUpdate(ValueAnimator animation) {
-            moveSpinner((int) animation.getAnimatedValue(), true);
-        }
-    };
+    protected AnimatorUpdateListener reboundUpdateListener = animation -> moveSpinner((int) animation.getAnimatedValue(), true);
     //</editor-fold>
 
     protected boolean moveSpinnerInfinitely(float dy) {
