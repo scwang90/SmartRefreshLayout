@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 import com.scwang.refreshlayout.R;
-import com.scwang.refreshlayout.activity.FlyRefreshActivity;
+import com.scwang.refreshlayout.activity.style.FlyRefreshStyleActivity;
 import com.scwang.refreshlayout.activity.style.BezierStyleActivity;
 import com.scwang.refreshlayout.activity.style.ClassicsStyleActivity;
 import com.scwang.refreshlayout.activity.style.MaterialStyleActivity;
@@ -43,7 +43,7 @@ import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 public class RefreshStylesFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private enum Item {
-        FlyRefresh("纸飞机", FlyRefreshActivity.class),
+        FlyRefresh("纸飞机", FlyRefreshStyleActivity.class),
         WaveSwipe("水波", WaveSwipStyleActivity.class),
         WaterDrop("苹果水滴风格", WaterDropStyleActivity.class),
         Material("官方主题", MaterialStyleActivity.class),

@@ -29,9 +29,9 @@ import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 public class ClassicsStyleActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private enum Item {
-        背后固定("下拉的时候Header固定在背后"),
         尺寸拉伸("下拉的时候Header的高度跟随变大"),
         位置平移("下拉的时候Header的位置向下偏移"),
+        背后固定("下拉的时候Header固定在背后"),
         默认主题("更改为默认主题颜色"),
         橙色主题("更改为橙色主题颜色"),
         红色主题("更改为红色主题颜色"),
@@ -91,9 +91,11 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
         switch (Item.values()[position]) {
             case 背后固定:
                 mClassicsHeader.setSpinnerStyle(SpinnerStyle.FixedBehind);
+                mRefreshLayout.setPrimaryColors(0xff444444, 0xffffffff);
+                ((View)mRefreshLayout).setBackgroundColor(0xff444444);
                 /**
                  * 由于是后面才设置，需要手动更改视图的位置
-                 * 如果在 onCreate 或者 xml 中设置好 就不用手动调整位置了
+                 * 如果在 onCreate 或者 xml 中设置好[SpinnerStyle] 就不用手动调整位置了
                  */
                 ((ViewGroup)mRefreshLayout).bringChildToFront(mRecyclerView);
                 break;

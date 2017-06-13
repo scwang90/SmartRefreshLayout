@@ -10,7 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.scwang.refreshlayout.activity.FlyRefreshActivity;
+import com.scwang.refreshlayout.activity.style.FlyRefreshStyleActivity;
 import com.scwang.smartrefreshheader.FlyRefreshHeader;
 import com.scwang.smartrefreshheader.flyrefresh.FlyView;
 import com.scwang.smartrefreshheader.flyrefresh.MountanScenceView;
@@ -38,7 +38,7 @@ public class ScrollingActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ScrollingActivity.this, FlyRefreshActivity.class));
+                startActivity(new Intent(ScrollingActivity.this, FlyRefreshStyleActivity.class));
             }
         });
 

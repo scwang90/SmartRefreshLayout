@@ -1,4 +1,4 @@
-package com.scwang.refreshlayout.activity;
+package com.scwang.refreshlayout.activity.style;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -33,7 +33,6 @@ import com.scwang.refreshlayout.R;
 import com.scwang.smartrefreshheader.FlyRefreshHeader;
 import com.scwang.smartrefreshheader.flyrefresh.FlyView;
 import com.scwang.smartrefreshheader.flyrefresh.MountanScenceView;
-import com.scwang.smartrefreshlayout.SmartRefreshLayout;
 import com.scwang.smartrefreshlayout.api.RefreshHeader;
 import com.scwang.smartrefreshlayout.api.RefreshLayout;
 import com.scwang.smartrefreshlayout.listener.OnRefreshListener;
@@ -48,7 +47,9 @@ import java.util.Locale;
 
 import jp.wasabeef.recyclerview.animators.BaseItemAnimator;
 
-public class FlyRefreshActivity extends AppCompatActivity {
+import static com.scwang.refreshlayout.R.id.fab;
+
+public class FlyRefreshStyleActivity extends AppCompatActivity {
 
     private RecyclerView mListView;
     private RefreshLayout mFlylayout;
@@ -60,6 +61,9 @@ public class FlyRefreshActivity extends AppCompatActivity {
     private LinearLayoutManager mLayoutManager;
     private FlyRefreshHeader mFlyRefreshHeader;
     private MountanScenceView mScenceView;
+    private CollapsingToolbarLayout mToolbarLayout;
+    private FloatingActionButton mActionButton;
+    private View.OnClickListener mThemeListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,8 +86,8 @@ public class FlyRefreshActivity extends AppCompatActivity {
 
         mFlyView = (FlyView) findViewById(R.id.flyview);
         mScenceView = (MountanScenceView) findViewById(R.id.flyrefresh);
-        mFlyRefreshHeader.setUp(mScenceView, mFlyView);
-        mFlylayout = (SmartRefreshLayout) findViewById(R.id.smart);
+        mFlyRefreshHeader.setUp(mScenceView, mFlyView);//绑定场景和纸飞机
+        mFlylayout = (RefreshLayout) findViewById(R.id.smart);
         mFlylayout.setRefreshHeader(mFlyRefreshHeader);//设置Header
         mFlylayout.setReboundInterpolator(new ElasticOutInterpolator());//设置回弹插值器，会带有弹簧震动效果
         mFlylayout.setReboundDuration(800);//设置回弹动画时长
@@ -96,10 +100,11 @@ public class FlyRefreshActivity extends AppCompatActivity {
                     //开始刷新的时候个第一个item设置动画效果
                     bounceAnimateView(child.findViewById(R.id.icon));
                 }
+                updateTheme();//改变主题颜色
                 mListView.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        //通知刷新完成，这里改为通知Header(在FlyHeader内部实现中早已通知RefreshLayout刷新完成)，让纸飞机飞回来
+                        //通知刷新完成，这里改为通知Header，让纸飞机飞回来(在FlyHeader内部实现中早已通知RefreshLayout刷新完成)
                         mFlyRefreshHeader.finishRefresh(new AnimatorListenerAdapter() {
                             public void onAnimationEnd(Animator animation) {
                                 addItemData();//在纸飞机回到原位之后添加数据效果更真实
@@ -135,28 +140,16 @@ public class FlyRefreshActivity extends AppCompatActivity {
         mListView.setLayoutManager(mLayoutManager);
         mListView.setAdapter(mAdapter);
         mListView.setItemAnimator(new SampleItemAnimator());
-        final CollapsingToolbarLayout layout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
-        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        mToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        mActionButton = (FloatingActionButton) findViewById(fab);
         /**
          * 设置点击 ActionButton 时候触发自动刷新 并改变主题颜色
          */
-        fab.setOnClickListener(new View.OnClickListener() {
-            int index = 0;
-            int[] ids = new int[]{
-                    android.R.color.holo_green_light,
-                    android.R.color.holo_red_light,
-                    android.R.color.holo_orange_light,
-                    android.R.color.holo_blue_bright,
-            };
+        mActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int color = ContextCompat.getColor(getApplication(), ids[index % ids.length]);
+                updateTheme();
                 mFlylayout.autoRefresh();
-                mFlylayout.setPrimaryColors(color);
-                fab.setBackgroundColor(color);
-                fab.setBackgroundTintList(ColorStateList.valueOf(color));
-                layout.setContentScrimColor(color);
-                index++;
             }
         });
         /**
@@ -170,7 +163,7 @@ public class FlyRefreshActivity extends AppCompatActivity {
                 float fraction = 1f * (scrollRange + verticalOffset) / scrollRange;
                 if (fraction < 0.1 && misAppbarExpand) {
                     misAppbarExpand = false;
-                    fab.animate().scaleX(0).scaleY(0);
+                    mActionButton.animate().scaleX(0).scaleY(0);
                     mFlyView.animate().scaleX(0).scaleY(0);
                     ValueAnimator animator = ValueAnimator.ofInt(mListView.getPaddingTop(), 0);
                     animator.setDuration(300);
@@ -184,7 +177,7 @@ public class FlyRefreshActivity extends AppCompatActivity {
                 }
                 if (fraction > 0.8 && !misAppbarExpand) {
                     misAppbarExpand = true;
-                    fab.animate().scaleX(1).scaleY(1);
+                    mActionButton.animate().scaleX(1).scaleY(1);
                     mFlyView.animate().scaleX(1).scaleY(1);
                     ValueAnimator animator = ValueAnimator.ofInt(mListView.getPaddingTop(), DensityUtil.dp2px(25));
                     animator.setDuration(300);
@@ -198,6 +191,30 @@ public class FlyRefreshActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void updateTheme() {
+        if (mThemeListener == null) {
+            mThemeListener = new View.OnClickListener() {
+                int index = 0;
+                int[] ids = new int[]{
+                        android.R.color.holo_green_light,
+                        android.R.color.holo_red_light,
+                        android.R.color.holo_orange_light,
+                        android.R.color.holo_blue_bright,
+                };
+                @Override
+                public void onClick(View v) {
+                    int color = ContextCompat.getColor(getApplication(), ids[index % ids.length]);
+                    mFlylayout.setPrimaryColors(color);
+                    mActionButton.setBackgroundColor(color);
+                    mActionButton.setBackgroundTintList(ColorStateList.valueOf(color));
+                    mToolbarLayout.setContentScrimColor(color);
+                    index++;
+                }
+            };
+        }
+        mThemeListener.onClick(null);
     }
 
     private void initDataSet() {

@@ -184,6 +184,9 @@ public class FlyRefreshHeader implements RefreshHeader, SizeObserver {
         ViewCompat.animate(v).setInterpolator(null);
     }
 
+    public void finishRefresh() {
+        finishRefresh(null);
+    }
     public void finishRefresh(AnimatorListenerAdapter listenerAdapter) {
         if (mFlyView == null || !mIsRefreshing) {
             return;
