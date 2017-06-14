@@ -51,24 +51,22 @@ public class FalsifyHeader extends View implements RefreshHeader {
 
     @Override@SuppressLint("DrawAllocation")
     protected final void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
         if (isInEditMode()) {//这段代码在运行时不会执行，只会在Studio编辑预览时运行，不用在意性能问题
-//            setBackgroundColor(0x44000000);
-            super.onDraw(canvas);
-
             int d = DensityUtil.dp2px(5);
 
             Paint paint = new Paint();
             paint.setStyle(Paint.Style.STROKE);
             paint.setColor(0x44ffffff);
             paint.setStrokeWidth(DensityUtil.dp2px(1));
-            paint.setPathEffect(new DashPathEffect(new float[]{d,d,d,d},1));
+            paint.setPathEffect(new DashPathEffect(new float[]{d, d, d, d}, 1));
             canvas.drawRect(d, d, getWidth() - d, getBottom() - d, paint);
 
             TextView textView = new TextView(getContext());
-            textView.setText("FalsifyHeader 虚假区域\n运行时代表下拉Header的高度\n而不会显示任何东西");
+            textView.setText("FalsifyHeader 虚假区域\n运行时代表下拉Header的高度【" + DensityUtil.px2dp(getHeight()) + "dp】\n而不会显示任何东西");
             textView.setTextColor(0x44ffffff);
             textView.setGravity(Gravity.CENTER);
-            textView.measure(makeMeasureSpec(getWidth(), EXACTLY),makeMeasureSpec(getHeight(), EXACTLY));
+            textView.measure(makeMeasureSpec(getWidth(), EXACTLY), makeMeasureSpec(getHeight(), EXACTLY));
             textView.layout(0, 0, getWidth(), getHeight());
             textView.draw(canvas);
         }

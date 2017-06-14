@@ -4,19 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false"
     tools:context="com.scwang.refreshlayout.activity.style.FlyRefreshStyleActivity">
 
     <com.scwang.smartrefresh.header.flyrefresh.MountanScenceView
         android:id="@+id/mountan"
         android:layout_width="match_parent"
-        android:layout_height="340dp"
+        android:layout_height="match_parent"
+        app:srlViewportHeightHeight="340dp"
         app:srlPrimaryColor="@color/colorPrimary"/>
+    <!--srlViewportHeightHeight 设置为-->
+    <!--AppBarLayout.Height + RefreshLayout.Height-->
+    <!--效果最佳-->
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_bar_height"
         android:fitsSystemWindows="true"
+        android:clipChildren="false"
+        android:clipToPadding="false"
         android:background="@android:color/transparent"
         android:theme="@style/AppTheme.AppBarOverlay">
 
@@ -24,6 +32,8 @@
             android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:clipToPadding="false"
             app:expandedTitleMarginBottom="120dp"
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
@@ -45,6 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:srlExtendRate="1.5"
+        app:srlHeaderHeight="100dp"
         app:srlReboundDuration="200"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
         <com.scwang.smartrefresh.header.FlyRefreshHeader

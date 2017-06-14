@@ -180,10 +180,10 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         mEnableRefresh = ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnableRefresh, mEnableRefresh);
         mReboundDuration = ta.getInt(R.styleable.SmartRefreshLayout_srlReboundDuration, mReboundDuration);
         mEnableLoadmore = ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnableLoadmore, mEnableLoadmore);
-        mHeaderHeight = ta.getDimensionPixelSize(R.styleable.SmartRefreshLayout_srlHeaderHeight, density.dip2px(100));
-        mFooterHeight = ta.getDimensionPixelSize(R.styleable.SmartRefreshLayout_srlFooterHeight, density.dip2px(60));
-        mExtendFooterHeight = ta.getDimensionPixelSize(R.styleable.SmartRefreshLayout_srlFooterExtendHeight, (int) (mFooterHeight * (mExtendRate - 1)));
-        mExtendHeaderHeight = ta.getDimensionPixelSize(R.styleable.SmartRefreshLayout_srlHeaderExtendHeight, (int) (mHeaderHeight * (mExtendRate - 1)));
+        mHeaderHeight = ta.getDimensionPixelOffset(R.styleable.SmartRefreshLayout_srlHeaderHeight, density.dip2px(100));
+        mFooterHeight = ta.getDimensionPixelOffset(R.styleable.SmartRefreshLayout_srlFooterHeight, density.dip2px(60));
+        mExtendFooterHeight = ta.getDimensionPixelOffset(R.styleable.SmartRefreshLayout_srlFooterExtendHeight, (int) (mFooterHeight * (mExtendRate - 1)));
+        mExtendHeaderHeight = ta.getDimensionPixelOffset(R.styleable.SmartRefreshLayout_srlHeaderExtendHeight, (int) (mHeaderHeight * (mExtendRate - 1)));
         mDisableContentWhenRefresh = ta.getBoolean(R.styleable.SmartRefreshLayout_srlDisableContentWhenRefresh, mDisableContentWhenRefresh);
         mDisableContentWhenLoading = ta.getBoolean(R.styleable.SmartRefreshLayout_srlDisableContentWhenLoading, mDisableContentWhenLoading);
         mEnableHeaderTranslationContent = ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnableHeaderTranslationContent, mEnableHeaderTranslationContent);

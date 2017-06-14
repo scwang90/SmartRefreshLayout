@@ -31,6 +31,7 @@
 
     <declare-styleable name="MountanScenceView">
         <attr name="srlPrimaryColor"/>
+        <attr name="srlViewportHeightHeight" format="dimension"/>
     </declare-styleable>
 
 </resources>

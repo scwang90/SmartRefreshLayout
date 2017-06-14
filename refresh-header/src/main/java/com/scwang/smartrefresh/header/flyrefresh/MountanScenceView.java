@@ -51,13 +51,14 @@ public class MountanScenceView extends View {
     private Path mMount3 = new Path();
     private Path mTrunk = new Path();
     private Path mBranch = new Path();
+    private Matrix mTransMatrix = new Matrix();
 
     private float mScaleX = 5f;
     private float mScaleY = 5f;
     private float mMoveFactor = 0;
     private float mBounceMax = 1;
     private float mTreeBendFactor = Float.MAX_VALUE;
-    private Matrix mTransMatrix = new Matrix();
+    private int mViewportHeightHeight = 0;
 
     //<editor-fold desc="MountanScenceView">
     public MountanScenceView(Context context) {
@@ -81,18 +82,6 @@ public class MountanScenceView extends View {
         init(context, attrs, defStyleAttr);
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        final float width = getMeasuredWidth();
-        final float height = getMeasuredHeight();
-        mScaleX = width / WIDTH;
-        mScaleY = height / HEIGHT;
-
-        updateMountainPath(mMoveFactor);
-        updateTreePath(mMoveFactor, true);
-    }
-
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
         mMountPaint.setAntiAlias(true);
         mMountPaint.setStyle(Paint.Style.FILL);
@@ -108,13 +97,26 @@ public class MountanScenceView extends View {
         if (ta.hasValue(R.styleable.MountanScenceView_srlPrimaryColor)) {
             setPrimaryColor(ta.getColor(R.styleable.MountanScenceView_srlPrimaryColor, 0xff000000));
         }
+        mViewportHeightHeight = ta.getDimensionPixelOffset(R.styleable.MountanScenceView_srlViewportHeightHeight, 0);
         ta.recycle();
 
-        updateMountainPath(mMoveFactor);
+        updateMountainPath(mMoveFactor, HEIGHT);
         updateTreePath(mMoveFactor, true);
     }
 
-    private void updateMountainPath(float factor) {
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        final int width = getMeasuredWidth();
+        final int height = getMeasuredHeight();
+        mScaleX = 1f * width / WIDTH;
+        mScaleY = 1f * (mViewportHeightHeight > 0 ? mViewportHeightHeight : height) / HEIGHT;
+
+        updateMountainPath(mMoveFactor, height);
+        updateTreePath(mMoveFactor, true);
+    }
+
+    private void updateMountainPath(float factor,int height) {
 
         mTransMatrix.reset();
         mTransMatrix.setScale(mScaleX, mScaleY);
@@ -147,8 +149,8 @@ public class MountanScenceView extends View {
         mMount3.reset();
         mMount3.moveTo(0, 114 + offset3);
         mMount3.cubicTo(30, 106 + offset3, 196, 97 + offset3, WIDTH, 104 + offset3);
-        mMount3.lineTo(WIDTH, HEIGHT);
-        mMount3.lineTo(0, HEIGHT);
+        mMount3.lineTo(WIDTH, height / mScaleY);
+        mMount3.lineTo(0, height / mScaleY);
         mMount3.close();
         mMount3.transform(mTransMatrix);
     }
@@ -303,7 +305,9 @@ public class MountanScenceView extends View {
         float bendFactor = Math.max(0, percent);
 
         mMoveFactor = Math.max(0, mBounceMax);
-        updateMountainPath(mMoveFactor);
+
+        int height = getMeasuredHeight();
+        updateMountainPath(mMoveFactor, height > 0 ? height : HEIGHT);
         updateTreePath(bendFactor, false);
     }
 

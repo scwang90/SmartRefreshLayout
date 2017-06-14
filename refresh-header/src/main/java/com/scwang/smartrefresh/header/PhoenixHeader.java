@@ -141,6 +141,12 @@ public class PhoenixHeader extends View implements RefreshHeader, SizeDefinition
         ta.recycle();
     }
 
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        setMeasuredDimension(resolveSize(getSuggestedMinimumWidth(), widthMeasureSpec),
+                resolveSize(getSuggestedMinimumHeight(), heightMeasureSpec));
+    }
+
     private void setupAnimation() {
         mAnimation = new Animation() {
             @Override
