@@ -10,7 +10,6 @@ import android.graphics.RectF;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -192,15 +191,16 @@ public class CircleRefreshHeader extends View implements RefreshHeader, SizeObse
         }
 
         if (mAniStatus == AnimatorStatus.REL_DRAG) {
-            ViewGroup.LayoutParams params = getLayoutParams();
-            int height;
-            // NOTICE: If the height equals mLastHeight, then the requestLayout() will not work correctly
-            do {
-                height = getRelHeight();
-            } while (height == mLastHeight && getRelRatio() != 1);
-            mLastHeight = height;
-            params.height = PULL_HEIGHT + height;
-            requestLayout();
+            springUp();
+//            ViewGroup.LayoutParams params = getLayoutParams();
+//            int height;
+//            // NOTICE: If the height equals mLastHeight, then the requestLayout() will not work correctly
+//            do {
+//                height = getRelHeight();
+//            } while (height == mLastHeight && getRelRatio() != 1);
+//            mLastHeight = height;
+//            params.height = PULL_HEIGHT + height;
+//            requestLayout();
         }
 
 

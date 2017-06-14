@@ -13,8 +13,9 @@
         android:id="@+id/smart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:srlPrimaryColor="@color/colorPrimary"
         app:srlEnableLoadmore="false">
-        <com.scwang.smartrefresh.header.CircleRefreshHeader
+        <com.scwang.smartrefresh.header.CircleHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <android.support.v7.widget.RecyclerView
