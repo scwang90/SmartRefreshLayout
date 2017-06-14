@@ -11,17 +11,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.scwang.refreshlayout.activity.style.FlyRefreshStyleActivity;
-import com.scwang.smartrefreshheader.FlyRefreshHeader;
-import com.scwang.smartrefreshheader.flyrefresh.FlyView;
-import com.scwang.smartrefreshheader.flyrefresh.MountanScenceView;
-import com.scwang.smartrefreshlayout.SmartRefreshLayout;
-import com.scwang.smartrefreshlayout.api.DefaultRefreshFooterCreater;
-import com.scwang.smartrefreshlayout.api.RefreshFooter;
-import com.scwang.smartrefreshlayout.api.RefreshHeader;
-import com.scwang.smartrefreshlayout.api.RefreshLayout;
-import com.scwang.smartrefreshlayout.footer.classics.ClassicsFooter;
-import com.scwang.smartrefreshlayout.listener.OnRefreshListener;
-import com.scwang.smartrefreshlayout.listener.SimpleMultiPurposeListener;
+import com.scwang.smartrefresh.header.FlyRefreshHeader;
+import com.scwang.smartrefresh.header.flyrefresh.FlyView;
+import com.scwang.smartrefresh.header.flyrefresh.MountanScenceView;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreater;
+import com.scwang.smartrefresh.layout.api.RefreshFooter;
+import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.footer.classics.ClassicsFooter;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 
 public class ScrollingActivity extends AppCompatActivity {
 

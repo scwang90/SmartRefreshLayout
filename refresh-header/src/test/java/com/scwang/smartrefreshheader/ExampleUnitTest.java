@@ -1,4 +1,4 @@
-package com.scwang.smartrefreshheader;
+package com.scwang.smartrefresh.header;
 
 import org.junit.Test;
 

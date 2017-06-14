@@ -1,4 +1,4 @@
-package com.scwang.smartrefreshlayout;
+package com.scwang.smartrefresh.layout;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.scwang.smartrefreshlayout.test", appContext.getPackageName());
+        assertEquals("com.scwang.smartrefresh.layout.test", appContext.getPackageName());
     }
 }

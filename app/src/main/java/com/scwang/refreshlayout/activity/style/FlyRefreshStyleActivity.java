@@ -30,14 +30,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.scwang.refreshlayout.R;
-import com.scwang.smartrefreshheader.FlyRefreshHeader;
-import com.scwang.smartrefreshheader.flyrefresh.FlyView;
-import com.scwang.smartrefreshheader.flyrefresh.MountanScenceView;
-import com.scwang.smartrefreshlayout.api.RefreshHeader;
-import com.scwang.smartrefreshlayout.api.RefreshLayout;
-import com.scwang.smartrefreshlayout.listener.OnRefreshListener;
-import com.scwang.smartrefreshlayout.listener.SimpleMultiPurposeListener;
-import com.scwang.smartrefreshlayout.util.DensityUtil;
+import com.scwang.smartrefresh.header.FlyRefreshHeader;
+import com.scwang.smartrefresh.header.flyrefresh.FlyView;
+import com.scwang.smartrefresh.header.flyrefresh.MountanScenceView;
+import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
+import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

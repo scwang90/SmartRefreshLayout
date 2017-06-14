@@ -15,7 +15,7 @@ import android.widget.AdapterView;
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
-import com.scwang.smartrefreshlayout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
 
 import java.util.Arrays;
 

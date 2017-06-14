@@ -11,7 +11,7 @@
         app:navigationIcon="?attr/homeAsUpIndicator"
         app:title="选择地区" />
 
-    <com.scwang.smartrefreshlayout.SmartRefreshLayout
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -54,6 +54,6 @@
                 tools:listitem="@android:layout/simple_list_item_1"/>
         </LinearLayout>
 
-    </com.scwang.smartrefreshlayout.SmartRefreshLayout>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

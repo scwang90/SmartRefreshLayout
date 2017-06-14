@@ -8,7 +8,7 @@ import android.widget.ListView;
 
 import com.scwang.refreshlayout.dummy.DummyContent;
 import com.scwang.refreshlayout.dummy.DummyContent.DummyItem;
-import com.scwang.smartrefreshlayout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 /**
  * A fragment representing a list of Items.

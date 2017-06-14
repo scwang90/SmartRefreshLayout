@@ -12,7 +12,7 @@
         app:navigationIcon="?attr/homeAsUpIndicator"
         app:title="@string/title_activity_style_bezier"/>
 
-    <com.scwang.smartrefreshlayout.SmartRefreshLayout
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/smart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,7 +20,7 @@
         app:srlAccentColor="@android:color/white"
         app:srlEnableHeaderTranslationContent="true"
         app:srlEnableLoadmore="false">
-        <com.scwang.smartrefreshlayout.header.BezierHeader
+        <com.scwang.smartrefresh.layout.header.BezierHeader
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
         <android.support.v7.widget.RecyclerView
@@ -28,6 +28,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:listitem="@android:layout/simple_list_item_2"/>
-    </com.scwang.smartrefreshlayout.SmartRefreshLayout>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

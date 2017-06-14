@@ -4,11 +4,11 @@ import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.scwang.smartrefreshlayout.SmartRefreshLayout;
-import com.scwang.smartrefreshlayout.api.DefaultRefreshHeaderCreater;
-import com.scwang.smartrefreshlayout.api.RefreshHeader;
-import com.scwang.smartrefreshlayout.api.RefreshLayout;
-import com.scwang.smartrefreshlayout.header.BezierHeader;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreater;
+import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.header.BezierHeader;
 
 /**
  *

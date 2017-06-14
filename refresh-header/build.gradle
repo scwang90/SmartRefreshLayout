@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'maven'
 apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'maven'
 
 android {
     compileSdkVersion 25
@@ -40,9 +40,9 @@ dependencies {
 
 publish {
     userOrg = 'scwang90'
-    groupId = 'com.scwang.refreshlayout'
+    groupId = 'com.scwang.smartrefresh'
     artifactId = 'SmartRefreshHeader'
-    version = '0.0.1'
+    version = '1.0.0'
     description = 'Some delicate headers of SmartRefreshLayout'
     website = "https://github.com/scwang90/${rootProject.name}"
 }

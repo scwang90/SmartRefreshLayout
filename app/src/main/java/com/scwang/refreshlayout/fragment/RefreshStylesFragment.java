@@ -27,9 +27,9 @@ import com.scwang.refreshlayout.activity.style.WaterDropStyleActivity;
 import com.scwang.refreshlayout.activity.style.WaveSwipStyleActivity;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
-import com.scwang.smartrefreshlayout.api.RefreshHeader;
-import com.scwang.smartrefreshlayout.api.RefreshLayout;
-import com.scwang.smartrefreshlayout.header.ClassicsHeader;
+import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
 import java.lang.reflect.Constructor;
 import java.util.Arrays;

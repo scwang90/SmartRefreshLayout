@@ -12,13 +12,13 @@
         app:navigationIcon="?attr/homeAsUpIndicator"
         app:title="@string/title_activity_style_classics"/>
 
-    <com.scwang.smartrefreshlayout.SmartRefreshLayout
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/smart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:srlEnableHeaderTranslationContent="true"
         app:srlEnableLoadmore="true">
-        <com.scwang.smartrefreshlayout.header.ClassicsHeader
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srlClassicsSpinnerStyle="FixedBehind"/>
@@ -28,9 +28,9 @@
             android:layout_height="match_parent"
             android:background="@android:color/white"
             tools:listitem="@android:layout/simple_list_item_2"/>
-        <com.scwang.smartrefreshlayout.footer.classics.ClassicsFooter
+        <com.scwang.smartrefresh.layout.footer.classics.ClassicsFooter
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-    </com.scwang.smartrefreshlayout.SmartRefreshLayout>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

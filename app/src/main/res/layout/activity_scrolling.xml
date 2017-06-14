@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.scwang.refreshlayout.ScrollingActivity">
 
-    <com.scwang.smartrefreshheader.flyrefresh.MountanScenceView
+    <com.scwang.smartrefresh.header.flyrefresh.MountanScenceView
         android:id="@+id/flyrefresh"
         android:layout_width="match_parent"
         android:layout_height="340dp" />
@@ -38,7 +38,7 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <com.scwang.smartrefreshlayout.SmartRefreshLayout
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -48,7 +48,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
         <include layout="@layout/content_scrolling"
             android:id="@+id/content"/>
-    </com.scwang.smartrefreshlayout.SmartRefreshLayout>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -60,7 +60,7 @@
         app:fabSize="normal"
         app:elevation="0dp" />
 
-    <com.scwang.smartrefreshheader.flyrefresh.FlyView
+    <com.scwang.smartrefresh.header.flyrefresh.FlyView
         android:id="@+id/flyview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
