@@ -18,35 +18,35 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
-import com.scwang.smartrefresh.layout.header.bezier.RippleView;
-import com.scwang.smartrefresh.layout.header.bezier.RoundDotView;
-import com.scwang.smartrefresh.layout.header.bezier.RoundProgressView;
-import com.scwang.smartrefresh.layout.header.bezier.WaveView;
+import com.scwang.smartrefresh.layout.header.bezierradar.RippleView;
+import com.scwang.smartrefresh.layout.header.bezierradar.RoundDotView;
+import com.scwang.smartrefresh.layout.header.bezierradar.RoundProgressView;
+import com.scwang.smartrefresh.layout.header.bezierradar.WaveView;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 /**
- * 贝塞尔曲线风格刷新组件
+ * 贝塞尔曲线类雷达风格刷新组件
  * Created by lcodecore on 2016/10/2.
  */
 
-public class BezierHeader extends FrameLayout implements RefreshHeader {
+public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
 
     private WaveView mWaveView;
     private RippleView mRippleView;
     private RoundDotView mDotView;
     private RoundProgressView mProgressView;
 
-    public BezierHeader(Context context) {
+    public BezierRadarHeader(Context context) {
         this(context,null);
     }
 
-    public BezierHeader(Context context, AttributeSet attrs) {
+    public BezierRadarHeader(Context context, AttributeSet attrs) {
         this(context, attrs,0);
     }
 
-    public BezierHeader(Context context, AttributeSet attrs, int defStyleAttr) {
+    public BezierRadarHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs, defStyleAttr);
     }
@@ -92,10 +92,10 @@ public class BezierHeader extends FrameLayout implements RefreshHeader {
         }
 
 
-        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.BezierHeader);
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.BezierRadarHeader);
 
-        int primaryColor = ta.getColor(R.styleable.BezierHeader_srlPrimaryColor, 0);
-        int accentColor = ta.getColor(R.styleable.BezierHeader_srlAccentColor, 0);
+        int primaryColor = ta.getColor(R.styleable.BezierRadarHeader_srlPrimaryColor, 0);
+        int accentColor = ta.getColor(R.styleable.BezierRadarHeader_srlAccentColor, 0);
         if (primaryColor != 0) {
             setPrimary(primaryColor);
         }

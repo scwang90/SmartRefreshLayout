@@ -8,7 +8,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreater;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.header.BezierHeader;
+import com.scwang.smartrefresh.layout.header.BezierRadarHeader;
 
 /**
  *
@@ -24,7 +24,7 @@ public class App extends Application {
             @NonNull
             @Override
             public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
-                BezierHeader header = new BezierHeader(context);
+                BezierRadarHeader header = new BezierRadarHeader(context);
                 layout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);
                 return header;
             }

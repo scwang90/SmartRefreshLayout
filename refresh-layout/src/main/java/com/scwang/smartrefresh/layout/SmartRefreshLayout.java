@@ -38,7 +38,7 @@ import com.scwang.smartrefresh.layout.api.SizeObserver;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.footer.ballpulse.BallPulseFooter;
-import com.scwang.smartrefresh.layout.header.BezierHeader;
+import com.scwang.smartrefresh.layout.header.BezierRadarHeader;
 import com.scwang.smartrefresh.layout.impl.RefreshBottomWrapper;
 import com.scwang.smartrefresh.layout.impl.RefreshContentWrapper;
 import com.scwang.smartrefresh.layout.impl.RefreshHeaderWrapper;
@@ -141,7 +141,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     //</editor-fold>
 
     protected static DefaultRefreshFooterCreater mFooterCreater = (context, l) -> new BallPulseFooter(context);
-    protected static DefaultRefreshHeaderCreater mHeaderCreater = (context, l) -> new BezierHeader(context);
+    protected static DefaultRefreshHeaderCreater mHeaderCreater = (context, l) -> new BezierRadarHeader(context);
 
     //</editor-fold>
 

@@ -34,7 +34,7 @@
         <attr name="srlDisableContentWhenLoading" format="boolean"/>
     </declare-styleable>
 
-    <declare-styleable name="BezierHeader">
+    <declare-styleable name="BezierRadarHeader">
         <attr name="srlPrimaryColor"/>
         <attr name="srlAccentColor"/>
     </declare-styleable>
