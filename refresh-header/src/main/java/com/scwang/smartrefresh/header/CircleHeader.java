@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.RectF;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
@@ -31,7 +32,7 @@ public class CircleHeader extends View implements RefreshHeader, SizeObserver {
     private float mPercent;
     private float mWaveHeight;
     private float mHeadHeight;
-    private float mSpringDelta;
+    private float mSpringRatio;
 
 
     private RefreshState mState;
@@ -95,14 +96,20 @@ public class CircleHeader extends View implements RefreshHeader, SizeObserver {
     }
 
     private void deawSpringUp(Canvas canvas, int viewWidth) {
-        float radus = mHeadHeight / 6;
-        if (mSpringDelta > 0) {
-            int leftX = (int) (viewWidth / 2 - 2 * radus + getSprRatio() * radus);
-            mPath.reset();
-            mPath.moveTo(leftX, curH);
-            mPath.quadTo(mWidth / 2, curH - mRadius * getSprRatio() * 2,
-                    mWidth - leftX, curH);
-            canvas.drawPath(mPath, mBallPaint);
+        if (mSpringRatio > 0) {
+            float radus = mHeadHeight / 6;
+            float leftX = (viewWidth / 2 - 2 * radus + mSpringRatio * radus);
+            float curH = mHeadHeight * (1-0.25f*mSpringRatio);
+            if (curH > mHeadHeight * 0.75f) {
+                mPath.reset();
+                mPath.moveTo(leftX, curH);
+                mPath.quadTo(viewWidth / 2, curH - radus * mSpringRatio * 2,
+                        viewWidth - leftX, curH);
+                canvas.drawPath(mPath, mFrontPaint);
+            } else {
+                canvas.drawArc(new RectF(viewWidth / 2 - radus, curH - radus, viewWidth / 2 + radus, curH + radus),
+                        180, 180, true, mFrontPaint);
+            }
         }
     }
 
@@ -113,6 +120,9 @@ public class CircleHeader extends View implements RefreshHeader, SizeObserver {
     //<editor-fold desc="SizeObserver">
     @Override
     public void onSizeDefined(RefreshLayout layout, int height, int extendHeight) {
+        if (mHeadHeight != height) {
+            layout.setOnRefreshListener(refreshlayout -> layout.finisRefresh(6000));
+        }
     }
     //</editor-fold>
 
@@ -140,6 +150,7 @@ public class CircleHeader extends View implements RefreshHeader, SizeObserver {
     @Override
     public void startAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
         mHeadHeight = headHeight;
+        DecelerateInterpolator interpolator = new DecelerateInterpolator();
         ValueAnimator waveAnimator = ValueAnimator.ofFloat(
                 mWaveHeight, 0,
                 -(mHeadHeight*0.5f),0,
@@ -149,14 +160,17 @@ public class CircleHeader extends View implements RefreshHeader, SizeObserver {
             mWaveHeight = (float)animation.getAnimatedValue();
             invalidate();
         });
-        waveAnimator.setInterpolator(new DecelerateInterpolator());
+        waveAnimator.setInterpolator(interpolator);
         waveAnimator.setDuration(1000);
         waveAnimator.start();
 
-        ValueAnimator springAinAnimator = ValueAnimator.ofFloat(mHeadHeight, mHeadHeight / 2);
+        ValueAnimator springAinAnimator = ValueAnimator.ofFloat(0, 1);
         springAinAnimator.addUpdateListener(animation -> {
-            mSpringDelta = (float)animation.getAnimatedValue();
+            mSpringRatio = (float)animation.getAnimatedValue();
         });
+        springAinAnimator.setInterpolator(interpolator);
+        springAinAnimator.setDuration(1000);
+        springAinAnimator.start();
     }
 
     @Override

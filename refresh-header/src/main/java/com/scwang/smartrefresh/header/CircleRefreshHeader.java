@@ -16,6 +16,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.api.SizeObserver;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 /**
@@ -49,7 +50,11 @@ public class CircleRefreshHeader extends View implements RefreshHeader, SizeObse
     private OnViewAniDone onViewAniDone;
     private AnimatorStatus mAniStatus = AnimatorStatus.PULL_DOWN;
 
-    private static long REL_DRAG_DUR = 200;
+    private static final long REL_DRAG_DUR = 20000;
+    private static final long OUTER_DUR = 2000;
+    private static final long DONE_DUR = 10000;
+    private static final long POP_BALL_DUR = 3000;
+    private static final long SPRING_DUR = 2000;
 
     private Paint mBackPaint;
     private Paint mBallPaint;
@@ -384,7 +389,6 @@ public class CircleRefreshHeader extends View implements RefreshHeader, SizeObse
         return Math.min(ratio, 1);
     }
 
-    private static long SPRING_DUR = 200;
     private long mSprStart;
     private long mSprStop;
 
@@ -404,7 +408,6 @@ public class CircleRefreshHeader extends View implements RefreshHeader, SizeObse
         return Math.min(1, ratio);
     }
 
-    private static final long POP_BALL_DUR = 300;
     private long mPopStart;
     private long mPopStop;
 
@@ -425,7 +428,6 @@ public class CircleRefreshHeader extends View implements RefreshHeader, SizeObse
         return Math.min(ratio, 1);
     }
 
-    private static final long OUTER_DUR = 200;
     private long mOutStart;
     private long mOutStop;
 
@@ -451,7 +453,6 @@ public class CircleRefreshHeader extends View implements RefreshHeader, SizeObse
         return Math.min(ratio, 1);
     }
 
-    private static final long DONE_DUR = 1000;
     private long mDoneStart;
     private long mDoneStop;
 
@@ -511,10 +512,14 @@ public class CircleRefreshHeader extends View implements RefreshHeader, SizeObse
     //</editor-fold>
 
     //<editor-fold desc="SizeObserver">
+    OnRefreshListener listener;
     @Override
     public void onSizeDefined(RefreshLayout layout, int height, int extendHeight) {
+        if (listener == null) {
+            layout.setOnRefreshListener(listener = refreshlayout -> layout.finisRefresh(20000));
+        }
         PULL_HEIGHT = height;
-        PULL_DELTA = extendHeight;
+        PULL_DELTA = height / 2;
     }
     //</editor-fold>
 
