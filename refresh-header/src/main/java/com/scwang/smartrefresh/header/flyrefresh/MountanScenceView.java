@@ -58,7 +58,7 @@ public class MountanScenceView extends View {
     private float mMoveFactor = 0;
     private float mBounceMax = 1;
     private float mTreeBendFactor = Float.MAX_VALUE;
-    private int mViewportHeightHeight = 0;
+    private int mViewportHeight = 0;
 
     //<editor-fold desc="MountanScenceView">
     public MountanScenceView(Context context) {
@@ -97,7 +97,7 @@ public class MountanScenceView extends View {
         if (ta.hasValue(R.styleable.MountanScenceView_srlPrimaryColor)) {
             setPrimaryColor(ta.getColor(R.styleable.MountanScenceView_srlPrimaryColor, 0xff000000));
         }
-        mViewportHeightHeight = ta.getDimensionPixelOffset(R.styleable.MountanScenceView_srlViewportHeightHeight, 0);
+        mViewportHeight = ta.getDimensionPixelOffset(R.styleable.MountanScenceView_srlViewportHeight, 0);
         ta.recycle();
 
         updateMountainPath(mMoveFactor, HEIGHT);
@@ -110,7 +110,7 @@ public class MountanScenceView extends View {
         final int width = getMeasuredWidth();
         final int height = getMeasuredHeight();
         mScaleX = 1f * width / WIDTH;
-        mScaleY = 1f * (mViewportHeightHeight > 0 ? mViewportHeightHeight : height) / HEIGHT;
+        mScaleY = 1f * (mViewportHeight > 0 ? mViewportHeight : height) / HEIGHT;
 
         updateMountainPath(mMoveFactor, height);
         updateTreePath(mMoveFactor, true);

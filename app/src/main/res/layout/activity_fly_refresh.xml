@@ -11,7 +11,7 @@
         android:id="@+id/mountan"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srlViewportHeightHeight="340dp"
+        app:srlViewportHeight="340dp"
         app:srlPrimaryColor="@color/colorPrimary"/>
     <!--srlViewportHeightHeight 设置为-->
     <!--AppBarLayout.Height + RefreshLayout.Height-->
