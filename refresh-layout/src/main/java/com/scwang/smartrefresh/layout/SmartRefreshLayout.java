@@ -34,6 +34,7 @@ import com.scwang.smartrefresh.layout.api.RefreshContent;
 import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayoutHook;
 import com.scwang.smartrefresh.layout.api.SizeObserver;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
@@ -106,6 +107,44 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     //</editor-fold>
 
     //<editor-fold desc="内部视图">
+
+    /**
+     * 尺寸值的定义状态，用于在值覆盖的时候决定优先级
+     */
+    private enum DimensionStatus {
+        None,//未初始化
+        Default,//默认值
+        XmlWrap,//Xml计算
+        XmlExact,//Xml指定
+        CodeExact,//代码指定
+        CodeUnNotify,//代码指定，但是还没通知确认
+    }
+    /**
+     * 头部高度
+     */
+    protected int mHeaderHeight;
+    protected DimensionStatus mHeaderHeightStatus = DimensionStatus.None;
+    /**
+     * 底部高度
+     */
+    protected int mFooterHeight;
+    protected DimensionStatus mFooterHeightStatus = DimensionStatus.None;
+    /**
+     * 扩展高度
+     */
+    protected int mExtendHeaderHeight;
+    /**
+     * 扩展高度
+     */
+    protected int mExtendFooterHeight;
+    /**
+     * 扩展比率(最大高度/Header高度)
+     */
+    protected float mHeaderExtendRate = 2.0f;
+    /**
+     * 扩展比率(最大高度/Footer高度)
+     */
+    protected float mFooterExtendRate = 2.0f;
     /**
      * 下拉头部视图
      */
@@ -118,26 +157,6 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
      * 上拉底部视图
      */
     protected RefreshFooter mRefreshFooter;
-    /**
-     * 头部高度
-     */
-    protected int mHeaderHeight;
-    /**
-     * 底部高度
-     */
-    protected int mFooterHeight;
-    /**
-     * 扩展高度
-     */
-    protected int mExtendHeaderHeight;
-    /**
-     * 扩展高度
-     */
-    protected int mExtendFooterHeight;
-    /**
-     * 扩展比率
-     */
-    protected float mExtendRate = 2.0f;
     //</editor-fold>
 
     protected static DefaultRefreshFooterCreater mFooterCreater = (context, l) -> new BallPulseFooter(context);
@@ -176,14 +195,14 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.SmartRefreshLayout);
 
         mDragRate = ta.getFloat(R.styleable.SmartRefreshLayout_srlExtendRate, mDragRate);
-        mExtendRate = ta.getFloat(R.styleable.SmartRefreshLayout_srlExtendRate, mExtendRate);
+        mHeaderExtendRate = ta.getFloat(R.styleable.SmartRefreshLayout_srlExtendRate, mHeaderExtendRate);
         mEnableRefresh = ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnableRefresh, mEnableRefresh);
         mReboundDuration = ta.getInt(R.styleable.SmartRefreshLayout_srlReboundDuration, mReboundDuration);
         mEnableLoadmore = ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnableLoadmore, mEnableLoadmore);
         mHeaderHeight = ta.getDimensionPixelOffset(R.styleable.SmartRefreshLayout_srlHeaderHeight, density.dip2px(100));
         mFooterHeight = ta.getDimensionPixelOffset(R.styleable.SmartRefreshLayout_srlFooterHeight, density.dip2px(60));
-        mExtendFooterHeight = ta.getDimensionPixelOffset(R.styleable.SmartRefreshLayout_srlFooterExtendHeight, (int) (mFooterHeight * (mExtendRate - 1)));
-        mExtendHeaderHeight = ta.getDimensionPixelOffset(R.styleable.SmartRefreshLayout_srlHeaderExtendHeight, (int) (mHeaderHeight * (mExtendRate - 1)));
+        mExtendFooterHeight = ta.getDimensionPixelOffset(R.styleable.SmartRefreshLayout_srlFooterExtendHeight, (int) (mFooterHeight * (mHeaderExtendRate - 1)));
+        mExtendHeaderHeight = ta.getDimensionPixelOffset(R.styleable.SmartRefreshLayout_srlHeaderExtendHeight, (int) (mHeaderHeight * (mHeaderExtendRate - 1)));
         mDisableContentWhenRefresh = ta.getBoolean(R.styleable.SmartRefreshLayout_srlDisableContentWhenRefresh, mDisableContentWhenRefresh);
         mDisableContentWhenLoading = ta.getBoolean(R.styleable.SmartRefreshLayout_srlDisableContentWhenLoading, mDisableContentWhenLoading);
         mEnableHeaderTranslationContent = ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnableHeaderTranslationContent, mEnableHeaderTranslationContent);
@@ -312,10 +331,10 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
 
 
         if (mRefreshListener == null) {
-            mRefreshListener = refresh -> refresh.finisRefresh(3000);
+            mRefreshListener = refresh -> postDelayed(() -> refresh.finisRefresh(0), 3000);
         }
         if (mLoadmoreListener == null) {
-            mLoadmoreListener = refresh -> refresh.finisLoadmore(3000);
+            mLoadmoreListener = refresh -> postDelayed(() -> refresh.finisLoadmore(0), 3000);
         }
         if (mPrimaryColors != null) {
             mRefreshHeader.setPrimaryColors(mPrimaryColors);
@@ -329,28 +348,47 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         final boolean isInEditMode = isInEditMode();
 
         if (mRefreshHeader != null) {
+
+            if (mHeaderHeightStatus == DimensionStatus.None) {
+                mHeaderHeightStatus = DimensionStatus.Default;
+                if (mRefreshHeader instanceof SizeObserver) {
+                    ((SizeObserver) mRefreshHeader).onSizeDefined(this, mHeaderHeight, mExtendHeaderHeight);
+                }
+            } else if (mHeaderHeightStatus == DimensionStatus.CodeUnNotify) {
+                mHeaderHeightStatus = DimensionStatus.CodeExact;
+                if (mRefreshHeader instanceof SizeObserver) {
+                    ((SizeObserver) mRefreshHeader).onSizeDefined(this, mHeaderHeight, mExtendHeaderHeight);
+                }
+            }
+
             final View headerView = mRefreshHeader.getView();
             final LayoutParams lp = (LayoutParams) headerView.getLayoutParams();
             final int widthSpec = getChildMeasureSpec(widthMeasureSpec, lp.leftMargin + lp.rightMargin, lp.width);
             int heightSpec = heightMeasureSpec;
+
             if (lp.height > 0) {
-                mHeaderHeight = lp.height + lp.topMargin + lp.bottomMargin;
-                mExtendHeaderHeight = (int) (mHeaderHeight * (mExtendRate - 1));
+                if (mHeaderHeightStatus == DimensionStatus.Default) {
+                    mHeaderHeight = lp.height + lp.topMargin + lp.bottomMargin;
+                    mExtendHeaderHeight = (int) (mHeaderHeight * (mHeaderExtendRate - 1));
+                    mHeaderHeightStatus = DimensionStatus.XmlExact;
+                    if (mRefreshHeader instanceof SizeObserver) {
+                        ((SizeObserver) mRefreshHeader).onSizeDefined(this, mHeaderHeight, mExtendHeaderHeight);
+                    }
+                }
                 heightSpec = makeMeasureSpec(lp.height, EXACTLY);
                 headerView.measure(widthSpec, heightSpec);
-            } else /*if (mRefreshHeader instanceof SizeDefinition) {
-                mHeaderHeight = ((SizeDefinition) mRefreshHeader).defineHeight();
-                mExtendHeaderHeight = ((SizeDefinition) mRefreshHeader).defineExtendHeight();
-                heightSpec = makeMeasureSpec(mHeaderHeight - lp.topMargin - lp.bottomMargin, EXACTLY);
-                headerView.measure(widthSpec, heightSpec);
-            } else */if (lp.height == WRAP_CONTENT) {
+            } else if (lp.height == WRAP_CONTENT) {
                 heightSpec = makeMeasureSpec(getSize(heightMeasureSpec) - lp.topMargin - lp.bottomMargin, AT_MOST);
                 headerView.measure(widthSpec, heightSpec);
                 int measuredHeight = headerView.getMeasuredHeight();
-                if (measuredHeight > 0) {
+                if (measuredHeight > 0 && mHeaderHeightStatus == DimensionStatus.Default) {
                     mHeaderHeight = headerView.getMeasuredHeight() + lp.topMargin + lp.bottomMargin;
-                    mExtendHeaderHeight = (int) (mHeaderHeight * (mExtendRate - 1));
-                } else {
+                    mExtendHeaderHeight = (int) (mHeaderHeight * (mHeaderExtendRate - 1));
+                    mHeaderHeightStatus = DimensionStatus.XmlWrap;
+                    if (mRefreshHeader instanceof SizeObserver) {
+                        ((SizeObserver) mRefreshHeader).onSizeDefined(this, mHeaderHeight, mExtendHeaderHeight);
+                    }
+                } else if (mHeaderHeight <= 0) {
                     heightSpec = makeMeasureSpec(mHeaderHeight - lp.topMargin - lp.bottomMargin, EXACTLY);
                     headerView.measure(widthSpec, heightSpec);
                 }
@@ -365,37 +403,53 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                 heightSpec = makeMeasureSpec(height - lp.topMargin - lp.bottomMargin, EXACTLY);
                 headerView.measure(widthSpec, heightSpec);
             }
-            if (mRefreshHeader instanceof SizeObserver) {
-                ((SizeObserver) mRefreshHeader).onSizeDefined(this, mHeaderHeight, mExtendHeaderHeight);
-            }
+
             if (isInEditMode) {
                 minimumHeight += headerView.getMeasuredHeight();
             }
         }
 
         if (mRefreshFooter != null) {
+
+            if (mFooterHeightStatus == DimensionStatus.None) {
+                mFooterHeightStatus = DimensionStatus.Default;
+                if (mRefreshFooter instanceof SizeObserver) {
+                    ((SizeObserver) mRefreshFooter).onSizeDefined(this, mFooterHeight, mExtendFooterHeight);
+                }
+            } else if (mFooterHeightStatus == DimensionStatus.CodeUnNotify) {
+                mFooterHeightStatus = DimensionStatus.CodeExact;
+                if (mRefreshFooter instanceof SizeObserver) {
+                    ((SizeObserver) mRefreshFooter).onSizeDefined(this, mFooterHeight, mExtendFooterHeight);
+                }
+            }
+
             final View footerView = mRefreshFooter.getView();
             final LayoutParams lp = (LayoutParams) footerView.getLayoutParams();
             final int widthSpec = getChildMeasureSpec(widthMeasureSpec, lp.leftMargin + lp.rightMargin, lp.width);
             int heightSpec = heightMeasureSpec;
             if (lp.height > 0) {
-                mFooterHeight = lp.height + lp.topMargin + lp.bottomMargin;
-                mExtendFooterHeight = (int) (mFooterHeight * (mExtendRate - 1));
+                if (mFooterHeightStatus == DimensionStatus.Default) {
+                    mFooterHeight = lp.height + lp.topMargin + lp.bottomMargin;
+                    mExtendFooterHeight = (int) (mFooterHeight * (mFooterExtendRate - 1));
+                    mFooterHeightStatus = DimensionStatus.XmlExact;
+                    if (mRefreshFooter instanceof SizeObserver) {
+                        ((SizeObserver) mRefreshFooter).onSizeDefined(this, mFooterHeight, mExtendFooterHeight);
+                    }
+                }
                 heightSpec = makeMeasureSpec(lp.height, EXACTLY);
                 footerView.measure(widthSpec, heightSpec);
-            } else /*if (mRefreshFooter instanceof SizeDefinition) {
-                mFooterHeight = ((SizeDefinition) mRefreshFooter).defineHeight();
-                mExtendFooterHeight = ((SizeDefinition) mRefreshFooter).defineExtendHeight();
-                heightSpec = makeMeasureSpec(mFooterHeight - lp.topMargin - lp.bottomMargin, EXACTLY);
-                footerView.measure(widthSpec, heightSpec);
-            } else */if (lp.height == WRAP_CONTENT) {
+            } else if (lp.height == WRAP_CONTENT) {
                 heightSpec = makeMeasureSpec(getSize(heightMeasureSpec) - lp.topMargin - lp.bottomMargin, AT_MOST);
                 footerView.measure(widthSpec, heightSpec);
                 int measuredHeight = footerView.getMeasuredHeight();
-                if (measuredHeight > 0) {
+                if (measuredHeight > 0 && mFooterHeightStatus == DimensionStatus.Default) {
                     mFooterHeight = footerView.getMeasuredHeight() + lp.topMargin + lp.bottomMargin;
-                    mExtendFooterHeight = (int) (mFooterHeight * (mExtendRate - 1));
-                } else {
+                    mExtendFooterHeight = (int) (mFooterHeight * (mFooterExtendRate - 1));
+                    mFooterHeightStatus = DimensionStatus.XmlWrap;
+                    if (mRefreshFooter instanceof SizeObserver) {
+                        ((SizeObserver) mRefreshFooter).onSizeDefined(this, mFooterHeight, mExtendFooterHeight);
+                    }
+                } else if (measuredHeight <= 0){
                     heightSpec = makeMeasureSpec(mFooterHeight - lp.topMargin - lp.bottomMargin, EXACTLY);
                     footerView.measure(widthSpec, heightSpec);
                 }
@@ -409,9 +463,6 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                 final int height = Math.max(0, mSpinner);
                 heightSpec = makeMeasureSpec(height - lp.topMargin - lp.bottomMargin, EXACTLY);
                 footerView.measure(widthSpec, heightSpec);
-            }
-            if (mRefreshFooter instanceof SizeObserver) {
-                ((SizeObserver) mRefreshFooter).onSizeDefined(this, mFooterHeight, mExtendFooterHeight);
             }
             if (isInEditMode) {
                 minimumHeight += footerView.getMeasuredHeight();
@@ -1052,52 +1103,65 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
 
     //<editor-fold desc="开放接口 open interface">
     @Override
-    public SmartRefreshLayout setFooterHeightDp(float height) {
-        this.mFooterHeight = dp2px(height);
+    public SmartRefreshLayout setFooterHeight(float heightDp) {
+        return setFooterHeight(dp2px(heightDp));
+    }
+    @Override
+    public SmartRefreshLayout setFooterHeight(int heightPx) {
+        this.mFooterHeight = heightPx;
+        this.mExtendFooterHeight = (int) (heightPx * (mFooterExtendRate - 1));
+        if (mRefreshFooter != null) {
+            this.mFooterHeightStatus = DimensionStatus.CodeExact;
+            if (mRefreshFooter instanceof SizeObserver) {
+                ((SizeObserver) mRefreshFooter).onSizeDefined(this, mFooterHeight, mExtendFooterHeight);
+            }
+        } else {
+            this.mFooterHeightStatus = DimensionStatus.CodeUnNotify;
+        }
         return this;
     }
     @Override
-    public SmartRefreshLayout setFooterHeightPx(int height) {
-        this.mFooterHeight = height;
-        return this;
+    public SmartRefreshLayout setHeaderHeight(float heightDp) {
+        return setHeaderHeight(dp2px(heightDp));
     }
     @Override
-    public SmartRefreshLayout setHeaderHeightDp(float height) {
-        this.mHeaderHeight = dp2px(height);
-        return this;
-    }
-    @Override
-    public SmartRefreshLayout setHeaderHeightPx(int height) {
-        this.mHeaderHeight = height;
-        return this;
-    }
-    @Override
-    public SmartRefreshLayout setExtendHeaderHeightDp(float height) {
-        this.mExtendHeaderHeight = dp2px(height);
-        return this;
-    }
-    @Override
-    public SmartRefreshLayout setExtendHeaderHeightPx(int height) {
-        this.mExtendHeaderHeight = height;
-        return this;
-    }
-    @Override
-    public SmartRefreshLayout setExtendFooterHeightDp(float height) {
-        this.mExtendFooterHeight = dp2px(height);
-        return this;
-    }
-    @Override
-    public SmartRefreshLayout setExtendFooterHeightPx(int height) {
-        this.mExtendFooterHeight = height;
+    public SmartRefreshLayout setHeaderHeight(int heightPx) {
+        this.mHeaderHeight = heightPx;
+        this.mExtendHeaderHeight = (int) (heightPx * (mHeaderExtendRate - 1));
+        if (mRefreshHeader != null) {
+            this.mHeaderHeightStatus = DimensionStatus.CodeExact;
+            if (mRefreshHeader instanceof SizeObserver) {
+                ((SizeObserver) mRefreshHeader).onSizeDefined(this, mHeaderHeight, mExtendHeaderHeight);
+            }
+        } else {
+            this.mHeaderHeightStatus = DimensionStatus.CodeUnNotify;
+        }
         return this;
     }
 
     /**
-     * 设置下拉最大高度和真实高度的比率（将会影响可以下拉的最大高度）
+     * 设置下拉最大高度和Header高度的比率（将会影响可以下拉的最大高度）
      */
     @Override
-    public SmartRefreshLayout setExtendRate(float rate) {
-        this.mExtendRate = rate;
+    public SmartRefreshLayout setHeaderExtendRate(float rate) {
+        this.mHeaderExtendRate = rate;
+        this.mExtendHeaderHeight = (int) (mHeaderHeight * (mHeaderExtendRate - 1));
+        if (mRefreshHeader instanceof SizeObserver) {
+            ((SizeObserver) mRefreshHeader).onSizeDefined(this, mHeaderHeight, mExtendHeaderHeight);
+        }
+        return this;
+    }
+
+    /**
+     * 设置上啦最大高度和Footer高度的比率（将会影响可以上啦的最大高度）
+     */
+    @Override
+    public SmartRefreshLayout setFooterExtendRate(float rate) {
+        this.mFooterExtendRate = rate;
+        this.mExtendFooterHeight = (int) (mFooterHeight * (mFooterExtendRate - 1));
+        if (mRefreshFooter instanceof SizeObserver) {
+            ((SizeObserver) mRefreshFooter).onSizeDefined(this, mFooterHeight, mExtendFooterHeight);
+        }
         return this;
     }
 
@@ -1180,9 +1244,23 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     public SmartRefreshLayout setRefreshFooter(RefreshFooter bottom) {
         if (mRefreshFooter != null) {
             removeView(mRefreshFooter.getView());
+            if (mFooterHeightStatus == DimensionStatus.XmlExact
+                    || mFooterHeightStatus == DimensionStatus.XmlWrap) {
+                mFooterHeightStatus = DimensionStatus.None;
+            }
+        }
+        if (mFooterHeightStatus == DimensionStatus.CodeExact) {
+            mFooterHeightStatus = DimensionStatus.CodeUnNotify;
         }
         this.mRefreshFooter = bottom;
         this.addView(mRefreshFooter.getView());
+        return this;
+    }
+
+    RefreshLayoutHook mHook;
+    @Override
+    public SmartRefreshLayout registHook(RefreshLayoutHook hook) {
+        mHook = hook;
         return this;
     }
 
@@ -1202,6 +1280,13 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     public SmartRefreshLayout setRefreshHeader(RefreshHeader header) {
         if (mRefreshHeader != null) {
             removeView(mRefreshHeader.getView());
+            if (mHeaderHeightStatus == DimensionStatus.XmlExact
+                    || mHeaderHeightStatus == DimensionStatus.XmlWrap) {
+                mHeaderHeightStatus = DimensionStatus.None;
+            }
+        }
+        if (mHeaderHeightStatus == DimensionStatus.CodeExact) {
+            mHeaderHeightStatus = DimensionStatus.CodeUnNotify;
         }
         this.mRefreshHeader = header;
         this.addView(mRefreshHeader.getView());
@@ -1301,7 +1386,11 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
      */
     @Override
     public SmartRefreshLayout finisRefresh(int delayed){
-        postDelayed(this::resetStatus, delayed);
+        if (mHook != null) {
+            mHook.onHookFinisRefresh(this::resetStatus, this, delayed);
+        } else {
+            postDelayed(this::resetStatus, delayed);
+        }
         return this;
     }
     /**

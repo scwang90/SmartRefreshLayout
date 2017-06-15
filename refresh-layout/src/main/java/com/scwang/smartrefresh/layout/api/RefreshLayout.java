@@ -3,6 +3,7 @@ package com.scwang.smartrefresh.layout.api;
 import android.support.annotation.Nullable;
 import android.view.animation.Interpolator;
 
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnMultiPurposeListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -15,21 +16,15 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 
 public interface RefreshLayout {
 
-    RefreshLayout setFooterHeightDp(float height);
+    RefreshLayout setFooterHeight(float heightDp);
 
-    RefreshLayout setFooterHeightPx(int height);
+    RefreshLayout setFooterHeight(int heightPx);
 
-    RefreshLayout setHeaderHeightDp(float height);
+    RefreshLayout setHeaderHeight(float heightDp);
 
-    RefreshLayout setHeaderHeightPx(int height);
+    RefreshLayout setHeaderHeight(int heightPx);
 
-    RefreshLayout setExtendHeaderHeightDp(float height);
-
-    RefreshLayout setExtendHeaderHeightPx(int height);
-
-    RefreshLayout setExtendFooterHeightDp(float height);
-
-    RefreshLayout setExtendFooterHeightPx(int height);
+    SmartRefreshLayout setFooterExtendRate(float rate);
 
     RefreshLayout setReboundInterpolator(Interpolator interpolator);
 
@@ -63,7 +58,7 @@ public interface RefreshLayout {
 
     RefreshLayout setPrimaryColors(int... colors);
 
-    RefreshLayout setExtendRate(float rate);
+    RefreshLayout setHeaderExtendRate(float rate);
 
     RefreshLayout finisRefresh();
 
@@ -72,6 +67,8 @@ public interface RefreshLayout {
     RefreshLayout finisRefresh(int delayed);
 
     RefreshLayout finisLoadmore(int delayed);
+
+    RefreshLayout registHook(RefreshLayoutHook hook);
 
     @Nullable
     RefreshFooter getRefreshFooter();
