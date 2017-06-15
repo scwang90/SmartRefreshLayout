@@ -1387,7 +1387,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     @Override
     public SmartRefreshLayout finisRefresh(int delayed){
         if (mHook != null) {
-            mHook.onHookFinisRefresh(this::resetStatus, this, delayed);
+            mHook.onHookFinisRefresh(args -> postDelayed(this::resetStatus, args.length > 0 && args[0] instanceof Integer ? (int) args[0] : 0), this, delayed);
         } else {
             postDelayed(this::resetStatus, delayed);
         }

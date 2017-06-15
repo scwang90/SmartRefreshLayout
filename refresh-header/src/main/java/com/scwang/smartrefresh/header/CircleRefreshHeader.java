@@ -316,6 +316,7 @@ public class CircleRefreshHeader extends View implements RefreshHeader, SizeObse
                 mRefreshStart, swipe, false, mOutPaint);
         if (swipe >= TARGET_DEGREE) {
             mIsStart = false;
+            mIsRefreshing = false;
         } else if (swipe <= 10) {
             mIsStart = true;
         }

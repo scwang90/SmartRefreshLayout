@@ -7,7 +7,7 @@ package com.scwang.smartrefresh.layout.api;
 
 public interface RefreshLayoutHook {
     interface SuperMethod {
-        void execute();
+        void execute(Object... args);
     }
     void onHookFinisRefresh(SuperMethod method, RefreshLayout layout, int delayed);
 }

@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
@@ -37,6 +38,7 @@ public class CircleHeader extends View implements RefreshHeader, SizeObserver {
     private float mWaveHeight;
     private float mHeadHeight;
     private float mSpringRatio;
+    private float mFinishRatio;
 
 
     private RefreshState mState;
@@ -103,6 +105,45 @@ public class CircleHeader extends View implements RefreshHeader, SizeObserver {
         drawSpringUp(canvas, viewWidth);
         drawBoll(canvas, viewWidth);
         drawOuter(canvas, viewWidth);
+        drawFinish(canvas, viewWidth);
+    }
+
+    private void drawFinish(Canvas canvas, int viewWidth) {
+        if (mFinishRatio > 0) {
+            int beforeColor = mOuterPaint.getColor();
+            if (mFinishRatio < 0.3) {
+                canvas.drawCircle(viewWidth / 2, mBollY, mBollRadius, mFrontPaint);
+                int outerR = (int) (mBollRadius + 10 + 10 * mFinishRatio / 0.3f);
+                int afterColor = Color.argb((int) (0xff * (1 - mFinishRatio / 0.3f)), Color.red(beforeColor),
+                        Color.green(beforeColor), Color.blue(beforeColor));
+                mOuterPaint.setColor(afterColor);
+                canvas.drawArc(new RectF(viewWidth / 2 - outerR, mBollY - outerR, viewWidth / 2 + outerR, mBollY + outerR),
+                        0, 360, false, mOuterPaint);
+            }
+            mOuterPaint.setColor(beforeColor);
+
+
+            if (mFinishRatio >= 0.3 && mFinishRatio < 0.7) {
+                float fraction = (mFinishRatio - 0.3f) / 0.4f;
+                mBollY = (int) (mHeadHeight / 2 + (mHeadHeight - mHeadHeight / 2) * fraction);
+                canvas.drawCircle(viewWidth / 2, mBollY, mBollRadius, mFrontPaint);
+                if (mBollY >= mHeadHeight - mBollRadius * 2) {
+                    mShowBollTail = true;
+                    drawBollTail(canvas, viewWidth, fraction);
+                }
+                mShowBollTail = false;
+            }
+
+            if (mFinishRatio >= 0.7 && mFinishRatio <= 1) {
+                float fraction = (mFinishRatio - 0.7f) / 0.3f;
+                int leftX = (int) (viewWidth / 2 - mBollRadius - 2 * mBollRadius * fraction);
+                mPath.reset();
+                mPath.moveTo(leftX, mHeadHeight);
+                mPath.quadTo(viewWidth / 2, mHeadHeight - (mBollRadius * (1 - fraction)),
+                        viewWidth - leftX, mHeadHeight);
+                canvas.drawPath(mPath, mFrontPaint);
+            }
+        }
     }
 
     private void drawOuter(Canvas canvas, int viewWidth) {
@@ -133,19 +174,17 @@ public class CircleHeader extends View implements RefreshHeader, SizeObserver {
         if (mShowBoll) {
             canvas.drawCircle(viewWidth / 2, mBollY, mBollRadius, mFrontPaint);
 
-            drawBollTail(canvas, viewWidth);
+            drawBollTail(canvas, viewWidth, (mHeadHeight + mWaveHeight) / mHeadHeight);
         }
     }
 
-    private void drawBollTail(Canvas canvas, int viewWidth) {
+    private void drawBollTail(Canvas canvas, int viewWidth, float fraction) {
         if (mShowBollTail) {
-            final float bottom = mHeadHeight;
-            final float fraction = (mHeadHeight + mWaveHeight) / mHeadHeight;
-            final float bezierw = (viewWidth / 2 + (mBollRadius * 3 / 4) * (1 - fraction));
-            final float starty = mBollY + mBollRadius * fraction;
-            final float startx = viewWidth / 2 + (float) Math.sqrt(mBollRadius * mBollRadius * (1 - fraction * fraction));
+            final float bottom = mHeadHeight + mWaveHeight;
+            final float starty = mBollY + mBollRadius * fraction / 2;
+            final float startx = viewWidth / 2 + (float) Math.sqrt(mBollRadius * mBollRadius * (1 - fraction * fraction / 4));
             final float bezier1x = (viewWidth / 2 + (mBollRadius * 3 / 4) * (1 - fraction));
-            final float bezier2x = bezierw + mBollRadius / 2;
+            final float bezier2x = bezier1x + mBollRadius;
 
             mPath.reset();
             mPath.moveTo(startx, starty);
@@ -173,7 +212,6 @@ public class CircleHeader extends View implements RefreshHeader, SizeObserver {
     private void drawSpringUp(Canvas canvas, int viewWidth) {
         if (mSpringRatio > 0) {
             float leftX = (viewWidth / 2 - 4 * mBollRadius + mSpringRatio * 3 * mBollRadius);
-            mBollY = mHeadHeight + mWaveHeight;
             if (mSpringRatio < 0.9) {
                 mPath.reset();
                 mPath.moveTo(leftX, mBollY);
@@ -190,27 +228,26 @@ public class CircleHeader extends View implements RefreshHeader, SizeObserver {
 
     //</editor-fold>
 
-
-
     //<editor-fold desc="SizeObserver">
     @Override
     public void onSizeDefined(RefreshLayout layout, int height, int extendHeight) {
+        layout.setOnRefreshListener(null);
         layout.registHook(new RefreshLayoutHook(){
             @Override
             public void onHookFinisRefresh(SuperMethod method, RefreshLayout layout, int delayed) {
                 mShowOuter = false;
-                ValueAnimator animator = ValueAnimator.ofFloat(mBollY, mHeadHeight + mBollRadius);
+                mShowBoll = false;
+                ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
                 animator.addUpdateListener(animation -> {
-                    mBollY = (float) animation.getAnimatedValue();
+                    mFinishRatio = (float) animation.getAnimatedValue();
                     invalidate();
                 });
                 animator.setInterpolator(new DecelerateInterpolator());
-                animator.setDuration(500);
+                animator.setDuration(1000);
                 animator.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
-                        mShowBoll = false;
-                        method.execute();
+                        method.execute(10000);
                     }
                 });
                 animator.start();
@@ -252,30 +289,37 @@ public class CircleHeader extends View implements RefreshHeader, SizeObserver {
         );
         waveAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             float speed = 0;
+            float springBollY;
             float springRatio = 0;
             int springstatus = 0;//0 还没开始弹起 1 向上弹起 2 在弹起的最高点停住
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 float curValue = (float) animation.getAnimatedValue();
-                if (springstatus == 0 && mWaveHeight <= 0) {
+                if (springstatus == 0 && curValue <= 0) {
                     springstatus = 1;
                     speed = Math.abs(curValue - mWaveHeight);
                 }
                 if (springstatus == 1) {
-                    springRatio = -mWaveHeight / reboundHeight;
+                    springRatio = -curValue / reboundHeight;
                     if (springRatio >= mSpringRatio) {
                         mSpringRatio = springRatio;
+                        mBollY = mHeadHeight + curValue;
                         speed = Math.abs(curValue - mWaveHeight);
                     } else {
                         springstatus = 2;
                         mSpringRatio = 0;
                         mShowBoll = true;
                         mShowBollTail = true;
+                        springBollY = mBollY;
                     }
                 }
                 if (springstatus == 2) {
                     if (mBollY > mHeadHeight / 2) {
                         mBollY = Math.max(mHeadHeight / 2, mBollY - speed);
+                        float bolly = animation.getAnimatedFraction() * (mHeadHeight / 2 - springBollY) + springBollY;
+                        if (mBollY > bolly) {
+                            mBollY = bolly;
+                        }
                     }
                 }
                 if (mShowBollTail && curValue < mWaveHeight) {
@@ -291,6 +335,12 @@ public class CircleHeader extends View implements RefreshHeader, SizeObserver {
         });
         waveAnimator.setInterpolator(interpolator);
         waveAnimator.setDuration(1000);
+        waveAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                postDelayed(layout::finisRefresh, 2000);
+            }
+        });
         waveAnimator.start();
     }
 
