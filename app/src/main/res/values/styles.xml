@@ -5,14 +5,13 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:listDivider">@color/colorDivison</item>
     </style>
 
     <style name="AppTheme" parent="AppThemeBase">
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="AppTheme.TranslucentStatus"></style>
+    <style name="AppTheme.TranslucentStatus"/>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
