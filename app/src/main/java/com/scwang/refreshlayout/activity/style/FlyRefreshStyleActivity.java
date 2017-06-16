@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -77,6 +78,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
             }
         });
 
+        mToolbar.setNavigationIcon(VectorDrawableCompat.create(getResources(), R.drawable.ic_bga_refresh_loading12, getTheme()));
 
         /************************************************************
          * 关键代码-开始

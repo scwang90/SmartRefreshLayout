@@ -65,7 +65,7 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
         mWaterDropView.updateComleteState(0);
 
         mProgressDrawable = new ProgressDrawable();
-        mProgressDrawable.setBounds(0,0, density.dip2px(30), density.dip2px(30));
+        mProgressDrawable.setBounds(0,0, density.dip2px(20), density.dip2px(20));
 
         mImageView = new ImageView(context);
         mProgress = new MaterialProgressDrawable(context, mImageView);
@@ -124,12 +124,14 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
     protected void dispatchDraw(Canvas canvas) {
         super.dispatchDraw(canvas);
         if (mState == RefreshState.Refreshing) {
+            canvas.save();
             canvas.translate(
                     getWidth()/2-mProgressDrawable.width()/2,
                     getHeight()/2-mProgressDrawable.height()/2
             );
-            canvas.rotate(mProgressDegree);
+            canvas.rotate(mProgressDegree, mProgressDrawable.width() / 2, mProgressDrawable.height() / 2);
             mProgressDrawable.draw(canvas);
+            canvas.restore();
         }
     }
 
@@ -194,7 +196,7 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
 
     @Override
     public void startAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
-        mProgress.start();
+        //mProgress.start();
         Animator animator = mWaterDropView.createAnimator();
         animator.addListener(new AnimatorListenerAdapter() {
             @Override
@@ -222,7 +224,7 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
 
     @Override
     public void onFinish(RefreshLayout layout) {
-        mProgress.stop();
+        //mProgress.stop();
     }
 
     @Override

@@ -1,7 +1,10 @@
 package com.scwang.smartrefresh.layout.internal.pathview;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.ColorFilter;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PixelFormat;
@@ -12,8 +15,6 @@ import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.scwang.smartrefresh.layout.internal.pathview.TextScanner.parserPath;
 
 /**
  * 路径
@@ -32,93 +33,72 @@ public class PathsDrawable extends Drawable {
     private static final Region REGION = new Region();
     private static final Region MAX_CLIP = new Region(Integer.MIN_VALUE,
             Integer.MIN_VALUE,Integer.MAX_VALUE, Integer.MAX_VALUE);
-    private String[] mOrginPaths;
+    private List<Path> mOrginPaths;
 
     public PathsDrawable() {
         mPaint = new Paint();
         mPaint.setColor(0xff11bbff);
+        mPaint.setStyle(Paint.Style.FILL);
         mPaint.setAntiAlias(true);
     }
 
     protected void onMeasure() {
-        int suggestedMinimumWidth = 1;
-        int suggestedMinimumHeight = 1;
-        mWidth = mHeight = 1;
-        mStartX = mStartY = -1;
+        Integer top = null,left = null,right = null,bottom = null;
         if (mPaths != null) {
             for (Path path : mPaths) {
                 REGION.setPath(path, MAX_CLIP);
                 Rect bounds = REGION.getBounds();
-                if (suggestedMinimumWidth < bounds.width()) {
-                    mWidth = suggestedMinimumWidth = bounds.width();
-                }
-                if (suggestedMinimumHeight < bounds.height()) {
-                    mHeight = suggestedMinimumHeight = bounds.height();
-                }
-                if (mStartX == -1 || mStartX > bounds.left) {
-                    mStartX = bounds.left;
-                }
-                if (mStartY == -1 || mStartY > bounds.top) {
-                    mStartY = bounds.top;
-                }
+                top = Math.min(top == null ? bounds.top : top, bounds.top);
+                left = Math.min(left == null ? bounds.left : left, bounds.left);
+                right = Math.max(right == null ? bounds.right : right, bounds.right);
+                bottom = Math.max(bottom == null ? bounds.bottom : bottom, bounds.bottom);
             }
         }
-        if (mStartX == -1) {
-            mStartX = 0;
-        }
-        if (mStartY == -1) {
-            mStartY = 0;
-        }
+        mStartX = left == null ? 0 : left;
+        mStartY = top == null ? 0 : top;
+        mWidth = right == null ? 0 : right - mStartX;
+        mHeight = bottom == null ? 0 : bottom - mStartY;
         if (mOrginWidth == 0) {
             mOrginWidth = mWidth;
         }
         if (mOrginHeight == 0) {
             mOrginHeight = mHeight;
         }
-        super.setBounds(0, 0, mWidth, mHeight);
+        Rect bounds = getBounds();
+        super.setBounds(bounds.left, bounds.top, bounds.left + mWidth, bounds.top + mHeight);
     }
 
     @Override
     public void setBounds(int left, int top, int right, int bottom) {
-        this.setBounds(new Rect(left, top, right, bottom));
-    }
-
-    @Override
-    public void setBounds(@NonNull Rect bounds) {
-        if (mOrginPaths != null && mOrginPaths.length > 0) {
-            if (bounds.width() != mWidth || bounds.height() != mHeight) {
-                float ratioWidth = 1f * bounds.width() / mOrginWidth;
-                float ratioHeight = 1f * bounds.height() / mOrginHeight;
-                String[] paths = zoomPaths(mOrginPaths, ratioWidth, ratioHeight);
-                mPaths = new ArrayList<>();
-                for (String path : paths) {
-                    Path parser = parserPath(path);
-                    mPaths.add(parser);
-                }
-                onMeasure();
+        final int width = right - left;
+        final int height = bottom - top;
+        if (mOrginPaths != null && mOrginPaths.size() > 0 &&
+                (width != mWidth || height != mHeight)) {
+            float ratioWidth = 1f * width / mOrginWidth;
+            float ratioHeight = 1f * height / mOrginHeight;
+            Matrix matrix = new Matrix();
+            matrix.setScale(ratioWidth, ratioHeight);
+            mPaths = new ArrayList<>();
+            for (Path path : mOrginPaths) {
+                Path npath = new Path();
+                path.transform(matrix, npath);
+                mPaths.add(npath);
             }
+            onMeasure();
+        } else {
+            super.setBounds(left, top, right, bottom);
         }
     }
 
-    private String[] zoomPaths(String[] paths, float ratioWidth, float ratioHeight) {
-        String[] outpaths = new String[paths.length];
-        for (int i = 0; i < paths.length; i++) {
-            outpaths[i] = zoomPath(paths[i], ratioWidth, ratioHeight);
-        }
-        return outpaths;
-    }
-
-    private String zoomPath(String path, float ratioWidth, float ratioHeight) {
-        return TextScanner.zoomPath(path, ratioWidth, ratioHeight).toString();
+    public void setBounds(@NonNull Rect bounds) {
+        setBounds(bounds.left, bounds.top, bounds.right, bounds.bottom);
     }
 
     public void parserPaths(String... paths) {
-        mOrginPaths = paths;
         mOrginWidth = mOrginHeight = 0;
-        mPaths = new ArrayList<>();
+        mPaths = mOrginPaths = new ArrayList<>();
         for (String path : paths) {
-            Path parser = parserPath(path);
-            mPaths.add(parser);
+            mOrginPaths.add(PathParser.createPathFromPathData(path));
         }
         onMeasure();
     }
@@ -130,24 +110,32 @@ public class PathsDrawable extends Drawable {
         }
     }
 
+    //<editor-fold desc="Drawable">
     @Override
     public void draw(@NonNull Canvas canvas) {
-        canvas.save();
         Rect bounds = getBounds();
         int width = bounds.width();
         int height = bounds.height();
-        canvas.translate(bounds.left, bounds.top);
-        canvas.scale(1f * width / mWidth, 1f * height / mHeight);
-        canvas.translate(-mStartX, -mStartY);
-        if (mPaths != null) {
-            for (int i = 0; i < mPaths.size(); i++) {
-                if (mColors != null && i < mColors.size()) {
-                    mPaint.setColor(mColors.get(i));
+        if (mPaint.getAlpha() == 0xFF) {
+            canvas.save();
+            canvas.translate(bounds.left-mStartX, bounds.top-mStartY);
+            if (mPaths != null) {
+                for (int i = 0; i < mPaths.size(); i++) {
+                    if (mColors != null && i < mColors.size()) {
+                        mPaint.setColor(mColors.get(i));
+                    }
+                    canvas.drawPath(mPaths.get(i), mPaint);
                 }
-                canvas.drawPath(mPaths.get(i), mPaint);
             }
+            canvas.restore();
+        } else {
+            createCachedBitmapIfNeeded(width, height);
+            if (!canReuseCache()) {
+                updateCachedBitmap(width, height);
+                updateCacheStates();
+            }
+            canvas.drawBitmap(mCachedBitmap, bounds.left, bounds.top, mPaint);
         }
-        canvas.restore();
     }
 
     @Override
@@ -164,6 +152,7 @@ public class PathsDrawable extends Drawable {
     public int getOpacity() {
         return PixelFormat.TRANSLUCENT;
     }
+    //</editor-fold>
 
     public int width() {
         return getBounds().width();
@@ -172,4 +161,57 @@ public class PathsDrawable extends Drawable {
     public int height() {
         return getBounds().height();
     }
+
+    //<editor-fold desc="CachedBitmap">
+
+    private Bitmap mCachedBitmap;
+    private boolean mCacheDirty;
+
+    public void updateCachedBitmap(int width, int height) {
+        mCachedBitmap.eraseColor(Color.TRANSPARENT);
+        Canvas tmpCanvas = new Canvas(mCachedBitmap);
+        drawCachedBitmap(tmpCanvas);
+    }
+
+    private void drawCachedBitmap(Canvas canvas) {
+        canvas.translate(-mStartX, -mStartY);
+        if (mPaths != null) {
+            for (int i = 0; i < mPaths.size(); i++) {
+                if (mColors != null && i < mColors.size()) {
+                    mPaint.setColor(mColors.get(i));
+                }
+                canvas.drawPath(mPaths.get(i), mPaint);
+            }
+        }
+    }
+
+    public void createCachedBitmapIfNeeded(int width, int height) {
+        if (mCachedBitmap == null || !canReuseBitmap(width, height)) {
+            mCachedBitmap = Bitmap.createBitmap(width, height,
+                    Bitmap.Config.ARGB_8888);
+            mCacheDirty = true;
+        }
+
+    }
+
+    public boolean canReuseBitmap(int width, int height) {
+        if (width == mCachedBitmap.getWidth()
+                && height == mCachedBitmap.getHeight()) {
+            return true;
+        }
+        return false;
+    }
+    public boolean canReuseCache() {
+        if (!mCacheDirty) {
+            return true;
+        }
+        return false;
+    }
+
+    public void updateCacheStates() {
+        // Use shallow copy here and shallow comparison in canReuseCache(),
+        // likely hit cache miss more, but practically not much difference.
+        mCacheDirty = false;
+    }
+    //</editor-fold>
 }

@@ -75,9 +75,9 @@ public class RefreshStylesFragment extends Fragment implements AdapterView.OnIte
         View view = root.findViewById(R.id.recycler);
         if (view instanceof RecyclerView) {
             RecyclerView recyclerView = (RecyclerView) view;
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), VERTICAL));
-            recyclerView.setItemAnimator(new DefaultItemAnimator());
             recyclerView.setAdapter(new BaseRecyclerAdapter<Item>(Arrays.asList(Item.values()), simple_list_item_2,this) {
                 @Override
                 protected void onBindViewHolder(SmartViewHolder holder, Item model, int position) {

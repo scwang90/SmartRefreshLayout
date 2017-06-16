@@ -820,9 +820,9 @@ class TextScanner {
                     path.append(' ');
                     path.append(xAxisRotation);
                     path.append(' ');
-                    path.append(largeArcFlag == null ? 0 : 1);
+                    path.append(largeArcFlag == null||!largeArcFlag ? 0 : 1);
                     path.append(',');
-                    path.append(sweepFlag == null ? 0 : 1);
+                    path.append(sweepFlag == null||!sweepFlag ? 0 : 1);
 
                     if (sweepFlag != null) {
 //                        x = scan.possibleNextFloat();

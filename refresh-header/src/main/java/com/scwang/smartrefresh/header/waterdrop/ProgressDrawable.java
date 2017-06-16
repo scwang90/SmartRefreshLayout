@@ -27,18 +27,18 @@ public class ProgressDrawable extends PathsDrawable {
         );
 
         parserColors(
-            0xccaaaaaa,
-            0xbbaaaaaa,
-            0xaaaaaaaa,
-            0x99aaaaaa,
-            0x88aaaaaa,
-            0x77aaaaaa,
-            0x66aaaaaa,
-            0x55aaaaaa,
-            0x44aaaaaa,
-            0x33aaaaaa,
-            0x22aaaaaa,
-            0x11aaaaaa
-        );
+                0x11aaaaaa,
+                0x22aaaaaa,
+                0x33aaaaaa,
+                0x44aaaaaa,
+                0x55aaaaaa,
+                0x66aaaaaa,
+                0x77aaaaaa,
+                0x88aaaaaa,
+                0x99aaaaaa,
+                0xaaaaaaaa,
+                0xbbaaaaaa,
+                0xccaaaaaa
+                );
     }
 }
