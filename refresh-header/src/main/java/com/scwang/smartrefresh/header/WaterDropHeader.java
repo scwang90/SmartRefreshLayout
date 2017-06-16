@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import com.scwang.smartrefresh.header.internal.MaterialProgressDrawable;
 import com.scwang.smartrefresh.header.waterdrop.WaterDropView;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
@@ -110,6 +111,11 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
             topImage = mWaterDropView.getBottom() - (widthWaterDrop - widthImage) / 2 - heightImage;
         }
         mImageView.layout(leftImage, topImage, leftImage + widthImage, topImage + heightImage);
+    }
+
+    @Override
+    public void onSizeDefined(RefreshKernel layout, int height, int extendHeight) {
+
     }
 
     @Override

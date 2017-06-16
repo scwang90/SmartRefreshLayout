@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.scwang.smartrefresh.layout.R;
 import com.scwang.smartrefresh.layout.api.RefreshFooter;
+import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
@@ -89,6 +90,10 @@ public class BallPulseFooter extends ViewGroup implements RefreshFooter {
         }
     }
 
+    @Override
+    public void onSizeDefined(RefreshKernel layout, int height, int extendHeight) {
+
+    }
     @Override
     public void onPullingUp(float percent, int offset, int bottomHeight, int extendHeight) {
         mBallPulseView.onPullingUp(percent, offset, bottomHeight, extendHeight);

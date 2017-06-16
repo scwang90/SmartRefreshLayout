@@ -14,6 +14,7 @@ import android.widget.FrameLayout;
 
 import com.scwang.smartrefresh.layout.R;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
@@ -124,6 +125,11 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
     @Override
     public SpinnerStyle getSpinnerStyle() {
         return SpinnerStyle.Scale;
+    }
+
+    @Override
+    public void onSizeDefined(RefreshKernel layout, int height, int extendHeight) {
+
     }
 
     @Override

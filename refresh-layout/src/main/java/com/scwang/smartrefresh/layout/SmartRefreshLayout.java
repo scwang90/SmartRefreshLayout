@@ -293,6 +293,11 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         if (isInEditMode()) return;
+
+        if (mKernel == null) {
+            mKernel = new RefreshKernelImpl();
+        }
+
         if (mRefreshContent == null) {
             for (int i = 0, len = getChildCount(); i < len; i++) {
                 View view = getChildAt(i);
@@ -532,6 +537,14 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
             int bottom = top + footerView.getMeasuredHeight();
             footerView.layout(left, top, right, bottom);
         }
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        mKernel = null;
+        mRefreshHeader = null;
+        mRefreshFooter = null;
     }
 
     //</editor-fold>

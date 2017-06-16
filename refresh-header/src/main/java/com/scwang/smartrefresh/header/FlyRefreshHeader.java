@@ -33,10 +33,12 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader, Si
     private AnimatorSet mFlyAnimator;
     private MountanScenceView mScenceView;
     private RefreshLayout mRefreshLayout;
+    private RefreshKernel mRefreshKernel;
     private float mCurrentPercent;
     private boolean mIsRefreshing = false;
     private int mOffset = 0;
 
+    //<editor-fold desc="View">
     public FlyRefreshHeader(Context context) {
         super(context);
     }
@@ -49,7 +51,16 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader, Si
         super(context, attrs, defStyleAttr);
     }
 
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        mRefreshLayout = null;
+        mRefreshKernel = null;
+    }
+    //</editor-fold>
+
     //<editor-fold desc="RefreshHeader">
+
     @Override
     public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
         if (offset < 0) {
@@ -71,7 +82,6 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader, Si
         }
     }
 
-
     @Override
     public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
         if (!mIsRefreshing) {
@@ -81,7 +91,11 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader, Si
 
     @Override
     public void startAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
-        layout.finishRefresh(0);
+        /**
+         * 提前关闭 下拉视图偏移
+         */
+        mRefreshKernel.animSpinner(0);
+
         if (mCurrentPercent > 0) {
             ValueAnimator valueAnimator = ValueAnimator.ofFloat(mCurrentPercent, 0);
             valueAnimator.setDuration(300);
@@ -132,12 +146,13 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader, Si
 
     @Override
     public void onSizeDefined(RefreshKernel kernel, int height, int extendHeight) {
+        mRefreshKernel = kernel;
         mRefreshLayout = kernel.getRefreshLayout();
-        kernel.registHeaderHook(new RefreshLayoutHeaderHooker() {
+        mRefreshKernel.registHeaderHook(new RefreshLayoutHeaderHooker() {
             @Override
             public void onHookFinishRefresh(SuperMethod method, RefreshLayout layout) {
                 if (mIsRefreshing) {
-                    method.invoke();
+                    finishRefresh(null);
                 } else {
                     method.invoke();
                 }
@@ -147,6 +162,7 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader, Si
 
     //</editor-fold>
 
+    //<editor-fold desc="API">
     public void setUpMountanScenceView(MountanScenceView scenceView){
         mScenceView = scenceView;
     }
@@ -174,6 +190,7 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader, Si
         }
 
         mIsRefreshing = false;
+        mRefreshLayout.finishRefresh(0);
 
         final int offDistX = -mFlyView.getRight();
         final int offDistY = -DensityUtil.dp2px(10);
@@ -224,4 +241,5 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader, Si
         mFlyAnimator.playSequentially(flyDownAnim, flyInAnim);
         mFlyAnimator.start();
     }
+    //</editor-fold>
 }

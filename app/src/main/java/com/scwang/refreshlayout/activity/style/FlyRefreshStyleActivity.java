@@ -198,6 +198,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
             mThemeListener = new View.OnClickListener() {
                 int index = 0;
                 int[] ids = new int[]{
+                        R.color.colorPrimary,
                         android.R.color.holo_green_light,
                         android.R.color.holo_red_light,
                         android.R.color.holo_orange_light,

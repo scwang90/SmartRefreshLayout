@@ -14,6 +14,7 @@ import android.view.animation.Interpolator;
 import android.view.animation.Transformation;
 
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
@@ -167,6 +168,11 @@ public class TaurusHeader extends View implements RefreshHeader/*, SizeDefinitio
         );
         mCloudRight.parserColors(0x88c9def3,0x88e9f4ff,0x88ffffff);
         mCloudRight.setBounds(0, 0, density.dip2px(100), density.dip2px(32));
+
+    }
+
+    @Override
+    public void onSizeDefined(RefreshKernel layout, int height, int extendHeight) {
 
     }
 

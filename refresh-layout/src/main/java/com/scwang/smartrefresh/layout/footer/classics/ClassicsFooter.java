@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.R;
 import com.scwang.smartrefresh.layout.api.RefreshFooter;
+import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
@@ -36,6 +37,7 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
     private PathsView mProgressView;
     private SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
 
+    //<editor-fold desc="LinearLayout">
     public ClassicsFooter(Context context) {
         super(context);
         this.initView(context, null, 0);
@@ -97,6 +99,14 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
         }
 
         ta.recycle();
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="RefreshFooter">
+
+    @Override
+    public void onSizeDefined(RefreshKernel layout, int height, int extendHeight) {
+
     }
 
     @Override
@@ -165,5 +175,6 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
                 break;
         }
     }
+    //</editor-fold>
 
 }

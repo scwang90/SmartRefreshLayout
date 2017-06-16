@@ -15,6 +15,7 @@ import android.view.animation.LinearInterpolator;
 import android.view.animation.Transformation;
 
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
@@ -178,6 +179,11 @@ public class PhoenixHeader extends View implements RefreshHeader/*, SizeDefiniti
         mDrawableSun.parserPaths(sunPaths);
         mDrawableSun.parserColors(sunColors);
         mDrawableSun.setBounds(0, 0, mSunSize, mSunSize);
+    }
+
+    @Override
+    public void onSizeDefined(RefreshKernel layout, int height, int extendHeight) {
+
     }
 
     @Override

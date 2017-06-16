@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.scwang.smartrefresh.layout.api.RefreshFooter;
+import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
@@ -49,6 +50,11 @@ public class RefreshBottomWrapper implements RefreshFooter {
             }
         }
         return mSpinnerStyle = SpinnerStyle.Translate;
+    }
+
+    @Override
+    public void onSizeDefined(RefreshKernel layout, int height, int extendHeight) {
+
     }
 
     @Override

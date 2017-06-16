@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.R;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
@@ -136,6 +137,11 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
 
     public void setLastUpdateTime(Date time) {
         mLastUpdateText.setText(mFormat.format(time));
+    }
+
+    @Override
+    public void onSizeDefined(RefreshKernel layout, int height, int extendHeight) {
+
     }
 
     @Override

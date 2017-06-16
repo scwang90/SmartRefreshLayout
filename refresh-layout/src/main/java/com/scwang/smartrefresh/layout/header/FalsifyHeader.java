@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
@@ -75,6 +76,12 @@ public class FalsifyHeader extends View implements RefreshHeader {
     //</editor-fold>
 
     //<editor-fold desc="RefreshHeader">
+
+    @Override
+    public void onSizeDefined(RefreshKernel layout, int height, int extendHeight) {
+
+    }
+
     @Override
     public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
 
