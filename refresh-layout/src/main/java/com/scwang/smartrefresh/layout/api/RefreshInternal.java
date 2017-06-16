@@ -12,7 +12,7 @@ import com.scwang.smartrefresh.layout.listener.OnStateChangedListener;
  * Created by SCWANG on 2017/5/26.
  */
 
-public interface RefreshInternal extends OnStateChangedListener {
+public interface RefreshInternal extends SizeObserver, OnStateChangedListener {
     void onFinish(RefreshLayout layout);
     void setPrimaryColors(int... colors);
     @NonNull

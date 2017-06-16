@@ -12,11 +12,12 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.api.SizeObserver;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.scwang.smartrefresh.layout.impl.RefreshLayoutHeaderHooker;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 /**
@@ -50,11 +51,11 @@ public class CircleRefreshHeader extends View implements RefreshHeader, SizeObse
     private OnViewAniDone onViewAniDone;
     private AnimatorStatus mAniStatus = AnimatorStatus.PULL_DOWN;
 
-    private static final long REL_DRAG_DUR = 20000;
-    private static final long OUTER_DUR = 2000;
-    private static final long DONE_DUR = 10000;
-    private static final long POP_BALL_DUR = 3000;
-    private static final long SPRING_DUR = 2000;
+    private static final long REL_DRAG_DUR = 2000;
+    private static final long OUTER_DUR = 200;
+    private static final long DONE_DUR = 1000;
+    private static final long POP_BALL_DUR = 300;
+    private static final long SPRING_DUR = 200;
 
     private Paint mBackPaint;
     private Paint mBallPaint;
@@ -316,7 +317,6 @@ public class CircleRefreshHeader extends View implements RefreshHeader, SizeObse
                 mRefreshStart, swipe, false, mOutPaint);
         if (swipe >= TARGET_DEGREE) {
             mIsStart = false;
-            mIsRefreshing = false;
         } else if (swipe <= 10) {
             mIsStart = true;
         }
@@ -513,14 +513,18 @@ public class CircleRefreshHeader extends View implements RefreshHeader, SizeObse
     //</editor-fold>
 
     //<editor-fold desc="SizeObserver">
-    OnRefreshListener listener;
+//    OnRefreshListener listener;
     @Override
-    public void onSizeDefined(RefreshLayout layout, int height, int extendHeight) {
-        if (listener == null) {
-            layout.setOnRefreshListener(listener = refreshlayout -> layout.finishRefresh(20000));
-        }
+    public void onSizeDefined(RefreshKernel kernel, int height, int extendHeight) {
         PULL_HEIGHT = height;
         PULL_DELTA = height / 2;
+        kernel.registHeaderHook(new RefreshLayoutHeaderHooker() {
+            @Override
+            public void onHookFinishRefresh(SuperMethod method, RefreshLayout layout) {
+                setRefreshing(false);
+                setOnViewAniDone(method::invoke);
+            }
+        });
     }
     //</editor-fold>
 
@@ -549,7 +553,6 @@ public class CircleRefreshHeader extends View implements RefreshHeader, SizeObse
 
     @Override
     public void onFinish(RefreshLayout layout) {
-        setRefreshing(false);
     }
 
     @Override

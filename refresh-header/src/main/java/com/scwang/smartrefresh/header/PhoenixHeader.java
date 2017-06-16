@@ -16,7 +16,6 @@ import android.view.animation.Transformation;
 
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.api.SizeDefinition;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.internal.pathview.PathsDrawable;
@@ -27,7 +26,7 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
  * Created by SCWANG on 2017/5/31.
  */
 
-public class PhoenixHeader extends View implements RefreshHeader, SizeDefinition {
+public class PhoenixHeader extends View implements RefreshHeader/*, SizeDefinition*/ {
 
     private static final int ANIMATION_DURATION = 1000;
     private static final float SUN_INITIAL_ROTATE_GROWTH = 1.2f;
@@ -235,15 +234,15 @@ public class PhoenixHeader extends View implements RefreshHeader, SizeDefinition
     }
 
 
-    @Override
-    public int defineHeight() {
-        return (int)(Resources.getSystem().getDisplayMetrics().widthPixels * 0.27);
-    }
-
-    @Override
-    public int defineExtendHeight() {
-        return (int) (defineHeight() * 0.3f);
-    }
+//    @Override
+//    public int defineHeight() {
+//        return (int)(Resources.getSystem().getDisplayMetrics().widthPixels * 0.27);
+//    }
+//
+//    @Override
+//    public int defineExtendHeight() {
+//        return (int) (defineHeight() * 0.3f);
+//    }
 
     @Override
     public void onDraw(Canvas canvas) {

@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import com.scwang.smartrefresh.header.internal.MaterialProgressDrawable;
 import com.scwang.smartrefresh.header.material.CircleImageView;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.api.SizeObserver;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
@@ -190,7 +191,7 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader, SizeObse
 
     //<editor-fold desc="RefreshHeader">
     @Override
-    public void onSizeDefined(RefreshLayout layout, int height, int extendHeight) {
+    public void onSizeDefined(RefreshKernel kernel, int height, int extendHeight) {
         if (isInEditMode()) {
             mWaveHeight = mHeadHeight = height / 2;
         }

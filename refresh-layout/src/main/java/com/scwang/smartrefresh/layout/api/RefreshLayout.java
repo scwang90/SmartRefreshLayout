@@ -68,10 +68,6 @@ public interface RefreshLayout {
 
     RefreshLayout finishLoadmore(int delayed);
 
-    RefreshLayout registHeaderHook(RefreshLayoutHookHeader hook);
-
-    RefreshLayout registFooterHook(RefreshLayoutHookFooter hook);
-
     @Nullable
     RefreshFooter getRefreshFooter();
 

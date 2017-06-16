@@ -15,9 +15,11 @@ import android.view.animation.DecelerateInterpolator;
 import com.scwang.smartrefresh.header.flyrefresh.FlyView;
 import com.scwang.smartrefresh.header.flyrefresh.MountanScenceView;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.api.SizeObserver;
 import com.scwang.smartrefresh.layout.header.FalsifyHeader;
+import com.scwang.smartrefresh.layout.impl.RefreshLayoutHeaderHooker;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 /**
@@ -129,8 +131,18 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader, Si
     }
 
     @Override
-    public void onSizeDefined(RefreshLayout layout, int height, int extendHeight) {
-        mRefreshLayout = layout;
+    public void onSizeDefined(RefreshKernel kernel, int height, int extendHeight) {
+        mRefreshLayout = kernel.getRefreshLayout();
+        kernel.registHeaderHook(new RefreshLayoutHeaderHooker() {
+            @Override
+            public void onHookFinishRefresh(SuperMethod method, RefreshLayout layout) {
+                if (mIsRefreshing) {
+                    method.invoke();
+                } else {
+                    method.invoke();
+                }
+            }
+        });
     }
 
     //</editor-fold>
@@ -162,7 +174,6 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader, Si
         }
 
         mIsRefreshing = false;
-        mRefreshLayout.setEnableRefresh(true);
 
         final int offDistX = -mFlyView.getRight();
         final int offDistY = -DensityUtil.dp2px(10);
@@ -199,11 +210,16 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader, Si
             public void onAnimationStart(Animator animation) {
                 mFlyView.setRotationY(0);
             }
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                mRefreshLayout.setEnableRefresh(true);
+                if (listenerAdapter != null) {
+                    listenerAdapter.onAnimationEnd(animation);
+                }
+            }
         });
 
-        if (listenerAdapter != null) {
-            flyInAnim.addListener(listenerAdapter);
-        }
         mFlyAnimator = new AnimatorSet();
         mFlyAnimator.playSequentially(flyDownAnim, flyInAnim);
         mFlyAnimator.start();

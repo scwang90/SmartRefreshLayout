@@ -33,10 +33,11 @@ import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreater;
 import com.scwang.smartrefresh.layout.api.RefreshContent;
 import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayoutHookFooter;
 import com.scwang.smartrefresh.layout.api.RefreshLayoutHookHeader;
-import com.scwang.smartrefresh.layout.api.SizeObserver;
+import com.scwang.smartrefresh.layout.constant.DimensionStatus;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.footer.ballpulse.BallPulseFooter;
@@ -108,32 +109,14 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     //</editor-fold>
 
     //<editor-fold desc="钩子 Hook">
+    protected RefreshKernel mKernel;
     protected RefreshLayoutHookHeader mHeaderHook;
     protected RefreshLayoutHookFooter mFooterHook;
     //</editor-fold>
 
     //<editor-fold desc="内部视图">
 
-    /**
-     * 尺寸值的定义状态，用于在值覆盖的时候决定优先级
-     * 越往下优先级越高
-     */
-    private enum DimensionStatus {
-        DefaultUnNotify(false),//默认值，但是还没通知确认
-        Default(true),//默认值
-        XmlWrap(true),//Xml计算
-        XmlLayoutUnNotify(false),//Xml 的layout 中指定，但是还没通知确认
-        XmlLayout(true),//Xml 的layout 中指定
-        XmlExact(true),//Xml 的view 指定
-        CodeExactUnNotify(false),//代码指定，但是还没通知确认
-        CodeExact(true),//代码指定
-        DeadLockUnNotify(false),//锁死，但是还没通知确认
-        DeadLock(true);//锁死
-        public final boolean notifyed;
-        DimensionStatus(boolean notifyed) {
-            this.notifyed = notifyed;
-        }
-    }
+
     /**
      * 头部高度
      */
@@ -374,16 +357,8 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         if (mRefreshHeader != null) {
 
             if (!mHeaderHeightStatus.notifyed) {
-                if (mHeaderHeightStatus == DimensionStatus.DefaultUnNotify) {
-                    mHeaderHeightStatus = DimensionStatus.Default;
-                } else if (mHeaderHeightStatus == DimensionStatus.XmlLayoutUnNotify) {
-                    mHeaderHeightStatus = DimensionStatus.XmlLayout;
-                } else if (mHeaderHeightStatus == DimensionStatus.CodeExactUnNotify) {
-                    mHeaderHeightStatus = DimensionStatus.CodeExact;
-                }
-                if (mRefreshHeader instanceof SizeObserver) {
-                    ((SizeObserver) mRefreshHeader).onSizeDefined(this, mHeaderHeight, mExtendHeaderHeight);
-                }
+                mHeaderHeightStatus = mHeaderHeightStatus.notifyed();
+                mRefreshHeader.onSizeDefined(mKernel, mHeaderHeight, mExtendHeaderHeight);
             }
 
 
@@ -393,13 +368,11 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
             int heightSpec = heightMeasureSpec;
 
             if (lp.height > 0) {
-                if (mHeaderHeightStatus.ordinal() < DimensionStatus.XmlExact.ordinal()) {
+                if (mHeaderHeightStatus.canReplaceWith(DimensionStatus.XmlExact)) {
+                    mHeaderHeightStatus = DimensionStatus.XmlExact;
                     mHeaderHeight = lp.height + lp.topMargin + lp.bottomMargin;
                     mExtendHeaderHeight = (int) (mHeaderHeight * (mHeaderExtendRate - 1));
-                    mHeaderHeightStatus = DimensionStatus.XmlExact;
-                    if (mRefreshHeader instanceof SizeObserver) {
-                        ((SizeObserver) mRefreshHeader).onSizeDefined(this, mHeaderHeight, mExtendHeaderHeight);
-                    }
+                    mRefreshHeader.onSizeDefined(mKernel, mHeaderHeight, mExtendHeaderHeight);
                 }
                 heightSpec = makeMeasureSpec(lp.height, EXACTLY);
                 headerView.measure(widthSpec, heightSpec);
@@ -407,13 +380,11 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                 heightSpec = makeMeasureSpec(getSize(heightMeasureSpec) - lp.topMargin - lp.bottomMargin, AT_MOST);
                 headerView.measure(widthSpec, heightSpec);
                 int measuredHeight = headerView.getMeasuredHeight();
-                if (measuredHeight > 0 && mHeaderHeightStatus.ordinal() < DimensionStatus.XmlWrap.ordinal()) {
+                if (measuredHeight > 0 && mHeaderHeightStatus.canReplaceWith(DimensionStatus.XmlWrap)) {
+                    mHeaderHeightStatus = DimensionStatus.XmlWrap;
                     mHeaderHeight = headerView.getMeasuredHeight() + lp.topMargin + lp.bottomMargin;
                     mExtendHeaderHeight = (int) (mHeaderHeight * (mHeaderExtendRate - 1));
-                    mHeaderHeightStatus = DimensionStatus.XmlWrap;
-                    if (mRefreshHeader instanceof SizeObserver) {
-                        ((SizeObserver) mRefreshHeader).onSizeDefined(this, mHeaderHeight, mExtendHeaderHeight);
-                    }
+                    mRefreshHeader.onSizeDefined(mKernel, mHeaderHeight, mExtendHeaderHeight);
                 } else if (mHeaderHeight <= 0) {
                     heightSpec = makeMeasureSpec(mHeaderHeight - lp.topMargin - lp.bottomMargin, EXACTLY);
                     headerView.measure(widthSpec, heightSpec);
@@ -438,16 +409,8 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         if (mRefreshFooter != null) {
 
             if (!mFooterHeightStatus.notifyed) {
-                if (mFooterHeightStatus == DimensionStatus.DefaultUnNotify) {
-                    mFooterHeightStatus = DimensionStatus.Default;
-                } else if (mFooterHeightStatus == DimensionStatus.XmlLayoutUnNotify) {
-                    mFooterHeightStatus = DimensionStatus.XmlLayout;
-                } else if (mFooterHeightStatus == DimensionStatus.CodeExactUnNotify) {
-                    mFooterHeightStatus = DimensionStatus.CodeExact;
-                }
-                if (mRefreshFooter instanceof SizeObserver) {
-                    ((SizeObserver) mRefreshFooter).onSizeDefined(this, mFooterHeight, mExtendFooterHeight);
-                }
+                mFooterHeightStatus = mFooterHeightStatus.notifyed();
+                mRefreshFooter.onSizeDefined(mKernel, mFooterHeight, mExtendFooterHeight);
             }
 
             final View footerView = mRefreshFooter.getView();
@@ -455,13 +418,11 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
             final int widthSpec = getChildMeasureSpec(widthMeasureSpec, lp.leftMargin + lp.rightMargin, lp.width);
             int heightSpec = heightMeasureSpec;
             if (lp.height > 0) {
-                if (mFooterHeightStatus.ordinal() < DimensionStatus.XmlExact.ordinal()) {
+                if (mFooterHeightStatus.canReplaceWith(DimensionStatus.XmlExact)) {
+                    mFooterHeightStatus = DimensionStatus.XmlExact;
                     mFooterHeight = lp.height + lp.topMargin + lp.bottomMargin;
                     mExtendFooterHeight = (int) (mFooterHeight * (mFooterExtendRate - 1));
-                    mFooterHeightStatus = DimensionStatus.XmlExact;
-                    if (mRefreshFooter instanceof SizeObserver) {
-                        ((SizeObserver) mRefreshFooter).onSizeDefined(this, mFooterHeight, mExtendFooterHeight);
-                    }
+                    mRefreshFooter.onSizeDefined(mKernel, mFooterHeight, mExtendFooterHeight);
                 }
                 heightSpec = makeMeasureSpec(lp.height, EXACTLY);
                 footerView.measure(widthSpec, heightSpec);
@@ -469,13 +430,11 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                 heightSpec = makeMeasureSpec(getSize(heightMeasureSpec) - lp.topMargin - lp.bottomMargin, AT_MOST);
                 footerView.measure(widthSpec, heightSpec);
                 int measuredHeight = footerView.getMeasuredHeight();
-                if (measuredHeight > 0 && mFooterHeightStatus.ordinal() < DimensionStatus.XmlWrap.ordinal()) {
+                if (measuredHeight > 0 && mFooterHeightStatus.canReplaceWith(DimensionStatus.XmlWrap)) {
+                    mFooterHeightStatus = DimensionStatus.XmlWrap;
                     mFooterHeight = footerView.getMeasuredHeight() + lp.topMargin + lp.bottomMargin;
                     mExtendFooterHeight = (int) (mFooterHeight * (mFooterExtendRate - 1));
-                    mFooterHeightStatus = DimensionStatus.XmlWrap;
-                    if (mRefreshFooter instanceof SizeObserver) {
-                        ((SizeObserver) mRefreshFooter).onSizeDefined(this, mFooterHeight, mExtendFooterHeight);
-                    }
+                    mRefreshFooter.onSizeDefined(mKernel, mFooterHeight, mExtendFooterHeight);
                 } else if (measuredHeight <= 0){
                     heightSpec = makeMeasureSpec(mFooterHeight - lp.topMargin - lp.bottomMargin, EXACTLY);
                     footerView.measure(widthSpec, heightSpec);
@@ -683,7 +642,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
 
     //<editor-fold desc="状态更改 state changes">
 
-    private void notifyStateChanged(RefreshState state) {
+    protected void notifyStateChanged(RefreshState state) {
         if (mRefreshFooter != null) {
             mRefreshFooter.onStateChanged(state);
         }
@@ -710,12 +669,12 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         notifyStateChanged(state = RefreshState.PullDownToRefresh);
     }
 
-    private void setStatePullDownCanceled() {
+    protected void setStatePullDownCanceled() {
         notifyStateChanged(state = RefreshState.PullDownCanceled);
         resetStatus();
     }
 
-    private void setStatePullUpCanceled() {
+    protected void setStatePullUpCanceled() {
         notifyStateChanged(state = RefreshState.PullUpCanceled);
         resetStatus();
     }
@@ -797,6 +756,23 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     protected AnimatorUpdateListener reboundUpdateListener = animation -> moveSpinner((int) animation.getAnimatedValue(), true);
     //</editor-fold>
 
+    protected boolean overSpinner() {
+        if (state == RefreshState.PullDownToRefresh) {
+            setStatePullDownCanceled();
+            return true;
+        } else if (state == RefreshState.PullToUpLoad) {
+            setStatePullUpCanceled();
+            return true;
+        } else if (state == RefreshState.ReleaseToRefresh) {
+            setStateRefresing();
+            return true;
+        } else if (state == RefreshState.ReleaseToLoad) {
+            setStateLoding();
+            return true;
+        }
+        return false;
+    }
+
     protected boolean moveSpinnerInfinitely(float dy) {
         if (state == RefreshState.PullDownToRefresh || state == RefreshState.ReleaseToRefresh) {
             final double M = mExtendHeaderHeight + mHeaderHeight;
@@ -811,37 +787,6 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
             final double x = -Math.min(0, dy * mDragRate);
             final double y = -Math.min(M*(1-Math.pow(100,-x/H)),x);// 公式 y = M(1-40^(-x/H))
             moveSpinner((int) y, false);
-            return true;
-        }
-        return false;
-    }
-
-    protected void animSpinner(int endValue) {
-        if (mSpinner != endValue) {
-            if (reboundAnimator != null) {
-                reboundAnimator.cancel();
-            }
-            reboundAnimator = ValueAnimator.ofInt(mSpinner, endValue);
-            reboundAnimator.setDuration(mReboundDuration);
-            reboundAnimator.setInterpolator(mReboundInterpolator);
-            reboundAnimator.addUpdateListener(reboundUpdateListener);
-            reboundAnimator.addListener(reboundAnimatorEndListener);
-            reboundAnimator.start();
-        }
-    }
-
-    private boolean overSpinner() {
-        if (state == RefreshState.PullDownToRefresh) {
-            setStatePullDownCanceled();
-            return true;
-        } else if (state == RefreshState.PullToUpLoad) {
-            setStatePullUpCanceled();
-            return true;
-        } else if (state == RefreshState.ReleaseToRefresh) {
-            setStateRefresing();
-            return true;
-        } else if (state == RefreshState.ReleaseToLoad) {
-            setStateLoding();
             return true;
         }
         return false;
@@ -907,6 +852,20 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                     mOnMultiPurposeListener.onFooterPulling(mRefreshFooter, 1f * spinner / mFooterHeight, spinner, mFooterHeight, mExtendFooterHeight);
                 }
             }
+        }
+    }
+
+    protected void animSpinner(int endValue) {
+        if (mSpinner != endValue) {
+            if (reboundAnimator != null) {
+                reboundAnimator.cancel();
+            }
+            reboundAnimator = ValueAnimator.ofInt(mSpinner, endValue);
+            reboundAnimator.setDuration(mReboundDuration);
+            reboundAnimator.setInterpolator(mReboundInterpolator);
+            reboundAnimator.addUpdateListener(reboundUpdateListener);
+            reboundAnimator.addListener(reboundAnimatorEndListener);
+            reboundAnimator.start();
         }
     }
 
@@ -1135,16 +1094,14 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     }
     @Override
     public SmartRefreshLayout setFooterHeight(int heightPx) {
-        if (mFooterHeightStatus.ordinal() < DimensionStatus.CodeExact.ordinal()) {
-            this.mFooterHeight = heightPx;
-            this.mExtendFooterHeight = (int) (heightPx * (mFooterExtendRate - 1));
+        if (mFooterHeightStatus.canReplaceWith(DimensionStatus.CodeExact)) {
+            mFooterHeight = heightPx;
+            mExtendFooterHeight = (int) (heightPx * (mFooterExtendRate - 1));
             if (mRefreshFooter != null) {
-                this.mFooterHeightStatus = DimensionStatus.CodeExact;
-                if (mRefreshFooter instanceof SizeObserver) {
-                    ((SizeObserver) mRefreshFooter).onSizeDefined(this, mFooterHeight, mExtendFooterHeight);
-                }
+                mFooterHeightStatus = DimensionStatus.CodeExact;
+                mRefreshFooter.onSizeDefined(mKernel, mFooterHeight, mExtendFooterHeight);
             } else {
-                this.mFooterHeightStatus = DimensionStatus.CodeExactUnNotify;
+                mFooterHeightStatus = DimensionStatus.CodeExactUnNotify;
             }
         }
         return this;
@@ -1155,16 +1112,14 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     }
     @Override
     public SmartRefreshLayout setHeaderHeight(int heightPx) {
-        if (mHeaderHeightStatus.ordinal() < DimensionStatus.CodeExact.ordinal()) {
-            this.mHeaderHeight = heightPx;
-            this.mExtendHeaderHeight = (int) (heightPx * (mHeaderExtendRate - 1));
+        if (mHeaderHeightStatus.canReplaceWith(DimensionStatus.CodeExact)) {
+            mHeaderHeight = heightPx;
+            mExtendHeaderHeight = (int) (heightPx * (mHeaderExtendRate - 1));
             if (mRefreshHeader != null) {
-                this.mHeaderHeightStatus = DimensionStatus.CodeExact;
-                if (mRefreshHeader instanceof SizeObserver) {
-                    ((SizeObserver) mRefreshHeader).onSizeDefined(this, mHeaderHeight, mExtendHeaderHeight);
-                }
+                mHeaderHeightStatus = DimensionStatus.CodeExact;
+                mRefreshHeader.onSizeDefined(mKernel, mHeaderHeight, mExtendHeaderHeight);
             } else {
-                this.mHeaderHeightStatus = DimensionStatus.CodeExactUnNotify;
+                mHeaderHeightStatus = DimensionStatus.CodeExactUnNotify;
             }
         }
         return this;
@@ -1177,8 +1132,8 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     public SmartRefreshLayout setHeaderExtendRate(float rate) {
         this.mHeaderExtendRate = rate;
         this.mExtendHeaderHeight = (int) (mHeaderHeight * (mHeaderExtendRate - 1));
-        if (mRefreshHeader instanceof SizeObserver) {
-            ((SizeObserver) mRefreshHeader).onSizeDefined(this, mHeaderHeight, mExtendHeaderHeight);
+        if (mRefreshHeader != null) {
+            mRefreshHeader.onSizeDefined(mKernel, mHeaderHeight, mExtendHeaderHeight);
         }
         return this;
     }
@@ -1190,8 +1145,8 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     public SmartRefreshLayout setFooterExtendRate(float rate) {
         this.mFooterExtendRate = rate;
         this.mExtendFooterHeight = (int) (mFooterHeight * (mFooterExtendRate - 1));
-        if (mRefreshFooter instanceof SizeObserver) {
-            ((SizeObserver) mRefreshFooter).onSizeDefined(this, mFooterHeight, mExtendFooterHeight);
+        if (mRefreshFooter != null) {
+            mRefreshFooter.onSizeDefined(mKernel, mFooterHeight, mExtendFooterHeight);
         }
         return this;
     }
@@ -1275,42 +1230,10 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     public SmartRefreshLayout setRefreshFooter(RefreshFooter bottom) {
         if (mRefreshFooter != null) {
             removeView(mRefreshFooter.getView());
-            if (mFooterHeightStatus == DimensionStatus.XmlExact
-                    || mFooterHeightStatus == DimensionStatus.XmlWrap) {
-                mFooterHeightStatus = DimensionStatus.DefaultUnNotify;
-            }
-        }
-        if (mFooterHeightStatus == DimensionStatus.CodeExact) {
-            mFooterHeightStatus = DimensionStatus.CodeExactUnNotify;
         }
         this.mRefreshFooter = bottom;
+        this.mFooterHeightStatus = mFooterHeightStatus.unNotify();
         this.addView(mRefreshFooter.getView());
-        return this;
-    }
-
-    /**
-     * 注册 HeaderHook 钩子
-     */
-    @Override
-    public SmartRefreshLayout registHeaderHook(RefreshLayoutHookHeader hook) {
-        if (mHeaderHook == null || mHeaderHook.isAgreeDisplace(hook)) {
-            mHeaderHook = hook;
-        } else if (hook != null) {
-            hook.onRefuseDisplace(mHeaderHook);
-        }
-        return this;
-    }
-
-    /**
-     * 注册 FooterHook 钩子
-     */
-    @Override
-    public SmartRefreshLayout registFooterHook(RefreshLayoutHookFooter hook) {
-        if (mFooterHook == null || mFooterHook.isAgreeDisplace(hook)) {
-            mFooterHook = hook;
-        } else if (hook != null) {
-            hook.onRefuseDisplace(mFooterHook);
-        }
         return this;
     }
 
@@ -1330,15 +1253,9 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     public SmartRefreshLayout setRefreshHeader(RefreshHeader header) {
         if (mRefreshHeader != null) {
             removeView(mRefreshHeader.getView());
-            if (mHeaderHeightStatus == DimensionStatus.XmlExact
-                    || mHeaderHeightStatus == DimensionStatus.XmlWrap) {
-                mHeaderHeightStatus = DimensionStatus.DefaultUnNotify;
-            }
-        }
-        if (mHeaderHeightStatus == DimensionStatus.CodeExact) {
-            mHeaderHeightStatus = DimensionStatus.CodeExactUnNotify;
         }
         this.mRefreshHeader = header;
+        this.mHeaderHeightStatus = mHeaderHeightStatus.unNotify();
         this.addView(mRefreshHeader.getView());
         return this;
     }
@@ -1558,5 +1475,101 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         mFooterCreater = creater;
     }
 
+    //</editor-fold>
+
+    //<editor-fold desc="核心接口 RefreshKernel">
+    protected class RefreshKernelImpl implements RefreshKernel {
+        @NonNull
+        @Override
+        public RefreshLayout getRefreshLayout() {
+            return SmartRefreshLayout.this;
+        }
+
+        //<editor-fold desc="注册钩子 Hook">
+        /**
+         * 注册 HeaderHook 钩子
+         */
+        @Override
+        public RefreshKernelImpl registHeaderHook(RefreshLayoutHookHeader hook) {
+            if (mHeaderHook == null || mHeaderHook.isAgreeDisplace(hook)) {
+                mHeaderHook = hook;
+            } else if (hook != null) {
+                hook.onRefuseDisplace(mHeaderHook);
+            }
+            return this;
+        }
+
+        /**
+         * 注册 FooterHook 钩子
+         */
+        @Override
+        public RefreshKernelImpl registFooterHook(RefreshLayoutHookFooter hook) {
+            if (mFooterHook == null || mFooterHook.isAgreeDisplace(hook)) {
+                mFooterHook = hook;
+            } else if (hook != null) {
+                hook.onRefuseDisplace(mFooterHook);
+            }
+            return this;
+        }
+        //</editor-fold>
+
+        //<editor-fold desc="状态更改 state changes">
+        public RefreshKernel setStatePullUpToLoad() {
+            SmartRefreshLayout.this.setStatePullUpToLoad();
+            return this;
+        }
+        public RefreshKernel setStateReleaseLoad() {
+            SmartRefreshLayout.this.setStateReleaseLoad();
+            return this;
+        }
+        public RefreshKernel setStateReleaseRefresh() {
+            SmartRefreshLayout.this.setStateReleaseRefresh();
+            return this;
+        }
+        public RefreshKernel setStatePullDownToRefresh() {
+            SmartRefreshLayout.this.setStatePullDownToRefresh();
+            return this;
+        }
+        public RefreshKernel setStatePullDownCanceled() {
+            SmartRefreshLayout.this.setStatePullDownCanceled();
+            return this;
+        }
+        public RefreshKernel setStatePullUpCanceled() {
+            SmartRefreshLayout.this.setStatePullUpCanceled();
+            return this;
+        }
+        public RefreshKernel setStateLoding() {
+            SmartRefreshLayout.this.setStateLoding();
+            return this;
+        }
+        public RefreshKernel setStateRefresing() {
+            SmartRefreshLayout.this.setStateRefresing();
+            return this;
+        }
+        public RefreshKernel resetStatus() {
+            SmartRefreshLayout.this.resetStatus();
+            return this;
+        }
+        //</editor-fold>
+
+        //<editor-fold desc="视图位移 Spinner">
+        public RefreshKernel overSpinner() {
+            SmartRefreshLayout.this.overSpinner();
+            return this;
+        }
+        public RefreshKernel moveSpinnerInfinitely(float dy) {
+            SmartRefreshLayout.this.moveSpinnerInfinitely(dy);
+            return this;
+        }
+        public RefreshKernel moveSpinner(int spinner, boolean isAnimator) {
+            SmartRefreshLayout.this.moveSpinner(spinner, isAnimator);
+            return this;
+        }
+        public RefreshKernel animSpinner(int endValue)  {
+            SmartRefreshLayout.this.animSpinner(endValue);
+            return this;
+        }
+        //</editor-fold>
+    }
     //</editor-fold>
 }
