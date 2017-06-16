@@ -9,6 +9,7 @@ package com.scwang.smartrefresh.header;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
+import android.graphics.Canvas;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.scwang.smartrefresh.header.internal.MaterialProgressDrawable;
+import com.scwang.smartrefresh.header.waterdrop.ProgressDrawable;
 import com.scwang.smartrefresh.header.waterdrop.WaterDropView;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
@@ -35,10 +37,12 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
 
     private static final float MAX_PROGRESS_ANGLE = 0.8f;
 
-    private WaterDropView mWaterDropView;
-    private ImageView mImageView;
-    private MaterialProgressDrawable mProgress;
     private RefreshState mState;
+    private ImageView mImageView;
+    private WaterDropView mWaterDropView;
+    private ProgressDrawable mProgressDrawable;
+    private MaterialProgressDrawable mProgress;
+    private int mProgressDegree = 0;
 
     public WaterDropHeader(Context context) {
         super(context);
@@ -59,6 +63,9 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
 //        mWaterDropView.setWaterDropColor(0xff9ba2ab);
         addView(mWaterDropView, MATCH_PARENT, MATCH_PARENT);
         mWaterDropView.updateComleteState(0);
+
+        mProgressDrawable = new ProgressDrawable();
+        mProgressDrawable.setBounds(0,0, density.dip2px(30), density.dip2px(30));
 
         mImageView = new ImageView(context);
         mProgress = new MaterialProgressDrawable(context, mImageView);
@@ -111,6 +118,19 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
             topImage = mWaterDropView.getBottom() - (widthWaterDrop - widthImage) / 2 - heightImage;
         }
         mImageView.layout(leftImage, topImage, leftImage + widthImage, topImage + heightImage);
+    }
+
+    @Override
+    protected void dispatchDraw(Canvas canvas) {
+        super.dispatchDraw(canvas);
+        if (mState == RefreshState.Refreshing) {
+            canvas.translate(
+                    getWidth()/2-mProgressDrawable.width()/2,
+                    getHeight()/2-mProgressDrawable.height()/2
+            );
+            canvas.rotate(mProgressDegree);
+            mProgressDrawable.draw(canvas);
+        }
     }
 
     @Override
@@ -188,6 +208,16 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
             }
         });
         animator.start();//开始回弹
+        postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mProgressDegree = (mProgressDegree + 30) % 360;
+                invalidate();
+                if (mState == RefreshState.Refreshing) {
+                    postDelayed(this, 100);
+                }
+            }
+        },100);
     }
 
     @Override
