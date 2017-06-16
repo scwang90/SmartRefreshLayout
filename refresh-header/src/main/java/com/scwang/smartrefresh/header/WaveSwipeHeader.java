@@ -65,10 +65,10 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
 
     public WaveSwipeHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context, attrs, defStyleAttr);
+        initView(context, attrs, defStyleAttr);
     }
 
-    private void init(Context context, AttributeSet attrs, int defStyleAttr) {
+    private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
         addView(mWaveView = new WaveView(context));
         addView(mCircleView = new ProgressAnimationImageView(getContext()));
 

@@ -17,9 +17,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 import com.scwang.refreshlayout.R;
-import com.scwang.refreshlayout.activity.style.FlyRefreshStyleActivity;
 import com.scwang.refreshlayout.activity.style.BezierStyleActivity;
+import com.scwang.refreshlayout.activity.style.CircleStyleActivity;
 import com.scwang.refreshlayout.activity.style.ClassicsStyleActivity;
+import com.scwang.refreshlayout.activity.style.FlyRefreshStyleActivity;
 import com.scwang.refreshlayout.activity.style.MaterialStyleActivity;
 import com.scwang.refreshlayout.activity.style.PhoenixStyleActivity;
 import com.scwang.refreshlayout.activity.style.TaurusStyleActivity;
@@ -49,7 +50,8 @@ public class RefreshStylesFragment extends Fragment implements AdapterView.OnIte
         Material("官方主题", MaterialStyleActivity.class),
         Phoenix("金色校园", PhoenixStyleActivity.class),
         Taurus("冲上云霄", TaurusStyleActivity.class),
-        Bezier("贝塞尔曲线", BezierStyleActivity.class),
+        Bezier("贝塞尔雷达", BezierStyleActivity.class),
+        Circle("弹出圆圈", CircleStyleActivity.class),
         Classics("经典风格", ClassicsStyleActivity.class),
         ;
         public String name;

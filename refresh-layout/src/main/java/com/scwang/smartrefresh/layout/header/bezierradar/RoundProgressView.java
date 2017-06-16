@@ -29,10 +29,10 @@ public class RoundProgressView extends View {
 
     public RoundProgressView(Context context) {
         super(context);
-        init();
+        initView();
     }
 
-    private void init() {
+    private void initView() {
         mPath = new Paint();
         mPantR = new Paint();
         mPath.setAntiAlias(true);
@@ -56,6 +56,12 @@ public class RoundProgressView extends View {
         mAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
     }
 
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        setMeasuredDimension(resolveSize(getSuggestedMinimumWidth(), widthMeasureSpec),
+                resolveSize(getSuggestedMinimumHeight(), heightMeasureSpec));
+    }
+
     public void setBackColor(int backColor) {
         mPantR.setColor(backColor&0x00ffffff|0x55000000);
     }
@@ -69,6 +75,11 @@ public class RoundProgressView extends View {
         super.onDraw(canvas);
         int width = getWidth();
         int height = getHeight();
+
+        if (isInEditMode()) {
+            stratAngle = 0;
+            endAngle = 270;
+        }
 
         mPath.setStyle(Paint.Style.FILL);
         canvas.drawCircle(width / 2, height / 2, mRadius, mPath);

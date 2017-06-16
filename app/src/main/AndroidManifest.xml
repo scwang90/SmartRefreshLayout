@@ -49,11 +49,15 @@
         <activity
             android:name=".activity.style.BezierStyleActivity"
             android:label="@string/title_activity_style_bezier"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".activity.style.ClassicsStyleActivity"
             android:label="@string/title_activity_style_classics"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activity.style.CircleStyleActivity"
+            android:label="@string/title_activity_style_circle"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

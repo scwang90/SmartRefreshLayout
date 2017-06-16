@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
@@ -22,9 +21,9 @@ import com.scwang.smartrefresh.layout.header.bezierradar.RippleView;
 import com.scwang.smartrefresh.layout.header.bezierradar.RoundDotView;
 import com.scwang.smartrefresh.layout.header.bezierradar.RoundProgressView;
 import com.scwang.smartrefresh.layout.header.bezierradar.WaveView;
+import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 /**
  * 贝塞尔曲线类雷达风格刷新组件
@@ -48,28 +47,11 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
 
     public BezierRadarHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context, attrs, defStyleAttr);
+        initView(context, attrs, defStyleAttr);
     }
 
-    @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
-        if (getTag() instanceof String) {
-            String tag = getTag().toString();
-            String[] colors = tag.split("#");
-            for (String color : colors) {
-                if (color.matches("[0-9a-fA-F]{6,8}")) {
-                    if (color.equals(colors[colors.length - 1])) {
-                        setAccentColor(Color.parseColor("#"+color));
-                    } else {
-                        setPrimary(Color.parseColor("#"+color));
-                    }
-                }
-            }
-        }
-    }
-
-    private void init(Context context, AttributeSet attrs, int defStyleAttr) {
+    private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
+        setMinimumHeight(DensityUtil.dp2px(100));
         /**
          * 初始化headView
          */
@@ -82,11 +64,10 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
             this.addView(mProgressView, MATCH_PARENT, MATCH_PARENT);
             mWaveView.setHeadHeight(1000);
         } else {
-            this.addView(mWaveView, MATCH_PARENT, WRAP_CONTENT);
-            this.addView(mDotView, MATCH_PARENT, WRAP_CONTENT);
-            this.addView(mProgressView, MATCH_PARENT, WRAP_CONTENT);
-            this.addView(mRippleView, MATCH_PARENT, WRAP_CONTENT);
-            //mProgressView.setVisibility(View.INVISIBLE);
+            this.addView(mWaveView, MATCH_PARENT, MATCH_PARENT);
+            this.addView(mDotView, MATCH_PARENT, MATCH_PARENT);
+            this.addView(mProgressView, MATCH_PARENT, MATCH_PARENT);
+            this.addView(mRippleView, MATCH_PARENT, MATCH_PARENT);
             mProgressView.setScaleX(0);
             mProgressView.setScaleY(0);
         }
@@ -97,7 +78,7 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
         int primaryColor = ta.getColor(R.styleable.BezierRadarHeader_srlPrimaryColor, 0);
         int accentColor = ta.getColor(R.styleable.BezierRadarHeader_srlAccentColor, 0);
         if (primaryColor != 0) {
-            setPrimary(primaryColor);
+            setPrimaryColor(primaryColor);
         }
         if (accentColor != 0) {
             setAccentColor(primaryColor);
@@ -106,7 +87,7 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
         ta.recycle();
     }
 
-    public void setPrimary(int color) {
+    public void setPrimaryColor(int color) {
         mWaveView.setWaveColor(color);
         mProgressView.setBackColor(color);
     }
@@ -117,18 +98,18 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
         mProgressView.setFrontColor(color);
     }
 
-    public void setBackColorId(int colorId) {
-        setPrimary(ContextCompat.getColor(getContext(), colorId));
+    public void setPrimaryColorId(int colorId) {
+        setPrimaryColor(ContextCompat.getColor(getContext(), colorId));
     }
 
-    public void setFrontColorId(int colorId) {
+    public void setAccentColorId(int colorId) {
         setAccentColor(ContextCompat.getColor(getContext(), colorId));
     }
 
     @Override
     public void setPrimaryColors(int... colors) {
         if (colors.length > 0) {
-            setPrimary(colors[0]);
+            setPrimaryColor(colors[0]);
         }
         if (colors.length > 1) {
             setAccentColor(colors[1]);
@@ -165,7 +146,7 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
         ValueAnimator animator = ValueAnimator.ofInt(
                 mWaveView.getWaveHeight(), 0,
                 -(int)(mWaveView.getWaveHeight()*0.8),0,
-                -(int)(mWaveView.getWaveHeight()*0.4),0);
+                -(int)(mWaveView.getWaveHeight()*0.4f),0);
         animator.addUpdateListener(animation -> {
             mWaveView.setWaveHeight((int) animation.getAnimatedValue()/2);
             mWaveView.invalidate();
@@ -180,8 +161,6 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
                 mDotView.setVisibility(INVISIBLE);
-                //mProgressView.setVisibility(View.VISIBLE);
-                //mProgressView.animate().setDuration(300);
                 mProgressView.animate().scaleX((float) 1.0);
                 mProgressView.animate().scaleY((float) 1.0);
                 mProgressView.postDelayed(() -> {
@@ -214,7 +193,6 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
                 mDotView.setVisibility(View.VISIBLE);
                 mProgressView.setScaleX(0);
                 mProgressView.setScaleY(0);
-                //mProgressView.setVisibility(View.INVISIBLE);
                 break;
             case PullToUpLoad:
                 break;

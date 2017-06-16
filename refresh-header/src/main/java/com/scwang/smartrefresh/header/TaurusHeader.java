@@ -97,10 +97,10 @@ public class TaurusHeader extends View implements RefreshHeader, SizeDefinition 
 
     public TaurusHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context, attrs, defStyleAttr);
+        initView(context, attrs, defStyleAttr);
     }
 
-    private void init(Context context, AttributeSet attrs, int defStyleAttr) {
+    private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
         mMatrix = new Matrix();
         mWinds = new HashMap<>();
         mRandom = new Random();

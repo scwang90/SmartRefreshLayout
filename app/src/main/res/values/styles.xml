@@ -11,7 +11,7 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="AppTheme.TranslucentStatus"/>
+    <style name="AppTheme.TranslucentStatus" />
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

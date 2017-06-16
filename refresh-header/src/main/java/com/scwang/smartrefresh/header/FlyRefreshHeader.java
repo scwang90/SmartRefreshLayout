@@ -79,7 +79,7 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader, Si
 
     @Override
     public void startAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
-        layout.finisRefresh(0);
+        layout.finishRefresh(0);
         if (mCurrentPercent > 0) {
             ValueAnimator valueAnimator = ValueAnimator.ofFloat(mCurrentPercent, 0);
             valueAnimator.setDuration(300);

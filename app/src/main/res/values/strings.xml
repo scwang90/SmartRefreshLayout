@@ -112,4 +112,5 @@
     <string name="title_activity_style_taurus">冲上云霄</string>
     <string name="title_activity_style_bezier">贝塞尔雷达</string>
     <string name="title_activity_style_classics">经典风格</string>
+    <string name="title_activity_style_circle">弹出圆圈</string>
 </resources>

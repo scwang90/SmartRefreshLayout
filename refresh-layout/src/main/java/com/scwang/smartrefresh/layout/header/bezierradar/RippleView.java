@@ -26,6 +26,12 @@ public class RippleView extends View {
         mPaint.setStyle(Paint.Style.FILL);
     }
 
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        setMeasuredDimension(resolveSize(getSuggestedMinimumWidth(), widthMeasureSpec),
+                resolveSize(getSuggestedMinimumHeight(), heightMeasureSpec));
+    }
+
     public void setFrontColor(int color) {
         mPaint.setColor(color);
     }

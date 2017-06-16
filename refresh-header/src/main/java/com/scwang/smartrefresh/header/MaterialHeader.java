@@ -67,10 +67,10 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader, SizeObse
 
     public MaterialHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context, attrs, defStyleAttr);
+        initView(context, attrs, defStyleAttr);
     }
 
-    private void init(Context context, AttributeSet attrs, int defStyleAttr) {
+    private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
         setMinimumHeight(DensityUtil.dp2px(100));
 
         mProgress = new MaterialProgressDrawable(context, this);

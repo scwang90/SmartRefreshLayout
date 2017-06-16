@@ -16,20 +16,20 @@ public class PathsView extends View {
 
     public PathsView(Context context) {
         super(context);
-        this.init(context, null, 0);
+        this.initView(context, null, 0);
     }
 
     public PathsView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.init(context, attrs, 0);
+        this.initView(context, attrs, 0);
     }
 
     public PathsView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.init(context, attrs, defStyleAttr);
+        this.initView(context, attrs, defStyleAttr);
     }
 
-    private void init(Context context, AttributeSet attrs, int defStyleAttr) {
+    private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
         mPathsDrawable = new PathsDrawable();
     }
 

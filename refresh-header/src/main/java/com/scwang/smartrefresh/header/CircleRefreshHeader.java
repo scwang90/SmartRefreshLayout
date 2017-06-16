@@ -517,7 +517,7 @@ public class CircleRefreshHeader extends View implements RefreshHeader, SizeObse
     @Override
     public void onSizeDefined(RefreshLayout layout, int height, int extendHeight) {
         if (listener == null) {
-            layout.setOnRefreshListener(listener = refreshlayout -> layout.finisRefresh(20000));
+            layout.setOnRefreshListener(listener = refreshlayout -> layout.finishRefresh(20000));
         }
         PULL_HEIGHT = height;
         PULL_DELTA = height / 2;

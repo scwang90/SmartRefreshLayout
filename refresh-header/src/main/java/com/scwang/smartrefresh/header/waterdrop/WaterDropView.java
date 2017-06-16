@@ -32,20 +32,20 @@ public class WaterDropView extends View {
 
     public WaterDropView(Context context) {
         super(context);
-        init(context, null);
+        initView(context, null);
     }
 
     public WaterDropView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context, attrs);
+        initView(context, attrs);
     }
 
     public WaterDropView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context, attrs);
+        initView(context, attrs);
     }
 
-    private void init(Context context, AttributeSet attrs) {
+    private void initView(Context context, AttributeSet attrs) {
 //        setBackgroundColor(0xffbbff11);
         topCircle = new Circle();
         bottomCircle = new Circle();

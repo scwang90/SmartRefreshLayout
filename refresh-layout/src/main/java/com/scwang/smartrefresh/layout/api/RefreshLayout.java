@@ -60,15 +60,17 @@ public interface RefreshLayout {
 
     RefreshLayout setHeaderExtendRate(float rate);
 
-    RefreshLayout finisRefresh();
+    RefreshLayout finishRefresh();
 
-    RefreshLayout finisLoadmore();
+    RefreshLayout finishLoadmore();
 
-    RefreshLayout finisRefresh(int delayed);
+    RefreshLayout finishRefresh(int delayed);
 
-    RefreshLayout finisLoadmore(int delayed);
+    RefreshLayout finishLoadmore(int delayed);
 
-    RefreshLayout registHook(RefreshLayoutHook hook);
+    RefreshLayout registHeaderHook(RefreshLayoutHookHeader hook);
+
+    RefreshLayout registFooterHook(RefreshLayoutHookFooter hook);
 
     @Nullable
     RefreshFooter getRefreshFooter();

@@ -15,20 +15,20 @@ public class FlyView extends PathsView {
 
     public FlyView(Context context) {
         super(context);
-        this.init(context, null, 0);
+        this.initView(context, null, 0);
     }
 
     public FlyView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.init(context, attrs, 0);
+        this.initView(context, attrs, 0);
     }
 
     public FlyView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.init(context, attrs, defStyleAttr);
+        this.initView(context, attrs, defStyleAttr);
     }
 
-    private void init(Context context, AttributeSet attrs, int defStyleAttr) {
+    private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
         parserColors(0xffffffff);
         parserPaths("M2.01,21L23,12 2.01,3 2,10l15,2 -15,2z");
         setMinimumWidth(DensityUtil.dp2px(25));

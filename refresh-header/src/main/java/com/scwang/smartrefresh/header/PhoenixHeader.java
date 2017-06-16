@@ -114,10 +114,10 @@ public class PhoenixHeader extends View implements RefreshHeader, SizeDefinition
 
     public PhoenixHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context, attrs, defStyleAttr);
+        initView(context, attrs, defStyleAttr);
     }
 
-    private void init(Context context, AttributeSet attrs, int defStyleAttr) {
+    private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
         mMatrix = new Matrix();
         DensityUtil density = new DensityUtil();
         mSunSize = density.dip2px(40);

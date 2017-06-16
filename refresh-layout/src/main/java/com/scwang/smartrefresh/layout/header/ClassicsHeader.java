@@ -45,20 +45,20 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
 
     public ClassicsHeader(Context context) {
         super(context);
-        this.init(context, null, 0);
+        this.initView(context, null, 0);
     }
 
     public ClassicsHeader(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.init(context, attrs, 0);
+        this.initView(context, attrs, 0);
     }
 
     public ClassicsHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.init(context, attrs, defStyleAttr);
+        this.initView(context, attrs, defStyleAttr);
     }
 
-    private void init(Context context, AttributeSet attrs, int defStyleAttr) {
+    private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
         DensityUtil density = new DensityUtil();
 
         setMinimumHeight(density.dip2px(80));

@@ -16,10 +16,10 @@ import android.view.animation.DecelerateInterpolator;
 
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayoutHook;
 import com.scwang.smartrefresh.layout.api.SizeObserver;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.impl.RefreshLayoutHeaderHooker;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 /**
@@ -46,7 +46,7 @@ public class CircleHeader extends View implements RefreshHeader, SizeObserver {
     private boolean mShowBoll;//是否显示中心球体
     private boolean mShowBollTail;//是否显示球体拖拽的尾巴
     private boolean mShowOuter;
-    private int mBollRadius;//球体半径
+    private float mBollRadius;//球体半径
 
     private int mRefreshStart = 90;
     private int mRefreshStop = 90;
@@ -72,6 +72,7 @@ public class CircleHeader extends View implements RefreshHeader, SizeObserver {
     }
 
     private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
+        setMinimumHeight(DensityUtil.dp2px(100));
         mBackPaint = new Paint();
         mBackPaint.setColor(0xff11bbff);
         mBackPaint.setAntiAlias(true);
@@ -98,6 +99,15 @@ public class CircleHeader extends View implements RefreshHeader, SizeObserver {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+
+        if (isInEditMode()) {
+            mShowBoll = true;
+            mShowOuter = true;
+            mHeadHeight = getHeight();
+            mRefreshStop = 270;
+            mBollY = mHeadHeight / 2;
+            mBollRadius = mHeadHeight / 6;
+        }
 
         int viewWidth = getWidth();
         int viewHeight = getHeight();
@@ -231,10 +241,9 @@ public class CircleHeader extends View implements RefreshHeader, SizeObserver {
     //<editor-fold desc="SizeObserver">
     @Override
     public void onSizeDefined(RefreshLayout layout, int height, int extendHeight) {
-        layout.setOnRefreshListener(null);
-        layout.registHook(new RefreshLayoutHook(){
+        layout.registHeaderHook(new RefreshLayoutHeaderHooker() {
             @Override
-            public void onHookFinisRefresh(SuperMethod method, RefreshLayout layout, int delayed) {
+            public void onHookFinishRefresh(SuperMethod method, RefreshLayout layout) {
                 mShowOuter = false;
                 mShowBoll = false;
                 ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
@@ -247,7 +256,7 @@ public class CircleHeader extends View implements RefreshHeader, SizeObserver {
                 animator.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
-                        method.execute(10000);
+                        method.invoke(0);
                     }
                 });
                 animator.start();
@@ -335,12 +344,6 @@ public class CircleHeader extends View implements RefreshHeader, SizeObserver {
         });
         waveAnimator.setInterpolator(interpolator);
         waveAnimator.setDuration(1000);
-        waveAnimator.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                postDelayed(layout::finisRefresh, 2000);
-            }
-        });
         waveAnimator.start();
     }
 

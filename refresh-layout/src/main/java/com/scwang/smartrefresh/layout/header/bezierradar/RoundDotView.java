@@ -27,6 +27,12 @@ public class RoundDotView extends View {
         mRadius = DensityUtil.dp2px(7);
     }
 
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        setMeasuredDimension(resolveSize(getSuggestedMinimumWidth(), widthMeasureSpec),
+                resolveSize(getSuggestedMinimumHeight(), heightMeasureSpec));
+    }
+
     public void setDotColor(int color) {
         mPath.setColor(color);
     }

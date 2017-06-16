@@ -6,8 +6,21 @@ package com.scwang.smartrefresh.layout.api;
  */
 
 public interface RefreshLayoutHook {
+
+    /**
+     * 是否同意被取代
+     * @param hook 新的 Hook
+     * @return true 同意并将被取代，反之不然
+     */
+    boolean isAgreeDisplace(RefreshLayoutHook hook);
+
+    /**
+     * 在已经存在 Hook 的时候 被拒绝替代
+     * @param hook 发出拒绝的
+     */
+    void onRefuseDisplace(RefreshLayoutHook hook);
+
     interface SuperMethod {
-        void execute(Object... args);
+        void invoke(Object... args);
     }
-    void onHookFinisRefresh(SuperMethod method, RefreshLayout layout, int delayed);
 }

@@ -33,20 +33,20 @@ public class BallPulseFooter extends ViewGroup implements RefreshFooter {
 
     public BallPulseFooter(@NonNull Context context) {
         super(context);
-        init(context, null, 0);
+        initView(context, null, 0);
     }
 
     public BallPulseFooter(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        init(context, attrs, 0);
+        initView(context, attrs, 0);
     }
 
     public BallPulseFooter(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context, attrs, defStyleAttr);
+        initView(context, attrs, defStyleAttr);
     }
 
-    private void init(Context context, AttributeSet attrs, int defStyleAttr) {
+    private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
         mBallPulseView = new BallPulseView(context);
         addView(mBallPulseView, WRAP_CONTENT, WRAP_CONTENT);
         setMinimumHeight(DensityUtil.dp2px(60));
