@@ -1423,7 +1423,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
      */
     @Override
     public boolean autoRefresh(int delayed) {
-        if (state == RefreshState.None) {
+        if (state == RefreshState.None && mEnableRefresh) {
             postDelayed(() -> {
                 ValueAnimator animator = ValueAnimator.ofInt(mSpinner, mHeaderHeight + mExtendHeaderHeight / 2);
                 animator.setDuration(mReboundDuration);
@@ -1458,7 +1458,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
      */
     @Override
     public boolean autoLoadmore(int delayed) {
-        if (state == RefreshState.None) {
+        if (state == RefreshState.None && mEnableLoadmore) {
             postDelayed(() -> {
                 ValueAnimator animator = ValueAnimator.ofInt(mSpinner, -mHeaderHeight - mExtendFooterHeight / 2);
                 animator.setDuration(mReboundDuration);

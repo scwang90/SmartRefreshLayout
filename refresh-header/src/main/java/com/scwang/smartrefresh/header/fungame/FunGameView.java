@@ -147,15 +147,15 @@ public abstract class FunGameView extends FunGameHeader {
         switch (status) {
             case STATUS_GAME_PREPAR:
             case STATUS_GAME_PLAY:
-                textPaint.setTextSize(50);
+                textPaint.setTextSize(DensityUtil.dp2px(25));
                 promptText(canvas, textLoading);
                 break;
             case STATUS_GAME_FINISHED:
-                textPaint.setTextSize(40);
+                textPaint.setTextSize(DensityUtil.dp2px(20));
                 promptText(canvas, textLoadingFinished);
                 break;
             case STATUS_GAME_OVER:
-                textPaint.setTextSize(50);
+                textPaint.setTextSize(DensityUtil.dp2px(25));
                 promptText(canvas, textGameOver);
                 break;
         }
@@ -228,12 +228,6 @@ public abstract class FunGameView extends FunGameHeader {
     }
 
     @Override
-    public void postEnd() {
-        postStatus(FunGameView.STATUS_GAME_PREPAR);
-        super.postEnd();
-    }
-
-    @Override
     protected void onManualOperationMove(float percent, int offset, int headHeight, int extendHeight) {
         moveController(Math.max(offset, 0));
     }
@@ -276,7 +270,12 @@ public abstract class FunGameView extends FunGameHeader {
 
     @Override
     public void onFinish(RefreshLayout layout) {
-        postStatus(FunGameView.STATUS_GAME_FINISHED);
+        super.onFinish(layout);
+        if (mManualOperation) {
+            postStatus(FunGameView.STATUS_GAME_FINISHED);
+        } else {
+            postStatus(FunGameView.STATUS_GAME_PREPAR);
+        }
     }
 
     @Override

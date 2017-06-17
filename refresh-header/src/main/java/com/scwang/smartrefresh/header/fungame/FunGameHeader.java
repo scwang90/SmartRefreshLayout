@@ -10,6 +10,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.Nullable;
+import android.support.v4.graphics.ColorUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -113,9 +114,8 @@ public class FunGameHeader extends FunGameBase implements RefreshHeader {
             maskLp.topMargin = (int) FunGameView.DIVIDING_LINE_SIZE;
             maskLp.bottomMargin = (int) FunGameView.DIVIDING_LINE_SIZE;
 
-//            addView(maskReLayout, maskLp);
-//            addView(curtainReLayout, maskLp);
-
+            addView(maskReLayout, maskLp);
+            addView(curtainReLayout, maskLp);
 
             halfHitBlockHeight = (int) ((mHeaderHeight - 2 * FunGameView.DIVIDING_LINE_SIZE) * .5f);
             RelativeLayout.LayoutParams topRelayLayoutParams = new RelativeLayout.LayoutParams(MATCH_PARENT, halfHitBlockHeight);
@@ -191,9 +191,9 @@ public class FunGameHeader extends FunGameBase implements RefreshHeader {
             topMaskView.setTextColor(colors[0]);
             bottomMaskView.setTextColor(colors[0]);
             if (colors.length > 1) {
-                maskReLayout.setBackgroundColor(colors[1]);
-                topMaskView.setBackgroundColor(colors[1]);
-                bottomMaskView.setBackgroundColor(colors[1]);
+                maskReLayout.setBackgroundColor(ColorUtils.setAlphaComponent(colors[1],200));
+                topMaskView.setBackgroundColor(ColorUtils.setAlphaComponent(colors[1],200));
+                bottomMaskView.setBackgroundColor(ColorUtils.setAlphaComponent(colors[1],200));
             }
         }
     }

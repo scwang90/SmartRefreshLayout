@@ -75,7 +75,7 @@ public class FunGameHitBlockHeader extends FunGameView {
     /**
      * 小球半径
      */
-    private static final float BALL_RADIUS = 8.f;
+    private float BALL_RADIUS;
 
     private Paint blockPaint;
 
@@ -111,6 +111,8 @@ public class FunGameHitBlockHeader extends FunGameView {
         blockHorizontalNum = typedArray.getInt(R.styleable.FunGameHitBlockHeader_fgvBlockHorizontalNum, BLOCK_HORIZONTAL_NUM);
         speed = typedArray.getInt(R.styleable.FunGameHitBlockHeader_fgvBallSpeed, DensityUtil.dp2px(SPEED));
         typedArray.recycle();
+
+        BALL_RADIUS = DensityUtil.dp2px(4);
     }
 
     @Override
