@@ -287,7 +287,7 @@ public class CircleHeader extends View implements RefreshHeader, SizeObserver {
     }
 
     @Override
-    public void startAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
+    public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
         mHeadHeight = headHeight;
         mBollRadius = headHeight / 6;
         DecelerateInterpolator interpolator = new DecelerateInterpolator();

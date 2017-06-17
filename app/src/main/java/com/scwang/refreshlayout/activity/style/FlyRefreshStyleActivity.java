@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -78,8 +77,6 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
             }
         });
 
-        mToolbar.setNavigationIcon(VectorDrawableCompat.create(getResources(), R.drawable.ic_bga_refresh_loading12, getTheme()));
-
         /************************************************************
          * 关键代码-开始
          ************************************************************/
@@ -104,7 +101,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
                 mListView.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        //通知刷新完成，这里改为通知Header，让纸飞机飞回来(在FlyHeader内部实现中早已通知RefreshLayout刷新完成)
+                        //通知刷新完成，这里改为通知Header，让纸飞机飞回来
                         mFlyRefreshHeader.finishRefresh(new AnimatorListenerAdapter() {
                             public void onAnimationEnd(Animator animation) {
                                 addItemData();//在纸飞机回到原位之后添加数据效果更真实
@@ -114,7 +111,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
                 }, 2000);//模拟两秒的后台数据加载
             }
         });
-        //设置 让 AppBarLayout 和 RefreshLayout 的滚动同步
+        //设置 让 AppBarLayout 和 RefreshLayout 的滚动同步 并不保持 mToolbar 位置不变
         final AppBarLayout appBar = (AppBarLayout) findViewById(R.id.app_bar);
         mFlylayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
             @Override

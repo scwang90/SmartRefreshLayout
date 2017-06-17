@@ -541,7 +541,7 @@ public class CircleRefreshHeader extends View implements RefreshHeader, SizeObse
     }
 
     @Override
-    public void startAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
+    public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
         setRefreshing(true);
         releaseDrag();
     }

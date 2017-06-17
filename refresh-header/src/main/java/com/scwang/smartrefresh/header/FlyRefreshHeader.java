@@ -90,7 +90,7 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader, Si
     }
 
     @Override
-    public void startAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
+    public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
         /**
          * 提前关闭 下拉视图偏移
          */

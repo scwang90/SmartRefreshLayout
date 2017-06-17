@@ -241,7 +241,7 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader, SizeObse
     }
 
     @Override
-    public void startAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
+    public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
         mProgress.start();
         if ((int) mCircleView.getTranslationY() != headHeight / 2 + mCircleDiameter / 2) {
             mCircleView.animate().translationY(headHeight / 2 + mCircleDiameter / 2);

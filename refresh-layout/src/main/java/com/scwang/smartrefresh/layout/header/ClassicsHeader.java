@@ -37,6 +37,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     public static String REFRESH_HEADER_REFRESHING = "正在刷新";
     public static String REFRESH_HEADER_RELEASE = "释放立即刷新";
 
+    private Date mLastTime;
     private TextView mHeaderText;
     private TextView mLastUpdateText;
     private PathsView mArrowView;
@@ -136,7 +137,13 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     }
 
     public void setLastUpdateTime(Date time) {
+        mLastTime = time;
         mLastUpdateText.setText(mFormat.format(time));
+    }
+
+    public void setTimeFormat(DateFormat format) {
+        mFormat = format;
+        mLastUpdateText.setText(mFormat.format(mLastTime));
     }
 
     @Override
@@ -154,7 +161,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     }
 
     @Override
-    public void startAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
+    public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
         mProgressView.animate().rotation(36000).setDuration(100000);
     }
 

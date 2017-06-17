@@ -8,9 +8,9 @@ package com.scwang.smartrefresh.layout.api;
 public interface SizeObserver {
     /**
      * 尺寸定义完成
-     * @param layout RefreshLayout
+     * @param kernel RefreshKernel
      * @param height HeaderHeight or FooterHeight
      * @param extendHeight extendHeaderHeight or extendFooterHeight
      */
-    void onSizeDefined(RefreshKernel layout, int height, int extendHeight);
+    void onSizeDefined(RefreshKernel kernel, int height, int extendHeight);
 }

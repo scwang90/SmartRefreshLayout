@@ -16,12 +16,16 @@ import android.widget.AdapterView;
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
+import com.scwang.refreshlayout.util.DynamicTimeFormat;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Locale;
+import java.util.Random;
 
 import static android.R.layout.simple_list_item_2;
 import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
@@ -37,6 +41,7 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
         红色主题("更改为红色主题颜色"),
         绿色主题("更改为绿色主题颜色"),
         蓝色主题("更改为蓝色主题颜色"),
+        加载更多("上啦加载更多"),
         ;
         public String name;
         Item(String name) {
@@ -65,8 +70,12 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
         mRefreshLayout = (RefreshLayout)findViewById(R.id.smart);
         mRefreshLayout.autoRefresh();
 
+        int deta = new Random().nextInt(7 * 24 * 60 * 60 * 1000);
         mClassicsHeader = (ClassicsHeader)mRefreshLayout.getRefreshHeader();
-        mClassicsHeader.setLastUpdateTime(new Date());
+        mClassicsHeader.setLastUpdateTime(new Date(System.currentTimeMillis()-deta));
+        mClassicsHeader.setTimeFormat(new SimpleDateFormat("更新于 MM-dd HH:mm", Locale.CHINA));
+        mClassicsHeader.setTimeFormat(new DynamicTimeFormat("更新于 %s"));
+
 
         View view = findViewById(R.id.recycler);
         if (view instanceof RecyclerView) {
@@ -122,6 +131,9 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
             case 橙色主题:
                 setThemeColor(android.R.color.holo_orange_light, android.R.color.holo_orange_dark);
                 break;
+            case 加载更多:
+                mRefreshLayout.autoLoadmore();
+                return;
         }
         mRefreshLayout.autoRefresh();
     }

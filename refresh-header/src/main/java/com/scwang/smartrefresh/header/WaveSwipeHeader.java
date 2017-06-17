@@ -186,7 +186,7 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override
-    public void startAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
+    public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
         mLastFirstBounds = 0;
         mWaveView.animationDropCircle();
         mCircleView.makeProgressTransparent();

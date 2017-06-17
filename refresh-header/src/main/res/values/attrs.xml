@@ -34,4 +34,30 @@
         <attr name="srlViewportHeight" format="dimension"/>
     </declare-styleable>
 
+    <declare-styleable name="FunGameHeader">
+        <attr name="fgvMaskTopText" format="string" />
+        <attr name="fgvMaskBottomText" format="string" />
+        <attr name="fgvTopTextSize" format="dimension" />
+        <attr name="fgvBottomTextSize" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="FunGameView">
+        <attr name="fgvBackColor" format="color" />
+        <attr name="fgvLeftColor" format="color" />
+        <attr name="fgvMiddleColor" format="color" />
+        <attr name="fgvRightColor" format="color" />
+        <attr name="fgvTextLoading" format="string" />
+        <attr name="fgvTextLoadingFinished" format="string" />
+        <attr name="fgvTextGameOver" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="FunGameHitBlockHeader">
+        <attr name="fgvBlockHorizontalNum" format="integer" />
+        <attr name="fgvBallSpeed" format="dimension">
+            <!--<enum name="low" value="1.5dp" />-->
+            <!--<enum name="medium" value="3dp" />-->
+            <!--<enum name="fast" value="4.5dp" />-->
+        </attr>
+    </declare-styleable>
+
 </resources>

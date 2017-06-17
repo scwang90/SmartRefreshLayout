@@ -69,7 +69,7 @@ public class RefreshHeaderWrapper implements RefreshHeader {
     }
 
     @Override
-    public void startAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
+    public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
 
     }
 

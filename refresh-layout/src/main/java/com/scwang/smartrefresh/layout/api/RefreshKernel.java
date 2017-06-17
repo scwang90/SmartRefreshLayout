@@ -11,6 +11,8 @@ public interface RefreshKernel {
 
     @NonNull
     RefreshLayout getRefreshLayout();
+    @NonNull
+    RefreshContent getRefreshContent();
 
     //<editor-fold desc="注册钩子 Hook">
     RefreshKernel registHeaderHook(RefreshLayoutHookHeader hook);
@@ -34,6 +36,7 @@ public interface RefreshKernel {
     RefreshKernel moveSpinnerInfinitely(float dy);
     RefreshKernel moveSpinner(int spinner, boolean isAnimator) ;
     RefreshKernel animSpinner(int endValue) ;
+
     //</editor-fold>
 
 }
