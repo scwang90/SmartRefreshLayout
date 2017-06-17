@@ -84,7 +84,7 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
             switch (event.getAction() & ACTION_MASK) {
                 case MotionEvent.ACTION_DOWN:
                     mTouchY = event.getRawY();
-                    mRefreshKernel.moveSpinnerInfinitely(0);
+                    mRefreshKernel.moveSpinner(0, true);
                     break;
                 case MotionEvent.ACTION_MOVE:
                     float dy = event.getRawY() - mTouchY;

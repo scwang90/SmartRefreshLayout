@@ -63,7 +63,7 @@ public abstract class FunGameView extends FunGameHeader {
     protected int status = STATUS_GAME_PREPAR;
 
     protected int lModelColor, rModelColor, mModelColor;
-    protected int mBackColor;
+    protected int mBackColor, mBoundaryColor = 0xff606060;
     //</editor-fold>
 
     public FunGameView(Context context) {
@@ -126,7 +126,7 @@ public abstract class FunGameView extends FunGameHeader {
     private void drawBoundary(Canvas canvas) {
         mPaint.setColor(mBackColor);
         canvas.drawRect(0,0,screenWidth,mHeaderHeight,mPaint);
-        mPaint.setColor(ColorUtils.compositeColors(0x55000000, mBackColor));
+        mPaint.setColor(mBoundaryColor);
         canvas.drawLine(0, 0, screenWidth, 0, mPaint);
         canvas.drawLine(0, mHeaderHeight, screenWidth, mHeaderHeight, mPaint);
     }
@@ -283,7 +283,10 @@ public abstract class FunGameView extends FunGameHeader {
     public void setPrimaryColors(int... colors) {
         super.setPrimaryColors(colors);
         if (colors.length > 0) {
-            mBackColor = colors[0];
+            mBoundaryColor = mBackColor = colors[0];
+            if (mBackColor == 0 || mBackColor == 0xffffffff) {
+                mBoundaryColor = 0xff606060;
+            }
             if (colors.length > 1) {
                 mModelColor = colors[1];
                 lModelColor = ColorUtils.setAlphaComponent(colors[1], 225);

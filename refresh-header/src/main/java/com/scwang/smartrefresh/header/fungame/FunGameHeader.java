@@ -113,8 +113,8 @@ public class FunGameHeader extends FunGameBase implements RefreshHeader {
             maskLp.topMargin = (int) FunGameView.DIVIDING_LINE_SIZE;
             maskLp.bottomMargin = (int) FunGameView.DIVIDING_LINE_SIZE;
 
-            addView(maskReLayout, maskLp);
-            addView(curtainReLayout, maskLp);
+//            addView(maskReLayout, maskLp);
+//            addView(curtainReLayout, maskLp);
 
 
             halfHitBlockHeight = (int) ((mHeaderHeight - 2 * FunGameView.DIVIDING_LINE_SIZE) * .5f);
