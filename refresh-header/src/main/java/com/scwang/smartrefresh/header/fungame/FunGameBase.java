@@ -88,7 +88,7 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
                     break;
                 case MotionEvent.ACTION_MOVE:
                     float dy = event.getRawY() - mTouchY;
-                    mRefreshKernel.moveSpinnerInfinitely(Math.max(dy, 0));
+                    mRefreshKernel.moveSpinnerInfinitely(dy);
                     break;
                 case MotionEvent.ACTION_UP:
                 case MotionEvent.ACTION_CANCEL:
@@ -112,11 +112,13 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
     //</editor-fold>
 
     //<editor-fold desc="abstract">
-
+    boolean enableLoadmore;
     protected void onManualOperationStart() {
         mManualOperation = true;
         mRefreshContent = mRefreshKernel.getRefreshContent();
         mRefreshContent.getView().offsetTopAndBottom(mHeaderHeight);
+        enableLoadmore = mRefreshKernel.getEnableLoadmore();
+        mRefreshKernel.getRefreshLayout().setEnableLoadmore(false);
     }
 
     protected void onManualOperationMove(float percent, int offset, int headHeight, int extendHeight) {
@@ -126,6 +128,7 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
     protected void onManualOperationRelease() {
         mManualOperation = false;
         mRefreshContent.getView().offsetTopAndBottom(-mHeaderHeight);
+        mRefreshKernel.getRefreshLayout().setEnableLoadmore(enableLoadmore);
         if (mManualOperationListener != null) {
             mManualOperationListener.run();
         }

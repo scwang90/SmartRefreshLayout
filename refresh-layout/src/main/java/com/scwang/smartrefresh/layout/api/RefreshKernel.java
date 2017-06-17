@@ -37,6 +37,9 @@ public interface RefreshKernel {
     RefreshKernel moveSpinner(int spinner, boolean isAnimator) ;
     RefreshKernel animSpinner(int endValue) ;
 
+
     //</editor-fold>
+
+    boolean getEnableLoadmore();
 
 }

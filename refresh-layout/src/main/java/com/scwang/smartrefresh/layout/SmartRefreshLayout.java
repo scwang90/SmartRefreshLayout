@@ -838,7 +838,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                 }
             }
         }
-        if (spinner >= 0 && mRefreshHeader != null) {
+        if (spinner >= 0 && mRefreshHeader != null && mEnableRefresh) {
             if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale) {
                 requestLayout();
             } else if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Translate) {
@@ -856,7 +856,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                 }
             }
         }
-        if (spinner <= 0 && mRefreshFooter != null) {
+        if (spinner <= 0 && mRefreshFooter != null && mEnableLoadmore) {
             if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Scale) {
                 requestLayout();
             } else if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Translate) {
@@ -1597,6 +1597,11 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
             return this;
         }
         //</editor-fold>
+
+        @Override
+        public boolean getEnableLoadmore() {
+            return mEnableLoadmore;
+        }
     }
     //</editor-fold>
 }
