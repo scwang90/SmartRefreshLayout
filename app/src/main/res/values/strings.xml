@@ -113,4 +113,6 @@
     <string name="title_activity_style_bezier">贝塞尔雷达</string>
     <string name="title_activity_style_classics">经典风格</string>
     <string name="title_activity_style_circle">弹出圆圈</string>
+    <string name="title_activity_style_fungame_battlecity">战争城市</string>
+    <string name="title_activity_style_fungame_hitblock">打砖块</string>
 </resources>

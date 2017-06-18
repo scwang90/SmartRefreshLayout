@@ -94,10 +94,10 @@ public class MountanScenceView extends View {
         mBoarderPaint.setStrokeJoin(Paint.Join.ROUND);
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.MountanScenceView);
-        if (ta.hasValue(R.styleable.MountanScenceView_srlPrimaryColor)) {
-            setPrimaryColor(ta.getColor(R.styleable.MountanScenceView_srlPrimaryColor, 0xff000000));
+        if (ta.hasValue(R.styleable.MountanScenceView_msvPrimaryColor)) {
+            setPrimaryColor(ta.getColor(R.styleable.MountanScenceView_msvPrimaryColor, 0xff000000));
         }
-        mViewportHeight = ta.getDimensionPixelOffset(R.styleable.MountanScenceView_srlViewportHeight, 0);
+        mViewportHeight = ta.getDimensionPixelOffset(R.styleable.MountanScenceView_msvViewportHeight, 0);
         ta.recycle();
 
         updateMountainPath(mMoveFactor, HEIGHT);

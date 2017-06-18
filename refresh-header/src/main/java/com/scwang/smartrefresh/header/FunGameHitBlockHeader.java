@@ -33,11 +33,6 @@ public class FunGameHitBlockHeader extends FunGameView {
     private static final int BLOCK_HORIZONTAL_NUM = 3;
 
     /**
-     * 矩形块的高度占屏幕高度比率
-     */
-    private static final float BLOCK_HEIGHT_RATIO = .03125f;
-
-    /**
      * 矩形块的宽度占屏幕宽度比率
      */
     private static final float BLOCK_WIDTH_RATIO = .01806f;
@@ -103,44 +98,48 @@ public class FunGameHitBlockHeader extends FunGameView {
 
     public FunGameHitBlockHeader(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        initAttrs(context, attrs);
+        initView(context, attrs);
     }
 
-    private void initAttrs(Context context, AttributeSet attrs) {
+    private void initView(Context context, AttributeSet attrs) {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.FunGameHitBlockHeader);
         blockHorizontalNum = typedArray.getInt(R.styleable.FunGameHitBlockHeader_fgvBlockHorizontalNum, BLOCK_HORIZONTAL_NUM);
         speed = typedArray.getInt(R.styleable.FunGameHitBlockHeader_fgvBallSpeed, DensityUtil.dp2px(SPEED));
         typedArray.recycle();
 
+        blockPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        blockPaint.setStyle(Paint.Style.FILL);
         BALL_RADIUS = DensityUtil.dp2px(4);
     }
 
     @Override
     protected void initConcreteView() {
-        blockPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        blockPaint.setStyle(Paint.Style.FILL);
 
-        blockHeight = screenHeight * BLOCK_HEIGHT_RATIO;
-        blockWidth = screenWidth * BLOCK_WIDTH_RATIO;
+        final int measuredWidth = getMeasuredWidth();
+        controllerSize = (int) (blockHeight * 1.6f);
+        blockHeight = mHeaderHeight / BLOCK_VERTICAL_NUM - DIVIDING_LINE_SIZE;
+        blockWidth = measuredWidth * BLOCK_WIDTH_RATIO;
 
-        blockLeft = screenWidth * BLOCK_POSITION_RATIO;
-        racketLeft = screenWidth * RACKET_POSITION_RATIO;
+        blockLeft = measuredWidth * BLOCK_POSITION_RATIO;
+        racketLeft = measuredWidth * RACKET_POSITION_RATIO;
 
         controllerSize = (int) (blockHeight * 1.6f);
     }
 
     @Override
-    protected void drawGame(Canvas canvas) {
+    protected void drawGame(Canvas canvas, int width, int height) {
         drawColorBlock(canvas);
         drawRacket(canvas);
-
-        if (status == STATUS_GAME_PLAY || status == STATUS_GAME_FINISHED)
-            makeBallPath(canvas);
+        if (status == STATUS_GAME_PLAY
+                || status == STATUS_GAME_FINISHED
+                || isInEditMode()) {
+            makeBallPath(canvas, width, height);
+        }
     }
 
     @Override
      protected void resetConfigParams() {
-        cx = racketLeft - 2 * BALL_RADIUS;
+        cx = racketLeft - 3 * BALL_RADIUS;
         cy = (int) (mHeaderHeight * .5f);
 
         controllerPosition = DIVIDING_LINE_SIZE;
@@ -168,8 +167,10 @@ public class FunGameHitBlockHeader extends FunGameView {
     /**
      * 绘制并处理小球运动的轨迹
      * @param canvas 默认画布
+     * @param width
+     * @param height
      */
-    private void makeBallPath(Canvas canvas) {
+    private void makeBallPath(Canvas canvas, int width, int height) {
         mPaint.setColor(mModelColor);
 
         if (cx <= blockLeft +  blockHorizontalNum * blockWidth + (blockHorizontalNum - 1) * DIVIDING_LINE_SIZE + BALL_RADIUS) { // 小球进入到色块区域
@@ -189,7 +190,7 @@ public class FunGameHitBlockHeader extends FunGameView {
                 }
                 isleft = true;
             }
-        } else if (cx > canvas.getWidth()) { // 小球超出挡板区域
+        } else if (cx > width) { // 小球超出挡板区域
             status = STATUS_GAME_OVER;
         }
 
@@ -198,7 +199,6 @@ public class FunGameHitBlockHeader extends FunGameView {
         } else if (cy >= mHeaderHeight - BALL_RADIUS - DIVIDING_LINE_SIZE) { // 小球撞到下边界
             angle = 180 + DEFAULT_ANGLE;
         }
-
 
         if (isleft) {
             cx -= speed;
@@ -289,8 +289,6 @@ public class FunGameHitBlockHeader extends FunGameView {
     @Override
     public void onSizeDefined(RefreshKernel kernel, int height, int extendHeight) {
         super.onSizeDefined(kernel, height, extendHeight);
-        blockHeight = height / BLOCK_VERTICAL_NUM - DIVIDING_LINE_SIZE;
-        controllerSize = (int) (blockHeight * 1.6f);
     }
     //</editor-fold>
 }

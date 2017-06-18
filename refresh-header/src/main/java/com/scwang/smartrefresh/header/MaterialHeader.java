@@ -92,11 +92,11 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader, SizeObse
         mBezierPaint.setStyle(Paint.Style.FILL);
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.MaterialHeader);
-        mShowBezierWave = ta.getBoolean(R.styleable.MaterialHeader_srlShowBezierWave, mShowBezierWave);
-        mBezierPaint.setColor(ta.getColor(R.styleable.MaterialHeader_srlPrimaryColor, 0xff11bbff));
-        if (ta.hasValue(R.styleable.MaterialHeader_srlShadowRadius)) {
-            int radius = ta.getDimensionPixelOffset(R.styleable.MaterialHeader_srlShadowRadius, 0);
-            int color = ta.getColor(R.styleable.MaterialHeader_srlShadowColor, 0xff000000);
+        mShowBezierWave = ta.getBoolean(R.styleable.MaterialHeader_mhShowBezierWave, mShowBezierWave);
+        mBezierPaint.setColor(ta.getColor(R.styleable.MaterialHeader_mhPrimaryColor, 0xff11bbff));
+        if (ta.hasValue(R.styleable.MaterialHeader_mhShadowRadius)) {
+            int radius = ta.getDimensionPixelOffset(R.styleable.MaterialHeader_mhShadowRadius, 0);
+            int color = ta.getColor(R.styleable.MaterialHeader_mhShadowColor, 0xff000000);
             mBezierPaint.setShadowLayer(radius, 0, 0, color);
             setLayerType(LAYER_TYPE_SOFTWARE, null);
         }

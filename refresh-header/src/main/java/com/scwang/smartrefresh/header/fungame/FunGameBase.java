@@ -65,6 +65,13 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
     }
 
     @Override
+    public void setTranslationY(float translationY) {
+        if (!isInEditMode()) {
+            super.setTranslationY(translationY);
+        }
+    }
+
+    @Override
     public void setLayoutParams(ViewGroup.LayoutParams params) {
         super.setLayoutParams(params);
         params.height = -3;
@@ -172,6 +179,7 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
                     mManualOperationListener = method::invoke;
                     onFinish(layout);
                 } else {
+                    mManualOperationListener = null;
                     method.invoke();
                 }
             }

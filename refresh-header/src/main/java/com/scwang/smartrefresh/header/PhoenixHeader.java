@@ -127,8 +127,8 @@ public class PhoenixHeader extends View implements RefreshHeader/*, SizeDefiniti
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.PhoenixHeader);
 
-        int primaryColor = ta.getColor(R.styleable.PhoenixHeader_srlPrimaryColor, 0);
-        int accentColor = ta.getColor(R.styleable.PhoenixHeader_srlAccentColor, 0);
+        int primaryColor = ta.getColor(R.styleable.PhoenixHeader_phPrimaryColor, 0);
+        int accentColor = ta.getColor(R.styleable.PhoenixHeader_phAccentColor, 0);
         if (primaryColor != 0) {
             setBackgroundColor(primaryColor);
             if (accentColor != 0) {

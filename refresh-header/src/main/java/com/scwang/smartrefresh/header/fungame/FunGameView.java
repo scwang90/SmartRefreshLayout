@@ -34,11 +34,6 @@ public abstract class FunGameView extends FunGameHeader {
     protected static final int STATUS_GAME_FINISHED = 3;
 
     /**
-     * 分割线默认宽度大小
-     */
-    protected static final float DIVIDING_LINE_SIZE = 1.f;
-
-    /**
      * 控件高度占屏幕高度比率
      */
     protected static final float VIEW_HEIGHT_RATIO = .161f;
@@ -57,8 +52,6 @@ public abstract class FunGameView extends FunGameHeader {
     protected float controllerPosition;
 
     protected int controllerSize;
-
-    protected int screenWidth, screenHeight;
 
     protected int status = STATUS_GAME_PREPAR;
 
@@ -94,7 +87,7 @@ public abstract class FunGameView extends FunGameHeader {
         ta.recycle();
 
         initBaseTools();
-        initBaseConfigParams(context);
+        initBaseConfigParams();
         initConcreteView();
     }
 
@@ -103,19 +96,16 @@ public abstract class FunGameView extends FunGameHeader {
         textPaint.setColor(Color.parseColor("#C1C2C2"));
 
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaint.setStrokeWidth(DensityUtil.dp2px(1f));
+        mPaint.setStrokeWidth(DIVIDING_LINE_SIZE);
     }
 
-    protected void initBaseConfigParams(Context context) {
+    protected void initBaseConfigParams() {
         controllerPosition = DIVIDING_LINE_SIZE;
-
-        screenWidth = getScreenMetrics(context).widthPixels;
-        screenHeight = getScreenMetrics(context).heightPixels;
     }
 
     protected abstract void initConcreteView();
 
-    protected abstract void drawGame(Canvas canvas);
+    protected abstract void drawGame(Canvas canvas, int width, int height);
 
     protected abstract void resetConfigParams();
 
@@ -123,19 +113,23 @@ public abstract class FunGameView extends FunGameHeader {
      * 绘制分割线
      * @param canvas 默认画布
      */
-    private void drawBoundary(Canvas canvas) {
+    private void drawBoundary(Canvas canvas,int width,int height) {
         mPaint.setColor(mBackColor);
-        canvas.drawRect(0,0,screenWidth,mHeaderHeight,mPaint);
+        canvas.drawRect(0, 0, width, height, mPaint);
         mPaint.setColor(mBoundaryColor);
-        canvas.drawLine(0, 0, screenWidth, 0, mPaint);
-        canvas.drawLine(0, mHeaderHeight, screenWidth, mHeaderHeight, mPaint);
+        canvas.drawLine(0, 0, width, 0, mPaint);
+        canvas.drawLine(0, height - DIVIDING_LINE_SIZE,
+                width, height - DIVIDING_LINE_SIZE,
+                mPaint);
     }
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
-        drawBoundary(canvas);
-        drawText(canvas);
-        drawGame(canvas);
+        final int width = getWidth();
+        final int height = mHeaderHeight;
+        drawBoundary(canvas, width, height);
+        drawText(canvas, width, height);
+        drawGame(canvas, width, height);
         super.dispatchDraw(canvas);
     }
 
@@ -143,20 +137,20 @@ public abstract class FunGameView extends FunGameHeader {
      * 绘制文字内容
      * @param canvas 默认画布
      */
-    private void drawText(Canvas canvas) {
+    private void drawText(Canvas canvas, int width, int height) {
         switch (status) {
             case STATUS_GAME_PREPAR:
             case STATUS_GAME_PLAY:
                 textPaint.setTextSize(DensityUtil.dp2px(25));
-                promptText(canvas, textLoading);
+                promptText(canvas, textLoading, width, height);
                 break;
             case STATUS_GAME_FINISHED:
                 textPaint.setTextSize(DensityUtil.dp2px(20));
-                promptText(canvas, textLoadingFinished);
+                promptText(canvas, textLoadingFinished, width, height);
                 break;
             case STATUS_GAME_OVER:
                 textPaint.setTextSize(DensityUtil.dp2px(25));
-                promptText(canvas, textGameOver);
+                promptText(canvas, textGameOver, width, height);
                 break;
         }
     }
@@ -166,16 +160,15 @@ public abstract class FunGameView extends FunGameHeader {
      * @param canvas 默认画布
      * @param text 相关文字字符串
      */
-    private void promptText(Canvas canvas, String text) {
-        float textX = (canvas.getWidth() - textPaint.measureText(text)) * .5f;
-        float textY = mHeaderHeight  * .5f - (textPaint.ascent() + textPaint.descent()) * .5f;
+    private void promptText(Canvas canvas, String text, int width, int height) {
+        float textX = (width - textPaint.measureText(text)) * .5f;
+        float textY = height  * .5f - (textPaint.ascent() + textPaint.descent()) * .5f;
         canvas.drawText(text, textX, textY, textPaint);
     }
 
 
     /**
      * 获取当前控件状态
-     * @return
      */
     public int getCurrStatus() {
         return status;
@@ -265,6 +258,7 @@ public abstract class FunGameView extends FunGameHeader {
     @Override
     public void onSizeDefined(RefreshKernel kernel, int height, int extendHeight) {
         super.onSizeDefined(kernel, height, extendHeight);
+        initConcreteView();
         postStatus(STATUS_GAME_PREPAR);
     }
 

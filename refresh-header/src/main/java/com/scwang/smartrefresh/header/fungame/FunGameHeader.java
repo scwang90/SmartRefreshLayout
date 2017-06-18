@@ -22,6 +22,7 @@ import com.scwang.smartrefresh.header.R;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
@@ -33,6 +34,10 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 public class FunGameHeader extends FunGameBase implements RefreshHeader {
 
     //<editor-fold desc="Field">
+    /**
+     * 分割线默认宽度大小
+     */
+    protected float DIVIDING_LINE_SIZE = 1.f;
 
     private RelativeLayout curtainReLayout, maskReLayout;
 
@@ -42,8 +47,8 @@ public class FunGameHeader extends FunGameBase implements RefreshHeader {
 
     private boolean isStart = false;
 
-    private String topMaskViewText = "Pull To Break Out!";
-    private String bottomMaskViewText = "Scrooll to move handle";
+    private String topMaskViewText = "下拉即将展开";//"Pull To Break Out!";
+    private String bottomMaskViewText = "拖动控制游戏";//"Scrooll to move handle";
 
     private int topMaskTextSize = 16;
 
@@ -95,6 +100,8 @@ public class FunGameHeader extends FunGameBase implements RefreshHeader {
 
         topMaskView = createMaskTextView(context,topMaskViewText, topMaskTextSize, Gravity.BOTTOM);
         bottomMaskView = createMaskTextView(context,bottomMaskViewText, bottomMaskTextSize, Gravity.TOP);
+
+        DIVIDING_LINE_SIZE = Math.max(1, DensityUtil.dp2px(0.5f));
     }
 
 
@@ -109,18 +116,18 @@ public class FunGameHeader extends FunGameBase implements RefreshHeader {
     }
 
     private void coverMaskView() {
-        if (getChildCount() < 2) {
+        if (getChildCount() < 2 && !isInEditMode()) {
             LayoutParams maskLp = new LayoutParams(MATCH_PARENT,mHeaderHeight);
-            maskLp.topMargin = (int) FunGameView.DIVIDING_LINE_SIZE;
-            maskLp.bottomMargin = (int) FunGameView.DIVIDING_LINE_SIZE;
+//            maskLp.topMargin = (int) FunGameView.DIVIDING_LINE_SIZE;
+//            maskLp.bottomMargin = (int) FunGameView.DIVIDING_LINE_SIZE;
 
             addView(maskReLayout, maskLp);
             addView(curtainReLayout, maskLp);
 
-            halfHitBlockHeight = (int) ((mHeaderHeight - 2 * FunGameView.DIVIDING_LINE_SIZE) * .5f);
+            halfHitBlockHeight = (int) ((mHeaderHeight/* - 2 * DIVIDING_LINE_SIZE*/) * .5f);
             RelativeLayout.LayoutParams topRelayLayoutParams = new RelativeLayout.LayoutParams(MATCH_PARENT, halfHitBlockHeight);
             RelativeLayout.LayoutParams bottomRelayLayoutParams = new RelativeLayout.LayoutParams(MATCH_PARENT, halfHitBlockHeight);
-            bottomRelayLayoutParams.topMargin = halfHitBlockHeight;
+            bottomRelayLayoutParams.topMargin = mHeaderHeight - halfHitBlockHeight;
             curtainReLayout.addView(topMaskView, topRelayLayoutParams);
             curtainReLayout.addView(bottomMaskView, bottomRelayLayoutParams);
         }
@@ -208,12 +215,6 @@ public class FunGameHeader extends FunGameBase implements RefreshHeader {
     public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
         super.onStartAnimator(layout, headHeight, extendHeight);
         postStart();
-    }
-
-    @Override
-    protected void onManualOperationRelease() {
-        super.onManualOperationRelease();
-        postEnd();
     }
 
     @Override

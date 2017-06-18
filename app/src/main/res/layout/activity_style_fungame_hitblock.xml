@@ -1,26 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.scwang.refreshlayout.fragment.RefreshStylesFragment">
+    tools:context="com.scwang.refreshlayout.activity.style.BezierStyleActivity"
+    android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
-        app:title="@string/fragment_refresh_styles"/>
+        android:id="@+id/toolbar"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:title="@string/title_activity_style_fungame_hitblock"/>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/smart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srlPrimaryColor="@color/colorPrimary"
-        app:srlAccentColor="@android:color/white"
-        app:srlEnableLoadmore="false">
-        <com.scwang.smartrefresh.header.StoreHouseHeader
+        app:srlEnableLoadmore="false"
+        app:srlEnableHeaderTranslationContent="true">
+        <com.scwang.smartrefresh.header.FunGameHitBlockHeader
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/padding_common"
-            android:paddingBottom="@dimen/padding_common"/>
+            android:layout_height="match_parent"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler"
             android:layout_width="match_parent"

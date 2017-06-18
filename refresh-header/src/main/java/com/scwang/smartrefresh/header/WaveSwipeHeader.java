@@ -75,17 +75,17 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.WaveSwipeHeader);
 
-        int primaryColor = ta.getColor(R.styleable.WaveSwipeHeader_srlPrimaryColor, 0);
-        int accentColor = ta.getColor(R.styleable.WaveSwipeHeader_srlAccentColor, 0);
+        int primaryColor = ta.getColor(R.styleable.WaveSwipeHeader_wshPrimaryColor, 0);
+        int accentColor = ta.getColor(R.styleable.WaveSwipeHeader_wshAccentColor, 0);
         if (primaryColor != 0) {
             mWaveView.setWaveColor(primaryColor);
         }
         if (accentColor != 0) {
             mCircleView.setProgressColorSchemeColors(accentColor);
         }
-        if (ta.hasValue(R.styleable.WaveSwipeHeader_srlShadowRadius)) {
-            int radius = ta.getDimensionPixelOffset(R.styleable.WaveSwipeHeader_srlShadowRadius, 0);
-            int color = ta.getColor(R.styleable.WaveSwipeHeader_srlShadowColor, 0xff000000);
+        if (ta.hasValue(R.styleable.WaveSwipeHeader_wshShadowRadius)) {
+            int radius = ta.getDimensionPixelOffset(R.styleable.WaveSwipeHeader_wshShadowRadius, 0);
+            int color = ta.getColor(R.styleable.WaveSwipeHeader_wshShadowColor, 0xff000000);
             mWaveView.setShadow(radius, color);
         }
 

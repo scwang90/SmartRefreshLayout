@@ -365,12 +365,6 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
 
         if (mRefreshHeader != null) {
 
-            if (!mHeaderHeightStatus.notifyed) {
-                mHeaderHeightStatus = mHeaderHeightStatus.notifyed();
-                mRefreshHeader.onSizeDefined(mKernel, mHeaderHeight, mExtendHeaderHeight);
-            }
-
-
             final View headerView = mRefreshHeader.getView();
             final LayoutParams lp = (LayoutParams) headerView.getLayoutParams();
             final int widthSpec = getChildMeasureSpec(widthMeasureSpec, lp.leftMargin + lp.rightMargin, lp.width);
@@ -410,17 +404,17 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                 headerView.measure(widthSpec, heightSpec);
             }
 
+            if (!mHeaderHeightStatus.notifyed) {
+                mHeaderHeightStatus = mHeaderHeightStatus.notifyed();
+                mRefreshHeader.onSizeDefined(mKernel, mHeaderHeight, mExtendHeaderHeight);
+            }
+
             if (isInEditMode) {
                 minimumHeight += headerView.getMeasuredHeight();
             }
         }
 
         if (mRefreshFooter != null) {
-
-            if (!mFooterHeightStatus.notifyed) {
-                mFooterHeightStatus = mFooterHeightStatus.notifyed();
-                mRefreshFooter.onSizeDefined(mKernel, mFooterHeight, mExtendFooterHeight);
-            }
 
             final View footerView = mRefreshFooter.getView();
             final LayoutParams lp = (LayoutParams) footerView.getLayoutParams();
@@ -454,6 +448,12 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
             } else {
                 footerView.measure(widthSpec, heightSpec);
             }
+
+            if (!mFooterHeightStatus.notifyed) {
+                mFooterHeightStatus = mFooterHeightStatus.notifyed();
+                mRefreshFooter.onSizeDefined(mKernel, mFooterHeight, mExtendFooterHeight);
+            }
+
             if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Scale && !isInEditMode) {
                 final int height = Math.max(0, mSpinner);
                 heightSpec = makeMeasureSpec(height - lp.topMargin - lp.bottomMargin, EXACTLY);
