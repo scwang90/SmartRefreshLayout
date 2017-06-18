@@ -62,6 +62,7 @@
 
     <declare-styleable name="StoreHouseHeader">
         <attr name="shhText" format="string" />
+        <attr name="shhLineWidth" format="dimension" />
     </declare-styleable>
 
 

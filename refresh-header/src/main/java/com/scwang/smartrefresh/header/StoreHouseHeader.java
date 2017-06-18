@@ -76,6 +76,7 @@ public class StoreHouseHeader extends View implements RefreshHeader {
         setTextColor(0xffcccccc);
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.StoreHouseHeader);
+        mLineWidth = ta.getDimensionPixelOffset(R.styleable.StoreHouseHeader_shhLineWidth, mLineWidth);
         if (ta.hasValue(R.styleable.StoreHouseHeader_shhText)) {
             initWithString(ta.getString(R.styleable.StoreHouseHeader_shhText));
         } else {
@@ -274,13 +275,13 @@ public class StoreHouseHeader extends View implements RefreshHeader {
 
     @Override
     public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
-        setProgress(percent);
+        setProgress(percent * .8f);
         invalidate();
     }
 
     @Override
     public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
-        setProgress(percent);
+        setProgress(percent * .8f);
         invalidate();
     }
 

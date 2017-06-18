@@ -42,7 +42,7 @@ public class StoreHouseStyleActivity extends AppCompatActivity implements Adapte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_style_fungame_hitblock);
+        setContentView(R.layout.activity_style_storehouse);
 
         mToolbar = (Toolbar)findViewById(R.id.toolbar);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
