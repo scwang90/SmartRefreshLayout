@@ -152,7 +152,7 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader, Si
             @Override
             public void onHookFinishRefresh(SuperMethod method, RefreshLayout layout) {
                 if (mIsRefreshing) {
-                    finishRefresh(null);
+//                    finishRefresh(null);
                 } else {
                     method.invoke();
                 }
