@@ -839,10 +839,12 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
             }
         }
         if (spinner >= 0 && mRefreshHeader != null) {
-            if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale) {
-                requestLayout();
-            } else if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Translate) {
-                mRefreshHeader.getView().setTranslationY(spinner);
+            if (mEnableRefresh) {
+                if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale) {
+                    requestLayout();
+                } else if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Translate) {
+                    mRefreshHeader.getView().setTranslationY(spinner);
+                }
             }
             if (isAnimator) {
                 mRefreshHeader.onReleasing(1f * spinner / mHeaderHeight, spinner, mHeaderHeight, mExtendHeaderHeight);
@@ -857,10 +859,12 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
             }
         }
         if (spinner <= 0 && mRefreshFooter != null) {
-            if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Scale) {
-                requestLayout();
-            } else if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Translate) {
-                mRefreshFooter.getView().setTranslationY(spinner);
+            if (mEnableLoadmore) {
+                if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Scale) {
+                    requestLayout();
+                } else if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Translate) {
+                    mRefreshFooter.getView().setTranslationY(spinner);
+                }
             }
             if (isAnimator) {
                 mRefreshFooter.onPullReleasing(1f * spinner / mFooterHeight, spinner, mFooterHeight, mExtendFooterHeight);
