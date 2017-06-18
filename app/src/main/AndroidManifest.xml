@@ -70,6 +70,9 @@
             android:name=".activity.style.FunGameHitBlockStyleActivity"
             android:label="@string/title_activity_style_fungame_hitblock"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.style.StoreHouseStyleActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

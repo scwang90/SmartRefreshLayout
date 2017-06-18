@@ -25,6 +25,7 @@ import com.scwang.refreshlayout.activity.style.FunGameBattleCityStyleActivity;
 import com.scwang.refreshlayout.activity.style.FunGameHitBlockStyleActivity;
 import com.scwang.refreshlayout.activity.style.MaterialStyleActivity;
 import com.scwang.refreshlayout.activity.style.PhoenixStyleActivity;
+import com.scwang.refreshlayout.activity.style.StoreHouseStyleActivity;
 import com.scwang.refreshlayout.activity.style.TaurusStyleActivity;
 import com.scwang.refreshlayout.activity.style.WaterDropStyleActivity;
 import com.scwang.refreshlayout.activity.style.WaveSwipStyleActivity;
@@ -56,6 +57,7 @@ public class RefreshStylesFragment extends Fragment implements AdapterView.OnIte
         Circle("弹出圆圈", CircleStyleActivity.class),
         FunGameHitBlock("游戏-打砖块", FunGameHitBlockStyleActivity.class),
         FunGameBattleCity("游戏-战争城市", FunGameBattleCityStyleActivity.class),
+        StoreHouse("StoreHouse", StoreHouseStyleActivity.class),
         Classics("经典风格", ClassicsStyleActivity.class),
         ;
         public String name;
