@@ -35,3 +35,46 @@
 ![](art/gif_WaterDrop.gif)
 ![](art/gif_Classics.gif)
 ![](art/gif_FlyRefresh.gif)
+
+
+## 简单用例
+#### 1.添加依赖
+```
+compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.0-alpha-1'
+```
+
+#### 2.在XML布局文件中添加 SmartRefreshLayout
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/refreshLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        android:background="#fff" />
+</com.lcodecore.library.TwinklingRefreshLayout>
+```
+
+To get better effect, you'd better add code `android:overScrollMode="never"` to the childView.
+
+#### 3.Coding in the Activity or Fragment.
+##### Change of state need to be manually controlled.
+```
+refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+    @Override
+    public void onRefresh(RefreshLayout refreshlayout) {
+        refreshlayout.finishRefresh(2000);
+    }
+});
+refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+    @Override
+    public void onLoadmore(SmartRefreshLayout refreshlayout) {
+        refreshlayout.finishLoadmore(2000);
+    }
+});
+```
+
