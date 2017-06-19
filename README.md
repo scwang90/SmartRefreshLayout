@@ -56,13 +56,12 @@ compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.0-alpha-1'
         android:layout_height="match_parent"
         android:overScrollMode="never"
         android:background="#fff" />
-</com.lcodecore.library.TwinklingRefreshLayout>
+</com.scwang.smartrefresh.layout.SmartRefreshLayout>
 ```
 
 To get better effect, you'd better add code `android:overScrollMode="never"` to the childView.
 
-#### 3.Coding in the Activity or Fragment.
-##### Change of state need to be manually controlled.
+#### 3.在 Activity 或者 Fragment 中添加代码
 ```
 refreshLayout.setOnRefreshListener(new OnRefreshListener() {
     @Override
