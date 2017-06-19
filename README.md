@@ -21,4 +21,4 @@
 ## Demo
 [下载Demo](art/app-debug.apk)
 
-![](art/gif_recyclerview.gif)  ![](art/gif_listview.gif)  ![](art/gif_gridview.gif) ![](art/gif_recyclerview2.gif) ![](art/gif_scrollview.gif)  ![](art/gif_webview.gif)
+![](art/gif_BezierRadarHeader.gif)
