@@ -61,7 +61,7 @@ compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.0-alpha-1'
 
 #### 3.在 Activity 或者 Fragment 中添加代码
 ```java
-RefreshLayout refreshLayout = (refreshLayout)findViewById(R.id.refreshLayout);
+RefreshLayout refreshLayout = (RefreshLayout)findViewById(R.id.refreshLayout);
 refreshLayout.setOnRefreshListener(new OnRefreshListener() {
     @Override
     public void onRefresh(RefreshLayout refreshlayout) {
