@@ -59,8 +59,6 @@ compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.0-alpha-1'
 </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 ```
 
-To get better effect, you'd better add code `android:overScrollMode="never"` to the childView.
-
 #### 3.在 Activity 或者 Fragment 中添加代码
 ```java
 RefreshLayout refreshLayout = (refreshLayout)findViewById(R.id.refreshLayout);
