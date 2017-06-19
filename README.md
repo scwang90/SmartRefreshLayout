@@ -19,16 +19,16 @@
  - 支持设置主题来适配任何场景的App，不会出现炫酷但很尴尬的情况.
  
 ## Demo
-[下载Demo](art/app-debug.apk)
+[下载 APK-Demo](art/app-debug.apk)
 
 ![](art/gif_BezierRadarHeader.gif)
-![](gif_BattleCity.gif)
-![](gif_BezierRadarHeader.gif)
-![](gif_Circle.gif)
-![](gif_HitBlock.gif)
-![](gif_Material.gif)
-![](gif_Phoenix.gif)
-![](gif_StoreHouse.gif)
-![](gif_Taurus.gif)
-![](gif_WaterDrop.gif)
-![](gif_WaveSwipe.gif)
+![](art/gif_BattleCity.gif)
+![](art/gif_BezierRadarHeader.gif)
+![](art/gif_Circle.gif)
+![](art/gif_HitBlock.gif)
+![](art/gif_Material.gif)
+![](art/gif_Phoenix.gif)
+![](art/gif_StoreHouse.gif)
+![](art/gif_Taurus.gif)
+![](art/gif_WaterDrop.gif)
+![](art/gif_WaveSwipe.gif)
