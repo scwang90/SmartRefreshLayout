@@ -10,4 +10,5 @@
  - 支持通用的刷新监听器 OnRefreshListener 和更详细的滚动监听 OnMultiPurposeListener.
  - 支持自定义回弹动画的插值器，实现各种炫酷的动画效果.
  - 支持设置主题来适配任何场景的App，不会出现炫酷但很尴尬的情况.
- - 
+ 
+话不多说先上 Demo 效果图：
