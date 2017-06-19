@@ -22,13 +22,13 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<SmartV
     private AdapterView.OnItemClickListener mListener;
 
     public BaseRecyclerAdapter(Collection<T> collection, @LayoutRes int layoutId) {
-        setHasStableIds(true);
+        setHasStableIds(false);
         this.mList = new ArrayList<>(collection);
         this.mLayoutId = layoutId;
     }
 
     public BaseRecyclerAdapter(Collection<T> collection, @LayoutRes int layoutId, AdapterView.OnItemClickListener listener) {
-        setHasStableIds(true);
+        setHasStableIds(false);
         setOnItemClickListener(listener);
         this.mList = new ArrayList<>(collection);
         this.mLayoutId = layoutId;
