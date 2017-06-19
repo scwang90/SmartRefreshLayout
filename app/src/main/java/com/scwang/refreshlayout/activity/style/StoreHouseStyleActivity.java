@@ -58,8 +58,8 @@ public class StoreHouseStyleActivity extends AppCompatActivity implements Adapte
         View view = findViewById(R.id.recycler);
         if (view instanceof RecyclerView) {
             RecyclerView recyclerView = (RecyclerView) view;
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.addItemDecoration(new DividerItemDecoration(this, VERTICAL));
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setItemAnimator(new DefaultItemAnimator());
             recyclerView.setAdapter(new BaseRecyclerAdapter<Item>(Arrays.asList(Item.values()), simple_list_item_2,this) {
                 @Override
@@ -98,6 +98,5 @@ public class StoreHouseStyleActivity extends AppCompatActivity implements Adapte
             getWindow().setStatusBarColor(ContextCompat.getColor(this, colorPrimaryDark));
         }
     }
-
 
 }
