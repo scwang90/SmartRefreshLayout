@@ -37,11 +37,19 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
+//publish {
+//    userOrg = 'scwang90'
+//    groupId = 'com.scwang.smartrefresh'
+//    artifactId = 'SmartRefreshLayout'
+//    version = '1.0.0-alpha-1'
+//    description = 'An intelligent refresh layout'
+//    website = "https://github.com/scwang90/${rootProject.name}"
+//}
 publish {
     userOrg = 'scwang90'
     groupId = 'com.scwang.smartrefresh'
     artifactId = 'SmartRefreshLayout'
-    version = '1.0.0-alpha-1'
-    description = 'An intelligent refresh layout'
+    publishVersion = '1.0.0-alpha-1'
+    desc = 'An intelligent refresh layout'
     website = "https://github.com/scwang90/${rootProject.name}"
 }

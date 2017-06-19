@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'com.novoda.bintray-release'
-apply plugin: 'maven'
+//apply plugin: 'com.novoda.bintray-release'
+//apply plugin: 'maven'
 
 android {
     compileSdkVersion 25
@@ -38,11 +38,11 @@ dependencies {
     compile project(':refresh-layout')
 }
 
-publish {
-    userOrg = 'scwang90'
-    groupId = 'com.scwang.smartrefresh'
-    artifactId = 'SmartRefreshFooter'
-    version = '1.0.0-alpha-1'
-    description = 'Some delicate footers of SmartRefreshLayout'
-    website = "https://github.com/scwang90/${rootProject.name}"
-}
+//publish {
+//    userOrg = 'scwang90'
+//    groupId = 'com.scwang.smartrefresh'
+//    artifactId = 'SmartRefreshFooter'
+//    version = '1.0.0-alpha-1'
+//    description = 'Some delicate footers of SmartRefreshLayout'
+//    website = "https://github.com/scwang90/${rootProject.name}"
+//}

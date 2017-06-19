@@ -26,7 +26,7 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 /**
  * CircleRefresh
- * @link https://github.com/tuesda/CircleRefreshLayout
+ * https://github.com/tuesda/CircleRefreshLayout
  * Created by zhanglei on 15/7/18.
  */
 public class CircleHeader extends View implements RefreshHeader, SizeObserver {

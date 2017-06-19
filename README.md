@@ -21,7 +21,7 @@
 ## Demo
 [下载 APK-Demo](art/app-debug.apk)
 
-![](art/gif_BezierRadar.gif)
+![](art/gif_BezierRadar.gif) 
 ![](art/gif_Circle.gif)
 ![](art/gif_Phoenix.gif)
 ![](art/gif_Taurus.gif)

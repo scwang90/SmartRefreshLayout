@@ -10,13 +10,20 @@ buildscript {
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
         classpath 'me.tatarka:gradle-retrolambda:3.6.0'
-        classpath 'com.novoda:bintray-release:0.5.0'
+        classpath 'com.novoda:bintray-release:0.4.0'
     }
 }
 
 allprojects {
     repositories {
         jcenter()
+    }
+    tasks.withType(Javadoc) {
+        options{
+            encoding "UTF-8"
+            charSet 'UTF-8'
+            links "http://docs.oracle.com/javase/7/docs/api"
+        }
     }
 }
 
