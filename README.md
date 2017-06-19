@@ -31,3 +31,4 @@
 ![](art/gif_Material.gif)
 ![](art/gif_StoreHouse.gif)
 ![](art/gif_WaterDrop.gif)
+![](art/gif_Classics.gif)
