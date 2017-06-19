@@ -21,9 +21,8 @@
 ## Demo
 [下载 APK-Demo](art/app-debug.apk)
 
-![](art/gif_BezierRadarHeader.gif)
+![](art/gif_BezierRadar.gif)
 ![](art/gif_BattleCity.gif)
-![](art/gif_BezierRadarHeader.gif)
 ![](art/gif_Circle.gif)
 ![](art/gif_HitBlock.gif)
 ![](art/gif_Material.gif)
