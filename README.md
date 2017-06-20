@@ -143,5 +143,8 @@ SmartRefreshLayout.setDefaultRefreshFooterCreater(new DefaultRefreshFooterCreate
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 ```
 
-注意：方法二 XML设置的Header和Footer的优先级是中等的，会被方法三覆盖。而且使用本方法的时候，Android Studio 会有预览效果，如下图
+注意：方法二 XML设置的Header和Footer的优先级是中等的，会被方法三覆盖。而且使用本方法的时候，Android Studio 会有预览效果，如下图：
+
 ![](art/jpg_preview_xml_define.jpg)
+
+不过不用担心，只是预览效果，运行的时候只有下拉才会出现~
