@@ -7,7 +7,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
@@ -15,6 +15,7 @@
             android:label="@string/title_activity_index_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -26,8 +27,8 @@
         <activity
             android:name=".activity.style.FlyRefreshStyleActivity"
             android:label="@string/title_activity_fly_refresh"
-            android:theme="@style/AppTheme.TranslucentStatus"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.TranslucentStatus" />
         <activity
             android:name=".activity.SelectRegionActivity"
             android:screenOrientation="portrait" />
@@ -61,18 +62,26 @@
         <activity
             android:name=".activity.style.CircleStyleActivity"
             android:label="@string/title_activity_style_circle"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.style.FunGameBattleCityStyleActivity"
             android:label="@string/title_activity_style_fungame_battlecity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.style.FunGameHitBlockStyleActivity"
             android:label="@string/title_activity_style_fungame_hitblock"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.style.StoreHouseStyleActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.using.AssignDefaultUsingActivity"
+            android:label="@string/title_activity_using_assign_default"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.using.AssignXmlUsingActivity"
+            android:label="@string/title_activity_using_assign_xml"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

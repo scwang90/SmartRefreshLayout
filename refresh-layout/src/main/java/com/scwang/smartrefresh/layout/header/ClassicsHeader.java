@@ -205,7 +205,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     }
 
     @Override
-    public void onStateChanged(RefreshState state) {
+    public void onStateChanged(RefreshState oldState, RefreshState state) {
         switch (state) {
             case PullDownToRefresh:
             case None:

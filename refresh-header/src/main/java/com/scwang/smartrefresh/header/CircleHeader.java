@@ -282,7 +282,7 @@ public class CircleHeader extends View implements RefreshHeader, SizeObserver {
     }
 
     @Override
-    public void onStateChanged(RefreshState state) {
+    public void onStateChanged(RefreshState oldState, RefreshState state) {
         mState = state;
     }
 

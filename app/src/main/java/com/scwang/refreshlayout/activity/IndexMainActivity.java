@@ -11,12 +11,13 @@ import android.view.MenuItem;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.fragment.RefreshStylesFragment;
+import com.scwang.refreshlayout.fragment.RefreshUsingFragment;
 
 public class IndexMainActivity extends AppCompatActivity implements OnNavigationItemSelectedListener {
 
     private enum TabFragment {
         styles(R.id.navigation_home,RefreshStylesFragment.class),
-        functions(R.id.navigation_dashboard,RefreshStylesFragment.class),
+        functions(R.id.navigation_using,RefreshUsingFragment.class),
         about(R.id.navigation_notifications,RefreshStylesFragment.class);
 
         private final int menuId;

@@ -171,7 +171,7 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override
-    public void onStateChanged(RefreshState state) {
+    public void onStateChanged(RefreshState oldState, RefreshState state) {
         mState = state;
         switch (state) {
             case None:

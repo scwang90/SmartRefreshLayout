@@ -1,4 +1,4 @@
-package com.scwang.smartrefresh.layout.footer.classics;
+package com.scwang.smartrefresh.layout.footer;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -161,7 +161,7 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
     }
 
     @Override
-    public void onStateChanged(RefreshState state) {
+    public void onStateChanged(RefreshState oldState, RefreshState state) {
         switch (state) {
             case PullToUpLoad:
             case None:

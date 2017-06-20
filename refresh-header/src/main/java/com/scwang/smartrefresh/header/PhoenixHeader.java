@@ -205,7 +205,7 @@ public class PhoenixHeader extends View implements RefreshHeader/*, SizeDefiniti
     }
 
     @Override
-    public void onStateChanged(RefreshState state) {
+    public void onStateChanged(RefreshState oldState, RefreshState state) {
 
     }
 

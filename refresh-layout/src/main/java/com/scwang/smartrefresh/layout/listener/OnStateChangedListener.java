@@ -9,5 +9,5 @@ import com.scwang.smartrefresh.layout.constant.RefreshState;
  */
 
 public interface OnStateChangedListener {
-    void onStateChanged(RefreshState state);
+    void onStateChanged(RefreshState oldState, RefreshState state);
 }

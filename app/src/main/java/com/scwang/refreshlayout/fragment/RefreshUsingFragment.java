@@ -17,18 +17,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 import com.scwang.refreshlayout.R;
-import com.scwang.refreshlayout.activity.style.BezierStyleActivity;
-import com.scwang.refreshlayout.activity.style.CircleStyleActivity;
-import com.scwang.refreshlayout.activity.style.ClassicsStyleActivity;
-import com.scwang.refreshlayout.activity.style.FlyRefreshStyleActivity;
-import com.scwang.refreshlayout.activity.style.FunGameBattleCityStyleActivity;
-import com.scwang.refreshlayout.activity.style.FunGameHitBlockStyleActivity;
-import com.scwang.refreshlayout.activity.style.MaterialStyleActivity;
-import com.scwang.refreshlayout.activity.style.PhoenixStyleActivity;
-import com.scwang.refreshlayout.activity.style.StoreHouseStyleActivity;
-import com.scwang.refreshlayout.activity.style.TaurusStyleActivity;
-import com.scwang.refreshlayout.activity.style.WaterDropStyleActivity;
-import com.scwang.refreshlayout.activity.style.WaveSwipStyleActivity;
+import com.scwang.refreshlayout.activity.using.AssignDefaultUsingActivity;
+import com.scwang.refreshlayout.activity.using.AssignXmlUsingActivity;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
@@ -42,24 +32,14 @@ import static android.R.layout.simple_list_item_2;
 import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 
 /**
- * 风格展示
+ * 使用示例
  * A simple {@link Fragment} subclass.
  */
-public class RefreshStylesFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class RefreshUsingFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private enum Item {
-        FlyRefresh("纸飞机", FlyRefreshStyleActivity.class),
-        WaveSwipe("水波", WaveSwipStyleActivity.class),
-        WaterDrop("苹果水滴风格", WaterDropStyleActivity.class),
-        Material("官方主题", MaterialStyleActivity.class),
-        Phoenix("金色校园", PhoenixStyleActivity.class),
-        Taurus("冲上云霄", TaurusStyleActivity.class),
-        Bezier("贝塞尔雷达", BezierStyleActivity.class),
-        Circle("弹出圆圈", CircleStyleActivity.class),
-        FunGameHitBlock("游戏-打砖块", FunGameHitBlockStyleActivity.class),
-        FunGameBattleCity("游戏-战争城市", FunGameBattleCityStyleActivity.class),
-        StoreHouse("StoreHouse", StoreHouseStyleActivity.class),
-        Classics("经典风格", ClassicsStyleActivity.class),
+        SetDefaultCreater("设置全局默认的Header和Footer", AssignDefaultUsingActivity.class),
+        XmlDefine("在XML中定义Header和Footer", AssignXmlUsingActivity.class),
         ;
         public String name;
         public Class<?> clazz;

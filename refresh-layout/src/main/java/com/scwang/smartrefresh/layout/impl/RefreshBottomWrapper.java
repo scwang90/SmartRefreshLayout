@@ -73,7 +73,7 @@ public class RefreshBottomWrapper implements RefreshFooter {
     }
 
     @Override
-    public void onStateChanged(RefreshState state) {
+    public void onStateChanged(RefreshState oldState, RefreshState state) {
 
     }
 }

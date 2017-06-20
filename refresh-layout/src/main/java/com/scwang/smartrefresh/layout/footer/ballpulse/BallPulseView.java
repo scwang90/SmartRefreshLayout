@@ -206,7 +206,7 @@ public class BallPulseView extends View implements RefreshFooter {
     }
 
     @Override
-    public void onStateChanged(RefreshState state) {
+    public void onStateChanged(RefreshState oldState, RefreshState state) {
 
     }
 }

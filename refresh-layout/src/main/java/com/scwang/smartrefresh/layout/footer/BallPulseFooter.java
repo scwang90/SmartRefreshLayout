@@ -1,4 +1,4 @@
-package com.scwang.smartrefresh.layout.footer.ballpulse;
+package com.scwang.smartrefresh.layout.footer;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -16,6 +16,7 @@ import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.footer.ballpulse.BallPulseView;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import static android.view.View.MeasureSpec.AT_MOST;
@@ -110,8 +111,8 @@ public class BallPulseFooter extends ViewGroup implements RefreshFooter {
     }
 
     @Override
-    public void onStateChanged(RefreshState state) {
-        mBallPulseView.onStateChanged(state);
+    public void onStateChanged(RefreshState oldState, RefreshState state) {
+        mBallPulseView.onStateChanged(oldState, state);
     }
 
     @Override

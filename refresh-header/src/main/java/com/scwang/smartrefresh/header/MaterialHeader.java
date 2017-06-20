@@ -249,7 +249,7 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader, SizeObse
     }
 
     @Override
-    public void onStateChanged(RefreshState state) {
+    public void onStateChanged(RefreshState oldState, RefreshState state) {
         switch (state) {
             case None:
                 break;

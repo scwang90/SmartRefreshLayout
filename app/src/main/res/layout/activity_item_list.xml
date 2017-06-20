@@ -19,7 +19,7 @@
         android:layout_height="match_parent"
         tools:listitem="@layout/fragment_item" />
 
-    <com.scwang.smartrefresh.layout.footer.ballpulse.BallPulseFooter
+    <com.scwang.smartrefresh.layout.footer.BallPulseFooter
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

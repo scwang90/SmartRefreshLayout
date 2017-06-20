@@ -4,33 +4,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.scwang.refreshlayout.activity.style.BezierStyleActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="com.scwang.refreshlayout.activity.using.AssignDefaultUsingActivity">
 
     <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"
         app:navigationIcon="?attr/homeAsUpIndicator"
-        app:title="@string/title_activity_style_classics"/>
+        app:title="@string/title_activity_using_assign_xml"/>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/smart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srlEnableHeaderTranslationContent="true"
-        app:srlEnableLoadmore="true">
+        app:srlAccentColor="@android:color/white"
+        app:srlPrimaryColor="#444444"
+        android:background="#444444">
+        <!--srlAccentColor srlPrimaryColor 将会改变 Header 和 Footer 的主题颜色-->
         <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srlClassicsSpinnerStyle="FixedBehind"/>
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler"
+        <!--FixedBehind可以让Header固定在内容的背后，下拉的时候效果同微信浏览器的效果-->
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:padding="@dimen/padding_common"
             android:background="@android:color/white"
-            tools:listitem="@android:layout/simple_list_item_2"/>
+            android:text="@string/description_define_in_xml"/>
         <com.scwang.smartrefresh.layout.footer.ClassicsFooter
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            app:srlClassicsSpinnerStyle="FixedBehind"/>
+        <!--FixedBehind可以让Footer固定在内容的背后，下拉的时候效果同微信浏览器的效果-->
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

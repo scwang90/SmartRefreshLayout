@@ -98,7 +98,7 @@ public class FalsifyHeader extends View implements RefreshHeader {
     }
 
     @Override
-    public void onStateChanged(RefreshState state) {
+    public void onStateChanged(RefreshState oldState, RefreshState state) {
 
     }
 

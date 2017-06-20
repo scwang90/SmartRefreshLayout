@@ -74,7 +74,7 @@ public class RefreshHeaderWrapper implements RefreshHeader {
     }
 
     @Override
-    public void onStateChanged(RefreshState state) {
+    public void onStateChanged(RefreshState oldState, RefreshState state) {
 
     }
 }
