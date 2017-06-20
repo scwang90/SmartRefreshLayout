@@ -95,20 +95,18 @@ refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
 ```java
 //设置全局的Header构建器
 SmartRefreshLayout.setDefaultRefreshHeaderCreater(new DefaultRefreshHeaderCreater() {
-            @NonNull
-            @Override
-            public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
-                return new ClassicsHeader(context);//指定为经典Header，默认是 贝塞尔雷达Header
-            }
-        });
+        @Override
+        public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
+            return new ClassicsHeader(context);//指定为经典Header，默认是 贝塞尔雷达Header
+        }
+    });
 //设置全局的Footer构建器
 SmartRefreshLayout.setDefaultRefreshFooterCreater(new DefaultRefreshFooterCreater() {
-            @NonNull
-            @Override
-            public RefreshFooter createRefreshFooter(Context context, RefreshLayout layout) {
-                return new ClassicsFooter(context);//指定为经典Footer，默认是 BallPulseFooter
-            }
-        });
+        @Override
+        public RefreshFooter createRefreshFooter(Context context, RefreshLayout layout) {
+            return new ClassicsFooter(context);//指定为经典Footer，默认是 BallPulseFooter
+        }
+    });
 ```
 
 注意：方法一 设置的Header和Footer的优先级是最低的，如果同时还使用了方法二、三，将会被其他方法取代
@@ -151,5 +149,10 @@ SmartRefreshLayout.setDefaultRefreshFooterCreater(new DefaultRefreshFooterCreate
 
 #### 2.方法三 Java代码设置
 ```java
+final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.smart);
+//设置 Header 为 Material风格
+refreshLayout.setRefreshHeader(new MaterialHeader(this).setShowBezierWave(true));
+//设置 Footer 为 球脉冲
+refreshLayout.setRefreshFooter(new BallPulseFooter(this).setSpinnerStyle(SpinnerStyle.Scale));
 
 ```
