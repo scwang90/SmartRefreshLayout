@@ -20,6 +20,7 @@ import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.activity.using.AssignCodeUsingActivity;
 import com.scwang.refreshlayout.activity.using.AssignDefaultUsingActivity;
 import com.scwang.refreshlayout.activity.using.AssignXmlUsingActivity;
+import com.scwang.refreshlayout.activity.using.BasicUsingActivity;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
@@ -39,6 +40,7 @@ import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 public class RefreshUsingFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private enum Item {
+        Basic("基本的使用", BasicUsingActivity.class),
         DefaultCreater("设置全局默认的Header和Footer", AssignDefaultUsingActivity.class),
         XmlDefine("在XML中定义Header和Footer", AssignXmlUsingActivity.class),
         CodeDefine("在代码中指定Header和Footer", AssignCodeUsingActivity.class),

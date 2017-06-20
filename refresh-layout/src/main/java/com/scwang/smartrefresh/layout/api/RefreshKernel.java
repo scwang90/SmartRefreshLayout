@@ -41,5 +41,6 @@ public interface RefreshKernel {
     //</editor-fold>
 
     boolean getEnableLoadmore();
+    boolean getEnableRefresh();
 
 }

@@ -76,9 +76,10 @@ public class IndexMainActivity extends AppCompatActivity implements OnNavigation
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return getSupportFragmentManager()
+        getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.content,TabFragment.from(item.getItemId()).fragment())
-                .commit() > 0;
+                .commit();
+        return true;
     }
 }

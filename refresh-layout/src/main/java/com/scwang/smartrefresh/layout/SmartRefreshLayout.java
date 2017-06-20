@@ -92,6 +92,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     protected boolean mEnableHeaderTranslationContent = true;//是否启用内容视图拖动效果
     protected boolean mEnableFooterTranslationContent = true;//是否启用内容视图拖动效果
     protected boolean mEnablePreviewInEditMode = true;//是否在编辑模式下开启预览功能
+    protected boolean mLoadmoreFinished = false;//数据是否全部加载完成，如果完成就不能在触发加载事件
     //</editor-fold>
 
     //<editor-fold desc="监听属性">
@@ -574,9 +575,9 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     @Override
     public boolean dispatchTouchEvent(MotionEvent e) {
         if (!isEnabled() || mNestedScrollInProgress
-                || (!mEnableRefresh && !mEnableLoadmore)
+                || (!mEnableRefresh && !(mEnableLoadmore && !mLoadmoreFinished))
                 || mState == RefreshState.Loading
-                || mState == RefreshState.Refreshing ) {
+                || mState == RefreshState.Refreshing) {
             return (mState == RefreshState.Loading && mDisableContentWhenLoading)
                     || (mState == RefreshState.Refreshing && mDisableContentWhenRefresh)
                     || super.dispatchTouchEvent(e);
@@ -603,7 +604,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                             setStatePullDownToRefresh();
                             e.setAction(MotionEvent.ACTION_CANCEL);
                             super.dispatchTouchEvent(e);
-                        } else if (dy < 0 && mEnableLoadmore && !mRefreshContent.canScrollDown()) {
+                        } else if (dy < 0 && mEnableLoadmore && !mLoadmoreFinished && !mRefreshContent.canScrollDown()) {
                             mInitialMotionY = dy + mTouchY + mTouchSlop;
                             setStatePullUpToLoad();
                             e.setAction(MotionEvent.ACTION_CANCEL);
@@ -962,7 +963,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
 //        || (!mEnableRefresh && !mEnableLoadmore)
 //                || mState == RefreshState.Loading
 //                || mState == RefreshState.Refreshing
-        return isEnabled() && (mEnableRefresh||mEnableLoadmore) && !(mState == RefreshState.Loading|| mState == RefreshState.Refreshing)
+        return isEnabled() && (mEnableRefresh||(mEnableLoadmore && !mLoadmoreFinished)) && !(mState == RefreshState.Loading|| mState == RefreshState.Refreshing)
                 && (nestedScrollAxes & ViewCompat.SCROLL_AXIS_VERTICAL) != 0;
     }
 
@@ -989,7 +990,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                 consumed[1] = dy;
             }
             moveSpinnerInfinitely((int)mTotalUnconsumed);
-        } else if (mEnableLoadmore && dy < 0 && mTotalUnconsumed < 0) {
+        } else if (mEnableLoadmore && !mLoadmoreFinished && dy < 0 && mTotalUnconsumed < 0) {
             if (dy < mTotalUnconsumed) {
                 consumed[1] = dy - (int) mTotalUnconsumed;
                 mTotalUnconsumed = 0;
@@ -1055,7 +1056,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
             }
             mTotalUnconsumed += Math.abs(dy);
             moveSpinnerInfinitely(mTotalUnconsumed);
-        } else if (mEnableLoadmore && dy > 0 && (mRefreshContent == null || !mRefreshContent.canScrollDown())) {
+        } else if (mEnableLoadmore && !mLoadmoreFinished && dy > 0 && (mRefreshContent == null || !mRefreshContent.canScrollDown())) {
             if (mState == RefreshState.None) {
                 setStatePullUpToLoad();
             }
@@ -1360,7 +1361,6 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         setPrimaryColors(colors);
         return this;
     }
-
     /**
      * 设置主题颜色
      */
@@ -1375,6 +1375,16 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         mPrimaryColors = colors;
         return this;
     }
+
+    /**
+     * 设置数据全部加载完成，将不能再次触发加载功能
+     */
+    @Override
+    public SmartRefreshLayout setLoadmoreFinished(boolean finished) {
+        mLoadmoreFinished = finished;
+        return this;
+    }
+
     /**
      * 完成刷新
      */
@@ -1382,7 +1392,6 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     public SmartRefreshLayout finishRefresh(){
         return finishRefresh(1000);
     }
-
     /**
      * 完成加载
      */
@@ -1479,7 +1488,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
      */
     @Override
     public boolean autoLoadmore(int delayed) {
-        if (mState == RefreshState.None && mEnableLoadmore) {
+        if (mState == RefreshState.None && mEnableLoadmore && !mLoadmoreFinished) {
             postDelayed(() -> {
                 ValueAnimator animator = ValueAnimator.ofInt(mSpinner, -mHeaderHeight - mExtendFooterHeight / 2);
                 animator.setDuration(mReboundDuration);
@@ -1622,6 +1631,11 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         @Override
         public boolean getEnableLoadmore() {
             return mEnableLoadmore;
+        }
+
+        @Override
+        public boolean getEnableRefresh() {
+            return mEnableRefresh;
         }
     }
     //</editor-fold>

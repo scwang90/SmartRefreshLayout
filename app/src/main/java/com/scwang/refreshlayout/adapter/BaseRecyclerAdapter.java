@@ -21,6 +21,12 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<SmartV
     private final List<T> mList;
     private AdapterView.OnItemClickListener mListener;
 
+    public BaseRecyclerAdapter(@LayoutRes int layoutId) {
+        setHasStableIds(false);
+        this.mList = new ArrayList<>();
+        this.mLayoutId = layoutId;
+    }
+
     public BaseRecyclerAdapter(Collection<T> collection, @LayoutRes int layoutId) {
         setHasStableIds(false);
         this.mList = new ArrayList<>(collection);
@@ -56,4 +62,16 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<SmartV
         return mList.size();
     }
 
+    public BaseRecyclerAdapter<T> refresh(Collection<T> collection) {
+        mList.clear();
+        mList.addAll(collection);
+        notifyDataSetChanged();
+        return this;
+    }
+
+    public BaseRecyclerAdapter<T> loadmore(Collection<T> collection) {
+        mList.addAll(collection);
+        notifyDataSetChanged();
+        return this;
+    }
 }

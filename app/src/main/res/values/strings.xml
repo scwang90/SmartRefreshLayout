@@ -117,6 +117,7 @@
     <string name="title_activity_style_fungame_battlecity">战争城市</string>
     <string name="title_activity_style_fungame_hitblock">打砖块</string>
     <string name="title_activity_style_storehouse">StoreHouse</string>
+    <string name="title_activity_using_basic">基本使用</string>
     <string name="title_activity_using_assign_default">全局默认</string>
     <string name="title_activity_using_assign_xml">XML配置</string>
     <string name="title_activity_using_assign_code">java代码设置</string>

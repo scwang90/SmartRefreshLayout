@@ -1,6 +1,5 @@
 package com.scwang.smartrefresh.layout.listener;
 
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -54,7 +53,7 @@ public class SimpleMultiPurposeListener implements OnMultiPurposeListener {
     }
 
     @Override
-    public void onLoadmore(SmartRefreshLayout refreshlayout) {
+    public void onLoadmore(RefreshLayout refreshlayout) {
 
     }
 
