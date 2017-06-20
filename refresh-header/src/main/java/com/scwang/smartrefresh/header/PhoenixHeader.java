@@ -29,6 +29,7 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 public class PhoenixHeader extends View implements RefreshHeader/*, SizeDefinition*/ {
 
+    //<editor-fold desc="static">
     private static final int ANIMATION_DURATION = 1000;
     private static final float SUN_INITIAL_ROTATE_GROWTH = 1.2f;
     private static final Interpolator LINEAR_INTERPOLATOR = new LinearInterpolator();
@@ -92,6 +93,7 @@ public class PhoenixHeader extends View implements RefreshHeader/*, SizeDefiniti
             "m109.1,226.62c-0.79,-0.95 -1.06,-6.89 -0.87,-19.14 0.24,-15.65 0.48,-17.89 2.02,-18.86 1.28,-0.8 2.22,-0.8 3.5,0 1.54,0.97 1.78,3.22 2.02,18.86C116.06,225.82 115.66,228 112,228c-0.97,0 -2.27,-0.62 -2.9,-1.38zM56.2,211.8c-0.66,-0.66 -1.2,-1.75 -1.2,-2.42 0,-0.67 3.91,-8 8.68,-16.3C71.62,179.3 72.61,178 75.16,178c5.4,0 4.68,3.34 -3.95,18.26 -4.35,7.52 -8.48,14.36 -9.18,15.2C60.5,213.3 57.85,213.45 56.2,211.8ZM165.97,211.47c-0.7,-0.84 -4.83,-7.68 -9.18,-15.2C148.16,181.34 147.43,178 152.84,178c2.56,0 3.55,1.3 11.48,15.08 4.78,8.3 8.68,15.63 8.68,16.3 0,3.33 -4.81,4.76 -7.03,2.08zM16.2,171.8c-1.65,-1.65 -1.5,-4.3 0.33,-5.83 0.84,-0.7 7.68,-4.83 15.2,-9.18C46.66,148.16 50,147.43 50,152.84c0,2.56 -1.3,3.55 -15.08,11.48C26.62,169.09 19.29,173 18.62,173 17.95,173 16.86,172.46 16.2,171.8ZM192.75,164.26C179.38,156.4 178,155.33 178,152.81c0,-5.44 3.35,-4.67 18.95,4.39 7.89,4.58 14.83,9.1 15.44,10.06 1.38,2.19 -0.25,5.15 -2.99,5.45 -1.04,0.12 -8.54,-3.69 -16.65,-8.46zM105.06,164.91C90.72,162.1 75.91,150.34 69.37,136.56 48.31,92.21 94.21,46.31 138.56,67.37c10.34,4.91 19.16,13.73 24.07,24.07 18.52,38.99 -15.04,81.81 -57.58,73.47zM125.2,156.89c12.02,-2.51 23.55,-11.32 29.53,-22.54 13.91,-26.1 -2.19,-58.49 -31.58,-63.53 -29.3,-5.02 -55.36,21.03 -50.33,50.33 4.23,24.68 27.93,40.85 52.38,35.74zM1.22,118.82C0.55,118.15 0,116.85 0,115.92c0,-3.57 2.26,-3.98 20.52,-3.7 15.65,0.24 17.89,0.48 18.86,2.02 0.8,1.28 0.8,2.22 -0,3.5 -0.97,1.54 -3.22,1.78 -19.02,2.02 -13.09,0.2 -18.25,-0.06 -19.14,-0.95zM189.22,118.82C188.55,118.15 188,116.85 188,115.92c0,-3.57 2.26,-3.98 20.52,-3.7 15.65,0.24 17.89,0.48 18.86,2.02 0.8,1.28 0.8,2.22 -0,3.5 -0.97,1.54 -3.22,1.78 -19.02,2.02 -13.09,0.2 -18.25,-0.06 -19.14,-0.95zM30.61,70.66c-7.64,-4.49 -14.39,-8.95 -14.99,-9.91 -1.28,-2.02 0.14,-5.06 2.59,-5.54 0.82,-0.16 8.31,3.63 16.64,8.43C48.51,71.51 50,72.63 50,75.08c0,2.57 -1.65,4.04 -4.33,3.84 -0.64,-0.05 -7.42,-3.76 -15.06,-8.25zM179.25,78.34C178.56,78.06 178,76.6 178,75.1c0,-2.48 1.44,-3.56 15.16,-11.46 8.34,-4.8 15.83,-8.59 16.64,-8.43 2.44,0.48 3.86,3.52 2.59,5.53 -1.22,1.93 -28.89,18.3 -30.73,18.18 -0.64,-0.04 -1.72,-0.31 -2.41,-0.58zM63.65,34.92C58.83,26.62 55.02,19.13 55.19,18.27c0.49,-2.51 3.51,-3.95 5.55,-2.66 0.96,0.6 5.48,7.55 10.06,15.44C79.85,46.65 80.63,50 75.19,50 72.66,50 71.62,48.63 63.65,34.92ZM149.46,47.69c-0.43,-1.71 1.57,-6.01 7.74,-16.65 4.58,-7.89 9.1,-14.83 10.06,-15.44 2.02,-1.27 5.05,0.15 5.53,2.59 0.16,0.82 -3.63,8.31 -8.43,16.64C156.39,48.7 155.39,50 152.84,50c-2.09,0 -2.95,-0.59 -3.38,-2.31zM109.1,38.62c-0.79,-0.95 -1.06,-6.89 -0.87,-19.14 0.24,-15.65 0.48,-17.89 2.02,-18.86 1.28,-0.8 2.22,-0.8 3.5,0 1.54,0.97 1.78,3.22 2.02,18.86C116.06,37.82 115.66,40 112,40c-0.97,0 -2.27,-0.62 -2.9,-1.38z",
             "M105.5,156.61C83.66,151.3 69.02,129.01 72.82,106.85 76.91,83 99.57,66.78 123.15,70.82c23.85,4.09 40.07,26.75 36.03,50.33 -4.31,25.12 -29.03,41.45 -53.68,35.46z"
     };
+    //</editor-fold>
 
     private PathsDrawable mDrawableSun;
     private PathsDrawable mDrawableSky;
@@ -104,6 +106,7 @@ public class PhoenixHeader extends View implements RefreshHeader/*, SizeDefiniti
     private boolean isRefreshing;
     private Animation mAnimation;
 
+    //<editor-fold desc="View">
     public PhoenixHeader(Context context) {
         this(context,null);
     }
@@ -180,7 +183,9 @@ public class PhoenixHeader extends View implements RefreshHeader/*, SizeDefiniti
         mDrawableSun.parserColors(sunColors);
         mDrawableSun.setBounds(0, 0, mSunSize, mSunSize);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="RefreshHeader">
     @Override
     public void onSizeDefined(RefreshKernel layout, int height, int extendHeight) {
 
@@ -238,7 +243,7 @@ public class PhoenixHeader extends View implements RefreshHeader/*, SizeDefiniti
     public SpinnerStyle getSpinnerStyle() {
         return SpinnerStyle.Scale;
     }
-
+    //</editor-fold>
 
 //    @Override
 //    public int defineHeight() {
@@ -250,6 +255,7 @@ public class PhoenixHeader extends View implements RefreshHeader/*, SizeDefiniti
 //        return (int) (defineHeight() * 0.3f);
 //    }
 
+    //<editor-fold desc="draw">
     @Override
     public void onDraw(Canvas canvas) {
         int width = getWidth();
@@ -348,6 +354,7 @@ public class PhoenixHeader extends View implements RefreshHeader/*, SizeDefiniti
         mDrawableSun.draw(canvas);
         canvas.restoreToCount(saveCount);
     }
+    //</editor-fold>
 
 }
 

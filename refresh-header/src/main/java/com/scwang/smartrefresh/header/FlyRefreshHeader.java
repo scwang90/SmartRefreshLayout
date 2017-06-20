@@ -158,11 +158,11 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader, Si
         mRefreshLayout = kernel.getRefreshLayout();
         mRefreshKernel.registHeaderHook(new RefreshLayoutHeaderHooker() {
             @Override
-            public void onHookFinishRefresh(SuperMethod method, RefreshLayout layout) {
+            public void onHookFinishRefresh(SuperMethod supper, RefreshLayout layout) {
                 if (mIsRefreshing) {
                     finishRefresh(null);
                 } else {
-                    method.invoke();
+                    supper.invoke();
                 }
             }
         });

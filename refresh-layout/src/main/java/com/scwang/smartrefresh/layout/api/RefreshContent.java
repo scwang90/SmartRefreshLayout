@@ -10,12 +10,12 @@ import android.view.ViewGroup;
  */
 
 public interface RefreshContent {
-    void moveSpinner(int driftValue);
+    void moveSpinner(int spinner);
     boolean canScrollUp();
     boolean canScrollDown();
-    void measure(int widthSpec, int heightSpec);
     int getMeasuredWidth();
     int getMeasuredHeight();
+    void measure(int widthSpec, int heightSpec);
     void layout(int left, int top, int right, int bottom);
 
     View getView();

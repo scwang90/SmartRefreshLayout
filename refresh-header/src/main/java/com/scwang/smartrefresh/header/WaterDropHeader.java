@@ -35,6 +35,7 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 public class WaterDropHeader extends ViewGroup implements RefreshHeader {
 
+    //<editor-fold desc="Field">
     private static final float MAX_PROGRESS_ANGLE = 0.8f;
 
     private RefreshState mState;
@@ -43,7 +44,9 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
     private ProgressDrawable mProgressDrawable;
     private MaterialProgressDrawable mProgress;
     private int mProgressDegree = 0;
+    //</editor-fold>
 
+    //<editor-fold desc="ViewGroup">
     public WaterDropHeader(Context context) {
         super(context);
         initView(context);
@@ -119,7 +122,9 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
         }
         mImageView.layout(leftImage, topImage, leftImage + widthImage, topImage + heightImage);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Draw">
     @Override
     protected void dispatchDraw(Canvas canvas) {
         super.dispatchDraw(canvas);
@@ -134,7 +139,9 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
             canvas.restore();
         }
     }
+    //</editor-fold>
 
+    //<editor-fold desc="RefreshHeader">
     @Override
     public void onSizeDefined(RefreshKernel layout, int height, int extendHeight) {
 
@@ -244,4 +251,5 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
     public SpinnerStyle getSpinnerStyle() {
         return SpinnerStyle.Scale;
     }
+    //</editor-fold>
 }

@@ -10,7 +10,6 @@ import android.support.v4.graphics.ColorUtils;
 import android.util.AttributeSet;
 
 import com.scwang.smartrefresh.header.fungame.FunGameView;
-import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import java.util.ArrayList;
@@ -133,7 +132,7 @@ public class FunGameHitBlockHeader extends FunGameView {
         if (status == STATUS_GAME_PLAY
                 || status == STATUS_GAME_FINISHED
                 || isInEditMode()) {
-            makeBallPath(canvas, width, height);
+            makeBallPath(canvas, width);
         }
     }
 
@@ -168,9 +167,8 @@ public class FunGameHitBlockHeader extends FunGameView {
      * 绘制并处理小球运动的轨迹
      * @param canvas 默认画布
      * @param width
-     * @param height
      */
-    private void makeBallPath(Canvas canvas, int width, int height) {
+    private void makeBallPath(Canvas canvas, int width) {
         mPaint.setColor(mModelColor);
 
         if (cx <= blockLeft +  blockHorizontalNum * blockWidth + (blockHorizontalNum - 1) * DIVIDING_LINE_SIZE + BALL_RADIUS) { // 小球进入到色块区域
@@ -284,11 +282,4 @@ public class FunGameHitBlockHeader extends FunGameView {
             canvas.drawRect(left, top, left + blockWidth, top + blockHeight, blockPaint);
         }
     }
-
-    //<editor-fold desc="Description">
-    @Override
-    public void onSizeDefined(RefreshKernel kernel, int height, int extendHeight) {
-        super.onSizeDefined(kernel, height, extendHeight);
-    }
-    //</editor-fold>
 }

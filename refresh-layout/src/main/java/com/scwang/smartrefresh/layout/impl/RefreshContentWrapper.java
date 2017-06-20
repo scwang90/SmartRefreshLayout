@@ -119,8 +119,8 @@ public class RefreshContentWrapper implements RefreshContent {
     }
 
     @Override
-    public void moveSpinner(int driftValue) {
-        mContentView.setTranslationY(driftValue);
+    public void moveSpinner(int spinner) {
+        mContentView.setTranslationY(spinner);
     }
 
     @Override

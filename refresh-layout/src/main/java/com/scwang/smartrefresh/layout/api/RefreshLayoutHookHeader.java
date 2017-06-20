@@ -6,5 +6,5 @@ package com.scwang.smartrefresh.layout.api;
  */
 
 public interface RefreshLayoutHookHeader extends RefreshLayoutHook{
-    void onHookFinishRefresh(SuperMethod method, RefreshLayout layout);
+    void onHookFinishRefresh(SuperMethod supper, RefreshLayout layout);
 }

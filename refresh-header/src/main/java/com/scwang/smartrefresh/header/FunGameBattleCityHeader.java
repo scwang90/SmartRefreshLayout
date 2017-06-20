@@ -8,7 +8,6 @@ import android.util.AttributeSet;
 import android.util.SparseArray;
 
 import com.scwang.smartrefresh.header.fungame.FunGameView;
-import com.scwang.smartrefresh.layout.api.RefreshKernel;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -391,10 +390,4 @@ public class FunGameBattleCityHeader extends FunGameView {
         return random.nextInt(TANK_ROW_NUM);
     }
 
-    //<editor-fold desc="Description">
-    @Override
-    public void onSizeDefined(RefreshKernel kernel, int height, int extendHeight) {
-        super.onSizeDefined(kernel, height, extendHeight);
-    }
-    //</editor-fold>
 }

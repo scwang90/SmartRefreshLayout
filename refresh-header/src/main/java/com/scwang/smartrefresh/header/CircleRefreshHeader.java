@@ -520,9 +520,9 @@ public class CircleRefreshHeader extends View implements RefreshHeader, SizeObse
         PULL_DELTA = height / 2;
         kernel.registHeaderHook(new RefreshLayoutHeaderHooker() {
             @Override
-            public void onHookFinishRefresh(SuperMethod method, RefreshLayout layout) {
+            public void onHookFinishRefresh(SuperMethod supper, RefreshLayout layout) {
                 setRefreshing(false);
-                setOnViewAniDone(method::invoke);
+                setOnViewAniDone(supper::invoke);
             }
         });
     }

@@ -174,13 +174,13 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
         setTranslationY(mOffset - mHeaderHeight);
         kernel.registHeaderHook(new RefreshLayoutHeaderHooker() {
             @Override
-            public void onHookFinishRefresh(SuperMethod method, RefreshLayout layout) {
+            public void onHookFinishRefresh(SuperMethod supper, RefreshLayout layout) {
                 if (mManualOperation) {
-                    mManualOperationListener = method::invoke;
+                    mManualOperationListener = supper::invoke;
                     onFinish(layout);
                 } else {
                     mManualOperationListener = null;
-                    method.invoke();
+                    supper.invoke();
                 }
             }
         });

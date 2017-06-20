@@ -283,10 +283,6 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader, SizeObse
         //mProgress.setColorSchemeColors(colors);
     }
 
-    public void setColorSchemeColors(int... colors) {
-        mProgress.setColorSchemeColors(colors);
-    }
-
     @NonNull
     @Override
     public View getView() {
@@ -299,4 +295,11 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader, SizeObse
     }
     //</editor-fold>
 
+
+    //<editor-fold desc="API">
+    public MaterialHeader setColorSchemeColors(int... colors) {
+        mProgress.setColorSchemeColors(colors);
+        return this;
+    }
+    //</editor-fold>
 }

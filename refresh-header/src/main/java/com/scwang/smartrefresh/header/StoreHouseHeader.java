@@ -25,6 +25,7 @@ import java.util.ArrayList;
 
 public class StoreHouseHeader extends View implements RefreshHeader {
 
+    //<editor-fold desc="Field">
     public ArrayList<StoreHouseBarItem> mItemList = new ArrayList<StoreHouseBarItem>();
 
     private int mLineWidth = -1;
@@ -51,7 +52,9 @@ public class StoreHouseHeader extends View implements RefreshHeader {
     private boolean mIsInLoading = false;
     private AniController mAniController = new AniController();
     private int mTextColor = Color.WHITE;
+    //</editor-fold>
 
+    //<editor-fold desc="View">
     public StoreHouseHeader(Context context) {
         super(context);
         initView(context, null, 0);
@@ -85,40 +88,6 @@ public class StoreHouseHeader extends View implements RefreshHeader {
         ta.recycle();
     }
 
-    private void setProgress(float progress) {
-        mProgress = progress;
-    }
-
-    public int getLoadingAniDuration() {
-        return mLoadingAniDuration;
-    }
-
-    public void setLoadingAniDuration(int duration) {
-        mLoadingAniDuration = duration;
-        mLoadingAniSegDuration = duration;
-    }
-
-    public StoreHouseHeader setLineWidth(int width) {
-        mLineWidth = width;
-        for (int i = 0; i < mItemList.size(); i++) {
-            mItemList.get(i).setLineWidth(width);
-        }
-        return this;
-    }
-
-    public StoreHouseHeader setTextColor(int color) {
-        mTextColor = color;
-        for (int i = 0; i < mItemList.size(); i++) {
-            mItemList.get(i).setColor(color);
-        }
-        return this;
-    }
-
-    public StoreHouseHeader setDropHeight(int height) {
-        mDropHeight = height;
-        return this;
-    }
-
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int height = getTopOffset() + mDrawZoneHeight + getBottomOffset();
@@ -128,85 +97,6 @@ public class StoreHouseHeader extends View implements RefreshHeader {
         mOffsetX = (getMeasuredWidth() - mDrawZoneWidth) / 2;
         mOffsetY = getTopOffset();
         mDropHeight = getTopOffset();
-    }
-
-    private int getTopOffset() {
-        return getPaddingTop() + DensityUtil.dp2px(10);
-    }
-
-    private int getBottomOffset() {
-        return getPaddingBottom() + DensityUtil.dp2px(10);
-    }
-
-    public void initWithString(String str) {
-        initWithString(str, 25);
-    }
-
-    public void initWithString(String str, int fontSize) {
-        ArrayList<float[]> pointList = StoreHousePath.getPath(str, fontSize * 0.01f, 14);
-        initWithPointList(pointList);
-    }
-
-    public void initWithStringArray(int id) {
-        String[] points = getResources().getStringArray(id);
-        ArrayList<float[]> pointList = new ArrayList<float[]>();
-        for (int i = 0; i < points.length; i++) {
-            String[] x = points[i].split(",");
-            float[] f = new float[4];
-            for (int j = 0; j < 4; j++) {
-                f[j] = Float.parseFloat(x[j]);
-            }
-            pointList.add(f);
-        }
-        initWithPointList(pointList);
-    }
-
-    public float getScale() {
-        return mScale;
-    }
-
-    public void setScale(float scale) {
-        mScale = scale;
-    }
-
-    public void initWithPointList(ArrayList<float[]> pointList) {
-
-        float drawWidth = 0;
-        float drawHeight = 0;
-        boolean shouldLayout = mItemList.size() > 0;
-        mItemList.clear();
-        DensityUtil density = new DensityUtil();
-        for (int i = 0; i < pointList.size(); i++) {
-            float[] line = pointList.get(i);
-            PointF startPoint = new PointF(density.dip2px(line[0]) * mScale, density.dip2px(line[1]) * mScale);
-            PointF endPoint = new PointF(density.dip2px(line[2]) * mScale, density.dip2px(line[3]) * mScale);
-
-            drawWidth = Math.max(drawWidth, startPoint.x);
-            drawWidth = Math.max(drawWidth, endPoint.x);
-
-            drawHeight = Math.max(drawHeight, startPoint.y);
-            drawHeight = Math.max(drawHeight, endPoint.y);
-
-            StoreHouseBarItem item = new StoreHouseBarItem(i, startPoint, endPoint, mTextColor, mLineWidth);
-            item.resetPosition(mHorizontalRandomness);
-            mItemList.add(item);
-        }
-        mDrawZoneWidth = (int) Math.ceil(drawWidth);
-        mDrawZoneHeight = (int) Math.ceil(drawHeight);
-        if (shouldLayout) {
-            requestLayout();
-        }
-    }
-
-    private void beginLoading() {
-        mIsInLoading = true;
-        mAniController.start();
-        invalidate();
-    }
-
-    private void loadFinish() {
-        mIsInLoading = false;
-        mAniController.stop();
     }
 
     @Override
@@ -269,9 +159,132 @@ public class StoreHouseHeader extends View implements RefreshHeader {
         }
         canvas.restoreToCount(c1);
     }
+    //</editor-fold>
+
+    //<editor-fold desc="API">
+    public int getLoadingAniDuration() {
+        return mLoadingAniDuration;
+    }
+
+    public StoreHouseHeader setLoadingAniDuration(int duration) {
+        mLoadingAniDuration = duration;
+        mLoadingAniSegDuration = duration;
+        return this;
+    }
+
+    public StoreHouseHeader setLineWidth(int width) {
+        mLineWidth = width;
+        for (int i = 0; i < mItemList.size(); i++) {
+            mItemList.get(i).setLineWidth(width);
+        }
+        return this;
+    }
+
+    public StoreHouseHeader setTextColor(int color) {
+        mTextColor = color;
+        for (int i = 0; i < mItemList.size(); i++) {
+            mItemList.get(i).setColor(color);
+        }
+        return this;
+    }
+
+    public StoreHouseHeader setDropHeight(int height) {
+        mDropHeight = height;
+        return this;
+    }
+
+    public StoreHouseHeader initWithString(String str) {
+        initWithString(str, 25);
+        return this;
+    }
+
+    public StoreHouseHeader initWithString(String str, int fontSize) {
+        ArrayList<float[]> pointList = StoreHousePath.getPath(str, fontSize * 0.01f, 14);
+        initWithPointList(pointList);
+        return this;
+    }
+
+    public StoreHouseHeader initWithStringArray(int id) {
+        String[] points = getResources().getStringArray(id);
+        ArrayList<float[]> pointList = new ArrayList<float[]>();
+        for (int i = 0; i < points.length; i++) {
+            String[] x = points[i].split(",");
+            float[] f = new float[4];
+            for (int j = 0; j < 4; j++) {
+                f[j] = Float.parseFloat(x[j]);
+            }
+            pointList.add(f);
+        }
+        initWithPointList(pointList);
+        return this;
+    }
+
+    public float getScale() {
+        return mScale;
+    }
+
+    public StoreHouseHeader setScale(float scale) {
+        mScale = scale;
+        return this;
+    }
+
+    public StoreHouseHeader initWithPointList(ArrayList<float[]> pointList) {
+
+        float drawWidth = 0;
+        float drawHeight = 0;
+        boolean shouldLayout = mItemList.size() > 0;
+        mItemList.clear();
+        DensityUtil density = new DensityUtil();
+        for (int i = 0; i < pointList.size(); i++) {
+            float[] line = pointList.get(i);
+            PointF startPoint = new PointF(density.dip2px(line[0]) * mScale, density.dip2px(line[1]) * mScale);
+            PointF endPoint = new PointF(density.dip2px(line[2]) * mScale, density.dip2px(line[3]) * mScale);
+
+            drawWidth = Math.max(drawWidth, startPoint.x);
+            drawWidth = Math.max(drawWidth, endPoint.x);
+
+            drawHeight = Math.max(drawHeight, startPoint.y);
+            drawHeight = Math.max(drawHeight, endPoint.y);
+
+            StoreHouseBarItem item = new StoreHouseBarItem(i, startPoint, endPoint, mTextColor, mLineWidth);
+            item.resetPosition(mHorizontalRandomness);
+            mItemList.add(item);
+        }
+        mDrawZoneWidth = (int) Math.ceil(drawWidth);
+        mDrawZoneHeight = (int) Math.ceil(drawHeight);
+        if (shouldLayout) {
+            requestLayout();
+        }
+        return this;
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="private">
+    private void setProgress(float progress) {
+        mProgress = progress;
+    }
+
+    private int getTopOffset() {
+        return getPaddingTop() + DensityUtil.dp2px(10);
+    }
+
+    private int getBottomOffset() {
+        return getPaddingBottom() + DensityUtil.dp2px(10);
+    }
+
+    private void beginLoading() {
+        mIsInLoading = true;
+        mAniController.start();
+        invalidate();
+    }
+
+    private void loadFinish() {
+        mIsInLoading = false;
+        mAniController.stop();
+    }
+    //</editor-fold>
 
     //<editor-fold desc="Description">
-
 
     @Override
     public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {

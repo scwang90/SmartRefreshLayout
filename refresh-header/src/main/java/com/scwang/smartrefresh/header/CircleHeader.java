@@ -239,12 +239,13 @@ public class CircleHeader extends View implements RefreshHeader, SizeObserver {
 
     //</editor-fold>
 
-    //<editor-fold desc="SizeObserver">
+    //<editor-fold desc="RefreshHeader">
+
     @Override
     public void onSizeDefined(RefreshKernel kernel, int height, int extendHeight) {
         kernel.registHeaderHook(new RefreshLayoutHeaderHooker() {
             @Override
-            public void onHookFinishRefresh(SuperMethod method, RefreshLayout layout) {
+            public void onHookFinishRefresh(SuperMethod supper, RefreshLayout layout) {
                 mShowOuter = false;
                 mShowBoll = false;
                 ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
@@ -257,16 +258,13 @@ public class CircleHeader extends View implements RefreshHeader, SizeObserver {
                 animator.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
-                        method.invoke(0);
+                        supper.invoke(0);
                     }
                 });
                 animator.start();
             }
         });
     }
-    //</editor-fold>
-
-    //<editor-fold desc="RefreshHeader">
 
     @Override
     public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
