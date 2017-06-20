@@ -20,6 +20,14 @@
  - 支持自定义回弹动画的插值器，实现各种炫酷的动画效果.
  - 支持设置主题来适配任何场景的App，不会出现炫酷但很尴尬的情况.
  
+
+&emsp;&emsp;看到这么多炫酷的Header，是不是觉得很棒？这时你或许会担心这么多的Header集成在一起，但是平时只会用到一个，是不是要引入很多无用的代码和资源？
+&emsp;&emsp;不过请放心，我已经把刷新布局分成三个包啦！
+
+ - SmartRefreshLayout 刷新布局核心，自带ClassicsHeader（经典）、BezierRadarHeader（贝塞尔雷达）两个 Header.
+ - SmartRefreshHeader 各种Header的集成，除了Layout自带的Header，其他都在这个包中.
+ - SmartRefreshFooter 各种Footer的集成，除了Layout自带的Footer，其他都在这个包中.
+
 ## Demo
 [下载 APK-Demo](art/app-debug.apk)
 
