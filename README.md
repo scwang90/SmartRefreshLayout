@@ -19,15 +19,8 @@
  - 支持通用的刷新监听器 OnRefreshListener 和更详细的滚动监听 OnMultiPurposeListener.
  - 支持自定义回弹动画的插值器，实现各种炫酷的动画效果.
  - 支持设置主题来适配任何场景的App，不会出现炫酷但很尴尬的情况.
+ - 支持设置多种滑动方式来适配各种效果的Header和Footer：位置平移、尺寸拉伸、背后固定、顶层固定、全屏
  
-
-&emsp;&emsp;看到这么多炫酷的Header，是不是觉得很棒？这时你或许会担心这么多的Header集成在一起，但是平时只会用到一个，是不是要引入很多无用的代码和资源？
-&emsp;&emsp;不过请放心，我已经把刷新布局分成三个包啦！
-
- - SmartRefreshLayout 刷新布局核心，自带ClassicsHeader（经典）、BezierRadarHeader（贝塞尔雷达）两个 Header.
- - SmartRefreshHeader 各种Header的集成，除了Layout自带的Header，其他都在这个包中.
- - SmartRefreshFooter 各种Footer的集成，除了Layout自带的Footer，其他都在这个包中.
-
 ## Demo
 [下载 APK-Demo](art/app-debug.apk)
 
@@ -45,10 +38,19 @@
 ![](art/gif_FlyRefresh.gif)
 
 
+&emsp;&emsp;看到这么多炫酷的Header，是不是觉得很棒？这时你或许会担心这么多的Header集成在一起，但是平时只会用到一个，是不是要引入很多无用的代码和资源？
+&emsp;&emsp;请放心，我已经把刷新布局分成三个包啦，用到的时候自行引用就可以啦！
+
+ - SmartRefreshLayout 刷新布局核心实现，自带ClassicsHeader（经典）、BezierRadarHeader（贝塞尔雷达）两个 Header.
+ - SmartRefreshHeader 各种Header的集成，除了Layout自带的Header，其他都在这个包中.
+ - SmartRefreshFooter 各种Footer的集成，除了Layout自带的Footer，其他都在这个包中.
+
 ## 简单用例
-#### 1.添加依赖
+#### 1.在 buld.gradle 中添加依赖
 ```
 compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.0-alpha-1'
+compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.0-alpha-1'//如果使用了特殊的Header
+compile 'com.scwang.smartrefresh:SmartRefreshFooter:1.0.0-alpha-1'//如果使用了特殊的Footer
 ```
 
 #### 2.在XML布局文件中添加 SmartRefreshLayout
