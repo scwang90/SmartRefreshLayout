@@ -82,6 +82,10 @@
             android:name=".activity.using.AssignXmlUsingActivity"
             android:label="@string/title_activity_using_assign_xml"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.using.AssignCodeUsingActivity"
+            android:label="@string/title_activity_using_assign_code"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

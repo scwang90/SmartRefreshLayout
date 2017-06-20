@@ -39,6 +39,7 @@
     </declare-styleable>
 
     <declare-styleable name="BallPulseFooter">
+        <attr name="srlClassicsSpinnerStyle"/>
         <attr name="srlPrimaryColor"/>
         <attr name="srlAccentColor"/>
     </declare-styleable>

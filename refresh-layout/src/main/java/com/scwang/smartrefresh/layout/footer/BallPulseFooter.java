@@ -32,7 +32,9 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 public class BallPulseFooter extends ViewGroup implements RefreshFooter {
 
     private BallPulseView mBallPulseView;
+    private SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
 
+    //<editor-fold desc="ViewGroup">
     public BallPulseFooter(@NonNull Context context) {
         super(context);
         initView(context, null, 0);
@@ -64,60 +66,59 @@ public class BallPulseFooter extends ViewGroup implements RefreshFooter {
             mBallPulseView.setNormalColor(primaryColor);
         }
 
+        mSpinnerStyle = SpinnerStyle.values()[ta.getInt(R.styleable.BallPulseFooter_srlClassicsSpinnerStyle, mSpinnerStyle.ordinal())];
+
         ta.recycle();
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        if (mBallPulseView != null) {
-            int heightSpec = makeMeasureSpec(getSize(heightMeasureSpec), AT_MOST);
-            int widthSpec = makeMeasureSpec(getSize(widthMeasureSpec), AT_MOST);
-            mBallPulseView.measure(widthSpec, heightSpec);
-        }
-        setMeasuredDimension(resolveSize(getSuggestedMinimumWidth(), widthMeasureSpec),
-                resolveSize(getSuggestedMinimumHeight(), heightMeasureSpec));
+        int widthSpec = makeMeasureSpec(getSize(widthMeasureSpec), AT_MOST);
+        int heightSpec = makeMeasureSpec(getSize(heightMeasureSpec), AT_MOST);
+        mBallPulseView.measure(widthSpec, heightSpec);
+        setMeasuredDimension(
+                resolveSize(mBallPulseView.getMeasuredWidth(), widthMeasureSpec),
+                resolveSize(mBallPulseView.getMeasuredHeight(), heightMeasureSpec)
+        );
     }
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        if (mBallPulseView != null) {
-            int pwidth = getMeasuredWidth();
-            int pheight = getMeasuredHeight();
-            int cwidth = mBallPulseView.getMeasuredWidth();
-            int cheight = mBallPulseView.getMeasuredHeight();
-            int left = pwidth / 2 - cwidth / 2;
-            int top = pheight / 2 - cheight / 2;
-            mBallPulseView.layout(left, top, left + cwidth, top + cheight);
-        }
+        int pwidth = getMeasuredWidth();
+        int pheight = getMeasuredHeight();
+        int cwidth = mBallPulseView.getMeasuredWidth();
+        int cheight = mBallPulseView.getMeasuredHeight();
+        int left = pwidth / 2 - cwidth / 2;
+        int top = pheight / 2 - cheight / 2;
+        mBallPulseView.layout(left, top, left + cwidth, top + cheight);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="RefreshFooter">
     @Override
     public void onSizeDefined(RefreshKernel layout, int height, int extendHeight) {
 
     }
     @Override
     public void onPullingUp(float percent, int offset, int bottomHeight, int extendHeight) {
-        mBallPulseView.onPullingUp(percent, offset, bottomHeight, extendHeight);
     }
 
     @Override
     public void onPullReleasing(float percent, int offset, int bottomHeight, int extendHeight) {
-        mBallPulseView.onPullReleasing(percent, offset, bottomHeight, extendHeight);
     }
 
     @Override
     public void startAnimator(RefreshLayout layout, int bottomHeight, int extendHeight) {
-        mBallPulseView.startAnimator(layout, bottomHeight, extendHeight);
+        mBallPulseView.startAnim();
     }
 
     @Override
     public void onStateChanged(RefreshState oldState, RefreshState state) {
-        mBallPulseView.onStateChanged(oldState, state);
     }
 
     @Override
     public void onFinish(RefreshLayout layout) {
-        mBallPulseView.onFinish(layout);
+        mBallPulseView.stopAnim();
     }
 
     @Override
@@ -139,6 +140,14 @@ public class BallPulseFooter extends ViewGroup implements RefreshFooter {
 
     @Override
     public SpinnerStyle getSpinnerStyle() {
-        return SpinnerStyle.Translate;
+        return mSpinnerStyle;
     }
+    //</editor-fold>
+
+    //<editor-fold desc="API">
+    public BallPulseFooter setSpinnerStyle(SpinnerStyle mSpinnerStyle) {
+        this.mSpinnerStyle = mSpinnerStyle;
+        return this;
+    }
+    //</editor-fold>
 }

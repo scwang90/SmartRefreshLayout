@@ -189,7 +189,7 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader, Si
     }
 
     public void finishRefresh(AnimatorListenerAdapter listenerAdapter) {
-        if (mFlyView == null || !mIsRefreshing) {
+        if (mFlyView == null || !mIsRefreshing || mRefreshLayout == null) {
             return;
         }
         if (mFlyAnimator != null) {

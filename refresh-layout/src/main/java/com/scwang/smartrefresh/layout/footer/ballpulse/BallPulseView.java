@@ -6,22 +6,16 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.ColorInt;
-import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.scwang.smartrefresh.layout.api.RefreshFooter;
-import com.scwang.smartrefresh.layout.api.RefreshKernel;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.constant.RefreshState;
-import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BallPulseView extends View implements RefreshFooter {
+public class BallPulseView extends View {
 
     public static final int DEFAULT_SIZE = 50; //dp
 
@@ -38,6 +32,7 @@ public class BallPulseView extends View implements RefreshFooter {
     private ArrayList<ValueAnimator> mAnimators;
     private Map<ValueAnimator, ValueAnimator.AnimatorUpdateListener> mUpdateListeners = new HashMap<>();;
 
+    //<editor-fold desc="View">
     public BallPulseView(Context context) {
         this(context, null);
     }
@@ -64,26 +59,11 @@ public class BallPulseView extends View implements RefreshFooter {
                 resolveSize(default_size, heightMeasureSpec));
     }
 
-    public void setIndicatorColor(int color) {
-        mPaint.setColor(color);
-    }
-
-    public void setNormalColor(@ColorInt int color) {
-        normalColor = color;
-    }
-
-    public void setAnimatingColor(@ColorInt int color) {
-        animatingColor = color;
-    }
-
     @Override
-    public void setPrimaryColors(int... colors) {
-        if (colors.length > 0) {
-            setBackgroundColor(colors[0]);
-        }
-        if (colors.length > 1) {
-            setNormalColor(colors[1]);
-            setAnimatingColor(colors[1]);
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if (mAnimators != null) for (int i = 0; i < mAnimators.size(); i++) {
+            mAnimators.get(i).cancel();
         }
     }
 
@@ -101,12 +81,57 @@ public class BallPulseView extends View implements RefreshFooter {
             canvas.restore();
         }
     }
+    //</editor-fold>
 
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        if (mAnimators != null) for (int i = 0; i < mAnimators.size(); i++) {
-            mAnimators.get(i).cancel();
+    //<editor-fold desc="private">
+    private boolean isStarted() {
+//        for (ValueAnimator animator : mAnimators) {
+//            return animator.isStarted();
+//        }
+        return mIsStarted;
+    }
+
+    private void createAnimators() {
+        mAnimators = new ArrayList<>();
+        int[] delays = new int[]{120, 240, 360};
+        for (int i = 0; i < 3; i++) {
+            final int index = i;
+
+            ValueAnimator scaleAnim = ValueAnimator.ofFloat(1, 0.3f, 1);
+
+            scaleAnim.setDuration(750);
+            scaleAnim.setRepeatCount(ValueAnimator.INFINITE);
+            scaleAnim.setStartDelay(delays[i]);
+
+            mUpdateListeners.put(scaleAnim, animation -> {
+                scaleFloats[index] = (float) animation.getAnimatedValue();
+                postInvalidate();
+            });
+            mAnimators.add(scaleAnim);
+        }
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="API">
+    public void setIndicatorColor(int color) {
+        mPaint.setColor(color);
+    }
+
+    public void setNormalColor(@ColorInt int color) {
+        normalColor = color;
+    }
+
+    public void setAnimatingColor(@ColorInt int color) {
+        animatingColor = color;
+    }
+
+    public void setPrimaryColors(int... colors) {
+        if (colors.length > 0) {
+            setBackgroundColor(colors[0]);
+        }
+        if (colors.length > 1) {
+            setNormalColor(colors[1]);
+            setAnimatingColor(colors[1]);
         }
     }
 
@@ -142,71 +167,6 @@ public class BallPulseView extends View implements RefreshFooter {
         }
         setIndicatorColor(normalColor);
     }
+    //</editor-fold>
 
-    private boolean isStarted() {
-//        for (ValueAnimator animator : mAnimators) {
-//            return animator.isStarted();
-//        }
-        return mIsStarted;
-    }
-
-    private void createAnimators() {
-        mAnimators = new ArrayList<>();
-        int[] delays = new int[]{120, 240, 360};
-        for (int i = 0; i < 3; i++) {
-            final int index = i;
-
-            ValueAnimator scaleAnim = ValueAnimator.ofFloat(1, 0.3f, 1);
-
-            scaleAnim.setDuration(750);
-            scaleAnim.setRepeatCount(ValueAnimator.INFINITE);
-            scaleAnim.setStartDelay(delays[i]);
-
-            mUpdateListeners.put(scaleAnim, animation -> {
-                scaleFloats[index] = (float) animation.getAnimatedValue();
-                postInvalidate();
-            });
-            mAnimators.add(scaleAnim);
-        }
-    }
-
-    @NonNull
-    @Override
-    public View getView() {
-        return this;
-    }
-
-    @Override
-    public void onFinish(RefreshLayout layout) {
-        stopAnim();
-    }
-
-    @Override
-    public SpinnerStyle getSpinnerStyle() {
-        return null;
-    }
-
-    @Override
-    public void onSizeDefined(RefreshKernel layout, int height, int extendHeight) {
-
-    }
-    @Override
-    public void onPullingUp(float percent, int offset, int bottomHeight, int extendHeight) {
-
-    }
-
-    @Override
-    public void onPullReleasing(float percent, int offset, int bottomHeight, int extendHeight) {
-
-    }
-
-    @Override
-    public void startAnimator(RefreshLayout layout, int bottomHeight, int extendHeight) {
-        startAnim();
-    }
-
-    @Override
-    public void onStateChanged(RefreshState oldState, RefreshState state) {
-
-    }
 }

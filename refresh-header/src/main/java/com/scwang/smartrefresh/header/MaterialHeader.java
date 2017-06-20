@@ -164,9 +164,9 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader, SizeObse
     /**
      * One of DEFAULT, or LARGE.
      */
-    public void setSize(int size) {
+    public MaterialHeader setSize(int size) {
         if (size != SIZE_LARGE && size != SIZE_DEFAULT) {
-            return;
+            return this;
         }
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         if (size == SIZE_LARGE) {
@@ -180,10 +180,12 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader, SizeObse
         mCircleView.setImageDrawable(null);
         mProgress.updateSizes(size);
         mCircleView.setImageDrawable(mProgress);
+        return this;
     }
 
-    public void setShowBezierWave(boolean show) {
+    public MaterialHeader setShowBezierWave(boolean show) {
         this.mShowBezierWave = show;
+        return this;
     }
 
     //</editor-fold>

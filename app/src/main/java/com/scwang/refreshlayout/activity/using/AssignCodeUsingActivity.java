@@ -6,21 +6,24 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.scwang.refreshlayout.R;
+import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
+import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 
 /**
- * 在XML中指定Header和Footer
+ * 在Java代码中指定Header和Footer
  */
-public class AssignXmlUsingActivity extends AppCompatActivity {
+public class AssignCodeUsingActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_using_assign_xml);
+        setContentView(R.layout.activity_using_assign_code);
 
         mToolbar = (Toolbar)findViewById(R.id.toolbar);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -31,11 +34,17 @@ public class AssignXmlUsingActivity extends AppCompatActivity {
         });
 
 
+        final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.smart);
+        //设置 Header 为 Material风格
+        refreshLayout.setRefreshHeader(new MaterialHeader(this).setShowBezierWave(true));
+        //设置 Footer 为 球脉冲
+        refreshLayout.setRefreshFooter(new BallPulseFooter(this).setSpinnerStyle(SpinnerStyle.Scale));
+
         /**
          * 以下代码仅仅为了演示效果而已，不是必须的
-         * 关键代码在 activity_using_assign_xml 中
          */
-        final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.smart);
+        //设置主题颜色
+        refreshLayout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);
         //触发上啦加载
         refreshLayout.autoLoadmore();
         //通过多功能监听接口实现 在第一次加载完成之后 自动刷新

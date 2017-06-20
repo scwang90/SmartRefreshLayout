@@ -461,16 +461,17 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                 footerView.measure(widthSpec, heightSpec);
             }
 
+            if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Scale && !isInEditMode) {
+                final int height = Math.max(0, -mSpinner);
+                heightSpec = makeMeasureSpec(height - lp.topMargin - lp.bottomMargin, EXACTLY);
+                footerView.measure(widthSpec, heightSpec);
+            }
+
             if (!mFooterHeightStatus.notifyed) {
                 mFooterHeightStatus = mFooterHeightStatus.notifyed();
                 mRefreshFooter.onSizeDefined(mKernel, mFooterHeight, mExtendFooterHeight);
             }
 
-            if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Scale && !isInEditMode) {
-                final int height = Math.max(0, mSpinner);
-                heightSpec = makeMeasureSpec(height - lp.topMargin - lp.bottomMargin, EXACTLY);
-                footerView.measure(widthSpec, heightSpec);
-            }
             if (isInEditMode) {
                 minimumHeight += footerView.getMeasuredHeight();
             }

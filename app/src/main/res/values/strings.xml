@@ -119,6 +119,7 @@
     <string name="title_activity_style_storehouse">StoreHouse</string>
     <string name="title_activity_using_assign_default">全局默认</string>
     <string name="title_activity_using_assign_xml">XML配置</string>
+    <string name="title_activity_using_assign_code">java代码设置</string>
     <string name="description_set_default_creater">这是使用定制Header和Footer的第一种方法-全局默认\n\n
         本方法是实际项目中最常用的方法，起特点有：\n\n
         1.设置一次全部生效，不用多次写重复的代码\n
@@ -136,7 +137,8 @@
         return new ClassicsFooter(context);//指定为经典Footer，默认是 BallPulseFooter\n
         }\n
         });\n\n
-        关键代码，需要在布局生成之前设置，建议代码放在 Application.onCreate 中</string>
+        关键代码，需要在布局生成之前设置，建议代码放在 Application.onCreate 中
+    </string>
     <string name="description_define_in_xml"><![CDATA[这是使用定制Header和Footer的第二种方法-Xml中配置\n\n
         在需要使用特别的Header或者特别配置的页面时候可以使用本方法\n\n
         本方法的特点：\n
@@ -157,4 +159,15 @@
                 \t\tandroid:layout_height="wrap_content"/>\n
         </com.scwang.smartrefresh.SmartRefreshLayout>\n
     ]]></string>
+    <string name="description_define_in_code">这是使用定制Header和Footer的第三种方法-代码设置\n\n
+        本方法是实际项目中比较少用的方法，起特点有：\n\n
+        1.设置一次生效一次，需要多处设置，建议特别的页面使用\n
+        2.优先级最高，即使使用了会覆盖方法一和方法二的设置\n\n
+        使用方法： \n
+        final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.smart);\n
+        //设置 Header 为 Material风格\n
+        refreshLayout.setRefreshHeader(new MaterialHeader(this));\n
+        //设置 Footer 为 三球动画\n
+        refreshLayout.setRefreshFooter(new BallPulseFooter(this));\n\n
+    </string>
 </resources>

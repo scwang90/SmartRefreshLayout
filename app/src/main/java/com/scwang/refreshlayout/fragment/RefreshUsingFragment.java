@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 import com.scwang.refreshlayout.R;
+import com.scwang.refreshlayout.activity.using.AssignCodeUsingActivity;
 import com.scwang.refreshlayout.activity.using.AssignDefaultUsingActivity;
 import com.scwang.refreshlayout.activity.using.AssignXmlUsingActivity;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
@@ -38,8 +39,9 @@ import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 public class RefreshUsingFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private enum Item {
-        SetDefaultCreater("设置全局默认的Header和Footer", AssignDefaultUsingActivity.class),
+        DefaultCreater("设置全局默认的Header和Footer", AssignDefaultUsingActivity.class),
         XmlDefine("在XML中定义Header和Footer", AssignXmlUsingActivity.class),
+        CodeDefine("在代码中指定Header和Footer", AssignCodeUsingActivity.class),
         ;
         public String name;
         public Class<?> clazz;

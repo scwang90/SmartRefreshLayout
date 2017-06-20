@@ -177,4 +177,10 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
     }
     //</editor-fold>
 
+    //<editor-fold desc="API">
+    public ClassicsFooter setSpinnerStyle(SpinnerStyle style) {
+        this.mSpinnerStyle = style;
+        return this;
+    }
+    //</editor-fold>
 }

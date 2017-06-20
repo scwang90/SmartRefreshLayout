@@ -148,3 +148,8 @@ SmartRefreshLayout.setDefaultRefreshFooterCreater(new DefaultRefreshFooterCreate
 ![](art/jpg_preview_xml_define.jpg)
 
 不过不用担心，只是预览效果，运行的时候只有下拉才会出现~
+
+#### 2.方法三 Java代码设置
+```java
+
+```

@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.novoda.bintray-release'
-apply plugin: 'maven'
+//apply plugin: 'maven'
 
 android {
     compileSdkVersion 25

@@ -35,6 +35,8 @@ public class AssignDefaultUsingActivity extends AppCompatActivity {
             @NonNull
             @Override
             public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
+                layout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);//创建同时可以先设置主题颜色
+                ((View) layout).setBackgroundResource(R.color.colorPrimary);
                 return new ClassicsHeader(context);//指定为经典Header，默认是 贝塞尔雷达Header
             }
         });
