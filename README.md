@@ -114,7 +114,7 @@ SmartRefreshLayout.setDefaultRefreshFooterCreater(new DefaultRefreshFooterCreate
 注意：方法一 设置的Header和Footer的优先级是最低的，如果同时还使用了方法二、三，将会被其他方法取代
 
 
-#### 1.方法二 XML布局文件指定
+#### 2.方法二 XML布局文件指定
 ```xml
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/smart"
