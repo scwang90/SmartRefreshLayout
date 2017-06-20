@@ -45,6 +45,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     private DateFormat mFormat = new SimpleDateFormat("上次更新 M-d HH:mm", Locale.CHINA);
     private SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
 
+    //<editor-fold desc="RelativeLayout">
     public ClassicsHeader(Context context) {
         super(context);
         this.initView(context, null, 0);
@@ -135,17 +136,9 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
 
         ta.recycle();
     }
+    //</editor-fold>
 
-    public void setLastUpdateTime(Date time) {
-        mLastTime = time;
-        mLastUpdateText.setText(mFormat.format(time));
-    }
-
-    public void setTimeFormat(DateFormat format) {
-        mFormat = format;
-        mLastUpdateText.setText(mFormat.format(mLastTime));
-    }
-
+    //<editor-fold desc="RefreshHeader">
     @Override
     public void onSizeDefined(RefreshKernel layout, int height, int extendHeight) {
 
@@ -225,9 +218,25 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
                 break;
         }
     }
+    //</editor-fold>
 
-    public void setSpinnerStyle(SpinnerStyle style) {
-        this.mSpinnerStyle = style;
+    //<editor-fold desc="API">
+    public ClassicsHeader setLastUpdateTime(Date time) {
+        mLastTime = time;
+        mLastUpdateText.setText(mFormat.format(time));
+        return this;
     }
+
+    public ClassicsHeader setTimeFormat(DateFormat format) {
+        mFormat = format;
+        mLastUpdateText.setText(mFormat.format(mLastTime));
+        return this;
+    }
+
+    public ClassicsHeader setSpinnerStyle(SpinnerStyle style) {
+        this.mSpinnerStyle = style;
+        return this;
+    }
+    //</editor-fold>
 
 }

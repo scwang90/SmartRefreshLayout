@@ -38,6 +38,7 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
     private RoundDotView mDotView;
     private RoundProgressView mProgressView;
 
+    //<editor-fold desc="FrameLayout">
     public BezierRadarHeader(Context context) {
         this(context,null);
     }
@@ -87,26 +88,34 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
 
         ta.recycle();
     }
+    //</editor-fold>
 
-    public void setPrimaryColor(int color) {
+    //<editor-fold desc="API">
+    public BezierRadarHeader setPrimaryColor(int color) {
         mWaveView.setWaveColor(color);
         mProgressView.setBackColor(color);
+        return this;
     }
 
-    public void setAccentColor(int color) {
+    public BezierRadarHeader setAccentColor(int color) {
         mDotView.setDotColor(color);
         mRippleView.setFrontColor(color);
         mProgressView.setFrontColor(color);
+        return this;
     }
 
-    public void setPrimaryColorId(int colorId) {
+    public BezierRadarHeader setPrimaryColorId(int colorId) {
         setPrimaryColor(ContextCompat.getColor(getContext(), colorId));
+        return this;
     }
 
-    public void setAccentColorId(int colorId) {
+    public BezierRadarHeader setAccentColorId(int colorId) {
         setAccentColor(ContextCompat.getColor(getContext(), colorId));
+        return this;
     }
+    //</editor-fold>
 
+    //<editor-fold desc="RefreshHeader">
     @Override
     public void setPrimaryColors(int... colors) {
         if (colors.length > 0) {
@@ -208,4 +217,5 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
                 break;
         }
     }
+    //</editor-fold>
 }

@@ -124,5 +124,4 @@ public class FalsifyHeader extends View implements RefreshHeader {
     }
     //</editor-fold>
 
-
 }

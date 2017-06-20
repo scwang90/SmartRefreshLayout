@@ -115,13 +115,16 @@ SmartRefreshLayout.setDefaultRefreshFooterCreater(new DefaultRefreshFooterCreate
 #### 2.方法二 XML布局文件指定
 ```xml
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/smart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srlAccentColor="@android:color/white"
+        android:background="#444444"
         app:srlPrimaryColor="#444444"
-        android:background="#444444">
+        app:srlAccentColor="@android:color/white"
+        app:srlEnablePreviewInEditMode="true">
         <!--srlAccentColor srlPrimaryColor 将会改变 Header 和 Footer 的主题颜色-->
+        <!--srlEnablePreviewInEditMode 可以开启和关闭预览功能-->
         <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

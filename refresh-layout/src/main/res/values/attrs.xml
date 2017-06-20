@@ -29,6 +29,7 @@
         <attr name="srlEnableLoadmore" format="boolean"/>
         <attr name="srlEnableHeaderTranslationContent" format="boolean"/>
         <attr name="srlEnableFooterTranslationContent" format="boolean"/>
+        <attr name="srlEnablePreviewInEditMode" format="boolean"/>
         <attr name="srlDisableContentWhenRefresh" format="boolean"/>
         <attr name="srlDisableContentWhenLoading" format="boolean"/>
     </declare-styleable>
