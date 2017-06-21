@@ -11,6 +11,8 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.PagerAdapterWrapper;
 import android.support.v4.view.ScrollingView;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +21,7 @@ import android.widget.AbsListView;
 import android.widget.ScrollView;
 
 import com.scwang.smartrefresh.layout.api.RefreshContent;
+import com.scwang.smartrefresh.layout.api.RefreshKernel;
 
 import java.util.Collections;
 import java.util.Queue;
@@ -34,6 +37,7 @@ public class RefreshContentWrapper implements RefreshContent {
     private View mContentView;
     private View mScrollableView;
     private MotionEvent mMotionEvent;
+    private boolean mEnableAutoLoadmore = false;
 
     public RefreshContentWrapper(View view) {
         this.mContentView = view;
@@ -275,6 +279,50 @@ public class RefreshContentWrapper implements RefreshContent {
     @Override
     public void onActionUpOrCancel(MotionEvent e) {
         mMotionEvent = null;
+    }
+
+    @Override
+    public void setEnableAutoLoadmore(boolean enable, RefreshKernel kernel) {
+        mEnableAutoLoadmore = enable;
+        if (mScrollableView != null && enable) {
+            setUpAutoLoadmore(mScrollableView, kernel);
+        }
+    }
+
+    private void setUpAutoLoadmore(View scrollableView, RefreshKernel kernel) {
+        if (scrollableView instanceof AbsListView) {
+            AbsListView absListView = ((AbsListView) scrollableView);
+            absListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(AbsListView view, int scrollState) {
+                }
+
+                @Override
+                public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                    if (absListView.getAdapter() != null && absListView.getLastVisiblePosition() == absListView.getAdapter().getCount() - 1) {
+                        kernel.getRefreshLayout().autoLoadmore(0);
+                    }
+                }
+            });
+        } else if (scrollableView instanceof RecyclerView) {
+            RecyclerView recyclerView = ((RecyclerView) scrollableView);
+            recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                    super.onScrollStateChanged(recyclerView, newState);
+                    RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
+                    if (manager instanceof LinearLayoutManager) {
+                        LinearLayoutManager linearManager = ((LinearLayoutManager) manager);
+                        if(newState == RecyclerView.SCROLL_STATE_IDLE){
+                            int lastVisiblePosition = linearManager.findLastVisibleItemPosition();
+                            if(lastVisiblePosition >= linearManager.getItemCount() - 1){
+                                kernel.getRefreshLayout().autoLoadmore(0);
+                            }
+                        }
+                    }
+                }
+            });
+        }
     }
 
     private class PagerPrimaryAdapter extends PagerAdapterWrapper {

@@ -92,6 +92,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     protected boolean mEnableHeaderTranslationContent = true;//是否启用内容视图拖动效果
     protected boolean mEnableFooterTranslationContent = true;//是否启用内容视图拖动效果
     protected boolean mEnablePreviewInEditMode = true;//是否在编辑模式下开启预览功能
+    protected boolean mEnableAutoLoadmore = false;//是否在列表滚动到底部时自动加载更多
     protected boolean mLoadmoreFinished = false;//数据是否全部加载完成，如果完成就不能在触发加载事件
     //</editor-fold>
 
@@ -330,6 +331,8 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                 mRefreshContent.getView().setLayoutParams(new LayoutParams(MATCH_PARENT, MATCH_PARENT));
             }
         }
+        mRefreshContent.setEnableAutoLoadmore(mEnableAutoLoadmore, mKernel);
+
         if (mRefreshHeader == null) {
             mRefreshHeader = mHeaderCreater.createRefreshHeader(getContext(), this);
             if (!(mRefreshHeader.getView().getLayoutParams() instanceof MarginLayoutParams)) {
@@ -1182,10 +1185,23 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     }
 
     /**
+     * 设置下拉最大高度和Header高度的比率（将会影响可以上啦的最大高度）
+     */
+    @Override
+    public SmartRefreshLayout setExtendHeaderRate(float rate) {
+        this.mHeaderExtendRate = rate;
+        this.mExtendHeaderHeight = (int) (mHeaderHeight * (mHeaderExtendRate - 1));
+        if (mRefreshHeader != null) {
+            mRefreshHeader.onSizeDefined(mKernel, mHeaderHeight, mExtendHeaderHeight);
+        }
+        return this;
+    }
+
+    /**
      * 设置上啦最大高度和Footer高度的比率（将会影响可以上啦的最大高度）
      */
     @Override
-    public SmartRefreshLayout setFooterExtendRate(float rate) {
+    public SmartRefreshLayout setExtendFooterRate(float rate) {
         this.mFooterExtendRate = rate;
         this.mExtendFooterHeight = (int) (mFooterHeight * (mFooterExtendRate - 1));
         if (mRefreshFooter != null) {
@@ -1267,6 +1283,15 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     }
 
     /**
+     * 设置是否监听列表在滚动到底部时触发加载事件
+     */
+    @Override
+    public SmartRefreshLayout setEnableAutoLoadmore(boolean enable) {
+        this.mEnableAutoLoadmore = enable;
+        return this;
+    }
+
+    /**
      * 设置底部上啦组件的实现
      */
     @Override
@@ -1310,6 +1335,14 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     @Override
     public RefreshHeader getRefreshHeader() {
         return mRefreshHeader;
+    }
+
+    /**
+     * 获取状态
+     */
+    @Override
+    public RefreshState getState() {
+        return mState;
     }
 
     /**

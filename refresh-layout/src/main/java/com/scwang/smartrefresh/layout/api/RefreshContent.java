@@ -24,4 +24,6 @@ public interface RefreshContent {
 
     void onActionDown(MotionEvent e);
     void onActionUpOrCancel(MotionEvent e);
+
+    void setEnableAutoLoadmore(boolean enable, RefreshKernel kernel);
 }

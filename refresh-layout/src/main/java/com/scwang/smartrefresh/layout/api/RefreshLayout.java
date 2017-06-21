@@ -3,6 +3,7 @@ package com.scwang.smartrefresh.layout.api;
 import android.support.annotation.Nullable;
 import android.view.animation.Interpolator;
 
+import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnMultiPurposeListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -23,7 +24,9 @@ public interface RefreshLayout {
 
     RefreshLayout setHeaderHeight(int heightPx);
 
-    RefreshLayout setFooterExtendRate(float rate);
+    RefreshLayout setExtendFooterRate(float rate);
+
+    RefreshLayout setExtendHeaderRate(float rate);
 
     RefreshLayout setReboundInterpolator(Interpolator interpolator);
 
@@ -40,6 +43,8 @@ public interface RefreshLayout {
     RefreshLayout setDisableContentWhenRefresh(boolean disable);
 
     RefreshLayout setDisableContentWhenLoading(boolean disable);
+
+    RefreshLayout setEnableAutoLoadmore(boolean enable);
 
     RefreshLayout setRefreshFooter(RefreshFooter bottom);
 
@@ -74,6 +79,8 @@ public interface RefreshLayout {
 
     @Nullable
     RefreshHeader getRefreshHeader();
+
+    RefreshState getState();
 
     boolean isRefreshing();
 
