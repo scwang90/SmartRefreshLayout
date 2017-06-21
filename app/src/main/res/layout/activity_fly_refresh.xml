@@ -53,11 +53,12 @@
         app:srlExtendHeaderRate="1.5"
         app:srlHeaderHeight="100dp"
         app:srlReboundDuration="200"
+        app:srlEnablePreviewInEditMode="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
         <com.scwang.smartrefresh.header.FlyRefreshHeader
             android:id="@+id/flyrefresh"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler"
             android:layout_width="match_parent"
