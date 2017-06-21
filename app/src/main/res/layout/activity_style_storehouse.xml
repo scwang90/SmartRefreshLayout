@@ -16,6 +16,9 @@
         android:id="@+id/smart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#333"
+        app:srlPrimaryColor="#333"
+        app:srlAccentColor="#fff"
         app:srlEnableLoadmore="false"
         app:srlEnableHeaderTranslationContent="true">
         <com.scwang.smartrefresh.header.StoreHouseHeader
@@ -29,6 +32,7 @@
             android:id="@+id/recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="#fff"
             tools:listitem="@android:layout/simple_list_item_2"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 

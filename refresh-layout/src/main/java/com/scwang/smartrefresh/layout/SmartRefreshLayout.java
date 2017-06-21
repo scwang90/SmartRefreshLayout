@@ -58,6 +58,7 @@ import static android.view.View.MeasureSpec.makeMeasureSpec;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static com.scwang.smartrefresh.layout.util.DensityUtil.dp2px;
+import static java.lang.System.currentTimeMillis;
 
 /**
  * 智能刷新布局
@@ -162,6 +163,9 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
 
     protected static DefaultRefreshFooterCreater mFooterCreater = (context, l) -> new BallPulseFooter(context);
     protected static DefaultRefreshHeaderCreater mHeaderCreater = (context, l) -> new BezierRadarHeader(context);
+
+    protected long mLastLoadingTime = 0;
+    protected long mLastRefreshingTime = 0;
 
     //</editor-fold>
 
@@ -622,7 +626,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                 final float spinner = dy + mTouchY - mInitialMotionY;
                 if (((mState == RefreshState.PullDownToRefresh || mState == RefreshState.ReleaseToRefresh) && spinner < 0)
                     ||((mState == RefreshState.PullToUpLoad || mState == RefreshState.ReleaseToLoad) && spinner > 0)) {
-                    long time = System.currentTimeMillis();
+                    long time = currentTimeMillis();
                     if (mFalsifyEvent == null) {
                         mFalsifyEvent = MotionEvent.obtain(time, time, MotionEvent.ACTION_DOWN, mTouchX + dx, mInitialMotionY, 0);
                         super.dispatchTouchEvent(mFalsifyEvent);
@@ -650,7 +654,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
 
                 if (mFalsifyEvent != null) {
                     mFalsifyEvent = null;
-                    long time = System.currentTimeMillis();
+                    long time = currentTimeMillis();
                     MotionEvent ec = MotionEvent.obtain(time, time, MotionEvent.ACTION_CANCEL, mTouchX, y, 0);
                     super.dispatchTouchEvent(ec);
                 }
@@ -668,11 +672,11 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         // scrolling, ignore this request so that the vertical scroll event
         // isn't stolen
         View target = mRefreshContent.getScrollableView();
-        if ((android.os.Build.VERSION.SDK_INT < 21 && target instanceof AbsListView)
-                || (target != null && !ViewCompat.isNestedScrollingEnabled(target))) {
+        if ((android.os.Build.VERSION.SDK_INT >= 21 || !(target instanceof AbsListView))
+                && (target == null || ViewCompat.isNestedScrollingEnabled(target))) {
+                    super.requestDisallowInterceptTouchEvent(b);
+                //} else {
             // Nope.
-        } else {
-            super.requestDisallowInterceptTouchEvent(b);
         }
     }
 
@@ -698,13 +702,14 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         notifyStateChanged(RefreshState.PullToUpLoad);
     }
 
-    protected void setStateReleaseLoad() {
+    protected void setStateReleaseToLoad() {
         notifyStateChanged(RefreshState.ReleaseToLoad);
     }
 
-    protected void setStateReleaseRefresh() {
+    protected void setStateReleaseToRefresh() {
         notifyStateChanged(RefreshState.ReleaseToRefresh);
     }
+
     protected void setStatePullDownToRefresh() {
         notifyStateChanged(RefreshState.PullDownToRefresh);
     }
@@ -720,6 +725,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     }
 
     protected void setStateLoding() {
+        mLastLoadingTime = currentTimeMillis();
         notifyStateChanged(RefreshState.Loading);
         animSpinner(-mFooterHeight);
         if (mLoadmoreListener != null) {
@@ -735,6 +741,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     }
 
     protected void setStateRefresing() {
+        mLastRefreshingTime = currentTimeMillis();
         notifyStateChanged(RefreshState.Refreshing);
         animSpinner(mHeaderHeight);
         if (mRefreshListener != null) {
@@ -762,6 +769,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                 }
             } else if (mState == RefreshState.Loading && mRefreshFooter != null) {
                 notifyStateChanged(RefreshState.LoadingFinish);
+                mRefreshContent.onLoadingFinish(mFooterHeight);
                 mRefreshFooter.onFinish(this);
                 if (mOnMultiPurposeListener != null) {
                     mOnMultiPurposeListener.onFooterFinish(mRefreshFooter);
@@ -839,11 +847,11 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         this.mSpinner = spinner;
         if (!isAnimator) {
             if (mState == RefreshState.PullDownToRefresh && Math.abs(mSpinner) > mHeaderHeight) {
-                setStateReleaseRefresh();
+                setStateReleaseToRefresh();
             } else if (mState == RefreshState.ReleaseToRefresh && Math.abs(mSpinner) < mHeaderHeight) {
                 setStatePullDownToRefresh();
             } else if (mState == RefreshState.PullToUpLoad && Math.abs(mSpinner) > mFooterHeight) {
-                setStateReleaseLoad();
+                setStateReleaseToLoad();
             } else if (mState == RefreshState.ReleaseToLoad && Math.abs(mSpinner) < mFooterHeight) {
                 setStatePullUpToLoad();
             }
@@ -1423,14 +1431,16 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
      */
     @Override
     public SmartRefreshLayout finishRefresh(){
-        return finishRefresh(1000);
+        long passTime =  System.currentTimeMillis() - mLastRefreshingTime;
+        return finishRefresh(Math.max(0, 1000 - (int)passTime));//保证刷新动画有1000毫秒的时间
     }
     /**
      * 完成加载
      */
     @Override
     public SmartRefreshLayout finishLoadmore(){
-        return finishLoadmore(1000);
+        long passTime =  System.currentTimeMillis() - mLastLoadingTime;
+        return finishLoadmore(Math.max(0, 1000 - (int)passTime));//保证加载动画有1000毫秒的时间
     }
     /**
      * 完成刷新
@@ -1486,9 +1496,16 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
      */
     @Override
     public boolean autoRefresh(int delayed) {
+        return autoRefresh(delayed, 1.5f);
+    }
+    /**
+     * 自动刷新
+     */
+    @Override
+    public boolean autoRefresh(int delayed, float dragrate) {
         if (mState == RefreshState.None && mEnableRefresh) {
             postDelayed(() -> {
-                ValueAnimator animator = ValueAnimator.ofInt(mSpinner, mHeaderHeight + mExtendHeaderHeight / 2);
+                ValueAnimator animator = ValueAnimator.ofInt(mSpinner, (int) (mHeaderHeight * dragrate));
                 animator.setDuration(mReboundDuration);
                 animator.setInterpolator(new DecelerateInterpolator());
                 animator.addUpdateListener(animation -> moveSpinner((int) animation.getAnimatedValue(), false));
@@ -1499,6 +1516,9 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                     }
                     @Override
                     public void onAnimationEnd(Animator animation) {
+                        if (mState != RefreshState.ReleaseToRefresh) {
+                            setStateReleaseToRefresh();
+                        }
                         overSpinner();
                     }
                 });
@@ -1521,9 +1541,16 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
      */
     @Override
     public boolean autoLoadmore(int delayed) {
+        return autoLoadmore(delayed, 1.5f);
+    }
+    /**
+     * 自动加载
+     */
+    @Override
+    public boolean autoLoadmore(int delayed, float dragrate) {
         if (mState == RefreshState.None && mEnableLoadmore && !mLoadmoreFinished) {
             postDelayed(() -> {
-                ValueAnimator animator = ValueAnimator.ofInt(mSpinner, -mHeaderHeight - mExtendFooterHeight / 2);
+                ValueAnimator animator = ValueAnimator.ofInt(mSpinner, -(int)(mFooterHeight * dragrate));
                 animator.setDuration(mReboundDuration);
                 animator.setInterpolator(new DecelerateInterpolator());
                 animator.addUpdateListener(animation -> moveSpinner((int) animation.getAnimatedValue(), false));
@@ -1532,8 +1559,12 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                     public void onAnimationStart(Animator animation) {
                         setStatePullUpToLoad();
                     }
+
                     @Override
                     public void onAnimationEnd(Animator animation) {
+                        if (mState != RefreshState.ReleaseToLoad) {
+                            setStateReleaseToLoad();
+                        }
                         overSpinner();
                     }
                 });
@@ -1608,12 +1639,12 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
             SmartRefreshLayout.this.setStatePullUpToLoad();
             return this;
         }
-        public RefreshKernel setStateReleaseLoad() {
-            SmartRefreshLayout.this.setStateReleaseLoad();
+        public RefreshKernel setStateReleaseToLoad() {
+            SmartRefreshLayout.this.setStateReleaseToLoad();
             return this;
         }
-        public RefreshKernel setStateReleaseRefresh() {
-            SmartRefreshLayout.this.setStateReleaseRefresh();
+        public RefreshKernel setStateReleaseToRefresh() {
+            SmartRefreshLayout.this.setStateReleaseToRefresh();
             return this;
         }
         public RefreshKernel setStatePullDownToRefresh() {

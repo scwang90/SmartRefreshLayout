@@ -189,8 +189,8 @@ refreshLayout.setRefreshFooter(new BallPulseFooter(this).setSpinnerStyle(Spinner
 |setPrimaryColors|colors|主题\强调颜色|
 |setPrimaryColorsId|colors|主题\强调颜色资源Id|
 |setReboundDuration|integer|释放后回弹动画时长|
-|setHeaderHeight|dimension|Header的标准高度（px|dp 两个版本）|
-|setFooterHeight|dimension|Footer的标准高度（px|dp 两个版本）|
+|setHeaderHeight|dimension|Header的标准高度（px/dp 两个版本）|
+|setFooterHeight|dimension|Footer的标准高度（px/dp 两个版本）|
 |setDragRate|float|显示拖动高度/真实拖动高度（默认0.5，阻尼效果）|
 |setExtendHeaderRate|float|Header最大拖动高度/Header标准高度（默认2，要求>=1）|
 |setExtendFooterRate|float|Footer最大拖动高度/Footer标准高度（默认2，要求>=1）|

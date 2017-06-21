@@ -23,6 +23,7 @@ import android.widget.ScrollView;
 import com.scwang.smartrefresh.layout.api.RefreshContent;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 
+import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -289,6 +290,27 @@ public class RefreshContentWrapper implements RefreshContent {
         }
     }
 
+    @Override
+    public void onLoadingFinish(int footerHeight) {
+        if (mScrollableView != null) {
+            scrollAViewBy(mScrollableView, footerHeight);
+        }
+    }
+
+    private static void scrollAViewBy(View view, int height) {
+        if (view instanceof RecyclerView) ((RecyclerView) view).smoothScrollBy(0, height);
+        else if (view instanceof ScrollView) ((ScrollView) view).smoothScrollBy(0, height);
+        else if (view instanceof AbsListView) ((AbsListView) view).smoothScrollBy(height, 150);
+        else {
+            try {
+                Method method = view.getClass().getDeclaredMethod("smoothScrollBy", Integer.class, Integer.class);
+                method.invoke(view, 0, height);
+            } catch (Exception e) {
+                view.scrollBy(0, height);
+            }
+        }
+    }
+
     private void setUpAutoLoadmore(View scrollableView, RefreshKernel kernel) {
         if (scrollableView instanceof AbsListView) {
             AbsListView absListView = ((AbsListView) scrollableView);
@@ -300,7 +322,7 @@ public class RefreshContentWrapper implements RefreshContent {
                 @Override
                 public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                     if (absListView.getAdapter() != null && absListView.getLastVisiblePosition() == absListView.getAdapter().getCount() - 1) {
-                        kernel.getRefreshLayout().autoLoadmore(0);
+                        kernel.getRefreshLayout().autoLoadmore(0,1);
                     }
                 }
             });
@@ -316,7 +338,7 @@ public class RefreshContentWrapper implements RefreshContent {
                         if(newState == RecyclerView.SCROLL_STATE_IDLE){
                             int lastVisiblePosition = linearManager.findLastVisibleItemPosition();
                             if(lastVisiblePosition >= linearManager.getItemCount() - 1){
-                                kernel.getRefreshLayout().autoLoadmore(0);
+                                kernel.getRefreshLayout().autoLoadmore(0,1);
                             }
                         }
                     }

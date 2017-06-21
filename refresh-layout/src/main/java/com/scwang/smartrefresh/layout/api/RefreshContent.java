@@ -26,4 +26,6 @@ public interface RefreshContent {
     void onActionUpOrCancel(MotionEvent e);
 
     void setEnableAutoLoadmore(boolean enable, RefreshKernel kernel);
+
+    void onLoadingFinish(int footerHeight);
 }

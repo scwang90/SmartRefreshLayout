@@ -31,7 +31,7 @@ public class StoreHouseHeader extends View implements RefreshHeader {
     private int mLineWidth = -1;
     private float mScale = 1;
     private int mDropHeight = -1;
-    private float mInternalAnimationFactor = 0.7f;
+    private static final float mInternalAnimationFactor = 0.7f;
     private int mHorizontalRandomness = -1;
 
     private float mProgress = 0;
@@ -40,18 +40,19 @@ public class StoreHouseHeader extends View implements RefreshHeader {
     private int mDrawZoneHeight = 0;
     private int mOffsetX = 0;
     private int mOffsetY = 0;
-    private float mBarDarkAlpha = 0.4f;
-    private float mFromAlpha = 1.0f;
-    private float mToAlpha = 0.4f;
+    private static final float mBarDarkAlpha = 0.4f;
+    private static final float mFromAlpha = 1.0f;
+    private static final float mToAlpha = 0.4f;
 
     private int mLoadingAniDuration = 1000;
     private int mLoadingAniSegDuration = 1000;
-    private int mLoadingAniItemDuration = 400;
+    private static final int mLoadingAniItemDuration = 400;
 
     private Transformation mTransformation = new Transformation();
     private boolean mIsInLoading = false;
     private AniController mAniController = new AniController();
     private int mTextColor = Color.WHITE;
+    private Matrix mMatrix = new Matrix();
     //</editor-fold>
 
     //<editor-fold desc="View">
@@ -143,12 +144,12 @@ public class StoreHouseHeader extends View implements RefreshHeader {
                     }
                     offsetX += storeHouseBarItem.translationX * (1 - realProgress);
                     offsetY += -mDropHeight * (1 - realProgress);
-                    Matrix matrix = new Matrix();
-                    matrix.postRotate(360 * realProgress);
-                    matrix.postScale(realProgress, realProgress);
-                    matrix.postTranslate(offsetX, offsetY);
+                    mMatrix.reset();
+                    mMatrix.postRotate(360 * realProgress);
+                    mMatrix.postScale(realProgress, realProgress);
+                    mMatrix.postTranslate(offsetX, offsetY);
                     storeHouseBarItem.setAlpha(mBarDarkAlpha * realProgress);
-                    canvas.concat(matrix);
+                    canvas.concat(mMatrix);
                 }
             }
             storeHouseBarItem.draw(canvas);

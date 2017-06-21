@@ -8,6 +8,7 @@ import android.util.AttributeSet;
 import android.util.SparseArray;
 
 import com.scwang.smartrefresh.header.fungame.FunGameView;
+import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -82,7 +83,7 @@ public class FunGameBattleCityHeader extends FunGameView {
     /**
      * 敌方坦克速度、子弹速度
      */
-    private int enemySpeed = 2, bulletSpeed = 7;
+    private int enemySpeed = 1, bulletSpeed = 4;
 
     /**
      * 当前前一辆敌方坦克和后一辆已经存在的间距值
@@ -141,10 +142,10 @@ public class FunGameBattleCityHeader extends FunGameView {
 
     @Override
     protected void drawGame(Canvas canvas, int width, int height) {
-        drawSelfTank(canvas,width,height);
+        drawSelfTank(canvas,width);
         if (status == STATUS_GAME_PLAY || status == STATUS_GAME_FINISHED) {
-            drawEnemyTank(canvas,width,height);
-            makeBulletPath(canvas,width,height);
+            drawEnemyTank(canvas,width);
+            makeBulletPath(canvas,width);
         }
         if (isInEditMode()) {
             drawTank(canvas, new RectF(controllerSize, 0, controllerSize * 2, controllerSize));
@@ -158,8 +159,8 @@ public class FunGameBattleCityHeader extends FunGameView {
         status = FunGameView.STATUS_GAME_PREPAR;
         controllerPosition = DIVIDING_LINE_SIZE;
 
-        enemySpeed = 2;
-        bulletSpeed = 7;
+        enemySpeed = DensityUtil.dp2px(1);
+        bulletSpeed = DensityUtil.dp2px(4);
 
         levelNum = DEFAULT_TANK_MAGIC_TOTAL_NUM;
         wipeOutNum = 0;
@@ -193,7 +194,7 @@ public class FunGameBattleCityHeader extends FunGameView {
      * 绘制子弹路径
      * @param canvas 默认画布
      */
-    private void makeBulletPath(Canvas canvas, int width, int height) {
+    private void makeBulletPath(Canvas canvas, int width) {
         mPaint.setColor(mModelColor);
         offsetMBulletX += bulletSpeed;
         if (offsetMBulletX / bulletSpace == 1) {
@@ -263,8 +264,8 @@ public class FunGameBattleCityHeader extends FunGameView {
      */
     private void upLevel() {
         levelNum += DEFAULT_TANK_MAGIC_TOTAL_NUM;
-        enemySpeed++;
-        bulletSpeed += 2;
+        enemySpeed += DensityUtil.dp2px(1);
+        bulletSpeed += DensityUtil.dp2px(1);
         wipeOutNum = 0;
 
         if (enemyTankSpace > 12)
@@ -304,7 +305,7 @@ public class FunGameBattleCityHeader extends FunGameView {
      * 绘制我方坦克
      * @param canvas 默认画布
      */
-    private void drawSelfTank(Canvas canvas, int width, int height) {
+    private void drawSelfTank(Canvas canvas, int width) {
         mPaint.setColor(rModelColor);
         boolean isAboveCrash = checkTankCrash(getTrackIndex((int) controllerPosition),
                 width - controllerSize,
@@ -331,7 +332,7 @@ public class FunGameBattleCityHeader extends FunGameView {
      * 绘制三条轨道上的敌方坦克
      * @param canvas 默认画布
      */
-    private void drawEnemyTank(Canvas canvas, int width, int height) {
+    private void drawEnemyTank(Canvas canvas, int width) {
         mPaint.setColor(lModelColor);
         offsetETankX += enemySpeed;
         if (offsetETankX / enemyTankSpace == 1 || once) {

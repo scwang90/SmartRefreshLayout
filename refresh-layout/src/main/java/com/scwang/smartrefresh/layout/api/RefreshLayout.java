@@ -90,7 +90,11 @@ public interface RefreshLayout {
 
     boolean autoRefresh(int delayed);
 
+    boolean autoRefresh(int delayed, float dragrate);
+
     boolean autoLoadmore();
 
     boolean autoLoadmore(int delayed);
+
+    boolean autoLoadmore(int delayed, float dragrate);
 }

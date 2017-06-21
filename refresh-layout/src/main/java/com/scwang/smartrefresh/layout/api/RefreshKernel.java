@@ -21,8 +21,8 @@ public interface RefreshKernel {
 
     //<editor-fold desc="状态更改 state changes">
     RefreshKernel setStatePullUpToLoad();
-    RefreshKernel setStateReleaseLoad() ;
-    RefreshKernel setStateReleaseRefresh() ;
+    RefreshKernel setStateReleaseToLoad() ;
+    RefreshKernel setStateReleaseToRefresh() ;
     RefreshKernel setStatePullDownToRefresh() ;
     RefreshKernel setStatePullDownCanceled() ;
     RefreshKernel setStatePullUpCanceled() ;
