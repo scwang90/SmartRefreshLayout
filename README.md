@@ -163,25 +163,7 @@ refreshLayout.setRefreshFooter(new BallPulseFooter(this).setSpinnerStyle(Spinner
 
 ## 属性 Attributes
 
-<!-- |名称-name|代码-code|格式-format|描述-description| -->
-<!-- |:---:|:---:|:---:|:---:| -->
-<!-- |srlPrimaryColor|setPrimaryColor|color|主题颜色| -->
-<!-- |srlAccentColor|setAccentColor|color|强调颜色| -->
-<!-- |srlReboundDuration|setReboundDuration|integer|释放后回弹动画时长| -->
-<!-- |srlHeaderHeight|setHeaderHeight|dimension|Header的标准高度| -->
-<!-- |srlFooterHeight|setFooterHeight|dimension|Footer的标准高度| -->
-<!-- |srlDragRate|setDragRate|float|显示拖动高度/真实拖动高度（默认0.5，阻尼效果）| -->
-<!-- |srlExtendHeaderRate|setExtendHeaderRate|float|Header最大拖动高度/Header标准高度（默认2，要求>=1）| -->
-<!-- |srlExtendFooterRate|setExtendFooterRate|float|Footer最大拖动高度/Footer标准高度（默认2，要求>=1）| -->
-<!-- |srlEnableRefresh|setEnableRefresh|boolean|是否开启下拉刷新功能（默认true）| -->
-<!-- |srlEnableLoadmore|setEnableLoadmore|boolean|是否开启加上拉加载功能（默认true）| -->
-<!-- |srlEnableHeaderTranslationContent|setEnableHeaderTranslationContent|boolean|拖动Header的时候是否同时拖动内容（默认true）| -->
-<!-- |srlEnableFooterTranslationContent|setEnableFooterTranslationContent|boolean|拖动Footer的时候是否同时拖动内容（默认true）| -->
-<!-- |srlEnablePreviewInEditMode|setEnablePreviewInEditMode|boolean|是否在编辑模式（Android Studio）时显示预览效果（默认true）| -->
-<!-- |srlDisableContentWhenRefresh|setDisableContentWhenRefresh|boolean|是否在刷新的时候禁止内容的一切手势操作（默认false）| -->
-<!-- |srlDisableContentWhenLoading|setDisableContentWhenLoading|boolean|是否在加载的时候禁止内容的一切手势操作（默认false）| -->
-
-|名称-name|代码-code|格式-format|描述-description|
+|名称-name|格式-format|描述-description|
 |:---:|:---:|:---:|
 |srlPrimaryColor|color|主题颜色|
 |srlAccentColor|color|强调颜色|
@@ -198,3 +180,23 @@ refreshLayout.setRefreshFooter(new BallPulseFooter(this).setSpinnerStyle(Spinner
 |srlEnablePreviewInEditMode|boolean|是否在编辑模式（Android Studio）时显示预览效果（默认true）|
 |srlDisableContentWhenRefresh|boolean|是否在刷新的时候禁止内容的一切手势操作（默认false）|
 |srlDisableContentWhenLoading|boolean|是否在加载的时候禁止内容的一切手势操作（默认false）|
+
+## 方法 Method
+
+|名称-name|格式-format|描述-description|
+|:---:|:---:|:---:|
+|setPrimaryColor|color|主题颜色|
+|setAccentColor|color|强调颜色|
+|setReboundDuration|integer|释放后回弹动画时长|
+|setHeaderHeight|dimension|Header的标准高度|
+|setFooterHeight|dimension|Footer的标准高度|
+|setDragRate|float|显示拖动高度/真实拖动高度（默认0.5，阻尼效果）|
+|setExtendHeaderRate|float|Header最大拖动高度/Header标准高度（默认2，要求>=1）|
+|setExtendFooterRate|float|Footer最大拖动高度/Footer标准高度（默认2，要求>=1）|
+|setEnableRefresh|boolean|是否开启下拉刷新功能（默认true）|
+|setEnableLoadmore|boolean|是否开启加上拉加载功能（默认true）|
+|setEnableHeaderTranslationContent|boolean|拖动Header的时候是否同时拖动内容（默认true）|
+|setEnableFooterTranslationContent|boolean|拖动Footer的时候是否同时拖动内容（默认true）|
+|setEnablePreviewInEditMode|boolean|是否在编辑模式（Android Studio）时显示预览效果（默认true）|
+|setDisableContentWhenRefresh|boolean|是否在刷新的时候禁止内容的一切手势操作（默认false）|
+|setDisableContentWhenLoading|boolean|是否在加载的时候禁止内容的一切手势操作（默认false）|
