@@ -64,7 +64,7 @@ public class FalsifyHeader extends View implements RefreshHeader {
             canvas.drawRect(d, d, getWidth() - d, getBottom() - d, paint);
 
             TextView textView = new TextView(getContext());
-            textView.setText("FalsifyHeader 虚假区域\n运行时代表下拉Header的高度【" + DensityUtil.px2dp(getHeight()) + "dp】\n而不会显示任何东西");
+            textView.setText(getClass().getSimpleName()+" 虚假区域\n运行时代表下拉Header的高度【" + DensityUtil.px2dp(getHeight()) + "dp】\n而不会显示任何东西");
             textView.setTextColor(0x44ffffff);
             textView.setGravity(Gravity.CENTER);
             textView.measure(makeMeasureSpec(getWidth(), EXACTLY), makeMeasureSpec(getHeight(), EXACTLY));

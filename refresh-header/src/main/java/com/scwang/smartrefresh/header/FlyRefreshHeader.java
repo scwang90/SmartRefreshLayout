@@ -60,7 +60,6 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader, Si
     //</editor-fold>
 
     //<editor-fold desc="RefreshHeader">
-
     @Override
     public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
         if (offset < 0) {
