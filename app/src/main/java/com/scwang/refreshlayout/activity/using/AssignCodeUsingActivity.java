@@ -19,6 +19,7 @@ import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 public class AssignCodeUsingActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
+    private static boolean isFirstEnter = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,20 +46,23 @@ public class AssignCodeUsingActivity extends AppCompatActivity {
          */
         //设置主题颜色
         refreshLayout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);
-        //触发上啦加载
-        refreshLayout.autoLoadmore();
-        //通过多功能监听接口实现 在第一次加载完成之后 自动刷新
-        refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener(){
-            @Override
-            public void onStateChanged(RefreshState oldState, RefreshState state) {
-                if (oldState == RefreshState.LoadingFinish
-                        && state == RefreshState.None) {
-                    refreshLayout.autoRefresh();
-                    refreshLayout.setOnMultiPurposeListener(null);
-                }
-            }
-        });
 
+        if (isFirstEnter) {
+            isFirstEnter = false;
+            //触发上啦加载
+            refreshLayout.autoLoadmore();
+            //通过多功能监听接口实现 在第一次加载完成之后 自动刷新
+            refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener(){
+                @Override
+                public void onStateChanged(RefreshState oldState, RefreshState state) {
+                    if (oldState == RefreshState.LoadingFinish
+                            && state == RefreshState.None) {
+                        refreshLayout.autoRefresh();
+                        refreshLayout.setOnMultiPurposeListener(null);
+                    }
+                }
+            });
+        }
     }
 
 }

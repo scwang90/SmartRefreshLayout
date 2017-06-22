@@ -33,10 +33,8 @@ import com.scwang.refreshlayout.R;
 import com.scwang.smartrefresh.header.FlyRefreshHeader;
 import com.scwang.smartrefresh.header.flyrefresh.FlyView;
 import com.scwang.smartrefresh.header.flyrefresh.MountanScenceView;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
@@ -52,7 +50,7 @@ import jp.wasabeef.recyclerview.animators.BaseItemAnimator;
 public class FlyRefreshStyleActivity extends AppCompatActivity {
 
     private RecyclerView mListView;
-    private RefreshLayout mFlylayout;
+    private RefreshLayout mRefreshlayout;
 
     private ItemAdapter mAdapter;
 
@@ -65,6 +63,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
     private CollapsingToolbarLayout mToolbarLayout;
     private FloatingActionButton mActionButton;
     private View.OnClickListener mThemeListener;
+    private static boolean isFirstEnter = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,11 +86,10 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
         mScenceView = (MountanScenceView) findViewById(R.id.mountan);
         mFlyRefreshHeader = (FlyRefreshHeader)findViewById(R.id.flyrefresh);
         mFlyRefreshHeader.setUp(mScenceView, mFlyView);//绑定场景和纸飞机
-        mFlylayout = (RefreshLayout) findViewById(R.id.smart);
-        mFlylayout.setReboundInterpolator(new ElasticOutInterpolator());//设置回弹插值器，会带有弹簧震动效果
-        mFlylayout.setReboundDuration(800);//设置回弹动画时长
-        mFlylayout.autoRefresh();//触发自动刷新
-        mFlylayout.setOnRefreshListener(new OnRefreshListener() {
+        mRefreshlayout = (RefreshLayout) findViewById(R.id.smart);
+        mRefreshlayout.setReboundInterpolator(new ElasticOutInterpolator());//设置回弹插值器，会带有弹簧震动效果
+        mRefreshlayout.setReboundDuration(800);//设置回弹动画时长
+        mRefreshlayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 View child = mListView.getChildAt(0);
@@ -115,7 +113,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
         });
         //设置 让 AppBarLayout 和 RefreshLayout 的滚动同步 并不保持 mToolbar 位置不变
         final AppBarLayout appBar = (AppBarLayout) findViewById(R.id.app_bar);
-        mFlylayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
+        mRefreshlayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
             @Override
             public void onHeaderPulling(RefreshHeader header, float percent, int offset, int bottomHeight, int extendHeight) {
                 appBar.setTranslationY(offset);
@@ -130,6 +128,11 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
         /************************************************************
          * 关键代码-结束
          ************************************************************/
+
+        if (isFirstEnter) {
+            isFirstEnter = false;
+            mRefreshlayout.autoRefresh();//第一次进入触发自动刷新，演示效果
+        }
 
         /**
          * 初始化列表数据
@@ -150,7 +153,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 updateTheme();
-                mFlylayout.autoRefresh();
+                mRefreshlayout.autoRefresh();
             }
         });
         /**
@@ -208,7 +211,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     int color = ContextCompat.getColor(getApplication(), ids[index % ids.length]);
-                    mFlylayout.setPrimaryColors(color);
+                    mRefreshlayout.setPrimaryColors(color);
                     mActionButton.setBackgroundColor(color);
                     mActionButton.setBackgroundTintList(ColorStateList.valueOf(color));
                     mToolbarLayout.setContentScrimColor(color);

@@ -48,6 +48,7 @@ public class PhoenixStyleActivity extends AppCompatActivity implements AdapterVi
     private RefreshLayout mRefreshLayout;
     private FloatingActionButton mActionButton;
     private CollapsingToolbarLayout mToolbarLayout;
+    private static boolean isFirstEnter = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +64,10 @@ public class PhoenixStyleActivity extends AppCompatActivity implements AdapterVi
         });
 
         mRefreshLayout = (RefreshLayout)findViewById(R.id.smart);
-        mRefreshLayout.autoRefresh();
+        if (isFirstEnter) {
+            isFirstEnter = false;
+            mRefreshLayout.autoRefresh();//第一次进入触发自动刷新，演示效果
+        }
 
         mAppBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
         mToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);

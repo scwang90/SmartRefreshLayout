@@ -46,6 +46,7 @@ public class MaterialStyleActivity extends AppCompatActivity implements AdapterV
     private Toolbar mToolbar;
     private RefreshLayout mRefreshLayout;
     private MaterialHeader mMaterialHeader;
+    private static boolean isFirstEnter = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,10 @@ public class MaterialStyleActivity extends AppCompatActivity implements AdapterV
         });
 
         mRefreshLayout = (RefreshLayout)findViewById(R.id.smart);
-        mRefreshLayout.autoRefresh();
+        if (isFirstEnter) {
+            isFirstEnter = false;
+            mRefreshLayout.autoRefresh();//第一次进入触发自动刷新，演示效果
+        }
 
         mMaterialHeader = (MaterialHeader)mRefreshLayout.getRefreshHeader();
 

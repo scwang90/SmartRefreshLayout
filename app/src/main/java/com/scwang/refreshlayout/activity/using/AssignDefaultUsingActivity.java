@@ -26,6 +26,7 @@ import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 public class AssignDefaultUsingActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
+    private static boolean isFirstEnter = true;
 
     /**
      * 关键代码，需要在布局生成之前设置，建议代码放在 Application.onCreate 中
@@ -72,19 +73,22 @@ public class AssignDefaultUsingActivity extends AppCompatActivity {
          * 关键代码在构造函数中
          */
         final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.smart);
-        //触发上啦加载
-        refreshLayout.autoLoadmore();
-        //通过多功能监听接口实现 在第一次加载完成之后 自动刷新
-        refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener(){
-            @Override
-            public void onStateChanged(RefreshState oldState, RefreshState state) {
-                if (oldState == RefreshState.LoadingFinish
-                        && state == RefreshState.None) {
-                    refreshLayout.autoRefresh();
-                    refreshLayout.setOnMultiPurposeListener(null);
+        if (isFirstEnter) {
+            isFirstEnter = false;
+            //触发上啦加载
+            refreshLayout.autoLoadmore();
+            //通过多功能监听接口实现 在第一次加载完成之后 自动刷新
+            refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener(){
+                @Override
+                public void onStateChanged(RefreshState oldState, RefreshState state) {
+                    if (oldState == RefreshState.LoadingFinish
+                            && state == RefreshState.None) {
+                        refreshLayout.autoRefresh();
+                        refreshLayout.setOnMultiPurposeListener(null);
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
 }

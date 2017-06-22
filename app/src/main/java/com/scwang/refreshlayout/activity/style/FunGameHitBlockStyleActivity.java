@@ -16,7 +16,6 @@ import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.Arrays;
 
@@ -40,6 +39,7 @@ public class FunGameHitBlockStyleActivity extends AppCompatActivity implements A
 
     private Toolbar mToolbar;
     private RefreshLayout mRefreshLayout;
+    private static boolean isFirstEnter = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,13 +55,10 @@ public class FunGameHitBlockStyleActivity extends AppCompatActivity implements A
         });
 
         mRefreshLayout = (RefreshLayout)findViewById(R.id.smart);
-        mRefreshLayout.autoRefresh();
-        mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(RefreshLayout refreshlayout) {
-                refreshlayout.finishRefresh(4000);
-            }
-        });
+        if (isFirstEnter) {
+            isFirstEnter = false;
+            mRefreshLayout.autoRefresh();//第一次进入触发自动刷新，演示效果
+        }
 
         View view = findViewById(R.id.recycler);
         if (view instanceof RecyclerView) {

@@ -11,10 +11,8 @@ import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -29,6 +27,7 @@ public class BasicUsingActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
     private BaseRecyclerAdapter<Void> mAdapter;
+    private static boolean isFirstEnter = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +67,7 @@ public class BasicUsingActivity extends AppCompatActivity {
 
         final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.smart);
         refreshLayout.autoRefresh();//触发自动刷新（非必须）
-//        refreshLayout.setEnableAutoLoadmore(true);//开启自动加载功能（非必须）
+        refreshLayout.setEnableAutoLoadmore(true);//开启自动加载功能（非必须）
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(final RefreshLayout refreshlayout) {
@@ -98,12 +97,11 @@ public class BasicUsingActivity extends AppCompatActivity {
             }
         });
 
-        refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
-            @Override
-            public void onStateChanged(RefreshState oldState, RefreshState state) {
-                mToolbar.setTitle(state.name() + " - " + System.currentTimeMillis());
-            }
-        });
+        if (isFirstEnter) {
+            isFirstEnter = false;
+            //触发上啦加载
+            refreshLayout.autoRefresh();
+        }
 
     }
 

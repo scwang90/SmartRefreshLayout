@@ -39,6 +39,7 @@ public class FunGameBattleCityStyleActivity extends AppCompatActivity implements
 
     private Toolbar mToolbar;
     private RefreshLayout mRefreshLayout;
+    private static boolean isFirstEnter = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +55,10 @@ public class FunGameBattleCityStyleActivity extends AppCompatActivity implements
         });
 
         mRefreshLayout = (RefreshLayout)findViewById(R.id.smart);
-        mRefreshLayout.autoRefresh();
+        if (isFirstEnter) {
+            isFirstEnter = false;
+            mRefreshLayout.autoRefresh();//第一次进入触发自动刷新，演示效果
+        }
 
         View view = findViewById(R.id.recycler);
         if (view instanceof RecyclerView) {
