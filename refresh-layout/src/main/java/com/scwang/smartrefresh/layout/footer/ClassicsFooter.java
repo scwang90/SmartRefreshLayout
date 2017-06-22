@@ -80,7 +80,6 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
             mProgressView.setVisibility(GONE);
         }
 
-
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ClassicsFooter);
 
         mSpinnerStyle = SpinnerStyle.values()[ta.getInt(R.styleable.ClassicsFooter_srlClassicsSpinnerStyle, mSpinnerStyle.ordinal())];
