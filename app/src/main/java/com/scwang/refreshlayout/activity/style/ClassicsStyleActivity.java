@@ -104,8 +104,7 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
             mRefreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener(){
                 @Override
                 public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
-                    if (oldState == RefreshState.LoadingFinish
-                            && newState == RefreshState.None) {
+                    if (oldState == RefreshState.LoadingFinish && newState == RefreshState.None) {
                         mRefreshLayout.autoRefresh();
                         mRefreshLayout.setOnMultiPurposeListener(null);//保准只有第一次关联
                     }
@@ -120,7 +119,6 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
             case 背后固定:
                 mClassicsHeader.setSpinnerStyle(SpinnerStyle.FixedBehind);
                 mRefreshLayout.setPrimaryColors(0xff444444, 0xffffffff);
-                ((View)mRefreshLayout).setBackgroundColor(0xff444444);
                 /**
                  * 由于是后面才设置，需要手动更改视图的位置
                  * 如果在 onCreate 或者 xml 中设置好[SpinnerStyle] 就不用手动调整位置了
