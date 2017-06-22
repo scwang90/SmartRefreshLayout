@@ -685,16 +685,18 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     //<editor-fold desc="状态更改 state changes">
 
     protected void notifyStateChanged(RefreshState state) {
-        RefreshState oldState = mState;
-        mState = state;
-        if (mRefreshFooter != null) {
-            mRefreshFooter.onStateChanged(oldState, state);
-        }
-        if (mRefreshHeader != null) {
-            mRefreshHeader.onStateChanged(oldState, state);
-        }
-        if (mOnMultiPurposeListener != null) {
-            mOnMultiPurposeListener.onStateChanged(oldState, state);
+        final RefreshState oldState = mState;
+        if (oldState != state) {
+            mState = state;
+            if (mRefreshFooter != null) {
+                mRefreshFooter.onStateChanged(oldState, state);
+            }
+            if (mRefreshHeader != null) {
+                mRefreshHeader.onStateChanged(oldState, state);
+            }
+            if (mOnMultiPurposeListener != null) {
+                mOnMultiPurposeListener.onStateChanged(oldState, state);
+            }
         }
     }
 
@@ -853,7 +855,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                 setStateReleaseToLoad();
             } else if (mSpinner < 0) {
                 setStatePullUpToLoad();
-            } else {
+            } else if (mSpinner > 0) {
                 setStatePullDownToRefresh();
             }
         }
