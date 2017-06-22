@@ -10,6 +10,6 @@
 
     <color name="colorBackgroud">#FFFFFF</color>
     <color name="colorBackgroudDark">#f2f2f2</color>
-    <color name="colorDivison">#dedede</color>
+    <color name="colorDivison">#33aaaaaa</color>
 
 </resources>

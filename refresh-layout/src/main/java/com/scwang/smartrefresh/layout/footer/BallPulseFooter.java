@@ -124,8 +124,8 @@ public class BallPulseFooter extends ViewGroup implements RefreshFooter {
     @Override
     public void setPrimaryColors(int... colors) {
         if (colors.length > 1) {
-            setBackgroundColor(colors[0]);
-            mBallPulseView.setPrimaryColors(colors);
+            mBallPulseView.setNormalColor(colors[1]);
+            mBallPulseView.setAnimatingColor(colors[0]);
         } else if (colors.length > 0) {
             mBallPulseView.setNormalColor(ColorUtils.compositeColors(0x99ffffff,colors[0]));
             mBallPulseView.setAnimatingColor(colors[0]);

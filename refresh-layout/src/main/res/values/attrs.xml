@@ -53,7 +53,6 @@
 
     <declare-styleable name="ClassicsFooter">
         <attr name="srlClassicsSpinnerStyle"/>
-        <attr name="srlPrimaryColor"/>
         <attr name="srlAccentColor"/>
     </declare-styleable>
 </resources>

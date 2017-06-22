@@ -16,6 +16,7 @@ import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.Arrays;
 
@@ -25,6 +26,7 @@ import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 public class FunGameHitBlockStyleActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private enum Item {
+        默认主题("更改为橙色默认颜色"),
         橙色主题("更改为橙色主题颜色"),
         红色主题("更改为红色主题颜色"),
         绿色主题("更改为绿色主题颜色"),
@@ -54,6 +56,12 @@ public class FunGameHitBlockStyleActivity extends AppCompatActivity implements A
 
         mRefreshLayout = (RefreshLayout)findViewById(R.id.smart);
         mRefreshLayout.autoRefresh();
+        mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                refreshlayout.finishRefresh(4000);
+            }
+        });
 
         View view = findViewById(R.id.recycler);
         if (view instanceof RecyclerView) {
@@ -75,6 +83,9 @@ public class FunGameHitBlockStyleActivity extends AppCompatActivity implements A
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         switch (Item.values()[position]) {
+            case 默认主题:
+                mRefreshLayout.setPrimaryColorsId(android.R.color.white, android.R.color.black);
+                break;
             case 蓝色主题:
                 setThemeColor(R.color.colorPrimary, R.color.colorPrimaryDark);
                 break;

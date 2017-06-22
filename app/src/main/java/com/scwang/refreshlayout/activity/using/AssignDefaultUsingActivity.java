@@ -15,6 +15,7 @@ import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
+import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
@@ -36,8 +37,8 @@ public class AssignDefaultUsingActivity extends AppCompatActivity {
             @Override
             public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
                 layout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);//创建同时可以先设置主题颜色
-                ((View) layout).setBackgroundResource(R.color.colorPrimary);
-                return new ClassicsHeader(context);//指定为经典Header，默认是 贝塞尔雷达Header
+                ((View) layout).setBackgroundResource(R.color.colorPrimary);//设置刷新布局的背景融合Header主题色
+                return new ClassicsHeader(context).setSpinnerStyle(SpinnerStyle.FixedBehind);//指定为经典Header，默认是 贝塞尔雷达Header
             }
         });
         //设置全局的Footer构建器
@@ -45,7 +46,10 @@ public class AssignDefaultUsingActivity extends AppCompatActivity {
             @NonNull
             @Override
             public RefreshFooter createRefreshFooter(Context context, RefreshLayout layout) {
-                return new ClassicsFooter(context);//指定为经典Footer，默认是 BallPulseFooter
+                ClassicsFooter footer = new ClassicsFooter(context);
+                footer.setBackgroundResource(android.R.color.white);
+                footer.setSpinnerStyle(SpinnerStyle.Scale);//设置为拉伸模式
+                return footer;//指定为经典Footer，默认是 BallPulseFooter
             }
         });
     }

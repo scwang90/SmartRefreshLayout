@@ -186,7 +186,7 @@ public class FunGameBattleCityHeader extends FunGameView {
      */
     private RectF generateEnemyTank(int index) {
         float left = - (controllerSize + barrelSize);
-        float top = index * (controllerSize + DIVIDING_LINE_SIZE) + DIVIDING_LINE_SIZE;
+        float top = index * (controllerSize) + DIVIDING_LINE_SIZE;
         return new RectF(left, top, left + barrelSize * 2.5f, top + controllerSize);
     }
 

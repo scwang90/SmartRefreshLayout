@@ -16,7 +16,8 @@
         android:id="@+id/smart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srlEnableHeaderTranslationContent="true"
+        app:srlPrimaryColor="@color/colorPrimary"
+        app:srlAccentColor="@android:color/white"
         app:srlEnableLoadmore="false">
         <com.scwang.smartrefresh.header.FunGameBattleCityHeader
             android:layout_width="match_parent"

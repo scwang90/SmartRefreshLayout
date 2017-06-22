@@ -35,6 +35,7 @@
         <com.scwang.smartrefresh.layout.footer.ClassicsFooter
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:srlAccentColor="@android:color/white"
             app:srlClassicsSpinnerStyle="FixedBehind"/>
         <!--FixedBehind可以让Footer固定在内容的背后，下拉的时候效果同微信浏览器的效果-->
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>

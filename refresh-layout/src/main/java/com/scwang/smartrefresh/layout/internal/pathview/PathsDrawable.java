@@ -23,17 +23,17 @@ import java.util.List;
 
 public class PathsDrawable extends Drawable {
 
-    private Paint mPaint;
-    private List<Path> mPaths;
-    private List<Integer> mColors;
-    private int mWidth = 1,mHeight = 1;
-    private int mStartX = 0,mStartY = 0;
-    private int mOrginWidth;
-    private int mOrginHeight;
-    private static final Region REGION = new Region();
-    private static final Region MAX_CLIP = new Region(Integer.MIN_VALUE,
+    protected Paint mPaint;
+    protected List<Path> mPaths;
+    protected List<Integer> mColors;
+    protected int mWidth = 1,mHeight = 1;
+    protected int mStartX = 0,mStartY = 0;
+    protected int mOrginWidth;
+    protected int mOrginHeight;
+    protected static final Region REGION = new Region();
+    protected static final Region MAX_CLIP = new Region(Integer.MIN_VALUE,
             Integer.MIN_VALUE,Integer.MAX_VALUE, Integer.MAX_VALUE);
-    private List<Path> mOrginPaths;
+    protected List<Path> mOrginPaths;
 
     public PathsDrawable() {
         mPaint = new Paint();
@@ -126,6 +126,7 @@ public class PathsDrawable extends Drawable {
                     }
                     canvas.drawPath(mPaths.get(i), mPaint);
                 }
+                mPaint.setAlpha(0xFF);
             }
             canvas.restore();
         } else {

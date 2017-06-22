@@ -125,16 +125,6 @@ public class BallPulseView extends View {
         animatingColor = color;
     }
 
-    public void setPrimaryColors(int... colors) {
-        if (colors.length > 0) {
-            setBackgroundColor(colors[0]);
-        }
-        if (colors.length > 1) {
-            setNormalColor(colors[1]);
-            setAnimatingColor(colors[1]);
-        }
-    }
-
     public void startAnim() {
         if (mAnimators == null) createAnimators();
         if (mAnimators == null) return;

@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
-import android.view.animation.LinearInterpolator;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,6 +17,7 @@ import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.internal.ProgressDrawable;
 import com.scwang.smartrefresh.layout.internal.pathview.PathsView;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
@@ -41,7 +42,8 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     private TextView mHeaderText;
     private TextView mLastUpdateText;
     private PathsView mArrowView;
-    private PathsView mProgressView;
+    private ImageView mProgressView;
+    private ProgressDrawable mProgressDrawable;
     private DateFormat mFormat = new SimpleDateFormat("上次更新 M-d HH:mm", Locale.CHINA);
     private SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
 
@@ -66,16 +68,10 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
 
         setMinimumHeight(density.dip2px(80));
 
-        mProgressView = new PathsView(context){
-            @Override
-            protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-                super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
-            }
-        };
-        mProgressView.parserColors(0xff666666);
-        mProgressView.parserPaths("M17.65,6.35C16.2,4.9 14.21,4 12,4c-4.42,0 -7.99,3.58 -7.99,8s3.57,8 7.99,8c3.73,0 6.84,-2.55 7.73,-6h-2.08c-0.82,2.33 -3.04,4 -5.65,4 -3.31,0 -6,-2.69 -6,-6s2.69,-6 6,-6c1.66,0 3.14,0.69 4.22,1.78L13,11h7V4l-2.35,2.35z");
-        mProgressView.animate().setDuration(1000*5).setInterpolator(new LinearInterpolator());
+        mProgressDrawable = new ProgressDrawable();
+        mProgressDrawable.setColor(0xff666666);
+        mProgressView = new ImageView(context);
+        mProgressView.setImageDrawable(mProgressDrawable);
         LayoutParams lpProgress = new LayoutParams(density.dip2px(20), density.dip2px(20));
         lpProgress.leftMargin = density.dip2px(80);
         lpProgress.addRule(CENTER_VERTICAL);
@@ -155,12 +151,12 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
 
     @Override
     public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
-        mProgressView.animate().rotation(36000).setDuration(100000);
+        mProgressDrawable.start();
     }
 
     @Override
     public void onFinish(RefreshLayout layout) {
-        mProgressView.animate().rotation(0).setDuration(300);
+        mProgressDrawable.stop();
     }
 
     @Override
@@ -169,19 +165,19 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
             setBackgroundColor(colors[0]);
             mArrowView.parserColors(colors[1]);
             mHeaderText.setTextColor(colors[1]);
-            mProgressView.parserColors(colors[1]);
+            mProgressDrawable.setColor(colors[1]);
             mLastUpdateText.setTextColor(colors[1]&0x00ffffff|0x99000000);
         } else if (colors.length > 0) {
             setBackgroundColor(colors[0]);
             if (colors[0] == 0xffffffff) {
                 mArrowView.parserColors(0xff666666);
                 mHeaderText.setTextColor(0xff666666);
-                mProgressView.parserColors(0xff666666);
+                mProgressDrawable.setColor(0xff666666);
                 mLastUpdateText.setTextColor(0xff666666&0x00ffffff|0x99000000);
             } else {
                 mArrowView.parserColors(0xffffffff);
                 mHeaderText.setTextColor(0xffffffff);
-                mProgressView.parserColors(0xffffffff);
+                mProgressDrawable.setColor(0xffffffff);
                 mLastUpdateText.setTextColor(0xaaffffff);
             }
         }

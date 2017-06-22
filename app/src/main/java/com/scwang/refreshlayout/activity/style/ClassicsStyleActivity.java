@@ -18,8 +18,10 @@ import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.refreshlayout.util.DynamicTimeFormat;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -68,7 +70,6 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
         });
 
         mRefreshLayout = (RefreshLayout)findViewById(R.id.smart);
-        mRefreshLayout.autoRefresh();
 
         int deta = new Random().nextInt(7 * 24 * 60 * 60 * 1000);
         mClassicsHeader = (ClassicsHeader)mRefreshLayout.getRefreshHeader();
@@ -93,6 +94,20 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
             });
             mRecyclerView = recyclerView;
         }
+
+        //触发上啦加载
+        mRefreshLayout.autoLoadmore();
+        //通过多功能监听接口实现 在第一次加载完成之后 自动刷新
+        mRefreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener(){
+            @Override
+            public void onStateChanged(RefreshState oldState, RefreshState state) {
+                if (oldState == RefreshState.LoadingFinish
+                        && state == RefreshState.None) {
+                    mRefreshLayout.autoRefresh();
+                    mRefreshLayout.setOnMultiPurposeListener(null);//保准只有第一次关联
+                }
+            }
+        });
     }
 
     @Override

@@ -17,13 +17,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.scwang.smartrefresh.header.internal.MaterialProgressDrawable;
-import com.scwang.smartrefresh.header.waterdrop.ProgressDrawable;
 import com.scwang.smartrefresh.header.waterdrop.WaterDropView;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.internal.ProgressDrawable;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import static android.view.View.MeasureSpec.AT_MOST;
@@ -78,12 +78,6 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
         mImageView.setImageDrawable(mProgress);
         addView(mImageView, density.dip2px(30), density.dip2px(30));
     }
-
-//    @Override
-//    public void setLayoutParams(LayoutParams params) {
-//        params.height = -3;
-//        super.setLayoutParams(params);
-//    }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {

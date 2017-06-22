@@ -42,26 +42,19 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
     //<editor-fold desc="View">
     public FunGameBase(Context context) {
         super(context);
-        this.initView(context, null, 0);
     }
 
     public FunGameBase(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        this.initView(context, attrs, 0);
     }
 
     public FunGameBase(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.initView(context, attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public FunGameBase(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        this.initView(context, attrs, defStyleAttr);
-    }
-
-    private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
     }
 
     @Override

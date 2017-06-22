@@ -7,7 +7,7 @@ import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
-import android.view.animation.LinearInterpolator;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,7 +17,7 @@ import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
-import com.scwang.smartrefresh.layout.internal.pathview.PathsView;
+import com.scwang.smartrefresh.layout.internal.ProgressDrawable;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
@@ -34,7 +34,8 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
     private static final String REFRESH_BOTTOM_LOADING = "正在加载...";
 
     private TextView mBottomText;
-    private PathsView mProgressView;
+    private ImageView mProgressView;
+    private ProgressDrawable mProgressDrawable;
     private SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
 
     //<editor-fold desc="LinearLayout">
@@ -56,16 +57,13 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
     private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
         DensityUtil density = new DensityUtil();
 
-//        int padding = density.dip2px(20);
         setGravity(Gravity.CENTER);
-//        setPadding(padding,padding,padding,padding);
         setMinimumHeight(density.dip2px(60));
 
-        mProgressView = new PathsView(context);
-//        mProgressView.parserPaths("M17.65,6.35C16.2,4.9 14.21,4 12,4c-4.42,0 -7.99,3.58 -7.99,8s3.57,8 7.99,8c3.73,0 6.84,-2.55 7.73,-6h-2.08c-0.82,2.33 -3.04,4 -5.65,4 -3.31,0 -6,-2.69 -6,-6s2.69,-6 6,-6c1.66,0 3.14,0.69 4.22,1.78L13,11h7V4l-2.35,2.35z");
-        mProgressView.parserPaths("M176.5,63.5C162,49 142.1,40 120,40c-44.2,0 -79.9,35.8 -79.9,80s35.7,80 79.9,80c37.3,0 68.4,-25.5 77.3,-60h-20.8c-8.2,23.3 -30.4,40 -56.5,40 -33.1,0 -60,-26.9 -60,-60s26.9,-60 60,-60c16.6,0 31.4,06.9 42.2,17.8L130,110h70V40l-23.5,23.5z");
-        mProgressView.animate().setInterpolator(new LinearInterpolator());
-        mProgressView.parserColors(0xff666666);
+        mProgressDrawable = new ProgressDrawable();
+        mProgressDrawable.setColor(0xff666666);
+        mProgressView = new ImageView(context);
+        mProgressView.setImageDrawable(mProgressDrawable);
         LayoutParams lpPathView = new LayoutParams(density.dip2px(16), density.dip2px(16));
         lpPathView.rightMargin = density.dip2px(10);
         addView(mProgressView, lpPathView);
@@ -86,20 +84,14 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
 
         mSpinnerStyle = SpinnerStyle.values()[ta.getInt(R.styleable.ClassicsFooter_srlClassicsSpinnerStyle, mSpinnerStyle.ordinal())];
 
-        int primaryColor = ta.getColor(R.styleable.ClassicsFooter_srlPrimaryColor, 0);
-        int accentColor = ta.getColor(R.styleable.ClassicsFooter_srlAccentColor, 0);
-        if (primaryColor != 0) {
-            if (accentColor != 0) {
-                setPrimaryColors(primaryColor, accentColor);
-            } else {
-                setPrimaryColors(primaryColor);
-            }
-        } else if (accentColor != 0) {
-            setPrimaryColors(0, accentColor);
+        if (ta.hasValue(R.styleable.ClassicsFooter_srlAccentColor)) {
+            int accentColor = ta.getColor(R.styleable.ClassicsFooter_srlAccentColor, 0);
+            setAccentColor(accentColor);
         }
 
         ta.recycle();
     }
+
     //</editor-fold>
 
     //<editor-fold desc="RefreshFooter">
@@ -122,31 +114,35 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
     @Override
     public void startAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
         mProgressView.setVisibility(VISIBLE);
-        mProgressView.animate().rotation(36000).setDuration(100000);
+        mProgressDrawable.start();
     }
 
     @Override
     public void onFinish(RefreshLayout layout) {
-        mProgressView.animate().rotation(0).setDuration(300);
+        mProgressDrawable.stop();
         mProgressView.setVisibility(GONE);
     }
 
+    /**
+     * ClassicsFooter 没有主题色
+     * ClassicsFooter has no primary colors
+     */
     @Override
     public void setPrimaryColors(int... colors) {
-        if (colors.length > 1) {
-            setBackgroundColor(colors[0]);
-            mBottomText.setTextColor(colors[1]);
-            mProgressView.parserColors(colors[1]);
-        } else if (colors.length > 0) {
-            setBackgroundColor(colors[0]);
-            if (colors[0] == 0xffffffff) {
-                mBottomText.setTextColor(0xff666666);
-                mProgressView.parserColors(0xff666666);
-            } else {
-                mBottomText.setTextColor(0xffffffff);
-                mProgressView.parserColors(0xffffffff);
-            }
-        }
+//        if (colors.length > 1) {
+//            setBackgroundColor(colors[0]);
+//            mBottomText.setTextColor(colors[1]);
+//            mProgressDrawable.setColor(colors[1]);
+//        } else if (colors.length > 0) {
+//            setBackgroundColor(colors[0]);
+//            if (colors[0] == 0xffffffff) {
+//                mBottomText.setTextColor(0xff666666);
+//                mProgressDrawable.setColor(0xff666666);
+//            } else {
+//                mBottomText.setTextColor(0xffffffff);
+//                mProgressDrawable.setColor(0xffffffff);
+//            }
+//        }
     }
 
 
@@ -180,6 +176,11 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
     //<editor-fold desc="API">
     public ClassicsFooter setSpinnerStyle(SpinnerStyle style) {
         this.mSpinnerStyle = style;
+        return this;
+    }
+    public ClassicsFooter setAccentColor(int accentColor) {
+        mBottomText.setTextColor(accentColor);
+        mProgressDrawable.setColor(accentColor);
         return this;
     }
     //</editor-fold>

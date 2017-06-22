@@ -844,16 +844,17 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         if (mSpinner == spinner) {
             return;
         }
+        final int oldSpinner = mSpinner;
         this.mSpinner = spinner;
-        if (!isAnimator) {
-            if (mState == RefreshState.PullDownToRefresh && Math.abs(mSpinner) > mHeaderHeight) {
+        if (!isAnimator && mState != RefreshState.Refreshing && mState != RefreshState.Loading) {
+            if (mSpinner > mHeaderHeight) {
                 setStateReleaseToRefresh();
-            } else if (mState == RefreshState.ReleaseToRefresh && Math.abs(mSpinner) < mHeaderHeight) {
-                setStatePullDownToRefresh();
-            } else if (mState == RefreshState.PullToUpLoad && Math.abs(mSpinner) > mFooterHeight) {
+            } else if (-mSpinner > mFooterHeight) {
                 setStateReleaseToLoad();
-            } else if (mState == RefreshState.ReleaseToLoad && Math.abs(mSpinner) < mFooterHeight) {
+            } else if (mSpinner < 0) {
                 setStatePullUpToLoad();
+            } else {
+                setStatePullDownToRefresh();
             }
         }
         if (mRefreshContent != null) {
@@ -867,7 +868,8 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                 }
             }
         }
-        if (spinner >= 0 && mRefreshHeader != null) {
+        if ((spinner >= 0 || oldSpinner > 0) && mRefreshHeader != null) {
+            spinner = Math.max(spinner, 0);
             if (mEnableRefresh) {
                 if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale) {
                     requestLayout();
@@ -887,7 +889,8 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                 }
             }
         }
-        if (spinner <= 0 && mRefreshFooter != null) {
+        if ((spinner <= 0 || oldSpinner < 0) && mRefreshFooter != null) {
+            spinner = Math.min(spinner, 0);
             if (mEnableLoadmore) {
                 if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Scale) {
                     requestLayout();
@@ -1559,7 +1562,6 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                     public void onAnimationStart(Animator animation) {
                         setStatePullUpToLoad();
                     }
-
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         if (mState != RefreshState.ReleaseToLoad) {
