@@ -689,13 +689,13 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         if (oldState != state) {
             mState = state;
             if (mRefreshFooter != null) {
-                mRefreshFooter.onStateChanged(oldState, state);
+                mRefreshFooter.onStateChanged(this, oldState, state);
             }
             if (mRefreshHeader != null) {
-                mRefreshHeader.onStateChanged(oldState, state);
+                mRefreshHeader.onStateChanged(this, oldState, state);
             }
             if (mOnMultiPurposeListener != null) {
-                mOnMultiPurposeListener.onStateChanged(oldState, state);
+                mOnMultiPurposeListener.onStateChanged(this, oldState, state);
             }
         }
     }
@@ -734,7 +734,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
             mLoadmoreListener.onLoadmore(this);
         }
         if (mRefreshFooter != null) {
-            mRefreshFooter.startAnimator(this, mFooterHeight, mExtendFooterHeight);
+            mRefreshFooter.onStartAnimator(this, mFooterHeight, mExtendFooterHeight);
         }
         if (mOnMultiPurposeListener != null) {
             mOnMultiPurposeListener.onLoadmore(this);
@@ -1359,6 +1359,14 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     }
 
     /**
+     * 获取实体布局视图
+     */
+    @Override
+    public SmartRefreshLayout getLayout() {
+        return this;
+    }
+
+    /**
      * 单独设置刷新监听器
      */
     @Override
@@ -1580,6 +1588,16 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         }
     }
 
+    @Override
+    public boolean isEnableLoadmore() {
+        return mEnableLoadmore;
+    }
+
+    @Override
+    public boolean isEnableRefresh() {
+        return mEnableRefresh;
+    }
+
     /**
      * 设置默认Header构建器
      */
@@ -1696,15 +1714,6 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         }
         //</editor-fold>
 
-        @Override
-        public boolean getEnableLoadmore() {
-            return mEnableLoadmore;
-        }
-
-        @Override
-        public boolean getEnableRefresh() {
-            return mEnableRefresh;
-        }
     }
     //</editor-fold>
 }

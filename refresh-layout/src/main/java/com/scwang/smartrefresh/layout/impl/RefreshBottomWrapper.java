@@ -68,12 +68,12 @@ public class RefreshBottomWrapper implements RefreshFooter {
     }
 
     @Override
-    public void startAnimator(RefreshLayout layout, int bottomHeight, int extendHeight) {
+    public void onStartAnimator(RefreshLayout layout, int bottomHeight, int extendHeight) {
 
     }
 
     @Override
-    public void onStateChanged(RefreshState oldState, RefreshState state) {
+    public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
 
     }
 }

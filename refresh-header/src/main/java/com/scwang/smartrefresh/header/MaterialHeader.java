@@ -17,7 +17,6 @@ import com.scwang.smartrefresh.header.material.CircleImageView;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.api.SizeObserver;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
@@ -29,7 +28,7 @@ import static android.view.View.MeasureSpec.getSize;
  * Created by SCWANG on 2017/6/2.
  */
 
-public class MaterialHeader extends ViewGroup implements RefreshHeader, SizeObserver {
+public class MaterialHeader extends ViewGroup implements RefreshHeader {
 
     // Maps to ProgressBar.Large style
     public static final int SIZE_LARGE = 0;
@@ -251,8 +250,8 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader, SizeObse
     }
 
     @Override
-    public void onStateChanged(RefreshState oldState, RefreshState state) {
-        switch (state) {
+    public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
+        switch (newState) {
             case None:
                 break;
             case PullDownToRefresh:

@@ -117,7 +117,7 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
         mManualOperation = true;
         mRefreshContent = mRefreshKernel.getRefreshContent();
         mRefreshContent.getView().offsetTopAndBottom(mHeaderHeight);
-        enableLoadmore = mRefreshKernel.getEnableLoadmore();
+        enableLoadmore = mRefreshKernel.getRefreshLayout().isEnableLoadmore();
         mRefreshKernel.getRefreshLayout().setEnableLoadmore(false);
     }
 
@@ -156,8 +156,8 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
     }
 
     @Override
-    public void onStateChanged(RefreshState oldState, RefreshState state) {
-        mState = state;
+    public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
+        mState = newState;
     }
 
     @Override

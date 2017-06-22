@@ -2,6 +2,7 @@ package com.scwang.smartrefresh.layout.footer;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
@@ -112,7 +113,7 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
     }
 
     @Override
-    public void startAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
+    public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
         mProgressView.setVisibility(VISIBLE);
         mProgressDrawable.start();
     }
@@ -129,20 +130,23 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
      */
     @Override
     public void setPrimaryColors(int... colors) {
-//        if (colors.length > 1) {
-//            setBackgroundColor(colors[0]);
-//            mBottomText.setTextColor(colors[1]);
-//            mProgressDrawable.setColor(colors[1]);
-//        } else if (colors.length > 0) {
-//            setBackgroundColor(colors[0]);
-//            if (colors[0] == 0xffffffff) {
-//                mBottomText.setTextColor(0xff666666);
-//                mProgressDrawable.setColor(0xff666666);
-//            } else {
-//                mBottomText.setTextColor(0xffffffff);
-//                mProgressDrawable.setColor(0xffffffff);
-//            }
-//        }
+        if (mSpinnerStyle == SpinnerStyle.FixedBehind) {
+            if (colors.length > 1) {
+                setBackgroundColor(colors[0]);
+                mBottomText.setTextColor(colors[1]);
+                mProgressDrawable.setColor(colors[1]);
+            } else if (colors.length > 0) {
+                setBackgroundColor(colors[0]);
+                if (colors[0] == 0xffffffff) {
+                    mBottomText.setTextColor(0xff666666);
+                    mProgressDrawable.setColor(0xff666666);
+                } else {
+                    mBottomText.setTextColor(0xffffffff);
+                    mProgressDrawable.setColor(0xffffffff);
+                }
+            }
+        }
+
     }
 
 
@@ -157,10 +161,11 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
     }
 
     @Override
-    public void onStateChanged(RefreshState oldState, RefreshState state) {
-        switch (state) {
-            case PullToUpLoad:
+    public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
+        switch (newState) {
             case None:
+                restoreRefreshLayoutBackground();
+            case PullToUpLoad:
                 mBottomText.setText(REFRESH_BOTTOM_PULLUP);
                 break;
             case Loading:
@@ -168,7 +173,31 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
                 break;
             case ReleaseToLoad:
                 mBottomText.setText(REFRESH_BOTTOM_RELEASE);
+                replaceRefreshLayoutBackground(refreshLayout);
                 break;
+        }
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="private">
+    private Runnable restoreRunable;
+    private void restoreRefreshLayoutBackground() {
+        if (restoreRunable != null) {
+            restoreRunable.run();
+            restoreRunable = null;
+        }
+    }
+
+    private void replaceRefreshLayoutBackground(RefreshLayout refreshLayout) {
+        if (restoreRunable == null && mSpinnerStyle == SpinnerStyle.FixedBehind) {
+            restoreRunable = new Runnable() {
+                Drawable drawable = refreshLayout.getLayout().getBackground();
+                @Override
+                public void run() {
+                    refreshLayout.getLayout().setBackgroundDrawable(drawable);
+                }
+            };
+            refreshLayout.getLayout().setBackgroundDrawable(getBackground());
         }
     }
     //</editor-fold>
@@ -184,4 +213,5 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
         return this;
     }
     //</editor-fold>
+
 }

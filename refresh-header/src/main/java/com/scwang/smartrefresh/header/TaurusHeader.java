@@ -154,7 +154,7 @@ public class TaurusHeader extends View implements RefreshHeader/*, SizeDefinitio
     }
 
     @Override
-    public void onStateChanged(RefreshState oldState, RefreshState state) {
+    public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
     }
 
     @Override

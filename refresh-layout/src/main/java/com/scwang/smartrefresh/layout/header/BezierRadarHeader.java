@@ -199,8 +199,8 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
     }
 
     @Override
-    public void onStateChanged(RefreshState oldState, RefreshState state) {
-        switch (state) {
+    public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
+        switch (newState) {
             case None:
                 break;
             case PullDownToRefresh:

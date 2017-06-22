@@ -18,7 +18,6 @@ import android.view.animation.DecelerateInterpolator;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.api.SizeObserver;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.impl.RefreshLayoutHeaderHooker;
@@ -29,7 +28,7 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
  * https://github.com/tuesda/CircleRefreshLayout
  * Created by zhanglei on 15/7/18.
  */
-public class CircleHeader extends View implements RefreshHeader, SizeObserver {
+public class CircleHeader extends View implements RefreshHeader {
 
     //<editor-fold desc="Field">
 
@@ -143,8 +142,6 @@ public class CircleHeader extends View implements RefreshHeader, SizeObserver {
                         viewWidth - leftX, mBollY);
                 canvas.drawPath(mPath, mFrontPaint);
             } else {
-//                canvas.drawArc(new RectF(viewWidth / 2 - radus, mBollY - radus, viewWidth / 2 + radus, curH + radus),
-//                        180, 180, true, mFrontPaint);
                 canvas.drawCircle(viewWidth / 2, mBollY, mBollRadius, mFrontPaint);
             }
         }
@@ -280,8 +277,8 @@ public class CircleHeader extends View implements RefreshHeader, SizeObserver {
     }
 
     @Override
-    public void onStateChanged(RefreshState oldState, RefreshState state) {
-        mState = state;
+    public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
+        mState = newState;
     }
 
     @Override

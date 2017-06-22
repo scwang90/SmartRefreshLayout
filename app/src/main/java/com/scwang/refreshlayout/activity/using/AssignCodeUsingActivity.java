@@ -54,9 +54,8 @@ public class AssignCodeUsingActivity extends AppCompatActivity {
             //通过多功能监听接口实现 在第一次加载完成之后 自动刷新
             refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener(){
                 @Override
-                public void onStateChanged(RefreshState oldState, RefreshState state) {
-                    if (oldState == RefreshState.LoadingFinish
-                            && state == RefreshState.None) {
+                public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
+                    if (oldState == RefreshState.LoadingFinish && newState == RefreshState.None) {
                         refreshLayout.autoRefresh();
                         refreshLayout.setOnMultiPurposeListener(null);
                     }

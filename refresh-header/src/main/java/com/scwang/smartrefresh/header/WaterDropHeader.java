@@ -172,9 +172,9 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override
-    public void onStateChanged(RefreshState oldState, RefreshState state) {
-        mState = state;
-        switch (state) {
+    public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
+        mState = newState;
+        switch (newState) {
             case None:
                 mWaterDropView.setVisibility(View.VISIBLE);
                 break;

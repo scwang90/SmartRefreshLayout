@@ -2,6 +2,7 @@ package com.scwang.smartrefresh.layout.header;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -132,12 +133,12 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
 
         ta.recycle();
     }
+
     //</editor-fold>
 
     //<editor-fold desc="RefreshHeader">
     @Override
-    public void onSizeDefined(RefreshKernel layout, int height, int extendHeight) {
-
+    public void onSizeDefined(RefreshKernel kernel, int height, int extendHeight) {
     }
 
     @Override
@@ -194,10 +195,11 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     }
 
     @Override
-    public void onStateChanged(RefreshState oldState, RefreshState state) {
-        switch (state) {
-            case PullDownToRefresh:
+    public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
+        switch (newState) {
             case None:
+                restoreRefreshLayoutBackground();
+            case PullDownToRefresh:
                 mHeaderText.setText(REFRESH_HEADER_PULLDOWN);
                 mArrowView.setVisibility(VISIBLE);
                 mProgressView.setVisibility(GONE);
@@ -211,7 +213,31 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
             case ReleaseToRefresh:
                 mHeaderText.setText(REFRESH_HEADER_RELEASE);
                 mArrowView.animate().rotation(180);
+                replaceRefreshLayoutBackground(refreshLayout);
                 break;
+        }
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="private">
+    private Runnable restoreRunable;
+    private void restoreRefreshLayoutBackground() {
+        if (restoreRunable != null) {
+            restoreRunable.run();
+            restoreRunable = null;
+        }
+    }
+
+    private void replaceRefreshLayoutBackground(RefreshLayout refreshLayout) {
+        if (restoreRunable == null && mSpinnerStyle == SpinnerStyle.FixedBehind) {
+            restoreRunable = new Runnable() {
+                Drawable drawable = refreshLayout.getLayout().getBackground();
+                @Override
+                public void run() {
+                    refreshLayout.getLayout().setBackgroundDrawable(drawable);
+                }
+            };
+            refreshLayout.getLayout().setBackgroundDrawable(getBackground());
         }
     }
     //</editor-fold>

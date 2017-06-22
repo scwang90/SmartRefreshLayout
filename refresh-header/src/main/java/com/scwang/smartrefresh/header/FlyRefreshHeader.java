@@ -17,7 +17,6 @@ import com.scwang.smartrefresh.header.flyrefresh.MountanScenceView;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.api.SizeObserver;
 import com.scwang.smartrefresh.layout.header.FalsifyHeader;
 import com.scwang.smartrefresh.layout.impl.RefreshLayoutHeaderHooker;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
@@ -27,7 +26,7 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
  * Created by SCWANG on 2017/6/6.
  */
 
-public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader, SizeObserver {
+public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
 
     private FlyView mFlyView;
     private AnimatorSet mFlyAnimator;

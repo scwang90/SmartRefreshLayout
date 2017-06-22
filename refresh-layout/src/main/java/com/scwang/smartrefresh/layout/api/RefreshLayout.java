@@ -1,6 +1,7 @@
 package com.scwang.smartrefresh.layout.api;
 
 import android.support.annotation.Nullable;
+import android.view.ViewGroup;
 import android.view.animation.Interpolator;
 
 import com.scwang.smartrefresh.layout.constant.RefreshState;
@@ -82,6 +83,8 @@ public interface RefreshLayout {
 
     RefreshState getState();
 
+    ViewGroup getLayout();
+
     boolean isRefreshing();
 
     boolean isLoading();
@@ -97,4 +100,8 @@ public interface RefreshLayout {
     boolean autoLoadmore(int delayed);
 
     boolean autoLoadmore(int delayed, float dragrate);
+
+    boolean isEnableRefresh();
+
+    boolean isEnableLoadmore();
 }

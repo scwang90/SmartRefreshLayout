@@ -103,9 +103,9 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
             //通过多功能监听接口实现 在第一次加载完成之后 自动刷新
             mRefreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener(){
                 @Override
-                public void onStateChanged(RefreshState oldState, RefreshState state) {
+                public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
                     if (oldState == RefreshState.LoadingFinish
-                            && state == RefreshState.None) {
+                            && newState == RefreshState.None) {
                         mRefreshLayout.autoRefresh();
                         mRefreshLayout.setOnMultiPurposeListener(null);//保准只有第一次关联
                     }
