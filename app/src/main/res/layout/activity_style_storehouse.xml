@@ -16,7 +16,6 @@
         android:id="@+id/smart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#333"
         app:srlPrimaryColor="#333"
         app:srlAccentColor="#fff"
         app:srlEnableLoadmore="false"

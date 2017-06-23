@@ -161,7 +161,7 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
     }
 
     @Override
-    public void onSizeDefined(RefreshKernel kernel, int height, int extendHeight) {
+    public void onInitialized(RefreshKernel kernel, int height, int extendHeight) {
         mRefreshKernel = kernel;
         mHeaderHeight = height;
         setTranslationY(mOffset - mHeaderHeight);

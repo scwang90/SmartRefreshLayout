@@ -206,8 +206,8 @@ public class FunGameHeader extends FunGameBase implements RefreshHeader {
     }
 
     @Override
-    public void onSizeDefined(RefreshKernel kernel, int height, int extendHeight) {
-        super.onSizeDefined(kernel, height, extendHeight);
+    public void onInitialized(RefreshKernel kernel, int height, int extendHeight) {
+        super.onInitialized(kernel, height, extendHeight);
         coverMaskView();
     }
 

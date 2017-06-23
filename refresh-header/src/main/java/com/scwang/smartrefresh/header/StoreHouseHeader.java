@@ -52,7 +52,9 @@ public class StoreHouseHeader extends View implements RefreshHeader {
     private boolean mIsInLoading = false;
     private AniController mAniController = new AniController();
     private int mTextColor = Color.WHITE;
+    private int mBackgroundColor = 0;
     private Matrix mMatrix = new Matrix();
+    private RefreshKernel mRefreshKernel;
     //</editor-fold>
 
     //<editor-fold desc="View">
@@ -76,7 +78,8 @@ public class StoreHouseHeader extends View implements RefreshHeader {
         mLineWidth = density.dip2px(1);
         mDropHeight = density.dip2px(40);
         mHorizontalRandomness = Resources.getSystem().getDisplayMetrics().widthPixels / 2;
-        setBackgroundColor(0xff333333);
+//        setBackgroundColor(0xff333333);
+        mBackgroundColor = 0xff333333;
         setTextColor(0xffcccccc);
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.StoreHouseHeader);
@@ -160,6 +163,13 @@ public class StoreHouseHeader extends View implements RefreshHeader {
         }
         canvas.restoreToCount(c1);
     }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        mRefreshKernel = null;
+    }
+
     //</editor-fold>
 
     //<editor-fold desc="API">
@@ -208,8 +218,8 @@ public class StoreHouseHeader extends View implements RefreshHeader {
     public StoreHouseHeader initWithStringArray(int id) {
         String[] points = getResources().getStringArray(id);
         ArrayList<float[]> pointList = new ArrayList<float[]>();
-        for (int i = 0; i < points.length; i++) {
-            String[] x = points[i].split(",");
+        for (String point : points) {
+            String[] x = point.split(",");
             float[] f = new float[4];
             for (int j = 0; j < 4; j++) {
                 f[j] = Float.parseFloat(x[j]);
@@ -260,6 +270,28 @@ public class StoreHouseHeader extends View implements RefreshHeader {
     }
     //</editor-fold>
 
+    //<editor-fold desc="background">
+    private Runnable restoreRunable;
+    private void restoreRefreshLayoutBackground() {
+        if (restoreRunable != null) {
+            restoreRunable.run();
+            restoreRunable = null;
+        }
+    }
+    private void replaceRefreshLayoutBackground(RefreshLayout refreshLayout) {
+//        if (restoreRunable == null) {
+//            restoreRunable = new Runnable() {
+//                Drawable drawable = refreshLayout.getLayout().getBackground();
+//                @Override
+//                public void run() {
+//                    refreshLayout.getLayout().setBackgroundDrawable(drawable);
+//                }
+//            };
+//            refreshLayout.getLayout().setBackgroundDrawable(getBackground());
+//        }
+    }
+    //</editor-fold>
+
     //<editor-fold desc="private">
     private void setProgress(float progress) {
         mProgress = progress;
@@ -285,7 +317,15 @@ public class StoreHouseHeader extends View implements RefreshHeader {
     }
     //</editor-fold>
 
-    //<editor-fold desc="Description">
+    //<editor-fold desc="RefreshHeader">
+
+    @Override
+    public void onInitialized(RefreshKernel kernel, int height, int extendHeight) {
+        if (mBackgroundColor != 0) {
+            kernel.requestDrawBackgoundForHeader(mBackgroundColor);
+        }
+        mRefreshKernel = kernel;
+    }
 
     @Override
     public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
@@ -306,12 +346,11 @@ public class StoreHouseHeader extends View implements RefreshHeader {
 
     @Override
     public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
-
-    }
-
-    @Override
-    public void onSizeDefined(RefreshKernel kernel, int height, int extendHeight) {
-
+        if (newState == RefreshState.ReleaseToRefresh) {
+            replaceRefreshLayoutBackground(refreshLayout);
+        } else if (newState == RefreshState.None) {
+            restoreRefreshLayoutBackground();
+        }
     }
 
     @Override
@@ -325,7 +364,10 @@ public class StoreHouseHeader extends View implements RefreshHeader {
     @Override
     public void setPrimaryColors(int... colors) {
         if (colors.length > 0) {
-            setBackgroundColor(colors[0]);
+            mBackgroundColor = colors[0];
+            if (mRefreshKernel != null) {
+                mRefreshKernel.requestDrawBackgoundForFooter(colors[0]);
+            }
             if (colors.length > 1) {
                 setTextColor(colors[1]);
             }

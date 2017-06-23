@@ -36,8 +36,11 @@ public interface RefreshKernel {
     RefreshKernel moveSpinnerInfinitely(float dy);
     RefreshKernel moveSpinner(int spinner, boolean isAnimator) ;
     RefreshKernel animSpinner(int endValue) ;
+    //</editor-fold>
 
-
+    //<editor-fold desc="绘制背景 Backgound">
+    RefreshKernel requestDrawBackgoundForHeader(int backgroundColor);
+    RefreshKernel requestDrawBackgoundForFooter(int backgroundColor);
     //</editor-fold>
 
 }

@@ -5,6 +5,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:divider">@color/colorDivison</item>
+        <item name="android:dividerHeight">0.5dp</item>
         <item name="android:listDivider">@color/colorDivison</item>
         <item name="android:homeAsUpIndicator">@drawable/ic_arrow_back_white_24dp</item>
     </style>

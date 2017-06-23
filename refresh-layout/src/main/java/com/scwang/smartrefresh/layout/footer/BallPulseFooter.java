@@ -96,7 +96,7 @@ public class BallPulseFooter extends ViewGroup implements RefreshFooter {
 
     //<editor-fold desc="RefreshFooter">
     @Override
-    public void onSizeDefined(RefreshKernel layout, int height, int extendHeight) {
+    public void onInitialized(RefreshKernel layout, int height, int extendHeight) {
 
     }
     @Override

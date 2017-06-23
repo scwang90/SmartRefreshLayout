@@ -97,7 +97,7 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
     //<editor-fold desc="RefreshFooter">
 
     @Override
-    public void onSizeDefined(RefreshKernel layout, int height, int extendHeight) {
+    public void onInitialized(RefreshKernel layout, int height, int extendHeight) {
 
     }
 

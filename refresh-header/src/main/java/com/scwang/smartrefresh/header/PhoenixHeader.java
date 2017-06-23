@@ -187,7 +187,7 @@ public class PhoenixHeader extends View implements RefreshHeader/*, SizeDefiniti
 
     //<editor-fold desc="RefreshHeader">
     @Override
-    public void onSizeDefined(RefreshKernel layout, int height, int extendHeight) {
+    public void onInitialized(RefreshKernel layout, int height, int extendHeight) {
 
     }
 

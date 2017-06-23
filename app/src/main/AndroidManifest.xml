@@ -90,6 +90,10 @@
             android:name=".activity.using.AssignCodeUsingActivity"
             android:label="@string/title_activity_using_assign_code"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.using.ListenerUsingActivity"
+            android:label="@string/title_activity_using_listener"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

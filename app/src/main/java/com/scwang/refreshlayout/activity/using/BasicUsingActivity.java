@@ -66,7 +66,6 @@ public class BasicUsingActivity extends AppCompatActivity {
         });
 
         final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.smart);
-        refreshLayout.autoRefresh();//触发自动刷新（非必须）
         refreshLayout.setEnableAutoLoadmore(true);//开启自动加载功能（非必须）
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -99,7 +98,7 @@ public class BasicUsingActivity extends AppCompatActivity {
 
         if (isFirstEnter) {
             isFirstEnter = false;
-            //触发上啦加载
+            //触发自动刷新
             refreshLayout.autoRefresh();
         }
 

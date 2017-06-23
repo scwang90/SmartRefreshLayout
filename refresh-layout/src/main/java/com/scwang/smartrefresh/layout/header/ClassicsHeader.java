@@ -138,7 +138,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
 
     //<editor-fold desc="RefreshHeader">
     @Override
-    public void onSizeDefined(RefreshKernel kernel, int height, int extendHeight) {
+    public void onInitialized(RefreshKernel kernel, int height, int extendHeight) {
     }
 
     @Override
@@ -219,7 +219,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     }
     //</editor-fold>
 
-    //<editor-fold desc="private">
+    //<editor-fold desc="background">
     private Runnable restoreRunable;
     private void restoreRefreshLayoutBackground() {
         if (restoreRunable != null) {

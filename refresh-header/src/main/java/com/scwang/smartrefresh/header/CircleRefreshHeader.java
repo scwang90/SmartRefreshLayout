@@ -514,7 +514,7 @@ public class CircleRefreshHeader extends View implements RefreshHeader {
     //<editor-fold desc="SizeObserver">
 //    OnRefreshListener listener;
     @Override
-    public void onSizeDefined(RefreshKernel kernel, int height, int extendHeight) {
+    public void onInitialized(RefreshKernel kernel, int height, int extendHeight) {
         PULL_HEIGHT = height;
         PULL_DELTA = height / 2;
         kernel.registHeaderHook(new RefreshLayoutHeaderHooker() {

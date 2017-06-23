@@ -7,6 +7,8 @@ import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -166,6 +168,10 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
 
     protected long mLastLoadingTime = 0;
     protected long mLastRefreshingTime = 0;
+
+    protected Paint mPaint;
+    protected int mHeaderBackgroundColor = 0;
+    protected int mFooterBackgroundColor = 0;
 
     //</editor-fold>
 
@@ -397,7 +403,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                     mHeaderHeightStatus = DimensionStatus.XmlExact;
                     mHeaderHeight = lp.height + lp.topMargin + lp.bottomMargin;
                     mExtendHeaderHeight = (int) (mHeaderHeight * (mHeaderExtendRate - 1));
-                    mRefreshHeader.onSizeDefined(mKernel, mHeaderHeight, mExtendHeaderHeight);
+                    mRefreshHeader.onInitialized(mKernel, mHeaderHeight, mExtendHeaderHeight);
                 }
                 heightSpec = makeMeasureSpec(lp.height, EXACTLY);
                 headerView.measure(widthSpec, heightSpec);
@@ -409,7 +415,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                     mHeaderHeightStatus = DimensionStatus.XmlWrap;
                     mHeaderHeight = headerView.getMeasuredHeight() + lp.topMargin + lp.bottomMargin;
                     mExtendHeaderHeight = (int) (mHeaderHeight * (mHeaderExtendRate - 1));
-                    mRefreshHeader.onSizeDefined(mKernel, mHeaderHeight, mExtendHeaderHeight);
+                    mRefreshHeader.onInitialized(mKernel, mHeaderHeight, mExtendHeaderHeight);
                 } else if (mHeaderHeight <= 0) {
                     heightSpec = makeMeasureSpec(mHeaderHeight - lp.topMargin - lp.bottomMargin, EXACTLY);
                     headerView.measure(widthSpec, heightSpec);
@@ -428,7 +434,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
 
             if (!mHeaderHeightStatus.notifyed) {
                 mHeaderHeightStatus = mHeaderHeightStatus.notifyed();
-                mRefreshHeader.onSizeDefined(mKernel, mHeaderHeight, mExtendHeaderHeight);
+                mRefreshHeader.onInitialized(mKernel, mHeaderHeight, mExtendHeaderHeight);
             }
 
             if (isInEditMode && mEnablePreviewInEditMode) {
@@ -447,7 +453,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                     mFooterHeightStatus = DimensionStatus.XmlExact;
                     mFooterHeight = lp.height + lp.topMargin + lp.bottomMargin;
                     mExtendFooterHeight = (int) (mFooterHeight * (mFooterExtendRate - 1));
-                    mRefreshFooter.onSizeDefined(mKernel, mFooterHeight, mExtendFooterHeight);
+                    mRefreshFooter.onInitialized(mKernel, mFooterHeight, mExtendFooterHeight);
                 }
                 heightSpec = makeMeasureSpec(lp.height, EXACTLY);
                 footerView.measure(widthSpec, heightSpec);
@@ -459,7 +465,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                     mFooterHeightStatus = DimensionStatus.XmlWrap;
                     mFooterHeight = footerView.getMeasuredHeight() + lp.topMargin + lp.bottomMargin;
                     mExtendFooterHeight = (int) (mFooterHeight * (mFooterExtendRate - 1));
-                    mRefreshFooter.onSizeDefined(mKernel, mFooterHeight, mExtendFooterHeight);
+                    mRefreshFooter.onInitialized(mKernel, mFooterHeight, mExtendFooterHeight);
                 } else if (measuredHeight <= 0){
                     heightSpec = makeMeasureSpec(mFooterHeight - lp.topMargin - lp.bottomMargin, EXACTLY);
                     footerView.measure(widthSpec, heightSpec);
@@ -479,7 +485,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
 
             if (!mFooterHeightStatus.notifyed) {
                 mFooterHeightStatus = mFooterHeightStatus.notifyed();
-                mRefreshFooter.onSizeDefined(mKernel, mFooterHeight, mExtendFooterHeight);
+                mRefreshFooter.onInitialized(mKernel, mFooterHeight, mExtendFooterHeight);
             }
 
             if (isInEditMode && mEnablePreviewInEditMode) {
@@ -572,6 +578,18 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         mKernel = null;
         mRefreshHeader = null;
         mRefreshFooter = null;
+    }
+
+    @Override
+    protected void dispatchDraw(Canvas canvas) {
+        if (mHeaderBackgroundColor != 0 && mSpinner > 0) {
+            mPaint.setColor(mHeaderBackgroundColor);
+            canvas.drawRect(0, 0, getWidth(), mSpinner, mPaint);
+        } else if (mFooterBackgroundColor != 0 && mSpinner < 0) {
+            mPaint.setColor(mFooterBackgroundColor);
+            canvas.drawRect(0, 0, getWidth(), getHeight() + mSpinner, mPaint);
+        }
+        super.dispatchDraw(canvas);
     }
 
     //</editor-fold>
@@ -806,6 +824,20 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     protected AnimatorUpdateListener reboundUpdateListener = animation -> moveSpinner((int) animation.getAnimatedValue(), true);
     //</editor-fold>
 
+    protected void animSpinner(int endValue) {
+        if (mSpinner != endValue) {
+            if (reboundAnimator != null) {
+                reboundAnimator.cancel();
+            }
+            reboundAnimator = ValueAnimator.ofInt(mSpinner, endValue);
+            reboundAnimator.setDuration(mReboundDuration);
+            reboundAnimator.setInterpolator(mReboundInterpolator);
+            reboundAnimator.addUpdateListener(reboundUpdateListener);
+            reboundAnimator.addListener(reboundAnimatorEndListener);
+            reboundAnimator.start();
+        }
+    }
+
     protected boolean overSpinner() {
         if (mState == RefreshState.PullDownToRefresh) {
             setStatePullDownCanceled();
@@ -863,10 +895,16 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
             if (spinner >= 0) {
                 if (mEnableHeaderTranslationContent || mRefreshHeader == null || mRefreshHeader.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
                     mRefreshContent.moveSpinner(spinner);
+                    if (mHeaderBackgroundColor != 0) {
+                        invalidate();
+                    }
                 }
             } else {
                 if (mEnableFooterTranslationContent || mRefreshFooter == null || mRefreshFooter.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
                     mRefreshContent.moveSpinner(spinner);
+                    if (mHeaderBackgroundColor != 0) {
+                        invalidate();
+                    }
                 }
             }
         }
@@ -911,20 +949,6 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                     mOnMultiPurposeListener.onFooterPulling(mRefreshFooter, 1f * spinner / mFooterHeight, spinner, mFooterHeight, mExtendFooterHeight);
                 }
             }
-        }
-    }
-
-    protected void animSpinner(int endValue) {
-        if (mSpinner != endValue) {
-            if (reboundAnimator != null) {
-                reboundAnimator.cancel();
-            }
-            reboundAnimator = ValueAnimator.ofInt(mSpinner, endValue);
-            reboundAnimator.setDuration(mReboundDuration);
-            reboundAnimator.setInterpolator(mReboundInterpolator);
-            reboundAnimator.addUpdateListener(reboundUpdateListener);
-            reboundAnimator.addListener(reboundAnimatorEndListener);
-            reboundAnimator.start();
         }
     }
 
@@ -1158,7 +1182,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
             mExtendFooterHeight = (int) (heightPx * (mFooterExtendRate - 1));
             if (mRefreshFooter != null) {
                 mFooterHeightStatus = DimensionStatus.CodeExact;
-                mRefreshFooter.onSizeDefined(mKernel, mFooterHeight, mExtendFooterHeight);
+                mRefreshFooter.onInitialized(mKernel, mFooterHeight, mExtendFooterHeight);
             } else {
                 mFooterHeightStatus = DimensionStatus.CodeExactUnNotify;
             }
@@ -1176,7 +1200,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
             mExtendHeaderHeight = (int) (heightPx * (mHeaderExtendRate - 1));
             if (mRefreshHeader != null) {
                 mHeaderHeightStatus = DimensionStatus.CodeExact;
-                mRefreshHeader.onSizeDefined(mKernel, mHeaderHeight, mExtendHeaderHeight);
+                mRefreshHeader.onInitialized(mKernel, mHeaderHeight, mExtendHeaderHeight);
             } else {
                 mHeaderHeightStatus = DimensionStatus.CodeExactUnNotify;
             }
@@ -1192,7 +1216,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         this.mHeaderExtendRate = rate;
         this.mExtendHeaderHeight = (int) (mHeaderHeight * (mHeaderExtendRate - 1));
         if (mRefreshHeader != null) {
-            mRefreshHeader.onSizeDefined(mKernel, mHeaderHeight, mExtendHeaderHeight);
+            mRefreshHeader.onInitialized(mKernel, mHeaderHeight, mExtendHeaderHeight);
         }
         return this;
     }
@@ -1205,7 +1229,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         this.mHeaderExtendRate = rate;
         this.mExtendHeaderHeight = (int) (mHeaderHeight * (mHeaderExtendRate - 1));
         if (mRefreshHeader != null) {
-            mRefreshHeader.onSizeDefined(mKernel, mHeaderHeight, mExtendHeaderHeight);
+            mRefreshHeader.onInitialized(mKernel, mHeaderHeight, mExtendHeaderHeight);
         }
         return this;
     }
@@ -1218,7 +1242,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         this.mFooterExtendRate = rate;
         this.mExtendFooterHeight = (int) (mFooterHeight * (mFooterExtendRate - 1));
         if (mRefreshFooter != null) {
-            mRefreshFooter.onSizeDefined(mKernel, mFooterHeight, mExtendFooterHeight);
+            mRefreshFooter.onInitialized(mKernel, mFooterHeight, mExtendFooterHeight);
         }
         return this;
     }
@@ -1712,6 +1736,24 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
             SmartRefreshLayout.this.animSpinner(endValue);
             return this;
         }
+
+        //<editor-fold desc="绘制背景 Backgound">
+        public RefreshKernel requestDrawBackgoundForHeader(int backgroundColor) {
+            if (mPaint == null && backgroundColor != 0) {
+                mPaint = new Paint();
+            }
+            mHeaderBackgroundColor = backgroundColor;
+            return this;
+        }
+        public RefreshKernel requestDrawBackgoundForFooter(int backgroundColor) {
+            if (mPaint == null && backgroundColor != 0) {
+                mPaint = new Paint();
+            }
+            mFooterBackgroundColor = backgroundColor;
+            return this;
+        }
+        //</editor-fold>
+
         //</editor-fold>
 
     }

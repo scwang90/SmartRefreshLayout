@@ -53,7 +53,7 @@ public class RefreshBottomWrapper implements RefreshFooter {
     }
 
     @Override
-    public void onSizeDefined(RefreshKernel layout, int height, int extendHeight) {
+    public void onInitialized(RefreshKernel layout, int height, int extendHeight) {
 
     }
 

@@ -192,7 +192,7 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
 
     //<editor-fold desc="RefreshHeader">
     @Override
-    public void onSizeDefined(RefreshKernel kernel, int height, int extendHeight) {
+    public void onInitialized(RefreshKernel kernel, int height, int extendHeight) {
         if (isInEditMode()) {
             mWaveHeight = mHeadHeight = height / 2;
         }

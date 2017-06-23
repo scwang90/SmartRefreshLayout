@@ -239,7 +239,7 @@ public class CircleHeader extends View implements RefreshHeader {
     //<editor-fold desc="RefreshHeader">
 
     @Override
-    public void onSizeDefined(RefreshKernel kernel, int height, int extendHeight) {
+    public void onInitialized(RefreshKernel kernel, int height, int extendHeight) {
         kernel.registHeaderHook(new RefreshLayoutHeaderHooker() {
             @Override
             public void onHookFinishRefresh(SuperMethod supper, RefreshLayout layout) {

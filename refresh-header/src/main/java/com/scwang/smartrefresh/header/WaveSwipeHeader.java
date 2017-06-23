@@ -135,7 +135,7 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
     //<editor-fold desc="RefreshHeader">
 
     @Override
-    public void onSizeDefined(RefreshKernel layout, int height, int extendHeight) {
+    public void onInitialized(RefreshKernel layout, int height, int extendHeight) {
 
     }
 

@@ -13,7 +13,7 @@ import com.scwang.smartrefresh.layout.constant.RefreshState;
 public class SimpleMultiPurposeListener implements OnMultiPurposeListener {
 
     @Override
-    public void onHeaderPulling(RefreshHeader header, float percent, int offset, int bottomHeight, int extendHeight) {
+    public void onHeaderPulling(RefreshHeader header, float percent, int offset, int headerHeight, int extendHeight) {
 
     }
 
@@ -33,12 +33,12 @@ public class SimpleMultiPurposeListener implements OnMultiPurposeListener {
     }
 
     @Override
-    public void onFooterPulling(RefreshFooter footer, float percent, int offset, int headHeight, int extendHeight) {
+    public void onFooterPulling(RefreshFooter footer, float percent, int offset, int footerHeight, int extendHeight) {
 
     }
 
     @Override
-    public void onFooterReleasing(RefreshFooter footer, float percent, int offset, int headHeight, int extendHeight) {
+    public void onFooterReleasing(RefreshFooter footer, float percent, int offset, int footerHeight, int extendHeight) {
 
     }
 
@@ -53,12 +53,12 @@ public class SimpleMultiPurposeListener implements OnMultiPurposeListener {
     }
 
     @Override
-    public void onLoadmore(RefreshLayout refreshlayout) {
+    public void onRefresh(RefreshLayout refreshlayout) {
 
     }
 
     @Override
-    public void onRefresh(RefreshLayout refreshlayout) {
+    public void onLoadmore(RefreshLayout refreshlayout) {
 
     }
 

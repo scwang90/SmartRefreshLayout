@@ -36,7 +36,7 @@ public interface RefreshInternal extends OnStateChangedListener {
      * @param height HeaderHeight or FooterHeight
      * @param extendHeight extendHeaderHeight or extendFooterHeight
      */
-    void onSizeDefined(RefreshKernel kernel, int height, int extendHeight);
+    void onInitialized(RefreshKernel kernel, int height, int extendHeight);
 
     /**
      * 开始动画

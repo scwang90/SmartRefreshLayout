@@ -151,7 +151,7 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
     }
 
     @Override
-    public void onSizeDefined(RefreshKernel kernel, int height, int extendHeight) {
+    public void onInitialized(RefreshKernel kernel, int height, int extendHeight) {
         mRefreshKernel = kernel;
         mRefreshLayout = kernel.getRefreshLayout();
         mRefreshKernel.registHeaderHook(new RefreshLayoutHeaderHooker() {
