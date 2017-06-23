@@ -42,20 +42,7 @@ public class BasicUsingActivity extends AppCompatActivity {
             }
         });
 
-//        final RecyclerView recyclerView = (RecyclerView)findViewById(R.id.recycler);
-//        recyclerView.setItemAnimator(new DefaultItemAnimator());
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        recyclerView.addItemDecoration(new DividerItemDecoration(this, VERTICAL));
-//        recyclerView.setAdapter(mAdapter = new BaseRecyclerAdapter<Void>(simple_list_item_2) {
-//            @Override
-//            protected void onBindViewHolder(SmartViewHolder holder, Void model, int position) {
-//                holder.text(android.R.id.text1, String.format(Locale.CHINA, "第%02d条数据", position));
-//                holder.text(android.R.id.text2, String.format(Locale.CHINA, "这是测试的第%02d条数据", position));
-//                holder.textColorId(android.R.id.text2, R.color.colorTextAssistant);
-//            }
-//        });
-
-        ListView listView = (ListView) findViewById(R.id.recycler);
+        ListView listView = (ListView) findViewById(R.id.list);
         listView.setAdapter(mAdapter = new BaseRecyclerAdapter<Void>(simple_list_item_2) {
             @Override
             protected void onBindViewHolder(SmartViewHolder holder, Void model, int position) {
