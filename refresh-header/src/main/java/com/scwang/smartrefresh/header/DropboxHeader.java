@@ -91,6 +91,20 @@ public class DropboxHeader extends View implements RefreshHeader {
         } else {
             PathsDrawable drawable1 = new PathsDrawable();
             drawable1.parserPaths(
+                    "M3 2h18v20h-18z",
+                    "m4,1c-1.105,0 -2,0.895 -2,2v3,11 3,1c0,1.105 0.895,2 2,2h2,12 2c1.105,0 2,-0.895 2,-2v-1,-3 -11,-3c0,-1.105 -0.895,-2 -2,-2h-2,-12 -2zM3.5,3h1c0.276,0 0.5,0.224 0.5,0.5v1c0,0.276 -0.224,0.5 -0.5,0.5h-1c-0.276,0 -0.5,-0.224 -0.5,-0.5v-1c0,-0.276 0.224,-0.5 0.5,-0.5zM19.5,3h1c0.276,0 0.5,0.224 0.5,0.5v1c0,0.276 -0.224,0.5 -0.5,0.5h-1c-0.276,0 -0.5,-0.224 -0.5,-0.5v-1c0,-0.276 0.224,-0.5 0.5,-0.5zM3.5,6h1c0.276,0 0.5,0.224 0.5,0.5v1c0,0.276 -0.224,0.5 -0.5,0.5h-1c-0.276,0 -0.5,-0.224 -0.5,-0.5v-1c0,-0.276 0.224,-0.5 0.5,-0.5zM19.5,6h1c0.276,0 0.5,0.224 0.5,0.5v1c0,0.276 -0.224,0.5 -0.5,0.5h-1c-0.276,0 -0.5,-0.224 -0.5,-0.5v-1c0,-0.276 0.224,-0.5 0.5,-0.5zM3.5,9h1c0.276,0 0.5,0.224 0.5,0.5v1c0,0.276 -0.224,0.5 -0.5,0.5h-1c-0.276,0 -0.5,-0.224 -0.5,-0.5v-1c0,-0.276 0.224,-0.5 0.5,-0.5zM19.5,9h1c0.276,0 0.5,0.224 0.5,0.5v1c0,0.276 -0.224,0.5 -0.5,0.5h-1c-0.276,0 -0.5,-0.224 -0.5,-0.5v-1c0,-0.276 0.224,-0.5 0.5,-0.5zM3.5,12h1c0.276,0 0.5,0.224 0.5,0.5v1c0,0.276 -0.224,0.5 -0.5,0.5h-1c-0.276,0 -0.5,-0.224 -0.5,-0.5v-1c0,-0.276 0.224,-0.5 0.5,-0.5zM19.5,12h1c0.276,0 0.5,0.224 0.5,0.5v1c0,0.276 -0.224,0.5 -0.5,0.5h-1c-0.276,0 -0.5,-0.224 -0.5,-0.5v-1c0,-0.276 0.224,-0.5 0.5,-0.5zM3.5,15h1c0.276,0 0.5,0.224 0.5,0.5v1c0,0.276 -0.224,0.5 -0.5,0.5h-1c-0.276,0 -0.5,-0.224 -0.5,-0.5v-1c0,-0.276 0.224,-0.5 0.5,-0.5zM19.5,15h1c0.276,0 0.5,0.224 0.5,0.5v1c0,0.276 -0.224,0.5 -0.5,0.5h-1c-0.276,0 -0.5,-0.224 -0.5,-0.5v-1c0,-0.276 0.224,-0.5 0.5,-0.5zM3.5,18h1c0.276,0 0.5,0.224 0.5,0.5v1c0,0.276 -0.224,0.5 -0.5,0.5h-1c-0.276,0 -0.5,-0.224 -0.5,-0.5v-1c0,-0.276 0.224,-0.5 0.5,-0.5zM19.5,18h1c0.276,0 0.5,0.224 0.5,0.5v1c0,0.276 -0.224,0.5 -0.5,0.5h-1c-0.276,0 -0.5,-0.224 -0.5,-0.5v-1c0,-0.276 0.224,-0.5 0.5,-0.5z"
+            );
+            drawable1.parserColors(
+                    0xffecf0f1,
+                    0xfffc4108
+            );
+            mDrawable1 = drawable1;
+        }
+        if (ta.hasValue(R.styleable.DropboxHeader_dhDrawable2)) {
+            mDrawable2 = ta.getDrawable(R.styleable.DropboxHeader_dhDrawable2);
+        } else {
+            PathsDrawable drawable2 = new PathsDrawable();
+            drawable2.parserPaths(
                     "M49,16.5l-14,-14l-27,0l0,53l41,0z",
                     "m16,23.5h25c0.55,0 1,-0.45 1,-1 0,-0.55 -0.45,-1 -1,-1L16,21.5c-0.55,0 -1,0.45 -1,1 0,0.55 0.45,1 1,1z",
                     "m16,15.5h10c0.55,0 1,-0.45 1,-1 0,-0.55 -0.45,-1 -1,-1L16,13.5c-0.55,0 -1,0.45 -1,1 0,0.55 0.45,1 1,1z",
@@ -99,32 +113,18 @@ public class DropboxHeader extends View implements RefreshHeader {
                     "M41,45.5L16,45.5c-0.55,0 -1,0.45 -1,1 0,0.55 0.45,1 1,1h25c0.55,0 1,-0.45 1,-1 0,-0.55 -0.45,-1 -1,-1z",
                     "M49,16.5l-14,-14l0,14z"
             );
-            drawable1.parserColors(
+            drawable2.parserColors(
                     0xfffed469,
                     0xffd5ae57
             );
-            mDrawable1 = drawable1;
-        }
-        if (ta.hasValue(R.styleable.DropboxHeader_dhDrawable2)) {
-            mDrawable2 = ta.getDrawable(R.styleable.DropboxHeader_dhDrawable2);
-        } else {
-            PathsDrawable drawable2 = new PathsDrawable();
-            drawable2.parserPaths("M6.021,2.188L6.021,11.362C5.46,11.327 4.843,11.414 4.229,11.663C2.624,12.312 1.696,13.729 2.155,14.825C2.62,15.924 4.294,16.284 5.898,15.634C7.131,15.134 7.856,14.184 7.965,13.272L7.958,4.387L15.02,3.028L15.02,9.406C14.422,9.343 13.746,9.432 13.076,9.703C11.471,10.353 10.544,11.77 11.004,12.866C11.467,13.964 13.141,14.325 14.746,13.675C15.979,13.174 16.836,12.224 16.947,11.313L16.958,0.002L6.021,2.188L6.021,2.188Z");
-            drawable2.parserColors(0xff98d761);
             mDrawable2 = drawable2;
         }
         if (ta.hasValue(R.styleable.DropboxHeader_dhDrawable3)) {
             mDrawable3 = ta.getDrawable(R.styleable.DropboxHeader_dhDrawable3);
         } else {
             PathsDrawable drawable3 = new PathsDrawable();
-            drawable3.parserPaths(
-                "M3 2h18v20h-18z",
-                "m4,1c-1.105,0 -2,0.895 -2,2v3,11 3,1c0,1.105 0.895,2 2,2h2,12 2c1.105,0 2,-0.895 2,-2v-1,-3 -11,-3c0,-1.105 -0.895,-2 -2,-2h-2,-12 -2zM3.5,3h1c0.276,0 0.5,0.224 0.5,0.5v1c0,0.276 -0.224,0.5 -0.5,0.5h-1c-0.276,0 -0.5,-0.224 -0.5,-0.5v-1c0,-0.276 0.224,-0.5 0.5,-0.5zM19.5,3h1c0.276,0 0.5,0.224 0.5,0.5v1c0,0.276 -0.224,0.5 -0.5,0.5h-1c-0.276,0 -0.5,-0.224 -0.5,-0.5v-1c0,-0.276 0.224,-0.5 0.5,-0.5zM3.5,6h1c0.276,0 0.5,0.224 0.5,0.5v1c0,0.276 -0.224,0.5 -0.5,0.5h-1c-0.276,0 -0.5,-0.224 -0.5,-0.5v-1c0,-0.276 0.224,-0.5 0.5,-0.5zM19.5,6h1c0.276,0 0.5,0.224 0.5,0.5v1c0,0.276 -0.224,0.5 -0.5,0.5h-1c-0.276,0 -0.5,-0.224 -0.5,-0.5v-1c0,-0.276 0.224,-0.5 0.5,-0.5zM3.5,9h1c0.276,0 0.5,0.224 0.5,0.5v1c0,0.276 -0.224,0.5 -0.5,0.5h-1c-0.276,0 -0.5,-0.224 -0.5,-0.5v-1c0,-0.276 0.224,-0.5 0.5,-0.5zM19.5,9h1c0.276,0 0.5,0.224 0.5,0.5v1c0,0.276 -0.224,0.5 -0.5,0.5h-1c-0.276,0 -0.5,-0.224 -0.5,-0.5v-1c0,-0.276 0.224,-0.5 0.5,-0.5zM3.5,12h1c0.276,0 0.5,0.224 0.5,0.5v1c0,0.276 -0.224,0.5 -0.5,0.5h-1c-0.276,0 -0.5,-0.224 -0.5,-0.5v-1c0,-0.276 0.224,-0.5 0.5,-0.5zM19.5,12h1c0.276,0 0.5,0.224 0.5,0.5v1c0,0.276 -0.224,0.5 -0.5,0.5h-1c-0.276,0 -0.5,-0.224 -0.5,-0.5v-1c0,-0.276 0.224,-0.5 0.5,-0.5zM3.5,15h1c0.276,0 0.5,0.224 0.5,0.5v1c0,0.276 -0.224,0.5 -0.5,0.5h-1c-0.276,0 -0.5,-0.224 -0.5,-0.5v-1c0,-0.276 0.224,-0.5 0.5,-0.5zM19.5,15h1c0.276,0 0.5,0.224 0.5,0.5v1c0,0.276 -0.224,0.5 -0.5,0.5h-1c-0.276,0 -0.5,-0.224 -0.5,-0.5v-1c0,-0.276 0.224,-0.5 0.5,-0.5zM3.5,18h1c0.276,0 0.5,0.224 0.5,0.5v1c0,0.276 -0.224,0.5 -0.5,0.5h-1c-0.276,0 -0.5,-0.224 -0.5,-0.5v-1c0,-0.276 0.224,-0.5 0.5,-0.5zM19.5,18h1c0.276,0 0.5,0.224 0.5,0.5v1c0,0.276 -0.224,0.5 -0.5,0.5h-1c-0.276,0 -0.5,-0.224 -0.5,-0.5v-1c0,-0.276 0.224,-0.5 0.5,-0.5z"
-            );
-            drawable3.parserColors(
-                    0xffecf0f1,
-                    0xfffc4108
-            );
+            drawable3.parserPaths("M6.021,2.188L6.021,11.362C5.46,11.327 4.843,11.414 4.229,11.663C2.624,12.312 1.696,13.729 2.155,14.825C2.62,15.924 4.294,16.284 5.898,15.634C7.131,15.134 7.856,14.184 7.965,13.272L7.958,4.387L15.02,3.028L15.02,9.406C14.422,9.343 13.746,9.432 13.076,9.703C11.471,10.353 10.544,11.77 11.004,12.866C11.467,13.964 13.141,14.325 14.746,13.675C15.979,13.174 16.836,12.224 16.947,11.313L16.958,0.002L6.021,2.188L6.021,2.188Z");
+            drawable3.parserColors(0xff98d761);
             mDrawable3 = drawable3;
         }
         ta.recycle();
@@ -186,7 +186,6 @@ public class DropboxHeader extends View implements RefreshHeader {
 
         if (isInEditMode()) {
             mDropOutPercent = 2.5f;
-            mDropOutOverFlow = true;
         }
         if (mDropOutPercent > 0) {
             canvas.clipPath(generateClipPath(body, width));
@@ -205,20 +204,17 @@ public class DropboxHeader extends View implements RefreshHeader {
             Rect bounds3 = mDrawable3.getBounds();
             bounds3.offsetTo(width / 2 - bounds3.width() / 2, (int) ((body.boxCenterY - bounds3.height() / 2 + bounds3.height()) * percent3) - bounds3.height());
             mDrawable3.draw(canvas);
-        }
 
-        if (mDropOutOverFlow) {
-            Rect bounds1 = mDrawable1.getBounds();
-            bounds1.offsetTo(width / 2 - bounds1.width() / 2, ((body.boxCenterY - bounds1.height() / 2)));
-            mDrawable1.draw(canvas);
+            if (mDropOutOverFlow) {
+                bounds1.offsetTo(width / 2 - bounds1.width() / 2, ((body.boxCenterY - bounds1.height() / 2)));
+                mDrawable1.draw(canvas);
 
-            Rect bounds2 = mDrawable2.getBounds();
-            bounds2.offsetTo(width / 2 - bounds2.width() / 2, ((body.boxCenterY - bounds2.height() / 2)));
-            mDrawable2.draw(canvas);
+                bounds2.offsetTo(width / 2 - bounds2.width() / 2, ((body.boxCenterY - bounds2.height() / 2)));
+                mDrawable2.draw(canvas);
 
-            Rect bounds3 = mDrawable3.getBounds();
-            bounds3.offsetTo(width / 2 - bounds3.width() / 2, ((body.boxCenterY - bounds3.height() / 2)));
-            mDrawable3.draw(canvas);
+                bounds3.offsetTo(width / 2 - bounds3.width() / 2, ((body.boxCenterY - bounds3.height() / 2)));
+                mDrawable3.draw(canvas);
+            }
         }
 
     }
