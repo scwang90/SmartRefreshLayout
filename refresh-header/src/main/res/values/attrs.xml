@@ -66,4 +66,10 @@
     </declare-styleable>
 
 
+    <declare-styleable name="DropboxHeader">
+        <attr name="dhDrawable1" format="reference" />
+        <attr name="dhDrawable2" format="reference" />
+        <attr name="dhDrawable3" format="reference" />
+    </declare-styleable>
+
 </resources>

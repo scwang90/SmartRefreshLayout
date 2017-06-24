@@ -586,7 +586,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         if (mHeaderBackgroundColor != 0 && (mSpinner > 0 || isPreviewInEditMode)) {
             mPaint.setColor(mHeaderBackgroundColor);
             canvas.drawRect(0, 0, getWidth(), (isPreviewInEditMode) ? mHeaderHeight : mSpinner, mPaint);
-        } else if (mFooterBackgroundColor != 0 && mSpinner < 0 || isPreviewInEditMode) {
+        } else if (mFooterBackgroundColor != 0 && (mSpinner < 0 || isPreviewInEditMode)) {
             mPaint.setColor(mFooterBackgroundColor);
             canvas.drawRect(0, 0, getWidth(), getHeight() + (isPreviewInEditMode ? (-mFooterHeight) : mSpinner), mPaint);
         }
