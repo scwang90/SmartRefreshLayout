@@ -31,7 +31,7 @@ public interface RefreshInternal extends OnStateChangedListener {
     void setPrimaryColors(int... colors);
 
     /**
-     * 尺寸定义完成 （如果高度不改变，只调用一次）
+     * 尺寸定义完成 （如果高度不改变（代码修改：setHeader），只调用一次, 在RefreshLayout#onMeasure中调用）
      * @param kernel RefreshKernel
      * @param height HeaderHeight or FooterHeight
      * @param extendHeight extendHeaderHeight or extendFooterHeight
@@ -45,6 +45,7 @@ public interface RefreshInternal extends OnStateChangedListener {
      * @param extendHeight extendHeaderHeight or extendFooterHeight
      */
     void onStartAnimator(RefreshLayout layout, int height, int extendHeight);
+
     /**
      * 动画结束
      * @param layout RefreshLayout

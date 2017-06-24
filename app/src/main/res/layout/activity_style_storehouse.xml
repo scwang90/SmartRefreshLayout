@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="25dp"
             android:paddingBottom="25dp"
-            app:shhText="SmartRefreshLayout"
+            app:shhText="StoreHouse"
             app:shhLineWidth="2dp"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler"

@@ -16,11 +16,14 @@
         app:srlPrimaryColor="@color/colorPrimary"
         app:srlAccentColor="@android:color/white"
         app:srlEnableLoadmore="false">
-        <com.scwang.smartrefresh.header.StoreHouseHeader
+        <com.scwang.smartrefresh.header.DropboxHeader
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="25dp"
-            android:paddingBottom="25dp"/>
+            android:layout_height="match_parent" />
+        <!--<com.scwang.smartrefresh.header.StoreHouseHeader-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:paddingTop="25dp"-->
+            <!--android:paddingBottom="25dp"/>-->
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler"
             android:layout_width="match_parent"
