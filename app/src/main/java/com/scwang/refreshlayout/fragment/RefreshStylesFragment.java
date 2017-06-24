@@ -20,6 +20,7 @@ import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.activity.style.BezierStyleActivity;
 import com.scwang.refreshlayout.activity.style.CircleStyleActivity;
 import com.scwang.refreshlayout.activity.style.ClassicsStyleActivity;
+import com.scwang.refreshlayout.activity.style.DropboxStyleActivity;
 import com.scwang.refreshlayout.activity.style.FlyRefreshStyleActivity;
 import com.scwang.refreshlayout.activity.style.FunGameBattleCityStyleActivity;
 import com.scwang.refreshlayout.activity.style.FunGameHitBlockStyleActivity;
@@ -48,6 +49,7 @@ import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 public class RefreshStylesFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private enum Item {
+        Dropbox("掉落盒子", DropboxStyleActivity.class),
         FlyRefresh("纸飞机", FlyRefreshStyleActivity.class),
         WaveSwipe("水波", WaveSwipStyleActivity.class),
         WaterDrop("苹果水滴风格", WaterDropStyleActivity.class),

@@ -34,6 +34,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.style.WaveSwipStyleActivity"
+            android:label="@string/title_activity_style_wave_swip"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.style.MaterialStyleActivity"
@@ -73,6 +74,11 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.style.StoreHouseStyleActivity"
+            android:label="@string/title_activity_style_storehouse"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.style.DropboxStyleActivity"
+            android:label="@string/title_activity_style_dropbox"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.using.BasicUsingActivity"

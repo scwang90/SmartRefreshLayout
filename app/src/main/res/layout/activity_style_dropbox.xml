@@ -1,19 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.scwang.refreshlayout.fragment.RefreshStylesFragment">
+    tools:context="com.scwang.refreshlayout.activity.style.BezierStyleActivity"
+    android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
-        app:title="@string/fragment_refresh_styles"/>
+        android:id="@+id/toolbar"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:title="@string/title_activity_style_dropbox"/>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/smart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srlEnableHeaderTranslationContent="true">
+        app:srlPrimaryColor="@color/colorPrimary"
+        app:srlAccentColor="@android:color/white"
+        app:srlEnableHeaderTranslationContent="true"
+        app:srlEnableLoadmore="false">
         <com.scwang.smartrefresh.header.DropboxHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -23,6 +29,5 @@
             android:layout_height="match_parent"
             tools:listitem="@android:layout/simple_list_item_2"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-
 
 </LinearLayout>

@@ -172,4 +172,5 @@
         refreshLayout.setRefreshFooter(new BallPulseFooter(this));\n\n
     </string>
     <string name="title_activity_using_listener">多功能监听器</string>
+    <string name="title_activity_style_dropbox">掉落盒子</string>
 </resources>
