@@ -31,25 +31,32 @@
 ![](art/gif_Dropbox.gif)
 
 上面这两个是我自己实现的Header，设计来自下面两个网址：[Refresh-your-delivery](https://dribbble.com/shots/2753803-Refresh-your-delivery)，[Dropbox-Refresh](https://dribbble.com/shots/3470499-Dropbox-Refresh)
+
 下面的Header是我把github上其他优秀的Header进行的整理和集合还有优化：
 
 ![](art/gif_BezierRadar.gif) 
 ![](art/gif_Circle.gif)
+
 整理来自：[TwinklingRefreshLayout](https://github.com/lcodecorex/TwinklingRefreshLayout/blob/master/art/gif_recyclerview2.gif)，[Pull Down To Refresh](https://dribbble.com/shots/1797373-Pull-Down-To-Refresh)
 ![](art/gif_FlyRefresh.gif)
 ![](art/gif_Classics.gif)
+
 整理来自：[FlyRefresh](https://github.com/race604/FlyRefresh)，[ClassicsHeader](#1)
 ![](art/gif_Phoenix.gif)
 ![](art/gif_Taurus.gif)
+
 整理来自：[Yalantis/Phoenix](https://github.com/Yalantis/Phoenix)，[Yalantis/Taurus](https://github.com/Yalantis/Taurus)
 ![](art/gif_BattleCity.gif)
 ![](art/gif_HitBlock.gif)
+
 整理来自：[FunGame/BattleCity](https://github.com/Hitomis/FunGameRefresh)，[FunGame/HitBlock](https://github.com/Hitomis/FunGameRefresh)
 ![](art/gif_WaveSwipe.gif)
 ![](art/gif_Material.gif)
+
 整理来自：[WaveSwipeRefreshLayout](https://github.com/recruit-lifestyle/WaveSwipeRefreshLayout)，[MaterialHeader](#1)
 ![](art/gif_StoreHouse.gif)
 ![](art/gif_WaterDrop.gif)
+
 整理来自：[Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)，[WaterDrop](https://github.com/THEONE10211024/WaterDropListView)
 
 
