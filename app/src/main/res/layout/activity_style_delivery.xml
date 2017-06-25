@@ -1,19 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.scwang.refreshlayout.fragment.RefreshStylesFragment">
+    android:background="#f0f0f0"
+    tools:context="com.scwang.refreshlayout.activity.style.DeliveryStyleActivity"
+    android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
-        app:title="@string/fragment_refresh_styles"/>
+        android:id="@+id/toolbar"
+        android:background="#fff"
+        app:titleTextColor="#fbbb"
+        app:navigationIcon="@drawable/ic_arrow_back_gray_24dp"
+        app:title="@string/title_activity_style_delivery"/>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/smart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srlEnableHeaderTranslationContent="true">
+        android:padding="@dimen/padding_common_d"
+        app:srlEnableHeaderTranslationContent="true"
+        app:srlDisableContentWhenRefresh="true"
+        app:srlEnableLoadmore="false">
         <com.scwang.smartrefresh.header.DeliveryHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -21,8 +30,9 @@
             android:id="@+id/recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@android:layout/simple_list_item_2"/>
+            android:clipToPadding="false"
+            android:clipChildren="false"
+            tools:listitem="@layout/listitem_delivery"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-
 
 </LinearLayout>

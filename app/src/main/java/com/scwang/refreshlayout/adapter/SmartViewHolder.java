@@ -1,6 +1,7 @@
 package com.scwang.refreshlayout.adapter;
 
 import android.content.res.Resources;
+import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
@@ -49,6 +50,14 @@ public class SmartViewHolder extends RecyclerView.ViewHolder implements View.OnC
         View view = findViewById(id);
         if (view instanceof TextView) {
             ((TextView) view).setText(sequence);
+        }
+        return this;
+    }
+
+    public SmartViewHolder text(int id,@StringRes int stringRes) {
+        View view = findViewById(id);
+        if (view instanceof TextView) {
+            ((TextView) view).setText(stringRes);
         }
         return this;
     }

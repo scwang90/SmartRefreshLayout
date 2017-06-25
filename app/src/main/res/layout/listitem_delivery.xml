@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:cardUseCompatPadding="true"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="1dp"
+    app:cardMaxElevation="2dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context="com.scwang.refreshlayout.activity.using.ListenerUsingActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_common">
+
+        <View
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="#fff0f0f0"
+            android:layout_marginEnd="@dimen/padding_common"
+            android:layout_marginRight="@dimen/padding_common"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <View
+                android:layout_width="200dp"
+                android:layout_height="10dp"
+                android:background="#fff0f0f0"
+                android:layout_marginTop="@dimen/padding_common"/>
+            <View
+                android:layout_width="100dp"
+                android:layout_height="10dp"
+                android:background="#fff0f0f0"
+                android:layout_marginTop="30dp"/>
+            <View
+                android:layout_width="100dp"
+                android:layout_height="10dp"
+                android:background="#fff0f0f0"
+                android:layout_marginTop="@dimen/padding_common"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

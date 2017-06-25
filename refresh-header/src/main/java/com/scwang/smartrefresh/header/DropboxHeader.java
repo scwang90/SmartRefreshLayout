@@ -35,6 +35,7 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 public class DropboxHeader extends View implements RefreshHeader {
 
+    //<editor-fold desc="Field">
     private Path mPath;
     private Paint mPaint;
     private BoxBody mBoxBody;
@@ -49,6 +50,7 @@ public class DropboxHeader extends View implements RefreshHeader {
     private ValueAnimator mReboundAnimator;
     private ValueAnimator mDropOutAnimator;
     private RefreshState mState;
+    //</editor-fold>
 
     //<editor-fold desc="View">
     public DropboxHeader(Context context) {
@@ -219,6 +221,9 @@ public class DropboxHeader extends View implements RefreshHeader {
 
     }
 
+    //</editor-fold>
+
+    //<editor-fold desc="Description">
     private int generateSideLength() {
         return mHeaderHeight / 5;
     }
@@ -311,7 +316,6 @@ public class DropboxHeader extends View implements RefreshHeader {
         mPath.close();
         return mPath;
     }
-
     //</editor-fold>
 
     //<editor-fold desc="RefreshHeader">

@@ -163,6 +163,29 @@ public class PathsDrawable extends Drawable {
         return getBounds().height();
     }
 
+    public void setGeometricWidth(int width) {
+        Rect bounds = getBounds();
+        float rate = 1f * width / bounds.width();
+        setBounds(
+                (int) (bounds.left * rate),
+                (int) (bounds.top * rate),
+                (int) (bounds.right * rate),
+                (int) (bounds.bottom * rate)
+        );
+
+    }
+
+    public void setGeometricHeight(int height) {
+        Rect bounds = getBounds();
+        float rate = 1f * height / bounds.height();
+        setBounds(
+                (int) (bounds.left * rate),
+                (int) (bounds.top * rate),
+                (int) (bounds.right * rate),
+                (int) (bounds.bottom * rate)
+        );
+    }
+
     //<editor-fold desc="CachedBitmap">
 
     private Bitmap mCachedBitmap;

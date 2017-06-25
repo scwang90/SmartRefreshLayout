@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -20,6 +21,7 @@ import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.activity.style.BezierStyleActivity;
 import com.scwang.refreshlayout.activity.style.CircleStyleActivity;
 import com.scwang.refreshlayout.activity.style.ClassicsStyleActivity;
+import com.scwang.refreshlayout.activity.style.DeliveryStyleActivity;
 import com.scwang.refreshlayout.activity.style.DropboxStyleActivity;
 import com.scwang.refreshlayout.activity.style.FlyRefreshStyleActivity;
 import com.scwang.refreshlayout.activity.style.FunGameBattleCityStyleActivity;
@@ -49,24 +51,25 @@ import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 public class RefreshStylesFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private enum Item {
-        Dropbox("掉落盒子", DropboxStyleActivity.class),
-        FlyRefresh("纸飞机", FlyRefreshStyleActivity.class),
-        WaveSwipe("水波", WaveSwipStyleActivity.class),
-        WaterDrop("苹果水滴风格", WaterDropStyleActivity.class),
-        Material("官方主题", MaterialStyleActivity.class),
-        Phoenix("金色校园", PhoenixStyleActivity.class),
-        Taurus("冲上云霄", TaurusStyleActivity.class),
-        Bezier("贝塞尔雷达", BezierStyleActivity.class),
-        Circle("弹出圆圈", CircleStyleActivity.class),
-        FunGameHitBlock("游戏-打砖块", FunGameHitBlockStyleActivity.class),
-        FunGameBattleCity("游戏-战争城市", FunGameBattleCityStyleActivity.class),
-        StoreHouse("StoreHouse", StoreHouseStyleActivity.class),
-        Classics("经典风格", ClassicsStyleActivity.class),
+        Delivery(R.string.title_activity_style_delivery,DeliveryStyleActivity.class),
+        Dropbox(R.string.title_activity_style_dropbox, DropboxStyleActivity.class),
+        FlyRefresh(R.string.title_activity_style_flyrefresh, FlyRefreshStyleActivity.class),
+        WaveSwipe(R.string.title_activity_style_wave_swip, WaveSwipStyleActivity.class),
+        WaterDrop(R.string.title_activity_style_water_drop, WaterDropStyleActivity.class),
+        Material(R.string.title_activity_style_material, MaterialStyleActivity.class),
+        Phoenix(R.string.title_activity_style_phoenix, PhoenixStyleActivity.class),
+        Taurus(R.string.title_activity_style_taurus, TaurusStyleActivity.class),
+        Bezier(R.string.title_activity_style_bezier, BezierStyleActivity.class),
+        Circle(R.string.title_activity_style_circle, CircleStyleActivity.class),
+        FunGameHitBlock(R.string.title_activity_style_fungame_hitblock, FunGameHitBlockStyleActivity.class),
+        FunGameBattleCity(R.string.title_activity_style_fungame_battlecity, FunGameBattleCityStyleActivity.class),
+        StoreHouse(R.string.title_activity_style_storehouse, StoreHouseStyleActivity.class),
+        Classics(R.string.title_activity_style_classics, ClassicsStyleActivity.class),
         ;
-        public String name;
+        public int nameId;
         public Class<?> clazz;
-        Item(String name, Class<?> clazz) {
-            this.name = name;
+        Item(@StringRes int nameId, Class<?> clazz) {
+            this.nameId = nameId;
             this.clazz = clazz;
         }
 
@@ -91,7 +94,7 @@ public class RefreshStylesFragment extends Fragment implements AdapterView.OnIte
                 @Override
                 protected void onBindViewHolder(SmartViewHolder holder, Item model, int position) {
                     holder.text(android.R.id.text1, model.name());
-                    holder.text(android.R.id.text2, model.name);
+                    holder.text(android.R.id.text2, model.nameId);
                     holder.textColorId(android.R.id.text2, R.color.colorTextAssistant);
                 }
             });

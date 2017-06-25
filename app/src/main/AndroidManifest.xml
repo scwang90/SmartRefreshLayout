@@ -81,6 +81,10 @@
             android:label="@string/title_activity_style_dropbox"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.style.DeliveryStyleActivity"
+            android:label="@string/title_activity_style_dropbox"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.using.BasicUsingActivity"
             android:label="@string/title_activity_using_basic"
             android:screenOrientation="portrait"/>

@@ -56,7 +56,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<SmartV
 
     @Override
     public void onBindViewHolder(SmartViewHolder holder, int position) {
-        onBindViewHolder(holder, mList.get(position), position);
+        onBindViewHolder(holder, position < mList.size() ? mList.get(position) : null, position);
     }
 
     protected abstract void onBindViewHolder(SmartViewHolder holder, T model, int position);
