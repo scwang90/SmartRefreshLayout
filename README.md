@@ -31,7 +31,6 @@
 ![](art/gif_Dropbox.gif)
 
 上面这两个是我自己实现的Header，设计来自下面两个网址：[Refresh-your-delivery](https://dribbble.com/shots/2753803-Refresh-your-delivery)，[Dropbox-Refresh](https://dribbble.com/shots/3470499-Dropbox-Refresh)
-
 下面的Header是我把github上其他优秀的Header进行的整理和集合还有优化：
 
 ![](art/gif_BezierRadar.gif) 
