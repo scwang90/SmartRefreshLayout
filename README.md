@@ -27,6 +27,13 @@
 ## Demo
 [下载 APK-Demo](art/app-debug.apk)
 
+![](art/gif_Delivery.gif) 
+![](art/gif_Dropbox.gif)
+
+这两个是我自己实现的Header，设计来自下面两个网址：[Refresh-your-delivery](https://dribbble.com/shots/2753803-Refresh-your-delivery)，[Dropbox-Refresh](https://dribbble.com/shots/3470499-Dropbox-Refresh)
+
+下面的Header是我把github上其他优秀的Header进行的整理和集合还有优化：
+
 ![](art/gif_BezierRadar.gif) 
 ![](art/gif_Circle.gif)
 ![](art/gif_FlyRefresh.gif)

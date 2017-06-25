@@ -150,14 +150,14 @@ public class DeliveryHeader extends View implements RefreshHeader {
 
         final int centerY = height - mHeaderHeight / 2 + shake;
         final int centerYBox = centerY + (mHeaderHeight / 2 - mBoxDrawable.height() +  mBoxDrawable.height() / 4)
-                - Math.min(mHeaderHeight / 2 - mBoxDrawable.height() +  mBoxDrawable.height() / 4, (int) (mAppreciation * 100));
+                - Math.min(mHeaderHeight / 2 - mBoxDrawable.height() +  mBoxDrawable.height() / 4, DensityUtil.dp2px(mAppreciation * 100));
         mBoxDrawable.getBounds().offsetTo(width / 2 - mBoxDrawable.width() / 2, centerYBox - mBoxDrawable.height() / 4);
         mBoxDrawable.draw(canvas);
 
         if (mState == RefreshState.Refreshing
                 || mState == RefreshState.RefreshFinish) {
             Rect bounds = mUmbrellaDrawable.getBounds();
-            final int centerYUmbrella = centerY - mHeaderHeight + Math.min(mHeaderHeight, (int)(mAppreciation * 100));
+            final int centerYUmbrella = centerY - mHeaderHeight + Math.min(mHeaderHeight, DensityUtil.dp2px(mAppreciation * 100));
             mUmbrellaDrawable.getBounds().offsetTo(width / 2 - bounds.width() / 2, centerYUmbrella - bounds.height());
             mUmbrellaDrawable.draw(canvas);
         }
