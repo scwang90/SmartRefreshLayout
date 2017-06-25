@@ -19,7 +19,6 @@
         android:id="@+id/smart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/padding_common_d"
         app:srlEnableHeaderTranslationContent="true"
         app:srlDisableContentWhenRefresh="true"
         app:srlEnableLoadmore="false">
@@ -31,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:clipChildren="false"
+            android:padding="@dimen/padding_common_d"
             tools:listitem="@layout/listitem_delivery"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
