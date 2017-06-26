@@ -10,7 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 import com.scwang.refreshlayout.R;
@@ -123,7 +122,7 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
                  * 由于是后面才设置，需要手动更改视图的位置
                  * 如果在 onCreate 或者 xml 中设置好[SpinnerStyle] 就不用手动调整位置了
                  */
-                ((ViewGroup)mRefreshLayout).bringChildToFront(mRecyclerView);
+                mRefreshLayout.getLayout().bringChildToFront(mRecyclerView);
                 break;
             case 尺寸拉伸:
                 mClassicsHeader.setSpinnerStyle(SpinnerStyle.Scale);
@@ -133,7 +132,7 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
                 break;
             case 默认主题:
                 setThemeColor(R.color.colorPrimary, R.color.colorPrimaryDark);
-                ((View)mRefreshLayout).setBackgroundResource(android.R.color.transparent);
+                mRefreshLayout.getLayout().setBackgroundResource(android.R.color.transparent);
                 mRefreshLayout.setPrimaryColorsId(android.R.color.transparent, android.R.color.tertiary_text_dark);
                 break;
             case 蓝色主题:
@@ -158,7 +157,6 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
     private void setThemeColor(int colorPrimary, int colorPrimaryDark) {
         mToolbar.setBackgroundResource(colorPrimary);
         mRefreshLayout.setPrimaryColorsId(colorPrimary, android.R.color.white);
-        ((View)mRefreshLayout).setBackgroundResource(colorPrimary);
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setStatusBarColor(ContextCompat.getColor(this, colorPrimaryDark));
         }
