@@ -17,17 +17,17 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 
 public interface RefreshLayout {
 
-    RefreshLayout setFooterHeight(float heightDp);
+    RefreshLayout setFooterHeight(float dp);
 
-    RefreshLayout setFooterHeight(int heightPx);
+    RefreshLayout setFooterHeight(int px);
 
-    RefreshLayout setHeaderHeight(float heightDp);
+    RefreshLayout setHeaderHeight(float dp);
 
-    RefreshLayout setHeaderHeight(int heightPx);
+    RefreshLayout setHeaderHeight(int px);
 
-    RefreshLayout setExtendFooterRate(float rate);
+    RefreshLayout setHeaderMaxDragRate(float rate);
 
-    RefreshLayout setExtendHeaderRate(float rate);
+    RefreshLayout setFooterMaxDragRate(float rate);
 
     RefreshLayout setReboundInterpolator(Interpolator interpolator);
 
@@ -62,8 +62,6 @@ public interface RefreshLayout {
     RefreshLayout setPrimaryColorsId(int... primaryColorId);
 
     RefreshLayout setPrimaryColors(int... colors);
-
-    RefreshLayout setHeaderExtendRate(float rate);
 
     RefreshLayout setLoadmoreFinished(boolean finished);
 
