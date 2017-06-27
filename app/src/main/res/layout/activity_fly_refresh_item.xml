@@ -54,7 +54,7 @@
             android:layout_centerVertical="true"
             android:contentDescription="@string/app_name"
             android:scaleType="centerInside"
-            app:srcCompat="@drawable/ic_info_gray_24dp" />
+            app:srcCompat="@drawable/ic_fly_refresh_info" />
     </RelativeLayout>
 
 

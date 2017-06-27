@@ -6,12 +6,15 @@ android {
     buildToolsVersion "25.0.3"
     defaultConfig {
         applicationId "com.scwang.refreshlayout"
-        minSdkVersion 14
+        minSdkVersion 15
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+
+        renderscriptTargetApi 25
+        renderscriptSupportModeEnabled true    // Enable RS support
     }
     buildTypes {
         release {
@@ -36,11 +39,13 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:cardview-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
-    compile 'com.android.support:support-v4:25.3.1'
-    compile 'com.android.support:support-vector-drawable:25.3.1'
-    compile 'com.android.support:recyclerview-v7:25.3.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+//    compile 'com.android.support:support-v4:25.3.1'
+//    compile 'com.android.support:support-vector-drawable:25.3.1'
+//    compile 'com.android.support:recyclerview-v7:25.3.1'
+//    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.github.mmin18:realtimeblurview:1.0.6'
+    compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'jp.wasabeef:recyclerview-animators:2.2.6'
-    compile 'com.eftimoff:android-pathview:1.0.8@aar'
+    compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
     testCompile 'junit:junit:4.12'
 }

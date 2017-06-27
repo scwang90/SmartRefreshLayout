@@ -10,15 +10,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.scwang.refreshlayout.R;
+import com.scwang.refreshlayout.fragment.RefreshPractiveFragment;
 import com.scwang.refreshlayout.fragment.RefreshStylesFragment;
 import com.scwang.refreshlayout.fragment.RefreshUsingFragment;
 
 public class IndexMainActivity extends AppCompatActivity implements OnNavigationItemSelectedListener {
 
     private enum TabFragment {
-        styles(R.id.navigation_home,RefreshStylesFragment.class),
-        functions(R.id.navigation_using,RefreshUsingFragment.class),
-        about(R.id.navigation_notifications,RefreshStylesFragment.class);
+        about(R.id.navigation_practice,RefreshPractiveFragment.class),
+        styles(R.id.navigation_style,RefreshStylesFragment.class),
+        functions(R.id.navigation_using,RefreshUsingFragment.class)
+        ;
 
         private final int menuId;
         private final Class<? extends Fragment> clazz;
@@ -65,7 +67,7 @@ public class IndexMainActivity extends AppCompatActivity implements OnNavigation
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this);
-        navigation.setSelectedItemId(R.id.navigation_home);
+        navigation.setSelectedItemId(R.id.navigation_style);
     }
 
     @Override

@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class SmartViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -66,6 +67,14 @@ public class SmartViewHolder extends RecyclerView.ViewHolder implements View.OnC
         View view = findViewById(id);
         if (view instanceof TextView) {
             ((TextView) view).setTextColor(ContextCompat.getColor(view.getContext(), colorId));
+        }
+        return this;
+    }
+
+    public SmartViewHolder image(int id, int imageId) {
+        View view = findViewById(id);
+        if (view instanceof ImageView) {
+            ((ImageView) view).setImageResource(imageId);
         }
         return this;
     }

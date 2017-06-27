@@ -31,7 +31,7 @@
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:padding="@dimen/padding_common_d"
-            tools:listitem="@layout/listitem_delivery"/>
+            tools:listitem="@layout/listitem_style_delivery"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

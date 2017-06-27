@@ -46,7 +46,7 @@ public class RefreshHeaderWrapper implements RefreshHeader {
         }
         ViewGroup.LayoutParams params = mWrapperView.getLayoutParams();
         if (params != null) {
-            if (params.height == 0) {
+            if (params.height == ViewGroup.LayoutParams.MATCH_PARENT) {
                 return mSpinnerStyle = SpinnerStyle.Scale;
             }
         }

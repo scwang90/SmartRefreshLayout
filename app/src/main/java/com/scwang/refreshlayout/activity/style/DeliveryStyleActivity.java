@@ -19,7 +19,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 
 import java.util.Arrays;
 
-import static com.scwang.refreshlayout.R.layout.listitem_delivery;
+import static com.scwang.refreshlayout.R.layout.listitem_style_delivery;
 
 public class DeliveryStyleActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
@@ -73,7 +73,7 @@ public class DeliveryStyleActivity extends AppCompatActivity implements AdapterV
             RecyclerView recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setItemAnimator(new DefaultItemAnimator());
-            recyclerView.setAdapter(new BaseRecyclerAdapter<Item>(Arrays.asList(Item.values()), listitem_delivery,this) {
+            recyclerView.setAdapter(new BaseRecyclerAdapter<Item>(Arrays.asList(Item.values()), listitem_style_delivery,this) {
                 @Override
                 protected void onBindViewHolder(SmartViewHolder holder, Item model, int position) {
                 }

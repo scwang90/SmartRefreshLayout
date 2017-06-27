@@ -96,9 +96,9 @@
 
     <string name="title_activity_fly_refresh">FlyRefresh</string>
     <string name="title_activity_index_main">首页</string>
-    <string name="title_home">展示</string>
+    <string name="title_style">风格</string>
     <string name="title_using">使用</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_practice">实战</string>
     <string name="region_hint">未选择</string>
     <string name="region_name">已选地区</string>
 
@@ -175,4 +175,5 @@
     <string name="title_activity_style_dropbox">掉落盒子</string>
     <string name="title_activity_style_delivery">气球快递</string>
     <string name="title_activity_style_flyrefresh">纸飞机</string>
+    <string name="title_activity_practice_repast">餐饮外卖</string>
 </resources>

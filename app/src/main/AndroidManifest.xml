@@ -20,11 +20,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ScrollingActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.TranslucentStatus" />
-        <activity android:name=".ItemActivity" />
-        <activity
             android:name=".activity.style.FlyRefreshStyleActivity"
             android:label="@string/title_activity_fly_refresh"
             android:screenOrientation="portrait"
@@ -103,6 +98,10 @@
         <activity
             android:name=".activity.using.ListenerUsingActivity"
             android:label="@string/title_activity_using_listener"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.practice.RepastPracticeActivity"
+            android:label="@string/title_activity_practice_repast"
             android:screenOrientation="portrait"/>
     </application>
 
