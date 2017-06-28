@@ -5,10 +5,12 @@ import android.animation.Animator.AnimatorListener;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -189,6 +191,11 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         this.initView(context, attrs, defStyleAttr);
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public SmartRefreshLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+    }
+
     private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
         setClipToPadding(false);
 
@@ -216,6 +223,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         mEnableHeaderTranslationContent = ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnableHeaderTranslationContent, mEnableHeaderTranslationContent);
         mEnableFooterTranslationContent = ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnableFooterTranslationContent, mEnableFooterTranslationContent);
         mEnablePreviewInEditMode = ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnablePreviewInEditMode, mEnablePreviewInEditMode);
+        mEnableAutoLoadmore = ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnableAutoLoadmore, mEnableAutoLoadmore);
 
         mFooterExtendHeight = (int) Math.max((mFooterHeight * (mHeaderMaxDragRate - 1)), 0);
         mHeaderExtendHeight = (int) Math.max((mHeaderHeight * (mHeaderMaxDragRate - 1)), 0);
@@ -1311,6 +1319,9 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     @Override
     public SmartRefreshLayout setEnableAutoLoadmore(boolean enable) {
         this.mEnableAutoLoadmore = enable;
+        if (mRefreshContent != null && mKernel != null) {
+            mRefreshContent.setEnableAutoLoadmore(enable, mKernel);
+        }
         return this;
     }
 

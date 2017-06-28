@@ -1,0 +1,4 @@
+V 1.0.1
+添加：srlEnableAutoLoadmore 属性
+修改：srlExtendHeaderRate 属性为：srlHeaderMaxDragRate
+修改：srlExtendFooterRate 属性为：srlFooterMaxDragRate

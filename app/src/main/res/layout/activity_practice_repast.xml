@@ -13,7 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:srlHeaderHeight="150dp"
-        app:srlEnableLoadmore="false"
+        app:srlEnableAutoLoadmore="true"
+        app:srlDragRate="1"
         app:srlEnablePreviewInEditMode="false">
         <pl.droidsonroids.gif.GifImageView
             android:id="@+id/gifview"
