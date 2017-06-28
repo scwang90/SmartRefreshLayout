@@ -41,7 +41,7 @@
     <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar.Light"
         android:id="@+id/toolbar"
         android:background="@android:color/transparent"
-        app:navigationIcon="@drawable/ic_arrow_back_gray_24dp"
+        app:navigationIcon="@drawable/ic_arrow_back_dark_24dp"
         app:title="@string/title_activity_practice_repast"/>
 
 </FrameLayout>

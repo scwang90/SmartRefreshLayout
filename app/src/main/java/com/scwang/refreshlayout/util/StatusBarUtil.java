@@ -92,13 +92,18 @@ public class StatusBarUtil {
 
     /** 设置状态栏darkMode,字体颜色及icon变黑(目前支持MIUI6以上,Flyme4以上,Android M以上) */
     public static void darkMode(Window window, int color, @FloatRange(from = 0.0, to = 1.0) float alpha) {
-        immersive(window,color,alpha);
         if (isFlyme4Later()) {
             darkModeForFlyme4(window, true);
+            immersive(window,color,alpha);
         } else if (isMIUI6Later()) {
             darkModeForMIUI6(window, true);
+            immersive(window,color,alpha);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             darkModeForM(window, true);
+            immersive(window, color, alpha);
+        } else if (Build.VERSION.SDK_INT >= 19) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            setTranslucentView((ViewGroup) window.getDecorView(), color, alpha);
         }
 //        if (Build.VERSION.SDK_INT >= 21) {
 //            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);

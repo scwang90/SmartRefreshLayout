@@ -50,11 +50,13 @@ public class RepastPracticeActivity extends AppCompatActivity {
 
         final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.smart);
 
+        //第一次进入演示刷新
         if (isFirstEnter) {
             isFirstEnter = false;
             refreshLayout.autoRefresh();
         }
 
+        //初始化列表和监听
         View view = findViewById(R.id.recycler);
         if (view instanceof RecyclerView) {
             RecyclerView recyclerView = (RecyclerView) view;
@@ -102,10 +104,13 @@ public class RepastPracticeActivity extends AppCompatActivity {
         StatusBarUtil.setMargin(this, findViewById(R.id.gifview));
     }
 
+    /**
+     * 模拟数据
+     */
     private Collection<Model> loadModels() {
         return Arrays.asList(
                 new Model() {{
-                    this.name = "鱼香豆腐";
+                    this.name = "但家香酥鸭";
                     this.nickname = "爱过那张脸";
                     this.imageId = R.mipmap.image_practice_repast_1;
                     this.avatarId = R.mipmap.image_avatar_1;
@@ -130,7 +135,7 @@ public class RepastPracticeActivity extends AppCompatActivity {
                     this.imageId = R.mipmap.image_practice_repast_5;
                     this.avatarId = R.mipmap.image_avatar_5;
                 }}, new Model() {{
-                    this.name = "豆腐圆子";
+                    this.name = "米豆腐";
                     this.nickname = "宝宝树人";
                     this.imageId = R.mipmap.image_practice_repast_6;
                     this.avatarId = R.mipmap.image_avatar_6;
