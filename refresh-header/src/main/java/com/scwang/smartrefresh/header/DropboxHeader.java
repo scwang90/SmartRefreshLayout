@@ -54,15 +54,18 @@ public class DropboxHeader extends View implements RefreshHeader {
 
     //<editor-fold desc="View">
     public DropboxHeader(Context context) {
-        this(context, null);
+        super(context);
+        this.initView(context, null);
     }
 
     public DropboxHeader(Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs);
+        this.initView(context, attrs);
     }
 
     public DropboxHeader(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        this(context, attrs, defStyleAttr, 0);
+        super(context, attrs, defStyleAttr);
+        this.initView(context, attrs);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)

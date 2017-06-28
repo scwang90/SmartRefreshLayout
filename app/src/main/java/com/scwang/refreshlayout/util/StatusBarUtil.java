@@ -22,6 +22,7 @@ import java.util.regex.Pattern;
  * Created by SCWANG on 2016/10/26.
  */
 
+@SuppressWarnings("unused")
 public class StatusBarUtil {
 
     public static int DEFAULT_COLOR = 0;
@@ -120,7 +121,7 @@ public class StatusBarUtil {
 
     /** android 6.0设置字体颜色 */
     @TargetApi(Build.VERSION_CODES.M)
-    public static void darkModeForM(Window window, boolean dark) {
+    private static void darkModeForM(Window window, boolean dark) {
 //        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 //        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 //        window.setStatusBarColor(Color.TRANSPARENT);

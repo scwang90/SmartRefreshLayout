@@ -43,17 +43,21 @@ public class DeliveryHeader extends View implements RefreshHeader {
 
     //<editor-fold desc="View">
     public DeliveryHeader(Context context) {
-        this(context, null);
+        super(context);
+        this.initView(context, null);
     }
 
     public DeliveryHeader(Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs);
+        this.initView(context, attrs);
     }
 
     public DeliveryHeader(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        this(context, attrs, defStyleAttr, 0);
+        super(context, attrs, defStyleAttr);
+        this.initView(context, attrs);
     }
 
+    @SuppressWarnings("unused")
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public DeliveryHeader(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
