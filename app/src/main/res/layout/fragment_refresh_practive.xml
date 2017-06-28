@@ -16,10 +16,6 @@
         app:srlPrimaryColor="@color/colorPrimary"
         app:srlAccentColor="@android:color/white"
         app:srlEnableLoadmore="false">
-        <com.scwang.smartrefresh.layout.header.ClassicsHeader
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="200dp"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler"
             android:layout_width="match_parent"

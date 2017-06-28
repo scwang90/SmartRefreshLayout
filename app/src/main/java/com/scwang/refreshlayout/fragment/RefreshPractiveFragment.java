@@ -37,7 +37,7 @@ import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 public class RefreshPractiveFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private enum Item {
-        Repast("餐饮外卖", RepastPracticeActivity.class),
+        Repast("餐饮外卖-简单自定义Header-外边距magin", RepastPracticeActivity.class),
         ;
         public String name;
         public Class<?> clazz;

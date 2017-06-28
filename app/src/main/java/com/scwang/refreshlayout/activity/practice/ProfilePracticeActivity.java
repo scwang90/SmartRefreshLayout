@@ -22,7 +22,7 @@ import java.util.Collection;
 /**
  * 在Java代码中指定Header和Footer
  */
-public class RepastPracticeActivity extends AppCompatActivity {
+public class ProfilePracticeActivity extends AppCompatActivity {
 
 
     private class Model {
