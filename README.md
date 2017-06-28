@@ -76,8 +76,8 @@
 ## 简单用例
 #### 1.在 buld.gradle 中添加依赖
 ```
-compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.0'
-compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.0'//如果使用了特殊的Header
+compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.1'
+compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.1'//如果使用了特殊的Header
 ```
 
 #### 2.在XML布局文件中添加 SmartRefreshLayout
