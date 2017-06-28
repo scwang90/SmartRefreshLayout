@@ -366,7 +366,7 @@ public class StoreHouseHeader extends View implements RefreshHeader {
         if (colors.length > 0) {
             mBackgroundColor = colors[0];
             if (mRefreshKernel != null) {
-                mRefreshKernel.requestDrawBackgoundForFooter(colors[0]);
+                mRefreshKernel.requestDrawBackgoundForHeader(colors[0]);
             }
             if (colors.length > 1) {
                 setTextColor(colors[1]);

@@ -18,10 +18,6 @@ import android.widget.AdapterView;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.activity.practice.RepastPracticeActivity;
-import com.scwang.refreshlayout.activity.using.AssignCodeUsingActivity;
-import com.scwang.refreshlayout.activity.using.AssignDefaultUsingActivity;
-import com.scwang.refreshlayout.activity.using.AssignXmlUsingActivity;
-import com.scwang.refreshlayout.activity.using.ListenerUsingActivity;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
@@ -42,10 +38,6 @@ public class RefreshPractiveFragment extends Fragment implements AdapterView.OnI
 
     private enum Item {
         Repast("餐饮外卖", RepastPracticeActivity.class),
-        DefaultCreater("设置全局默认的Header和Footer", AssignDefaultUsingActivity.class),
-        XmlDefine("在XML中定义Header和Footer", AssignXmlUsingActivity.class),
-        CodeDefine("在代码中指定Header和Footer", AssignCodeUsingActivity.class),
-        Listener("多功能监听器", ListenerUsingActivity.class),
         ;
         public String name;
         public Class<?> clazz;
@@ -58,7 +50,7 @@ public class RefreshPractiveFragment extends Fragment implements AdapterView.OnI
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_refresh_using, container, false);
+        return inflater.inflate(R.layout.fragment_refresh_practive, container, false);
     }
 
     @Override

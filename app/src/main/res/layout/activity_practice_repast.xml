@@ -12,10 +12,11 @@
         android:id="@+id/smart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srlHeaderHeight="150dp"
-        app:srlEnableAutoLoadmore="true"
         app:srlDragRate="1"
-        app:srlEnablePreviewInEditMode="false">
+        app:srlHeaderHeight="150dp"
+        app:srlHeaderMaxDragRate="1.5"
+        app:srlEnableAutoLoadmore="true"
+        app:srlEnablePreviewInEditMode="true">
         <pl.droidsonroids.gif.GifImageView
             android:id="@+id/gifview"
             android:layout_width="match_parent"
