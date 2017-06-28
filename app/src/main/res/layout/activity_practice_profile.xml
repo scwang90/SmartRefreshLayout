@@ -12,13 +12,12 @@
         android:id="@+id/smart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srlDragRate="1"
-        app:srlHeaderMaxDragRate="1.5"
-        app:srlEnableAutoLoadmore="true"
-        app:srlEnablePreviewInEditMode="false">
+        app:srlEnablePreviewInEditMode="false"
+        app:srlHeaderMaxDragRate="0.9"
+        app:srlFooterMaxDragRate="0.9">
         <com.scwang.smartrefresh.layout.header.FalsifyHeader
             android:layout_width="match_parent"
-            android:layout_height="100dp" />
+            android:layout_height="200dp" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -26,6 +25,7 @@
             android:gravity="center_horizontal">
 
             <LinearLayout
+                android:id="@+id/profile"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -158,25 +158,25 @@
                     android:layout_width="45dp"
                     android:layout_height="45dp"
                     app:rv_isRadiusHalfHeight="true"
-                    app:rv_backgroundColor="#552299">
+                    app:rv_backgroundColor="#bb11ff">
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="@dimen/padding_common"
                         android:contentDescription="@string/app_name"
-                        app:srcCompat="@drawable/ic_fly_refresh_folder"/>
+                        app:srcCompat="@drawable/ic_fly_refresh_send"/>
                 </com.flyco.roundview.RoundFrameLayout>
                 <TextView style="@style/AppTheme.Label.Title"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
-                    android:text="Show My Floder"/>
+                    android:text="Show My Idea"/>
             </LinearLayout>
 
         </LinearLayout>
         <com.scwang.smartrefresh.layout.header.FalsifyHeader
             android:layout_width="match_parent"
-            android:layout_height="100dp" />
+            android:layout_height="200dp" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <com.github.mmin18.widget.RealtimeBlurView

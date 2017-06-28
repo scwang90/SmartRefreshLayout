@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 /**
- * 在Java代码中指定Header和Footer
+ * 餐饮美食
  */
 public class RepastPracticeActivity extends AppCompatActivity {
 

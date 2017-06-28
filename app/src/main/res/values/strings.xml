@@ -175,7 +175,7 @@
     <string name="title_activity_style_dropbox">掉落盒子</string>
     <string name="title_activity_style_delivery">气球快递</string>
     <string name="title_activity_style_flyrefresh">纸飞机</string>
-    <string name="title_activity_practice_repast">餐饮外卖</string>
+    <string name="title_activity_practice_repast">餐饮美食</string>
     <string name="title_activity_practice_profile">个人中心</string>
     <string name="fragment_refresh_practive">实战</string>
 </resources>

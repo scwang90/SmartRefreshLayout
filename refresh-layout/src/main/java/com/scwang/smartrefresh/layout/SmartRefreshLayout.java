@@ -1530,7 +1530,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
      */
     @Override
     public boolean autoRefresh(int delayed) {
-        return autoRefresh(delayed, 1.5f);
+        return autoRefresh(delayed, 1f * (mHeaderHeight + mHeaderExtendHeight / 2) / mHeaderHeight);
     }
     /**
      * 自动刷新
@@ -1575,7 +1575,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
      */
     @Override
     public boolean autoLoadmore(int delayed) {
-        return autoLoadmore(delayed, 1.5f);
+        return autoLoadmore(delayed, 1f * (mFooterHeight + mFooterExtendHeight / 2) / mFooterHeight);
     }
     /**
      * 自动加载

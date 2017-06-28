@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 import com.scwang.refreshlayout.R;
+import com.scwang.refreshlayout.activity.practice.ProfilePracticeActivity;
 import com.scwang.refreshlayout.activity.practice.RepastPracticeActivity;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
@@ -37,7 +38,8 @@ import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 public class RefreshPractiveFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private enum Item {
-        Repast("餐饮外卖-简单自定义Header-外边距magin", RepastPracticeActivity.class),
+        Repast("餐饮美食-简单自定义Header-外边距magin", RepastPracticeActivity.class),
+        Profile("个人中西-OverScroll", ProfilePracticeActivity.class),
         ;
         public String name;
         public Class<?> clazz;
