@@ -5,6 +5,7 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.graphics.PointF;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.NestedScrollingChild;
@@ -380,7 +381,7 @@ public class RefreshContentWrapper implements RefreshContent {
                     return;
                 }
                 ValueAnimator animator = ValueAnimator.ofInt(0, -lastDy * 2, 0);
-                animator.setDuration(400);
+                animator.setDuration(300);
                 animator.addUpdateListener(updateListener);
                 animator.setInterpolator(interpolator);
                 animator.start();
@@ -391,13 +392,21 @@ public class RefreshContentWrapper implements RefreshContent {
 
         @Override
         public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-            int scrollY = getScrollY(view, firstVisibleItem);
-            lastDy = scrollY - lasty;
-            lasty = scrollY;
+            if (Build.VERSION.SDK_INT < 23) {
+                int scrollY = getScrollY(view, firstVisibleItem);
+                lastDy = scrollY - lasty;
+                lasty = scrollY;
+            }
         }
 
         void attach(AbsListView listView) {
-            listView.setOnScrollListener(this);
+            if (Build.VERSION.SDK_INT >= 23) {
+                listView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+                    lastDy = scrollY - oldScrollY;
+                });
+            } else {
+                listView.setOnScrollListener(this);
+            }
         }
 
         private int getScrollY(AbsListView view, int firstVisibleItem) {
