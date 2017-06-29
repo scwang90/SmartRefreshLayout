@@ -92,6 +92,11 @@ public interface RefreshLayout {
     RefreshLayout setRefreshFooter(RefreshFooter bottom);
 
     /**
+     * 设置是否启用越界回弹
+     */
+    RefreshLayout setEnableOverScrollBounce(boolean enable);
+
+    /**
      * 设置指定的Header
      */
     RefreshLayout setRefreshHeader(RefreshHeader header);
@@ -213,4 +218,6 @@ public interface RefreshLayout {
     boolean isEnableLoadmore();
 
     boolean isLoadmoreFinished();
+
+    boolean isEnableOverScrollBounce();
 }

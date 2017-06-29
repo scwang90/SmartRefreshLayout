@@ -99,6 +99,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     protected boolean mEnableHeaderTranslationContent = true;//是否启用内容视图拖动效果
     protected boolean mEnableFooterTranslationContent = true;//是否启用内容视图拖动效果
     protected boolean mEnablePreviewInEditMode = true;//是否在编辑模式下开启预览功能
+    protected boolean mEnableOverScrollBounce = true;//是否启用越界回弹
     protected boolean mEnableAutoLoadmore = true;//是否在列表滚动到底部时自动加载更多
     protected boolean mLoadmoreFinished = false;//数据是否全部加载完成，如果完成就不能在触发加载事件
     //</editor-fold>
@@ -226,6 +227,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         mEnableFooterTranslationContent = ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnableFooterTranslationContent, mEnableFooterTranslationContent);
         mEnablePreviewInEditMode = ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnablePreviewInEditMode, mEnablePreviewInEditMode);
         mEnableAutoLoadmore = ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnableAutoLoadmore, mEnableAutoLoadmore);
+        mEnableOverScrollBounce = ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnableAutoLoadmore, mEnableOverScrollBounce);
 
         mFooterExtendHeight = (int) Math.max((mFooterHeight * (mHeaderMaxDragRate - 1)), 0);
         mHeaderExtendHeight = (int) Math.max((mHeaderHeight * (mHeaderMaxDragRate - 1)), 0);
@@ -1332,6 +1334,15 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     }
 
     /**
+     * 设置是否启用越界回弹
+     */
+    @Override
+    public SmartRefreshLayout setEnableOverScrollBounce(boolean enable) {
+        this.mEnableOverScrollBounce = enable;
+        return this;
+    }
+
+    /**
      * 设置指定的Header
      */
     @Override
@@ -1628,6 +1639,11 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     @Override
     public boolean isEnableRefresh() {
         return mEnableRefresh;
+    }
+
+    @Override
+    public boolean isEnableOverScrollBounce() {
+        return mEnableOverScrollBounce;
     }
 
     /**
