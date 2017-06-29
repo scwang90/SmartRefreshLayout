@@ -15,6 +15,7 @@ import android.support.v4.view.ScrollingView;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseArray;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -185,51 +186,6 @@ public class RefreshContentWrapper implements RefreshContent {
         mMotionEvent = null;
     }
 
-    private class RecyclerViewScrollComponent extends RecyclerView.OnScrollListener {
-        int lastDy;
-        long lastFlingTime;
-        boolean autoLoadmore;
-        RefreshKernel kernel;
-        TimeInterpolator interpolator = new DecelerateInterpolator();
-        ValueAnimator.AnimatorUpdateListener updateListener = animation -> kernel.moveSpinner((int) animation.getAnimatedValue(), true);
-
-        RecyclerViewScrollComponent(boolean autoLoadmore, RefreshKernel kernel) {
-            this.autoLoadmore = autoLoadmore;
-            this.kernel = kernel;
-        }
-        @Override
-        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-            if (newState == 0 && Math.abs(lastDy) > 1 && System.currentTimeMillis() - lastFlingTime < 1000) {
-                RefreshLayout layout = kernel.getRefreshLayout();
-                if ((autoLoadmore && !layout.isLoadmoreFinished() && lastDy > 0)
-                        || layout.isRefreshing() || layout.isLoading()) {
-                    return;
-                }
-                ValueAnimator animator = ValueAnimator.ofInt(0, -lastDy * 2, 0);
-                animator.setDuration(400);
-                animator.addUpdateListener(updateListener);
-                animator.setInterpolator(interpolator);
-                animator.start();
-                lastDy = 0;
-            }
-        }
-        @Override
-        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-            lastDy = dy;
-        }
-
-        void attach(RecyclerView recyclerView) {
-            recyclerView.addOnScrollListener(this);
-            recyclerView.setOnFlingListener(new RecyclerView.OnFlingListener() {
-                @Override
-                public boolean onFling(int velocityX, int velocityY) {
-                    lastFlingTime = System.currentTimeMillis();
-                    return false;
-                }
-            });
-        }
-    }
-
     @Override
     public void setupComponent(boolean autoLoadmore, RefreshKernel kernel) {
         mEnableAutoLoadmore = autoLoadmore;
@@ -239,6 +195,9 @@ public class RefreshContentWrapper implements RefreshContent {
         if (mScrollableView instanceof RecyclerView) {
             RecyclerViewScrollComponent component = new RecyclerViewScrollComponent(autoLoadmore, kernel);
             component.attach((RecyclerView) mScrollableView);
+        } else if (mScrollableView instanceof AbsListView) {
+            AbsListViewScrollComponent component = new AbsListViewScrollComponent(autoLoadmore, kernel);
+            component.attach(((AbsListView) mScrollableView));
         }
     }
 
@@ -393,6 +352,131 @@ public class RefreshContentWrapper implements RefreshContent {
         point[1] += group.getScrollY() - child.getTop();
     }
     //</editor-fold>
+
+
+    private class AbsListViewScrollComponent implements AbsListView.OnScrollListener {
+
+        int lasty;
+        int lastDy;
+        int lastState;
+        boolean autoLoadmore;
+        int mCurrentfirstVisibleItem = 0;
+        RefreshKernel kernel;
+        SparseArray<ItemRecod> recordSp = new SparseArray<>(0);
+        TimeInterpolator interpolator = new DecelerateInterpolator();
+        ValueAnimator.AnimatorUpdateListener updateListener = animation -> kernel.moveSpinner((int) animation.getAnimatedValue(), true);
+
+        AbsListViewScrollComponent(boolean autoLoadmore, RefreshKernel kernel) {
+            this.kernel = kernel;
+            this.autoLoadmore = autoLoadmore;
+        }
+
+        @Override
+        public void onScrollStateChanged(AbsListView view, int scrollState) {
+            if (scrollState == 0 && lastState == SCROLL_STATE_FLING && Math.abs(lastDy) > 1) {
+                RefreshLayout layout = kernel.getRefreshLayout();
+                if ((autoLoadmore && !layout.isLoadmoreFinished() && lastDy > 0)
+                        || layout.isRefreshing() || layout.isLoading()) {
+                    return;
+                }
+                ValueAnimator animator = ValueAnimator.ofInt(0, -lastDy * 2, 0);
+                animator.setDuration(400);
+                animator.addUpdateListener(updateListener);
+                animator.setInterpolator(interpolator);
+                animator.start();
+                lastDy = 0;
+            }
+            lastState = scrollState;
+        }
+
+        @Override
+        public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+            int scrollY = getScrollY(view, firstVisibleItem);
+            lastDy = scrollY - lasty;
+            lasty = scrollY;
+        }
+
+        void attach(AbsListView listView) {
+            listView.setOnScrollListener(this);
+        }
+
+        private int getScrollY(AbsListView view, int firstVisibleItem) {
+            mCurrentfirstVisibleItem = firstVisibleItem;
+            View firstView = view.getChildAt(0);
+            if (null != firstView) {
+                ItemRecod itemRecord = recordSp.get(firstVisibleItem);
+                if (null == itemRecord) {
+                    itemRecord = new ItemRecod();
+                }
+                itemRecord.height = firstView.getHeight();
+                itemRecord.top = firstView.getTop();
+                recordSp.append(firstVisibleItem, itemRecord);
+
+                int height = 0;
+                for (int i = 0; i < mCurrentfirstVisibleItem; i++) {
+                    ItemRecod itemRecod = recordSp.get(i);
+                    height += itemRecod.height;
+                }
+                ItemRecod itemRecod = recordSp.get(mCurrentfirstVisibleItem);
+                if (null == itemRecod) {
+                    itemRecod = new ItemRecod();
+                }
+                return height - itemRecod.top;
+            }
+            return 0;
+        }
+
+
+        class ItemRecod {
+            int height = 0;
+            int top = 0;
+        }
+    }
+
+    private class RecyclerViewScrollComponent extends RecyclerView.OnScrollListener {
+        int lastDy;
+        long lastFlingTime;
+        boolean autoLoadmore;
+        RefreshKernel kernel;
+        TimeInterpolator interpolator = new DecelerateInterpolator();
+        ValueAnimator.AnimatorUpdateListener updateListener = animation -> kernel.moveSpinner((int) animation.getAnimatedValue(), true);
+
+        RecyclerViewScrollComponent(boolean autoLoadmore, RefreshKernel kernel) {
+            this.autoLoadmore = autoLoadmore;
+            this.kernel = kernel;
+        }
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            if (newState == 0 && Math.abs(lastDy) > 1 && System.currentTimeMillis() - lastFlingTime < 1000) {
+                RefreshLayout layout = kernel.getRefreshLayout();
+                if ((autoLoadmore && !layout.isLoadmoreFinished() && lastDy > 0)
+                        || layout.isRefreshing() || layout.isLoading()) {
+                    return;
+                }
+                ValueAnimator animator = ValueAnimator.ofInt(0, -lastDy * 2, 0);
+                animator.setDuration(400);
+                animator.addUpdateListener(updateListener);
+                animator.setInterpolator(interpolator);
+                animator.start();
+                lastDy = 0;
+            }
+        }
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            lastDy = dy;
+        }
+
+        void attach(RecyclerView recyclerView) {
+            recyclerView.addOnScrollListener(this);
+            recyclerView.setOnFlingListener(new RecyclerView.OnFlingListener() {
+                @Override
+                public boolean onFling(int velocityX, int velocityY) {
+                    lastFlingTime = System.currentTimeMillis();
+                    return false;
+                }
+            });
+        }
+    }
 
     private class PagerPrimaryAdapter extends PagerAdapterWrapper {
         private ViewPager mViewPager;
