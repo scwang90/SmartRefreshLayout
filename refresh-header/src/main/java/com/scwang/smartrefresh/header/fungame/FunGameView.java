@@ -1,10 +1,12 @@
 package com.scwang.smartrefresh.header.fungame;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v4.graphics.ColorUtils;
 import android.text.TextPaint;
@@ -60,16 +62,27 @@ public abstract class FunGameView extends FunGameHeader {
     //</editor-fold>
 
     public FunGameView(Context context) {
-        this(context,null);
+        super(context);
+        this.initView(context, null);
     }
 
     public FunGameView(Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs);
+        this.initView(context, attrs);
     }
 
     public FunGameView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        this.initView(context, attrs);
+    }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public FunGameView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        this.initView(context, attrs);
+    }
+
+    private void initView(Context context, AttributeSet attrs) {
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.FunGameView);
         mBackColor = ta.getColor(R.styleable.FunGameView_fgvBackColor, 0);
         lModelColor = ta.getColor(R.styleable.FunGameView_fgvLeftColor, Color.rgb(0, 0, 0));

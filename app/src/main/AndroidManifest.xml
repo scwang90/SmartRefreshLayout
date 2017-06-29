@@ -96,6 +96,10 @@
             android:label="@string/title_activity_using_assign_code"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".activity.using.OverScrollUsingActivity"
+            android:label="@string/title_activity_using_overscroll"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".activity.using.ListenerUsingActivity"
             android:label="@string/title_activity_using_listener"
             android:screenOrientation="portrait"/>

@@ -18,12 +18,12 @@ public class SimpleMultiPurposeListener implements OnMultiPurposeListener {
     }
 
     @Override
-    public void onHeaderReleasing(RefreshHeader header, float percent, int offset, int bottomHeight, int extendHeight) {
+    public void onHeaderReleasing(RefreshHeader header, float percent, int offset, int footerHeight, int extendHeight) {
 
     }
 
     @Override
-    public void onHeaderStartAnimator(RefreshHeader header, int bottomHeight, int extendHeight) {
+    public void onHeaderStartAnimator(RefreshHeader header, int footerHeight, int extendHeight) {
 
     }
 

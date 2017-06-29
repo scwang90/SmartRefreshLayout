@@ -86,7 +86,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
         mScenceView = (MountanScenceView) findViewById(R.id.mountan);
         mFlyRefreshHeader = (FlyRefreshHeader)findViewById(R.id.flyrefresh);
         mFlyRefreshHeader.setUp(mScenceView, mFlyView);//绑定场景和纸飞机
-        mRefreshlayout = (RefreshLayout) findViewById(R.id.smart);
+        mRefreshlayout = (RefreshLayout) findViewById(R.id.smartLayout);
         mRefreshlayout.setReboundInterpolator(new ElasticOutInterpolator());//设置回弹插值器，会带有弹簧震动效果
         mRefreshlayout.setReboundDuration(800);//设置回弹动画时长
         mRefreshlayout.setOnRefreshListener(new OnRefreshListener() {
@@ -115,12 +115,12 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
         final AppBarLayout appBar = (AppBarLayout) findViewById(R.id.app_bar);
         mRefreshlayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
             @Override
-            public void onHeaderPulling(RefreshHeader header, float percent, int offset, int bottomHeight, int extendHeight) {
+            public void onHeaderPulling(RefreshHeader header, float percent, int offset, int footerHeight, int extendHeight) {
                 appBar.setTranslationY(offset);
                 mToolbar.setTranslationY(-offset);
             }
             @Override
-            public void onHeaderReleasing(RefreshHeader header, float percent, int offset, int bottomHeight, int extendHeight) {
+            public void onHeaderReleasing(RefreshHeader header, float percent, int offset, int footerHeight, int extendHeight) {
                 appBar.setTranslationY(offset);
                 mToolbar.setTranslationY(-offset);
             }
@@ -140,7 +140,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
         initDataSet();
         mAdapter = new ItemAdapter(this);
         mLayoutManager = new LinearLayoutManager(this);
-        mListView = (RecyclerView) findViewById(R.id.recycler);
+        mListView = (RecyclerView) findViewById(R.id.recyclerView);
         mListView.setLayoutManager(mLayoutManager);
         mListView.setAdapter(mAdapter);
         mListView.setItemAnimator(new SampleItemAnimator());

@@ -8,7 +8,7 @@
     tools:context="com.scwang.refreshlayout.activity.practice.RepastPracticeActivity">
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/smart"
+        android:id="@+id/smartLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:srlDragRate="1"
@@ -24,7 +24,7 @@
             android:scaleType="centerCrop"
             android:src="@mipmap/gif_header_repast"/>
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler"
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingTop="?attr/actionBarSize"

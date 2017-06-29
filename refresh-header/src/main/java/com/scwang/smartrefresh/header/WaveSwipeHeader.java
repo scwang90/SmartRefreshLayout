@@ -1,10 +1,12 @@
 package com.scwang.smartrefresh.header;
 
 import android.animation.ValueAnimator;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.os.Build;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewCompat;
@@ -57,19 +59,27 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
     private float mLastFirstBounds;
 
     public WaveSwipeHeader(Context context) {
-        this(context, null);
+        super(context);
+        this.initView(context, null);
     }
 
     public WaveSwipeHeader(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs);
+        this.initView(context, attrs);
     }
 
     public WaveSwipeHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initView(context, attrs, defStyleAttr);
+        this.initView(context, attrs);
     }
 
-    private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public WaveSwipeHeader(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        this.initView(context, attrs);
+    }
+
+    private void initView(Context context, AttributeSet attrs) {
         addView(mWaveView = new WaveView(context));
         addView(mCircleView = new ProgressAnimationImageView(getContext()));
 

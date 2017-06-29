@@ -56,7 +56,7 @@ public class ListenerUsingActivity extends AppCompatActivity {
 
         mTvContent = (TextView) findViewById(R.id.content);
 
-        final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.smart);
+        final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.smartLayout);
         refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
             @Override
             public void onHeaderPulling(RefreshHeader header, float percent, int offset, int headerHeight, int extendHeight) {

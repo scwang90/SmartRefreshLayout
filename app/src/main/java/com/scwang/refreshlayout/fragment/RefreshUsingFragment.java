@@ -22,6 +22,7 @@ import com.scwang.refreshlayout.activity.using.AssignDefaultUsingActivity;
 import com.scwang.refreshlayout.activity.using.AssignXmlUsingActivity;
 import com.scwang.refreshlayout.activity.using.BasicUsingActivity;
 import com.scwang.refreshlayout.activity.using.ListenerUsingActivity;
+import com.scwang.refreshlayout.activity.using.OverScrollUsingActivity;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
@@ -46,6 +47,7 @@ public class RefreshUsingFragment extends Fragment implements AdapterView.OnItem
         XmlDefine("在XML中定义Header和Footer", AssignXmlUsingActivity.class),
         CodeDefine("在代码中指定Header和Footer", AssignCodeUsingActivity.class),
         Listener("多功能监听器", ListenerUsingActivity.class),
+        OverScroll("越界回弹", OverScrollUsingActivity.class),
         ;
         public String name;
         public Class<?> clazz;
@@ -65,7 +67,7 @@ public class RefreshUsingFragment extends Fragment implements AdapterView.OnItem
     public void onViewCreated(View root, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(root, savedInstanceState);
 
-        View view = root.findViewById(R.id.recycler);
+        View view = root.findViewById(R.id.recyclerView);
         if (view instanceof RecyclerView) {
             RecyclerView recyclerView = (RecyclerView) view;
             recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -91,7 +93,7 @@ public class RefreshUsingFragment extends Fragment implements AdapterView.OnItem
             try {
                 Constructor<?> constructor = item.clazz.getConstructor(Context.class);
                 RefreshHeader header = (RefreshHeader) constructor.newInstance(getContext());
-                RefreshLayout layout = (RefreshLayout) getView().findViewById(R.id.smart);
+                RefreshLayout layout = (RefreshLayout) getView().findViewById(R.id.smartLayout);
                 layout.setRefreshHeader(header);
                 if (!(header instanceof ClassicsHeader)) {
                     layout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);

@@ -1,5 +1,6 @@
 package com.scwang.smartrefresh.header;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -7,7 +8,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.PointF;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.Transformation;
@@ -60,20 +63,26 @@ public class StoreHouseHeader extends View implements RefreshHeader {
     //<editor-fold desc="View">
     public StoreHouseHeader(Context context) {
         super(context);
-        initView(context, null, 0);
+        this.initView(context, null);
     }
 
     public StoreHouseHeader(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initView(context, attrs, 0);
+        this.initView(context, attrs);
     }
 
     public StoreHouseHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initView(context, attrs, defStyleAttr);
+        this.initView(context, attrs);
     }
 
-    private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public StoreHouseHeader(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        this.initView(context, attrs);
+    }
+
+    private void initView(Context context, AttributeSet attrs) {
         DensityUtil density = new DensityUtil();
         mLineWidth = density.dip2px(1);
         mDropHeight = density.dip2px(40);

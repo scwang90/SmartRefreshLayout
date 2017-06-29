@@ -13,11 +13,11 @@
         app:title="@string/title_activity_using_basic"/>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/smart"
+        android:id="@+id/smartLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <ListView
-            android:id="@+id/list"
+            android:id="@+id/listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/white"

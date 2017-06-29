@@ -47,7 +47,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/smart"
+        android:id="@+id/smartLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:srlHeaderMaxDragRate="1.5"
@@ -60,7 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler"
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingTop="25dp"
@@ -75,7 +75,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
         app:fabSize="normal"
-        app:layout_anchor="@id/recycler"
+        app:layout_anchor="@id/recyclerView"
         app:layout_anchorGravity="top"
         app:elevation="0dp"  />
 

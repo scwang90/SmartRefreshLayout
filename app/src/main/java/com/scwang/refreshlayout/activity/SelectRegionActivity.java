@@ -41,7 +41,7 @@ public class SelectRegionActivity extends AppCompatActivity implements AdapterVi
             });
         }
 
-        View view = findViewById(R.id.recycler);
+        View view = findViewById(R.id.recyclerView);
         if (view instanceof RecyclerView) {
             RecyclerView recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(this));

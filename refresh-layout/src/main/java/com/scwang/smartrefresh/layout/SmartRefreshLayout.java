@@ -11,6 +11,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Build;
+import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -98,7 +99,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     protected boolean mEnableHeaderTranslationContent = true;//是否启用内容视图拖动效果
     protected boolean mEnableFooterTranslationContent = true;//是否启用内容视图拖动效果
     protected boolean mEnablePreviewInEditMode = true;//是否在编辑模式下开启预览功能
-    protected boolean mEnableAutoLoadmore = false;//是否在列表滚动到底部时自动加载更多
+    protected boolean mEnableAutoLoadmore = true;//是否在列表滚动到底部时自动加载更多
     protected boolean mLoadmoreFinished = false;//数据是否全部加载完成，如果完成就不能在触发加载事件
     //</editor-fold>
 
@@ -348,7 +349,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                 mRefreshContent.getView().setLayoutParams(new LayoutParams(MATCH_PARENT, MATCH_PARENT));
             }
         }
-        mRefreshContent.setupComponent(mEnableAutoLoadmore, mKernel);
+        mRefreshContent.setupComponent(mKernel);
 
         if (mRefreshHeader == null) {
             mRefreshHeader = mHeaderCreater.createRefreshHeader(getContext(), this);
@@ -1327,14 +1328,25 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     @Override
     public SmartRefreshLayout setEnableAutoLoadmore(boolean enable) {
         this.mEnableAutoLoadmore = enable;
-        if (mRefreshContent != null && mKernel != null) {
-            mRefreshContent.setupComponent(enable, mKernel);
-        }
         return this;
     }
 
     /**
-     * 设置底部上啦组件的实现
+     * 设置指定的Header
+     */
+    @Override
+    public SmartRefreshLayout setRefreshHeader(RefreshHeader header) {
+        if (mRefreshHeader != null) {
+            removeView(mRefreshHeader.getView());
+        }
+        this.mRefreshHeader = header;
+        this.mHeaderHeightStatus = mHeaderHeightStatus.unNotify();
+        this.addView(mRefreshHeader.getView());
+        return this;
+    }
+
+    /**
+     * 设置指定的Footer
      */
     @Override
     public SmartRefreshLayout setRefreshFooter(RefreshFooter bottom) {
@@ -1354,20 +1366,6 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     @Override
     public RefreshFooter getRefreshFooter() {
         return mRefreshFooter;
-    }
-
-    /**
-     * 设置顶部下拉组件的实现
-     */
-    @Override
-    public SmartRefreshLayout setRefreshHeader(RefreshHeader header) {
-        if (mRefreshHeader != null) {
-            removeView(mRefreshHeader.getView());
-        }
-        this.mRefreshHeader = header;
-        this.mHeaderHeightStatus = mHeaderHeightStatus.unNotify();
-        this.addView(mRefreshHeader.getView());
-        return this;
     }
 
     /**
@@ -1436,7 +1434,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
      * 设置主题颜色
      */
     @Override
-    public SmartRefreshLayout setPrimaryColorsId(int... primaryColorId) {
+    public SmartRefreshLayout setPrimaryColorsId(@ColorRes int... primaryColorId) {
         int[] colors = new int[primaryColorId.length];
         for (int i = 0; i < primaryColorId.length; i++) {
             colors[i] = ContextCompat.getColor(getContext(), primaryColorId[i]);

@@ -165,7 +165,7 @@
         1.设置一次生效一次，需要多处设置，建议特别的页面使用\n
         2.优先级最高，即使使用了会覆盖方法一和方法二的设置\n\n
         使用方法： \n
-        final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.smart);\n
+        final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.smartLayout);\n
         //设置 Header 为 Material风格\n
         refreshLayout.setRefreshHeader(new MaterialHeader(this));\n
         //设置 Footer 为 三球动画\n
@@ -178,4 +178,5 @@
     <string name="title_activity_practice_repast">餐饮美食</string>
     <string name="title_activity_practice_profile">个人中心</string>
     <string name="fragment_refresh_practive">实战</string>
+    <string name="title_activity_using_overscroll">越界回弹</string>
 </resources>

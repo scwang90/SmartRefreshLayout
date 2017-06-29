@@ -55,13 +55,13 @@ public class CircleStyleActivity extends AppCompatActivity implements AdapterVie
             }
         });
 
-        mRefreshLayout = (RefreshLayout)findViewById(R.id.smart);
+        mRefreshLayout = (RefreshLayout)findViewById(R.id.smartLayout);
         if (isFirstEnter) {
             isFirstEnter = false;
             mRefreshLayout.autoRefresh();//第一次进入触发自动刷新，演示效果
         }
 
-        View view = findViewById(R.id.recycler);
+        View view = findViewById(R.id.recyclerView);
         if (view instanceof RecyclerView) {
             RecyclerView recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
