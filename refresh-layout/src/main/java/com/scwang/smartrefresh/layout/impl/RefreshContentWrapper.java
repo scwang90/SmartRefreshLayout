@@ -188,7 +188,7 @@ public class RefreshContentWrapper implements RefreshContent {
     }
 
     @Override
-    public void setupComponent( RefreshKernel kernel) {
+    public void setupComponent(RefreshKernel kernel) {
         if (mScrollableView instanceof RecyclerView) {
             RecyclerViewScrollComponent component = new RecyclerViewScrollComponent(kernel);
             component.attach((RecyclerView) mScrollableView);
