@@ -1,5 +1,7 @@
 package com.scwang.smartrefresh.layout.impl;
 
+import android.animation.TimeInterpolator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.graphics.PointF;
@@ -16,12 +18,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.webkit.WebView;
 import android.widget.AbsListView;
 import android.widget.ScrollView;
 
 import com.scwang.smartrefresh.layout.api.RefreshContent;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
 
 import java.lang.reflect.Method;
 import java.util.Collections;
@@ -50,6 +54,7 @@ public class RefreshContentWrapper implements RefreshContent {
         this.findScrollableView(mContentView);
     }
 
+    //<editor-fold desc="findScrollableView">
     private void findScrollableView(View content) {
         mScrollableView = findScrollableViewInternal(content, true);
         if (mScrollableView instanceof NestedScrollingParent
@@ -117,6 +122,7 @@ public class RefreshContentWrapper implements RefreshContent {
         }
         return scrollableView;
     }
+    //</editor-fold>
 
     @NonNull
     public View getView() {
@@ -130,115 +136,12 @@ public class RefreshContentWrapper implements RefreshContent {
 
     @Override
     public boolean canScrollUp() {
-//        if (mScrollableView == null) {
-//            mScrollableView = mContentView;
-//        }
         return canScrollUp(mContentView, mMotionEvent);
-    }
-
-    private static boolean canScrollUp(View targetView, MotionEvent event) {
-        if (canScrollUp(targetView)) {
-            return true;
-        }
-        if (targetView instanceof ViewGroup && event != null) {
-            ViewGroup viewGroup = (ViewGroup) targetView;
-            final int childCount = viewGroup.getChildCount();
-            PointF point = new PointF();
-            for (int i = 0; i < childCount; i++) {
-                View child = viewGroup.getChildAt(i);
-                if (isTransformedTouchPointInView(viewGroup,child, event.getX(), event.getY() , point)) {
-                    event = MotionEvent.obtain(event);
-                    event.offsetLocation(point.x, point.y);
-                    return canScrollUp(child, event);
-                }
-            }
-        }
-        return false;
-    }
-
-    private static boolean isTransformedTouchPointInView(ViewGroup group, View child, float x, float y,
-                                                    PointF outLocalPoint) {
-        final float[] point = new float[2];
-        point[0] = x;
-        point[1] = y;
-        transformPointToViewLocal(group, child, point);
-        final boolean isInView = pointInView(child, point[0], point[1], 0);
-        if (isInView && outLocalPoint != null) {
-            outLocalPoint.set(point[0]-x, point[1]-y);
-        }
-        return isInView;
-    }
-
-    private static void transformPointToViewLocal(ViewGroup group, View child, float[] point) {
-        point[0] += group.getScrollX() - child.getLeft();
-        point[1] += group.getScrollY() - child.getTop();
-//        if (!child.hasIdentityMatrix()) {
-//            child.getInverseMatrix().mapPoints(point);
-//        }
-    }
-
-    private static boolean pointInView(View view, float localX, float localY, float slop) {
-        return localX >= -slop && localY >= -slop && localX < ((view.getWidth()) + slop) &&
-                localY < ((view.getHeight()) + slop);
-    }
-
-
-    private static boolean canScrollUp(View targetView) {
-        if (android.os.Build.VERSION.SDK_INT < 14) {
-            if (targetView instanceof AbsListView) {
-                final AbsListView absListView = (AbsListView) targetView;
-                return absListView.getChildCount() > 0
-                        && (absListView.getFirstVisiblePosition() > 0 || absListView.getChildAt(0)
-                        .getTop() < absListView.getPaddingTop());
-            } else {
-                return targetView.getScrollY() > 0;
-            }
-        } else {
-            return targetView.canScrollVertically(-1);
-        }
     }
 
     @Override
     public boolean canScrollDown() {
-//        if (mScrollableView == null) {
-//            mScrollableView = mContentView;
-//        }
         return canScrollDown(mContentView, mMotionEvent);
-    }
-
-    private static boolean canScrollDown(View targetView, MotionEvent event) {
-        if (canScrollDown(targetView)) {
-            return true;
-        }
-        if (targetView instanceof ViewGroup && event != null) {
-            ViewGroup viewGroup = (ViewGroup) targetView;
-            final int childCount = viewGroup.getChildCount();
-            PointF point = new PointF();
-            for (int i = 0; i < childCount; i++) {
-                View child = viewGroup.getChildAt(i);
-                if (isTransformedTouchPointInView(viewGroup,child, event.getX(), event.getY() , point)) {
-                    event = MotionEvent.obtain(event);
-                    event.offsetLocation(point.x, point.y);
-                    return canScrollDown(child, event);
-                }
-            }
-        }
-        return false;
-    }
-
-    private static boolean canScrollDown(View mScrollableView) {
-        if (android.os.Build.VERSION.SDK_INT < 14) {
-            if (mScrollableView instanceof AbsListView) {
-                final AbsListView absListView = (AbsListView) mScrollableView;
-                return absListView.getChildCount() > 0
-                        && (absListView.getLastVisiblePosition() < absListView.getChildCount() - 1
-                        || absListView.getChildAt(absListView.getChildCount() - 1).getBottom() > absListView.getPaddingBottom());
-            } else {
-                return mScrollableView.getScrollY() < 0;
-            }
-        } else {
-            return mScrollableView.canScrollVertically(1);
-        }
     }
 
     @Override
@@ -282,22 +185,70 @@ public class RefreshContentWrapper implements RefreshContent {
         mMotionEvent = null;
     }
 
+    private class RecyclerViewScrollComponent extends RecyclerView.OnScrollListener {
+        int lastDy;
+        long lastFlingTime;
+        boolean autoLoadmore;
+        RefreshKernel kernel;
+        TimeInterpolator interpolator = new DecelerateInterpolator();
+        ValueAnimator.AnimatorUpdateListener updateListener = animation -> kernel.moveSpinner((int) animation.getAnimatedValue(), true);
+
+        RecyclerViewScrollComponent(boolean autoLoadmore, RefreshKernel kernel) {
+            this.autoLoadmore = autoLoadmore;
+            this.kernel = kernel;
+        }
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            if (newState == 0 && Math.abs(lastDy) > 1 && System.currentTimeMillis() - lastFlingTime < 1000) {
+                RefreshLayout layout = kernel.getRefreshLayout();
+                if ((autoLoadmore && !layout.isLoadmoreFinished() && lastDy > 0)
+                        || layout.isRefreshing() || layout.isLoading()) {
+                    return;
+                }
+                ValueAnimator animator = ValueAnimator.ofInt(0, -lastDy * 2, 0);
+                animator.setDuration(400);
+                animator.addUpdateListener(updateListener);
+                animator.setInterpolator(interpolator);
+                animator.start();
+                lastDy = 0;
+            }
+        }
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            lastDy = dy;
+        }
+
+        void attach(RecyclerView recyclerView) {
+            recyclerView.addOnScrollListener(this);
+            recyclerView.setOnFlingListener(new RecyclerView.OnFlingListener() {
+                @Override
+                public boolean onFling(int velocityX, int velocityY) {
+                    lastFlingTime = System.currentTimeMillis();
+                    return false;
+                }
+            });
+        }
+    }
+
     @Override
-    public void setEnableAutoLoadmore(boolean enable, RefreshKernel kernel) {
-        mEnableAutoLoadmore = enable;
-        if (mScrollableView != null && enable) {
+    public void setupComponent(boolean autoLoadmore, RefreshKernel kernel) {
+        mEnableAutoLoadmore = autoLoadmore;
+        if (mScrollableView != null && autoLoadmore) {
             setUpAutoLoadmore(mScrollableView, kernel);
         }
-    }
-
-    @Override
-    public void onLoadingFinish(int footerHeight) {
-        if (mScrollableView != null) {
-            scrollAViewBy(mScrollableView, footerHeight);
+        if (mScrollableView instanceof RecyclerView) {
+            RecyclerViewScrollComponent component = new RecyclerViewScrollComponent(autoLoadmore, kernel);
+            component.attach((RecyclerView) mScrollableView);
         }
     }
 
-    private static void scrollAViewBy(View view, int height) {
+    @Override
+    public boolean onLoadingFinish(int footerHeight) {
+        return mScrollableView != null && scrollAViewBy(mScrollableView, footerHeight);
+    }
+
+    //<editor-fold desc="private">
+    private static boolean scrollAViewBy(View view, int height) {
         if (view instanceof RecyclerView) ((RecyclerView) view).smoothScrollBy(0, height);
         else if (view instanceof ScrollView) ((ScrollView) view).smoothScrollBy(0, height);
         else if (view instanceof AbsListView) ((AbsListView) view).smoothScrollBy(height, 150);
@@ -307,8 +258,10 @@ public class RefreshContentWrapper implements RefreshContent {
                 method.invoke(view, 0, height);
             } catch (Exception e) {
                 view.scrollBy(0, height);
+                return false;
             }
         }
+        return true;
     }
 
     private void setUpAutoLoadmore(View scrollableView, RefreshKernel kernel) {
@@ -331,7 +284,6 @@ public class RefreshContentWrapper implements RefreshContent {
             recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
                 public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                    super.onScrollStateChanged(recyclerView, newState);
                     RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
                     if (manager instanceof LinearLayoutManager) {
                         LinearLayoutManager linearManager = ((LinearLayoutManager) manager);
@@ -346,6 +298,101 @@ public class RefreshContentWrapper implements RefreshContent {
             });
         }
     }
+    //</editor-fold>
+
+    //<editor-fold desc="滚动判断">
+    private static boolean canScrollUp(View targetView, MotionEvent event) {
+        if (canScrollUp(targetView)) {
+            return true;
+        }
+        if (targetView instanceof ViewGroup && event != null) {
+            ViewGroup viewGroup = (ViewGroup) targetView;
+            final int childCount = viewGroup.getChildCount();
+            PointF point = new PointF();
+            for (int i = 0; i < childCount; i++) {
+                View child = viewGroup.getChildAt(i);
+                if (isTransformedTouchPointInView(viewGroup,child, event.getX(), event.getY() , point)) {
+                    event = MotionEvent.obtain(event);
+                    event.offsetLocation(point.x, point.y);
+                    return canScrollUp(child, event);
+                }
+            }
+        }
+        return false;
+    }
+
+    private static boolean pointInView(View view, float localX, float localY, float slop) {
+        return localX >= -slop && localY >= -slop && localX < ((view.getWidth()) + slop) &&
+                localY < ((view.getHeight()) + slop);
+    }
+
+    private static boolean canScrollUp(View targetView) {
+        if (android.os.Build.VERSION.SDK_INT < 14) {
+            if (targetView instanceof AbsListView) {
+                final AbsListView absListView = (AbsListView) targetView;
+                return absListView.getChildCount() > 0
+                        && (absListView.getFirstVisiblePosition() > 0 || absListView.getChildAt(0)
+                        .getTop() < absListView.getPaddingTop());
+            } else {
+                return targetView.getScrollY() > 0;
+            }
+        } else {
+            return targetView.canScrollVertically(-1);
+        }
+    }
+
+    private static boolean canScrollDown(View targetView, MotionEvent event) {
+        if (canScrollDown(targetView)) {
+            return true;
+        }
+        if (targetView instanceof ViewGroup && event != null) {
+            ViewGroup viewGroup = (ViewGroup) targetView;
+            final int childCount = viewGroup.getChildCount();
+            PointF point = new PointF();
+            for (int i = 0; i < childCount; i++) {
+                View child = viewGroup.getChildAt(i);
+                if (isTransformedTouchPointInView(viewGroup,child, event.getX(), event.getY() , point)) {
+                    event = MotionEvent.obtain(event);
+                    event.offsetLocation(point.x, point.y);
+                    return canScrollDown(child, event);
+                }
+            }
+        }
+        return false;
+    }
+
+    private static boolean canScrollDown(View mScrollableView) {
+        if (android.os.Build.VERSION.SDK_INT < 14) {
+            if (mScrollableView instanceof AbsListView) {
+                final AbsListView absListView = (AbsListView) mScrollableView;
+                return absListView.getChildCount() > 0
+                        && (absListView.getLastVisiblePosition() < absListView.getChildCount() - 1
+                        || absListView.getChildAt(absListView.getChildCount() - 1).getBottom() > absListView.getPaddingBottom());
+            } else {
+                return mScrollableView.getScrollY() < 0;
+            }
+        } else {
+            return mScrollableView.canScrollVertically(1);
+        }
+    }
+
+    private static boolean isTransformedTouchPointInView(ViewGroup group, View child, float x, float y,PointF outLocalPoint) {
+        final float[] point = new float[2];
+        point[0] = x;
+        point[1] = y;
+        transformPointToViewLocal(group, child, point);
+        final boolean isInView = pointInView(child, point[0], point[1], 0);
+        if (isInView && outLocalPoint != null) {
+            outLocalPoint.set(point[0]-x, point[1]-y);
+        }
+        return isInView;
+    }
+
+    private static void transformPointToViewLocal(ViewGroup group, View child, float[] point) {
+        point[0] += group.getScrollX() - child.getLeft();
+        point[1] += group.getScrollY() - child.getTop();
+    }
+    //</editor-fold>
 
     private class PagerPrimaryAdapter extends PagerAdapterWrapper {
         private ViewPager mViewPager;

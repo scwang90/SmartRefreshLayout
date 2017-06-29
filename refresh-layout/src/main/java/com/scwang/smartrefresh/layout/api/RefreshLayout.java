@@ -102,4 +102,6 @@ public interface RefreshLayout {
     boolean isEnableRefresh();
 
     boolean isEnableLoadmore();
+
+    boolean isLoadmoreFinished();
 }
