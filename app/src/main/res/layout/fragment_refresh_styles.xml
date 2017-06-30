@@ -13,6 +13,7 @@
         android:id="@+id/smartLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:srlEnableLoadmore="false"
         app:srlEnableHeaderTranslationContent="true">
         <com.scwang.smartrefresh.header.DeliveryHeader
             android:layout_width="match_parent"
