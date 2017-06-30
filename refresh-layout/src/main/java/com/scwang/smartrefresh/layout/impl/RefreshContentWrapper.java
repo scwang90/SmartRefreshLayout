@@ -424,7 +424,7 @@ public class RefreshContentWrapper implements RefreshContent {
                     }
                 }
             } else if (overScroll) {
-                if (mlastVisiblePosition != lastVisiblePosition && lastDy > 0) {
+                if (mlastVisiblePosition != lastVisiblePosition && lastDy > 0 && layout.isEnableLoadmore()) {
                     mlastVisiblePosition = lastVisiblePosition;
                     if (adapter != null && lastVisiblePosition == adapter.getCount() - 1) {
                         ValueAnimator animator = ValueAnimator.ofInt(0, -lastDy, 0);
@@ -510,7 +510,7 @@ public class RefreshContentWrapper implements RefreshContent {
                             kernel.getRefreshLayout().autoLoadmore(0,1);
                         }
                     }
-                } else if (lastDy > 1 && intime && overScroll) {
+                } else if (lastDy > 1 && intime && overScroll && layout.isEnableLoadmore()) {
                     ValueAnimator animator = ValueAnimator.ofInt(0, -lastDy * 2, 0);
                     animator.setDuration(400);
                     animator.addUpdateListener(updateListener);
