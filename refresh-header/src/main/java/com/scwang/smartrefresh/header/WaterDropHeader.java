@@ -8,7 +8,7 @@ package com.scwang.smartrefresh.header;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
+import android.support.annotation.RequiresApi;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.os.Build;
@@ -64,7 +64,7 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
         this.initView(context);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     public WaterDropHeader(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         this.initView(context);

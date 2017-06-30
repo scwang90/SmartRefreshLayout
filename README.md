@@ -22,7 +22,7 @@
  - 支持设置多种滑动方式来适配各种效果的Header和Footer：位置平移、尺寸拉伸、背后固定、顶层固定、全屏
  - 支持内容尺寸自适应 Content-wrap_content
  - 支持继承重写和扩展功能，内部实现没有 private 方法和字段，继承之后都可以重写覆盖
- - 支持越界回弹（Listview、RecyclerView）
+ - 支持越界回弹（Listview、RecyclerView、ScrollView、WebView...View）
  
 ## Demo
 [下载 APK-Demo](art/app-debug.apk)

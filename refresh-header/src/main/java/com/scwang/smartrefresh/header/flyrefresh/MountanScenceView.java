@@ -1,6 +1,6 @@
 package com.scwang.smartrefresh.header.flyrefresh;
 
-import android.annotation.TargetApi;
+import android.support.annotation.RequiresApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -76,7 +76,7 @@ public class MountanScenceView extends View {
         initView(context, attrs, defStyleAttr);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     public MountanScenceView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initView(context, attrs, defStyleAttr);

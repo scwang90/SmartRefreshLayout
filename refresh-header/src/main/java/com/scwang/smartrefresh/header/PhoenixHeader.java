@@ -1,6 +1,6 @@
 package com.scwang.smartrefresh.header;
 
-import android.annotation.TargetApi;
+import android.support.annotation.RequiresApi;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -125,7 +125,7 @@ public class PhoenixHeader extends View implements RefreshHeader/*, SizeDefiniti
         initView(context, attrs);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     public PhoenixHeader(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initView(context, attrs);

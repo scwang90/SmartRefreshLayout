@@ -16,17 +16,28 @@
         android:id="@+id/smartLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <ScrollView
-            android:id="@+id/scrollView"
+        <!--<TextView-->
+            <!--android:id="@+id/textView"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:scrollbars = "vertical"-->
+            <!--android:padding="@dimen/padding_common"-->
+            <!--android:text="@string/large_text"/>-->
+        <!--<ScrollView-->
+            <!--android:id="@+id/scrollView"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="@android:color/white">-->
+            <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_margin="@dimen/padding_common"-->
+                <!--android:text="@string/large_text"/>-->
+        <!--</ScrollView>-->
+        <WebView
+            android:id="@+id/webView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/white">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/padding_common"
-                android:text="@string/large_text"/>
-        </ScrollView>
+            android:layout_height="match_parent"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

@@ -1,7 +1,7 @@
 package com.scwang.smartrefresh.header;
 
 import android.animation.ValueAnimator;
-import android.annotation.TargetApi;
+import android.support.annotation.RequiresApi;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -73,7 +73,7 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
         this.initView(context, attrs);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     public WaveSwipeHeader(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         this.initView(context, attrs);

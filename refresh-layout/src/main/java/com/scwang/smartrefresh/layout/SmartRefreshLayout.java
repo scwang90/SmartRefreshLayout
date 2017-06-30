@@ -5,7 +5,7 @@ import android.animation.Animator.AnimatorListener;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
-import android.annotation.TargetApi;
+import android.support.annotation.RequiresApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -181,25 +181,26 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     //<editor-fold desc="构造方法 construction methods">
     public SmartRefreshLayout(Context context) {
         super(context);
-        this.initView(context, null, 0);
+        this.initView(context, null);
     }
 
     public SmartRefreshLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.initView(context, attrs, 0);
+        this.initView(context, attrs);
     }
 
     public SmartRefreshLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.initView(context, attrs, defStyleAttr);
+        this.initView(context, attrs);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     public SmartRefreshLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+        this.initView(context, attrs);
     }
 
-    private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
+    private void initView(Context context, AttributeSet attrs) {
         setClipToPadding(false);
 
         mScreenHeightPixels = context.getResources().getDisplayMetrics().heightPixels;
@@ -1760,6 +1761,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
             SmartRefreshLayout.this.animSpinner(endValue);
             return this;
         }
+        //</editor-fold>
 
         //<editor-fold desc="绘制背景 Backgound">
         public RefreshKernel requestDrawBackgoundForHeader(int backgroundColor) {
@@ -1777,9 +1779,6 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
             return this;
         }
         //</editor-fold>
-
-        //</editor-fold>
-
     }
     //</editor-fold>
 }

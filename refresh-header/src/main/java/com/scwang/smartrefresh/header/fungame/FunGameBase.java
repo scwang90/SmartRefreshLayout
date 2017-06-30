@@ -1,6 +1,6 @@
 package com.scwang.smartrefresh.header.fungame;
 
-import android.annotation.TargetApi;
+import android.support.annotation.RequiresApi;
 import android.content.Context;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -52,7 +52,7 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
         super(context, attrs, defStyleAttr);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     public FunGameBase(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }

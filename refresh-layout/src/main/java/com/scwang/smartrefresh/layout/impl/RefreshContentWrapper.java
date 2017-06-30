@@ -1,11 +1,16 @@
 package com.scwang.smartrefresh.layout.impl;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
+import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.graphics.PointF;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.NestedScrollingChild;
 import android.support.v4.view.NestedScrollingParent;
@@ -65,6 +70,9 @@ public class RefreshContentWrapper implements RefreshContent {
         }
         if (mScrollableView instanceof ViewPager) {
             wrapperViewPager((ViewPager) this.mScrollableView);
+        }
+        if (mScrollableView == null) {
+            mScrollableView = content;
         }
     }
 
@@ -189,12 +197,16 @@ public class RefreshContentWrapper implements RefreshContent {
 
     @Override
     public void setupComponent(RefreshKernel kernel) {
+        TimeInterpolator interpolator = new DecelerateInterpolator();
+        AnimatorUpdateListener updateListener = animation -> kernel.moveSpinner((int) animation.getAnimatedValue(), true);
         if (mScrollableView instanceof RecyclerView) {
-            RecyclerViewScrollComponent component = new RecyclerViewScrollComponent(kernel);
+            RecyclerViewScrollComponent component = new RecyclerViewScrollComponent(kernel, interpolator, updateListener);
             component.attach((RecyclerView) mScrollableView);
         } else if (mScrollableView instanceof AbsListView) {
-            AbsListViewScrollComponent component = new AbsListViewScrollComponent(kernel);
+            AbsListViewScrollComponent component = new AbsListViewScrollComponent(kernel, interpolator, updateListener);
             component.attach(((AbsListView) mScrollableView));
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && mScrollableView != null) {
+            mScrollableView.setOnScrollChangeListener(new Api23ViewScrollComponent(kernel, interpolator, updateListener));
         }
     }
 
@@ -316,6 +328,48 @@ public class RefreshContentWrapper implements RefreshContent {
     }
     //</editor-fold>
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private class Api23ViewScrollComponent implements View.OnScrollChangeListener {
+        int lastOldScrollY = 0;
+        ValueAnimator animator;
+        RefreshKernel kernel;
+        TimeInterpolator interpolator;
+        AnimatorUpdateListener updateListener;
+
+        Api23ViewScrollComponent(RefreshKernel kernel, TimeInterpolator interpolator, AnimatorUpdateListener updateListener) {
+            this.kernel = kernel;
+            this.interpolator = interpolator;
+            this.updateListener = updateListener;
+        }
+
+        @Override
+        public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+            System.out.printf("%d,%d,%d,%d\n", scrollX, scrollY, oldScrollX, oldScrollY);
+            if (scrollY <= 0 && oldScrollY > 0 && animator == null) {
+                RefreshLayout layout = kernel.getRefreshLayout();
+                boolean overScroll = layout.isEnableOverScrollBounce()
+                        && !layout.isRefreshing()
+                        && !layout.isLoading()
+                        && mMotionEvent == null;
+                if (overScroll) {
+                    System.out.println("ValueAnimator");
+                    animator = ValueAnimator.ofInt(0, lastOldScrollY - oldScrollY, 0);
+                    animator.setDuration(500);
+                    animator.addUpdateListener(updateListener);
+                    animator.setInterpolator(interpolator);
+                    animator.addListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            animator = null;
+                        }
+                    });
+                    animator.start();
+                }
+            }
+            lastOldScrollY = oldScrollY;
+        }
+    }
+
     private class AbsListViewScrollComponent implements AbsListView.OnScrollListener {
 
         int lasty;
@@ -323,12 +377,14 @@ public class RefreshContentWrapper implements RefreshContent {
         int mlastVisiblePosition;
         int mFirstVisiblePosition;
         RefreshKernel kernel;
+        TimeInterpolator interpolator;
+        AnimatorUpdateListener updateListener;
         SparseArray<ItemRecod> recordSp = new SparseArray<>(0);
-        TimeInterpolator interpolator = new DecelerateInterpolator();
-        ValueAnimator.AnimatorUpdateListener updateListener = animation -> kernel.moveSpinner((int) animation.getAnimatedValue(), true);
 
-        AbsListViewScrollComponent(RefreshKernel kernel) {
+        AbsListViewScrollComponent(RefreshKernel kernel, TimeInterpolator interpolator, AnimatorUpdateListener updateListener) {
             this.kernel = kernel;
+            this.interpolator = interpolator;
+            this.updateListener = updateListener;
         }
 
         @Override
@@ -347,7 +403,10 @@ public class RefreshContentWrapper implements RefreshContent {
             lasty = scrollY;
             int lastVisiblePosition = absListView.getLastVisiblePosition();
             int firstVisiblePosition = absListView.getFirstVisiblePosition();
-            boolean overScroll = layout.isEnableOverScrollBounce() && !layout.isRefreshing() && !layout.isLoading();
+            boolean overScroll = layout.isEnableOverScrollBounce()
+                    && !layout.isRefreshing()
+                    && !layout.isLoading()
+                    && mMotionEvent == null;
             if (mFirstVisiblePosition != firstVisiblePosition && lastDy < 0 && overScroll) {
                 mFirstVisiblePosition = firstVisiblePosition;
                 if (adapter != null && firstVisiblePosition == 0) {
@@ -422,11 +481,13 @@ public class RefreshContentWrapper implements RefreshContent {
         int lastDy;
         long lastFlingTime;
         RefreshKernel kernel;
-        TimeInterpolator interpolator = new DecelerateInterpolator();
-        ValueAnimator.AnimatorUpdateListener updateListener = animation -> kernel.moveSpinner((int) animation.getAnimatedValue(), true);
+        TimeInterpolator interpolator;
+        AnimatorUpdateListener updateListener;
 
-        RecyclerViewScrollComponent(RefreshKernel kernel) {
+        RecyclerViewScrollComponent(RefreshKernel kernel, TimeInterpolator interpolator, AnimatorUpdateListener updateListener) {
             this.kernel = kernel;
+            this.interpolator = interpolator;
+            this.updateListener = updateListener;
         }
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {

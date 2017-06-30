@@ -1,6 +1,6 @@
 package com.scwang.refreshlayout.util;
 
-import android.annotation.TargetApi;
+import android.support.annotation.RequiresApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
@@ -120,7 +120,7 @@ public class StatusBarUtil {
     //------------------------->
 
     /** android 6.0设置字体颜色 */
-    @TargetApi(Build.VERSION_CODES.M)
+    @RequiresApi(Build.VERSION_CODES.M)
     private static void darkModeForM(Window window, boolean dark) {
 //        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 //        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);

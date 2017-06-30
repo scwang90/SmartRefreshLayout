@@ -71,6 +71,7 @@ public interface RefreshKernel {
      * @param backgroundColor 背景颜色
      */
     RefreshKernel requestDrawBackgoundForFooter(int backgroundColor);
+
     //</editor-fold>
 
 }

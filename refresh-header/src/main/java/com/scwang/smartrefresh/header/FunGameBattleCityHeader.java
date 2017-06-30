@@ -1,6 +1,6 @@
 package com.scwang.smartrefresh.header;
 
-import android.annotation.TargetApi;
+import android.support.annotation.RequiresApi;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Point;
@@ -132,7 +132,7 @@ public class FunGameBattleCityHeader extends FunGameView {
         super(context, attrs, defStyle);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     public FunGameBattleCityHeader(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
