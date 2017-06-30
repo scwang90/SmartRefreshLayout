@@ -49,7 +49,7 @@ public class RepastPracticeActivity extends AppCompatActivity {
             }
         });
 
-        final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.smart);
+        final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.smartLayout);
 
         //第一次进入演示刷新
         if (isFirstEnter) {
@@ -58,7 +58,7 @@ public class RepastPracticeActivity extends AppCompatActivity {
         }
 
         //初始化列表和监听
-        View view = findViewById(R.id.recycler);
+        View view = findViewById(R.id.recyclerView);
         if (view instanceof RecyclerView) {
             RecyclerView recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(this));

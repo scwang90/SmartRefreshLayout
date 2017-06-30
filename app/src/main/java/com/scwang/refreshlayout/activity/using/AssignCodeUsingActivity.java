@@ -35,7 +35,7 @@ public class AssignCodeUsingActivity extends AppCompatActivity {
         });
 
 
-        final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.smart);
+        final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.smartLayout);
         //设置 Header 为 Material风格
         refreshLayout.setRefreshHeader(new MaterialHeader(this).setShowBezierWave(true));
         //设置 Footer 为 球脉冲

@@ -1,11 +1,14 @@
 package com.scwang.smartrefresh.header;
 
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.os.Build;
+import android.support.annotation.Nullable;
 import android.support.v4.graphics.ColorUtils;
 import android.util.AttributeSet;
 
@@ -88,15 +91,23 @@ public class FunGameHitBlockHeader extends FunGameView {
     private int speed;
 
     public FunGameHitBlockHeader(Context context) {
-        this(context, null);
+        super(context);
+        initView(context, null);
     }
 
     public FunGameHitBlockHeader(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs);
+        initView(context, attrs);
     }
 
     public FunGameHitBlockHeader(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        initView(context, attrs);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public FunGameHitBlockHeader(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
         initView(context, attrs);
     }
 
@@ -166,7 +177,7 @@ public class FunGameHitBlockHeader extends FunGameView {
     /**
      * 绘制并处理小球运动的轨迹
      * @param canvas 默认画布
-     * @param width
+     * @param width 视图宽度
      */
     private void makeBallPath(Canvas canvas, int width) {
         mPaint.setColor(mModelColor);

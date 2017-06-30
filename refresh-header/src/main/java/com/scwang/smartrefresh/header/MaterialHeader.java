@@ -1,10 +1,12 @@
 package com.scwang.smartrefresh.header;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 import android.util.AttributeSet;
@@ -58,19 +60,27 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
 
     //<editor-fold desc="MaterialHeader">
     public MaterialHeader(Context context) {
-        this(context,null);
+        super(context);
+        initView(context, null);
     }
 
     public MaterialHeader(Context context, AttributeSet attrs) {
-        this(context, attrs,0);
+        super(context, attrs);
+        initView(context, attrs);
     }
 
     public MaterialHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initView(context, attrs, defStyleAttr);
+        initView(context, attrs);
     }
 
-    private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public MaterialHeader(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        initView(context, attrs);
+    }
+
+    private void initView(Context context, AttributeSet attrs) {
         setMinimumHeight(DensityUtil.dp2px(100));
 
         mProgress = new MaterialProgressDrawable(context, this);

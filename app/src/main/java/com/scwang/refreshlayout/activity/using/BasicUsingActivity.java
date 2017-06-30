@@ -42,7 +42,7 @@ public class BasicUsingActivity extends AppCompatActivity {
             }
         });
 
-        ListView listView = (ListView) findViewById(R.id.list);
+        ListView listView = (ListView) findViewById(R.id.listview);
         listView.setAdapter(mAdapter = new BaseRecyclerAdapter<Void>(simple_list_item_2) {
             @Override
             protected void onBindViewHolder(SmartViewHolder holder, Void model, int position) {
@@ -52,7 +52,7 @@ public class BasicUsingActivity extends AppCompatActivity {
             }
         });
 
-        final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.smart);
+        final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.smartLayout);
         refreshLayout.setEnableAutoLoadmore(true);//开启自动加载功能（非必须）
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override

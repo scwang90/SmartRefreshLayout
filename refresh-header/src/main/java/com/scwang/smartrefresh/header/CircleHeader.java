@@ -3,13 +3,16 @@ package com.scwang.smartrefresh.header;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
@@ -59,19 +62,27 @@ public class CircleHeader extends View implements RefreshHeader {
     //<editor-fold desc="View">
 
     public CircleHeader(Context context) {
-        this(context, null, 0);
+        super(context, null, 0);
+        initView(context, null);
     }
 
     public CircleHeader(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs, 0);
+        initView(context, attrs);
     }
 
     public CircleHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initView(context, attrs, defStyleAttr);
+        initView(context, attrs);
     }
 
-    private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public CircleHeader(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        initView(context, attrs);
+    }
+
+    private void initView(Context context, AttributeSet attrs) {
         setMinimumHeight(DensityUtil.dp2px(100));
         mBackPaint = new Paint();
         mBackPaint.setColor(0xff11bbff);

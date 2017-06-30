@@ -84,7 +84,7 @@ public class RefreshStylesFragment extends Fragment implements AdapterView.OnIte
     public void onViewCreated(View root, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(root, savedInstanceState);
 
-        View view = root.findViewById(R.id.recycler);
+        View view = root.findViewById(R.id.recyclerView);
         if (view instanceof RecyclerView) {
             RecyclerView recyclerView = (RecyclerView) view;
             recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -110,7 +110,7 @@ public class RefreshStylesFragment extends Fragment implements AdapterView.OnIte
             try {
                 Constructor<?> constructor = item.clazz.getConstructor(Context.class);
                 RefreshHeader header = (RefreshHeader) constructor.newInstance(getContext());
-                RefreshLayout layout = (RefreshLayout) getView().findViewById(R.id.smart);
+                RefreshLayout layout = (RefreshLayout) getView().findViewById(R.id.smartLayout);
                 layout.setRefreshHeader(header);
                 if (!(header instanceof ClassicsHeader)) {
                     layout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);

@@ -100,15 +100,15 @@ public class BallPulseFooter extends ViewGroup implements RefreshFooter {
 
     }
     @Override
-    public void onPullingUp(float percent, int offset, int bottomHeight, int extendHeight) {
+    public void onPullingUp(float percent, int offset, int footerHeight, int extendHeight) {
     }
 
     @Override
-    public void onPullReleasing(float percent, int offset, int bottomHeight, int extendHeight) {
+    public void onPullReleasing(float percent, int offset, int footerHeight, int extendHeight) {
     }
 
     @Override
-    public void onStartAnimator(RefreshLayout layout, int bottomHeight, int extendHeight) {
+    public void onStartAnimator(RefreshLayout layout, int footerHeight, int extendHeight) {
         mBallPulseView.startAnim();
     }
 

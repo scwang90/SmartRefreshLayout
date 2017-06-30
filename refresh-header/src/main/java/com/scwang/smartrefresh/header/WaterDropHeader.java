@@ -8,8 +8,10 @@ package com.scwang.smartrefresh.header;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
@@ -49,21 +51,28 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
     //<editor-fold desc="ViewGroup">
     public WaterDropHeader(Context context) {
         super(context);
-        initView(context);
+        this.initView(context);
     }
 
     public WaterDropHeader(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initView(context);
+        this.initView(context);
+    }
+
+    public WaterDropHeader(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        this.initView(context);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public WaterDropHeader(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        this.initView(context);
     }
 
     private void initView(Context context) {
-//        setBackgroundColor(0xff11bbff);
         DensityUtil density = new DensityUtil();
         mWaterDropView = new WaterDropView(context);
-//        mWaterDropView.setMaxCircleRadius(density.dip2px(20));
-//        mWaterDropView.setMinCircleRadius(density.dip2px(5));
-//        mWaterDropView.setWaterDropColor(0xff9ba2ab);
         addView(mWaterDropView, MATCH_PARENT, MATCH_PARENT);
         mWaterDropView.updateComleteState(0);
 
@@ -99,7 +108,6 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         final int measuredWidth = getMeasuredWidth();
-//        final int measuredHeight = getMeasuredHeight();
 
         final int widthWaterDrop = mWaterDropView.getMeasuredWidth();
         final int heightWaterDrop = mWaterDropView.getMeasuredHeight();
@@ -187,7 +195,6 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
                 mWaterDropView.setVisibility(View.VISIBLE);
                 break;
             case Refreshing:
-//              mWaterDropView.setVisibility(View.GONE);
                 break;
             case RefreshFinish:
                 mWaterDropView.setVisibility(View.GONE);
@@ -197,7 +204,6 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
 
     @Override
     public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
-        //mProgress.start();
         Animator animator = mWaterDropView.createAnimator();
         animator.addListener(new AnimatorListenerAdapter() {
             @Override
@@ -225,7 +231,6 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
 
     @Override
     public void onFinish(RefreshLayout layout) {
-        //mProgress.stop();
     }
 
     @Override

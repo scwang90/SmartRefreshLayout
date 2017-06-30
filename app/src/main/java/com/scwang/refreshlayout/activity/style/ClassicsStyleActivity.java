@@ -69,7 +69,7 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
             }
         });
 
-        mRefreshLayout = (RefreshLayout)findViewById(R.id.smart);
+        mRefreshLayout = (RefreshLayout)findViewById(R.id.smartLayout);
 
         int deta = new Random().nextInt(7 * 24 * 60 * 60 * 1000);
         mClassicsHeader = (ClassicsHeader)mRefreshLayout.getRefreshHeader();
@@ -78,7 +78,7 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
         mClassicsHeader.setTimeFormat(new DynamicTimeFormat("更新于 %s"));
 
 
-        View view = findViewById(R.id.recycler);
+        View view = findViewById(R.id.recyclerView);
         if (view instanceof RecyclerView) {
             RecyclerView recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(this));

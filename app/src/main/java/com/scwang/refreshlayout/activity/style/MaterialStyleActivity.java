@@ -61,7 +61,7 @@ public class MaterialStyleActivity extends AppCompatActivity implements AdapterV
             }
         });
 
-        mRefreshLayout = (RefreshLayout)findViewById(R.id.smart);
+        mRefreshLayout = (RefreshLayout)findViewById(R.id.smartLayout);
         if (isFirstEnter) {
             isFirstEnter = false;
             mRefreshLayout.autoRefresh();//第一次进入触发自动刷新，演示效果
@@ -69,7 +69,7 @@ public class MaterialStyleActivity extends AppCompatActivity implements AdapterV
 
         mMaterialHeader = (MaterialHeader)mRefreshLayout.getRefreshHeader();
 
-        View view = findViewById(R.id.recycler);
+        View view = findViewById(R.id.recyclerView);
         if (view instanceof RecyclerView) {
             RecyclerView recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(this));

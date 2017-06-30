@@ -144,7 +144,7 @@ SmartRefreshLayout.setDefaultRefreshFooterCreater(new DefaultRefreshFooterCreate
 ```xml
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/smart"
+        android:id="@+id/smartLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#444444"
@@ -180,7 +180,7 @@ SmartRefreshLayout.setDefaultRefreshFooterCreater(new DefaultRefreshFooterCreate
 
 #### 3.方法三 Java代码设置
 ```java
-final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.smart);
+final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.smartLayout);
 //设置 Header 为 Material风格
 refreshLayout.setRefreshHeader(new MaterialHeader(this).setShowBezierWave(true));
 //设置 Footer 为 球脉冲

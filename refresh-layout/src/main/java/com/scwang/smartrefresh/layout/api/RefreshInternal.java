@@ -20,7 +20,7 @@ public interface RefreshInternal extends OnStateChangedListener {
     View getView();
 
     /**
-     * 获取变换方式
+     * 获取变换方式 {@link SpinnerStyle}
      */
     SpinnerStyle getSpinnerStyle();
 
