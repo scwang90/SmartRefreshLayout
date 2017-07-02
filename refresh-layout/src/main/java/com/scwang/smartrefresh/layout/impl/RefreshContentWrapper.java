@@ -18,16 +18,21 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.PagerAdapterWrapper;
 import android.support.v4.view.ScrollingView;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.Space;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.MeasureSpec;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.webkit.WebView;
 import android.widget.AbsListView;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ScrollView;
 import android.widget.WrapperListAdapter;
@@ -41,6 +46,8 @@ import java.util.Collections;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+
 /**
  * 刷新内容包装
  * Created by SCWANG on 2017/5/26.
@@ -49,16 +56,19 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class RefreshContentWrapper implements RefreshContent {
 
     private View mContentView;
+    private View mRealContentView;
     private View mScrollableView;
+    private View mFixedHeader;
+    private View mFixedFooter;
     private MotionEvent mMotionEvent;
 
     public RefreshContentWrapper(View view) {
-        this.mContentView = view;
+        this.mContentView = mRealContentView = view;
         this.findScrollableView(view);
     }
 
     public RefreshContentWrapper(Context context) {
-        this.mContentView = new View(context);
+        this.mContentView = mRealContentView = new View(context);
         this.findScrollableView(mContentView);
     }
 
@@ -142,7 +152,13 @@ public class RefreshContentWrapper implements RefreshContent {
 
     @Override
     public void moveSpinner(int spinner) {
-        mContentView.setTranslationY(spinner);
+        mRealContentView.setTranslationY(spinner);
+        if (mFixedHeader != null) {
+            mFixedHeader.setTranslationY(Math.max(0, spinner));
+        }
+        if (mFixedFooter != null) {
+            mFixedFooter.setTranslationY(Math.min(0, spinner));
+        }
     }
 
     @Override
@@ -197,7 +213,7 @@ public class RefreshContentWrapper implements RefreshContent {
     }
 
     @Override
-    public void setupComponent(RefreshKernel kernel) {
+    public void setupComponent(RefreshKernel kernel, View fixedHeader, View fixedFooter) {
         TimeInterpolator interpolator = new DecelerateInterpolator();
         AnimatorUpdateListener updateListener = animation -> kernel.moveSpinner((int) animation.getAnimatedValue(), true);
         if (mScrollableView instanceof RecyclerView) {
@@ -209,6 +225,54 @@ public class RefreshContentWrapper implements RefreshContent {
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && mScrollableView != null) {
             mScrollableView.setOnScrollChangeListener(new Api23ViewScrollComponent(kernel, interpolator, updateListener));
         }
+        if (fixedHeader != null || fixedFooter != null) {
+            mFixedHeader = fixedHeader;
+            mFixedFooter = fixedFooter;
+            FrameLayout frameLayout = new FrameLayout(mContentView.getContext());
+            kernel.getRefreshLayout().getLayout().removeView(mContentView);
+            ViewGroup.LayoutParams layoutParams = mContentView.getLayoutParams();
+            frameLayout.addView(mContentView, MATCH_PARENT, MATCH_PARENT);
+            kernel.getRefreshLayout().getLayout().addView(frameLayout, layoutParams);
+            mContentView = frameLayout;
+            if (fixedHeader != null) {
+                ViewGroup.LayoutParams lp = fixedHeader.getLayoutParams();
+                ViewGroup parent = (ViewGroup) fixedHeader.getParent();
+                int index = parent.indexOfChild(fixedHeader);
+                parent.removeView(fixedHeader);
+                lp.height = measureViewHeight(fixedHeader);
+                parent.addView(new Space(mContentView.getContext()), index, lp);
+                frameLayout.addView(fixedHeader);
+            }
+            if (fixedFooter != null) {
+                ViewGroup.LayoutParams lp = fixedFooter.getLayoutParams();
+                ViewGroup parent = (ViewGroup) fixedFooter.getParent();
+                int index = parent.indexOfChild(fixedFooter);
+                parent.removeView(fixedFooter);
+                FrameLayout.LayoutParams flp = new FrameLayout.LayoutParams(lp);
+                lp.height = measureViewHeight(fixedFooter);
+                parent.addView(new Space(mContentView.getContext()), index, lp);
+                flp.gravity = Gravity.BOTTOM;
+                frameLayout.addView(fixedFooter, flp);
+            }
+        }
+    }
+
+    private static int measureViewHeight(View view) {
+        ViewGroup.LayoutParams p = view.getLayoutParams();
+        if (p == null) {
+            p = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.FILL_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+        }
+        int childHeightSpec;
+        int childWidthSpec = ViewGroup.getChildMeasureSpec(0, 0, p.width);
+        if (p.height > 0) {
+            childHeightSpec = MeasureSpec.makeMeasureSpec(p.height, MeasureSpec.EXACTLY);
+        } else {
+            childHeightSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
+        }
+        view.measure(childWidthSpec, childHeightSpec);
+        return view.getMeasuredHeight();
     }
 
     @Override

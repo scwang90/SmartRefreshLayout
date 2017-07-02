@@ -180,4 +180,5 @@
     <string name="fragment_refresh_practive">实战</string>
     <string name="title_activity_using_overscroll">越界回弹</string>
     <string name="title_activity_practice_webview">Github</string>
+    <string name="title_activity_practice_feedlist">微博列表</string>
 </resources>

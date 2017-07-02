@@ -259,6 +259,14 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
         this.mSpinnerStyle = style;
         return this;
     }
+
+    public ClassicsHeader setAccentColor(int accentColor) {
+        mArrowView.parserColors(accentColor);
+        mHeaderText.setTextColor(accentColor);
+        mProgressDrawable.setColor(accentColor);
+        mLastUpdateText.setTextColor(accentColor&0x00ffffff|0x99000000);
+        return this;
+    }
     //</editor-fold>
 
 }

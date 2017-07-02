@@ -55,9 +55,7 @@ public class WebviewPracticeActivity extends AppCompatActivity {
             @Override
             public void onPageCommitVisible(WebView view, String url) {
                 refreshLayout.finishRefresh();
-            }@Override
-            public void onPageFinished(WebView view, String url) {
-                webView.loadUrl(String.format(Locale.CHINA, "javascript:document.body.style.paddingTop='%dpx'; void 0", webView.getPaddingTop()));
+                view.loadUrl(String.format(Locale.CHINA, "javascript:document.body.style.paddingTop='%dpx'; void 0", webView.getPaddingTop()));
             }
         });
 

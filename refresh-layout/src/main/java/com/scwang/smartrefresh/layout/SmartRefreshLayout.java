@@ -88,6 +88,10 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     protected float mDragRate = .5f;
     protected float mInitialMotionY;
     protected Interpolator mReboundInterpolator;
+    protected View mFixedHeaderView;//固定在头部的视图
+    protected View mFixedFooterView;//固定在底部的视图
+    protected int mFixedHeaderViewId;//固定在头部的视图Id
+    protected int mFixedFooterViewId;//固定在头部的视图Id
     //</editor-fold>
 
     //<editor-fold desc="功能属性">
@@ -229,6 +233,8 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         mEnablePreviewInEditMode = ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnablePreviewInEditMode, mEnablePreviewInEditMode);
         mEnableAutoLoadmore = ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnableAutoLoadmore, mEnableAutoLoadmore);
         mEnableOverScrollBounce = ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnableAutoLoadmore, mEnableOverScrollBounce);
+        mFixedHeaderViewId = ta.getResourceId(R.styleable.SmartRefreshLayout_srlFixedHeaderViewId, View.NO_ID);
+        mFixedFooterViewId = ta.getResourceId(R.styleable.SmartRefreshLayout_srlFixedFooterViewId, View.NO_ID);
 
         mFooterExtendHeight = (int) Math.max((mFooterHeight * (mHeaderMaxDragRate - 1)), 0);
         mHeaderExtendHeight = (int) Math.max((mHeaderHeight * (mHeaderMaxDragRate - 1)), 0);
@@ -352,7 +358,13 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                 mRefreshContent.getView().setLayoutParams(new LayoutParams(MATCH_PARENT, MATCH_PARENT));
             }
         }
-        mRefreshContent.setupComponent(mKernel);
+        if (mFixedHeaderViewId > 0 && mFixedHeaderView == null) {
+            mFixedHeaderView = findViewById(mFixedHeaderViewId);
+        }
+        if (mFixedFooterViewId > 0 && mFixedFooterView == null) {
+            mFixedFooterView = findViewById(mFixedFooterViewId);
+        }
+        mRefreshContent.setupComponent(mKernel, mFixedHeaderView, mFixedFooterView);
 
         if (mRefreshHeader == null) {
             mRefreshHeader = mHeaderCreater.createRefreshHeader(getContext(), this);
@@ -383,7 +395,6 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         if (mRefreshFooter.getSpinnerStyle() != SpinnerStyle.FixedBehind) {
             bringChildToFront(mRefreshFooter.getView());
         }
-
 
         if (mRefreshListener == null) {
             mRefreshListener = refresh -> refresh.finishRefresh(3000);
@@ -589,6 +600,9 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         mKernel = null;
         mRefreshHeader = null;
         mRefreshFooter = null;
+        mRefreshContent = null;
+        mFixedHeaderView = null;
+        mFixedFooterView = null;
     }
 
     @Override

@@ -117,6 +117,10 @@
             android:name=".activity.practice.WebviewPracticeActivity"
             android:label="@string/title_activity_practice_profile"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.practice.FeedlistPracticeActivity"
+            android:label="@string/title_activity_practice_feedlist"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

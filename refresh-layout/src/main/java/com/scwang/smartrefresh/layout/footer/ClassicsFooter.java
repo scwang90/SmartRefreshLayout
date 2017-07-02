@@ -84,9 +84,17 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
 
         mSpinnerStyle = SpinnerStyle.values()[ta.getInt(R.styleable.ClassicsFooter_srlClassicsSpinnerStyle, mSpinnerStyle.ordinal())];
 
-        if (ta.hasValue(R.styleable.ClassicsFooter_srlAccentColor)) {
+        if (ta.hasValue(R.styleable.ClassicsFooter_srlPrimaryColor)) {
+            int primaryColor = ta.getColor(R.styleable.ClassicsFooter_srlPrimaryColor, 0);
+            if (ta.hasValue(R.styleable.ClassicsFooter_srlAccentColor)) {
+                int accentColor = ta.getColor(R.styleable.ClassicsFooter_srlAccentColor, 0);
+                setPrimaryColors(primaryColor, accentColor);
+            } else {
+                setPrimaryColors(primaryColor);
+            }
+        } else if (ta.hasValue(R.styleable.ClassicsFooter_srlAccentColor)) {
             int accentColor = ta.getColor(R.styleable.ClassicsFooter_srlAccentColor, 0);
-            setAccentColor(accentColor);
+            setPrimaryColors(0, accentColor);
         }
 
         ta.recycle();

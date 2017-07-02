@@ -34,6 +34,8 @@
         <attr name="srlEnableOverScrollBounce" format="boolean"/>
         <attr name="srlDisableContentWhenRefresh" format="boolean"/>
         <attr name="srlDisableContentWhenLoading" format="boolean"/>
+        <attr name="srlFixedHeaderViewId" format="reference"/>
+        <attr name="srlFixedFooterViewId" format="reference"/>
     </declare-styleable>
 
     <declare-styleable name="BezierRadarHeader">
@@ -55,6 +57,7 @@
 
     <declare-styleable name="ClassicsFooter">
         <attr name="srlClassicsSpinnerStyle"/>
+        <attr name="srlPrimaryColor"/>
         <attr name="srlAccentColor"/>
     </declare-styleable>
 </resources>
