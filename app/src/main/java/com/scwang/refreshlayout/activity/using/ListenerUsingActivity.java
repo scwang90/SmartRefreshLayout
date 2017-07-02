@@ -26,8 +26,7 @@ public class ListenerUsingActivity extends AppCompatActivity {
 
     private static DateFormat FORMAT = new SimpleDateFormat("HH:mm sss", Locale.CHINA);
 
-    private Toolbar mToolbar;
-    private TextView mTvContent;
+        private TextView mTvContent;
     private static boolean isFirstEnter = true;
     private String mHeaderPulling;
     private String mHeaderReleasing;
@@ -46,8 +45,8 @@ public class ListenerUsingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_using_listener);
 
-        mToolbar = (Toolbar)findViewById(R.id.toolbar);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        final Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

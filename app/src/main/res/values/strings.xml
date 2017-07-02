@@ -179,4 +179,5 @@
     <string name="title_activity_practice_profile">个人中心</string>
     <string name="fragment_refresh_practive">实战</string>
     <string name="title_activity_using_overscroll">越界回弹</string>
+    <string name="title_activity_practice_webview">Github</string>
 </resources>

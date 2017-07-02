@@ -25,8 +25,7 @@ import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
  */
 public class AssignDefaultUsingActivity extends AppCompatActivity {
 
-    private Toolbar mToolbar;
-    private static boolean isFirstEnter = true;
+        private static boolean isFirstEnter = true;
 
     /**
      * 关键代码，需要在布局生成之前设置，建议代码放在 Application.onCreate 中
@@ -60,8 +59,8 @@ public class AssignDefaultUsingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_using_assign_default);
 
-        mToolbar = (Toolbar)findViewById(R.id.toolbar);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        final Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

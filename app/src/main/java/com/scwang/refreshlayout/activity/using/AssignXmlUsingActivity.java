@@ -15,16 +15,15 @@ import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
  */
 public class AssignXmlUsingActivity extends AppCompatActivity {
 
-    private Toolbar mToolbar;
-    private static boolean isFirstEnter = true;
+        private static boolean isFirstEnter = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_using_assign_xml);
 
-        mToolbar = (Toolbar)findViewById(R.id.toolbar);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        final Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

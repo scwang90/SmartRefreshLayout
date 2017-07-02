@@ -32,7 +32,6 @@ public class RepastPracticeActivity extends AppCompatActivity {
         String nickname;
     }
 
-    private Toolbar mToolbar;
     private static boolean isFirstEnter = true;
     private BaseRecyclerAdapter<Model> mAdapter;
 
@@ -41,8 +40,8 @@ public class RepastPracticeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_practice_repast);
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -103,7 +102,7 @@ public class RepastPracticeActivity extends AppCompatActivity {
         //状态栏透明和间距处理
         StatusBarUtil.darkMode(this);
         StatusBarUtil.setPaddingSmart(this, view);
-        StatusBarUtil.setPaddingSmart(this, mToolbar);
+        StatusBarUtil.setPaddingSmart(this, toolbar);
         StatusBarUtil.setPaddingSmart(this, findViewById(R.id.blurview));
         StatusBarUtil.setMargin(this, findViewById(R.id.gifview));
     }

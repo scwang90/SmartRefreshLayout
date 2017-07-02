@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackgroudDark"
+    tools:context="com.scwang.refreshlayout.activity.practice.WebviewPracticeActivity">
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/smartLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srlPrimaryColor="@color/colorPrimary"
+        app:srlAccentColor="@android:color/white"
+        app:srlEnableLoadmore="true"
+        app:srlEnablePreviewInEditMode="true">
+        <com.scwang.smartrefresh.header.PhoenixHeader
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="?attr/actionBarSize"/>
+        <WebView
+            android:id="@+id/webView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingTop="?attr/actionBarSize"/>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <com.github.mmin18.widget.RealtimeBlurView
+        android:id="@+id/blurview"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:realtimeBlurRadius="10dp"
+        app:realtimeOverlayColor="@color/colorPrimaryOverlay"/>
+    <!--((0xFF * fgC * fgA) + (bgC * bgA * (0xFF - fgA))) / (a * 0xFF);-->
+    <!--((0xFF * fgC * 0xcc) + (0xff * 0xff * (0xFF - 0xcc))) / (0xff * 0xFF) = YY -->
+    <!--(0xFF * fgC * 0xcc) = YY * (0xff * 0xFF) - (0xff * 0xff * (0xFF - 0xcc))  -->
+    <!--fgC = (YY * (0xff * 0xFF) - (0xff * 0xff * (0xFF - 0xcc)))/(0xFF*0xcc)  -->
+    <!--fgC = (0xff * 0xFF)*(YY - 0x33)/(0xFF*0xcc)  -->
+    <!--fgC = 0xF*(YY - 0x33)/0xc  -->
+    <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
+        android:id="@+id/toolbar"
+        android:background="@android:color/transparent"
+        app:navigationIcon="@drawable/ic_arrow_back_white_24dp"
+        app:title="@string/title_activity_practice_webview"/>
+
+</FrameLayout>

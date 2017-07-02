@@ -25,17 +25,15 @@ import static android.R.layout.simple_list_item_2;
  */
 public class BasicUsingActivity extends AppCompatActivity {
 
-    private Toolbar mToolbar;
-    private BaseRecyclerAdapter<Void> mAdapter;
-    private static boolean isFirstEnter = true;
+        private BaseRecyclerAdapter<Void> mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_using_basic);
 
-        mToolbar = (Toolbar)findViewById(R.id.toolbar);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        final Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -83,11 +81,8 @@ public class BasicUsingActivity extends AppCompatActivity {
             }
         });
 
-        if (isFirstEnter) {
-            isFirstEnter = false;
-            //触发自动刷新
-            refreshLayout.autoRefresh();
-        }
+        //触发自动刷新
+        refreshLayout.autoRefresh();
 
     }
 

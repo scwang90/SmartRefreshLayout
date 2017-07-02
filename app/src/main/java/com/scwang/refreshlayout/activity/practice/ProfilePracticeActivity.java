@@ -13,15 +13,14 @@ import com.scwang.refreshlayout.util.StatusBarUtil;
  */
 public class ProfilePracticeActivity extends AppCompatActivity {
 
-    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_practice_profile);
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -30,7 +29,7 @@ public class ProfilePracticeActivity extends AppCompatActivity {
 
         //状态栏透明和间距处理
         StatusBarUtil.immersive(this);
-        StatusBarUtil.setPaddingSmart(this, mToolbar);
+        StatusBarUtil.setPaddingSmart(this, toolbar);
         StatusBarUtil.setPaddingSmart(this, findViewById(R.id.profile));
         StatusBarUtil.setPaddingSmart(this, findViewById(R.id.blurview));
     }

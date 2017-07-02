@@ -25,6 +25,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
+import android.view.animation.Interpolator;
 import android.webkit.WebView;
 import android.widget.AbsListView;
 import android.widget.ListAdapter;
@@ -211,28 +212,25 @@ public class RefreshContentWrapper implements RefreshContent {
     }
 
     @Override
-    public boolean onLoadingFinish(int footerHeight) {
-        return mScrollableView != null && scrollAViewBy(mScrollableView, footerHeight);
-    }
-
-    //<editor-fold desc="private">
-    private static boolean scrollAViewBy(View view, int height) {
-        if (view instanceof RecyclerView) ((RecyclerView) view).smoothScrollBy(0, height);
-        else if (view instanceof ScrollView) ((ScrollView) view).smoothScrollBy(0, height);
-        else if (view instanceof AbsListView) ((AbsListView) view).smoothScrollBy(height, 150);
-        else {
-            try {
-                Method method = view.getClass().getDeclaredMethod("smoothScrollBy", Integer.class, Integer.class);
-                method.invoke(view, 0, height);
-            } catch (Exception e) {
-                view.scrollBy(0, height);
-                return false;
+    public AnimatorUpdateListener onLoadingFinish(int footerHeight, Interpolator interpolator, int duration) {
+        if (mScrollableView != null) {
+            if (mScrollableView instanceof RecyclerView) ((RecyclerView) mScrollableView).smoothScrollBy(0, footerHeight, interpolator);
+            else if (mScrollableView instanceof ScrollView) ((ScrollView) mScrollableView).smoothScrollBy(0, footerHeight);
+            else if (mScrollableView instanceof AbsListView) ((AbsListView) mScrollableView).smoothScrollBy(footerHeight, duration);
+            else {
+                try {
+                    Method method = mScrollableView.getClass().getDeclaredMethod("smoothScrollBy", Integer.class, Integer.class);
+                    method.invoke(mScrollableView, 0, footerHeight);
+                } catch (Exception e) {
+                    int scrollX = mScrollableView.getScrollX();
+                    int scrollY = mScrollableView.getScrollY();
+                    return animation -> mScrollableView.scrollTo(scrollX, scrollY + (int) animation.getAnimatedValue());
+                }
             }
+            return null;
         }
-        return true;
+        return null;
     }
-
-    //</editor-fold>
 
     //<editor-fold desc="滚动判断">
     private static boolean canScrollUp(View targetView, MotionEvent event) {
@@ -328,6 +326,7 @@ public class RefreshContentWrapper implements RefreshContent {
     }
     //</editor-fold>
 
+    //<editor-fold desc="滚动组件">
     @RequiresApi(api = Build.VERSION_CODES.M)
     private class Api23ViewScrollComponent implements View.OnScrollChangeListener {
         int lastOldScrollY = 0;
@@ -417,7 +416,7 @@ public class RefreshContentWrapper implements RefreshContent {
                     animator.start();
                 }
             } else if (layout.isEnableLoadmore() && !layout.isLoadmoreFinished()) {
-                if (mlastVisiblePosition != lastVisiblePosition) {
+                if (mlastVisiblePosition != lastVisiblePosition && lastVisiblePosition > 0) {
                     mlastVisiblePosition = lastVisiblePosition;
                     if (adapter != null && lastVisiblePosition == adapter.getCount() - 1) {
                         kernel.getRefreshLayout().autoLoadmore(0, 1);
@@ -536,6 +535,7 @@ public class RefreshContentWrapper implements RefreshContent {
             });
         }
     }
+    //</editor-fold>
 
     private class PagerPrimaryAdapter extends PagerAdapterWrapper {
         private ViewPager mViewPager;

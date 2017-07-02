@@ -56,8 +56,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
 
     private FlyView mFlyView;
     private ArrayList<ItemData> mDataSet = new ArrayList<>();
-    private Toolbar mToolbar;
-    private LinearLayoutManager mLayoutManager;
+        private LinearLayoutManager mLayoutManager;
     private MountanScenceView mScenceView;
     private FlyRefreshHeader mFlyRefreshHeader;
     private CollapsingToolbarLayout mToolbarLayout;
@@ -69,9 +68,9 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fly_refresh);
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -111,18 +110,18 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
                 }, 2000);//模拟两秒的后台数据加载
             }
         });
-        //设置 让 AppBarLayout 和 RefreshLayout 的滚动同步 并不保持 mToolbar 位置不变
+        //设置 让 AppBarLayout 和 RefreshLayout 的滚动同步 并不保持 toolbar 位置不变
         final AppBarLayout appBar = (AppBarLayout) findViewById(R.id.app_bar);
         mRefreshlayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
             @Override
             public void onHeaderPulling(RefreshHeader header, float percent, int offset, int footerHeight, int extendHeight) {
                 appBar.setTranslationY(offset);
-                mToolbar.setTranslationY(-offset);
+                toolbar.setTranslationY(-offset);
             }
             @Override
             public void onHeaderReleasing(RefreshHeader header, float percent, int offset, int footerHeight, int extendHeight) {
                 appBar.setTranslationY(offset);
-                mToolbar.setTranslationY(-offset);
+                toolbar.setTranslationY(-offset);
             }
         });
         /************************************************************

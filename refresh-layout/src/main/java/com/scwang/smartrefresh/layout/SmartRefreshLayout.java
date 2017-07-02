@@ -5,7 +5,6 @@ import android.animation.Animator.AnimatorListener;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
-import android.support.annotation.RequiresApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -14,6 +13,7 @@ import android.os.Build;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.NestedScrollingChild;
 import android.support.v4.view.NestedScrollingChildHelper;
@@ -29,7 +29,6 @@ import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
-import android.view.animation.LinearInterpolator;
 import android.webkit.WebView;
 import android.widget.AbsListView;
 import android.widget.ScrollView;
@@ -56,6 +55,7 @@ import com.scwang.smartrefresh.layout.listener.OnMultiPurposeListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
+import com.scwang.smartrefresh.layout.util.ViscousFluidInterpolator;
 
 import static android.view.View.MeasureSpec.AT_MOST;
 import static android.view.View.MeasureSpec.EXACTLY;
@@ -81,7 +81,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     //<editor-fold desc="滑动属性">
     protected int mTouchSlop;
     protected int mSpinner;
-    protected int mReboundDuration = 300;
+    protected int mReboundDuration = 250;
     protected int mScreenHeightPixels;
     protected float mTouchX;
     protected float mTouchY;
@@ -204,7 +204,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         setClipToPadding(false);
 
         mScreenHeightPixels = context.getResources().getDisplayMetrics().heightPixels;
-        mReboundInterpolator = new DecelerateInterpolator();
+        mReboundInterpolator = new ViscousFluidInterpolator();
         mTouchSlop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
 
         mNestedScrollingParentHelper = new NestedScrollingParentHelper(this);
@@ -801,13 +801,16 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                 }
             } else if (mState == RefreshState.Loading && mRefreshFooter != null) {
                 notifyStateChanged(RefreshState.LoadingFinish);
-                boolean anim = mRefreshContent.onLoadingFinish(mFooterHeight);
+                AnimatorUpdateListener updateListener = mRefreshContent.onLoadingFinish(mFooterHeight, mReboundInterpolator, mReboundDuration);
                 mRefreshFooter.onFinish(this);
                 if (mOnMultiPurposeListener != null) {
                     mOnMultiPurposeListener.onFooterFinish(mRefreshFooter);
                 }
-                if (anim && mSpinner != 0) {
-                    animSpinner(0, new LinearInterpolator());
+                if (mSpinner != 0 && updateListener != null) {
+                    ValueAnimator valueAnimator = animSpinner(0);
+                    if (valueAnimator != null) {
+                        valueAnimator.addUpdateListener(updateListener);
+                    }
                     return;
                 }
             }
@@ -840,10 +843,10 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     protected AnimatorUpdateListener reboundUpdateListener = animation -> moveSpinner((int) animation.getAnimatedValue(), true);
     //</editor-fold>
 
-    protected void animSpinner(int endValue) {
-        animSpinner(endValue, mReboundInterpolator);
+    protected ValueAnimator animSpinner(int endValue) {
+        return animSpinner(endValue, mReboundInterpolator);
     }
-    protected void animSpinner(int endValue, Interpolator interpolator) {
+    protected ValueAnimator animSpinner(int endValue, Interpolator interpolator) {
         if (mSpinner != endValue) {
             if (reboundAnimator != null) {
                 reboundAnimator.cancel();
@@ -855,6 +858,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
             reboundAnimator.addListener(reboundAnimatorEndListener);
             reboundAnimator.start();
         }
+        return reboundAnimator;
     }
 
     protected boolean overSpinner() {
@@ -893,6 +897,10 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
 //        return false;
     }
 
+    /**
+     * 移动滚动 Scroll
+     * moveSpinner 的取名来自 谷歌官方的 @{@link android.support.v4.widget.SwipeRefreshLayout#moveSpinner(float)}
+     */
     protected void moveSpinner(int spinner, boolean isAnimator) {
         if (mSpinner == spinner) {
             return;

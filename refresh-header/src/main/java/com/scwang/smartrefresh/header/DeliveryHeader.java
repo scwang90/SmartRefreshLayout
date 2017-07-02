@@ -153,8 +153,8 @@ public class DeliveryHeader extends View implements RefreshHeader {
         }
 
         final int centerY = height - mHeaderHeight / 2 + shake;
-        final int centerYBox = centerY + (mHeaderHeight / 2 - mBoxDrawable.height() +  mBoxDrawable.height() / 4)
-                - Math.min(mHeaderHeight / 2 - mBoxDrawable.height() +  mBoxDrawable.height() / 4, DensityUtil.dp2px(mAppreciation * 100));
+        final int centerYBox = centerY + (mHeaderHeight / 2 - mBoxDrawable.height())
+                - Math.min(mHeaderHeight / 2 - mBoxDrawable.height(), DensityUtil.dp2px(mAppreciation * 100));
         mBoxDrawable.getBounds().offsetTo(width / 2 - mBoxDrawable.width() / 2, centerYBox - mBoxDrawable.height() / 4);
         mBoxDrawable.draw(canvas);
 
