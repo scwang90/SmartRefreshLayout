@@ -26,91 +26,115 @@
             android:layout_height="wrap_content"
             app:srlClassicsSpinnerStyle="FixedBehind"/>
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:gravity="center_horizontal"
             android:background="@color/colorPrimaryDark">
 
-            <RelativeLayout
+            <FrameLayout
                 android:id="@+id/profile"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:padding="@dimen/padding_common_h">
+                android:layout_height="130dp">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/avatar"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_marginLeft="@dimen/padding_common"
-                    android:layout_marginRight="@dimen/padding_common"
-                    app:civ_border_width="3dp"
-                    app:civ_border_color="@android:color/white"
-                    android:src="@mipmap/image_avatar_5"/>
+                <com.github.mmin18.widget.RealtimeBlurView
+                    android:id="@+id/blurview"
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    app:realtimeBlurRadius="10dp"
+                    app:realtimeOverlayColor="#aa3bb2ff"/>
+                <!--((0xFF * fgC * fgA) + (bgC * bgA * (0xFF - fgA))) / (a * 0xFF);-->
+                <!--((0xFF * fgC * 0xaa) + (bgC * 0xff * (0xFF - 0xaa))) / (0xff * 0xFF) = YY -->
+                <!--(0xFF * fgC * 0xaa) = YY * (0xff * 0xFF) - (bgC * 0xff * (0xFF - 0xaa))  -->
+                <!--fgC = (YY * (0xff * 0xFF) - (bgC * 0xff * (0xFF - 0xaa)))/(0xFF * 0xaa)  -->
+                <!--fgC = (YY * (0xff * 0xFF) - (bgC * (0xFF - 0xaa))) / 0xaa  -->
+                <!--fgC = (YY * 0xFE01 - (bgC * (0xFF - 0xaa))) / 0xaa  -->
+                <!--fgR = (0x33 * 0xFF - (0x22 * (0xFF - 0xaa))) / 0xaa  -->
+                <!--fgG = (0xaa * 0xFF - (0x99 * (0xFF - 0xaa))) / 0xaa  -->
+                <!--fgG = (0xff * 0xFF - (0xee * (0xFF - 0xaa))) / 0xaa  -->
+                <!--33aaff-->
+                <!--2299ee-->
+                <!--3bb2ff-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_common_h">
 
-                <TextView  style="@style/AppTheme.Label.Title.Large"
-                    android:id="@+id/title"
-                    android:layout_toEndOf="@id/avatar"
-                    android:layout_toRightOf="@id/avatar"
-                    android:textColor="@android:color/white"
-                    android:text="Frederik Hansen"/>
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/avatar"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginLeft="@dimen/padding_common"
+                        android:layout_marginRight="@dimen/padding_common"
+                        app:civ_border_width="3dp"
+                        app:civ_border_color="@android:color/white"
+                        android:src="@mipmap/image_avatar_5"/>
 
-                <TextView  style="@style/AppTheme.Label.Assistant"
-                    android:id="@+id/assistant"
-                    android:layout_marginTop="@dimen/padding_common_d"
-                    android:layout_marginBottom="@dimen/padding_common_d"
-                    android:layout_toEndOf="@id/avatar"
-                    android:layout_toRightOf="@id/avatar"
-                    android:layout_below="@+id/title"
-                    android:textColor="@android:color/white"
-                    android:text="Denmark,Nyborg"/>
+                    <TextView  style="@style/AppTheme.Label.Title.Large"
+                        android:id="@+id/title"
+                        android:layout_toEndOf="@id/avatar"
+                        android:layout_toRightOf="@id/avatar"
+                        android:textColor="@android:color/white"
+                        android:text="Frederik Hansen"/>
 
-                <com.flyco.roundview.RoundTextView style="@style/AppTheme.Label.Title.Large"
-                    android:id="@+id/photos"
-                    android:layout_below="@id/assistant"
-                    android:layout_toEndOf="@id/avatar"
-                    android:layout_toRightOf="@id/avatar"
-                    android:layout_marginTop="@dimen/padding_common_d"
-                    android:paddingTop="@dimen/padding_common"
-                    android:paddingLeft="@dimen/padding_common_h"
-                    android:paddingRight="@dimen/padding_common_h"
-                    android:paddingBottom="@dimen/padding_common"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:text="Photos"
-                    android:textSize="@dimen/textsize_content"
-                    app:rv_cornerRadius_TL="@dimen/padding_common_d"
-                    app:rv_cornerRadius_BL="@dimen/padding_common_d"
-                    app:rv_backgroundColor="@android:color/white"
-                    app:rv_strokeWidth="1dp"
-                    app:rv_strokeColor="@android:color/darker_gray"/>
+                    <TextView  style="@style/AppTheme.Label.Assistant"
+                        android:id="@+id/assistant"
+                        android:layout_marginTop="@dimen/padding_common_d"
+                        android:layout_marginBottom="@dimen/padding_common_d"
+                        android:layout_toEndOf="@id/avatar"
+                        android:layout_toRightOf="@id/avatar"
+                        android:layout_below="@+id/title"
+                        android:textColor="@android:color/white"
+                        android:text="Denmark,Nyborg"/>
 
-                <com.flyco.roundview.RoundTextView style="@style/AppTheme.Label.Title.Large"
-                    android:id="@+id/fllowing"
-                    android:layout_below="@id/assistant"
-                    android:layout_toEndOf="@id/photos"
-                    android:layout_toRightOf="@id/photos"
-                    android:layout_marginTop="@dimen/padding_common_d"
-                    android:paddingTop="@dimen/padding_common"
-                    android:paddingLeft="@dimen/padding_common_h"
-                    android:paddingRight="@dimen/padding_common_h"
-                    android:paddingBottom="@dimen/padding_common"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:text="fllowing"
-                    app:rv_cornerRadius_TR="@dimen/padding_common_d"
-                    app:rv_cornerRadius_BR="@dimen/padding_common_d"
-                    android:textSize="@dimen/textsize_content"
-                    app:rv_backgroundColor="@android:color/white"
-                    app:rv_strokeWidth="1dp"
-                    app:rv_strokeColor="@android:color/darker_gray"/>
+                    <com.flyco.roundview.RoundTextView style="@style/AppTheme.Label.Title.Large"
+                        android:id="@+id/photos"
+                        android:layout_below="@id/assistant"
+                        android:layout_toEndOf="@id/avatar"
+                        android:layout_toRightOf="@id/avatar"
+                        android:layout_marginTop="@dimen/padding_common_d"
+                        android:paddingTop="@dimen/padding_common"
+                        android:paddingLeft="@dimen/padding_common_h"
+                        android:paddingRight="@dimen/padding_common_h"
+                        android:paddingBottom="@dimen/padding_common"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:text="Photos"
+                        android:textSize="@dimen/textsize_content"
+                        app:rv_cornerRadius_TL="@dimen/padding_common_d"
+                        app:rv_cornerRadius_BL="@dimen/padding_common_d"
+                        app:rv_backgroundColor="@android:color/white"
+                        app:rv_strokeWidth="1dp"
+                        app:rv_strokeColor="@android:color/darker_gray"/>
 
-            </RelativeLayout>
+                    <com.flyco.roundview.RoundTextView style="@style/AppTheme.Label.Title.Large"
+                        android:id="@+id/fllowing"
+                        android:layout_below="@id/assistant"
+                        android:layout_toEndOf="@id/photos"
+                        android:layout_toRightOf="@id/photos"
+                        android:layout_marginTop="@dimen/padding_common_d"
+                        android:paddingTop="@dimen/padding_common"
+                        android:paddingLeft="@dimen/padding_common_h"
+                        android:paddingRight="@dimen/padding_common_h"
+                        android:paddingBottom="@dimen/padding_common"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:text="fllowing"
+                        app:rv_cornerRadius_TR="@dimen/padding_common_d"
+                        app:rv_cornerRadius_BR="@dimen/padding_common_d"
+                        android:textSize="@dimen/textsize_content"
+                        app:rv_backgroundColor="@android:color/white"
+                        app:rv_strokeWidth="1dp"
+                        app:rv_strokeColor="@android:color/darker_gray"/>
+
+                </RelativeLayout>
+            </FrameLayout>
 
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
+                android:layout_height="match_parent"
+                android:paddingTop="130dp"
+                android:clipToPadding="false">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -923,7 +947,7 @@
                 </LinearLayout>
             </ScrollView>
 
-        </LinearLayout>
+        </FrameLayout>
 
         <com.scwang.smartrefresh.layout.footer.ClassicsFooter
             android:layout_width="match_parent"

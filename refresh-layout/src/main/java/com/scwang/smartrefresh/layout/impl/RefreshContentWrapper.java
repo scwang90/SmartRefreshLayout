@@ -408,14 +408,31 @@ public class RefreshContentWrapper implements RefreshContent {
         @Override
         public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
             System.out.printf("%d,%d,%d,%d\n", scrollX, scrollY, oldScrollX, oldScrollY);
-            if (scrollY <= 0 && oldScrollY > 0 && animator == null) {
+            if (scrollY <= 0 && oldScrollY > 0 && animator == null && mMotionEvent == null) {
                 RefreshLayout layout = kernel.getRefreshLayout();
                 boolean overScroll = layout.isEnableOverScrollBounce()
                         && !layout.isRefreshing()
-                        && !layout.isLoading()
-                        && mMotionEvent == null;
+                        && !layout.isLoading();
                 if (overScroll) {
-                    System.out.println("ValueAnimator");
+//                    System.out.println("ValueAnimator");
+                    animator = ValueAnimator.ofInt(0, lastOldScrollY - oldScrollY, 0);
+                    animator.setDuration(500);
+                    animator.addUpdateListener(updateListener);
+                    animator.setInterpolator(interpolator);
+                    animator.addListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            animator = null;
+                        }
+                    });
+                    animator.start();
+                }
+            } else if (animator == null && mMotionEvent == null && oldScrollY < scrollY && !canScrollDown(mScrollableView)) {
+                RefreshLayout layout = kernel.getRefreshLayout();
+                boolean overScroll = layout.isEnableOverScrollBounce()
+                        && !layout.isRefreshing()
+                        && !layout.isLoading();
+                if (overScroll) {
                     animator = ValueAnimator.ofInt(0, lastOldScrollY - oldScrollY, 0);
                     animator.setDuration(500);
                     animator.addUpdateListener(updateListener);
