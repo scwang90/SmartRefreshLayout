@@ -30,5 +30,5 @@ public interface RefreshContent {
     void setupComponent(RefreshKernel kernel, View fixedHeader, View fixedFooter);
     void onInitialHeaderAndFooter(int headerHeight, int footerHeight);
 
-    AnimatorUpdateListener onLoadingFinish(int footerHeight, Interpolator mReboundInterpolator, int mReboundDuration);
+    AnimatorUpdateListener onLoadingFinish(int footerHeight, Interpolator reboundInterpolator, int reboundDuration);
 }
