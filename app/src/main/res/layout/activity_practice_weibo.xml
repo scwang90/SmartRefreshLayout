@@ -1,0 +1,1048 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.scwang.refreshlayout.activity.practice.WeiboPracticeActivity">
+
+    <ImageView
+        android:id="@+id/parallax"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-300dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/app_name"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/image_weibo_home_2"
+        app:layout_collapseMode="parallax"/>
+
+    <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
+        android:id="@+id/toolbar"
+        android:background="@android:color/transparent"
+        android:layout_marginBottom="0dp"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:layout_collapseMode="pin">
+        <android.support.v7.widget.ButtonBarLayout
+            android:id="@+id/buttonBarLayout"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/toolbar_avatar"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="@dimen/padding_common_d"
+                android:layout_marginRight="@dimen/padding_common_d"
+                android:src="@mipmap/image_avatar_5"
+                app:civ_border_width="@dimen/division_line"
+                app:civ_border_color="@android:color/white"
+                app:civ_border_overlay="true"/>
+            <TextView
+                android:id="@+id/title"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:textSize="16sp"
+                android:text="一醉方休"/>
+        </android.support.v7.widget.ButtonBarLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srlEnablePreviewInEditMode="false">
+
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlAccentColor="@android:color/white"/>
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <android.support.design.widget.CollapsingToolbarLayout
+                        android:id="@+id/collapse"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:titleEnabled="false"
+                        app:contentScrim="?attr/colorPrimary"
+                        app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+
+                        <RelativeLayout
+                            android:id="@+id/panel_lyt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="200dp"
+                            android:orientation="vertical"
+                            android:layout_gravity="bottom">
+
+                            <RelativeLayout
+                                android:id="@+id/panel"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="40dp"
+                                android:paddingTop="@dimen/padding_common_v"
+                                android:paddingBottom="@dimen/padding_common_v"
+                                android:paddingLeft="@dimen/padding_common_h"
+                                android:paddingRight="@dimen/padding_common_h"
+                                android:background="@android:color/white">
+
+                                <com.flyco.roundview.RoundTextView style="@style/AppTheme.Label"
+                                    android:id="@+id/attention"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_marginTop="0dp"
+                                    android:paddingTop="8dp"
+                                    android:paddingBottom="8dp"
+                                    android:paddingLeft="25dp"
+                                    android:paddingRight="25dp"
+                                    android:text="关注"
+                                    android:textColor="@android:color/white"
+                                    app:rv_backgroundColor="@color/colorPrimary"
+                                    app:rv_cornerRadius="@dimen/padding_common_d"/>
+
+                                <com.flyco.roundview.RoundTextView style="@style/AppTheme.Label"
+                                    android:id="@+id/leaveword"
+                                    android:layout_toLeftOf="@id/attention"
+                                    android:layout_toStartOf="@id/attention"
+                                    android:layout_marginTop="0dp"
+                                    android:layout_marginRight="@dimen/padding_common"
+                                    android:layout_marginLeft="@dimen/padding_common"
+                                    android:paddingTop="8dp"
+                                    android:paddingBottom="8dp"
+                                    android:paddingLeft="25dp"
+                                    android:paddingRight="25dp"
+                                    android:textColor="@color/colorPrimary"
+                                    app:rv_backgroundColor="@android:color/white"
+                                    app:rv_textPressColor="@android:color/white"
+                                    app:rv_cornerRadius="3dp"
+                                    app:rv_strokeWidth="@dimen/division_line"
+                                    app:rv_strokeColor="@color/colorPrimary"
+                                    android:text="留言"/>
+
+                                <TextView style="@style/AppTheme.Label.Title"
+                                    android:id="@+id/nickname"
+                                    android:layout_below="@id/attention"
+                                    android:text="一醉方休"/>
+
+                                <LinearLayout
+                                    android:id="@+id/relationship"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/nickname"
+                                    android:layout_marginTop="@dimen/padding_common">
+
+                                    <TextView style="@style/AppTheme.Label"
+                                        android:id="@+id/relationship_attention"
+                                        android:text="关注 84 "/>
+                                    <TextView style="@style/AppTheme.Label"
+                                        android:text="|"
+                                        android:layout_marginLeft="@dimen/padding_common_h"
+                                        android:layout_marginRight="@dimen/padding_common_h"/>
+                                    <TextView style="@style/AppTheme.Label"
+                                        android:id="@+id/relationship_fans"
+                                        android:text="粉丝 62"/>
+                                </LinearLayout>
+
+                                <TextView style="@style/AppTheme.Label.Discription"
+                                    android:id="@+id/signature"
+                                    android:layout_below="@id/relationship"
+                                    android:layout_marginTop="@dimen/padding_common"
+                                    android:textColor="@color/colorTextAssistant"
+                                    android:text="这个人很懒，什么也没留下..."/>
+
+                            </RelativeLayout>
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/avatar"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:layout_marginLeft="@dimen/padding_common"
+                                android:layout_marginStart="@dimen/padding_common"
+                                android:src="@mipmap/image_avatar_5"
+                                app:civ_border_width="3dp"
+                                app:civ_border_color="@android:color/white"
+                                app:civ_border_overlay="true"/>
+
+                            <TextView style="@style/AppTheme.Label.Layout"
+                                android:id="@+id/visitor"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
+                                android:background="?attr/selectableItemBackground"
+                                android:shadowColor="#aa000000"
+                                android:shadowDx="2.5"
+                                android:shadowDy="2.5"
+                                android:shadowRadius="10"
+                                android:textColor="@android:color/white"
+                                android:text="访客总量 15"/>
+
+                            <View style="@style/AppTheme.Divison"
+                                android:layout_alignParentBottom="true"/>
+                        </RelativeLayout>
+
+                    </android.support.design.widget.CollapsingToolbarLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@color/colorBackgroudDark"
+                        android:paddingBottom="0dp"
+                        app:layout_scrollFlags="scroll">
+                        <LinearLayout style="@style/AppTheme.CommonBar.Panel"
+                            android:background="@color/colorDivison"
+                            android:paddingTop="@dimen/division_line"
+                            android:paddingBottom="@dimen/division_line">
+                            <LinearLayout style="@style/AppTheme.CommonBar.Bar"
+                                android:background="@android:color/white"
+                                android:id="@+id/fmc_center_dynamic">
+                                <TextView style="@style/AppTheme.CommonBar.Content.Value"
+                                    android:drawableLeft="@drawable/ic_feed_list_mail"
+                                    android:drawableStart="@drawable/ic_feed_list_mail"
+                                    android:drawableTint="@color/colorPrimary"
+                                    android:text="发布动态"/>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/padding_common"
+                        android:paddingRight="@dimen/padding_common">
+                        <TextView style="@style/AppTheme.Label"
+                            android:textColor="@android:color/tertiary_text_dark"
+                            android:layout_marginTop="30dp"
+                            android:layout_height="45dp"
+                            android:text="21:44"/>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/padding_common"
+                            android:layout_marginRight="@dimen/padding_common"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+                            <View
+                                android:layout_width="@dimen/division_line"
+                                android:layout_height="30dp"
+                                android:background="#cccccc"/>
+                            <com.flyco.roundview.RoundFrameLayout
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                app:rv_isRadiusHalfHeight="true"
+                                app:rv_strokeColor="#cccccc"
+                                app:rv_strokeWidth="@dimen/division_line">
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="@dimen/padding_common"
+                                    android:contentDescription="@string/app_name"
+                                    android:tint="#cccccc"
+                                    app:srcCompat="@drawable/ic_feed_list_mail"/>
+                            </com.flyco.roundview.RoundFrameLayout>
+                            <View
+                                android:layout_width="@dimen/division_line"
+                                android:layout_height="match_parent"
+                                android:background="#cccccc"/>
+                        </LinearLayout>
+                        <com.flyco.roundview.RoundLinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="30dp"
+                            android:layout_marginBottom="@dimen/padding_common_d"
+                            android:orientation="vertical"
+                            android:padding="@dimen/padding_common"
+                            app:rv_strokeColor="#cccccc"
+                            app:rv_strokeWidth="@dimen/division_line"
+                            app:rv_cornerRadius="@dimen/padding_common_d">
+                            <TextView style="@style/AppTheme.Label.Title"
+                                android:layout_gravity="center_vertical"
+                                android:textColor="@android:color/tertiary_text_dark"
+                                android:text="Steffen Norgaard Andersen"/>
+                            <TextView style="@style/AppTheme.Label.Discription"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginTop="@dimen/padding_common_d"
+                                android:textColor="@android:color/tertiary_text_dark"
+                                android:text="Lorem ipsum dolor sit amet , consecteur adipiscing elit, sed do eiusmod tempor incidi-dunt ut labore et dlore magna aliqua. Ut enim ad minim veniam, sed do eiusmod quis nostrud exrcitation."/>
+                        </com.flyco.roundview.RoundLinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/padding_common"
+                        android:paddingRight="@dimen/padding_common">
+                        <TextView style="@style/AppTheme.Label"
+                            android:textColor="@android:color/tertiary_text_dark"
+                            android:layout_marginTop="30dp"
+                            android:layout_height="45dp"
+                            android:text="19:58"/>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/padding_common"
+                            android:layout_marginRight="@dimen/padding_common"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+                            <View
+                                android:layout_width="@dimen/division_line"
+                                android:layout_height="30dp"
+                                android:background="#cccccc"/>
+                            <com.flyco.roundview.RoundFrameLayout
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                app:rv_isRadiusHalfHeight="true"
+                                app:rv_strokeColor="#cccccc"
+                                app:rv_strokeWidth="@dimen/division_line">
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="@dimen/padding_common"
+                                    android:contentDescription="@string/app_name"
+                                    android:tint="#cccccc"
+                                    app:srcCompat="@drawable/ic_feed_list_photo"/>
+                            </com.flyco.roundview.RoundFrameLayout>
+                            <View
+                                android:layout_width="@dimen/division_line"
+                                android:layout_height="match_parent"
+                                android:background="#cccccc"/>
+                        </LinearLayout>
+                        <com.flyco.roundview.RoundLinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="30dp"
+                            android:layout_marginBottom="@dimen/padding_common_d"
+                            android:orientation="vertical"
+                            app:rv_cornerRadius_TL="@dimen/padding_common_d"
+                            app:rv_cornerRadius_TR="@dimen/padding_common_d">
+                            <ImageView style="@style/AppTheme.Label.Title"
+                                android:layout_width="match_parent"
+                                android:layout_gravity="center_vertical"
+                                android:textColor="#cccccc"
+                                android:adjustViewBounds="true"
+                                android:contentDescription="@string/app_name"
+                                android:src="@mipmap/image_practice_repast_1"/>
+                            <TextView style="@style/AppTheme.Label.Title"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginTop="@dimen/padding_common_d"
+                                android:textColor="@android:color/tertiary_text_dark"
+                                android:text="winter farewell"/>
+                        </com.flyco.roundview.RoundLinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/padding_common"
+                        android:paddingRight="@dimen/padding_common">
+                        <TextView style="@style/AppTheme.Label"
+                            android:textColor="#cccccc"
+                            android:layout_marginTop="30dp"
+                            android:layout_height="45dp"
+                            android:text="16:12"/>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/padding_common"
+                            android:layout_marginRight="@dimen/padding_common"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+                            <View
+                                android:layout_width="@dimen/division_line"
+                                android:layout_height="30dp"
+                                android:background="#cccccc"/>
+                            <com.flyco.roundview.RoundFrameLayout
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                app:rv_isRadiusHalfHeight="true"
+                                app:rv_strokeColor="#cccccc"
+                                app:rv_strokeWidth="@dimen/division_line">
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="@dimen/padding_common"
+                                    android:contentDescription="@string/app_name"
+                                    android:tint="#cccccc"
+                                    app:srcCompat="@drawable/ic_feed_list_favorite"/>
+                            </com.flyco.roundview.RoundFrameLayout>
+                            <View
+                                android:layout_width="@dimen/division_line"
+                                android:layout_height="match_parent"
+                                android:background="#cccccc"/>
+                        </LinearLayout>
+                        <com.flyco.roundview.RoundLinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="30dp"
+                            android:layout_marginBottom="@dimen/padding_common_d"
+                            app:rv_cornerRadius="@dimen/padding_common_d"
+                            app:rv_strokeColor="#cccccc"
+                            app:rv_strokeWidth="@dimen/division_line">
+                            <ImageView style="@style/AppTheme.Label.Title"
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                android:layout_gravity="center_vertical"
+                                android:textColor="@android:color/tertiary_text_dark"
+                                android:adjustViewBounds="true"
+                                android:contentDescription="@string/app_name"
+                                android:src="@mipmap/image_avatar_5"/>
+                            <TextView style="@style/AppTheme.Label.Title"
+                                android:layout_gravity="center_vertical"
+                                android:padding="@dimen/padding_common"
+                                android:textColor="@android:color/tertiary_text_dark"
+                                android:text="winter farewell"/>
+                        </com.flyco.roundview.RoundLinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/padding_common"
+                        android:paddingRight="@dimen/padding_common">
+                        <TextView style="@style/AppTheme.Label"
+                            android:textColor="@android:color/tertiary_text_dark"
+                            android:layout_marginTop="30dp"
+                            android:layout_height="45dp"
+                            android:text="19:58"/>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/padding_common"
+                            android:layout_marginRight="@dimen/padding_common"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+                            <View
+                                android:layout_width="@dimen/division_line"
+                                android:layout_height="30dp"
+                                android:background="#cccccc"/>
+                            <com.flyco.roundview.RoundFrameLayout
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                app:rv_isRadiusHalfHeight="true"
+                                app:rv_strokeColor="#cccccc"
+                                app:rv_strokeWidth="@dimen/division_line">
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="@dimen/padding_common"
+                                    android:contentDescription="@string/app_name"
+                                    android:tint="#cccccc"
+                                    app:srcCompat="@drawable/ic_feed_list_photo"/>
+                            </com.flyco.roundview.RoundFrameLayout>
+                            <View
+                                android:layout_width="@dimen/division_line"
+                                android:layout_height="match_parent"
+                                android:background="#cccccc"/>
+                        </LinearLayout>
+                        <com.flyco.roundview.RoundLinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="30dp"
+                            android:layout_marginBottom="@dimen/padding_common_d"
+                            android:orientation="vertical"
+                            app:rv_cornerRadius_TL="@dimen/padding_common_d"
+                            app:rv_cornerRadius_TR="@dimen/padding_common_d">
+                            <ImageView style="@style/AppTheme.Label.Title"
+                                android:layout_width="match_parent"
+                                android:layout_gravity="center_vertical"
+                                android:textColor="@android:color/tertiary_text_dark"
+                                android:adjustViewBounds="true"
+                                android:contentDescription="@string/app_name"
+                                android:src="@mipmap/image_practice_repast_3"/>
+                            <TextView style="@style/AppTheme.Label.Title"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginTop="@dimen/padding_common_d"
+                                android:textColor="@android:color/tertiary_text_dark"
+                                android:text="winter farewell"/>
+                        </com.flyco.roundview.RoundLinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/padding_common"
+                        android:paddingRight="@dimen/padding_common">
+                        <TextView style="@style/AppTheme.Label"
+                            android:textColor="@android:color/tertiary_text_dark"
+                            android:layout_marginTop="30dp"
+                            android:layout_height="45dp"
+                            android:text="16:12"/>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/padding_common"
+                            android:layout_marginRight="@dimen/padding_common"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+                            <View
+                                android:layout_width="@dimen/division_line"
+                                android:layout_height="30dp"
+                                android:background="#cccccc"/>
+                            <com.flyco.roundview.RoundFrameLayout
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                app:rv_isRadiusHalfHeight="true"
+                                app:rv_strokeColor="#cccccc"
+                                app:rv_strokeWidth="@dimen/division_line">
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="@dimen/padding_common"
+                                    android:contentDescription="@string/app_name"
+                                    android:tint="#cccccc"
+                                    app:srcCompat="@drawable/ic_feed_list_favorite"/>
+                            </com.flyco.roundview.RoundFrameLayout>
+                            <View
+                                android:layout_width="@dimen/division_line"
+                                android:layout_height="match_parent"
+                                android:background="#cccccc"/>
+                        </LinearLayout>
+                        <com.flyco.roundview.RoundLinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="30dp"
+                            android:layout_marginBottom="@dimen/padding_common_d"
+                            app:rv_cornerRadius="@dimen/padding_common_d"
+                            app:rv_strokeColor="#cccccc"
+                            app:rv_strokeWidth="@dimen/division_line">
+                            <ImageView style="@style/AppTheme.Label.Title"
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                android:layout_gravity="center_vertical"
+                                android:textColor="@android:color/tertiary_text_dark"
+                                android:adjustViewBounds="true"
+                                android:contentDescription="@string/app_name"
+                                android:src="@mipmap/image_avatar_5"/>
+                            <TextView style="@style/AppTheme.Label.Title"
+                                android:layout_gravity="center_vertical"
+                                android:padding="@dimen/padding_common"
+                                android:textColor="@android:color/tertiary_text_dark"
+                                android:text="winter farewell"/>
+                        </com.flyco.roundview.RoundLinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/padding_common"
+                        android:paddingRight="@dimen/padding_common">
+                        <TextView style="@style/AppTheme.Label"
+                            android:textColor="@android:color/tertiary_text_dark"
+                            android:layout_marginTop="30dp"
+                            android:layout_height="45dp"
+                            android:text="21:44"/>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/padding_common"
+                            android:layout_marginRight="@dimen/padding_common"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+                            <View
+                                android:layout_width="@dimen/division_line"
+                                android:layout_height="30dp"
+                                android:background="#cccccc"/>
+                            <com.flyco.roundview.RoundFrameLayout
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                app:rv_isRadiusHalfHeight="true"
+                                app:rv_strokeColor="#cccccc"
+                                app:rv_strokeWidth="@dimen/division_line">
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="@dimen/padding_common"
+                                    android:contentDescription="@string/app_name"
+                                    android:tint="#cccccc"
+                                    app:srcCompat="@drawable/ic_feed_list_mail"/>
+                            </com.flyco.roundview.RoundFrameLayout>
+                            <View
+                                android:layout_width="@dimen/division_line"
+                                android:layout_height="match_parent"
+                                android:background="#cccccc"/>
+                        </LinearLayout>
+                        <com.flyco.roundview.RoundLinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="30dp"
+                            android:layout_marginBottom="@dimen/padding_common_d"
+                            android:orientation="vertical"
+                            android:padding="@dimen/padding_common"
+                            app:rv_strokeColor="#cccccc"
+                            app:rv_strokeWidth="@dimen/division_line"
+                            app:rv_cornerRadius="@dimen/padding_common_d">
+                            <TextView style="@style/AppTheme.Label.Title"
+                                android:layout_gravity="center_vertical"
+                                android:textColor="@android:color/tertiary_text_dark"
+                                android:text="Steffen Norgaard Andersen"/>
+                            <TextView style="@style/AppTheme.Label.Discription"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginTop="@dimen/padding_common_d"
+                                android:textColor="@android:color/tertiary_text_dark"
+                                android:text="Lorem ipsum dolor sit amet , consecteur adipiscing elit, sed do eiusmod tempor incidi-dunt ut labore et dlore magna aliqua. Ut enim ad minim veniam, sed do eiusmod quis nostrud exrcitation."/>
+                        </com.flyco.roundview.RoundLinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/padding_common"
+                        android:paddingRight="@dimen/padding_common">
+                        <TextView style="@style/AppTheme.Label"
+                            android:textColor="@android:color/tertiary_text_dark"
+                            android:layout_marginTop="30dp"
+                            android:layout_height="45dp"
+                            android:text="19:58"/>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/padding_common"
+                            android:layout_marginRight="@dimen/padding_common"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+                            <View
+                                android:layout_width="@dimen/division_line"
+                                android:layout_height="30dp"
+                                android:background="#cccccc"/>
+                            <com.flyco.roundview.RoundFrameLayout
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                app:rv_isRadiusHalfHeight="true"
+                                app:rv_strokeColor="#cccccc"
+                                app:rv_strokeWidth="@dimen/division_line">
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="@dimen/padding_common"
+                                    android:contentDescription="@string/app_name"
+                                    android:tint="#cccccc"
+                                    app:srcCompat="@drawable/ic_feed_list_photo"/>
+                            </com.flyco.roundview.RoundFrameLayout>
+                            <View
+                                android:layout_width="@dimen/division_line"
+                                android:layout_height="match_parent"
+                                android:background="#cccccc"/>
+                        </LinearLayout>
+                        <com.flyco.roundview.RoundLinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="30dp"
+                            android:layout_marginBottom="@dimen/padding_common_d"
+                            android:orientation="vertical"
+                            app:rv_cornerRadius_TL="@dimen/padding_common_d"
+                            app:rv_cornerRadius_TR="@dimen/padding_common_d">
+                            <ImageView style="@style/AppTheme.Label.Title"
+                                android:layout_width="match_parent"
+                                android:layout_gravity="center_vertical"
+                                android:textColor="@android:color/tertiary_text_dark"
+                                android:adjustViewBounds="true"
+                                android:contentDescription="@string/app_name"
+                                android:src="@mipmap/image_practice_repast_1"/>
+                            <TextView style="@style/AppTheme.Label.Title"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginTop="@dimen/padding_common_d"
+                                android:textColor="@android:color/tertiary_text_dark"
+                                android:text="winter farewell"/>
+                        </com.flyco.roundview.RoundLinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/padding_common"
+                        android:paddingRight="@dimen/padding_common">
+                        <TextView style="@style/AppTheme.Label"
+                            android:textColor="@android:color/tertiary_text_dark"
+                            android:layout_marginTop="30dp"
+                            android:layout_height="45dp"
+                            android:text="16:12"/>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/padding_common"
+                            android:layout_marginRight="@dimen/padding_common"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+                            <View
+                                android:layout_width="@dimen/division_line"
+                                android:layout_height="30dp"
+                                android:background="#cccccc"/>
+                            <com.flyco.roundview.RoundFrameLayout
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                app:rv_isRadiusHalfHeight="true"
+                                app:rv_strokeColor="#cccccc"
+                                app:rv_strokeWidth="@dimen/division_line">
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="@dimen/padding_common"
+                                    android:contentDescription="@string/app_name"
+                                    android:tint="#cccccc"
+                                    app:srcCompat="@drawable/ic_feed_list_favorite"/>
+                            </com.flyco.roundview.RoundFrameLayout>
+                            <View
+                                android:layout_width="@dimen/division_line"
+                                android:layout_height="match_parent"
+                                android:background="#cccccc"/>
+                        </LinearLayout>
+                        <com.flyco.roundview.RoundLinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="30dp"
+                            android:layout_marginBottom="@dimen/padding_common_d"
+                            app:rv_cornerRadius="@dimen/padding_common_d"
+                            app:rv_strokeColor="#cccccc"
+                            app:rv_strokeWidth="@dimen/division_line">
+                            <ImageView style="@style/AppTheme.Label.Title"
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                android:layout_gravity="center_vertical"
+                                android:textColor="@android:color/tertiary_text_dark"
+                                android:adjustViewBounds="true"
+                                android:contentDescription="@string/app_name"
+                                android:src="@mipmap/image_avatar_5"/>
+                            <TextView style="@style/AppTheme.Label.Title"
+                                android:layout_gravity="center_vertical"
+                                android:padding="@dimen/padding_common"
+                                android:textColor="@android:color/tertiary_text_dark"
+                                android:text="winter farewell"/>
+                        </com.flyco.roundview.RoundLinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/padding_common"
+                        android:paddingRight="@dimen/padding_common">
+                        <TextView style="@style/AppTheme.Label"
+                            android:textColor="@android:color/tertiary_text_dark"
+                            android:layout_marginTop="30dp"
+                            android:layout_height="45dp"
+                            android:text="21:44"/>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/padding_common"
+                            android:layout_marginRight="@dimen/padding_common"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+                            <View
+                                android:layout_width="@dimen/division_line"
+                                android:layout_height="30dp"
+                                android:background="#cccccc"/>
+                            <com.flyco.roundview.RoundFrameLayout
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                app:rv_isRadiusHalfHeight="true"
+                                app:rv_strokeColor="#cccccc"
+                                app:rv_strokeWidth="@dimen/division_line">
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="@dimen/padding_common"
+                                    android:contentDescription="@string/app_name"
+                                    android:tint="#cccccc"
+                                    app:srcCompat="@drawable/ic_feed_list_mail"/>
+                            </com.flyco.roundview.RoundFrameLayout>
+                            <View
+                                android:layout_width="@dimen/division_line"
+                                android:layout_height="match_parent"
+                                android:background="#cccccc"/>
+                        </LinearLayout>
+                        <com.flyco.roundview.RoundLinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="30dp"
+                            android:layout_marginBottom="@dimen/padding_common_d"
+                            android:orientation="vertical"
+                            android:padding="@dimen/padding_common"
+                            app:rv_strokeColor="#cccccc"
+                            app:rv_strokeWidth="@dimen/division_line"
+                            app:rv_cornerRadius="@dimen/padding_common_d">
+                            <TextView style="@style/AppTheme.Label.Title"
+                                android:layout_gravity="center_vertical"
+                                android:textColor="@android:color/tertiary_text_dark"
+                                android:text="Steffen Norgaard Andersen"/>
+                            <TextView style="@style/AppTheme.Label.Discription"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginTop="@dimen/padding_common_d"
+                                android:textColor="@android:color/tertiary_text_dark"
+                                android:text="Lorem ipsum dolor sit amet , consecteur adipiscing elit, sed do eiusmod tempor incidi-dunt ut labore et dlore magna aliqua. Ut enim ad minim veniam, sed do eiusmod quis nostrud exrcitation."/>
+                        </com.flyco.roundview.RoundLinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/padding_common"
+                        android:paddingRight="@dimen/padding_common">
+                        <TextView style="@style/AppTheme.Label"
+                            android:textColor="@android:color/tertiary_text_dark"
+                            android:layout_marginTop="30dp"
+                            android:layout_height="45dp"
+                            android:text="19:58"/>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/padding_common"
+                            android:layout_marginRight="@dimen/padding_common"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+                            <View
+                                android:layout_width="@dimen/division_line"
+                                android:layout_height="30dp"
+                                android:background="#cccccc"/>
+                            <com.flyco.roundview.RoundFrameLayout
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                app:rv_isRadiusHalfHeight="true"
+                                app:rv_strokeColor="#cccccc"
+                                app:rv_strokeWidth="@dimen/division_line">
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="@dimen/padding_common"
+                                    android:contentDescription="@string/app_name"
+                                    android:tint="#cccccc"
+                                    app:srcCompat="@drawable/ic_feed_list_photo"/>
+                            </com.flyco.roundview.RoundFrameLayout>
+                            <View
+                                android:layout_width="@dimen/division_line"
+                                android:layout_height="match_parent"
+                                android:background="#cccccc"/>
+                        </LinearLayout>
+                        <com.flyco.roundview.RoundLinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="30dp"
+                            android:layout_marginBottom="@dimen/padding_common_d"
+                            android:orientation="vertical"
+                            app:rv_cornerRadius_TL="@dimen/padding_common_d"
+                            app:rv_cornerRadius_TR="@dimen/padding_common_d">
+                            <ImageView style="@style/AppTheme.Label.Title"
+                                android:layout_width="match_parent"
+                                android:layout_gravity="center_vertical"
+                                android:textColor="@android:color/tertiary_text_dark"
+                                android:adjustViewBounds="true"
+                                android:contentDescription="@string/app_name"
+                                android:src="@mipmap/image_practice_repast_1"/>
+                            <TextView style="@style/AppTheme.Label.Title"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginTop="@dimen/padding_common_d"
+                                android:textColor="@android:color/tertiary_text_dark"
+                                android:text="winter farewell"/>
+                        </com.flyco.roundview.RoundLinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/padding_common"
+                        android:paddingRight="@dimen/padding_common">
+                        <TextView style="@style/AppTheme.Label"
+                            android:textColor="@android:color/tertiary_text_dark"
+                            android:layout_marginTop="30dp"
+                            android:layout_height="45dp"
+                            android:text="16:12"/>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/padding_common"
+                            android:layout_marginRight="@dimen/padding_common"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+                            <View
+                                android:layout_width="@dimen/division_line"
+                                android:layout_height="30dp"
+                                android:background="#cccccc"/>
+                            <com.flyco.roundview.RoundFrameLayout
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                app:rv_isRadiusHalfHeight="true"
+                                app:rv_strokeColor="#cccccc"
+                                app:rv_strokeWidth="@dimen/division_line">
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="@dimen/padding_common"
+                                    android:contentDescription="@string/app_name"
+                                    android:tint="#cccccc"
+                                    app:srcCompat="@drawable/ic_feed_list_favorite"/>
+                            </com.flyco.roundview.RoundFrameLayout>
+                            <View
+                                android:layout_width="@dimen/division_line"
+                                android:layout_height="match_parent"
+                                android:background="#cccccc"/>
+                        </LinearLayout>
+                        <com.flyco.roundview.RoundLinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="30dp"
+                            android:layout_marginBottom="@dimen/padding_common_d"
+                            app:rv_cornerRadius="@dimen/padding_common_d"
+                            app:rv_strokeColor="#cccccc"
+                            app:rv_strokeWidth="@dimen/division_line">
+                            <ImageView style="@style/AppTheme.Label.Title"
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                android:layout_gravity="center_vertical"
+                                android:textColor="@android:color/tertiary_text_dark"
+                                android:adjustViewBounds="true"
+                                android:contentDescription="@string/app_name"
+                                android:src="@mipmap/image_avatar_5"/>
+                            <TextView style="@style/AppTheme.Label.Title"
+                                android:layout_gravity="center_vertical"
+                                android:padding="@dimen/padding_common"
+                                android:textColor="@android:color/tertiary_text_dark"
+                                android:text="winter farewell"/>
+                        </com.flyco.roundview.RoundLinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/padding_common"
+                        android:paddingRight="@dimen/padding_common">
+                        <TextView style="@style/AppTheme.Label"
+                            android:textColor="@android:color/tertiary_text_dark"
+                            android:layout_marginTop="30dp"
+                            android:layout_height="45dp"
+                            android:text="21:44"/>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/padding_common"
+                            android:layout_marginRight="@dimen/padding_common"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+                            <View
+                                android:layout_width="@dimen/division_line"
+                                android:layout_height="30dp"
+                                android:background="#cccccc"/>
+                            <com.flyco.roundview.RoundFrameLayout
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                app:rv_isRadiusHalfHeight="true"
+                                app:rv_strokeColor="#cccccc"
+                                app:rv_strokeWidth="@dimen/division_line">
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="@dimen/padding_common"
+                                    android:contentDescription="@string/app_name"
+                                    android:tint="#cccccc"
+                                    app:srcCompat="@drawable/ic_feed_list_mail"/>
+                            </com.flyco.roundview.RoundFrameLayout>
+                            <View
+                                android:layout_width="@dimen/division_line"
+                                android:layout_height="match_parent"
+                                android:background="#cccccc"/>
+                        </LinearLayout>
+                        <com.flyco.roundview.RoundLinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="30dp"
+                            android:layout_marginBottom="@dimen/padding_common_d"
+                            android:orientation="vertical"
+                            android:padding="@dimen/padding_common"
+                            app:rv_strokeColor="#cccccc"
+                            app:rv_strokeWidth="@dimen/division_line"
+                            app:rv_cornerRadius="@dimen/padding_common_d">
+                            <TextView style="@style/AppTheme.Label.Title"
+                                android:layout_gravity="center_vertical"
+                                android:textColor="@android:color/tertiary_text_dark"
+                                android:text="Steffen Norgaard Andersen"/>
+                            <TextView style="@style/AppTheme.Label.Discription"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginTop="@dimen/padding_common_d"
+                                android:textColor="@android:color/tertiary_text_dark"
+                                android:text="Lorem ipsum dolor sit amet , consecteur adipiscing elit, sed do eiusmod tempor incidi-dunt ut labore et dlore magna aliqua. Ut enim ad minim veniam, sed do eiusmod quis nostrud exrcitation."/>
+                        </com.flyco.roundview.RoundLinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/padding_common"
+                        android:paddingRight="@dimen/padding_common">
+                        <TextView style="@style/AppTheme.Label"
+                            android:textColor="@android:color/tertiary_text_dark"
+                            android:layout_marginTop="30dp"
+                            android:layout_height="45dp"
+                            android:text="19:58"/>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/padding_common"
+                            android:layout_marginRight="@dimen/padding_common"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+                            <View
+                                android:layout_width="@dimen/division_line"
+                                android:layout_height="30dp"
+                                android:background="#cccccc"/>
+                            <com.flyco.roundview.RoundFrameLayout
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                app:rv_isRadiusHalfHeight="true"
+                                app:rv_strokeColor="#cccccc"
+                                app:rv_strokeWidth="@dimen/division_line">
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="@dimen/padding_common"
+                                    android:contentDescription="@string/app_name"
+                                    android:tint="#cccccc"
+                                    app:srcCompat="@drawable/ic_feed_list_photo"/>
+                            </com.flyco.roundview.RoundFrameLayout>
+                            <View
+                                android:layout_width="@dimen/division_line"
+                                android:layout_height="match_parent"
+                                android:background="#cccccc"/>
+                        </LinearLayout>
+                        <com.flyco.roundview.RoundLinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="30dp"
+                            android:layout_marginBottom="@dimen/padding_common_d"
+                            android:orientation="vertical"
+                            app:rv_cornerRadius_TL="@dimen/padding_common_d"
+                            app:rv_cornerRadius_TR="@dimen/padding_common_d">
+                            <ImageView style="@style/AppTheme.Label.Title"
+                                android:layout_width="match_parent"
+                                android:layout_gravity="center_vertical"
+                                android:textColor="@android:color/tertiary_text_dark"
+                                android:adjustViewBounds="true"
+                                android:contentDescription="@string/app_name"
+                                android:src="@mipmap/image_practice_repast_1"/>
+                            <TextView style="@style/AppTheme.Label.Title"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginTop="@dimen/padding_common_d"
+                                android:textColor="@android:color/tertiary_text_dark"
+                                android:text="winter farewell"/>
+                        </com.flyco.roundview.RoundLinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</FrameLayout>

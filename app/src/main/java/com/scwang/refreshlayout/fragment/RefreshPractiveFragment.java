@@ -21,6 +21,7 @@ import com.scwang.refreshlayout.activity.practice.FeedlistPracticeActivity;
 import com.scwang.refreshlayout.activity.practice.ProfilePracticeActivity;
 import com.scwang.refreshlayout.activity.practice.RepastPracticeActivity;
 import com.scwang.refreshlayout.activity.practice.WebviewPracticeActivity;
+import com.scwang.refreshlayout.activity.practice.WeiboPracticeActivity;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
@@ -44,6 +45,7 @@ public class RefreshPractiveFragment extends Fragment implements AdapterView.OnI
         Profile("个人中心-OverScroll", ProfilePracticeActivity.class),
         Webview("网页引用-WebView", WebviewPracticeActivity.class),
         FeedList("微博列表-智能识别", FeedlistPracticeActivity.class),
+        Weibo("微博主页-CoordinatorLayout", WeiboPracticeActivity.class),
         ;
         public String name;
         public Class<?> clazz;
