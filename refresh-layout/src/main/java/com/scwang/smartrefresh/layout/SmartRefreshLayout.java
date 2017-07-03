@@ -526,6 +526,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                             ((isInEditMode && mRefreshHeader != null && (mEnableHeaderTranslationContent||mRefreshHeader.getSpinnerStyle() == SpinnerStyle.FixedBehind)) ? mHeaderHeight : 0) +
                             ((isInEditMode && mRefreshFooter != null && (mEnableFooterTranslationContent||mRefreshFooter.getSpinnerStyle() == SpinnerStyle.FixedBehind)) ? mFooterHeight : 0), lp.height);
             mRefreshContent.measure(widthSpec, heightSpec);
+            mRefreshContent.onInitialHeaderAndFooter(mHeaderHeight, mFooterHeight);
             minimumHeight += mRefreshContent.getMeasuredHeight();
         }
 

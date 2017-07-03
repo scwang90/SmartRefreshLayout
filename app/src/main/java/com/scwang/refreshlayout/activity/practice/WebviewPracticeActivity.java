@@ -12,6 +12,7 @@ import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.util.StatusBarUtil;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import java.util.Locale;
 
@@ -55,7 +56,7 @@ public class WebviewPracticeActivity extends AppCompatActivity {
             @Override
             public void onPageCommitVisible(WebView view, String url) {
                 refreshLayout.finishRefresh();
-                view.loadUrl(String.format(Locale.CHINA, "javascript:document.body.style.paddingTop='%dpx'; void 0", webView.getPaddingTop()));
+                view.loadUrl(String.format(Locale.CHINA, "javascript:document.body.style.paddingTop='%fpx'; void 0", DensityUtil.px2dp(webView.getPaddingTop())));
             }
         });
 

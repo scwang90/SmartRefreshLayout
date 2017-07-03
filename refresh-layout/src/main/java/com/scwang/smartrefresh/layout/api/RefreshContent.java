@@ -28,6 +28,7 @@ public interface RefreshContent {
     void onActionUpOrCancel(MotionEvent e);
 
     void setupComponent(RefreshKernel kernel, View fixedHeader, View fixedFooter);
+    void onInitialHeaderAndFooter(int headerHeight, int footerHeight);
 
     AnimatorUpdateListener onLoadingFinish(int footerHeight, Interpolator mReboundInterpolator, int mReboundDuration);
 }

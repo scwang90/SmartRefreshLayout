@@ -43,6 +43,7 @@ dependencies {
 //    compile 'com.android.support:recyclerview-v7:25.3.1'
 //    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.github.mmin18:realtimeblurview:1.0.6'
+    compile 'cn.carbs.android:AvatarImageView:1.0.4'
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'jp.wasabeef:recyclerview-animators:2.2.6'
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'

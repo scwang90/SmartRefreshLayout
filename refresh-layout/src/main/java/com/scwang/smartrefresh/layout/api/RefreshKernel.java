@@ -43,14 +43,14 @@ public interface RefreshKernel {
     /**
      * 移动视图到预设距离（dy 会被内部函数计算，将会出现无限接近最大值（height+extendHeader）的阻尼效果）
      * moveSpinner 的取名来自 谷歌官方的 @{@link android.support.v4.widget.SwipeRefreshLayout#moveSpinner(float)}
-     * @param dy 距离 大于0表示下拉 小于0表示上啦
+     * @param dy 距离 (px) 大于0表示下拉 小于0表示上啦
      */
     RefreshKernel moveSpinnerInfinitely(float dy);
 
     /**
      * 移动视图到指定位置
      * moveSpinner 的取名来自 谷歌官方的 @{@link android.support.v4.widget.SwipeRefreshLayout#moveSpinner(float)}
-     * @param spinner 位置
+     * @param spinner 位置 (px)
      * @param isAnimator 标记是否是动画执行
      */
     RefreshKernel moveSpinner(int spinner, boolean isAnimator) ;
@@ -58,7 +58,7 @@ public interface RefreshKernel {
     /**
      * 执行动画使视图位移到指定的 位置
      * moveSpinner 的取名来自 谷歌官方的 @{@link android.support.v4.widget.SwipeRefreshLayout#moveSpinner(float)}
-     * @param endValue 指定的结束位置
+     * @param endValue 指定的结束位置 (px)
      */
     RefreshKernel animSpinner(int endValue) ;
     //</editor-fold>

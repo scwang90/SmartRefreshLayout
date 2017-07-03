@@ -32,7 +32,6 @@ import android.view.animation.Interpolator;
 import android.webkit.WebView;
 import android.widget.AbsListView;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ScrollView;
 import android.widget.WrapperListAdapter;
@@ -47,6 +46,7 @@ import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 /**
  * 刷新内容包装
@@ -55,6 +55,8 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 public class RefreshContentWrapper implements RefreshContent {
 
+    private int mHeaderHeight = Integer.MAX_VALUE;
+    private int mFooterHeight = mHeaderHeight - 1;
     private View mContentView;
     private View mRealContentView;
     private View mScrollableView;
@@ -145,6 +147,7 @@ public class RefreshContentWrapper implements RefreshContent {
     }
     //</editor-fold>
 
+    //<editor-fold desc="implements">
     @NonNull
     public View getView() {
         return mContentView;
@@ -257,22 +260,10 @@ public class RefreshContentWrapper implements RefreshContent {
         }
     }
 
-    private static int measureViewHeight(View view) {
-        ViewGroup.LayoutParams p = view.getLayoutParams();
-        if (p == null) {
-            p = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.FILL_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT);
-        }
-        int childHeightSpec;
-        int childWidthSpec = ViewGroup.getChildMeasureSpec(0, 0, p.width);
-        if (p.height > 0) {
-            childHeightSpec = MeasureSpec.makeMeasureSpec(p.height, MeasureSpec.EXACTLY);
-        } else {
-            childHeightSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
-        }
-        view.measure(childWidthSpec, childHeightSpec);
-        return view.getMeasuredHeight();
+    @Override
+    public void onInitialHeaderAndFooter(int headerHeight, int footerHeight) {
+        mHeaderHeight = headerHeight;
+        mFooterHeight = footerHeight;
     }
 
     @Override
@@ -295,6 +286,7 @@ public class RefreshContentWrapper implements RefreshContent {
         }
         return null;
     }
+    //</editor-fold>
 
     //<editor-fold desc="滚动判断">
     private static boolean canScrollUp(View targetView, MotionEvent event) {
@@ -393,6 +385,9 @@ public class RefreshContentWrapper implements RefreshContent {
     //<editor-fold desc="滚动组件">
     @RequiresApi(api = Build.VERSION_CODES.M)
     private class Api23ViewScrollComponent implements View.OnScrollChangeListener {
+        long lastTime = 0;
+        long lastTimeOld = 0;
+        int lastScrollY = 0;
         int lastOldScrollY = 0;
         ValueAnimator animator;
         RefreshKernel kernel;
@@ -407,15 +402,20 @@ public class RefreshContentWrapper implements RefreshContent {
 
         @Override
         public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-            System.out.printf("%d,%d,%d,%d\n", scrollX, scrollY, oldScrollX, oldScrollY);
+            if (lastScrollY == scrollY && lastOldScrollY == oldScrollY) {
+                return;
+            }
+//            System.out.printf("%d,%d,%d,%d\n", scrollX, scrollY, oldScrollX, oldScrollY);
             if (scrollY <= 0 && oldScrollY > 0 && animator == null && mMotionEvent == null) {
                 RefreshLayout layout = kernel.getRefreshLayout();
                 boolean overScroll = layout.isEnableOverScrollBounce()
                         && !layout.isRefreshing()
                         && !layout.isLoading();
                 if (overScroll) {
-//                    System.out.println("ValueAnimator");
-                    animator = ValueAnimator.ofInt(0, lastOldScrollY - oldScrollY, 0);
+                    //time:16000000 value:160
+                    final int velocity = (lastOldScrollY - oldScrollY) * 16000 / (int)((lastTime - lastTimeOld)/1000f);
+//                    System.out.println("ValueAnimator - " + (lastTime - lastTimeOld) + " - " + velocity+"("+(lastOldScrollY - oldScrollY)+")");
+                    animator = ValueAnimator.ofInt(0, Math.min(velocity, mHeaderHeight), 0);
                     animator.setDuration(500);
                     animator.addUpdateListener(updateListener);
                     animator.setInterpolator(interpolator);
@@ -433,7 +433,9 @@ public class RefreshContentWrapper implements RefreshContent {
                         && !layout.isRefreshing()
                         && !layout.isLoading();
                 if (overScroll) {
-                    animator = ValueAnimator.ofInt(0, lastOldScrollY - oldScrollY, 0);
+                    final int velocity = (lastOldScrollY - oldScrollY) * 16000 / (int)((lastTime - lastTimeOld)/1000f);
+//                    System.out.println("ValueAnimator - " + (lastTime - lastTimeOld) + " - " + velocity+"("+(lastOldScrollY - oldScrollY)+")");
+                    animator = ValueAnimator.ofInt(0, Math.max(velocity, -mFooterHeight), 0);
                     animator.setDuration(500);
                     animator.addUpdateListener(updateListener);
                     animator.setInterpolator(interpolator);
@@ -446,7 +448,10 @@ public class RefreshContentWrapper implements RefreshContent {
                     animator.start();
                 }
             }
+            lastScrollY = scrollY;
             lastOldScrollY = oldScrollY;
+            lastTimeOld = lastTime;
+            lastTime = System.nanoTime();
         }
     }
 
@@ -479,7 +484,7 @@ public class RefreshContentWrapper implements RefreshContent {
             if (adapter instanceof WrapperListAdapter) {
                 adapter = ((WrapperListAdapter) adapter).getWrappedAdapter();
             }
-            lastDy = scrollY - lasty;
+            lastDy = lasty - scrollY;
             lasty = scrollY;
             int lastVisiblePosition = absListView.getLastVisiblePosition();
             int firstVisiblePosition = absListView.getFirstVisiblePosition();
@@ -487,10 +492,10 @@ public class RefreshContentWrapper implements RefreshContent {
                     && !layout.isRefreshing()
                     && !layout.isLoading()
                     && mMotionEvent == null;
-            if (mFirstVisiblePosition != firstVisiblePosition && lastDy < 0 && overScroll) {
+            if (mFirstVisiblePosition != firstVisiblePosition && lastDy > 0 && overScroll) {
                 mFirstVisiblePosition = firstVisiblePosition;
                 if (adapter != null && firstVisiblePosition == 0) {
-                    ValueAnimator animator = ValueAnimator.ofInt(0, -lastDy, 0);
+                    ValueAnimator animator = ValueAnimator.ofInt(0, Math.min(lastDy, mHeaderHeight), 0);
                     animator.setDuration(500);
                     animator.addUpdateListener(updateListener);
                     animator.setInterpolator(interpolator);
@@ -504,10 +509,10 @@ public class RefreshContentWrapper implements RefreshContent {
                     }
                 }
             } else if (overScroll) {
-                if (mlastVisiblePosition != lastVisiblePosition && lastDy > 0 && layout.isEnableLoadmore()) {
+                if (mlastVisiblePosition != lastVisiblePosition && lastDy < 0 && layout.isEnableLoadmore()) {
                     mlastVisiblePosition = lastVisiblePosition;
                     if (adapter != null && lastVisiblePosition == adapter.getCount() - 1) {
-                        ValueAnimator animator = ValueAnimator.ofInt(0, -lastDy, 0);
+                        ValueAnimator animator = ValueAnimator.ofInt(0, Math.max(lastDy, -mFooterHeight), 0);
                         animator.setDuration(500);
                         animator.addUpdateListener(updateListener);
                         animator.setInterpolator(interpolator);
@@ -576,8 +581,8 @@ public class RefreshContentWrapper implements RefreshContent {
                 boolean intime = System.currentTimeMillis() - lastFlingTime < 1000;
                 boolean overScroll = layout.isEnableOverScrollBounce() && !layout.isRefreshing() && !layout.isLoading();
                 if (lastDy < -1 && intime && overScroll) {
-                    ValueAnimator animator = ValueAnimator.ofInt(0, -lastDy * 2, 0);
-                    animator.setDuration(400);
+                    ValueAnimator animator = ValueAnimator.ofInt(0, Math.min(-lastDy * 2, mHeaderHeight), 0);
+                    animator.setDuration(500);
                     animator.addUpdateListener(updateListener);
                     animator.setInterpolator(interpolator);
                     animator.start();
@@ -591,8 +596,8 @@ public class RefreshContentWrapper implements RefreshContent {
                         }
                     }
                 } else if (lastDy > 1 && intime && overScroll && layout.isEnableLoadmore()) {
-                    ValueAnimator animator = ValueAnimator.ofInt(0, -lastDy * 2, 0);
-                    animator.setDuration(400);
+                    ValueAnimator animator = ValueAnimator.ofInt(0, Math.max(-lastDy * 2, -mFooterHeight), 0);
+                    animator.setDuration(500);
                     animator.addUpdateListener(updateListener);
                     animator.setInterpolator(interpolator);
                     animator.start();
@@ -615,6 +620,24 @@ public class RefreshContentWrapper implements RefreshContent {
                 }
             });
         }
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="private">
+    private static int measureViewHeight(View view) {
+        ViewGroup.LayoutParams p = view.getLayoutParams();
+        if (p == null) {
+            p = new ViewGroup.LayoutParams(MATCH_PARENT,WRAP_CONTENT);
+        }
+        int childHeightSpec;
+        int childWidthSpec = ViewGroup.getChildMeasureSpec(0, 0, p.width);
+        if (p.height > 0) {
+            childHeightSpec = MeasureSpec.makeMeasureSpec(p.height, MeasureSpec.EXACTLY);
+        } else {
+            childHeightSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
+        }
+        view.measure(childWidthSpec, childHeightSpec);
+        return view.getMeasuredHeight();
     }
     //</editor-fold>
 
