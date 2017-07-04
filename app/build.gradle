@@ -15,10 +15,19 @@ android {
         renderscriptTargetApi 25
         renderscriptSupportModeEnabled true    // Enable RS support
     }
+    signingConfigs {
+        debug {
+            storeFile file('debug.keystore')
+            storePassword "android"
+            keyAlias "androiddebugkey"
+            keyPassword "android"
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig = signingConfigs.debug
         }
     }
     lintOptions {

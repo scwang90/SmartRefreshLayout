@@ -626,13 +626,16 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent e) {
+        if (reboundAnimator != null
+                || (mState == RefreshState.Loading && mDisableContentWhenLoading)
+                || (mState == RefreshState.Refreshing && mDisableContentWhenRefresh)) {
+            return true;
+        }
         if (!isEnabled() || mNestedScrollInProgress
                 || (!mEnableRefresh && !(mEnableLoadmore && !mLoadmoreFinished))
                 || mState == RefreshState.Loading
                 || mState == RefreshState.Refreshing) {
-            return (mState == RefreshState.Loading && mDisableContentWhenLoading)
-                    || (mState == RefreshState.Refreshing && mDisableContentWhenRefresh)
-                    || super.dispatchTouchEvent(e);
+            return super.dispatchTouchEvent(e);
         }
         int action = e.getAction();
         switch (action) {
