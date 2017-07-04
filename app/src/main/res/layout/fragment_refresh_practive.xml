@@ -9,7 +9,7 @@
     <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
         app:title="@string/fragment_refresh_practive"/>
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+    <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/smartLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -22,6 +22,6 @@
             android:layout_height="match_parent"
             android:background="@android:color/white"
             tools:listitem="@android:layout/simple_list_item_2"/>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>

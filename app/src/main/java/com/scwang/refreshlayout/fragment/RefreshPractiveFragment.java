@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -80,6 +81,17 @@ public class RefreshPractiveFragment extends Fragment implements AdapterView.OnI
                 }
             });
         }
+
+        final SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) root.findViewById(R.id.smartLayout);
+        if (refreshLayout != null) {
+            refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    refreshLayout.setRefreshing(false);
+                }
+            });
+        }
+
     }
 
     @Override

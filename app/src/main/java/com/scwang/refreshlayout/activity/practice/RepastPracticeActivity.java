@@ -94,7 +94,7 @@ public class RepastPracticeActivity extends AppCompatActivity {
                                 refreshlayout.setLoadmoreFinished(true);//设置之后，将不会再触发加载事件
                             }
                         }
-                    }, 2000);
+                    }, 1000);
                 }
             });
         }

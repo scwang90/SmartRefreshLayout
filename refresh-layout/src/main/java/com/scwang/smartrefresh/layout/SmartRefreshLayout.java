@@ -400,7 +400,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
             mRefreshListener = refresh -> refresh.finishRefresh(3000);
         }
         if (mLoadmoreListener == null) {
-            mLoadmoreListener = refresh -> refresh.finishLoadmore(1000);
+            mLoadmoreListener = refresh -> refresh.finishLoadmore(2000);
         }
         if (mPrimaryColors != null) {
             mRefreshHeader.setPrimaryColors(mPrimaryColors);
