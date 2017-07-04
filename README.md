@@ -27,10 +27,14 @@
 ## Demo
 [下载 APK-Demo](art/app-debug.apk)
 
+#### 项目演示
+![](art/gif_practive_weibo.gif) 
+![](art/gif_practive_feedlist.gif)
 
 ![](art/gif_practive_repast.gif) 
 ![](art/gif_practive_profile.gif)
 
+#### 风格演示
 ![](art/gif_Delivery.gif) 
 ![](art/gif_Dropbox.gif)
 
