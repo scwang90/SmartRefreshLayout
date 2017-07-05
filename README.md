@@ -203,8 +203,8 @@ refreshLayout.setRefreshFooter(new BallPulseFooter(this).setSpinnerStyle(Spinner
 |srlHeaderHeight|dimension|Header的标准高度|
 |srlFooterHeight|dimension|Footer的标准高度|
 |srlDragRate|float|显示拖动高度/真实拖动高度（默认0.5，阻尼效果）|
-|srlExtendHeaderRate|float|Header最大拖动高度/Header标准高度（默认2，要求>=1）|
-|srlExtendFooterRate|float|Footer最大拖动高度/Footer标准高度（默认2，要求>=1）|
+|srlHeaderMaxDragRate|float|Header最大拖动高度/Header标准高度（默认2，要求>=1）|
+|srlFooterMaxDragRate|float|Footer最大拖动高度/Footer标准高度（默认2，要求>=1）|
 |srlEnableRefresh|boolean|是否开启下拉刷新功能（默认true）|
 |srlEnableLoadmore|boolean|是否开启加上拉加载功能（默认true）|
 |srlEnableHeaderTranslationContent|boolean|拖动Header的时候是否同时拖动内容（默认true）|
@@ -223,8 +223,8 @@ refreshLayout.setRefreshFooter(new BallPulseFooter(this).setSpinnerStyle(Spinner
 |setHeaderHeight|dimension|Header的标准高度（px/dp 两个版本）|
 |setFooterHeight|dimension|Footer的标准高度（px/dp 两个版本）|
 |setDragRate|float|显示拖动高度/真实拖动高度（默认0.5，阻尼效果）|
-|setExtendHeaderRate|float|Header最大拖动高度/Header标准高度（默认2，要求>=1）|
-|setExtendFooterRate|float|Footer最大拖动高度/Footer标准高度（默认2，要求>=1）|
+|setHeaderMaxDragRate|float|Header最大拖动高度/Header标准高度（默认2，要求>=1）|
+|setFooterMaxDragRate|float|Footer最大拖动高度/Footer标准高度（默认2，要求>=1）|
 |setEnableRefresh|boolean|是否开启下拉刷新功能（默认true）|
 |setEnableLoadmore|boolean|是否开启加上拉加载功能（默认true）|
 |setEnableHeaderTranslationContent|boolean|拖动Header的时候是否同时拖动内容（默认true）|
