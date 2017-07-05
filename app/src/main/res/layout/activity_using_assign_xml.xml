@@ -20,10 +20,17 @@
         app:srlAccentColor="@android:color/white"
         app:srlEnablePreviewInEditMode="true">
         <!--srlAccentColor srlPrimaryColor 将会改变 Header 和 Footer 的主题颜色-->
-        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srlClassicsSpinnerStyle="FixedBehind"/>
+            android:layout_height="100dp"
+            android:gravity="center"
+            android:background="#444"
+            android:textColor="#fff"
+            android:text="看看我会不会变成Header"/>
+        <!--<com.scwang.smartrefresh.layout.header.ClassicsHeader-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--app:srlClassicsSpinnerStyle="FixedBehind"/>-->
         <!--FixedBehind可以让Header固定在内容的背后，下拉的时候效果同微信浏览器的效果-->
         <TextView
             android:layout_width="match_parent"
