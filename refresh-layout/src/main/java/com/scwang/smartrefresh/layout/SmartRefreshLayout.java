@@ -628,9 +628,14 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     @Override
     public boolean dispatchTouchEvent(MotionEvent e) {
         final int action = MotionEventCompat.getActionMasked(e);
-        if (action == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP) {
-            if (mRefreshContent != null) {
-                mRefreshContent.onActionUpOrCancel();
+        if (mRefreshContent != null) {
+            switch (action) {
+                case MotionEvent.ACTION_DOWN:
+                    mRefreshContent.onActionDown(e);
+                    break;
+                case MotionEvent.ACTION_UP:
+                case MotionEvent.ACTION_CANCEL:
+                    mRefreshContent.onActionUpOrCancel();
             }
         }
         if (reboundAnimator != null
@@ -648,10 +653,6 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
             case MotionEvent.ACTION_DOWN:
                 mTouchX = e.getX();
                 mTouchY = e.getY();
-
-                if (mRefreshContent != null) {
-                    mRefreshContent.onActionDown(e);
-                }
                 super.dispatchTouchEvent(e);
                 return true;
 
@@ -701,11 +702,6 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
                 final float y = e.getY();
-
-                if (mRefreshContent != null) {
-                    mRefreshContent.onActionUpOrCancel();
-                }
-
                 if (mFalsifyEvent != null) {
                     mFalsifyEvent = null;
                     long time = currentTimeMillis();
