@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PixelFormat;
@@ -34,6 +33,7 @@ public class PathsDrawable extends Drawable {
     protected static final Region MAX_CLIP = new Region(Integer.MIN_VALUE,
             Integer.MIN_VALUE,Integer.MAX_VALUE, Integer.MAX_VALUE);
     protected List<Path> mOrginPaths;
+    protected List<String> mOrginSvgs;
 
     public PathsDrawable() {
         mPaint = new Paint();
@@ -76,14 +76,7 @@ public class PathsDrawable extends Drawable {
                 (width != mWidth || height != mHeight)) {
             float ratioWidth = 1f * width / mOrginWidth;
             float ratioHeight = 1f * height / mOrginHeight;
-            Matrix matrix = new Matrix();
-            matrix.setScale(ratioWidth, ratioHeight);
-            mPaths = new ArrayList<>();
-            for (Path path : mOrginPaths) {
-                Path npath = new Path();
-                path.transform(matrix, npath);
-                mPaths.add(npath);
-            }
+            mPaths = PathParser.transformScale(ratioWidth, ratioHeight, mOrginPaths, mOrginSvgs);
             onMeasure();
         } else {
             super.setBounds(left, top, right, bottom);
@@ -96,8 +89,10 @@ public class PathsDrawable extends Drawable {
 
     public void parserPaths(String... paths) {
         mOrginWidth = mOrginHeight = 0;
+        mOrginSvgs = new ArrayList<>();
         mPaths = mOrginPaths = new ArrayList<>();
         for (String path : paths) {
+            mOrginSvgs.add(path);
             mOrginPaths.add(PathParser.createPathFromPathData(path));
         }
         onMeasure();

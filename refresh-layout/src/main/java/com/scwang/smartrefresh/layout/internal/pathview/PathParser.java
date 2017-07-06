@@ -14,10 +14,13 @@
 
 package com.scwang.smartrefresh.layout.internal.pathview;
 
+import android.graphics.Matrix;
 import android.graphics.Path;
+import android.os.Build;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.List;
 
 // This class is a duplicate from the PathParser.java of frameworks/base, with slight
 // update on incompatible API like copyOfRange().
@@ -53,6 +56,117 @@ class PathParser {
         float[] result = new float[resultLength];
         System.arraycopy(original, start, result, 0, copyLength);
         return result;
+    }
+
+    public static List<Path> transformScale(float ratioWidth, float ratioHeight, List<Path> orginPaths, List<String> orginSvgs) {
+        Matrix matrix = new Matrix();
+        matrix.setScale(ratioWidth, ratioHeight);
+        List<Path> paths = new ArrayList<>();
+        if (Build.VERSION.SDK_INT > 16) {
+            for (Path path : orginPaths) {
+                Path npath = new Path();
+                path.transform(matrix, npath);
+                paths.add(npath);
+            }
+        } else {
+            for (String svgPath : orginSvgs) {
+                Path path = new Path();
+                PathDataNode[] nodes = createNodesFromPathData(svgPath);
+                transformScaleNodes(ratioWidth, ratioHeight, nodes);
+                PathDataNode.nodesToPath(nodes, path);
+                paths.add(path);
+            }
+
+        }
+        return paths;
+    }
+
+    private static void transformScaleNodes(float ratioWidth, float ratioHeight, PathDataNode[] node) {
+        for (int i = 0; i < node.length; i++) {
+            transformScaleCommand(ratioWidth, ratioHeight, node[i].type, node[i].params);
+        }
+    }
+
+    private static void transformScaleCommand(float ratioWidth, float ratioHeight, char cmd, float[] val) {
+        int incr = 2;
+        switch (cmd) {
+            case 'z':
+            case 'Z':
+                break;
+            case 'm':
+            case 'M':
+            case 'l':
+            case 'L':
+            case 't':
+            case 'T':
+                incr = 2;
+                break;
+            case 'h':
+            case 'H':
+            case 'v':
+            case 'V':
+                incr = 1;
+                break;
+            case 'c':
+            case 'C':
+                incr = 6;
+                break;
+            case 's':
+            case 'S':
+            case 'q':
+            case 'Q':
+                incr = 4;
+                break;
+            case 'a':
+            case 'A':
+                incr = 7;
+                break;
+        }
+        for (int k = 0; k < val.length; k += incr) {
+            switch (cmd) {
+                case 'm': // moveto - Start a new sub-path (relative)
+                case 'M': // moveto - Start a new sub-path
+                case 'l': // lineto - Draw a line from the current point (relative)
+                case 'L': // lineto - Draw a line from the current point
+                case 't': // Draws a quadratic Bézier curve(reflective control point)(relative)
+                case 'T': // Draws a quadratic Bézier curve (reflective control point)
+                    val[k] *= ratioWidth;
+                    val[k + 1] *= ratioHeight;
+                    break;
+                case 'h': // horizontal lineto - Draws a horizontal line (relative)
+                case 'H': // horizontal lineto - Draws a horizontal line
+                    val[k] *= ratioWidth;
+                    break;
+                case 'v': // vertical lineto - Draws a vertical line from the current point (r)
+                case 'V': // vertical lineto - Draws a vertical line from the current point
+                    val[k] *= ratioHeight;
+                    break;
+                case 'c': // curveto - Draws a cubic Bézier curve (relative)
+                case 'C': // curveto - Draws a cubic Bézier curve
+                    val[k] *= ratioWidth;
+                    val[k + 1] *= ratioHeight;
+                    val[k + 2] *= ratioWidth;
+                    val[k + 3] *= ratioHeight;
+                    val[k + 4] *= ratioWidth;
+                    val[k + 5] *= ratioHeight;
+                    break;
+                case 's': // smooth curveto - Draws a cubic Bézier curve (reflective cp)
+                case 'S': // shorthand/smooth curveto Draws a cubic Bézier curve(reflective cp)
+                case 'q': // Draws a quadratic Bézier (relative)
+                case 'Q': // Draws a quadratic Bézier
+                    val[k] *= ratioWidth;
+                    val[k + 1] *= ratioHeight;
+                    val[k + 2] *= ratioWidth;
+                    val[k + 3] *= ratioHeight;
+                case 'a': // Draws an elliptical arc
+                case 'A': // Draws an elliptical arc
+                    val[k] *= ratioWidth;
+                    val[k + 1] *= ratioHeight;
+                    val[k + 5] *= ratioWidth;
+                    val[k + 6] *= ratioHeight;
+                    break;
+            }
+        }
     }
 
     /**
