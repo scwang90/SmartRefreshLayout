@@ -24,6 +24,7 @@ import android.support.v4.view.ScrollingView;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -1584,25 +1585,33 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     @Override
     public boolean autoRefresh(int delayed, float dragrate) {
         if (mState == RefreshState.None && mEnableRefresh) {
+            if (reboundAnimator != null) {
+                reboundAnimator.cancel();
+            }
+            reboundAnimator = ValueAnimator.ofInt(mSpinner, (int) (mHeaderHeight * dragrate));
             postDelayed(() -> {
-                ValueAnimator animator = ValueAnimator.ofInt(mSpinner, (int) (mHeaderHeight * dragrate));
-                animator.setDuration(mReboundDuration);
-                animator.setInterpolator(new DecelerateInterpolator());
-                animator.addUpdateListener(animation -> moveSpinner((int) animation.getAnimatedValue(), false));
-                animator.addListener(new AnimatorListenerAdapter() {
+                if (reboundAnimator == null) {
+                    Log.e("SmartRefreshLayout", "autoLoadmore.reboundAnimator == null");
+                    reboundAnimator = ValueAnimator.ofInt(mSpinner, (int) (mHeaderHeight * dragrate));
+                }
+                reboundAnimator.setDuration(mReboundDuration);
+                reboundAnimator.setInterpolator(new DecelerateInterpolator());
+                reboundAnimator.addUpdateListener(animation -> moveSpinner((int) animation.getAnimatedValue(), false));
+                reboundAnimator.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationStart(Animator animation) {
                         setStatePullDownToRefresh();
                     }
                     @Override
                     public void onAnimationEnd(Animator animation) {
+                        reboundAnimator = null;
                         if (mState != RefreshState.ReleaseToRefresh) {
                             setStateReleaseToRefresh();
                         }
                         overSpinner();
                     }
                 });
-                animator.start();
+                reboundAnimator.start();
             }, delayed);
             return true;
         } else {
@@ -1629,25 +1638,33 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     @Override
     public boolean autoLoadmore(int delayed, float dragrate) {
         if (mState == RefreshState.None && mEnableLoadmore && !mLoadmoreFinished) {
+            if (reboundAnimator != null) {
+                reboundAnimator.cancel();
+            }
+            reboundAnimator = ValueAnimator.ofInt(mSpinner, -(int)(mFooterHeight * dragrate));
             postDelayed(() -> {
-                ValueAnimator animator = ValueAnimator.ofInt(mSpinner, -(int)(mFooterHeight * dragrate));
-                animator.setDuration(mReboundDuration);
-                animator.setInterpolator(new DecelerateInterpolator());
-                animator.addUpdateListener(animation -> moveSpinner((int) animation.getAnimatedValue(), false));
-                animator.addListener(new AnimatorListenerAdapter() {
+                if (reboundAnimator == null) {
+                    Log.e("SmartRefreshLayout", "autoLoadmore.reboundAnimator == null");
+                    reboundAnimator = ValueAnimator.ofInt(mSpinner, -(int)(mFooterHeight * dragrate));
+                }
+                reboundAnimator.setDuration(mReboundDuration);
+                reboundAnimator.setInterpolator(new DecelerateInterpolator());
+                reboundAnimator.addUpdateListener(animation -> moveSpinner((int) animation.getAnimatedValue(), false));
+                reboundAnimator.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationStart(Animator animation) {
                         setStatePullUpToLoad();
                     }
                     @Override
                     public void onAnimationEnd(Animator animation) {
+                        reboundAnimator = null;
                         if (mState != RefreshState.ReleaseToLoad) {
                             setStateReleaseToLoad();
                         }
                         overSpinner();
                     }
                 });
-                animator.start();
+                reboundAnimator.start();
             }, delayed);
             return true;
         } else {
