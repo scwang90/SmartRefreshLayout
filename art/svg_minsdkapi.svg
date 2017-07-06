@@ -51,11 +51,11 @@
             fill="#010101"
             fill-opacity=".3"
             x="32.5"
-            y="15">MinSdkAPI</text>
+            y="15">MinSdk</text>
 
         <text
             x="32.5"
-            y="14">MinSdkAPI</text>
+            y="14">MinSdk</text>
 
         <text
             fill="#010101"
