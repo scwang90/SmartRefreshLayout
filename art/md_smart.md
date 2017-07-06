@@ -2,9 +2,12 @@
 
 智能是什么玩意？有什么用？
 
->智能主要体现 SmartRefreshLayout 对未知布局的自动识别上，这样可以让我们更高效的实现我们所需的功能，也可以实现一些非寻常的功能。下面通过**自定义Header** 和 **嵌套Layout作为内容** 来解释 SmartRefreshLayout 的智能之处。
+>智能主要体现 SmartRefreshLayout 对未知布局的自动识别上，这样可以让我们更高效的实现我们所需的功能，也可以实现一些非寻常的功能。
+>下面通过**自定义Header** 和 **嵌套Layout作为内容** 来了解 SmartRefreshLayout 的智能之处。
+
 
 ###自定义Header
+
 我们来看这一下这个伪代码例子：
 ```xml
     <SmartRefreshLayout>
