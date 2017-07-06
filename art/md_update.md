@@ -13,3 +13,5 @@
 >添加：AbsListView 和 RecyclerView 的越界回弹  
 >添加：srlFixedHeaderViewId 属性  
 >添加：srlFixedFooterViewId 属性   
+>修复：DeliveryHeader,DropboxHeader 在API-17以下显示不全的问题
+
