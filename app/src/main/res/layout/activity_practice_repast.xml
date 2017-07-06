@@ -11,9 +11,9 @@
         android:id="@+id/smartLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srlDragRate="1"
+        app:srlDragRate="0.7"
+        app:srlHeaderMaxDragRate="1.3"
         app:srlHeaderHeight="150dp"
-        app:srlHeaderMaxDragRate="1.5"
         app:srlEnableAutoLoadmore="true"
         app:srlEnablePreviewInEditMode="true">
         <pl.droidsonroids.gif.GifImageView

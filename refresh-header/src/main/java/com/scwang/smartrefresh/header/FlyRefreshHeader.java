@@ -61,6 +61,7 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
+        mFlyView = null;
         mRefreshLayout = null;
         mRefreshKernel = null;
     }
@@ -225,7 +226,9 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
         flyDownAnim.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationStart(Animator animation) {
-                mFlyView.setRotationY(180);
+                if (mFlyView != null) {
+                    mFlyView.setRotationY(180);
+                }
             }
         });
         AnimatorSet flyInAnim = new AnimatorSet();
@@ -243,12 +246,15 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
         flyInAnim.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationStart(Animator animation) {
-                mFlyView.setRotationY(0);
+                if (mFlyView != null) {
+                    mFlyView.setRotationY(0);
+                }
             }
             @Override
             public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                mRefreshLayout.setEnableRefresh(true);
+                if (mRefreshLayout != null) {
+                    mRefreshLayout.setEnableRefresh(true);
+                }
                 if (listenerAdapter != null) {
                     listenerAdapter.onAnimationEnd(animation);
                 }
