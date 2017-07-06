@@ -15,6 +15,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.NestedScrollingChild;
 import android.support.v4.view.NestedScrollingChildHelper;
 import android.support.v4.view.NestedScrollingParent;
@@ -626,6 +627,12 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent e) {
+        final int action = MotionEventCompat.getActionMasked(e);
+        if (action == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP) {
+            if (mRefreshContent != null) {
+                mRefreshContent.onActionUpOrCancel();
+            }
+        }
         if (reboundAnimator != null
                 || (mState == RefreshState.Loading && mDisableContentWhenLoading)
                 || (mState == RefreshState.Refreshing && mDisableContentWhenRefresh)) {
@@ -635,15 +642,8 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                 || (!mEnableRefresh && !(mEnableLoadmore && !mLoadmoreFinished))
                 || mState == RefreshState.Loading
                 || mState == RefreshState.Refreshing) {
-            if (mRefreshContent != null) {
-                int action = e.getAction();
-                if (action == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP) {
-                    mRefreshContent.onActionUpOrCancel();
-                }
-            }
             return super.dispatchTouchEvent(e);
         }
-        int action = e.getAction();
         switch (action) {
             case MotionEvent.ACTION_DOWN:
                 mTouchX = e.getX();
