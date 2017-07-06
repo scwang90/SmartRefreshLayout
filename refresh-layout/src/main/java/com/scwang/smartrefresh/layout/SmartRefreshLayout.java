@@ -629,12 +629,18 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         if (reboundAnimator != null
                 || (mState == RefreshState.Loading && mDisableContentWhenLoading)
                 || (mState == RefreshState.Refreshing && mDisableContentWhenRefresh)) {
-            return true;
+            return false;
         }
         if (!isEnabled() || mNestedScrollInProgress
                 || (!mEnableRefresh && !(mEnableLoadmore && !mLoadmoreFinished))
                 || mState == RefreshState.Loading
                 || mState == RefreshState.Refreshing) {
+            if (mRefreshContent != null) {
+                int action = e.getAction();
+                if (action == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP) {
+                    mRefreshContent.onActionUpOrCancel();
+                }
+            }
             return super.dispatchTouchEvent(e);
         }
         int action = e.getAction();
@@ -1120,9 +1126,6 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         }
         // Dispatch up our nested parent
         stopNestedScroll();
-        if (mRefreshContent != null) {
-            mRefreshContent.onActionUpOrCancel();
-        }
     }
 
     @Override
