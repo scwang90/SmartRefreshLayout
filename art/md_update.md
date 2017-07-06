@@ -9,7 +9,7 @@
 >修改：srlExtendFooterRate 属性为：srlFooterMaxDragRate  
 >修复：DeliveryHeader,DropboxHeader 在API-21以下崩溃的问题  
 
-## V 1.0.2
+## V 1.0.2(开发中)
 >添加：AbsListView 和 RecyclerView 的越界回弹  
 >添加：srlFixedHeaderViewId 属性  
 >添加：srlFixedFooterViewId 属性   
