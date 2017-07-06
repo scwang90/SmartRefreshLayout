@@ -25,7 +25,7 @@ import static android.R.layout.simple_list_item_2;
  */
 public class BasicUsingActivity extends AppCompatActivity {
 
-        private BaseRecyclerAdapter<Void> mAdapter;
+    private BaseRecyclerAdapter<Void> mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

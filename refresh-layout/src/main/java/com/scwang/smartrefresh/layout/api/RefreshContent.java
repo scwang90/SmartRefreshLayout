@@ -25,7 +25,7 @@ public interface RefreshContent {
     ViewGroup.LayoutParams getLayoutParams();
 
     void onActionDown(MotionEvent e);
-    void onActionUpOrCancel(MotionEvent e);
+    void onActionUpOrCancel();
 
     void setupComponent(RefreshKernel kernel, View fixedHeader, View fixedFooter);
     void onInitialHeaderAndFooter(int headerHeight, int footerHeight);

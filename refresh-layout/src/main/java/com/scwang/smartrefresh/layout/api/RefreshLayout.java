@@ -219,5 +219,7 @@ public interface RefreshLayout {
 
     boolean isLoadmoreFinished();
 
+    boolean isEnableAutoLoadmore();
+
     boolean isEnableOverScrollBounce();
 }

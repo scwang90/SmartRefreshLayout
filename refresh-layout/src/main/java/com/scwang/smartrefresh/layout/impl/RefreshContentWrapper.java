@@ -211,7 +211,7 @@ public class RefreshContentWrapper implements RefreshContent {
     }
 
     @Override
-    public void onActionUpOrCancel(MotionEvent e) {
+    public void onActionUpOrCancel() {
         mMotionEvent = null;
     }
 
@@ -225,8 +225,13 @@ public class RefreshContentWrapper implements RefreshContent {
         } else if (mScrollableView instanceof AbsListView) {
             AbsListViewScrollComponent component = new AbsListViewScrollComponent(kernel, interpolator, updateListener);
             component.attach(((AbsListView) mScrollableView));
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && mScrollableView != null) {
+        } else if (Build.VERSION.SDK_INT >= 23 && mScrollableView != null) {
             mScrollableView.setOnScrollChangeListener(new Api23ViewScrollComponent(kernel, interpolator, updateListener));
+        }
+        if (Build.VERSION.SDK_INT >= 21
+                && mScrollableView != null
+                && !(mScrollableView instanceof NestedScrollingChild)) {
+            mScrollableView.setNestedScrollingEnabled(true);
         }
         if (fixedHeader != null || fixedFooter != null) {
             mFixedHeader = fixedHeader;
@@ -501,7 +506,7 @@ public class RefreshContentWrapper implements RefreshContent {
                     animator.setInterpolator(interpolator);
                     animator.start();
                 }
-            } else if (layout.isEnableLoadmore() && !layout.isLoadmoreFinished()) {
+            } else if (layout.isEnableLoadmore() && !layout.isLoadmoreFinished() && layout.isEnableAutoLoadmore()) {
                 if (mlastVisiblePosition != lastVisiblePosition && lastVisiblePosition > 0) {
                     mlastVisiblePosition = lastVisiblePosition;
                     if (adapter != null && lastVisiblePosition == adapter.getCount() - 1) {
@@ -586,7 +591,7 @@ public class RefreshContentWrapper implements RefreshContent {
                     animator.addUpdateListener(updateListener);
                     animator.setInterpolator(interpolator);
                     animator.start();
-                } else if (layout.isEnableLoadmore() && !layout.isLoadmoreFinished()) {
+                } else if (layout.isEnableLoadmore() && !layout.isLoadmoreFinished() && layout.isEnableAutoLoadmore()) {
                     RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
                     if (manager instanceof LinearLayoutManager) {
                         LinearLayoutManager linearManager = ((LinearLayoutManager) manager);

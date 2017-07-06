@@ -697,7 +697,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                 final float y = e.getY();
 
                 if (mRefreshContent != null) {
-                    mRefreshContent.onActionUpOrCancel(e);
+                    mRefreshContent.onActionUpOrCancel();
                 }
 
                 if (mFalsifyEvent != null) {
@@ -1120,6 +1120,9 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         }
         // Dispatch up our nested parent
         stopNestedScroll();
+        if (mRefreshContent != null) {
+            mRefreshContent.onActionUpOrCancel();
+        }
     }
 
     @Override
@@ -1661,6 +1664,11 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     @Override
     public boolean isLoadmoreFinished() {
         return mLoadmoreFinished;
+    }
+
+    @Override
+    public boolean isEnableAutoLoadmore() {
+        return mEnableAutoLoadmore;
     }
 
     @Override
