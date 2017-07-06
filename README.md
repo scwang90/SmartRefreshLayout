@@ -1,12 +1,11 @@
 # SmartRefreshLayout
-[![License](https://img.shields.io/badge/license-Apache%202-green.svg)](https://www.apache.org/licenses/LICENSE-2.0)
-[![Download](https://api.bintray.com/packages/scwang90/maven/SmartRefreshLayout/images/download.svg) ](https://bintray.com/scwang90/maven/SmartRefreshLayout/_latestVersion)
+[![License](https://img.shields.io/badge/license-Apache%202-green.svg)](https://www.apache.org/licenses/LICENSE-2.0) [![Download](https://api.bintray.com/packages/scwang90/maven/SmartRefreshLayout/images/download.svg) ](https://bintray.com/scwang90/maven/SmartRefreshLayout/_latestVersion)
 
-&emsp;&emsp;正如名字所说，这是一个“聪明的下拉刷新布局”，由于它的聪明，他不只是如其他的刷新布局所说的支持所有的View，还支持多层嵌套的视图结构，下文会对这个详细说明。
+&emsp;&emsp;正如名字所说，这是一个“聪明”的下拉刷新布局，由于它的聪明，他不只是如其他的刷新布局所说的支持所有的View，还支持多层嵌套的视图结构，下文会对这个详细说明。
 
 &emsp;&emsp;除了“聪明”之外，SmartRefreshLayout还具备了很多的特点。它继承至ViewGroup 而不是其他的Layout，提高了性能。
 
-&emsp;&emsp;吸取了现在流行的各种刷新布局的优点，包括谷歌官方的 SwipeRefreshLayout，现在非常流行的 [TwinklingRefreshLayout](https://github.com/lcodecorex/TwinklingRefreshLayout) 、[android-Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)。还集成了各种炫酷的 Header 和 Footer。
+&emsp;&emsp;吸取了现在流行的各种刷新布局的优点，包括谷歌官方的 SwipeRefreshLayout，现在非常流行的 [TwinklingRefreshLayout](https://github.com/lcodecorex/TwinklingRefreshLayout) 、[android-Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)。还集成了各种炫酷的 Header 和 Footer。
 
 &emsp;&emsp;下面列出了SmartRefreshLayout所有的特点功能:
 
@@ -14,18 +13,23 @@
  - 支持自定义并且已经集成了很多炫酷的 Header 和 Footer （图）.
  - 支持和ListView的同步滚动 和 RecyclerView、AppBarLayout、CoordinatorLayout 的嵌套滚动 NestedScrolling.
  - 支持在Android Studio Xml 编辑器中预览 效果（图）
- - 支持分别在 Default（默认）、Xml、JavaCode、中设置 Header 和 Footer.
+ - 支持分别在 Default（默认）、Xml、JavaCode 三个中设置 Header 和 Footer.
  - 支持自动刷新、自动上拉加载（自动检测列表滚动到底部，而不用手动上拉）.
  - 支持通用的刷新监听器 OnRefreshListener 和更详细的滚动监听 OnMultiPurposeListener.
  - 支持自定义回弹动画的插值器，实现各种炫酷的动画效果.
  - 支持设置主题来适配任何场景的App，不会出现炫酷但很尴尬的情况.
- - 支持设置多种滑动方式来适配各种效果的Header和Footer：位置平移、尺寸拉伸、背后固定、顶层固定、全屏
+ - 支持设置多种滑动方式来适配各种效果的Header和Footer：平移、拉伸、背后固定、顶层固定、全屏
  - 支持内容尺寸自适应 Content-wrap_content
  - 支持继承重写和扩展功能，内部实现没有 private 方法和字段，继承之后都可以重写覆盖
  - 支持越界回弹（Listview、RecyclerView、ScrollView、WebView...View）
- 
+ 
+## 传送门
+
+ - [博客文章](https://segmentfault.com/a/1190000010066071) 
+ - [聪明之处](art/md_smart.md)
+ 
 ## Demo
-[下载 APK-Demo](art/app-debug.apk)
+[下载 APK-Demo](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/app-debug.apk)
 
 #### 项目演示
 ![](art/gif_practive_weibo.gif) 
