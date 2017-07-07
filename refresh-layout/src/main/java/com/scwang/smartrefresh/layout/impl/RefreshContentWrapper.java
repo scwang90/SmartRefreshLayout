@@ -228,11 +228,11 @@ public class RefreshContentWrapper implements RefreshContent {
         } else if (Build.VERSION.SDK_INT >= 23 && mScrollableView != null) {
             mScrollableView.setOnScrollChangeListener(new Api23ViewScrollComponent(kernel, interpolator, updateListener));
         }
-        if (Build.VERSION.SDK_INT >= 21
-                && mScrollableView != null
-                && !(mScrollableView instanceof NestedScrollingChild)) {
-            mScrollableView.setNestedScrollingEnabled(true);
-        }
+//        if (Build.VERSION.SDK_INT >= 21
+//                && mScrollableView != null
+//                && !(mScrollableView instanceof NestedScrollingChild)) {
+//            mScrollableView.setNestedScrollingEnabled(true);
+//        }
         if (fixedHeader != null || fixedFooter != null) {
             mFixedHeader = fixedHeader;
             mFixedFooter = fixedFooter;
