@@ -32,6 +32,7 @@
         <attr name="srlEnablePreviewInEditMode" format="boolean"/>
         <attr name="srlEnableAutoLoadmore" format="boolean"/>
         <attr name="srlEnableOverScrollBounce" format="boolean"/>
+        <attr name="srlEnablePureScrollMode" format="boolean"/>
         <attr name="srlDisableContentWhenRefresh" format="boolean"/>
         <attr name="srlDisableContentWhenLoading" format="boolean"/>
         <attr name="srlFixedHeaderViewId" format="reference"/>

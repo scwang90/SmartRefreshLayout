@@ -15,11 +15,11 @@ import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
  * Created by SCWANG on 2017/5/26.
  */
 
-public class RefreshBottomWrapper implements RefreshFooter {
+public class RefreshFooterWrapper implements RefreshFooter {
     private View mWrapperView;
     private SpinnerStyle mSpinnerStyle;
 
-    public RefreshBottomWrapper(View wrapper) {
+    public RefreshFooterWrapper(View wrapper) {
         this.mWrapperView = wrapper;
     }
 

@@ -49,7 +49,8 @@ import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
 import com.scwang.smartrefresh.layout.header.BezierRadarHeader;
-import com.scwang.smartrefresh.layout.impl.RefreshBottomWrapper;
+import com.scwang.smartrefresh.layout.header.FalsifyHeader;
+import com.scwang.smartrefresh.layout.impl.RefreshFooterWrapper;
 import com.scwang.smartrefresh.layout.impl.RefreshContentWrapper;
 import com.scwang.smartrefresh.layout.impl.RefreshHeaderWrapper;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
@@ -107,6 +108,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     protected boolean mEnablePreviewInEditMode = true;//是否在编辑模式下开启预览功能
     protected boolean mEnableOverScrollBounce = true;//是否启用越界回弹
     protected boolean mEnableAutoLoadmore = true;//是否在列表滚动到底部时自动加载更多
+    protected boolean mEnablePureScrollMode = false;//是否开启纯滚动模式
     protected boolean mLoadmoreFinished = false;//数据是否全部加载完成，如果完成就不能在触发加载事件
     //</editor-fold>
 
@@ -235,6 +237,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         mEnablePreviewInEditMode = ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnablePreviewInEditMode, mEnablePreviewInEditMode);
         mEnableAutoLoadmore = ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnableAutoLoadmore, mEnableAutoLoadmore);
         mEnableOverScrollBounce = ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnableAutoLoadmore, mEnableOverScrollBounce);
+        mEnablePureScrollMode = ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnablePureScrollMode, mEnablePureScrollMode);
         mFixedHeaderViewId = ta.getResourceId(R.styleable.SmartRefreshLayout_srlFixedHeaderViewId, View.NO_ID);
         mFixedFooterViewId = ta.getResourceId(R.styleable.SmartRefreshLayout_srlFixedFooterViewId, View.NO_ID);
 
@@ -271,6 +274,8 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         final int count = getChildCount();
         if (count > 3) {
             throw new RuntimeException("最多只支持3个子View，Most only support three sub view");
+        } else if (mEnablePureScrollMode && count > 1) {
+            throw new RuntimeException("PureScrollMode模式只支持一个子View，Most only support one sub view in PureScrollMode");
         }
 
         //定义为确认的子View索引
@@ -305,7 +310,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                 } else if (count == 2 && mRefreshContent == null) {
                     mRefreshContent = new RefreshContentWrapper(view);
                 } else if (i == 2 && mRefreshFooter == null) {
-                    mRefreshFooter = new RefreshBottomWrapper(view);
+                    mRefreshFooter = new RefreshFooterWrapper(view);
                 } else if (mRefreshContent == null) {
                     mRefreshContent = new RefreshContentWrapper(view);
                 }
@@ -369,7 +374,11 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         mRefreshContent.setupComponent(mKernel, mFixedHeaderView, mFixedFooterView);
 
         if (mRefreshHeader == null) {
-            mRefreshHeader = mHeaderCreater.createRefreshHeader(getContext(), this);
+            if (mEnablePureScrollMode) {
+                mRefreshHeader = new FalsifyHeader(getContext());
+            } else {
+                mRefreshHeader = mHeaderCreater.createRefreshHeader(getContext(), this);
+            }
             if (!(mRefreshHeader.getView().getLayoutParams() instanceof MarginLayoutParams)) {
                 if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale) {
                     addView(mRefreshHeader.getView(), MATCH_PARENT, MATCH_PARENT);
@@ -379,7 +388,11 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
             }
         }
         if (mRefreshFooter == null) {
-            mRefreshFooter = mFooterCreater.createRefreshFooter(getContext(), this);
+            if (mEnablePureScrollMode) {
+                mRefreshFooter = new RefreshFooterWrapper(new FalsifyHeader(getContext()));
+            } else {
+                mRefreshFooter = mFooterCreater.createRefreshFooter(getContext(), this);
+            }
             if (!(mRefreshFooter.getView().getLayoutParams() instanceof MarginLayoutParams)) {
                 if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Scale) {
                     addView(mRefreshFooter.getView(), MATCH_PARENT, MATCH_PARENT);
@@ -883,10 +896,12 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     }
 
     protected boolean overSpinner() {
-        if (mState == RefreshState.PullDownToRefresh) {
+        if (mState == RefreshState.PullDownToRefresh
+                || (mEnablePureScrollMode && mState == RefreshState.ReleaseToRefresh)) {
             setStatePullDownCanceled();
             return true;
-        } else if (mState == RefreshState.PullToUpLoad) {
+        } else if (mState == RefreshState.PullToUpLoad
+                || (mEnablePureScrollMode && mState == RefreshState.ReleaseToLoad)) {
             setStatePullUpCanceled();
             return true;
         } else if (mState == RefreshState.ReleaseToRefresh) {
