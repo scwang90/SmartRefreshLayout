@@ -138,12 +138,15 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
      * 头部高度
      */
     protected int mHeaderHeight;
+    protected int mHeaderTranslationY;
     protected DimensionStatus mHeaderHeightStatus = DimensionStatus.DefaultUnNotify;
     /**
      * 底部高度
      */
     protected int mFooterHeight;
+    protected int mFooterTranslationY;
     protected DimensionStatus mFooterHeightStatus = DimensionStatus.DefaultUnNotify;
+
     /**
      * 扩展高度
      */
@@ -1063,11 +1066,9 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     //<editor-fold desc="NestedScrollingParent">
     @Override
     public boolean onStartNestedScroll(View child, View target, int nestedScrollAxes) {
-//        || (!mEnableRefresh && !mEnableLoadmore)
-//                || mState == RefreshState.Loading
-//                || mState == RefreshState.Refreshing
-        return isEnabled() && (mEnableRefresh||(mEnableLoadmore && !mLoadmoreFinished)) && !(mState == RefreshState.Loading|| mState == RefreshState.Refreshing)
-                && (nestedScrollAxes & ViewCompat.SCROLL_AXIS_VERTICAL) != 0;
+        boolean accepted = isEnabled() && (nestedScrollAxes & ViewCompat.SCROLL_AXIS_VERTICAL) != 0;
+        accepted = accepted && (mEnableRefresh||(mEnableLoadmore && !mLoadmoreFinished));
+        return accepted;
     }
 
     @Override
@@ -1084,24 +1085,51 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     public void onNestedPreScroll(View target, int dx, int dy, int[] consumed) {
         // If we are in the middle of consuming, a scroll, then we want to move the spinner back up
         // before allowing the list to scroll
-        if (mEnableRefresh && dy > 0 && mTotalUnconsumed > 0) {
-            if (dy > mTotalUnconsumed) {
-                consumed[1] = dy - (int) mTotalUnconsumed;
-                mTotalUnconsumed = 0;
-            } else {
-                mTotalUnconsumed -= dy;
-                consumed[1] = dy;
+        if (mState == RefreshState.Refreshing) {
+//            if (mRefreshHeader != null && mRefreshHeader.getSpinnerStyle() != SpinnerStyle.FixedFront) {
+//                if (dy > 0 && -mHeaderTranslationY < mHeaderHeight) {//向上滚动
+//                    if (mHeaderHeight + mHeaderTranslationY > dy) {
+//                        mHeaderTranslationY -= dy;
+//                        consumed[1] = dy;
+//                    } else {
+//                        consumed[1] = dy - (mHeaderHeight + mHeaderTranslationY);
+//                        mHeaderTranslationY = -mHeaderHeight;
+//                    }
+//                    mRefreshHeader.getView().setTranslationY(mHeaderTranslationY);
+////                    moveSpinner(mHeaderHeight + mHeaderTranslationY, true);
+//                } else if (dy < 0 && mHeaderTranslationY < 0) {
+//                    if (mHeaderTranslationY < dy) {
+//                        mHeaderTranslationY -= dy;
+//                        consumed[1] = dy;
+//                    } else {
+//                        consumed[1] = dy - mHeaderTranslationY;
+//                        mHeaderTranslationY = 0;
+//                    }
+//                    mRefreshHeader.getView().setTranslationY(mHeaderTranslationY);
+////                    moveSpinner(mHeaderHeight - mHeaderTranslationY, true);
+//                }
+//            }
+        } else if (mState == RefreshState.Loading) {
+        } else {
+            if (mEnableRefresh && dy > 0 && mTotalUnconsumed > 0) {
+                if (dy > mTotalUnconsumed) {
+                    consumed[1] = dy - (int) mTotalUnconsumed;
+                    mTotalUnconsumed = 0;
+                } else {
+                    mTotalUnconsumed -= dy;
+                    consumed[1] = dy;
+                }
+                moveSpinnerInfinitely((int)mTotalUnconsumed);
+            } else if (mEnableLoadmore && !mLoadmoreFinished && dy < 0 && mTotalUnconsumed < 0) {
+                if (dy < mTotalUnconsumed) {
+                    consumed[1] = dy - (int) mTotalUnconsumed;
+                    mTotalUnconsumed = 0;
+                } else {
+                    mTotalUnconsumed -= dy;
+                    consumed[1] = dy;
+                }
+                moveSpinnerInfinitely((int)mTotalUnconsumed);
             }
-            moveSpinnerInfinitely((int)mTotalUnconsumed);
-        } else if (mEnableLoadmore && !mLoadmoreFinished && dy < 0 && mTotalUnconsumed < 0) {
-            if (dy < mTotalUnconsumed) {
-                consumed[1] = dy - (int) mTotalUnconsumed;
-                mTotalUnconsumed = 0;
-            } else {
-                mTotalUnconsumed -= dy;
-                consumed[1] = dy;
-            }
-            moveSpinnerInfinitely((int)mTotalUnconsumed);
         }
 
         // If a client layout is using a custom start position for the circle
@@ -1152,19 +1180,21 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         // nested scrolling parent has stopped handling events. We do that by using the
         // 'offset in window 'functionality to see if we have been moved from the event.
         // This is a decent indication of whether we should take over the event stream or not.
-        final int dy = dyUnconsumed + mParentOffsetInWindow[1];
-        if (mEnableRefresh && dy < 0 && (mRefreshContent == null || !mRefreshContent.canScrollUp())) {
-            if (mState == RefreshState.None) {
-                setStatePullDownToRefresh();
+        if (mState != RefreshState.Loading && mState != RefreshState.Refreshing) {
+            final int dy = dyUnconsumed + mParentOffsetInWindow[1];
+            if (mEnableRefresh && dy < 0 && (mRefreshContent == null || !mRefreshContent.canScrollUp())) {
+                if (mState == RefreshState.None) {
+                    setStatePullDownToRefresh();
+                }
+                mTotalUnconsumed += Math.abs(dy);
+                moveSpinnerInfinitely(mTotalUnconsumed);
+            } else if (mEnableLoadmore && !mLoadmoreFinished && dy > 0 && (mRefreshContent == null || !mRefreshContent.canScrollDown())) {
+                if (mState == RefreshState.None) {
+                    setStatePullUpToLoad();
+                }
+                mTotalUnconsumed -= Math.abs(dy);
+                moveSpinnerInfinitely(mTotalUnconsumed);
             }
-            mTotalUnconsumed += Math.abs(dy);
-            moveSpinnerInfinitely(mTotalUnconsumed);
-        } else if (mEnableLoadmore && !mLoadmoreFinished && dy > 0 && (mRefreshContent == null || !mRefreshContent.canScrollDown())) {
-            if (mState == RefreshState.None) {
-                setStatePullUpToLoad();
-            }
-            mTotalUnconsumed -= Math.abs(dy);
-            moveSpinnerInfinitely(mTotalUnconsumed);
         }
     }
     //</editor-fold>
