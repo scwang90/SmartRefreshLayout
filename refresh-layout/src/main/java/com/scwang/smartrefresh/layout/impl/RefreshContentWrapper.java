@@ -156,7 +156,7 @@ public class RefreshContentWrapper implements RefreshContent {
     @Override
     public boolean isNestedScrollingChild(MotionEvent e) {
         MotionEvent event = MotionEvent.obtain(e);
-        event.offsetLocation(-mContentView.getLeft(), -mContentView.getTop() - mContentView.getTranslationY());
+        event.offsetLocation(-mContentView.getLeft(), -mContentView.getTop() - mRealContentView.getTranslationY());
         boolean isNested = isNestedScrollingChild(mContentView, event);
         event.recycle();
         return isNested;
