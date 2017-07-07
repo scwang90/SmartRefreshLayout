@@ -30,6 +30,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.scwang.refreshlayout.R;
+import com.scwang.refreshlayout.util.StatusBarUtil;
 import com.scwang.smartrefresh.header.FlyRefreshHeader;
 import com.scwang.smartrefresh.header.flyrefresh.FlyView;
 import com.scwang.smartrefresh.header.flyrefresh.MountanScenceView;
@@ -194,6 +195,13 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+        //状态栏透明和间距处理
+        StatusBarUtil.immersive(this);
+        StatusBarUtil.setPaddingSmart(this, toolbar);
+//        StatusBarUtil.setPaddingSmart(this, findViewById(R.id.profile));
+//        StatusBarUtil.setPaddingSmart(this, findViewById(R.id.blurview));
     }
 
     private void updateTheme() {

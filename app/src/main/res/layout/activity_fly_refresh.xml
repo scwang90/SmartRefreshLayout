@@ -21,7 +21,6 @@
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_bar_height"
-        android:fitsSystemWindows="true"
         android:clipChildren="false"
         android:background="@android:color/transparent"
         android:theme="@style/AppTheme.AppBarOverlay">
@@ -53,6 +52,7 @@
         app:srlHeaderMaxDragRate="1.5"
         app:srlHeaderHeight="100dp"
         app:srlReboundDuration="200"
+        app:srlEnableLoadmore="false"
         app:srlEnablePreviewInEditMode="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
         <com.scwang.smartrefresh.header.FlyRefreshHeader
