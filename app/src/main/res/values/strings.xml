@@ -95,7 +95,7 @@
     <!-- Strings related to Settings -->
 
     <string name="title_activity_fly_refresh">FlyRefresh</string>
-    <string name="title_activity_index_main">首页</string>
+    <string name="title_activity_index_main">SmartRefresh</string>
     <string name="title_style">风格</string>
     <string name="title_using">使用</string>
     <string name="title_practice">实战</string>

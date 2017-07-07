@@ -15,7 +15,7 @@ import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
  */
 public class AssignXmlUsingActivity extends AppCompatActivity {
 
-        private static boolean isFirstEnter = true;
+    private static boolean isFirstEnter = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

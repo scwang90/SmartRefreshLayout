@@ -228,11 +228,11 @@ public class RefreshContentWrapper implements RefreshContent {
         } else if (Build.VERSION.SDK_INT >= 23 && mScrollableView != null) {
             mScrollableView.setOnScrollChangeListener(new Api23ViewScrollComponent(kernel, interpolator, updateListener));
         }
-//        if (Build.VERSION.SDK_INT >= 21
-//                && mScrollableView != null
-//                && !(mScrollableView instanceof NestedScrollingChild)) {
-//            mScrollableView.setNestedScrollingEnabled(true);
-//        }
+        if (Build.VERSION.SDK_INT >= 21
+                && mScrollableView != null
+                && !(mScrollableView instanceof NestedScrollingChild)) {
+            mScrollableView.setNestedScrollingEnabled(true);
+        }
         if (fixedHeader != null || fixedFooter != null) {
             mFixedHeader = fixedHeader;
             mFixedFooter = fixedFooter;
@@ -243,6 +243,7 @@ public class RefreshContentWrapper implements RefreshContent {
             kernel.getRefreshLayout().getLayout().addView(frameLayout, layoutParams);
             mContentView = frameLayout;
             if (fixedHeader != null) {
+                fixedHeader.setClickable(true);
                 ViewGroup.LayoutParams lp = fixedHeader.getLayoutParams();
                 ViewGroup parent = (ViewGroup) fixedHeader.getParent();
                 int index = parent.indexOfChild(fixedHeader);
@@ -252,6 +253,7 @@ public class RefreshContentWrapper implements RefreshContent {
                 frameLayout.addView(fixedHeader);
             }
             if (fixedFooter != null) {
+                fixedFooter.setClickable(true);
                 ViewGroup.LayoutParams lp = fixedFooter.getLayoutParams();
                 ViewGroup parent = (ViewGroup) fixedFooter.getParent();
                 int index = parent.indexOfChild(fixedFooter);
@@ -302,8 +304,8 @@ public class RefreshContentWrapper implements RefreshContent {
             ViewGroup viewGroup = (ViewGroup) targetView;
             final int childCount = viewGroup.getChildCount();
             PointF point = new PointF();
-            for (int i = 0; i < childCount; i++) {
-                View child = viewGroup.getChildAt(i);
+            for (int i = childCount; i > 0; i--) {
+                View child = viewGroup.getChildAt(i - 1);
                 if (isTransformedTouchPointInView(viewGroup,child, event.getX(), event.getY() , point)) {
                     event = MotionEvent.obtain(event);
                     event.offsetLocation(point.x, point.y);
@@ -315,8 +317,12 @@ public class RefreshContentWrapper implements RefreshContent {
     }
 
     private static boolean pointInView(View view, float localX, float localY, float slop) {
-        return localX >= -slop && localY >= -slop && localX < ((view.getWidth()) + slop) &&
-                localY < ((view.getHeight()) + slop);
+        final float left = /*Math.max(view.getPaddingLeft(), 0)*/ - slop;
+        final float top = /*Math.max(view.getPaddingTop(), 0)*/ - slop;
+        final float width = view.getWidth()/* - Math.max(view.getPaddingLeft(), 0) - Math.max(view.getPaddingRight(), 0)*/;
+        final float height = view.getHeight()/* - Math.max(view.getPaddingTop(), 0) - Math.max(view.getPaddingBottom(), 0)*/;
+        return localX >= left && localY >= top && localX < ((width) + slop) &&
+                localY < ((height) + slop);
     }
 
     private static boolean canScrollUp(View targetView) {

@@ -26,7 +26,7 @@ public class ListenerUsingActivity extends AppCompatActivity {
 
     private static DateFormat FORMAT = new SimpleDateFormat("HH:mm sss", Locale.CHINA);
 
-        private TextView mTvContent;
+    private TextView mTvContent;
     private static boolean isFirstEnter = true;
     private String mHeaderPulling;
     private String mHeaderReleasing;

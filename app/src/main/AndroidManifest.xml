@@ -17,7 +17,6 @@
             android:label="@string/title_activity_index_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -27,8 +26,8 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.TranslucentStatus" />
         <activity
-            android:name=".activity.SelectRegionActivity"
-            android:screenOrientation="portrait" />
+            android:name=".activity.using.NestLayoutUsingActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.style.WaveSwipStyleActivity"
             android:label="@string/title_activity_style_wave_swip"
