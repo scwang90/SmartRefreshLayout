@@ -734,6 +734,16 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     }
 
     @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        if (mState == RefreshState.Refreshing || mState == RefreshState.Loading) {
+            if (mRefreshContent != null && !mRefreshContent.isNestedScrollingChild(ev)) {
+                return true;
+            }
+        }
+        return super.onInterceptTouchEvent(ev);
+    }
+
+    @Override
     public boolean onTouchEvent(MotionEvent e) {
         if (mState == RefreshState.Refreshing || mState == RefreshState.Loading) {
             final int action = MotionEventCompat.getActionMasked(e);

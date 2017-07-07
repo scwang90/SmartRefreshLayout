@@ -154,6 +154,36 @@ public class RefreshContentWrapper implements RefreshContent {
     }
 
     @Override
+    public boolean isNestedScrollingChild(MotionEvent e) {
+        MotionEvent event = MotionEvent.obtain(e);
+        event.offsetLocation(-mContentView.getLeft(), -mContentView.getTop() - mContentView.getTranslationY());
+        boolean isNested = isNestedScrollingChild(mContentView, event);
+        event.recycle();
+        return isNested;
+    }
+
+    private boolean isNestedScrollingChild(View targetView, MotionEvent event) {
+        if (targetView instanceof NestedScrollingChild
+                || (Build.VERSION.SDK_INT >= 21 && targetView.isNestedScrollingEnabled())) {
+            return true;
+        }
+        if (targetView instanceof ViewGroup && event != null) {
+            ViewGroup viewGroup = (ViewGroup) targetView;
+            final int childCount = viewGroup.getChildCount();
+            PointF point = new PointF();
+            for (int i = childCount; i > 0; i--) {
+                View child = viewGroup.getChildAt(i - 1);
+                if (isTransformedTouchPointInView(viewGroup,child, event.getX(), event.getY() , point)) {
+                    event = MotionEvent.obtain(event);
+                    event.offsetLocation(point.x, point.y);
+                    return isNestedScrollingChild(child, event);
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
     public void moveSpinner(int spinner) {
         mRealContentView.setTranslationY(spinner);
         if (mFixedHeader != null) {

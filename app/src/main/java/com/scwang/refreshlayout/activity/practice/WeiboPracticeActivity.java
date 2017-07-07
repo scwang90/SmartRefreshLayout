@@ -15,7 +15,7 @@ import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 /**
- * 个人中心
+ * 微博列表
  */
 public class WeiboPracticeActivity extends AppCompatActivity {
 

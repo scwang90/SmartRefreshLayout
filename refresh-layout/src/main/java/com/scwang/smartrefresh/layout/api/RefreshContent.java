@@ -31,4 +31,6 @@ public interface RefreshContent {
     void onInitialHeaderAndFooter(int headerHeight, int footerHeight);
 
     AnimatorUpdateListener onLoadingFinish(int footerHeight, Interpolator reboundInterpolator, int reboundDuration);
+
+    boolean isNestedScrollingChild(MotionEvent e);
 }
