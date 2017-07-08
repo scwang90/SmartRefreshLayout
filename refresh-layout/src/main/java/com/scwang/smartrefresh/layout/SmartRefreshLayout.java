@@ -221,11 +221,11 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
 
         mNestedScrollingParentHelper = new NestedScrollingParentHelper(this);
         mNestedScrollingChildHelper = new NestedScrollingChildHelper(this);
-        ViewCompat.setNestedScrollingEnabled(this,true);
 
         DensityUtil density = new DensityUtil();
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.SmartRefreshLayout);
 
+        ViewCompat.setNestedScrollingEnabled(this, ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnableNestedScrolling, true));
         mDragRate = ta.getFloat(R.styleable.SmartRefreshLayout_srlDragRate, mDragRate);
         mHeaderMaxDragRate = ta.getFloat(R.styleable.SmartRefreshLayout_srlHeaderMaxDragRate, mHeaderMaxDragRate);
         mFooterMaxDragRate = ta.getFloat(R.styleable.SmartRefreshLayout_srlFooterMaxDragRate, mFooterMaxDragRate);
@@ -737,7 +737,17 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         if (mState == RefreshState.Refreshing || mState == RefreshState.Loading) {
-            if (mRefreshContent != null && !mRefreshContent.isNestedScrollingChild(ev)) {
+            if (isNestedScrollingEnabled() && mRefreshContent != null && !mRefreshContent.isNestedScrollingChild(ev)) {
+                return true;
+            }
+            if (mState == RefreshState.Refreshing
+                    && mRefreshHeader != null && mRefreshHeader.getSpinnerStyle() != SpinnerStyle.FixedFront
+                    && mHeaderTranslationY > -mHeaderHeight) {
+                return true;
+            }
+            if (mState == RefreshState.Loading
+                    && mRefreshFooter != null && mRefreshFooter.getSpinnerStyle() != SpinnerStyle.FixedFront
+                    && mFooterTranslationY < mFooterHeight) {
                 return true;
             }
         }
@@ -1155,7 +1165,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     //<editor-fold desc="NestedScrollingParent">
     @Override
     public boolean onStartNestedScroll(View child, View target, int nestedScrollAxes) {
-        boolean accepted = isEnabled() && (nestedScrollAxes & ViewCompat.SCROLL_AXIS_VERTICAL) != 0;
+        boolean accepted = isEnabled() && isNestedScrollingEnabled() && (nestedScrollAxes & ViewCompat.SCROLL_AXIS_VERTICAL) != 0;
         accepted = accepted && (mEnableRefresh||(mEnableLoadmore && !mLoadmoreFinished));
         return accepted;
     }

@@ -56,5 +56,7 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'jp.wasabeef:recyclerview-animators:2.2.6'
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
+    compile 'in.srain.cube:ultra-ptr:1.0.11'
+    compile 'com.github.cpoopc:scrollablelayoutlib:1.0.1' // 目前只发布到jcenter
     testCompile 'junit:junit:4.12'
 }
