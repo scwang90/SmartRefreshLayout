@@ -132,6 +132,11 @@ public interface RefreshLayout {
     RefreshLayout setPrimaryColors(int... colors);
 
     /**
+     * 设置滚动边界
+     */
+    RefreshLayout setRefreshScrollBoundary(RefreshScrollBoundary boundary);
+
+    /**
      * 完成刷新
      */
     RefreshLayout finishRefresh();

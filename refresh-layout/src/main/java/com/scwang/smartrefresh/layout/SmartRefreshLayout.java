@@ -44,6 +44,7 @@ import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayoutHookFooter;
 import com.scwang.smartrefresh.layout.api.RefreshLayoutHookHeader;
+import com.scwang.smartrefresh.layout.api.RefreshScrollBoundary;
 import com.scwang.smartrefresh.layout.constant.DimensionStatus;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
@@ -1324,6 +1325,18 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
             }
         }
     }
+
+    @Override
+    public boolean onNestedPreFling(View target, float velocityX, float velocityY) {
+        return (mState == RefreshState.Refreshing && mHeaderTranslationY > -mHeaderHeight)
+                || (mState == RefreshState.Loading && mFooterTranslationY < mFooterHeight)
+                || dispatchNestedPreFling(velocityX, velocityY);
+    }
+
+    @Override
+    public boolean onNestedFling(View target, float velocityX, float velocityY, boolean consumed) {
+        return dispatchNestedFling(velocityX, velocityY, consumed);
+    }
     //</editor-fold>
 
     //<editor-fold desc="NestedScrollingChild">
@@ -1363,18 +1376,6 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     public boolean dispatchNestedPreScroll(int dx, int dy, int[] consumed, int[] offsetInWindow) {
         return mNestedScrollingChildHelper.dispatchNestedPreScroll(
                 dx, dy, consumed, offsetInWindow);
-    }
-
-    @Override
-    public boolean onNestedPreFling(View target, float velocityX,
-                                    float velocityY) {
-        return dispatchNestedPreFling(velocityX, velocityY);
-    }
-
-    @Override
-    public boolean onNestedFling(View target, float velocityX, float velocityY,
-                                 boolean consumed) {
-        return dispatchNestedFling(velocityX, velocityY, consumed);
     }
 
     @Override
@@ -1667,6 +1668,17 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
             mRefreshFooter.setPrimaryColors(colors);
         }
         mPrimaryColors = colors;
+        return this;
+    }
+
+    /**
+     * 设置滚动边界
+     */
+    @Override
+    public RefreshLayout setRefreshScrollBoundary(RefreshScrollBoundary boundary) {
+        if (mRefreshContent != null) {
+            mRefreshContent.setRefreshScrollBoundary(boundary);
+        }
         return this;
     }
 
