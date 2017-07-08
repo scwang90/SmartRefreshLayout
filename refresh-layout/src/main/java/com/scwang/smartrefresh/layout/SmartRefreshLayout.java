@@ -792,6 +792,10 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                                     int spinner = mSpinner + mHeaderTranslationY;
                                     mOnMultiPurposeListener.onHeaderReleasing(mRefreshHeader, 1f * spinner / mHeaderHeight, spinner, mHeaderHeight, mHeaderExtendHeight);
                                 }
+                                if (mHeaderTranslationY == -mHeaderHeight) {
+                                    e.setAction(MotionEvent.ACTION_DOWN);
+                                    super.dispatchTouchEvent(e);
+                                }
                             }
                         } else {
                             if (mRefreshFooter != null && mRefreshFooter.getSpinnerStyle() != SpinnerStyle.FixedFront) {
@@ -803,6 +807,10 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                                 if (mOnMultiPurposeListener != null) {
                                     int spinner = mSpinner + mFooterTranslationY;
                                     mOnMultiPurposeListener.onFooterReleasing(mRefreshFooter, 1f * spinner / mFooterHeight, spinner, mFooterHeight, mFooterExtendHeight);
+                                }
+                                if (mFooterTranslationY == mFooterHeight) {
+                                    e.setAction(MotionEvent.ACTION_DOWN);
+                                    super.dispatchTouchEvent(e);
                                 }
                             }
                         }
