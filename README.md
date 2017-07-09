@@ -85,6 +85,9 @@
 ```
 compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.1'
 compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.1'//如果使用了特殊的Header
+//快照版本-新功能，可能不稳定
+compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.2-alpha-1'
+compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.2-alpha-1'//如果使用了特殊的Header
 ```
 
 #### 2.在XML布局文件中添加 SmartRefreshLayout
@@ -209,8 +212,12 @@ refreshLayout.setRefreshFooter(new BallPulseFooter(this).setSpinnerStyle(Spinner
 |srlEnableHeaderTranslationContent|boolean|拖动Header的时候是否同时拖动内容（默认true）|
 |srlEnableFooterTranslationContent|boolean|拖动Footer的时候是否同时拖动内容（默认true）|
 |srlEnablePreviewInEditMode|boolean|是否在编辑模式时显示预览效果（默认true）|
+|srlEnablePureScrollMode|boolean|是否开启纯滚动模式|
+|srlEnableNestedScrolling|boolean|是否开启嵌套滚动NestedScrolling|
 |srlDisableContentWhenRefresh|boolean|是否在刷新的时候禁止内容的一切手势操作（默认false）|
 |srlDisableContentWhenLoading|boolean|是否在加载的时候禁止内容的一切手势操作（默认false）|
+|srlFixedHeaderViewId|id|指定固定的视图Id|
+|srlFixedFooterViewId|id|指定固定的视图Id|
 
 ## 方法 Method
 
@@ -239,6 +246,7 @@ refreshLayout.setRefreshFooter(new BallPulseFooter(this).setSpinnerStyle(Spinner
 |setOnRefreshLoadmoreListener|OnRefreshLoadmoreListener|同时设置上面两个监听器|
 |setOnMultiPurposeListener|OnMultiPurposeListener|设置多功能监听器|
 |setLoadmoreFinished|boolean|设置全部数据加载完成，之后不会触发加载事件|
+|setRefreshScrollBoundary|boundary|设置滚动边界判断|
 |finishRefresh|(int delayed)|完成刷新，结束刷新动画|
 |finishLoadmore|(int delayed)|完成加载，结束加载动画|
 |getRefreshHeader|RefreshHeader|获取Header|
