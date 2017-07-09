@@ -33,6 +33,8 @@ import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 
 public class ClassicsStyleActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
+    private BaseRecyclerAdapter<Item> mAdpater;
+
     private enum Item {
         尺寸拉伸("下拉的时候Header的高度跟随变大"),
         位置平移("下拉的时候Header的位置向下偏移"),
@@ -84,7 +86,7 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.addItemDecoration(new DividerItemDecoration(this, VERTICAL));
             recyclerView.setItemAnimator(new DefaultItemAnimator());
-            recyclerView.setAdapter(new BaseRecyclerAdapter<Item>(Arrays.asList(Item.values()), simple_list_item_2,this) {
+            recyclerView.setAdapter(mAdpater = new BaseRecyclerAdapter<Item>(Arrays.asList(Item.values()), simple_list_item_2,this) {
                 @Override
                 protected void onBindViewHolder(SmartViewHolder holder, Item model, int position) {
                     holder.text(android.R.id.text1, model.name());
@@ -110,6 +112,30 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
                 }
             });
         }
+
+//        mRefreshLayout.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
+//            @Override
+//            public void onRefresh(RefreshLayout refreshlayout) {
+//                refreshlayout.getLayout().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        mRefreshLayout.finishRefresh();
+//                        mAdpater.refresh(Arrays.asList(Item.values()));
+//                    }
+//                },2000);
+//            }
+//
+//            @Override
+//            public void onLoadmore(RefreshLayout refreshlayout) {
+//                refreshlayout.getLayout().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        mRefreshLayout.finishLoadmore();
+//                        mAdpater.loadmore(Arrays.asList(Item.values()));
+//                    }
+//                },2000);
+//            }
+//        });
     }
 
     @Override

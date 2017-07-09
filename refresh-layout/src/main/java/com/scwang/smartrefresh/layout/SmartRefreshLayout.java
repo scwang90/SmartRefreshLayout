@@ -1762,7 +1762,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                     mOnMultiPurposeListener.onFooterFinish(mRefreshFooter);
                 }
                 if (mSpinner == 0) {
-                    resetStatus();
+                    postDelayed(this::resetStatus, 500);
                 } else {
                     ValueAnimator valueAnimator = animSpinner(0, startDelay);
                     if (updateListener != null && valueAnimator != null) {
