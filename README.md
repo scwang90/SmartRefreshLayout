@@ -28,6 +28,7 @@
 ## 传送门
 
  - [智能之处](art/md_smart.md)
+ - [多点触摸](art/md_demo_multitouch.md)
  - [更新日志](art/md_update.md)
  - [博客文章](https://segmentfault.com/a/1190000010066071) 
  
