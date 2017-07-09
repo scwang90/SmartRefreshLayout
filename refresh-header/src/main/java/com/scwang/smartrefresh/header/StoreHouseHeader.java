@@ -363,11 +363,12 @@ public class StoreHouseHeader extends View implements RefreshHeader {
     }
 
     @Override
-    public void onFinish(RefreshLayout layout) {
+    public int onFinish(RefreshLayout layout) {
         loadFinish();
         for (int i = 0; i < mItemList.size(); i++) {
             mItemList.get(i).resetPosition(mHorizontalRandomness);
         }
+        return 0;
     }
 
     @Override

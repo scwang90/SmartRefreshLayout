@@ -1,9 +1,6 @@
 package com.scwang.smartrefresh.header;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
-import android.support.annotation.RequiresApi;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -13,6 +10,7 @@ import android.graphics.RectF;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
@@ -23,7 +21,6 @@ import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
-import com.scwang.smartrefresh.layout.impl.RefreshLayoutHeaderHooker;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 /**
@@ -34,6 +31,8 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
 public class CircleHeader extends View implements RefreshHeader {
 
     //<editor-fold desc="Field">
+
+    private static final int DURATION_FINISH = 800; //动画时长
 
     private Path mPath;
     private Paint mBackPaint;
@@ -251,27 +250,6 @@ public class CircleHeader extends View implements RefreshHeader {
 
     @Override
     public void onInitialized(RefreshKernel kernel, int height, int extendHeight) {
-        kernel.registHeaderHook(new RefreshLayoutHeaderHooker() {
-            @Override
-            public void onHookFinishRefresh(SuperMethod supper, RefreshLayout layout) {
-                mShowOuter = false;
-                mShowBoll = false;
-                ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
-                animator.addUpdateListener(animation -> {
-                    mFinishRatio = (float) animation.getAnimatedValue();
-                    invalidate();
-                });
-                animator.setInterpolator(new AccelerateInterpolator());
-                animator.setDuration(800);
-                animator.addListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        supper.invoke(0);
-                    }
-                });
-                animator.start();
-            }
-        });
     }
 
     @Override
@@ -355,8 +333,18 @@ public class CircleHeader extends View implements RefreshHeader {
     }
 
     @Override
-    public void onFinish(RefreshLayout layout) {
-
+    public int onFinish(RefreshLayout layout) {
+        mShowOuter = false;
+        mShowBoll = false;
+        ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
+        animator.addUpdateListener(animation -> {
+            mFinishRatio = (float) animation.getAnimatedValue();
+            invalidate();
+        });
+        animator.setInterpolator(new AccelerateInterpolator());
+        animator.setDuration(DURATION_FINISH);
+        animator.start();
+        return DURATION_FINISH;
     }
 
     @Override

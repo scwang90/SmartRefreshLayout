@@ -17,7 +17,6 @@ import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
-import com.scwang.smartrefresh.layout.impl.RefreshLayoutHeaderHooker;
 
 import static android.view.MotionEvent.ACTION_MASK;
 
@@ -32,8 +31,8 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
     protected int mOffset;
     protected int mHeaderHeight;
     protected RefreshState mState;
+    protected boolean mIsFinish;
     protected boolean mManualOperation;
-    protected Runnable mManualOperationListener;
     protected float mTouchY;
     protected RefreshKernel mRefreshKernel;
     protected RefreshContent mRefreshContent;
@@ -92,9 +91,11 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
                     break;
                 case MotionEvent.ACTION_UP:
                 case MotionEvent.ACTION_CANCEL:
-                    mTouchY = 0;
-                    mRefreshKernel.moveSpinner(mHeaderHeight, true);
                     onManualOperationRelease();
+                    mTouchY = -1;
+                    if (mIsFinish) {
+                        mRefreshKernel.moveSpinner(mHeaderHeight, true);
+                    }
                     break;
             }
             return true;
@@ -114,11 +115,13 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
     //<editor-fold desc="abstract">
     boolean enableLoadmore;
     protected void onManualOperationStart() {
-        mManualOperation = true;
-        mRefreshContent = mRefreshKernel.getRefreshContent();
-        mRefreshContent.getView().offsetTopAndBottom(mHeaderHeight);
-        enableLoadmore = mRefreshKernel.getRefreshLayout().isEnableLoadmore();
-        mRefreshKernel.getRefreshLayout().setEnableLoadmore(false);
+        if (!mManualOperation) {
+            mManualOperation = true;
+            mRefreshContent = mRefreshKernel.getRefreshContent();
+            mRefreshContent.getView().offsetTopAndBottom(mHeaderHeight);
+            enableLoadmore = mRefreshKernel.getRefreshLayout().isEnableLoadmore();
+            mRefreshKernel.getRefreshLayout().setEnableLoadmore(false);
+        }
     }
 
     protected void onManualOperationMove(float percent, int offset, int headHeight, int extendHeight) {
@@ -126,11 +129,17 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
     }
 
     protected void onManualOperationRelease() {
-        mManualOperation = false;
-        mRefreshContent.getView().offsetTopAndBottom(-mHeaderHeight);
-        mRefreshKernel.getRefreshLayout().setEnableLoadmore(enableLoadmore);
-        if (mManualOperationListener != null) {
-            mManualOperationListener.run();
+        if (mIsFinish) {
+            mManualOperation = false;
+            mRefreshKernel.getRefreshLayout().setEnableLoadmore(enableLoadmore);
+            mRefreshContent.getView().offsetTopAndBottom(-mHeaderHeight);
+            if (mTouchY != -1) {//还没松手
+                mRefreshKernel.getRefreshLayout().finishRefresh(0);
+            } else {
+                mRefreshKernel.moveSpinner(mHeaderHeight, true);
+            }
+        } else {
+            mRefreshKernel.moveSpinner(0, true);
         }
     }
     //</editor-fold>
@@ -152,7 +161,7 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
 
     @Override
     public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
-
+        mIsFinish = false;
     }
 
     @Override
@@ -165,23 +174,22 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
         mRefreshKernel = kernel;
         mHeaderHeight = height;
         setTranslationY(mOffset - mHeaderHeight);
-        kernel.registHeaderHook(new RefreshLayoutHeaderHooker() {
-            @Override
-            public void onHookFinishRefresh(SuperMethod supper, RefreshLayout layout) {
-                if (mManualOperation) {
-                    mManualOperationListener = supper::invoke;
-                    onFinish(layout);
-                } else {
-                    mManualOperationListener = null;
-                    supper.invoke();
-                }
-            }
-        });
     }
 
     @Override
-    public void onFinish(RefreshLayout layout) {
-
+    public int onFinish(RefreshLayout layout) {
+        if (!mIsFinish) {
+            mIsFinish = true;
+            if (mManualOperation) {
+                if (mTouchY == -1) {//已经放手
+                    onManualOperationRelease();
+                    onFinish(layout);
+                    return 0;
+                }
+                return Integer.MAX_VALUE;
+            }
+        }
+        return 0;
     }
 
     @Override

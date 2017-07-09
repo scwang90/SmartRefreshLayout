@@ -230,7 +230,8 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override
-    public void onFinish(RefreshLayout layout) {
+    public int onFinish(RefreshLayout layout) {
+        return 0;
     }
 
     @Override

@@ -226,9 +226,10 @@ public class PhoenixHeader extends View implements RefreshHeader/*, SizeDefiniti
     }
 
     @Override
-    public void onFinish(RefreshLayout layout) {
+    public int onFinish(RefreshLayout layout) {
         isRefreshing = false;
         clearAnimation();
+        return 0;
     }
 
     @Override

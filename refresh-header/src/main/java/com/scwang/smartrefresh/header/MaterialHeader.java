@@ -278,10 +278,11 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override
-    public void onFinish(RefreshLayout layout) {
+    public int onFinish(RefreshLayout layout) {
         mProgress.stop();
         mCircleView.animate().scaleX(0).scaleY(0);
         mFinished = true;
+        return 0;
     }
 
     @Override

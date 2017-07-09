@@ -232,7 +232,7 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override
-    public void onFinish(RefreshLayout layout) {
+    public int onFinish(RefreshLayout layout) {
         Animation scaleDownAnimation = new Animation() {
             @Override
             public void applyTransformation(float interpolatedTime, Transformation t) {
@@ -251,6 +251,7 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
         });
         mCircleView.clearAnimation();
         mCircleView.startAnimation(scaleDownAnimation);
+        return 0;
     }
 
     @Override

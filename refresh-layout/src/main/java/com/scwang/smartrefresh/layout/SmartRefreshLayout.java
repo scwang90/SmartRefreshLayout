@@ -42,8 +42,6 @@ import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayoutHookFooter;
-import com.scwang.smartrefresh.layout.api.RefreshLayoutHookHeader;
 import com.scwang.smartrefresh.layout.api.RefreshScrollBoundary;
 import com.scwang.smartrefresh.layout.constant.DimensionStatus;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
@@ -128,11 +126,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     protected NestedScrollingParentHelper mNestedScrollingParentHelper;
     //</editor-fold>
 
-    //<editor-fold desc="钩子Hook">
     protected RefreshKernel mKernel;
-    protected RefreshLayoutHookHeader mHeaderHook;
-    protected RefreshLayoutHookFooter mFooterHook;
-    //</editor-fold>
 
     //<editor-fold desc="内部视图">
     /**
@@ -928,37 +922,6 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
      */
     protected void resetStatus() {
         if (mState != RefreshState.None) {
-            if (mState == RefreshState.Refreshing && mRefreshHeader != null) {
-                if (mHeaderTranslationY != 0) {
-                    mRefreshHeader.getView().setTranslationY(0);
-                    moveSpinner(mSpinner + mHeaderTranslationY, true);
-                    mHeaderTranslationY = 0;
-                }
-                notifyStateChanged(RefreshState.RefreshFinish);
-                mRefreshHeader.onFinish(this);
-                if (mOnMultiPurposeListener != null) {
-                    mOnMultiPurposeListener.onHeaderFinish(mRefreshHeader);
-                }
-            } else if (mState == RefreshState.Loading && mRefreshFooter != null) {
-                if (mFooterTranslationY != 0) {
-                    mRefreshFooter.getView().setTranslationY(0);
-                    moveSpinner(mSpinner + mFooterTranslationY, true);
-                    mFooterTranslationY = 0;
-                }
-                notifyStateChanged(RefreshState.LoadingFinish);
-                AnimatorUpdateListener updateListener = mRefreshContent.onLoadingFinish(mFooterHeight, mReboundInterpolator, mReboundDuration);
-                mRefreshFooter.onFinish(this);
-                if (mOnMultiPurposeListener != null) {
-                    mOnMultiPurposeListener.onFooterFinish(mRefreshFooter);
-                }
-                if (mSpinner != 0 && updateListener != null) {
-                    ValueAnimator valueAnimator = animSpinner(0);
-                    if (valueAnimator != null) {
-                        valueAnimator.addUpdateListener(updateListener);
-                    }
-                    return;
-                }
-            }
             if (mSpinner == 0) {
                 notifyStateChanged(RefreshState.None);
             }
@@ -989,10 +952,13 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     //</editor-fold>
 
     protected ValueAnimator animSpinner(int endSpinner) {
-        return animSpinner(endSpinner, mReboundInterpolator);
+        return animSpinner(endSpinner, 0);
+    }
+    protected ValueAnimator animSpinner(int endSpinner, int startDelay) {
+        return animSpinner(endSpinner, startDelay, mReboundInterpolator);
     }
 
-    protected ValueAnimator animSpinner(int endSpinner, Interpolator interpolator) {
+    protected ValueAnimator animSpinner(int endSpinner, int startDelay, Interpolator interpolator) {
         if (mSpinner != endSpinner) {
             if (reboundAnimator != null) {
                 reboundAnimator.cancel();
@@ -1002,6 +968,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
             reboundAnimator.setInterpolator(interpolator);
             reboundAnimator.addUpdateListener(reboundUpdateListener);
             reboundAnimator.addListener(reboundAnimatorEndListener);
+            reboundAnimator.setStartDelay(startDelay);
             reboundAnimator.start();
         }
         return reboundAnimator;
@@ -1362,7 +1329,10 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
 
     @Override
     public boolean onNestedPreFling(View target, float velocityX, float velocityY) {
-        return (mState == RefreshState.Refreshing && mHeaderTranslationY > -mHeaderHeight)
+        return reboundAnimator != null
+                || mState == RefreshState.PullDownToRefresh || mState == RefreshState.PullToUpLoad
+                || mState == RefreshState.ReleaseToRefresh || mState == RefreshState.ReleaseToLoad
+                || (mState == RefreshState.Refreshing && mHeaderTranslationY > -mHeaderHeight)
                 || (mState == RefreshState.Loading && mFooterTranslationY < mFooterHeight)
                 || dispatchNestedPreFling(velocityX, velocityY);
     }
@@ -1747,10 +1717,25 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     @Override
     public SmartRefreshLayout finishRefresh(int delayed){
         postDelayed(() -> {
-            if (mHeaderHook != null) {
-                mHeaderHook.onHookFinishRefresh(args -> resetStatus(), this);
-            } else {
-                resetStatus();
+            if (mState == RefreshState.Refreshing && mRefreshHeader != null) {
+                int startDelay = mRefreshHeader.onFinish(this);
+                if (startDelay == Integer.MAX_VALUE) {
+                    return;
+                }
+                if (mHeaderTranslationY != 0) {
+                    mRefreshHeader.getView().setTranslationY(0);
+                    moveSpinner(mSpinner + mHeaderTranslationY, true);
+                    mHeaderTranslationY = 0;
+                }
+                notifyStateChanged(RefreshState.RefreshFinish);
+                if (mOnMultiPurposeListener != null) {
+                    mOnMultiPurposeListener.onHeaderFinish(mRefreshHeader);
+                }
+                if (mSpinner == 0) {
+                    resetStatus();
+                } else {
+                    animSpinner(0, startDelay);
+                }
             }
         }, delayed);
         return this;
@@ -1759,12 +1744,31 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
      * 完成加载
      */
     @Override
-    public SmartRefreshLayout finishLoadmore(int delayed){
+    public SmartRefreshLayout finishLoadmore(int delayed) {
         postDelayed(() -> {
-            if (mFooterHook != null) {
-                mFooterHook.onHookFinishLoadmore(args -> resetStatus(), this);
-            } else {
-                resetStatus();
+            if (mState == RefreshState.Loading && mRefreshFooter != null) {
+                int startDelay = mRefreshFooter.onFinish(this);
+                if (startDelay == Integer.MAX_VALUE) {
+                    return;
+                }
+                if (mFooterTranslationY != 0) {
+                    mRefreshFooter.getView().setTranslationY(0);
+                    moveSpinner(mSpinner + mFooterTranslationY, true);
+                    mFooterTranslationY = 0;
+                }
+                notifyStateChanged(RefreshState.LoadingFinish);
+                AnimatorUpdateListener updateListener = mRefreshContent.onLoadingFinish(mFooterHeight, mReboundInterpolator, mReboundDuration);
+                if (mOnMultiPurposeListener != null) {
+                    mOnMultiPurposeListener.onFooterFinish(mRefreshFooter);
+                }
+                if (mSpinner == 0) {
+                    resetStatus();
+                } else {
+                    ValueAnimator valueAnimator = animSpinner(0, startDelay);
+                    if (updateListener != null && valueAnimator != null) {
+                        valueAnimator.addUpdateListener(updateListener);
+                    }
+                }
             }
         }, delayed);
         return this;
@@ -1944,34 +1948,6 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         public RefreshContent getRefreshContent() {
             return SmartRefreshLayout.this.mRefreshContent;
         }
-
-        //<editor-fold desc="注册钩子 Hook">
-        /**
-         * 注册 HeaderHook 钩子
-         */
-        @Override
-        public RefreshKernelImpl registHeaderHook(RefreshLayoutHookHeader hook) {
-            if (mHeaderHook == null || mHeaderHook.isAgreeDisplace(hook)) {
-                mHeaderHook = hook;
-            } else if (hook != null) {
-                hook.onRefuseDisplace(mHeaderHook);
-            }
-            return this;
-        }
-
-        /**
-         * 注册 FooterHook 钩子
-         */
-        @Override
-        public RefreshKernelImpl registFooterHook(RefreshLayoutHookFooter hook) {
-            if (mFooterHook == null || mFooterHook.isAgreeDisplace(hook)) {
-                mFooterHook = hook;
-            } else if (hook != null) {
-                hook.onRefuseDisplace(mFooterHook);
-            }
-            return this;
-        }
-        //</editor-fold>
 
         //<editor-fold desc="状态更改 state changes">
         public RefreshKernel setStatePullUpToLoad() {

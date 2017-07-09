@@ -242,7 +242,8 @@ public class DeliveryHeader extends View implements RefreshHeader {
     }
 
     @Override
-    public void onFinish(RefreshLayout layout) {
+    public int onFinish(RefreshLayout layout) {
+        return 0;
     }
     //</editor-fold>
 }

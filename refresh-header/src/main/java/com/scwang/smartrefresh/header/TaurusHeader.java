@@ -169,10 +169,11 @@ public class TaurusHeader extends View implements RefreshHeader/*, SizeDefinitio
     }
 
     @Override
-    public void onFinish(RefreshLayout layout) {
+    public int onFinish(RefreshLayout layout) {
         isRefreshing = false;
         mEndOfRefreshing = true;
         clearAnimation();
+        return 0;
     }
 
     @Override

@@ -29,9 +29,9 @@ public class RefreshFooterWrapper implements RefreshFooter {
     }
 
     @Override
-    public void onFinish(RefreshLayout layout) {
-
-    }
+    public int onFinish(RefreshLayout layout) {
+		return 0;
+	}
 
     @Override
     public void setPrimaryColors(int... colors) {

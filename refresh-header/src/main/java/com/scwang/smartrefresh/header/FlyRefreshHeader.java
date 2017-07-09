@@ -21,7 +21,6 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.FalsifyHeader;
-import com.scwang.smartrefresh.layout.impl.RefreshLayoutHeaderHooker;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 /**
@@ -163,16 +162,14 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
     public void onInitialized(RefreshKernel kernel, int height, int extendHeight) {
         mRefreshKernel = kernel;
         mRefreshLayout = kernel.getRefreshLayout();
-        mRefreshKernel.registHeaderHook(new RefreshLayoutHeaderHooker() {
-            @Override
-            public void onHookFinishRefresh(SuperMethod supper, RefreshLayout layout) {
-                if (mIsRefreshing) {
-                    finishRefresh(null);
-                } else {
-                    supper.invoke();
-                }
-            }
-        });
+    }
+
+    @Override
+    public int onFinish(RefreshLayout layout) {
+        if (mIsRefreshing) {
+            finishRefresh();
+        }
+        return super.onFinish(layout);
     }
 
     //</editor-fold>

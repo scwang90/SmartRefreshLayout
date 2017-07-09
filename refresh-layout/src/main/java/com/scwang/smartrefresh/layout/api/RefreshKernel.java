@@ -15,11 +15,6 @@ public interface RefreshKernel {
     @NonNull
     RefreshContent getRefreshContent();
 
-    //<editor-fold desc="注册钩子 Hook">
-    RefreshKernel registHeaderHook(RefreshLayoutHookHeader hook);
-    RefreshKernel registFooterHook(RefreshLayoutHookFooter hook);
-    //</editor-fold>
-
     //<editor-fold desc="状态更改 state changes">
     RefreshKernel setStatePullUpToLoad();
     RefreshKernel setStateReleaseToLoad() ;

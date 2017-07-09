@@ -126,9 +126,10 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
     }
 
     @Override
-    public void onFinish(RefreshLayout layout) {
+    public int onFinish(RefreshLayout layout) {
         mProgressDrawable.stop();
         mProgressView.setVisibility(GONE);
+        return 0;
     }
 
     /**

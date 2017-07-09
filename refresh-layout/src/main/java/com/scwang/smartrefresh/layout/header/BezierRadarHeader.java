@@ -191,11 +191,12 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
     }
 
     @Override
-    public void onFinish(RefreshLayout layout) {
+    public int onFinish(RefreshLayout layout) {
         mProgressView.stopAnim();
         mProgressView.animate().scaleX(0f);
         mProgressView.animate().scaleY(0f);
         mRippleView.startReveal();
+        return 0;
     }
 
     @Override

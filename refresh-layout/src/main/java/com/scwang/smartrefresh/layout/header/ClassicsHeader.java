@@ -156,8 +156,9 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     }
 
     @Override
-    public void onFinish(RefreshLayout layout) {
+    public int onFinish(RefreshLayout layout) {
         mProgressDrawable.stop();
+        return 0;
     }
 
     @Override
