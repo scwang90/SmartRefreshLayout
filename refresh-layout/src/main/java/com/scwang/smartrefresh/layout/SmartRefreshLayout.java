@@ -51,8 +51,8 @@ import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
 import com.scwang.smartrefresh.layout.header.BezierRadarHeader;
 import com.scwang.smartrefresh.layout.header.FalsifyHeader;
-import com.scwang.smartrefresh.layout.impl.RefreshFooterWrapper;
 import com.scwang.smartrefresh.layout.impl.RefreshContentWrapper;
+import com.scwang.smartrefresh.layout.impl.RefreshFooterWrapper;
 import com.scwang.smartrefresh.layout.impl.RefreshHeaderWrapper;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnMultiPurposeListener;
@@ -737,18 +737,21 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         if (mState == RefreshState.Refreshing || mState == RefreshState.Loading) {
-            if (isNestedScrollingEnabled() && mRefreshContent != null && !mRefreshContent.isNestedScrollingChild(ev)) {
-                return true;
-            }
-            if (mState == RefreshState.Refreshing
-                    && mRefreshHeader != null && mRefreshHeader.getSpinnerStyle() != SpinnerStyle.FixedFront
-                    && mHeaderTranslationY > -mHeaderHeight) {
-                return true;
-            }
-            if (mState == RefreshState.Loading
-                    && mRefreshFooter != null && mRefreshFooter.getSpinnerStyle() != SpinnerStyle.FixedFront
-                    && mFooterTranslationY < mFooterHeight) {
-                return true;
+            if (isNestedScrollingEnabled()) {
+                if (mRefreshContent != null && !mRefreshContent.isNestedScrollingChild(ev)) {
+                    return true;
+                }
+            } else {
+                if (mState == RefreshState.Refreshing
+                        && mRefreshHeader != null && mRefreshHeader.getSpinnerStyle() != SpinnerStyle.FixedFront
+                        && mHeaderTranslationY > -mHeaderHeight) {
+                    return true;
+                }
+                if (mState == RefreshState.Loading
+                        && mRefreshFooter != null && mRefreshFooter.getSpinnerStyle() != SpinnerStyle.FixedFront
+                        && mFooterTranslationY < mFooterHeight) {
+                    return true;
+                }
             }
         }
         return super.onInterceptTouchEvent(ev);
@@ -985,17 +988,30 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     protected AnimatorUpdateListener reboundUpdateListener = animation -> moveSpinner((int) animation.getAnimatedValue(), true);
     //</editor-fold>
 
-    protected ValueAnimator animSpinner(int endValue) {
-        return animSpinner(endValue, mReboundInterpolator);
+    protected ValueAnimator animSpinner(int endSpinner) {
+        return animSpinner(endSpinner, mReboundInterpolator);
     }
-    protected ValueAnimator animSpinner(int endValue, Interpolator interpolator) {
-        if (mSpinner != endValue) {
+
+    protected ValueAnimator animSpinner(int endSpinner, Interpolator interpolator) {
+        if (mSpinner != endSpinner) {
             if (reboundAnimator != null) {
                 reboundAnimator.cancel();
             }
-            reboundAnimator = ValueAnimator.ofInt(mSpinner, endValue);
+            reboundAnimator = ValueAnimator.ofInt(mSpinner, endSpinner);
             reboundAnimator.setDuration(mReboundDuration);
             reboundAnimator.setInterpolator(interpolator);
+            reboundAnimator.addUpdateListener(reboundUpdateListener);
+            reboundAnimator.addListener(reboundAnimatorEndListener);
+            reboundAnimator.start();
+        }
+        return reboundAnimator;
+    }
+
+    protected ValueAnimator animSpinnerBounce(int bounceSpinner) {
+        if (mSpinner == 0 && reboundAnimator == null && mEnableOverScrollBounce) {
+            reboundAnimator = ValueAnimator.ofInt(0, bounceSpinner, 0);
+            reboundAnimator.setDuration(500);
+            reboundAnimator.setInterpolator(new DecelerateInterpolator());
             reboundAnimator.addUpdateListener(reboundUpdateListener);
             reboundAnimator.addListener(reboundAnimatorEndListener);
             reboundAnimator.start();
@@ -2009,8 +2025,13 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
             SmartRefreshLayout.this.moveSpinner(spinner, isAnimator);
             return this;
         }
-        public RefreshKernel animSpinner(int endValue)  {
-            SmartRefreshLayout.this.animSpinner(endValue);
+        public RefreshKernel animSpinner(int endSpinner)  {
+            SmartRefreshLayout.this.animSpinner(endSpinner);
+            return this;
+        }
+        @Override
+        public RefreshKernel animSpinnerBounce(int bounceSpinner) {
+            SmartRefreshLayout.this.animSpinnerBounce(bounceSpinner);
             return this;
         }
         //</editor-fold>

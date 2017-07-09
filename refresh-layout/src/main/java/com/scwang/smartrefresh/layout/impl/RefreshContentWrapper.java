@@ -1,9 +1,5 @@
 package com.scwang.smartrefresh.layout.impl;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.TimeInterpolator;
-import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.content.Context;
 import android.database.DataSetObserver;
@@ -27,7 +23,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.MeasureSpec;
 import android.view.ViewGroup;
-import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.webkit.WebView;
 import android.widget.AbsListView;
@@ -253,16 +248,14 @@ public class RefreshContentWrapper implements RefreshContent {
 
     @Override
     public void setupComponent(RefreshKernel kernel, View fixedHeader, View fixedFooter) {
-        TimeInterpolator interpolator = new DecelerateInterpolator();
-        AnimatorUpdateListener updateListener = animation -> kernel.moveSpinner((int) animation.getAnimatedValue(), true);
         if (mScrollableView instanceof RecyclerView) {
-            RecyclerViewScrollComponent component = new RecyclerViewScrollComponent(kernel, interpolator, updateListener);
+            RecyclerViewScrollComponent component = new RecyclerViewScrollComponent(kernel);
             component.attach((RecyclerView) mScrollableView);
         } else if (mScrollableView instanceof AbsListView) {
-            AbsListViewScrollComponent component = new AbsListViewScrollComponent(kernel, interpolator, updateListener);
+            AbsListViewScrollComponent component = new AbsListViewScrollComponent(kernel);
             component.attach(((AbsListView) mScrollableView));
         } else if (Build.VERSION.SDK_INT >= 23 && mScrollableView != null) {
-            mScrollableView.setOnScrollChangeListener(new Api23ViewScrollComponent(kernel, interpolator, updateListener));
+            mScrollableView.setOnScrollChangeListener(new Api23ViewScrollComponent(kernel));
         }
         if (Build.VERSION.SDK_INT >= 21
                 && mScrollableView != null
@@ -347,15 +340,10 @@ public class RefreshContentWrapper implements RefreshContent {
         long lastTimeOld = 0;
         int lastScrollY = 0;
         int lastOldScrollY = 0;
-        ValueAnimator animator;
         RefreshKernel kernel;
-        TimeInterpolator interpolator;
-        AnimatorUpdateListener updateListener;
 
-        Api23ViewScrollComponent(RefreshKernel kernel, TimeInterpolator interpolator, AnimatorUpdateListener updateListener) {
+        Api23ViewScrollComponent(RefreshKernel kernel) {
             this.kernel = kernel;
-            this.interpolator = interpolator;
-            this.updateListener = updateListener;
         }
 
         @Override
@@ -364,7 +352,7 @@ public class RefreshContentWrapper implements RefreshContent {
                 return;
             }
 //            System.out.printf("%d,%d,%d,%d\n", scrollX, scrollY, oldScrollX, oldScrollY);
-            if (scrollY <= 0 && oldScrollY > 0 && animator == null && mMotionEvent == null) {
+            if (scrollY <= 0 && oldScrollY > 0 && mMotionEvent == null) {
                 RefreshLayout layout = kernel.getRefreshLayout();
                 boolean overScroll = layout.isEnableOverScrollBounce()
                         && !layout.isRefreshing()
@@ -373,19 +361,9 @@ public class RefreshContentWrapper implements RefreshContent {
                     //time:16000000 value:160
                     final int velocity = (lastOldScrollY - oldScrollY) * 16000 / (int)((lastTime - lastTimeOld)/1000f);
 //                    System.out.println("ValueAnimator - " + (lastTime - lastTimeOld) + " - " + velocity+"("+(lastOldScrollY - oldScrollY)+")");
-                    animator = ValueAnimator.ofInt(0, Math.min(velocity, mHeaderHeight), 0);
-                    animator.setDuration(500);
-                    animator.addUpdateListener(updateListener);
-                    animator.setInterpolator(interpolator);
-                    animator.addListener(new AnimatorListenerAdapter() {
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            animator = null;
-                        }
-                    });
-                    animator.start();
+                    kernel.animSpinnerBounce(Math.min(velocity, mHeaderHeight));
                 }
-            } else if (animator == null && mMotionEvent == null && oldScrollY < scrollY && !ScrollBoundaryUtil.canScrollDown(mScrollableView)) {
+            } else if (mMotionEvent == null && oldScrollY < scrollY && !ScrollBoundaryUtil.canScrollDown(mScrollableView)) {
                 RefreshLayout layout = kernel.getRefreshLayout();
                 boolean overScroll = layout.isEnableOverScrollBounce()
                         && !layout.isRefreshing()
@@ -393,17 +371,7 @@ public class RefreshContentWrapper implements RefreshContent {
                 if (overScroll) {
                     final int velocity = (lastOldScrollY - oldScrollY) * 16000 / (int)((lastTime - lastTimeOld)/1000f);
 //                    System.out.println("ValueAnimator - " + (lastTime - lastTimeOld) + " - " + velocity+"("+(lastOldScrollY - oldScrollY)+")");
-                    animator = ValueAnimator.ofInt(0, Math.max(velocity, -mFooterHeight), 0);
-                    animator.setDuration(500);
-                    animator.addUpdateListener(updateListener);
-                    animator.setInterpolator(interpolator);
-                    animator.addListener(new AnimatorListenerAdapter() {
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            animator = null;
-                        }
-                    });
-                    animator.start();
+                    kernel.animSpinnerBounce(Math.max(velocity, -mFooterHeight));
                 }
             }
             lastScrollY = scrollY;
@@ -420,14 +388,10 @@ public class RefreshContentWrapper implements RefreshContent {
         int mlastVisiblePosition;
         int mFirstVisiblePosition;
         RefreshKernel kernel;
-        TimeInterpolator interpolator;
-        AnimatorUpdateListener updateListener;
         SparseArray<ItemRecod> recordSp = new SparseArray<>(0);
 
-        AbsListViewScrollComponent(RefreshKernel kernel, TimeInterpolator interpolator, AnimatorUpdateListener updateListener) {
+        AbsListViewScrollComponent(RefreshKernel kernel) {
             this.kernel = kernel;
-            this.interpolator = interpolator;
-            this.updateListener = updateListener;
         }
 
         @Override
@@ -453,11 +417,7 @@ public class RefreshContentWrapper implements RefreshContent {
             if (mFirstVisiblePosition != firstVisiblePosition && lastDy > 0 && overScroll) {
                 mFirstVisiblePosition = firstVisiblePosition;
                 if (adapter != null && firstVisiblePosition == 0) {
-                    ValueAnimator animator = ValueAnimator.ofInt(0, Math.min(lastDy, mHeaderHeight), 0);
-                    animator.setDuration(500);
-                    animator.addUpdateListener(updateListener);
-                    animator.setInterpolator(interpolator);
-                    animator.start();
+                    kernel.animSpinnerBounce(Math.min(lastDy, mHeaderHeight));
                 }
             } else if (layout.isEnableLoadmore() && !layout.isLoadmoreFinished() && layout.isEnableAutoLoadmore()) {
                 if (mlastVisiblePosition != lastVisiblePosition && lastVisiblePosition > 0) {
@@ -470,11 +430,7 @@ public class RefreshContentWrapper implements RefreshContent {
                 if (mlastVisiblePosition != lastVisiblePosition && lastDy < 0 && layout.isEnableLoadmore()) {
                     mlastVisiblePosition = lastVisiblePosition;
                     if (adapter != null && lastVisiblePosition == adapter.getCount() - 1) {
-                        ValueAnimator animator = ValueAnimator.ofInt(0, Math.max(lastDy, -mFooterHeight), 0);
-                        animator.setDuration(500);
-                        animator.addUpdateListener(updateListener);
-                        animator.setInterpolator(interpolator);
-                        animator.start();
+                        kernel.animSpinnerBounce(Math.max(lastDy, -mFooterHeight));
                     }
                 }
             }
@@ -524,13 +480,9 @@ public class RefreshContentWrapper implements RefreshContent {
         int lastDy;
         long lastFlingTime;
         RefreshKernel kernel;
-        TimeInterpolator interpolator;
-        AnimatorUpdateListener updateListener;
 
-        RecyclerViewScrollComponent(RefreshKernel kernel, TimeInterpolator interpolator, AnimatorUpdateListener updateListener) {
+        RecyclerViewScrollComponent(RefreshKernel kernel) {
             this.kernel = kernel;
-            this.interpolator = interpolator;
-            this.updateListener = updateListener;
         }
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -539,11 +491,7 @@ public class RefreshContentWrapper implements RefreshContent {
                 boolean intime = System.currentTimeMillis() - lastFlingTime < 1000;
                 boolean overScroll = layout.isEnableOverScrollBounce() && !layout.isRefreshing() && !layout.isLoading();
                 if (lastDy < -1 && intime && overScroll) {
-                    ValueAnimator animator = ValueAnimator.ofInt(0, Math.min(-lastDy * 2, mHeaderHeight), 0);
-                    animator.setDuration(500);
-                    animator.addUpdateListener(updateListener);
-                    animator.setInterpolator(interpolator);
-                    animator.start();
+                    kernel.animSpinnerBounce(Math.min(-lastDy * 2, mHeaderHeight));
                 } else if (layout.isEnableLoadmore() && !layout.isLoadmoreFinished() && layout.isEnableAutoLoadmore()) {
                     RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
                     if (manager instanceof LinearLayoutManager) {
@@ -554,11 +502,7 @@ public class RefreshContentWrapper implements RefreshContent {
                         }
                     }
                 } else if (lastDy > 1 && intime && overScroll && layout.isEnableLoadmore()) {
-                    ValueAnimator animator = ValueAnimator.ofInt(0, Math.max(-lastDy * 2, -mFooterHeight), 0);
-                    animator.setDuration(500);
-                    animator.addUpdateListener(updateListener);
-                    animator.setInterpolator(interpolator);
-                    animator.start();
+                    kernel.animSpinnerBounce(Math.max(-lastDy * 2, -mFooterHeight));
                 }
                 lastDy = 0;
             }
