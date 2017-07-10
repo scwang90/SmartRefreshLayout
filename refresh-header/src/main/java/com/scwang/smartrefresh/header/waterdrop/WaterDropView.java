@@ -54,8 +54,8 @@ public class WaterDropView extends View {
         mPaint.setColor(Color.GRAY);
         mPaint.setAntiAlias(true);
         mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-        mPaint.setStrokeWidth(STROKE_WIDTH = DensityUtil.dp2px(1));
-        mPaint.setShadowLayer(STROKE_WIDTH, 0, 0, 0xff000000);
+        mPaint.setStrokeWidth(STROKE_WIDTH = DensityUtil.dp2px(0.5f));
+        mPaint.setShadowLayer(STROKE_WIDTH, 0, 0, 0xCC000000);
         setLayerType(LAYER_TYPE_SOFTWARE, null);
 
         int padding = 4 * STROKE_WIDTH;
@@ -116,9 +116,9 @@ public class WaterDropView extends View {
 
     private void makeBezierPath() {
         mPath.reset();
-        mPath.addCircle(bottomCircle.x, bottomCircle.y, bottomCircle.radius, Path.Direction.CCW);
-        if (bottomCircle.radius < topCircle.radius) {
-            mPath.addCircle(topCircle.x, topCircle.y, topCircle.radius, Path.Direction.CCW);
+        mPath.addCircle(topCircle.x, topCircle.y, topCircle.radius, Path.Direction.CCW);
+        if (bottomCircle.y > topCircle.y + DensityUtil.dp2px(1)) {
+            mPath.addCircle(bottomCircle.x, bottomCircle.y, bottomCircle.radius, Path.Direction.CCW);
             //获取两圆的两个切线形成的四个切点
             double angle = getAngle();
             float top_x1 = (float) (topCircle.x - topCircle.radius * Math.cos(angle));
@@ -148,9 +148,8 @@ public class WaterDropView extends View {
                     (bottomCircle.y + top_y2) / 2,
                     top_x2,
                     top_y2);
-
-            mPath.close();
         }
+        mPath.close();
     }
 
     /**

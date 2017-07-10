@@ -24,7 +24,6 @@ import android.support.v4.view.ScrollingView;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -1810,12 +1809,9 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
             if (reboundAnimator != null) {
                 reboundAnimator.cancel();
             }
-            reboundAnimator = ValueAnimator.ofInt(mSpinner, (int) (mHeaderHeight * dragrate));
+            reboundAnimator = new ValueAnimator();
             postDelayed(() -> {
-                if (reboundAnimator == null) {
-                    Log.e("SmartRefreshLayout", "autoLoadmore.reboundAnimator == null");
-                    reboundAnimator = ValueAnimator.ofInt(mSpinner, (int) (mHeaderHeight * dragrate));
-                }
+                reboundAnimator = ValueAnimator.ofInt(mSpinner, (int) (mHeaderHeight * dragrate));
                 reboundAnimator.setDuration(mReboundDuration);
                 reboundAnimator.setInterpolator(new DecelerateInterpolator());
                 reboundAnimator.addUpdateListener(animation -> moveSpinner((int) animation.getAnimatedValue(), false));
@@ -1863,12 +1859,9 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
             if (reboundAnimator != null) {
                 reboundAnimator.cancel();
             }
-            reboundAnimator = ValueAnimator.ofInt(mSpinner, -(int)(mFooterHeight * dragrate));
+            reboundAnimator = new ValueAnimator();
             postDelayed(() -> {
-                if (reboundAnimator == null) {
-                    Log.e("SmartRefreshLayout", "autoLoadmore.reboundAnimator == null");
-                    reboundAnimator = ValueAnimator.ofInt(mSpinner, -(int)(mFooterHeight * dragrate));
-                }
+                reboundAnimator = ValueAnimator.ofInt(mSpinner, -(int)(mFooterHeight * dragrate));
                 reboundAnimator.setDuration(mReboundDuration);
                 reboundAnimator.setInterpolator(new DecelerateInterpolator());
                 reboundAnimator.addUpdateListener(animation -> moveSpinner((int) animation.getAnimatedValue(), false));

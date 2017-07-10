@@ -195,18 +195,20 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
         mProgressView.stopAnim();
         mProgressView.animate().scaleX(0f);
         mProgressView.animate().scaleY(0f);
+        mRippleView.setVisibility(VISIBLE);
         mRippleView.startReveal();
-        return 0;
+        return 400;
     }
 
     @Override
     public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
         switch (newState) {
             case None:
-                break;
-            case PullDownToRefresh:
                 mDotView.setAlpha(1);
                 mDotView.setVisibility(View.VISIBLE);
+                break;
+            case PullDownToRefresh:
+                mRippleView.setVisibility(GONE);
                 mProgressView.setScaleX(0);
                 mProgressView.setScaleY(0);
                 break;

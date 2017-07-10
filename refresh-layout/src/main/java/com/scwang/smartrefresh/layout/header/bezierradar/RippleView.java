@@ -37,7 +37,6 @@ public class RippleView extends View {
     }
 
     public void startReveal() {
-        setVisibility(VISIBLE);
         if (mAnimator == null) {
             int bigRadius = (int) (Math.sqrt(Math.pow(getHeight(), 2) + Math.pow(getWidth(), 2)));
             mAnimator = ValueAnimator.ofInt(0, bigRadius);
@@ -49,7 +48,6 @@ public class RippleView extends View {
             mAnimator.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    setVisibility(GONE);
                 }
             });
         }

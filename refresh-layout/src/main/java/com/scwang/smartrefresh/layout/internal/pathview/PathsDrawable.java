@@ -150,6 +150,7 @@ public class PathsDrawable extends Drawable {
     }
     //</editor-fold>
 
+    //<editor-fold desc="API">
     public int width() {
         return getBounds().width();
     }
@@ -180,6 +181,12 @@ public class PathsDrawable extends Drawable {
                 (int) (bounds.bottom * rate)
         );
     }
+
+    public Paint getPaint() {
+        return mPaint;
+    }
+
+    //</editor-fold>
 
     //<editor-fold desc="CachedBitmap">
 

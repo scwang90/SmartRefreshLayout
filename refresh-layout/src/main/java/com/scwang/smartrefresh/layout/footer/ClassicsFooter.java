@@ -33,6 +33,7 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
     private static final String REFRESH_BOTTOM_PULLUP = "上拉加载更多";
     private static final String REFRESH_BOTTOM_RELEASE = "释放立即加载";
     private static final String REFRESH_BOTTOM_LOADING = "正在加载...";
+    private static final String REFRESH_BOTTOM_FINISH = "加载完成";
 
     private TextView mBottomText;
     private ImageView mProgressView;
@@ -129,7 +130,8 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
     public int onFinish(RefreshLayout layout) {
         mProgressDrawable.stop();
         mProgressView.setVisibility(GONE);
-        return 0;
+        mBottomText.setText(REFRESH_BOTTOM_FINISH);
+        return 500;
     }
 
     /**
@@ -154,7 +156,6 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
                 }
             }
         }
-
     }
 
 
