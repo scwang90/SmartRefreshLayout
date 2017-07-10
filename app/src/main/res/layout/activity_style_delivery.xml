@@ -21,8 +21,6 @@
         android:layout_height="match_parent"
         app:srlDragRate="0.7"
         app:srlHeaderMaxDragRate="1.3"
-        app:srlEnableHeaderTranslationContent="true"
-        app:srlDisableContentWhenRefresh="true"
         app:srlEnableLoadmore="false">
         <com.scwang.smartrefresh.header.DeliveryHeader
             android:layout_width="match_parent"

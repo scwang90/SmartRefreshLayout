@@ -7,6 +7,7 @@
     tools:context="com.scwang.refreshlayout.fragment.RefreshStylesFragment">
 
     <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
+        android:id="@+id/toolbar"
         app:title="@string/fragment_refresh_styles"/>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout

@@ -40,7 +40,7 @@ public class WebviewPracticeActivity extends AppCompatActivity {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                webView.loadUrl("http://github.com");
+                webView.loadUrl("https://github.com/scwang90/SmartRefreshLayout");
             }
         });
         refreshLayout.autoRefresh();

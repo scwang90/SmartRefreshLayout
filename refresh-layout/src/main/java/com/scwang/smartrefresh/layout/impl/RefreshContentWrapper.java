@@ -28,6 +28,7 @@ import android.webkit.WebView;
 import android.widget.AbsListView;
 import android.widget.FrameLayout;
 import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.WrapperListAdapter;
 
@@ -258,7 +259,7 @@ public class RefreshContentWrapper implements RefreshContent {
             mScrollableView.setOnScrollChangeListener(new Api23ViewScrollComponent(kernel));
         }
         if (Build.VERSION.SDK_INT >= 21
-                && mScrollableView != null
+                && mScrollableView instanceof ListView
                 && !(mScrollableView instanceof NestedScrollingChild)) {
             mScrollableView.setNestedScrollingEnabled(true);
         }

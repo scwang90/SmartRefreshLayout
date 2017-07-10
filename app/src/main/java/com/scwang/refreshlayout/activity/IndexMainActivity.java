@@ -17,9 +17,9 @@ import com.scwang.refreshlayout.fragment.RefreshUsingFragment;
 public class IndexMainActivity extends AppCompatActivity implements OnNavigationItemSelectedListener {
 
     private enum TabFragment {
-        about(R.id.navigation_practice,RefreshPractiveFragment.class),
+        practice(R.id.navigation_practice,RefreshPractiveFragment.class),
         styles(R.id.navigation_style,RefreshStylesFragment.class),
-        functions(R.id.navigation_using,RefreshUsingFragment.class)
+        using(R.id.navigation_using,RefreshUsingFragment.class)
         ;
 
         private final int menuId;
