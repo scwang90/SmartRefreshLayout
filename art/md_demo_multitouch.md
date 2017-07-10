@@ -1,5 +1,5 @@
 # 多点触摸
-
+![MinSdk](https://raw.githubusercontent.com/scwang90/SmartRefreshLayout/master/art/svg_minsdkapi.svg)
 多点触摸就是多个手指一起滑动，直接看效果吧~
 
 ![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_demo_multitouch_1.gif) ![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_demo_multitouch_2.gif)
