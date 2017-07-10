@@ -197,7 +197,7 @@ refreshLayout.setRefreshFooter(new BallPulseFooter(this).setSpinnerStyle(Spinner
 ## 赞赏
 
 如果你喜欢 SmartRefreshLayout 的设计，感觉 SmartRefreshLayout 帮助到了你，可以点右上角 "Star" 支持一下 谢谢！ ^_^  
-你也还可以扫描下面的二维码~ 欢迎请作者喝一杯咖啡。
+你也还可以扫描下面的二维码~ 请作者喝一杯咖啡。
 
 ![](art/pay_alipay.jpg) ![](art/pay_wxpay.jpg)
 
