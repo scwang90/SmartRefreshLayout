@@ -1,5 +1,5 @@
 # Android智能下拉刷新框架-SmartRefreshLayout
-![](https://img.shields.io/travis/USER/REPO.svg) [![License](https://img.shields.io/badge/license-Apache%202-green.svg)](https://www.apache.org/licenses/LICENSE-2.0) [![Download](https://api.bintray.com/packages/scwang90/maven/SmartRefreshLayout/images/download.svg) ](https://bintray.com/scwang90/maven/SmartRefreshLayout/_latestVersion) ![MinSdk ](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/png_minsdkapi.png)
+![](https://img.shields.io/travis/scwang90/SmartRefreshLayout.svg) [![License](https://img.shields.io/badge/license-Apache%202-green.svg)](https://www.apache.org/licenses/LICENSE-2.0) [![Download](https://api.bintray.com/packages/scwang90/maven/SmartRefreshLayout/images/download.svg) ](https://bintray.com/scwang90/maven/SmartRefreshLayout/_latestVersion) ![MinSdk ](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/png_minsdkapi.png)
 
 &emsp;&emsp;正如名字所说，这是一个“聪明”或者说“智能”的下拉刷新布局，由于它的“智能”，他不只是如其他的刷新布局所说的支持所有的View，还支持多层嵌套的视图结构。
 
