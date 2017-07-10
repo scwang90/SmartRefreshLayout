@@ -1,5 +1,5 @@
 # Android智能下拉刷新框架-SmartRefreshLayout
-![](https://img.shields.io/travis/scwang90/SmartRefreshLayout/master.svg)
+![](https://img.shields.io/github/scwang90/SmartRefreshLayout/master.svg)
 ![](https://img.shields.io/github/downloads/scwang90/SmartRefreshLayout/total.svg)
 [![License](https://img.shields.io/badge/license-Apache%202-green.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Download](https://api.bintray.com/packages/scwang90/maven/SmartRefreshLayout/images/download.svg) ](https://bintray.com/scwang90/maven/SmartRefreshLayout/_latestVersion) 
