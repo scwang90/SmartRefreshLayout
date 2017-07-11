@@ -55,8 +55,18 @@ public class WebviewPracticeActivity extends AppCompatActivity {
             }
             @Override
             public void onPageCommitVisible(WebView view, String url) {
-                refreshLayout.finishRefresh();
+//                refreshLayout.finishRefresh();
                 view.loadUrl(String.format(Locale.CHINA, "javascript:document.body.style.paddingTop='%fpx'; void 0", DensityUtil.px2dp(webView.getPaddingTop())));
+            }
+        });
+
+        refreshLayout.setEnableLoadmore(true);
+        toolbar.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                refreshLayout.finishRefresh();
+                refreshLayout.finishLoadmore();
+                return false;
             }
         });
 

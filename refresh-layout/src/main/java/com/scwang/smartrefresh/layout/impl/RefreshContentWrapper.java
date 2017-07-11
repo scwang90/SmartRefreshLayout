@@ -36,9 +36,9 @@ import com.scwang.smartrefresh.layout.api.RefreshContent;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshScrollBoundary;
+import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.util.ScrollBoundaryUtil;
 
-import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -316,17 +316,17 @@ public class RefreshContentWrapper implements RefreshContent {
     public AnimatorUpdateListener onLoadingFinish(int footerHeight, Interpolator interpolator, int duration) {
         if (mScrollableView != null) {
             if (mScrollableView instanceof RecyclerView) ((RecyclerView) mScrollableView).smoothScrollBy(0, footerHeight, interpolator);
-            else if (mScrollableView instanceof ScrollView) ((ScrollView) mScrollableView).smoothScrollBy(0, footerHeight);
+//            else if (mScrollableView instanceof ScrollView) ((ScrollView) mScrollableView).smoothScrollBy(0, footerHeight);
             else if (mScrollableView instanceof AbsListView) ((AbsListView) mScrollableView).smoothScrollBy(footerHeight, duration);
             else {
-                try {
-                    Method method = mScrollableView.getClass().getDeclaredMethod("smoothScrollBy", Integer.class, Integer.class);
-                    method.invoke(mScrollableView, 0, footerHeight);
-                } catch (Exception e) {
+//                try {
+//                    Method method = mScrollableView.getClass().getDeclaredMethod("smoothScrollBy", Integer.class, Integer.class);
+//                    method.invoke(mScrollableView, 0, footerHeight);
+//                } catch (Exception e) {
                     int scrollX = mScrollableView.getScrollX();
                     int scrollY = mScrollableView.getScrollY();
-                    return animation -> mScrollableView.scrollTo(scrollX, scrollY + (int) animation.getAnimatedValue());
-                }
+                    return animation -> mScrollableView.scrollTo(scrollX, scrollY + footerHeight + (int) animation.getAnimatedValue());
+//                }
             }
             return null;
         }
@@ -353,23 +353,15 @@ public class RefreshContentWrapper implements RefreshContent {
                 return;
             }
 //            System.out.printf("%d,%d,%d,%d\n", scrollX, scrollY, oldScrollX, oldScrollY);
-            if (scrollY <= 0 && oldScrollY > 0 && mMotionEvent == null) {
-                RefreshLayout layout = kernel.getRefreshLayout();
-                boolean overScroll = layout.isEnableOverScrollBounce()
-                        && !layout.isRefreshing()
-                        && !layout.isLoading();
-                if (overScroll) {
-                    //time:16000000 value:160
-                    final int velocity = (lastOldScrollY - oldScrollY) * 16000 / (int)((lastTime - lastTimeOld)/1000f);
+            RefreshLayout layout = kernel.getRefreshLayout();
+            boolean overScroll = layout.isEnableOverScrollBounce() || layout.isRefreshing() || layout.isLoading();
+            if (scrollY <= 0 && oldScrollY > 0 && mMotionEvent == null && overScroll) {
+                //time:16000000 value:160
+                final int velocity = (lastOldScrollY - oldScrollY) * 16000 / (int)((lastTime - lastTimeOld)/1000f);
 //                    System.out.println("ValueAnimator - " + (lastTime - lastTimeOld) + " - " + velocity+"("+(lastOldScrollY - oldScrollY)+")");
-                    kernel.animSpinnerBounce(Math.min(velocity, mHeaderHeight));
-                }
-            } else if (mMotionEvent == null && oldScrollY < scrollY && !ScrollBoundaryUtil.canScrollDown(mScrollableView)) {
-                RefreshLayout layout = kernel.getRefreshLayout();
-                boolean overScroll = layout.isEnableOverScrollBounce()
-                        && !layout.isRefreshing()
-                        && !layout.isLoading();
-                if (overScroll) {
+                kernel.animSpinnerBounce(Math.min(velocity, mHeaderHeight));
+            } else if (mMotionEvent == null && oldScrollY < scrollY && overScroll) {
+                if (!ScrollBoundaryUtil.canScrollDown(mScrollableView)) {
                     final int velocity = (lastOldScrollY - oldScrollY) * 16000 / (int)((lastTime - lastTimeOld)/1000f);
 //                    System.out.println("ValueAnimator - " + (lastTime - lastTimeOld) + " - " + velocity+"("+(lastOldScrollY - oldScrollY)+")");
                     kernel.animSpinnerBounce(Math.max(velocity, -mFooterHeight));
@@ -411,16 +403,17 @@ public class RefreshContentWrapper implements RefreshContent {
             lasty = scrollY;
             int lastVisiblePosition = absListView.getLastVisiblePosition();
             int firstVisiblePosition = absListView.getFirstVisiblePosition();
-            boolean overScroll = layout.isEnableOverScrollBounce()
-                    && !layout.isRefreshing()
-                    && !layout.isLoading()
+            boolean overScroll = layout.isEnableOverScrollBounce() || layout.isRefreshing() || layout.isLoading()
+//                    && !layout.isRefreshing()
+//                    && !layout.isLoading()
                     && mMotionEvent == null;
             if (mFirstVisiblePosition != firstVisiblePosition && lastDy > 0 && overScroll) {
                 mFirstVisiblePosition = firstVisiblePosition;
                 if (adapter != null && firstVisiblePosition == 0) {
                     kernel.animSpinnerBounce(Math.min(lastDy, mHeaderHeight));
                 }
-            } else if (layout.isEnableLoadmore() && !layout.isLoadmoreFinished() && layout.isEnableAutoLoadmore()) {
+            } else if (layout.isEnableLoadmore() && !layout.isLoadmoreFinished() && layout.isEnableAutoLoadmore()
+                    && layout.getState() == RefreshState.None) {
                 if (mlastVisiblePosition != lastVisiblePosition && lastVisiblePosition > 0) {
                     mlastVisiblePosition = lastVisiblePosition;
                     if (adapter != null && lastVisiblePosition == adapter.getCount() - 1) {
@@ -490,10 +483,11 @@ public class RefreshContentWrapper implements RefreshContent {
             RefreshLayout layout = kernel.getRefreshLayout();
             if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                 boolean intime = System.currentTimeMillis() - lastFlingTime < 1000;
-                boolean overScroll = layout.isEnableOverScrollBounce() && !layout.isRefreshing() && !layout.isLoading();
+                boolean overScroll = layout.isEnableOverScrollBounce() || layout.isRefreshing() || layout.isLoading();
                 if (lastDy < -1 && intime && overScroll) {
                     kernel.animSpinnerBounce(Math.min(-lastDy * 2, mHeaderHeight));
-                } else if (layout.isEnableLoadmore() && !layout.isLoadmoreFinished() && layout.isEnableAutoLoadmore()) {
+                } else if (layout.isEnableLoadmore() && !layout.isLoadmoreFinished() && layout.isEnableAutoLoadmore()
+                        && layout.getState() == RefreshState.None) {
                     RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
                     if (manager instanceof LinearLayoutManager) {
                         LinearLayoutManager linearManager = ((LinearLayoutManager) manager);
