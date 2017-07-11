@@ -63,6 +63,10 @@ public interface RefreshKernel {
      */
     RefreshKernel animSpinnerBounce(int bounceSpinner);
 
+    /**
+     * 获取 Spinner
+     */
+    int getSpinner();
     //</editor-fold>
 
     //<editor-fold desc="绘制背景 Backgound">

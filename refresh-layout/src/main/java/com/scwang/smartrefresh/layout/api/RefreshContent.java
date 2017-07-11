@@ -33,6 +33,6 @@ public interface RefreshContent {
 
     boolean isNestedScrollingChild(MotionEvent e);
 
-    AnimatorUpdateListener onLoadingFinish(RefreshLayout layout, int footerHeight, int startDelay, Interpolator reboundInterpolator, int reboundDuration);
+    AnimatorUpdateListener onLoadingFinish(RefreshKernel layout, int footerHeight, int startDelay, Interpolator reboundInterpolator, int reboundDuration);
 
 }

@@ -1,5 +1,6 @@
 package com.scwang.smartrefresh.layout.impl;
 
+import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.content.Context;
 import android.database.DataSetObserver;
@@ -39,7 +40,6 @@ import com.scwang.smartrefresh.layout.api.RefreshScrollBoundary;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.util.ScrollBoundaryUtil;
 
-import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -314,10 +314,31 @@ public class RefreshContentWrapper implements RefreshContent {
     }
 
     @Override
-    public AnimatorUpdateListener onLoadingFinish(RefreshLayout layout, int footerHeight, int startDelay, Interpolator interpolator, int duration) {
-        if (mScrollableView != null && layout.isEnableScrollContentWhenLoaded()) {
-            if (startDelay > 0) {
-                layout.getLayout().postDelayed(() -> {
+    public AnimatorUpdateListener onLoadingFinish(RefreshKernel kernel, int footerHeight, int startDelay, Interpolator interpolator, int duration) {
+        if (mScrollableView != null && kernel.getRefreshLayout().isEnableScrollContentWhenLoaded()) {
+            if (mScrollableView instanceof AbsListView && Build.VERSION.SDK_INT < 19) {
+                if (startDelay > 0) {
+                    kernel.getRefreshLayout().getLayout().postDelayed(() -> ((AbsListView) mScrollableView).smoothScrollBy(footerHeight, duration), startDelay);
+                } else {
+                    ((AbsListView) mScrollableView).smoothScrollBy(footerHeight, duration);
+                }
+                return null;
+            }
+            return new AnimatorUpdateListener() {
+                int lastValue = kernel.getSpinner();
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    int thisValue = (int) animation.getAnimatedValue();
+                    if (mScrollableView instanceof AbsListView && Build.VERSION.SDK_INT >= 19) {
+                        ((AbsListView) mScrollableView).scrollListBy(thisValue - lastValue);
+                    } else {
+                        mScrollableView.scrollBy(0, thisValue - lastValue);
+                    }
+                    lastValue = thisValue;
+                }
+            };
+//            if (startDelay > 0) {
+//                layout.getLayout().postDelayed(() -> {
 //                    if (mScrollableView instanceof RecyclerView) ((RecyclerView) mScrollableView).smoothScrollBy(0, footerHeight, interpolator);
 //                    else if (mScrollableView instanceof ScrollView) ((ScrollView) mScrollableView).smoothScrollBy(0, footerHeight);
 //                    else if (mScrollableView instanceof AbsListView) ((AbsListView) mScrollableView).smoothScrollBy(footerHeight, duration);
@@ -328,24 +349,24 @@ public class RefreshContentWrapper implements RefreshContent {
 //                        } catch (Exception ignored) {
 //                        }
 //                    }
-                }, startDelay);
-            }
-            if (mScrollableView instanceof RecyclerView && startDelay == 0) ((RecyclerView) mScrollableView).smoothScrollBy(0, footerHeight, interpolator);
-            else if (mScrollableView instanceof ScrollView && startDelay == 0) ((ScrollView) mScrollableView).smoothScrollBy(0, footerHeight);
-            else if (mScrollableView instanceof AbsListView && startDelay == 0) ((AbsListView) mScrollableView).smoothScrollBy(footerHeight, duration);
-            else {
-                try {
-                    Method method = mScrollableView.getClass().getDeclaredMethod("smoothScrollBy", Integer.class, Integer.class);
-                    if (startDelay == 0) {
-                        method.invoke(mScrollableView, 0, footerHeight);
-                    }
-                } catch (Exception e) {
-                    int scrollX = mScrollableView.getScrollX();
-                    int scrollY = mScrollableView.getScrollY();
-                    return animation -> mScrollableView.scrollTo(scrollX, scrollY + footerHeight + (int) animation.getAnimatedValue());
-                }
-            }
-            return null;
+//                }, startDelay);
+//            }
+//            if (mScrollableView instanceof RecyclerView && startDelay == 0) ((RecyclerView) mScrollableView).smoothScrollBy(0, footerHeight, interpolator);
+//            else if (mScrollableView instanceof ScrollView && startDelay == 0) ((ScrollView) mScrollableView).smoothScrollBy(0, footerHeight);
+//            else if (mScrollableView instanceof AbsListView && startDelay == 0) ((AbsListView) mScrollableView).smoothScrollBy(footerHeight, duration);
+//            else {
+//                try {
+//                    Method method = mScrollableView.getClass().getDeclaredMethod("smoothScrollBy", Integer.class, Integer.class);
+//                    if (startDelay == 0) {
+//                        method.invoke(mScrollableView, 0, footerHeight);
+//                    }
+//                } catch (Exception e) {
+//                    int scrollX = mScrollableView.getScrollX();
+//                    int scrollY = mScrollableView.getScrollY();
+//                    return animation -> mScrollableView.scrollTo(scrollX, scrollY + footerHeight + (int) animation.getAnimatedValue());
+//                }
+//            }
+//            return null;
         }
         return null;
     }

@@ -23,6 +23,7 @@ import android.support.v4.view.NestedScrollingParentHelper;
 import android.support.v4.view.ScrollingView;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -1864,7 +1865,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                     return;
                 }
                 notifyStateChanged(RefreshState.LoadingFinish);
-                AnimatorUpdateListener updateListener = mRefreshContent.onLoadingFinish(this, mFooterHeight, startDelay, mReboundInterpolator, mReboundDuration);
+                AnimatorUpdateListener updateListener = mRefreshContent.onLoadingFinish(mKernel, mFooterHeight, startDelay, mReboundInterpolator, mReboundDuration);
                 if (mOnMultiPurposeListener != null) {
                     mOnMultiPurposeListener.onFooterFinish(mRefreshFooter, success);
                 }
@@ -1874,6 +1875,15 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                     ValueAnimator valueAnimator = animSpinner(0, startDelay);
                     if (updateListener != null && valueAnimator != null) {
                         valueAnimator.addUpdateListener(updateListener);
+                        valueAnimator.addListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                View scrollableView = mRefreshContent.getScrollableView();
+                                if (!(scrollableView instanceof RecyclerView)) {
+                                    scrollableView.invalidate();
+                                }
+                            }
+                        });
                     }
                 }
             }
@@ -2120,6 +2130,11 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         public RefreshKernel animSpinnerBounce(int bounceSpinner) {
             SmartRefreshLayout.this.animSpinnerBounce(bounceSpinner);
             return this;
+        }
+
+        @Override
+        public int getSpinner() {
+            return mSpinner;
         }
         //</editor-fold>
 
