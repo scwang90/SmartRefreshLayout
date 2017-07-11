@@ -203,6 +203,8 @@ refreshLayout.setRefreshFooter(new BallPulseFooter(this).setSpinnerStyle(Spinner
 
 ![](art/pay_alipay.jpg) ![](art/pay_wxpay.jpg)
 
+[捐赠列表](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/md_donationlist.md)
+
 License
 -------
 
