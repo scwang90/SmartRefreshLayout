@@ -318,16 +318,16 @@ public class RefreshContentWrapper implements RefreshContent {
         if (mScrollableView != null && layout.isEnableScrollContentWhenLoaded()) {
             if (startDelay > 0) {
                 layout.getLayout().postDelayed(() -> {
-                    if (mScrollableView instanceof RecyclerView) ((RecyclerView) mScrollableView).smoothScrollBy(0, footerHeight, interpolator);
-                    else if (mScrollableView instanceof ScrollView) ((ScrollView) mScrollableView).smoothScrollBy(0, footerHeight);
-                    else if (mScrollableView instanceof AbsListView) ((AbsListView) mScrollableView).smoothScrollBy(footerHeight, duration);
-                    else {
-                        try {
-                            Method method = mScrollableView.getClass().getDeclaredMethod("smoothScrollBy", Integer.class, Integer.class);
-                            method.invoke(mScrollableView, 0, footerHeight);
-                        } catch (Exception ignored) {
-                        }
-                    }
+//                    if (mScrollableView instanceof RecyclerView) ((RecyclerView) mScrollableView).smoothScrollBy(0, footerHeight, interpolator);
+//                    else if (mScrollableView instanceof ScrollView) ((ScrollView) mScrollableView).smoothScrollBy(0, footerHeight);
+//                    else if (mScrollableView instanceof AbsListView) ((AbsListView) mScrollableView).smoothScrollBy(footerHeight, duration);
+//                    else {
+//                        try {
+//                            Method method = mScrollableView.getClass().getDeclaredMethod("smoothScrollBy", Integer.class, Integer.class);
+//                            method.invoke(mScrollableView, 0, footerHeight);
+//                        } catch (Exception ignored) {
+//                        }
+//                    }
                 }, startDelay);
             }
             if (mScrollableView instanceof RecyclerView && startDelay == 0) ((RecyclerView) mScrollableView).smoothScrollBy(0, footerHeight, interpolator);

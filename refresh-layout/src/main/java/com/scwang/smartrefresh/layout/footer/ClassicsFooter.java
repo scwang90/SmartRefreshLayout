@@ -136,7 +136,7 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
             mProgressDrawable.stop();
             mProgressView.setVisibility(GONE);
             mBottomText.setText(REFRESH_FOOTER_FINISH);
-            return 500;
+            return 0;
         }
         return 0;
     }
