@@ -97,6 +97,16 @@ public interface RefreshLayout {
     RefreshLayout setEnableOverScrollBounce(boolean enable);
 
     /**
+     * 设置是否开启纯滚动模式
+     */
+    RefreshLayout setEnablePureScrollMode(boolean enable);
+
+    /**
+     * 设置是否在加载更多完成之后滚动内容显示新数据
+     */
+    RefreshLayout setEnableScrollContentWhenLoaded(boolean enable);
+
+    /**
      * 设置指定的Header
      */
     RefreshLayout setRefreshHeader(RefreshHeader header);
@@ -152,9 +162,19 @@ public interface RefreshLayout {
     RefreshLayout finishRefresh(int delayed);
 
     /**
+     * 完成刷新
+     */
+    RefreshLayout finishRefresh(int delayed, boolean success);
+
+    /**
      * 完成加载
      */
     RefreshLayout finishLoadmore(int delayed);
+
+    /**
+     * 完成加载
+     */
+    RefreshLayout finishLoadmore(int delayed, boolean success);
 
     /**
      * 获取当前 Header
@@ -227,4 +247,8 @@ public interface RefreshLayout {
     boolean isEnableAutoLoadmore();
 
     boolean isEnableOverScrollBounce();
+
+    boolean isEnablePureScrollMode();
+
+    boolean isEnableScrollContentWhenLoaded();
 }

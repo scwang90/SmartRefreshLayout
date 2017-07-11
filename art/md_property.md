@@ -18,6 +18,7 @@
 |srlEnablePreviewInEditMode|boolean|是否在编辑模式时显示预览效果（默认true）|
 |srlEnablePureScrollMode|boolean|是否开启纯滚动模式|
 |srlEnableNestedScrolling|boolean|是否开启嵌套滚动NestedScrolling|
+|srlEnableScrollContentWhenLoaded|boolean|是否在加载完成之后滚动内容显示新数据|
 |srlDisableContentWhenRefresh|boolean|是否在刷新的时候禁止内容的一切手势操作（默认false）|
 |srlDisableContentWhenLoading|boolean|是否在加载的时候禁止内容的一切手势操作（默认false）|
 |srlFixedHeaderViewId|id|指定固定的视图Id|
@@ -40,6 +41,9 @@
 |setEnableHeaderTranslationContent|boolean|拖动Header的时候是否同时拖动内容（默认true）|
 |setEnableFooterTranslationContent|boolean|拖动Footer的时候是否同时拖动内容（默认true）|
 |setEnableAutoLoadmore|boolean|是否监听列表滚动到底部时触发加载事件|
+|setEnablePureScrollMode|boolean|是否开启纯滚动模式|
+|setEnableNestedScrolling|boolean|是否开启嵌套滚动NestedScrolling|
+|setEnableScrollContentWhenLoaded|boolean|是否在加载完成之后滚动内容显示新数据|
 |setDisableContentWhenRefresh|boolean|是否在刷新的时候禁止内容的一切手势操作（默认false）|
 |setDisableContentWhenLoading|boolean|是否在加载的时候禁止内容的一切手势操作（默认false）|
 |setReboundInterpolator|Interpolator|设置回弹动画的插值器|
@@ -53,6 +57,8 @@
 |setRefreshScrollBoundary|boundary|设置滚动边界判断|
 |finishRefresh|(int delayed)|完成刷新，结束刷新动画|
 |finishLoadmore|(int delayed)|完成加载，结束加载动画|
+|finishRefresh|(boolean success)|完成刷新，并设置是否成功|
+|finishLoadmore|(boolean success)|完成加载，并设置是否成功|
 |getRefreshHeader|RefreshHeader|获取Header|
 |getRefreshFooter|RefreshFooter|获取Footer|
 |getState|RefreshState|获取当前状态|

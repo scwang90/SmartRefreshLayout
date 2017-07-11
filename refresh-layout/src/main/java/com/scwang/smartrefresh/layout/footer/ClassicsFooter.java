@@ -30,15 +30,17 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 public class ClassicsFooter extends LinearLayout implements RefreshFooter {
 
-    private static final String REFRESH_BOTTOM_PULLUP = "上拉加载更多";
-    private static final String REFRESH_BOTTOM_RELEASE = "释放立即加载";
-    private static final String REFRESH_BOTTOM_LOADING = "正在加载...";
-    private static final String REFRESH_BOTTOM_FINISH = "加载完成";
+    public static String REFRESH_FOOTER_PULLUP = "上拉加载更多";
+    public static String REFRESH_FOOTER_RELEASE = "释放立即加载";
+    public static String REFRESH_FOOTER_LOADING = "正在加载...";
+    public static String REFRESH_FOOTER_FINISH = "加载完成";
+    public static String REFRESH_FOOTER_ALLLOADED = "全部加载完成";
 
     private TextView mBottomText;
     private ImageView mProgressView;
     private ProgressDrawable mProgressDrawable;
     private SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
+    private boolean mLoadmoreFinished = false;
 
     //<editor-fold desc="LinearLayout">
     public ClassicsFooter(Context context) {
@@ -73,7 +75,7 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
         mBottomText = new AppCompatTextView(context, attrs, defStyleAttr);
         mBottomText.setTextColor(0xff666666);
         mBottomText.setTextSize(16);
-        mBottomText.setText(REFRESH_BOTTOM_PULLUP);
+        mBottomText.setText(REFRESH_FOOTER_PULLUP);
 
         addView(mBottomText, WRAP_CONTENT, WRAP_CONTENT);
 
@@ -122,16 +124,21 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
 
     @Override
     public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
-        mProgressView.setVisibility(VISIBLE);
-        mProgressDrawable.start();
+        if (!mLoadmoreFinished) {
+            mProgressView.setVisibility(VISIBLE);
+            mProgressDrawable.start();
+        }
     }
 
     @Override
-    public int onFinish(RefreshLayout layout) {
-        mProgressDrawable.stop();
-        mProgressView.setVisibility(GONE);
-        mBottomText.setText(REFRESH_BOTTOM_FINISH);
-        return 500;
+    public int onFinish(RefreshLayout layout, boolean success) {
+        if (!mLoadmoreFinished) {
+            mProgressDrawable.stop();
+            mProgressView.setVisibility(GONE);
+            mBottomText.setText(REFRESH_FOOTER_FINISH);
+            return 500;
+        }
+        return 0;
     }
 
     /**
@@ -158,6 +165,23 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
         }
     }
 
+    /**
+     * 设置数据全部加载完成，将不能再次触发加载功能
+     */
+    @Override
+    public boolean setLoadmoreFinished(boolean finished) {
+        if (mLoadmoreFinished != finished) {
+            mLoadmoreFinished = finished;
+            if (finished) {
+                mBottomText.setText(REFRESH_FOOTER_ALLLOADED);
+            } else {
+                mBottomText.setText(REFRESH_FOOTER_PULLUP);
+            }
+            mProgressDrawable.stop();
+            mProgressView.setVisibility(GONE);
+        }
+        return true;
+    }
 
     @NonNull
     public View getView() {
@@ -171,19 +195,21 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
 
     @Override
     public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
-        switch (newState) {
-            case None:
-                restoreRefreshLayoutBackground();
-            case PullToUpLoad:
-                mBottomText.setText(REFRESH_BOTTOM_PULLUP);
-                break;
-            case Loading:
-                mBottomText.setText(REFRESH_BOTTOM_LOADING);
-                break;
-            case ReleaseToLoad:
-                mBottomText.setText(REFRESH_BOTTOM_RELEASE);
-                replaceRefreshLayoutBackground(refreshLayout);
-                break;
+        if (!mLoadmoreFinished) {
+            switch (newState) {
+                case None:
+                    restoreRefreshLayoutBackground();
+                case PullToUpLoad:
+                    mBottomText.setText(REFRESH_FOOTER_PULLUP);
+                    break;
+                case Loading:
+                    mBottomText.setText(REFRESH_FOOTER_LOADING);
+                    break;
+                case ReleaseToLoad:
+                    mBottomText.setText(REFRESH_FOOTER_RELEASE);
+                    replaceRefreshLayoutBackground(refreshLayout);
+                    break;
+            }
         }
     }
     //</editor-fold>

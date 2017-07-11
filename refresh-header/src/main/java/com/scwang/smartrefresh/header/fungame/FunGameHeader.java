@@ -218,11 +218,11 @@ public class FunGameHeader extends FunGameBase implements RefreshHeader {
     }
 
     @Override
-    public int onFinish(RefreshLayout layout) {
+    public int onFinish(RefreshLayout layout, boolean success) {
         if (!mManualOperation) {
             postEnd();
         }
-        return super.onFinish(layout);
+        return super.onFinish(layout, success);
     }
 
     //</editor-fold>

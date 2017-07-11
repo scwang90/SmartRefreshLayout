@@ -232,7 +232,7 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override
-    public int onFinish(RefreshLayout layout) {
+    public int onFinish(RefreshLayout layout, boolean success) {
         Animation scaleDownAnimation = new Animation() {
             @Override
             public void applyTransformation(float interpolatedTime, Transformation t) {

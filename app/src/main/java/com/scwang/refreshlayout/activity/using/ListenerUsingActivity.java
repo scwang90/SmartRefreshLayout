@@ -82,8 +82,8 @@ public class ListenerUsingActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onHeaderFinish(RefreshHeader header) {
-                mHeaderFinish = String.format(Locale.CHINA, "%s",FORMAT.format(new Date()));
+            public void onHeaderFinish(RefreshHeader header, boolean success) {
+                mHeaderFinish = String.format(Locale.CHINA, "%s - " + success,FORMAT.format(new Date()));
                 updateContent();
             }
 
@@ -112,8 +112,8 @@ public class ListenerUsingActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFooterFinish(RefreshFooter footer) {
-                mFooterFinish = String.format(Locale.CHINA, "%s",FORMAT.format(new Date()));
+            public void onFooterFinish(RefreshFooter footer, boolean success) {
+                mFooterFinish = String.format(Locale.CHINA, "%s - " + success,FORMAT.format(new Date()));
                 updateContent();
             }
 

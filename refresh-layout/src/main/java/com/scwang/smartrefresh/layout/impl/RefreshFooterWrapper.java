@@ -29,7 +29,7 @@ public class RefreshFooterWrapper implements RefreshFooter {
     }
 
     @Override
-    public int onFinish(RefreshLayout layout) {
+    public int onFinish(RefreshLayout layout, boolean success) {
 		return 0;
 	}
 
@@ -75,5 +75,10 @@ public class RefreshFooterWrapper implements RefreshFooter {
     @Override
     public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
 
+    }
+
+    @Override
+    public boolean setLoadmoreFinished(boolean finished) {
+        return false;
     }
 }

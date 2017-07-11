@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         app:srlPrimaryColor="@color/colorPrimary"
         app:srlAccentColor="@android:color/white"
-        app:srlEnableLoadmore="true"
+        app:srlEnableLoadmore="false"
         app:srlEnablePreviewInEditMode="true">
         <com.scwang.smartrefresh.header.PhoenixHeader
             android:id="@+id/header"

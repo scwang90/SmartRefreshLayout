@@ -276,13 +276,13 @@ public abstract class FunGameView extends FunGameHeader {
     }
 
     @Override
-    public int onFinish(RefreshLayout layout) {
+    public int onFinish(RefreshLayout layout, boolean success) {
         if (mManualOperation) {
             postStatus(FunGameView.STATUS_GAME_FINISHED);
         } else {
             postStatus(FunGameView.STATUS_GAME_PREPAR);
         }
-        return super.onFinish(layout);
+        return super.onFinish(layout, success);
     }
 
     @Override

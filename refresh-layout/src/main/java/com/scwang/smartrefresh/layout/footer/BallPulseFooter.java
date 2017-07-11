@@ -117,9 +117,14 @@ public class BallPulseFooter extends ViewGroup implements RefreshFooter {
     }
 
     @Override
-    public int onFinish(RefreshLayout layout) {
+    public int onFinish(RefreshLayout layout, boolean success) {
         mBallPulseView.stopAnim();
         return 0;
+    }
+
+    @Override
+    public boolean setLoadmoreFinished(boolean finished) {
+        return false;
     }
 
     @Override

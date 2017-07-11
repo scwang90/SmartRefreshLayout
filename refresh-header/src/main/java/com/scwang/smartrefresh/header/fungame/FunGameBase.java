@@ -177,13 +177,13 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
     }
 
     @Override
-    public int onFinish(RefreshLayout layout) {
+    public int onFinish(RefreshLayout layout, boolean success) {
         if (!mIsFinish) {
             mIsFinish = true;
             if (mManualOperation) {
                 if (mTouchY == -1) {//已经放手
                     onManualOperationRelease();
-                    onFinish(layout);
+                    onFinish(layout, success);
                     return 0;
                 }
                 return Integer.MAX_VALUE;

@@ -29,7 +29,7 @@ public class RefreshHeaderWrapper implements RefreshHeader {
     }
 
     @Override
-    public int onFinish(RefreshLayout layout) {
+    public int onFinish(RefreshLayout layout, boolean success) {
         return 0;
     }
 

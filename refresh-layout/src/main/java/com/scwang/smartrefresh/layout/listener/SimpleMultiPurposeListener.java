@@ -28,7 +28,7 @@ public class SimpleMultiPurposeListener implements OnMultiPurposeListener {
     }
 
     @Override
-    public void onHeaderFinish(RefreshHeader header) {
+    public void onHeaderFinish(RefreshHeader header, boolean success) {
 
     }
 
@@ -48,7 +48,7 @@ public class SimpleMultiPurposeListener implements OnMultiPurposeListener {
     }
 
     @Override
-    public void onFooterFinish(RefreshFooter footer) {
+    public void onFooterFinish(RefreshFooter footer, boolean success) {
 
     }
 

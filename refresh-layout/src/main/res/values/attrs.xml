@@ -34,6 +34,7 @@
         <attr name="srlEnableOverScrollBounce" format="boolean"/>
         <attr name="srlEnablePureScrollMode" format="boolean"/>
         <attr name="srlEnableNestedScrolling" format="boolean"/>
+        <attr name="srlEnableScrollContentWhenLoaded" format="boolean"/>
         <attr name="srlDisableContentWhenRefresh" format="boolean"/>
         <attr name="srlDisableContentWhenLoading" format="boolean"/>
         <attr name="srlFixedHeaderViewId" format="reference"/>

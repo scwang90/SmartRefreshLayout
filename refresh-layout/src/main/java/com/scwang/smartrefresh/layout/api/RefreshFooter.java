@@ -22,4 +22,10 @@ public interface RefreshFooter extends RefreshInternal {
      * @param extendHeight Footer的扩展高度
      */
     void onPullReleasing(float percent,int offset, int footerHeight, int extendHeight);
+
+    /**
+     * 设置数据全部加载完成，将不能再次触发加载功能
+     * @return true 支持全部加载完成的状态显示 false 不支持
+     */
+    boolean setLoadmoreFinished(boolean finished);
 }

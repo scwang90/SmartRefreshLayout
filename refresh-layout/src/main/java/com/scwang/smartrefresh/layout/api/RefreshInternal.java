@@ -49,7 +49,8 @@ public interface RefreshInternal extends OnStateChangedListener {
     /**
      * 动画结束
      * @param layout RefreshLayout
+     * @param success 数据是否成功刷新或加载
      * @return 完成动画所需时间 如果返回 Integer.MAX_VALUE 将取消本次完成事件，继续保持原有状态
      */
-    int onFinish(RefreshLayout layout);
+    int onFinish(RefreshLayout layout, boolean success);
 }

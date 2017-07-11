@@ -333,7 +333,7 @@ public class CircleHeader extends View implements RefreshHeader {
     }
 
     @Override
-    public int onFinish(RefreshLayout layout) {
+    public int onFinish(RefreshLayout layout, boolean success) {
         mShowOuter = false;
         mShowBoll = false;
         ValueAnimator animator = ValueAnimator.ofFloat(0, 1);

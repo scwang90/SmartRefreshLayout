@@ -376,7 +376,7 @@ public class DropboxHeader extends View implements RefreshHeader {
     }
 
     @Override
-    public int onFinish(RefreshLayout layout) {
+    public int onFinish(RefreshLayout layout, boolean success) {
         mDropOutPercent = 0;
         return 0;
     }

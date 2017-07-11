@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 import com.scwang.refreshlayout.R;
+import com.scwang.refreshlayout.activity.ExperimentActivity;
 import com.scwang.refreshlayout.activity.style.BezierStyleActivity;
 import com.scwang.refreshlayout.activity.style.CircleStyleActivity;
 import com.scwang.refreshlayout.activity.style.ClassicsStyleActivity;
@@ -37,7 +38,6 @@ import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 
 import java.lang.reflect.Constructor;
 import java.util.Arrays;
@@ -104,25 +104,10 @@ public class RefreshStylesFragment extends Fragment implements AdapterView.OnIte
             });
         }
 
-        final RefreshLayout refreshLayout = (RefreshLayout) root.findViewById(R.id.smartLayout);
-        refreshLayout.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
-            @Override
-            public void onLoadmore(RefreshLayout refreshlayout) {
-
-            }
-
-            @Override
-            public void onRefresh(RefreshLayout refreshlayout) {
-
-            }
-        });
-
         root.findViewById(R.id.toolbar).setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                refreshLayout.finishRefresh();
-                refreshLayout.finishLoadmore();
-//                startActivity(new Intent(getContext(), ExperimentActivity.class));
+                startActivity(new Intent(getContext(), ExperimentActivity.class));
                 return false;
             }
         });

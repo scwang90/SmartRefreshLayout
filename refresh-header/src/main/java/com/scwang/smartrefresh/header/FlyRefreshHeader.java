@@ -165,11 +165,11 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
     }
 
     @Override
-    public int onFinish(RefreshLayout layout) {
+    public int onFinish(RefreshLayout layout, boolean success) {
         if (mIsRefreshing) {
             finishRefresh();
         }
-        return super.onFinish(layout);
+        return super.onFinish(layout, success);
     }
 
     //</editor-fold>
