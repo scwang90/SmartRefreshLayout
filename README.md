@@ -203,6 +203,7 @@ refreshLayout.setRefreshFooter(new BallPulseFooter(this).setSpinnerStyle(Spinner
 
 ![](art/pay_alipay.jpg) ![](art/pay_wxpay.jpg)
 
+如果在捐赠留言中备注名称，将会被记录到列表中~ 如果你也是github开源作者，可以留下github项目地址或者个人主页地址，也将会被添加到列表中  
 [捐赠列表](art/md_donationlist.md)
 
 License
