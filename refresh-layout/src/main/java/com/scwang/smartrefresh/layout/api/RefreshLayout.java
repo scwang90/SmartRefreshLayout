@@ -57,12 +57,12 @@ public interface RefreshLayout {
     RefreshLayout setEnableRefresh(boolean enable);
 
     /**
-     * 设置是否启在下拉Header的同事下拉内容
+     * 设置是否启在下拉Header的同时下拉内容
      */
     RefreshLayout setEnableHeaderTranslationContent(boolean enable);
 
     /**
-     * 设置是否启在上拉Footer的同事上拉内容
+     * 设置是否启在上拉Footer的同时上拉内容
      */
     RefreshLayout setEnableFooterTranslationContent(boolean enable);
 
