@@ -17,37 +17,6 @@
         android:src="@mipmap/image_weibo_home_2"
         app:layout_collapseMode="parallax"/>
 
-    <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
-        android:id="@+id/toolbar"
-        android:background="@android:color/transparent"
-        android:layout_marginBottom="0dp"
-        app:navigationIcon="?attr/homeAsUpIndicator"
-        app:layout_collapseMode="pin">
-        <android.support.v7.widget.ButtonBarLayout
-            android:id="@+id/buttonBarLayout"
-            android:layout_gravity="center"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content">
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/toolbar_avatar"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginEnd="@dimen/padding_common_d"
-                android:layout_marginRight="@dimen/padding_common_d"
-                android:src="@mipmap/image_avatar_5"
-                app:civ_border_width="@dimen/division_line"
-                app:civ_border_color="@android:color/white"
-                app:civ_border_overlay="true"/>
-            <TextView
-                android:id="@+id/title"
-                android:layout_gravity="center"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:textSize="16sp"
-                android:text="一醉方休"/>
-        </android.support.v7.widget.ButtonBarLayout>
-    </android.support.v7.widget.Toolbar>
-
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
@@ -209,9 +178,6 @@
                                 android:background="@android:color/white"
                                 android:id="@+id/fmc_center_dynamic">
                                 <TextView style="@style/AppTheme.CommonBar.Content.Value"
-                                    android:drawableLeft="@drawable/ic_feed_list_mail"
-                                    android:drawableStart="@drawable/ic_feed_list_mail"
-                                    android:drawableTint="@color/colorPrimary"
                                     android:text="发布动态"/>
                             </LinearLayout>
                         </LinearLayout>
@@ -1045,4 +1011,35 @@
         </android.support.v4.widget.NestedScrollView>
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
+        android:id="@+id/toolbar"
+        android:background="@android:color/transparent"
+        android:layout_marginBottom="0dp"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:layout_collapseMode="pin">
+        <android.support.v7.widget.ButtonBarLayout
+            android:id="@+id/buttonBarLayout"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/toolbar_avatar"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="@dimen/padding_common_d"
+                android:layout_marginRight="@dimen/padding_common_d"
+                android:src="@mipmap/image_avatar_5"
+                app:civ_border_width="@dimen/division_line"
+                app:civ_border_color="@android:color/white"
+                app:civ_border_overlay="true"/>
+            <TextView
+                android:id="@+id/title"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:textSize="16sp"
+                android:text="一醉方休"/>
+        </android.support.v7.widget.ButtonBarLayout>
+    </android.support.v7.widget.Toolbar>
 </FrameLayout>
