@@ -139,9 +139,12 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
         if (!mManualOperation) {
             mManualOperation = true;
             mRefreshContent = mRefreshKernel.getRefreshContent();
-            mRefreshContent.getView().offsetTopAndBottom(mHeaderHeight);
             enableLoadmore = mRefreshKernel.getRefreshLayout().isEnableLoadmore();
             mRefreshKernel.getRefreshLayout().setEnableLoadmore(false);
+            View contentView = mRefreshContent.getView();
+            MarginLayoutParams params = (MarginLayoutParams)contentView.getLayoutParams();
+            params.topMargin += mHeaderHeight;
+            contentView.setLayoutParams(params);
         }
     }
 
@@ -153,12 +156,15 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
         if (mIsFinish) {
             mManualOperation = false;
             mRefreshKernel.getRefreshLayout().setEnableLoadmore(enableLoadmore);
-            mRefreshContent.getView().offsetTopAndBottom(-mHeaderHeight);
             if (mTouchY != -1) {//还没松手
                 mRefreshKernel.getRefreshLayout().finishRefresh(0);
             } else {
                 mRefreshKernel.moveSpinner(mHeaderHeight, true);
             }
+            View contentView = mRefreshContent.getView();
+            MarginLayoutParams params = (MarginLayoutParams)contentView.getLayoutParams();
+            params.topMargin -= mHeaderHeight;
+            contentView.setLayoutParams(params);
         } else {
             mRefreshKernel.moveSpinner(0, true);
         }
