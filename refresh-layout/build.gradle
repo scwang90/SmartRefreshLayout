@@ -42,7 +42,7 @@ publish {
     userOrg = 'scwang90'
     groupId = 'com.scwang.smartrefresh'
     artifactId = 'SmartRefreshLayout'
-    version = '1.0.2-alpha-1'
+    version = '1.0.2-alpha-2'
     description = 'An intelligent refresh layout'
     website = "https://github.com/scwang90/${rootProject.name}"
 }

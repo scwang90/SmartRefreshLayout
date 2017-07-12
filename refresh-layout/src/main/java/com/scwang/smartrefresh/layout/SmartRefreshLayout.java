@@ -1061,7 +1061,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                 moveSpinner((int) dy, false);
             } else {
                 final double M = mHeaderExtendHeight;
-                final double H = Math.max(mScreenHeightPixels / 2, getHeight()) * mDragRate - mHeaderHeight;
+                final double H = Math.max(mScreenHeightPixels * 4 / 3, getHeight()) - mHeaderHeight;
                 final double x = Math.max(0, (dy - mHeaderHeight) * mDragRate);
                 final double y = Math.min(M * (1 - Math.pow(100, -x / H)), x);// 公式 y = M(1-40^(-x/H))
                 moveSpinner((int) y + mHeaderHeight, false);
@@ -1071,20 +1071,20 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                 moveSpinner((int) dy, false);
             } else {
                 final double M = mFooterExtendHeight;
-                final double H = Math.max(mScreenHeightPixels / 2, getHeight()) * mDragRate - mFooterHeight;
+                final double H = Math.max(mScreenHeightPixels * 4 / 3, getHeight()) - mFooterHeight;
                 final double x = -Math.min(0, (dy + mHeaderHeight) * mDragRate);
                 final double y = -Math.min(M * (1 - Math.pow(100, -x / H)), x);// 公式 y = M(1-40^(-x/H))
                 moveSpinner((int) y - mFooterHeight, false);
             }
         } else if (dy >= 0) {
             final double M = mHeaderExtendHeight + mHeaderHeight;
-            final double H = Math.max(mScreenHeightPixels / 2, getHeight()) * mDragRate;
+            final double H = Math.max(mScreenHeightPixels / 2, getHeight());
             final double x = Math.max(0, dy * mDragRate);
             final double y = Math.min(M * (1 - Math.pow(100, -x / H)), x);// 公式 y = M(1-40^(-x/H))
             moveSpinner((int) y, false);
         } else {
             final double M = mFooterExtendHeight + mFooterHeight;
-            final double H = Math.max(mScreenHeightPixels / 2, getHeight()) * mDragRate;
+            final double H = Math.max(mScreenHeightPixels / 2, getHeight());
             final double x = -Math.min(0, dy * mDragRate);
             final double y = -Math.min(M * (1 - Math.pow(100, -x / H)), x);// 公式 y = M(1-40^(-x/H))
             moveSpinner((int) y, false);

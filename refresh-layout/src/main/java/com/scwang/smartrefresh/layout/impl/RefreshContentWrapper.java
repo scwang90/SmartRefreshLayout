@@ -324,6 +324,9 @@ public class RefreshContentWrapper implements RefreshContent {
                 }
                 return null;
             }
+            if (!ScrollBoundaryUtil.canScrollDown(mScrollableView)) {
+                return null;
+            }
             return new AnimatorUpdateListener() {
                 int lastValue = kernel.getSpinner();
                 @Override
@@ -393,13 +396,13 @@ public class RefreshContentWrapper implements RefreshContent {
 //            System.out.printf("%d,%d,%d,%d\n", scrollX, scrollY, oldScrollX, oldScrollY);
             RefreshLayout layout = kernel.getRefreshLayout();
             boolean overScroll = layout.isEnableOverScrollBounce() || layout.isRefreshing() || layout.isLoading();
-            if (scrollY <= 0 && oldScrollY > 0 && mMotionEvent == null && overScroll && layout.isEnableRefresh()) {
+            if (scrollY <= 0 && oldScrollY > 0 && mMotionEvent == null && lastTime - lastTimeOld > 1000 && overScroll && layout.isEnableRefresh()) {
                 //time:16000000 value:160
                 final int velocity = (lastOldScrollY - oldScrollY) * 16000 / (int)((lastTime - lastTimeOld)/1000f);
 //                    System.out.println("ValueAnimator - " + (lastTime - lastTimeOld) + " - " + velocity+"("+(lastOldScrollY - oldScrollY)+")");
                 kernel.animSpinnerBounce(Math.min(velocity, mHeaderHeight));
             } else if (oldScrollY < scrollY && mMotionEvent == null && overScroll && layout.isEnableLoadmore()) {
-                if (!ScrollBoundaryUtil.canScrollDown(mScrollableView)) {
+                if (lastTime - lastTimeOld > 1000 && !ScrollBoundaryUtil.canScrollDown(mScrollableView)) {
                     final int velocity = (lastOldScrollY - oldScrollY) * 16000 / (int)((lastTime - lastTimeOld)/1000f);
 //                    System.out.println("ValueAnimator - " + (lastTime - lastTimeOld) + " - " + velocity+"("+(lastOldScrollY - oldScrollY)+")");
                     kernel.animSpinnerBounce(Math.max(velocity, -mFooterHeight));
