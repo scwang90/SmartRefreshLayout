@@ -55,6 +55,7 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
 
     //<editor-fold desc="DropHeader">
     private WaveView mWaveView;
+    private RefreshState mState;
     private ProgressAnimationImageView mCircleView;
     private float mLastFirstBounds;
 
@@ -152,6 +153,10 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
     @Override
     public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
 
+        if (mState == RefreshState.Refreshing) {
+            return;
+        }
+
         float dragPercent = Math.min(1f, percent);
         float adjustedPercent = (float) Math.max(dragPercent - .4, 0) * 5 / 3;
 
@@ -211,6 +216,7 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
 
     @Override
     public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
+        mState = newState;
         switch (newState) {
             case None:
                 break;

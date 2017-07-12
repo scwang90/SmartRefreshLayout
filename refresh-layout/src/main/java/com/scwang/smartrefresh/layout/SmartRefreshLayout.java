@@ -790,7 +790,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                     }
                     if (mTotalUnconsumed > 0) {
                         if (mState == RefreshState.Refreshing) {
-                            if (mRefreshHeader != null && mRefreshHeader.getSpinnerStyle() != SpinnerStyle.FixedFront) {
+//                            if (mRefreshHeader != null && mRefreshHeader.getSpinnerStyle() != SpinnerStyle.FixedFront) {
                                 final int spinner = (int)(mInitialMotionY + dy);
                                 if (spinner < 0 && (mRefreshContent != null && mRefreshContent.canScrollDown())) {
                                     moveSpinnerInfinitely(0);
@@ -804,9 +804,9 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                                     return false;
                                 }
                                 moveSpinnerInfinitely(spinner);
-                            }
+//                            }
                         } else {
-                            if (mRefreshFooter != null && mRefreshFooter.getSpinnerStyle() != SpinnerStyle.FixedFront) {
+//                            if (mRefreshFooter != null && mRefreshFooter.getSpinnerStyle() != SpinnerStyle.FixedFront) {
                                 final int spinner = (int)(mInitialMotionY + dy);
                                 if (spinner > 0 && (mRefreshContent != null && mRefreshContent.canScrollUp())) {
                                     moveSpinnerInfinitely(0);
@@ -820,7 +820,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                                     return false;
                                 }
                                 moveSpinnerInfinitely(spinner);
-                            }
+//                            }
                         }
                     }
                     break;

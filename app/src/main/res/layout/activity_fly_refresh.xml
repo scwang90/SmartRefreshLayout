@@ -14,7 +14,7 @@
         app:msvViewportHeight="340dp"
         app:msvPrimaryColor="@color/colorPrimary"/>
     <!--srlViewportHeightHeight 设置为-->
-    <!--AppBarLayout.Height + RefreshLayout.Height-->
+    <!--AppBarLayout.Height + RefreshHeader.Height-->
     <!--效果最佳-->
 
     <android.support.design.widget.AppBarLayout
