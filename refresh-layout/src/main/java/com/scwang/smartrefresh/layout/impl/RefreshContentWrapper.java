@@ -512,23 +512,37 @@ public class RefreshContentWrapper implements RefreshContent {
                     kernel.animSpinnerBounce(Math.min(-lastDy * 2, mHeaderHeight));
                 } else if (layout.isEnableLoadmore() && !layout.isLoadmoreFinished() && layout.isEnableAutoLoadmore()
                         && layout.getState() == RefreshState.None) {
-                    RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
-                    if (manager instanceof LinearLayoutManager) {
-                        LinearLayoutManager linearManager = ((LinearLayoutManager) manager);
-                        int lastVisiblePosition = linearManager.findLastVisibleItemPosition();
-                        if(lastVisiblePosition >= linearManager.getItemCount() - 1){
-                            kernel.getRefreshLayout().autoLoadmore(0,1);
-                        }
-                    }
+//                    RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
+//                    if (manager instanceof LinearLayoutManager) {
+//                        LinearLayoutManager linearManager = ((LinearLayoutManager) manager);
+//                        int lastVisiblePosition = linearManager.findLastVisibleItemPosition();
+//                        if(lastVisiblePosition >= linearManager.getItemCount() - 1){
+//                            kernel.getRefreshLayout().autoLoadmore(0,1);
+//                        }
+//                    }
                 } else if (lastDy > 1 && intime && overScroll && layout.isEnableLoadmore()) {
                     kernel.animSpinnerBounce(Math.max(-lastDy * 2, -mFooterHeight));
                 }
                 lastDy = 0;
             }
         }
+
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             lastDy = dy;
+            RefreshLayout layout = kernel.getRefreshLayout();
+            if (layout.isEnableLoadmore() && !layout.isLoadmoreFinished() && layout.isEnableAutoLoadmore()
+                    && layout.getState() == RefreshState.None){
+                RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
+                if (manager instanceof LinearLayoutManager) {
+                    LinearLayoutManager linearManager = ((LinearLayoutManager) manager);
+                    int lastVisiblePosition = linearManager.findLastVisibleItemPosition();
+                    if(lastVisiblePosition >= linearManager.getItemCount() - 1
+                            && !ScrollBoundaryUtil.canScrollDown(recyclerView)){
+                        kernel.getRefreshLayout().autoLoadmore(0,1);
+                    }
+                }
+            }
         }
 
         void attach(RecyclerView recyclerView) {
