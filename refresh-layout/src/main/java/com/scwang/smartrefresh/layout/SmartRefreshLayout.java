@@ -1820,6 +1820,15 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
      * 完成刷新
      */
     @Override
+    public SmartRefreshLayout finishRefresh(boolean success){
+        long passTime =  System.currentTimeMillis() - mLastRefreshingTime;
+        return finishRefresh(Math.max(0, 1000 - (int)passTime),true);
+    }
+
+    /**
+     * 完成刷新
+     */
+    @Override
     public SmartRefreshLayout finishRefresh(int delayed, boolean success) {
         postDelayed(() -> {
             if (mState == RefreshState.Refreshing && mRefreshHeader != null) {
@@ -1848,6 +1857,14 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         return finishLoadmore(delayed, true);
     }
 
+    /**
+     * 完成加载
+     */
+    @Override
+    public SmartRefreshLayout finishLoadmore(boolean success){
+        long passTime =  System.currentTimeMillis() - mLastLoadingTime;
+        return finishLoadmore(Math.max(0, 1000 - (int)passTime),true);
+    }
     /**
      * 完成加载
      */

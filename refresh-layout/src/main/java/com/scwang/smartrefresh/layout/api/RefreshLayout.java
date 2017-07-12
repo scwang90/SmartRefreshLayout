@@ -162,6 +162,12 @@ public interface RefreshLayout {
     RefreshLayout finishRefresh(int delayed);
 
     /**
+     * 完成加载
+     * @param success 数据是否成功刷新 （会影响到上次更新时间的改变）
+     */
+    RefreshLayout finishRefresh(boolean success);
+
+    /**
      * 完成刷新
      */
     RefreshLayout finishRefresh(int delayed, boolean success);
@@ -170,6 +176,11 @@ public interface RefreshLayout {
      * 完成加载
      */
     RefreshLayout finishLoadmore(int delayed);
+
+    /**
+     * 完成加载
+     */
+    RefreshLayout finishLoadmore(boolean success);
 
     /**
      * 完成加载
