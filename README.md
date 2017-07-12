@@ -88,8 +88,8 @@
 compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.1'
 compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.1'//如果使用了特殊的Header
 //快照版本-新功能，可能不稳定
-compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.2-alpha-1'
-compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.2-alpha-1'//如果使用了特殊的Header
+compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.2-alpha-3'
+compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.2-alpha-3'//如果使用了特殊的Header
 ```
 
 #### 2.在XML布局文件中添加 SmartRefreshLayout
