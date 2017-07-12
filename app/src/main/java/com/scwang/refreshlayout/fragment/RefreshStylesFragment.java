@@ -16,7 +16,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.activity.ExperimentActivity;
@@ -39,7 +38,6 @@ import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
-import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import java.lang.reflect.Constructor;
 import java.util.Arrays;
@@ -95,37 +93,6 @@ public class RefreshStylesFragment extends Fragment implements AdapterView.OnIte
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), VERTICAL));
             recyclerView.setAdapter(new BaseRecyclerAdapter<Item>(Arrays.asList(Item.values()), simple_list_item_2,this) {
-                @Override
-                public SmartViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                    SmartViewHolder viewHolder = super.onCreateViewHolder(parent, viewType);
-                    ViewGroup.LayoutParams layoutParams = viewHolder.itemView.getLayoutParams();
-                    if (layoutParams != null) {
-                        layoutParams.height = DensityUtil.dp2px(200);
-                    }
-                    return viewHolder;
-                }
-
-                @Override
-                protected void onBindViewHolder(SmartViewHolder holder, Item model, int position) {
-                    holder.text(android.R.id.text1, model.name());
-                    holder.text(android.R.id.text2, model.nameId);
-                    holder.textColorId(android.R.id.text2, R.color.colorTextAssistant);
-                }
-            });
-        }
-        View list = root.findViewById(R.id.listView);
-        if (list instanceof ListView) {
-            ((ListView) list).setAdapter(new BaseRecyclerAdapter<Item>(Arrays.asList(Item.values()), simple_list_item_2,this) {
-                @Override
-                public SmartViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                    SmartViewHolder viewHolder = super.onCreateViewHolder(parent, viewType);
-                    ViewGroup.LayoutParams layoutParams = viewHolder.itemView.getLayoutParams();
-                    if (layoutParams != null) {
-                        layoutParams.height = DensityUtil.dp2px(200);
-                    }
-                    return viewHolder;
-                }
-
                 @Override
                 protected void onBindViewHolder(SmartViewHolder holder, Item model, int position) {
                     holder.text(android.R.id.text1, model.name());
