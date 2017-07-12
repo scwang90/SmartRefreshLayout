@@ -69,7 +69,7 @@
 
 ![](art/gif_WaveSwipe.gif) ![](art/gif_Material.gif)
 
-整理来自：[WaveSwipeRefreshLayout](https://github.com/recruit-lifestyle/WaveSwipeRefreshLayout)，[MaterialHeader](#1)
+整理来自：[WaveSwipeRefreshLayout](https://github.com/recruit-lifestyle/WaveSwipeRefreshLayout)，[MaterialHeader](https://developer.android.com/reference/android/support/v4/widget/SwipeRefreshLayout.html)
 
 ![](art/gif_StoreHouse.gif) ![](art/gif_WaterDrop.gif)
 
@@ -211,6 +211,11 @@ SmartRefreshLayout 没有使用到：序列化、反序列化、JNI、反射，�
 
 如果在捐赠留言中备注名称，将会被记录到列表中~ 如果你也是github开源作者，捐赠时可以留下github项目地址或者个人主页地址，链接将会被添加到列表中起到互相推广的作用  
 [捐赠列表](art/md_donationlist.md)
+
+## 感谢
+[SwipeRefreshLayout](https://developer.android.com/reference/android/support/v4/widget/SwipeRefreshLayout.html)  
+[TwinklingRefreshLayout](https://github.com/lcodecorex/TwinklingRefreshLayout)  
+[android-Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)  
 
 License
 -------
