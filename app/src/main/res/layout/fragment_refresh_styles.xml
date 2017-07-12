@@ -14,7 +14,7 @@
         android:id="@+id/smartLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srlEnableLoadmore="false"
+        app:srlEnableLoadmore="true"
         app:srlEnableHeaderTranslationContent="true">
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"

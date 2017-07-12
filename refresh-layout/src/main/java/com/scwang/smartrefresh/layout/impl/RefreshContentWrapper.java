@@ -340,8 +340,6 @@ public class RefreshContentWrapper implements RefreshContent {
                     lastValue = thisValue;
                 }
             };
-//            if (startDelay > 0) {
-//                layout.getLayout().postDelayed(() -> {
 //                    if (mScrollableView instanceof RecyclerView) ((RecyclerView) mScrollableView).smoothScrollBy(0, footerHeight, interpolator);
 //                    else if (mScrollableView instanceof ScrollView) ((ScrollView) mScrollableView).smoothScrollBy(0, footerHeight);
 //                    else if (mScrollableView instanceof AbsListView) ((AbsListView) mScrollableView).smoothScrollBy(footerHeight, duration);
@@ -352,24 +350,6 @@ public class RefreshContentWrapper implements RefreshContent {
 //                        } catch (Exception ignored) {
 //                        }
 //                    }
-//                }, startDelay);
-//            }
-//            if (mScrollableView instanceof RecyclerView && startDelay == 0) ((RecyclerView) mScrollableView).smoothScrollBy(0, footerHeight, interpolator);
-//            else if (mScrollableView instanceof ScrollView && startDelay == 0) ((ScrollView) mScrollableView).smoothScrollBy(0, footerHeight);
-//            else if (mScrollableView instanceof AbsListView && startDelay == 0) ((AbsListView) mScrollableView).smoothScrollBy(footerHeight, duration);
-//            else {
-//                try {
-//                    Method method = mScrollableView.getClass().getDeclaredMethod("smoothScrollBy", Integer.class, Integer.class);
-//                    if (startDelay == 0) {
-//                        method.invoke(mScrollableView, 0, footerHeight);
-//                    }
-//                } catch (Exception e) {
-//                    int scrollX = mScrollableView.getScrollX();
-//                    int scrollY = mScrollableView.getScrollY();
-//                    return animation -> mScrollableView.scrollTo(scrollX, scrollY + footerHeight + (int) animation.getAnimatedValue());
-//                }
-//            }
-//            return null;
         }
         return null;
     }
@@ -453,12 +433,17 @@ public class RefreshContentWrapper implements RefreshContent {
                 }
             } else if (layout.isEnableLoadmore() && !layout.isLoadmoreFinished() && layout.isEnableAutoLoadmore()
                     && layout.getState() == RefreshState.None) {
-                if (mlastVisiblePosition != lastVisiblePosition && lastVisiblePosition > 0) {
-                    mlastVisiblePosition = lastVisiblePosition;
-                    if (adapter != null && lastVisiblePosition == adapter.getCount() - 1) {
-                        kernel.getRefreshLayout().autoLoadmore(0, 1);
-                    }
+                if (lastVisiblePosition == totalItemCount - 1
+                        && lastVisiblePosition > 0
+                        && !ScrollBoundaryUtil.canScrollDown(absListView)) {
+                    kernel.getRefreshLayout().autoLoadmore(0, 1);
                 }
+//                if (mlastVisiblePosition != lastVisiblePosition && lastVisiblePosition > 0) {
+//                    mlastVisiblePosition = lastVisiblePosition;
+//                    if (adapter != null && lastVisiblePosition == adapter.getCount() - 1) {
+//                        kernel.getRefreshLayout().autoLoadmore(0, 1);
+//                    }
+//                }
             } else if (overScroll) {
                 if (mlastVisiblePosition != lastVisiblePosition && lastDy < 0 && layout.isEnableLoadmore()) {
                     mlastVisiblePosition = lastVisiblePosition;
