@@ -39,6 +39,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     public static String REFRESH_HEADER_REFRESHING = "正在刷新";
     public static String REFRESH_HEADER_RELEASE = "释放立即刷新";
     public static String REFRESH_HEADER_FINISH = "刷新完成";
+    public static String REFRESH_HEADER_FAILED = "刷新失败";
 
     private Date mLastTime;
     private TextView mHeaderText;
@@ -160,8 +161,12 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     public int onFinish(RefreshLayout layout, boolean success) {
         mProgressDrawable.stop();
         mProgressView.setVisibility(GONE);
-        mHeaderText.setText(REFRESH_HEADER_FINISH);
-        setLastUpdateTime(new Date());
+        if (success) {
+            mHeaderText.setText(REFRESH_HEADER_FINISH);
+            setLastUpdateTime(new Date());
+        } else {
+            mHeaderText.setText(REFRESH_HEADER_FAILED);
+        }
         return 500;//延迟500毫秒之后再弹回
     }
 
