@@ -30,6 +30,7 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
     //<editor-fold desc="Field">
     protected int mOffset;
     protected int mHeaderHeight;
+    protected int mScreenHeightPixels;
     protected RefreshState mState;
     protected boolean mIsFinish;
     protected boolean mManualOperation;
@@ -41,19 +42,27 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
     //<editor-fold desc="View">
     public FunGameBase(Context context) {
         super(context);
+        initView(context);
     }
 
     public FunGameBase(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        initView(context);
     }
 
     public FunGameBase(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        initView(context);
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     public FunGameBase(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+        initView(context);
+    }
+
+    private void initView(Context context) {
+        mScreenHeightPixels = context.getResources().getDisplayMetrics().heightPixels;
     }
 
     @Override
@@ -87,7 +96,19 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
                     break;
                 case MotionEvent.ACTION_MOVE:
                     float dy = event.getRawY() - mTouchY;
-                    mRefreshKernel.moveSpinnerInfinitely(dy);
+                    if (dy >= 0) {
+                        final double M = mHeaderHeight * 2;
+                        final double H = mScreenHeightPixels * 2 / 3;
+                        final double x = Math.max(0, dy * 0.5);
+                        final double y = Math.min(M * (1 - Math.pow(100, -x / H)), x);// 公式 y = M(1-40^(-x/H))
+                        mRefreshKernel.moveSpinner((int) y, false);
+                    } else {
+                        final double M = mHeaderHeight * 2;
+                        final double H = mScreenHeightPixels * 2 / 3;
+                        final double x = -Math.min(0, dy * 0.5);
+                        final double y = -Math.min(M * (1 - Math.pow(100, -x / H)), x);// 公式 y = M(1-40^(-x/H))
+                        mRefreshKernel.moveSpinner((int) y, false);
+                    }
                     break;
                 case MotionEvent.ACTION_UP:
                 case MotionEvent.ACTION_CANCEL:
