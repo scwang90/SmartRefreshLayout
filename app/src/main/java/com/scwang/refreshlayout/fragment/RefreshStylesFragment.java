@@ -38,7 +38,6 @@ import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
-import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import java.lang.reflect.Constructor;
 import java.util.Arrays;
@@ -94,16 +93,6 @@ public class RefreshStylesFragment extends Fragment implements AdapterView.OnIte
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), VERTICAL));
             recyclerView.setAdapter(new BaseRecyclerAdapter<Item>(Arrays.asList(Item.values()), simple_list_item_2,this) {
-                @Override
-                public SmartViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                    SmartViewHolder viewHolder = super.onCreateViewHolder(parent, viewType);
-                    ViewGroup.LayoutParams layoutParams = viewHolder.itemView.getLayoutParams();
-                    if (layoutParams != null) {
-                        layoutParams.height = DensityUtil.dp2px(200);
-                    }
-                    return viewHolder;
-                }
-
                 @Override
                 protected void onBindViewHolder(SmartViewHolder holder, Item model, int position) {
                     holder.text(android.R.id.text1, model.name());
