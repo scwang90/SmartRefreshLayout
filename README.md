@@ -35,41 +35,43 @@
  - [博客文章](https://segmentfault.com/a/1190000010066071) 
  
 ## Demo
-[下载 APK-Demo](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/app-debug.apk)
+[下载 APK-Demo](art/app-debug.apk)
+
+![](art/png_apk_rqcode.png)
 
 #### 项目演示
-![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_practive_weibo.gif) ![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_practive_feedlist.gif)
+![](art/gif_practive_weibo.gif) ![](art/gif_practive_feedlist.gif)
 
-![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_practive_repast.gif) ![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_practive_profile.gif)
+![](art/gif_practive_repast.gif) ![](art/gif_practive_profile.gif)
 
 #### 风格演示
-![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_Delivery.gif) ![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_Dropbox.gif)
+![](art/gif_Delivery.gif) ![](art/gif_Dropbox.gif)
 
 上面这两个是我自己实现的Header，设计来自下面两个网址：[Refresh-your-delivery](https://dribbble.com/shots/2753803-Refresh-your-delivery)，[Dropbox-Refresh](https://dribbble.com/shots/3470499-Dropbox-Refresh)
 
 下面的Header是我把github上其他优秀的Header进行的整理和集合还有优化：
 
-![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_BezierRadar.gif) ![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_Circle.gif)
+![](art/gif_BezierRadar.gif) ![](art/gif_Circle.gif)
 
 整理来自：[TwinklingRefreshLayout](https://github.com/lcodecorex/TwinklingRefreshLayout/blob/master/art/gif_recyclerview2.gif)，[Pull Down To Refresh](https://dribbble.com/shots/1797373-Pull-Down-To-Refresh)
 
-![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_FlyRefresh.gif) ![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_Classics.gif)
+![](art/gif_FlyRefresh.gif) ![](art/gif_Classics.gif)
 
 整理来自：[FlyRefresh](https://github.com/race604/FlyRefresh)，[ClassicsHeader](#1)
 
-![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_Phoenix.gif) ![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_Taurus.gif)
+![](art/gif_Phoenix.gif) ![](art/gif_Taurus.gif)
 
 整理来自：[Yalantis/Phoenix](https://github.com/Yalantis/Phoenix)，[Yalantis/Taurus](https://github.com/Yalantis/Taurus)
 
-![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_BattleCity.gif) ![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_HitBlock.gif)
+![](art/gif_BattleCity.gif) ![](art/gif_HitBlock.gif)
 
 整理来自：[FunGame/BattleCity](https://github.com/Hitomis/FunGameRefresh)，[FunGame/HitBlock](https://github.com/Hitomis/FunGameRefresh)
 
-![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_WaveSwipe.gif) ![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_Material.gif)
+![](art/gif_WaveSwipe.gif) ![](art/gif_Material.gif)
 
 整理来自：[WaveSwipeRefreshLayout](https://github.com/recruit-lifestyle/WaveSwipeRefreshLayout)，[MaterialHeader](#1)
 
-![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_StoreHouse.gif) ![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_WaterDrop.gif)
+![](art/gif_StoreHouse.gif) ![](art/gif_WaterDrop.gif)
 
 整理来自：[Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)，[WaterDrop](https://github.com/THEONE10211024/WaterDropListView)
 
@@ -182,7 +184,7 @@ SmartRefreshLayout.setDefaultRefreshFooterCreater(new DefaultRefreshFooterCreate
 
 注意：方法二 XML设置的Header和Footer的优先级是中等的，会被方法三覆盖。而且使用本方法的时候，Android Studio 会有预览效果，如下图：
 
-![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/jpg_preview_xml_define.jpg)
+![](art/jpg_preview_xml_define.jpg)
 
 不过不用担心，只是预览效果，运行的时候只有下拉才会出现~
 
