@@ -23,7 +23,6 @@ import android.support.v4.view.NestedScrollingParentHelper;
 import android.support.v4.view.ScrollingView;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -1135,9 +1134,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
             if (mEnableRefresh) {
                 if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale
                         || mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Translate) {
-                    requestLayout();
-//                } else if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Translate) {
-//                    mRefreshHeader.getView().setTranslationY(spinner);
+                    mRefreshHeader.getView().requestLayout();
                 }
             }
             if (isAnimator) {
@@ -1157,9 +1154,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
             if (mEnableLoadmore) {
                 if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Scale
                         || mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Translate) {
-                    requestLayout();
-//                } else if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Translate) {
-//                    mRefreshFooter.getView().setTranslationY(spinner);
+                    mRefreshFooter.getView().requestLayout();
                 }
             }
             if (isAnimator) {
@@ -1317,7 +1312,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                     consumed[1] = dy;
                 }
                 moveSpinnerInfinitely(mTotalUnconsumed);
-            } else if (mEnableLoadmore && !mLoadmoreFinished && dy < 0 && mTotalUnconsumed < 0) {
+            } else if (mEnableLoadmore && dy < 0 && mTotalUnconsumed < 0) {
                 if (dy < mTotalUnconsumed) {
                     consumed[1] = dy - mTotalUnconsumed;
                     mTotalUnconsumed = 0;
@@ -1875,15 +1870,6 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                     ValueAnimator valueAnimator = animSpinner(0, startDelay);
                     if (updateListener != null && valueAnimator != null) {
                         valueAnimator.addUpdateListener(updateListener);
-                        valueAnimator.addListener(new AnimatorListenerAdapter() {
-                            @Override
-                            public void onAnimationEnd(Animator animation) {
-                                View scrollableView = mRefreshContent.getScrollableView();
-                                if (!(scrollableView instanceof RecyclerView)) {
-                                    scrollableView.invalidate();
-                                }
-                            }
-                        });
                     }
                 }
             }
