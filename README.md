@@ -198,6 +198,11 @@ refreshLayout.setRefreshFooter(new BallPulseFooter(this).setSpinnerStyle(Spinner
 
 ```
 
+
+## 混淆
+
+SmartRefreshLayout 没有使用到：序列化和反序列化，JNI，反射，所以并不需要添加任何混淆过滤代码，并且已经混淆测试通过，如果你在项目的使用中混淆之后出现问题，请及时通知我。
+
 ## 赞赏
 
 如果你喜欢 SmartRefreshLayout 的设计，感觉 SmartRefreshLayout 帮助到了你，可以点右上角 "Star" 支持一下 谢谢！ ^_^  
