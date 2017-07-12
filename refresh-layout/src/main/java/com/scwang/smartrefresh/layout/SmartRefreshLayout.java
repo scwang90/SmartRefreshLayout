@@ -155,7 +155,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     /**
      * 最大拖动比率(最大高度/Footer高度)
      */
-    protected float mFooterMaxDragRate = 2.0f;
+    protected float mFooterMaxDragRate = 3.0f;
     /**
      * 下拉头部视图
      */
