@@ -5,6 +5,9 @@ import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -26,6 +29,7 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
@@ -42,7 +46,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     public static String REFRESH_HEADER_FINISH = "刷新完成";
     public static String REFRESH_HEADER_FAILED = "刷新失败";
 
-//    private String KEY_LAST_UPDATE_TIME = "LAST_UPDATE_TIME";
+    private String KEY_LAST_UPDATE_TIME = "LAST_UPDATE_TIME";
 
     private Date mLastTime;
     private TextView mHeaderText;
@@ -137,10 +141,19 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
 
         ta.recycle();
 
-//        KEY_LAST_UPDATE_TIME += context.getClass().getName();
-//        mShared = context.getSharedPreferences("ClassicsHeader", Context.MODE_PRIVATE);
-//        setLastUpdateTime(new Date(mShared.getLong(KEY_LAST_UPDATE_TIME, System.currentTimeMillis())));
-        setLastUpdateTime(new Date());
+        if (context instanceof FragmentActivity) {
+            FragmentManager manager = ((FragmentActivity) context).getSupportFragmentManager();
+            if (manager != null) {
+                List<Fragment> fragments = manager.getFragments();
+                if (fragments != null && fragments.size() > 0) {
+                    setLastUpdateTime(new Date());
+                    return;
+                }
+            }
+        }
+        KEY_LAST_UPDATE_TIME += context.getClass().getName();
+        mShared = context.getSharedPreferences("ClassicsHeader", Context.MODE_PRIVATE);
+        setLastUpdateTime(new Date(mShared.getLong(KEY_LAST_UPDATE_TIME, System.currentTimeMillis())));
     }
 
     //</editor-fold>
@@ -263,7 +276,9 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     public ClassicsHeader setLastUpdateTime(Date time) {
         mLastTime = time;
         mLastUpdateText.setText(mFormat.format(time));
-//        mShared.edit().putLong(KEY_LAST_UPDATE_TIME, time.getTime()).apply();
+        if (mShared != null) {
+            mShared.edit().putLong(KEY_LAST_UPDATE_TIME, time.getTime()).apply();
+        }
         return this;
     }
 
