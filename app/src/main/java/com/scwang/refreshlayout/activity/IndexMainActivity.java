@@ -6,6 +6,8 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.BottomNavigationView.OnNavigationItemSelectedListener;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
@@ -60,13 +62,34 @@ public class IndexMainActivity extends AppCompatActivity implements OnNavigation
         }
     }
 
+    ViewPager mViewPager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_index_main);
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        final BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this);
+
+        mViewPager = (ViewPager) findViewById(R.id.viewPager);
+        mViewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
+            @Override
+            public Fragment getItem(int position) {
+                return TabFragment.values()[position].fragment();
+            }
+            @Override
+            public int getCount() {
+                return TabFragment.values().length;
+            }
+        });
+        mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
+            @Override
+            public void onPageSelected(int position) {
+                navigation.setSelectedItemId(TabFragment.values()[position].menuId);
+            }
+        });
+
         navigation.setSelectedItemId(R.id.navigation_style);
     }
 
@@ -78,10 +101,11 @@ public class IndexMainActivity extends AppCompatActivity implements OnNavigation
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.content,TabFragment.from(item.getItemId()).fragment())
-                .commit();
+//        getSupportFragmentManager()
+//                .beginTransaction()
+//                .replace(R.id.content,TabFragment.from(item.getItemId()).fragment())
+//                .commit();
+        mViewPager.setCurrentItem(TabFragment.from(item.getItemId()).ordinal());
         return true;
     }
 }

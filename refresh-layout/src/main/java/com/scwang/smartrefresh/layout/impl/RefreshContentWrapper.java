@@ -28,10 +28,8 @@ import android.view.animation.Interpolator;
 import android.webkit.WebView;
 import android.widget.AbsListView;
 import android.widget.FrameLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ScrollView;
-import android.widget.WrapperListAdapter;
 
 import com.scwang.smartrefresh.layout.api.RefreshContent;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
@@ -397,10 +395,10 @@ public class RefreshContentWrapper implements RefreshContent {
 
     private class AbsListViewScrollComponent implements AbsListView.OnScrollListener {
 
-        int lasty;
-        int lastDy;
-        int mlastVisiblePosition;
-        int mFirstVisiblePosition;
+        int scrollY;
+        int scrollDy;
+        int lastScrolly;
+        int lastScrollDy;
         RefreshKernel kernel;
         SparseArray<ItemRecod> recordSp = new SparseArray<>(0);
 
@@ -414,44 +412,35 @@ public class RefreshContentWrapper implements RefreshContent {
 
         @Override
         public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-            int scrollY = getScrollY(absListView, firstVisibleItem);
-            RefreshLayout layout = kernel.getRefreshLayout();
-            ListAdapter adapter = absListView.getAdapter();
-            if (adapter instanceof WrapperListAdapter) {
-                adapter = ((WrapperListAdapter) adapter).getWrappedAdapter();
-            }
-            lastDy = lasty - scrollY;
-            lasty = scrollY;
-            int lastVisiblePosition = absListView.getLastVisiblePosition();
-            int firstVisiblePosition = absListView.getFirstVisiblePosition();
-            boolean overScroll = layout.isEnableOverScrollBounce() || layout.isRefreshing() || layout.isLoading()
-                    && mMotionEvent == null;
-            if (mFirstVisiblePosition != firstVisiblePosition && lastDy > 0 && overScroll) {
-                mFirstVisiblePosition = firstVisiblePosition;
-                if (adapter != null && firstVisiblePosition == 0 && layout.isEnableRefresh()) {
-                    kernel.animSpinnerBounce(Math.min(lastDy, mHeaderHeight));
-                }
-            } else if (layout.isEnableLoadmore() && !layout.isLoadmoreFinished() && layout.isEnableAutoLoadmore()
-                    && layout.getState() == RefreshState.None) {
-                if (lastVisiblePosition == totalItemCount - 1
-                        && lastVisiblePosition > 0
-                        && !ScrollBoundaryUtil.canScrollDown(absListView)) {
-                    kernel.getRefreshLayout().autoLoadmore(0, 1);
-                }
-//                if (mlastVisiblePosition != lastVisiblePosition && lastVisiblePosition > 0) {
-//                    mlastVisiblePosition = lastVisiblePosition;
-//                    if (adapter != null && lastVisiblePosition == adapter.getCount() - 1) {
-//                        kernel.getRefreshLayout().autoLoadmore(0, 1);
-//                    }
-//                }
-            } else if (overScroll) {
-                if (mlastVisiblePosition != lastVisiblePosition && lastDy < 0 && layout.isEnableLoadmore()) {
-                    mlastVisiblePosition = lastVisiblePosition;
-                    if (adapter != null && lastVisiblePosition == adapter.getCount() - 1) {
-                        kernel.animSpinnerBounce(Math.max(lastDy, -mFooterHeight));
+            lastScrolly = scrollY;
+            lastScrollDy = scrollDy;
+            scrollY = getScrollY(absListView, firstVisibleItem);
+            scrollDy = lastScrolly - scrollY;
+
+            final int dy =lastScrollDy + scrollDy;
+            if (mMotionEvent == null && totalItemCount > 0) {
+                RefreshLayout layout = kernel.getRefreshLayout();
+                boolean overScroll = (layout.isEnableOverScrollBounce() || layout.isRefreshing() || layout.isLoading());
+                if (dy > 0 && firstVisibleItem == 0) {
+                    if (overScroll
+                            && layout.isEnableRefresh()
+                            && !ScrollBoundaryUtil.canScrollUp(absListView)) {
+                        kernel.animSpinnerBounce(Math.min(dy, mHeaderHeight));
+                    }
+                } else if (dy < 0) {
+                    int lastVisiblePosition = absListView.getLastVisiblePosition();
+                    if (lastVisiblePosition == totalItemCount - 1 && lastVisiblePosition > 0) {
+                        if (layout.isEnableLoadmore() && !layout.isLoadmoreFinished() && layout.isEnableAutoLoadmore()
+                                && layout.getState() == RefreshState.None
+                                && !ScrollBoundaryUtil.canScrollDown(absListView)) {
+                            kernel.getRefreshLayout().autoLoadmore(0, 1);
+                        } else if (overScroll && !ScrollBoundaryUtil.canScrollDown(absListView)) {
+                            kernel.animSpinnerBounce(Math.max(dy, -mFooterHeight));
+                        }
                     }
                 }
             }
+
         }
 
         void attach(AbsListView listView) {
@@ -505,12 +494,14 @@ public class RefreshContentWrapper implements RefreshContent {
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             RefreshLayout layout = kernel.getRefreshLayout();
-            if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+            if (newState == RecyclerView.SCROLL_STATE_IDLE && mMotionEvent == null) {
                 boolean intime = System.currentTimeMillis() - lastFlingTime < 1000;
                 boolean overScroll = layout.isEnableOverScrollBounce() || layout.isRefreshing() || layout.isLoading();
                 if (lastDy < -1 && intime && overScroll && layout.isEnableRefresh()) {
                     kernel.animSpinnerBounce(Math.min(-lastDy * 2, mHeaderHeight));
-                } else if (layout.isEnableLoadmore() && !layout.isLoadmoreFinished() && layout.isEnableAutoLoadmore()
+                } else if (layout.isEnableLoadmore()
+                        && !layout.isLoadmoreFinished()
+                        && layout.isEnableAutoLoadmore()
                         && layout.getState() == RefreshState.None) {
 //                    RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
 //                    if (manager instanceof LinearLayoutManager) {
@@ -531,13 +522,17 @@ public class RefreshContentWrapper implements RefreshContent {
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             lastDy = dy;
             RefreshLayout layout = kernel.getRefreshLayout();
-            if (layout.isEnableLoadmore() && !layout.isLoadmoreFinished() && layout.isEnableAutoLoadmore()
-                    && layout.getState() == RefreshState.None){
+            if (mMotionEvent == null
+                    && layout.isEnableLoadmore()
+                    && !layout.isLoadmoreFinished()
+                    && layout.isEnableAutoLoadmore()
+                    && layout.getState() == RefreshState.None ){
                 RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
                 if (manager instanceof LinearLayoutManager) {
                     LinearLayoutManager linearManager = ((LinearLayoutManager) manager);
                     int lastVisiblePosition = linearManager.findLastVisibleItemPosition();
                     if(lastVisiblePosition >= linearManager.getItemCount() - 1
+                            && lastVisiblePosition > 0
                             && !ScrollBoundaryUtil.canScrollDown(recyclerView)){
                         kernel.getRefreshLayout().autoLoadmore(0,1);
                     }
