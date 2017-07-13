@@ -188,7 +188,7 @@ refreshLayout.setRefreshFooter(new BallPulseFooter(this).setSpinnerStyle(Spinner
 
 ## Proguard
 
-Tis library didn't use to the serialization and deserialization, JNI, reflection, so do not need to add confusion filtering code, and it has been confusing tests pass, if you after the confusion in the use of the project appear problem, please inform me.
+This library does't use serialization and deserialization, JNI, reflection, so there is no need to add confusing filtering code, and it has been confusing tests pass, if you after the confusion in the use of the project appear problem, please inform me.
 
 ## Donate
 

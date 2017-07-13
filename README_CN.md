@@ -46,7 +46,7 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
 #### 风格演示
 ![](art/gif_Delivery.gif) ![](art/gif_Dropbox.gif)
 
-上面这两个是我自己实现的Header，设计来自下面两个网址：[Refresh-your-delivery](https://dribbble.com/shots/2753803-Refresh-your-delivery)，[Dropbox-Refresh](https://dribbble.com/shots/3470499-Dropbox-Refresh)
+上面这两个是我自己实现的Header，设计来自：[Refresh-your-delivery](https://dribbble.com/shots/2753803-Refresh-your-delivery)，[Dropbox-Refresh](https://dribbble.com/shots/3470499-Dropbox-Refresh)
 
 下面的Header是我把github上其它优秀的Header进行的整理和集合还有优化：
 
@@ -75,9 +75,8 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
 整理来自：[Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)，[WaterDrop](https://github.com/THEONE10211024/WaterDropListView)
 
 
-&emsp;&emsp;看到这么多炫酷的Header，是不是觉得很棒？这时你或许会担心这么多的Header集成在一起，但是平时只会用到一个，是不是要引入很多无用的代码和资源？
-
-&emsp;&emsp;请放心，我已经把刷新布局分成三个包啦，用到的时候自行引用就可以啦！
+看到这么多炫酷的Header，是不是觉得很棒？这时你或许会担心这么多的Header集成在一起，但是平时只会用到一个，是不是要引入很多无用的代码和资源？  
+请放心，我已经把刷新布局分成三个包啦，用到的时候自行引用就可以啦！
 
  - SmartRefreshLayout 刷新布局核心实现，自带ClassicsHeader（经典）、BezierRadarHeader（贝塞尔雷达）两个 Header.
  - SmartRefreshHeader 各种Header的集成，除了Layout自带的Header，其它都在这个包中.
