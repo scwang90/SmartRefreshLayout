@@ -3,14 +3,16 @@
 [![Download](https://api.bintray.com/packages/scwang90/maven/SmartRefreshLayout/images/download.svg) ](https://bintray.com/scwang90/maven/SmartRefreshLayout/_latestVersion) 
 ![MinSdk](https://cdn.rawgit.com/scwang90/SmartRefreshLayout/master/art/svg_minsdkapi.svg)
 
-正如名字所说，SmartRefreshLayout是一个“聪明”或者说“智能”的下拉刷新布局，由于它的“智能”，他不只是如其他的刷新布局所说的支持所有的View，还支持多层嵌套的视图结构。  除了“聪明”之外，SmartRefreshLayout还具备了很多的特点。  
-它继承自ViewGroup 而不是其他的FrameLayout或者LinearLayout，提高了性能。  
+## [English](README_EN.md) | 中文
+
+正如名字所说，SmartRefreshLayout是一个“聪明”或者说“智能”的下拉刷新布局，由于它的“智能”，它不只是如其它的刷新布局所说的支持所有的View，还支持多层嵌套的视图结构。  除了“聪明”之外，SmartRefreshLayout还具备了很多的特点。  
+它继承自ViewGroup 而不是其它的FrameLayout或者LinearLayout，提高了性能。  
 吸取了现在流行的各种刷新布局的优点，包括谷歌官方的 SwipeRefreshLayout，现在非常流行的 [TwinklingRefreshLayout](https://github.com/lcodecorex/TwinklingRefreshLayout) 、[android-Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/Ultra-Pull-To-Refresh)。还集成了各种炫酷的 Header 和 Footer。  
 SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷新框架，并集成各种的炫酷、多样、实用、美观的Header和Footer。
 
 ## 特点功能:
 
- - 支持所有的 View（AbsListView、RecyclerView、WebView....View） 和多层嵌套的 Layout（详细）
+ - 支持所有的 View（AbsListView、RecyclerView、WebView....View） 和多层嵌套的视图结构
  - 支持自定义并且已经集成了很多炫酷的 Header 和 Footer （图）.
  - 支持和ListView的同步滚动 和 RecyclerView、AppBarLayout、CoordinatorLayout 的嵌套滚动 NestedScrolling.
  - 支持在Android Studio Xml 编辑器中预览 效果（图）
@@ -46,7 +48,7 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
 
 上面这两个是我自己实现的Header，设计来自下面两个网址：[Refresh-your-delivery](https://dribbble.com/shots/2753803-Refresh-your-delivery)，[Dropbox-Refresh](https://dribbble.com/shots/3470499-Dropbox-Refresh)
 
-下面的Header是我把github上其他优秀的Header进行的整理和集合还有优化：
+下面的Header是我把github上其它优秀的Header进行的整理和集合还有优化：
 
 ![](art/gif_BezierRadar.gif) ![](art/gif_Circle.gif)
 
@@ -78,8 +80,8 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
 &emsp;&emsp;请放心，我已经把刷新布局分成三个包啦，用到的时候自行引用就可以啦！
 
  - SmartRefreshLayout 刷新布局核心实现，自带ClassicsHeader（经典）、BezierRadarHeader（贝塞尔雷达）两个 Header.
- - SmartRefreshHeader 各种Header的集成，除了Layout自带的Header，其他都在这个包中.
- - SmartRefreshFooter 各种Footer的集成，除了Layout自带的Footer，其他都在这个包中.
+ - SmartRefreshHeader 各种Header的集成，除了Layout自带的Header，其它都在这个包中.
+ - SmartRefreshFooter 各种Footer的集成，除了Layout自带的Footer，其它都在这个包中.
 
 ## 简单用例
 #### 1.在 buld.gradle 中添加依赖
@@ -144,7 +146,7 @@ SmartRefreshLayout.setDefaultRefreshFooterCreater(new DefaultRefreshFooterCreate
     });
 ```
 
-注意：方法一 设置的Header和Footer的优先级是最低的，如果同时还使用了方法二、三，将会被其他方法取代
+注意：方法一 设置的Header和Footer的优先级是最低的，如果同时还使用了方法二、三，将会被其它方法取代
 
 
 #### 2.方法二 XML布局文件指定
@@ -162,9 +164,7 @@ SmartRefreshLayout.setDefaultRefreshFooterCreater(new DefaultRefreshFooterCreate
     <!--srlEnablePreviewInEditMode 可以开启和关闭预览功能-->
     <com.scwang.smartrefresh.layout.header.ClassicsHeader
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:srlClassicsSpinnerStyle="FixedBehind"/>
-    <!--FixedBehind可以让Header固定在内容的背后，下拉的时候效果同微信浏览器的效果-->
+        android:layout_height="wrap_content"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -173,9 +173,7 @@ SmartRefreshLayout.setDefaultRefreshFooterCreater(new DefaultRefreshFooterCreate
         android:text="@string/description_define_in_xml"/>
     <com.scwang.smartrefresh.layout.footer.ClassicsFooter
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:srlClassicsSpinnerStyle="FixedBehind"/>
-    <!--FixedBehind可以让Footer固定在内容的背后，下拉的时候效果同微信浏览器的效果-->
+        android:layout_height="wrap_content"/>
 </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 ```
 

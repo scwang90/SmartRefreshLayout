@@ -15,19 +15,13 @@
         android:layout_height="match_parent"
         app:srlPrimaryColor="@color/colorPrimary"
         app:srlAccentColor="@android:color/white"
-        app:srlEnableLoadmore="true">
-        <com.scwang.smartrefresh.layout.header.ClassicsHeader
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+        app:srlEnableLoadmore="false">
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/white"
             tools:listitem="@android:layout/simple_list_item_2"/>
-        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>
