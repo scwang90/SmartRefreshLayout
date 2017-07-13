@@ -77,6 +77,7 @@
 |srlSpinnerStyle|enum|变换样式：srlClassicsSpinnerStyle的全部、FixedFront（固定在前面或全屏）|
 
 ## Header-方法 Header-Method
+|:---:|:---:|:---:|
 |setPrimaryColors|colors|主题\强调颜色|
 |setSpinnerStyle|enum|变换样式：参考属性srlSpinnerStyle|
 |setClassicsSpinnerStyle|enum|变换样式：参考属性srlClassicsSpinnerStyle|
