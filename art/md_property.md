@@ -66,3 +66,17 @@
 |isLoading|boolean|是否正在加载|
 |autoRefresh|(int delayed)|触发自动刷新|
 |autoLoadmore|(int delayed)|触发自动加载|
+
+## Header-属性 Header-Attributes
+
+|名称-name|格式-format|描述-description|
+|:---:|:---:|:---:|
+|srlPrimaryColor|color|主题颜色|
+|srlAccentColor|color|强调颜色|
+|srlClassicsSpinnerStyle|enum|变换样式：Translate(平行移动)、Scale（拉伸形变）、FixedBehind（固定在背后）|
+|srlSpinnerStyle|enum|变换样式：srlClassicsSpinnerStyle的全部、FixedFront（固定在前面或全屏）|
+
+## Header-方法 Header-Method
+|setPrimaryColors|colors|主题\强调颜色|
+|setSpinnerStyle|enum|变换样式：参考属性srlSpinnerStyle|
+|setClassicsSpinnerStyle|enum|变换样式：参考属性srlClassicsSpinnerStyle|
