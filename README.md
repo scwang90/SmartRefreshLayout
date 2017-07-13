@@ -35,7 +35,7 @@ SmartRefreshLayout's goal is to build a strong, stable and mature refresh layout
  - [Blog posts](https://segmentfault.com/a/1190000010066071) 
  
 ## Demo
-[download APK-Demo](art/app-debug.apk)
+[Download APK-Demo](art/app-debug.apk)
 
 ![](art/png_apk_rqcode.png)
 
@@ -77,9 +77,9 @@ The two above is my own implementation of the Header, the design comes from: [Re
 See so many cool headers, is not it feel great? At this point you may be worried that so many headers together, but usually only use one, is not to introduce a lot of useless code and resources?    
 Please rest assured that I have divided it into three packages, when used to reference their own it!
 
- - SmartRefreshLayout The core to realize，Bring ClassicsHeader and BezierRadarHeader.
- - SmartRefreshHeader Integration of various kinds of the Header.
- - SmartRefreshFooter Integration of various kinds of the Footer.
+ - **SmartRefreshLayout:** The core to realize，Bring ClassicsHeader and BezierRadarHeader.
+ - **SmartRefreshHeader:** Integration of various kinds of the Header.
+ - **SmartRefreshFooter:** Integration of various kinds of the Footer.
 
 ## Usage
 #### 1.Add a gradle dependency.
