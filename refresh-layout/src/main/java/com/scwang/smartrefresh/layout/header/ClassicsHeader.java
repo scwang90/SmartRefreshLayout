@@ -1,6 +1,7 @@
 package com.scwang.smartrefresh.layout.header;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
@@ -41,6 +42,8 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     public static String REFRESH_HEADER_FINISH = "刷新完成";
     public static String REFRESH_HEADER_FAILED = "刷新失败";
 
+    private String KEY_LAST_UPDATE_TIME = "LAST_UPDATE_TIME";
+
     private Date mLastTime;
     private TextView mHeaderText;
     private TextView mLastUpdateText;
@@ -49,6 +52,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     private ProgressDrawable mProgressDrawable;
     private DateFormat mFormat = new SimpleDateFormat("上次更新 M-d HH:mm", Locale.CHINA);
     private SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
+    private SharedPreferences mShared;
 
     //<editor-fold desc="RelativeLayout">
     public ClassicsHeader(Context context) {
@@ -95,7 +99,6 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
         mHeaderText.setTextSize(16);
 
         mLastUpdateText = new TextView(context);
-        mLastUpdateText.setText(mFormat.format(new Date()));
         mLastUpdateText.setTextColor(0xff7c7c7c);
         mLastUpdateText.setTextSize(12);
         LinearLayout.LayoutParams lpHeaderText = new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
@@ -116,7 +119,6 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
             mProgressView.setVisibility(GONE);
         }
 
-
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ClassicsHeader);
 
         mSpinnerStyle = SpinnerStyle.values()[ta.getInt(R.styleable.ClassicsHeader_srlClassicsSpinnerStyle,mSpinnerStyle.ordinal())];
@@ -134,6 +136,10 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
         }
 
         ta.recycle();
+
+        KEY_LAST_UPDATE_TIME += context.getClass().getName();
+        mShared = context.getSharedPreferences("ClassicsHeader", Context.MODE_PRIVATE);
+        setLastUpdateTime(new Date(mShared.getLong(KEY_LAST_UPDATE_TIME, System.currentTimeMillis())));
     }
 
     //</editor-fold>
@@ -256,6 +262,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     public ClassicsHeader setLastUpdateTime(Date time) {
         mLastTime = time;
         mLastUpdateText.setText(mFormat.format(time));
+        mShared.edit().putLong(KEY_LAST_UPDATE_TIME, time.getTime()).apply();
         return this;
     }
 
