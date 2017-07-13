@@ -42,7 +42,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     public static String REFRESH_HEADER_FINISH = "刷新完成";
     public static String REFRESH_HEADER_FAILED = "刷新失败";
 
-    private String KEY_LAST_UPDATE_TIME = "LAST_UPDATE_TIME";
+//    private String KEY_LAST_UPDATE_TIME = "LAST_UPDATE_TIME";
 
     private Date mLastTime;
     private TextView mHeaderText;
@@ -137,9 +137,10 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
 
         ta.recycle();
 
-        KEY_LAST_UPDATE_TIME += context.getClass().getName();
-        mShared = context.getSharedPreferences("ClassicsHeader", Context.MODE_PRIVATE);
-        setLastUpdateTime(new Date(mShared.getLong(KEY_LAST_UPDATE_TIME, System.currentTimeMillis())));
+//        KEY_LAST_UPDATE_TIME += context.getClass().getName();
+//        mShared = context.getSharedPreferences("ClassicsHeader", Context.MODE_PRIVATE);
+//        setLastUpdateTime(new Date(mShared.getLong(KEY_LAST_UPDATE_TIME, System.currentTimeMillis())));
+        setLastUpdateTime(new Date());
     }
 
     //</editor-fold>
@@ -262,7 +263,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     public ClassicsHeader setLastUpdateTime(Date time) {
         mLastTime = time;
         mLastUpdateText.setText(mFormat.format(time));
-        mShared.edit().putLong(KEY_LAST_UPDATE_TIME, time.getTime()).apply();
+//        mShared.edit().putLong(KEY_LAST_UPDATE_TIME, time.getTime()).apply();
         return this;
     }
 
