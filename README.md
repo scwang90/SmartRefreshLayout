@@ -215,8 +215,10 @@ SmartRefreshLayout 没有使用到：序列化、反序列化、JNI、反射，�
 ## 讨论
 
 QQ群已经建立，群号：477963933  
-#### 进群须知：
+#### 进群须知
 本群专为 【Android智能下拉刷新框架-SmartRefreshLayout】开设，请不要讨论安卓和下拉刷新之外的内容。本群中后期会改为收费咨询群，并再开启免费讨论群，还没进群的童鞋赶紧~
+#### 温馨提示
+加入群的答案在本文档中可以找到~
 
 ## 感谢
 [SwipeRefreshLayout](https://developer.android.com/reference/android/support/v4/widget/SwipeRefreshLayout.html)  
