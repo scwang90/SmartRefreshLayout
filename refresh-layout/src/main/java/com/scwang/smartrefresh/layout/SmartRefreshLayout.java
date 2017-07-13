@@ -345,6 +345,12 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         super.onAttachedToWindow();
         if (isInEditMode()) return;
 
+        if (mRefreshContent == null
+                && mRefreshHeader == null
+                && mRefreshFooter == null) {
+            onFinishInflate();
+        }
+
         if (mKernel == null) {
             mKernel = new RefreshKernelImpl();
         }
