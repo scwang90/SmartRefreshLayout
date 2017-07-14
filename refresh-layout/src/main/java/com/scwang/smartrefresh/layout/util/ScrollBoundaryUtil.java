@@ -69,18 +69,18 @@ public class ScrollBoundaryUtil {
         return false;
     }
 
-    public static boolean canScrollDown(View mScrollableView) {
+    public static boolean canScrollDown(View targetView) {
         if (android.os.Build.VERSION.SDK_INT < 14) {
-            if (mScrollableView instanceof AbsListView) {
-                final AbsListView absListView = (AbsListView) mScrollableView;
+            if (targetView instanceof AbsListView) {
+                final AbsListView absListView = (AbsListView) targetView;
                 return absListView.getChildCount() > 0
                         && (absListView.getLastVisiblePosition() < absListView.getChildCount() - 1
                         || absListView.getChildAt(absListView.getChildCount() - 1).getBottom() > absListView.getPaddingBottom());
             } else {
-                return mScrollableView.getScrollY() < 0;
+                return targetView.getScrollY() < 0;
             }
         } else {
-            return mScrollableView.canScrollVertically(1);
+            return targetView.canScrollVertically(1);
         }
     }
 
