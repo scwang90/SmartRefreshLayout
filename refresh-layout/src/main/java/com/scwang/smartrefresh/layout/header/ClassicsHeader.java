@@ -79,22 +79,8 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
 
         setMinimumHeight(density.dip2px(80));
 
-        mProgressDrawable = new ProgressDrawable();
-        mProgressDrawable.setColor(0xff666666);
-        mProgressView = new ImageView(context);
-        mProgressView.setImageDrawable(mProgressDrawable);
-        LayoutParams lpProgress = new LayoutParams(density.dip2px(20), density.dip2px(20));
-        lpProgress.leftMargin = density.dip2px(80);
-        lpProgress.addRule(CENTER_VERTICAL);
-        lpProgress.addRule(ALIGN_PARENT_LEFT);
-        addView(mProgressView, lpProgress);
-
-        mArrowView = new PathsView(context);
-        mArrowView.parserColors(0xff666666);
-        mArrowView.parserPaths("M20,12l-1.41,-1.41L13,16.17V4h-2v12.17l-5.58,-5.59L4,12l8,8 8,-8z");
-        addView(mArrowView, lpProgress);
-
         LinearLayout layout = new LinearLayout(context, attrs, defStyleAttr);
+        layout.setId(android.R.id.widget_frame);
         layout.setGravity(Gravity.CENTER_HORIZONTAL);
         layout.setOrientation(LinearLayout.VERTICAL);
         mHeaderText = new TextView(context);
@@ -115,6 +101,21 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
         LayoutParams lpHeaderLayout = new LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
         lpHeaderLayout.addRule(CENTER_IN_PARENT);
         addView(layout,lpHeaderLayout);
+
+        mProgressDrawable = new ProgressDrawable();
+        mProgressDrawable.setColor(0xff666666);
+        mProgressView = new ImageView(context);
+        mProgressView.setImageDrawable(mProgressDrawable);
+        LayoutParams lpProgress = new LayoutParams(density.dip2px(20), density.dip2px(20));
+        lpProgress.rightMargin = density.dip2px(20);
+        lpProgress.addRule(CENTER_VERTICAL);
+        lpProgress.addRule(LEFT_OF, android.R.id.widget_frame);
+        addView(mProgressView, lpProgress);
+
+        mArrowView = new PathsView(context);
+        mArrowView.parserColors(0xff666666);
+        mArrowView.parserPaths("M20,12l-1.41,-1.41L13,16.17V4h-2v12.17l-5.58,-5.59L4,12l8,8 8,-8z");
+        addView(mArrowView, lpProgress);
 
         if (isInEditMode()) {
             mArrowView.setVisibility(GONE);
