@@ -522,7 +522,7 @@ public class RefreshContentWrapper implements RefreshContent {
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             lastDy = dy;
             RefreshLayout layout = kernel.getRefreshLayout();
-            if (mMotionEvent == null
+            if (mMotionEvent == null && dy > 0
                     && layout.isEnableLoadmore()
                     && !layout.isLoadmoreFinished()
                     && layout.isEnableAutoLoadmore()

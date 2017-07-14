@@ -39,7 +39,10 @@ public class SmartViewHolder extends RecyclerView.ViewHolder implements View.OnC
     @Override
     public void onClick(View v) {
         if (mListener != null) {
-            mListener.onItemClick(null, v, getAdapterPosition(), getItemId());
+            int position = getAdapterPosition();
+            if(position >= 0){
+                mListener.onItemClick(null, v, position, getItemId());
+            }
         }
     }
 
