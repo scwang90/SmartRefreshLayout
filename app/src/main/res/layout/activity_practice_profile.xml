@@ -9,7 +9,7 @@
     tools:context="com.scwang.refreshlayout.activity.practice.ProfilePracticeActivity">
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/smartLayout"
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:srlEnablePureScrollMode="true"

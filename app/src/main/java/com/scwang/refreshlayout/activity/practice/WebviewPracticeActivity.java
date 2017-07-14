@@ -36,7 +36,7 @@ public class WebviewPracticeActivity extends AppCompatActivity {
         });
 
         final WebView webView = (WebView) findViewById(R.id.webView);
-        final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.smartLayout);
+        final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {

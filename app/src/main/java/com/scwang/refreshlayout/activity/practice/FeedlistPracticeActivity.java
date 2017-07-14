@@ -30,7 +30,7 @@ public class FeedlistPracticeActivity extends AppCompatActivity {
 
         if (isFirstEnter) {
             isFirstEnter = false;
-            final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.smartLayout);
+            final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
             refreshLayout.autoRefresh();
         }
 

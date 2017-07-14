@@ -32,6 +32,7 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
  - [更新日志](art/md_update.md)
  - [属性方法](art/md_property.md)
  - [博客文章](https://segmentfault.com/a/1190000010066071) 
+ - [自定义Header](art/md_property.md)
  
 ## Demo
 [下载 APK-Demo](art/app-debug.apk)
@@ -85,9 +86,6 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
 ## 简单用例
 #### 1.在 buld.gradle 中添加依赖
 ```
-compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.1'
-compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.1'//如果使用了特殊的Header
-//快照版本-新功能，可能不稳定
 compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.2-alpha-5'
 compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.2-alpha-5'//如果使用了特殊的Header
 ```
@@ -129,20 +127,27 @@ refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
 
 #### 1.方法一 全局设置
 ```java
-//设置全局的Header构建器
-SmartRefreshLayout.setDefaultRefreshHeaderCreater(new DefaultRefreshHeaderCreater() {
-        @Override
-        public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
-            return new ClassicsHeader(context);//指定为经典Header，默认是 贝塞尔雷达Header
-        }
-    });
-//设置全局的Footer构建器
-SmartRefreshLayout.setDefaultRefreshFooterCreater(new DefaultRefreshFooterCreater() {
-        @Override
-        public RefreshFooter createRefreshFooter(Context context, RefreshLayout layout) {
-            return new ClassicsFooter(context);//指定为经典Footer，默认是 BallPulseFooter
-        }
-    });
+public class App extends Application {
+    public void onCreate() {
+        super.onCreate();
+        //设置全局的Header构建器
+        SmartRefreshLayout.setDefaultRefreshHeaderCreater(new DefaultRefreshHeaderCreater() {
+                @Override
+                public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
+                    //指定为经典Header，默认是 贝塞尔雷达Header
+                    return new ClassicsHeader(context).setSpinnerStyle(SpinnerStyle.Translate);
+                }
+            });
+        //设置全局的Footer构建器
+        SmartRefreshLayout.setDefaultRefreshFooterCreater(new DefaultRefreshFooterCreater() {
+                @Override
+                public RefreshFooter createRefreshFooter(Context context, RefreshLayout layout) {
+                    //指定为经典Footer，默认是 BallPulseFooter
+                    return new ClassicsFooter(context).setSpinnerStyle(SpinnerStyle.Translate);
+                }
+            });
+    }
+}
 ```
 
 注意：方法一 设置的Header和Footer的优先级是最低的，如果同时还使用了方法二、三，将会被其它方法取代
@@ -152,7 +157,7 @@ SmartRefreshLayout.setDefaultRefreshFooterCreater(new DefaultRefreshFooterCreate
 ```xml
 <com.scwang.smartrefresh.layout.SmartRefreshLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/smartLayout"
+    android:id="@+id/refreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#444444"
@@ -184,7 +189,7 @@ SmartRefreshLayout.setDefaultRefreshFooterCreater(new DefaultRefreshFooterCreate
 
 #### 3.方法三 Java代码设置
 ```java
-final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.smartLayout);
+final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
 //设置 Header 为 Material风格
 refreshLayout.setRefreshHeader(new MaterialHeader(this).setShowBezierWave(true));
 //设置 Footer 为 球脉冲

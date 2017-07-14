@@ -63,7 +63,7 @@ public class TaurusStyleActivity extends AppCompatActivity implements AdapterVie
             }
         });
 
-        mRefreshLayout = (RefreshLayout)findViewById(R.id.smartLayout);
+        mRefreshLayout = (RefreshLayout)findViewById(R.id.refreshLayout);
         if (isFirstEnter) {
             isFirstEnter = false;
             mRefreshLayout.autoRefresh();//第一次进入触发自动刷新，演示效果

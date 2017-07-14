@@ -432,39 +432,43 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         final boolean isInEditMode = isInEditMode() && mEnablePreviewInEditMode;
 
         if (mRefreshHeader != null) {
-
             final View headerView = mRefreshHeader.getView();
             final LayoutParams lp = (LayoutParams) headerView.getLayoutParams();
             final int widthSpec = getChildMeasureSpec(widthMeasureSpec, lp.leftMargin + lp.rightMargin, lp.width);
             int heightSpec = heightMeasureSpec;
 
-            if (lp.height > 0) {
-                if (mHeaderHeightStatus.canReplaceWith(DimensionStatus.XmlExact)) {
-                    mHeaderHeightStatus = DimensionStatus.XmlExact;
-                    mHeaderHeight = lp.height/* + lp.topMargin*/ + lp.bottomMargin;
-                    mHeaderExtendHeight = (int) Math.max((mHeaderHeight * (mHeaderMaxDragRate - 1)), 0);
-                    mRefreshHeader.onInitialized(mKernel, mHeaderHeight, mHeaderExtendHeight);
-                }
-                heightSpec = makeMeasureSpec(lp.height, EXACTLY);
-                headerView.measure(widthSpec, heightSpec);
-            } else if (lp.height == WRAP_CONTENT) {
-                heightSpec = makeMeasureSpec(Math.max(getSize(heightMeasureSpec)/* - lp.topMargin*/ - lp.bottomMargin, 0), AT_MOST);
-                headerView.measure(widthSpec, heightSpec);
-                int measuredHeight = headerView.getMeasuredHeight();
-                if (measuredHeight > 0 && mHeaderHeightStatus.canReplaceWith(DimensionStatus.XmlWrap)) {
-                    mHeaderHeightStatus = DimensionStatus.XmlWrap;
-                    mHeaderHeight = headerView.getMeasuredHeight()/* + lp.topMargin*/ + lp.bottomMargin;
-                    mHeaderExtendHeight = (int) Math.max((mHeaderHeight * (mHeaderMaxDragRate - 1)), 0);
-                    mRefreshHeader.onInitialized(mKernel, mHeaderHeight, mHeaderExtendHeight);
-                } else if (mHeaderHeight <= 0) {
-                    heightSpec = makeMeasureSpec(Math.max(mHeaderHeight/* - lp.topMargin*/ - lp.bottomMargin, 0), EXACTLY);
-                    headerView.measure(widthSpec, heightSpec);
-                }
-            } else if (lp.height == MATCH_PARENT) {
+            if (mHeaderHeightStatus.gteReplaceWith(DimensionStatus.CodeExactUnNotify)) {
                 heightSpec = makeMeasureSpec(Math.max(mHeaderHeight/* - lp.topMargin*/ - lp.bottomMargin, 0), EXACTLY);
                 headerView.measure(widthSpec, heightSpec);
             } else {
-                headerView.measure(widthSpec, heightSpec);
+                if (lp.height > 0) {
+                    if (mHeaderHeightStatus.canReplaceWith(DimensionStatus.XmlExact)) {
+                        mHeaderHeightStatus = DimensionStatus.XmlExact;
+                        mHeaderHeight = lp.height/* + lp.topMargin*/ + lp.bottomMargin;
+                        mHeaderExtendHeight = (int) Math.max((mHeaderHeight * (mHeaderMaxDragRate - 1)), 0);
+                        mRefreshHeader.onInitialized(mKernel, mHeaderHeight, mHeaderExtendHeight);
+                    }
+                    heightSpec = makeMeasureSpec(lp.height, EXACTLY);
+                    headerView.measure(widthSpec, heightSpec);
+                } else if (lp.height == WRAP_CONTENT) {
+                    heightSpec = makeMeasureSpec(Math.max(getSize(heightMeasureSpec)/* - lp.topMargin*/ - lp.bottomMargin, 0), AT_MOST);
+                    headerView.measure(widthSpec, heightSpec);
+                    int measuredHeight = headerView.getMeasuredHeight();
+                    if (measuredHeight > 0 && mHeaderHeightStatus.canReplaceWith(DimensionStatus.XmlWrap)) {
+                        mHeaderHeightStatus = DimensionStatus.XmlWrap;
+                        mHeaderHeight = headerView.getMeasuredHeight()/* + lp.topMargin*/ + lp.bottomMargin;
+                        mHeaderExtendHeight = (int) Math.max((mHeaderHeight * (mHeaderMaxDragRate - 1)), 0);
+                        mRefreshHeader.onInitialized(mKernel, mHeaderHeight, mHeaderExtendHeight);
+                    } else if (measuredHeight <= 0) {
+                        heightSpec = makeMeasureSpec(Math.max(mHeaderHeight/* - lp.topMargin*/ - lp.bottomMargin, 0), EXACTLY);
+                        headerView.measure(widthSpec, heightSpec);
+                    }
+                } else if (lp.height == MATCH_PARENT) {
+                    heightSpec = makeMeasureSpec(Math.max(mHeaderHeight/* - lp.topMargin*/ - lp.bottomMargin, 0), EXACTLY);
+                    headerView.measure(widthSpec, heightSpec);
+                } else {
+                    headerView.measure(widthSpec, heightSpec);
+                }
             }
             if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale && !isInEditMode) {
                 final int height = Math.max(0, mSpinner);
@@ -483,19 +487,21 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         }
 
         if (mRefreshFooter != null) {
-
             final View footerView = mRefreshFooter.getView();
             final LayoutParams lp = (LayoutParams) footerView.getLayoutParams();
             final int widthSpec = getChildMeasureSpec(widthMeasureSpec, lp.leftMargin + lp.rightMargin, lp.width);
             int heightSpec = heightMeasureSpec;
-            if (lp.height > 0) {
+            if (mFooterHeightStatus.gteReplaceWith(DimensionStatus.CodeExactUnNotify)) {
+                heightSpec = makeMeasureSpec(Math.max(mFooterHeight - lp.topMargin/* - lp.bottomMargin*/, 0), EXACTLY);
+                footerView.measure(widthSpec, heightSpec);
+            } else if (lp.height > 0) {
                 if (mFooterHeightStatus.canReplaceWith(DimensionStatus.XmlExact)) {
                     mFooterHeightStatus = DimensionStatus.XmlExact;
                     mFooterHeight = lp.height + lp.topMargin/* + lp.bottomMargin*/;
                     mFooterExtendHeight = (int) Math.max((mFooterHeight * (mFooterMaxDragRate - 1)), 0);
                     mRefreshFooter.onInitialized(mKernel, mFooterHeight, mFooterExtendHeight);
                 }
-                heightSpec = makeMeasureSpec(lp.height, EXACTLY);
+                heightSpec = makeMeasureSpec(lp.height - lp.topMargin/* - lp.bottomMargin*/, EXACTLY);
                 footerView.measure(widthSpec, heightSpec);
             } else if (lp.height == WRAP_CONTENT) {
                 heightSpec = makeMeasureSpec(Math.max(getSize(heightMeasureSpec) - lp.topMargin/* - lp.bottomMargin*/, 0), AT_MOST);
@@ -1480,10 +1486,10 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     //<editor-fold desc="开放接口 open interface">
     @Override
     public SmartRefreshLayout setFooterHeight(float heightDp) {
-        return setFooterHeight(dp2px(heightDp));
+        return setFooterHeightPx(dp2px(heightDp));
     }
     @Override
-    public SmartRefreshLayout setFooterHeight(int heightPx) {
+    public SmartRefreshLayout setFooterHeightPx(int heightPx) {
         if (mFooterHeightStatus.canReplaceWith(DimensionStatus.CodeExact)) {
             mFooterHeight = heightPx;
             mFooterExtendHeight = (int) Math.max((heightPx * (mFooterMaxDragRate - 1)), 0);
@@ -1498,10 +1504,10 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     }
     @Override
     public SmartRefreshLayout setHeaderHeight(float heightDp) {
-        return setHeaderHeight(dp2px(heightDp));
+        return setHeaderHeightPx(dp2px(heightDp));
     }
     @Override
-    public SmartRefreshLayout setHeaderHeight(int heightPx) {
+    public SmartRefreshLayout setHeaderHeightPx(int heightPx) {
         if (mHeaderHeightStatus.canReplaceWith(DimensionStatus.CodeExact)) {
             mHeaderHeight = heightPx;
             mHeaderExtendHeight = (int) Math.max((heightPx * (mHeaderMaxDragRate - 1)), 0);

@@ -13,7 +13,7 @@
         app:title="@string/title_activity_using_basic"/>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/smartLayout"
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <ListView
@@ -24,7 +24,8 @@
             tools:listitem="@android:layout/simple_list_item_2"/>
         <com.scwang.smartrefresh.layout.footer.ClassicsFooter
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            app:srlClassicsSpinnerStyle="Translate"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

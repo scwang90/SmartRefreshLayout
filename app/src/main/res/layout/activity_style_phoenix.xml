@@ -33,7 +33,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/smartLayout"
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"

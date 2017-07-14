@@ -71,7 +71,7 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
             }
         });
 
-        mRefreshLayout = (RefreshLayout)findViewById(R.id.smartLayout);
+        mRefreshLayout = (RefreshLayout)findViewById(R.id.refreshLayout);
 
         int deta = new Random().nextInt(7 * 24 * 60 * 60 * 1000);
         mClassicsHeader = (ClassicsHeader)mRefreshLayout.getRefreshHeader();

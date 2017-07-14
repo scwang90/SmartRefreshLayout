@@ -92,7 +92,7 @@ public class RefreshPractiveFragment extends Fragment implements AdapterView.OnI
             try {
                 Constructor<?> constructor = item.clazz.getConstructor(Context.class);
                 RefreshHeader header = (RefreshHeader) constructor.newInstance(getContext());
-                RefreshLayout layout = (RefreshLayout) getView().findViewById(R.id.smartLayout);
+                RefreshLayout layout = (RefreshLayout) getView().findViewById(R.id.refreshLayout);
                 layout.setRefreshHeader(header);
                 if (!(header instanceof ClassicsHeader)) {
                     layout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);

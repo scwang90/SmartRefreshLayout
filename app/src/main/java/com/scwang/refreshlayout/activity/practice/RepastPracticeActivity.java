@@ -48,7 +48,7 @@ public class RepastPracticeActivity extends AppCompatActivity {
             }
         });
 
-        final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.smartLayout);
+        final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
 
         //第一次进入演示刷新
         if (isFirstEnter) {

@@ -11,7 +11,7 @@
         app:title="@string/fragment_refresh_styles"/>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/smartLayout"
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:srlEnableLoadmore="false"

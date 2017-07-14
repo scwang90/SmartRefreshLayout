@@ -20,11 +20,11 @@ public interface RefreshLayout {
 
     RefreshLayout setFooterHeight(float dp);
 
-    RefreshLayout setFooterHeight(int px);
+    RefreshLayout setFooterHeightPx(int px);
 
     RefreshLayout setHeaderHeight(float dp);
 
-    RefreshLayout setHeaderHeight(int px);
+    RefreshLayout setHeaderHeightPx(int px);
 
     /**
      * 设置下拉最大高度和Header高度的比率（将会影响可以下拉的最大高度）

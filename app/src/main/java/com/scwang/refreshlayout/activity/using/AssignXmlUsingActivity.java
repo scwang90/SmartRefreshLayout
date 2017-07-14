@@ -35,7 +35,7 @@ public class AssignXmlUsingActivity extends AppCompatActivity {
          * 以下代码仅仅为了演示效果而已，不是必须的
          * 关键代码在 activity_using_assign_xml 中
          */
-        final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.smartLayout);
+        final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
         if (isFirstEnter) {
             isFirstEnter = false;
             //触发上啦加载

@@ -45,7 +45,17 @@ public enum DimensionStatus {
         return this;
     }
 
+    /**
+     * 小于等于
+     */
     public boolean canReplaceWith(DimensionStatus status) {
         return ordinal() < status.ordinal() || (!notifyed && ordinal() == status.ordinal());
+    }
+
+    /**
+     * 大于等于
+     */
+    public boolean gteReplaceWith(DimensionStatus status) {
+        return ordinal() >= status.ordinal();
     }
 }

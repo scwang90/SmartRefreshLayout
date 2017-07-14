@@ -86,7 +86,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
         mScenceView = (MountanScenceView) findViewById(R.id.mountan);
         mFlyRefreshHeader = (FlyRefreshHeader)findViewById(R.id.flyrefresh);
         mFlyRefreshHeader.setUp(mScenceView, mFlyView);//绑定场景和纸飞机
-        mRefreshlayout = (RefreshLayout) findViewById(R.id.smartLayout);
+        mRefreshlayout = (RefreshLayout) findViewById(R.id.refreshLayout);
         mRefreshlayout.setReboundInterpolator(new ElasticOutInterpolator());//设置回弹插值器，会带有弹簧震动效果
         mRefreshlayout.setReboundDuration(800);//设置回弹动画时长
         mRefreshlayout.setOnRefreshListener(new OnRefreshListener() {

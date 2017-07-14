@@ -84,9 +84,6 @@ Please rest assured that I have divided it into three packages, when used to ref
 ## Usage
 #### 1.Add a gradle dependency.
 ```
-compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.1'
-compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.1'//If you use the special Header
-//Snapshot version - new feature, may not be stable
 compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.2-alpha-5'
 compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.2-alpha-5'//If you use the special Header
 ```
@@ -113,13 +110,13 @@ RefreshLayout refreshLayout = (RefreshLayout)findViewById(R.id.refreshLayout);
 refreshLayout.setOnRefreshListener(new OnRefreshListener() {
     @Override
     public void onRefresh(RefreshLayout refreshlayout) {
-        refreshlayout.finishRefresh(2000);
+        refreshlayout.finishRefresh(2000).setSpinnerStyle(SpinnerStyle.Translate);
     }
 });
 refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
     @Override
     public void onLoadmore(RefreshLayout refreshlayout) {
-        refreshlayout.finishLoadmore(2000);
+        refreshlayout.finishLoadmore(2000).setSpinnerStyle(SpinnerStyle.Translate);
     }
 });
 ```
@@ -128,18 +125,23 @@ refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
 
 #### 1.Global settings
 ```java
-SmartRefreshLayout.setDefaultRefreshHeaderCreater(new DefaultRefreshHeaderCreater() {
-        @Override
-        public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
-            return new ClassicsHeader(context);
-        }
-    });
-SmartRefreshLayout.setDefaultRefreshFooterCreater(new DefaultRefreshFooterCreater() {
-        @Override
-        public RefreshFooter createRefreshFooter(Context context, RefreshLayout layout) {
-            return new ClassicsFooter(context);
-        }
-    });
+public class App extends Application {
+    public void onCreate() {
+        super.onCreate();
+        SmartRefreshLayout.setDefaultRefreshHeaderCreater(new DefaultRefreshHeaderCreater() {
+                @Override
+                public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
+                    return new ClassicsHeader(context).setSpinnerStyle(SpinnerStyle.Translate);
+                }
+            });
+        SmartRefreshLayout.setDefaultRefreshFooterCreater(new DefaultRefreshFooterCreater() {
+                @Override
+                public RefreshFooter createRefreshFooter(Context context, RefreshLayout layout) {
+                    return new ClassicsFooter(context).setSpinnerStyle(SpinnerStyle.Translate);
+                }
+            });
+    }
+}
 ```
 
 Note: this method is the lowest priority.
@@ -149,7 +151,7 @@ Note: this method is the lowest priority.
 ```xml
 <com.scwang.smartrefresh.layout.SmartRefreshLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/smartLayout"
+    android:id="@+id/refreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#444444"
@@ -181,7 +183,7 @@ But don't worry, just a preview effect, run only the drop-down will appear.
 
 #### 3.Specified in the java code
 ```java
-final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.smartLayout);
+final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
 refreshLayout.setRefreshHeader(new MaterialHeader(this).setShowBezierWave(true));
 refreshLayout.setRefreshFooter(new BallPulseFooter(this).setSpinnerStyle(SpinnerStyle.Scale));
 ```
