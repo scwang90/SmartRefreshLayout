@@ -280,7 +280,11 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
         //第一次查找确认的 子View
         for (int i = 0; i < count; i++) {
             View view = getChildAt(i);
-            if (mRefreshContent == null && ( view instanceof AbsListView
+            if (view instanceof RefreshHeader && mRefreshHeader == null) {
+                mRefreshHeader = ((RefreshHeader) view);
+            } else if (view instanceof RefreshFooter && mRefreshFooter == null) {
+                mRefreshFooter = ((RefreshFooter) view);
+            } else if (mRefreshContent == null && ( view instanceof AbsListView
                     || view instanceof WebView
                     || view instanceof ScrollView
                     || view instanceof ScrollingView
@@ -288,10 +292,6 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
                     || view instanceof NestedScrollingParent
                     || view instanceof ViewPager)) {
                 mRefreshContent = new RefreshContentWrapper(view);
-            } else if (view instanceof RefreshHeader && mRefreshHeader == null) {
-                mRefreshHeader = ((RefreshHeader) view);
-            } else if (view instanceof RefreshFooter && mRefreshFooter == null) {
-                mRefreshFooter = ((RefreshFooter) view);
             } else {
                 uncertains[i] = true;//标记未确认
             }
@@ -1417,7 +1417,7 @@ public class SmartRefreshLayout extends ViewGroup implements NestedScrollingPare
     public boolean onNestedPreFling(View target, float velocityX, float velocityY) {
         return reboundAnimator != null
                 || mState == RefreshState.PullDownToRefresh || mState == RefreshState.PullToUpLoad
-//                || mState == RefreshState.ReleaseToRefresh || mState == RefreshState.ReleaseToLoad
+                || mState == RefreshState.ReleaseToRefresh || mState == RefreshState.ReleaseToLoad
 //                || (mState == RefreshState.Refreshing && mHeaderTranslationY > -mHeaderHeight)
 //                || (mState == RefreshState.Loading && mFooterTranslationY < mFooterHeight)
                 || (mState == RefreshState.Refreshing && mSpinner != 0)
