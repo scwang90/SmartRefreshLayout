@@ -73,7 +73,7 @@ import static java.lang.System.currentTimeMillis;
  * Created by SCWANG on 2017/5/26.
  */
 @SuppressWarnings({"unused","WeakerAccess"})
-public class SmartRefreshLayout extends ViewGroup implements NestedScrollingParent, NestedScrollingChild, RefreshLayout {
+public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
 
     //<editor-fold desc="属性变量 property and variable">
 

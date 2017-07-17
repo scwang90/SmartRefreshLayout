@@ -2,6 +2,8 @@ package com.scwang.smartrefresh.layout.api;
 
 import android.support.annotation.ColorRes;
 import android.support.annotation.Nullable;
+import android.support.v4.view.NestedScrollingChild;
+import android.support.v4.view.NestedScrollingParent;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
 
@@ -16,7 +18,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
  * Created by SCWANG on 2017/5/26.
  */
 
-public interface RefreshLayout {
+public interface RefreshLayout extends NestedScrollingParent, NestedScrollingChild {
 
     RefreshLayout setFooterHeight(float dp);
 

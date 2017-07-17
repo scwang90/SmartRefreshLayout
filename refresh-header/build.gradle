@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 //apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'com.novoda.bintray-release'
+//apply plugin: 'com.novoda.bintray-release'
 //apply plugin: 'maven'
 
 android {
@@ -37,18 +37,18 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testCompile 'junit:junit:4.12'
-    provided 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:appcompat-v7:25.3.1'
     compile project(':refresh-layout')
 }
 
-publish {
-    userOrg = 'scwang90'
-    groupId = 'com.scwang.smartrefresh'
-    artifactId = 'SmartRefreshHeader'
-    version = '1.0.2-alpha-6'
-    description = 'Some delicate headers of SmartRefreshLayout'
-    website = "https://github.com/scwang90/${rootProject.name}"
-}
+//publish {
+//    userOrg = 'scwang90'
+//    groupId = 'com.scwang.smartrefresh'
+//    artifactId = 'SmartRefreshHeader'
+//    version = '1.0.2-alpha-7'
+//    description = 'Some delicate headers of SmartRefreshLayout'
+//    website = "https://github.com/scwang90/${rootProject.name}"
+//}
 //publish {
 //    userOrg = 'scwang90'
 //    groupId = 'com.scwang.smartrefresh'

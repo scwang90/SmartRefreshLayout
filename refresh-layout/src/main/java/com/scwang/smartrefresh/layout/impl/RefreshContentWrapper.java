@@ -68,26 +68,29 @@ public class RefreshContentWrapper implements RefreshContent {
 
     public RefreshContentWrapper(View view) {
         this.mContentView = mRealContentView = view;
-        this.findScrollableView(view);
     }
 
     public RefreshContentWrapper(Context context) {
         this.mContentView = mRealContentView = new View(context);
-        this.findScrollableView(mContentView);
     }
 
     //<editor-fold desc="findScrollableView">
-    private void findScrollableView(View content) {
+    private void findScrollableView(View content, RefreshKernel kernel) {
         mScrollableView = findScrollableViewInternal(content, true);
+        try {
+            if (mScrollableView instanceof CoordinatorLayout) {
+                kernel.getRefreshLayout().setNestedScrollingEnabled(false);
+                wrapperCoordinatorLayout(((CoordinatorLayout) mScrollableView));
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
         if (mScrollableView instanceof NestedScrollingParent
                 && !(mScrollableView instanceof NestedScrollingChild)) {
             mScrollableView = findScrollableViewInternal(mScrollableView, false);
         }
         if (mScrollableView instanceof ViewPager) {
             wrapperViewPager((ViewPager) this.mScrollableView);
-        }
-        if (mScrollableView instanceof CoordinatorLayout) {
-            wrapperCoordinatorLayout(((CoordinatorLayout) mScrollableView));
         }
         if (mScrollableView == null) {
             mScrollableView = content;
@@ -101,11 +104,7 @@ public class RefreshContentWrapper implements RefreshContent {
                 ((AppBarLayout) view).addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
                     @Override
                     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                        if (verticalOffset >= 0) {
-                            mEnableRefresh = (true);
-                        } else {
-                            mEnableRefresh = (true);
-                        }
+                    mEnableRefresh = verticalOffset >= 0;
                     }
                 });
             }
@@ -276,10 +275,16 @@ public class RefreshContentWrapper implements RefreshContent {
 
     @Override
     public void setupComponent(RefreshKernel kernel, View fixedHeader, View fixedFooter) {
-        if (mScrollableView instanceof RecyclerView) {
-            RecyclerViewScrollComponent component = new RecyclerViewScrollComponent(kernel);
-            component.attach((RecyclerView) mScrollableView);
-        } else if (mScrollableView instanceof AbsListView) {
+        this.findScrollableView(mContentView, kernel);
+        try {
+            if (mScrollableView instanceof RecyclerView) {
+                RecyclerViewScrollComponent component = new RecyclerViewScrollComponent(kernel);
+                component.attach((RecyclerView) mScrollableView);
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        if (mScrollableView instanceof AbsListView) {
             AbsListViewScrollComponent component = new AbsListViewScrollComponent(kernel);
             component.attach(((AbsListView) mScrollableView));
         } else if (Build.VERSION.SDK_INT >= 23 && mScrollableView != null) {

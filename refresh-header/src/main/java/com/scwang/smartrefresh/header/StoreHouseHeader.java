@@ -26,7 +26,7 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import java.util.ArrayList;
 
-public class StoreHouseHeader extends View implements RefreshHeader {
+public class  StoreHouseHeader extends View implements RefreshHeader {
 
     //<editor-fold desc="Field">
     public ArrayList<StoreHouseBarItem> mItemList = new ArrayList<StoreHouseBarItem>();
@@ -93,23 +93,27 @@ public class StoreHouseHeader extends View implements RefreshHeader {
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.StoreHouseHeader);
         mLineWidth = ta.getDimensionPixelOffset(R.styleable.StoreHouseHeader_shhLineWidth, mLineWidth);
+        mDropHeight = ta.getDimensionPixelOffset(R.styleable.StoreHouseHeader_shhDropHeight, mDropHeight);
         if (ta.hasValue(R.styleable.StoreHouseHeader_shhText)) {
             initWithString(ta.getString(R.styleable.StoreHouseHeader_shhText));
         } else {
             initWithString("StoreHouse");
         }
         ta.recycle();
+
+        setMinimumHeight(mDrawZoneHeight + DensityUtil.dp2px(40));
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int height = getTopOffset() + mDrawZoneHeight + getBottomOffset();
-        heightMeasureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY);
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+//        int height = getTopOffset() + mDrawZoneHeight + getBottomOffset();
+//        heightMeasureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY);
+        setMeasuredDimension(resolveSize(getSuggestedMinimumWidth(), widthMeasureSpec),
+                resolveSize(getSuggestedMinimumHeight(), heightMeasureSpec));
 
         mOffsetX = (getMeasuredWidth() - mDrawZoneWidth) / 2;
-        mOffsetY = getTopOffset();
-        mDropHeight = getTopOffset();
+        mOffsetY = (getMeasuredHeight() - mDrawZoneHeight) / 2;//getTopOffset();
+        mDropHeight = getMeasuredHeight() / 2;//getTopOffset();
     }
 
     @Override
