@@ -223,7 +223,7 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
         }
     }
 
-    private void replaceRefreshLayoutBackground(RefreshLayout refreshLayout) {
+    private void replaceRefreshLayoutBackground(final RefreshLayout refreshLayout) {
         if (restoreRunable == null && mSpinnerStyle == SpinnerStyle.FixedBehind) {
             restoreRunable = new Runnable() {
                 Drawable drawable = refreshLayout.getLayout().getBackground();

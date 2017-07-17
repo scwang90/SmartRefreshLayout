@@ -109,8 +109,11 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
         if (mCurrentPercent > 0) {
             ValueAnimator valueAnimator = ValueAnimator.ofFloat(mCurrentPercent, 0);
             valueAnimator.setDuration(300);
-            valueAnimator.addUpdateListener(animation -> {
-                onPullingDown((float) animation.getAnimatedValue(), 0, 0, 0);
+            valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    FlyRefreshHeader.this.onPullingDown((float) animation.getAnimatedValue(), 0, 0, 0);
+                }
             });
             valueAnimator.start();
             mCurrentPercent = 0;
@@ -192,7 +195,7 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
         finishRefresh(null);
     }
 
-    public void finishRefresh(AnimatorListenerAdapter listenerAdapter) {
+    public void finishRefresh(final AnimatorListenerAdapter listenerAdapter) {
         if (mFlyView == null || !mIsRefreshing || mRefreshLayout == null) {
             return;
         }

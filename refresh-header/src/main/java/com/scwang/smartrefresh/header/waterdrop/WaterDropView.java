@@ -171,9 +171,12 @@ public class WaterDropView extends View {
     public Animator createAnimator() {
         ValueAnimator valueAnimator = ValueAnimator.ofFloat(1, 0.001f).setDuration(BACK_ANIM_DURATION);
         valueAnimator.setInterpolator(new DecelerateInterpolator());
-        valueAnimator.addUpdateListener(valueAnimator1 -> {
-            updateComleteState((float) valueAnimator1.getAnimatedValue());
-            postInvalidate();
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator1) {
+                WaterDropView.this.updateComleteState((float) valueAnimator1.getAnimatedValue());
+                WaterDropView.this.postInvalidate();
+            }
         });
         return valueAnimator;
     }

@@ -48,9 +48,12 @@ public class RoundProgressView extends View {
 
         mAnimator = ValueAnimator.ofInt(0,360);
         mAnimator.setDuration(720);
-        mAnimator.addUpdateListener(animation -> {
-            endAngle = (int) animation.getAnimatedValue();
-            postInvalidate();
+        mAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                endAngle = (int) animation.getAnimatedValue();
+                postInvalidate();
+            }
         });
         mAnimator.setRepeatCount(ValueAnimator.INFINITE);
         mAnimator.setInterpolator(new AccelerateDecelerateInterpolator());

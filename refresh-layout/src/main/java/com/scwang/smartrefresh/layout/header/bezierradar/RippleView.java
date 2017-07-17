@@ -41,9 +41,12 @@ public class RippleView extends View {
             int bigRadius = (int) (Math.sqrt(Math.pow(getHeight(), 2) + Math.pow(getWidth(), 2)));
             mAnimator = ValueAnimator.ofInt(0, bigRadius);
             mAnimator.setDuration(400);
-            mAnimator.addUpdateListener(animation -> {
-                mRadius = (int) animation.getAnimatedValue();
-                invalidate();
+            mAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    mRadius = (int) animation.getAnimatedValue();
+                    invalidate();
+                }
             });
             mAnimator.addListener(new AnimatorListenerAdapter() {
                 @Override

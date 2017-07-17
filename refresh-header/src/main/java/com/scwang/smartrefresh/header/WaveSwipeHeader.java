@@ -209,8 +209,13 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
         ValueAnimator animator = ValueAnimator.ofFloat(0, 0);
         animator.setDuration(500);
         animator.setInterpolator(new AccelerateDecelerateInterpolator());
-        animator.addUpdateListener(valueAnimator -> mCircleView.setTranslationY(
-                mWaveView.getCurrentCircleCenterY() + mCircleView.getHeight() / 2.f));
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                mCircleView.setTranslationY(
+                        mWaveView.getCurrentCircleCenterY() + mCircleView.getHeight() / 2.f);
+            }
+        });
         animator.start();
     }
 

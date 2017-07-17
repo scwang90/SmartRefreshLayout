@@ -275,7 +275,7 @@ public class CircleHeader extends View implements RefreshHeader {
         mHeadHeight = headHeight;
         mBollRadius = headHeight / 6;
         DecelerateInterpolator interpolator = new DecelerateInterpolator();
-        float reboundHeight = Math.min(mWaveHeight * 0.8f, mHeadHeight / 2);
+        final float reboundHeight = Math.min(mWaveHeight * 0.8f, mHeadHeight / 2);
         ValueAnimator waveAnimator = ValueAnimator.ofFloat(
                 mWaveHeight, 0,
                 -(reboundHeight*1.0f),0,
@@ -337,9 +337,12 @@ public class CircleHeader extends View implements RefreshHeader {
         mShowOuter = false;
         mShowBoll = false;
         ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
-        animator.addUpdateListener(animation -> {
-            mFinishRatio = (float) animation.getAnimatedValue();
-            invalidate();
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                mFinishRatio = (float) animation.getAnimatedValue();
+                CircleHeader.this.invalidate();
+            }
         });
         animator.setInterpolator(new AccelerateInterpolator());
         animator.setDuration(DURATION_FINISH);

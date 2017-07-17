@@ -214,7 +214,12 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
    * 各AnimatorのAnimatorUpdateListener
    */
   private ValueAnimator.AnimatorUpdateListener mAnimatorUpdateListener =
-          valueAnimator -> postInvalidate();
+          new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+              WaveView.this.postInvalidate();
+            }
+          };
 
   /**
    * Constructor

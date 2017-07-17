@@ -58,11 +58,7 @@ dependencies {
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
     compile 'in.srain.cube:ultra-ptr:1.0.11'
     compile 'com.github.cpoopc:scrollablelayoutlib:1.0.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile ('com.alibaba.android:vlayout:1.0.9@aar') {
-        transitive = true
-    }
-//    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.2-alpha-3'
-//    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.2-alpha-3'
+//    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.2-alpha-6'
+//    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.2-alpha-6'
     testCompile 'junit:junit:4.12'
 }

@@ -103,9 +103,12 @@ public class BallPulseView extends View {
             scaleAnim.setRepeatCount(ValueAnimator.INFINITE);
             scaleAnim.setStartDelay(delays[i]);
 
-            mUpdateListeners.put(scaleAnim, animation -> {
-                scaleFloats[index] = (float) animation.getAnimatedValue();
-                postInvalidate();
+            mUpdateListeners.put(scaleAnim, new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    scaleFloats[index] = (float) animation.getAnimatedValue();
+                    postInvalidate();
+                }
             });
             mAnimators.add(scaleAnim);
         }

@@ -74,10 +74,13 @@ public class ProgressDrawable extends Drawable implements Animatable {
 
     private void setupAnimators() {
         mValueAnimator = ValueAnimator.ofInt(30, 3600);
-        mValueAnimator.addUpdateListener(animation1 -> {
-            int value = (int) animation1.getAnimatedValue();
-            mProgressDegree = 30 * (value / 30);
-            invalidateSelf();
+        mValueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int value = (int) animation.getAnimatedValue();
+                mProgressDegree = 30 * (value / 30);
+                invalidateSelf();
+            }
         });
         mValueAnimator.setDuration(10000);
         mValueAnimator.setInterpolator(new LinearInterpolator());

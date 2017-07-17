@@ -8,6 +8,8 @@ import android.graphics.PointF;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.NestedScrollingChild;
 import android.support.v4.view.NestedScrollingParent;
@@ -60,6 +62,7 @@ public class RefreshContentWrapper implements RefreshContent {
     private View mScrollableView;
     private View mFixedHeader;
     private View mFixedFooter;
+    private boolean mEnableRefresh = true;
     private MotionEvent mMotionEvent;
     private RefreshScrollBoundaryAdapter mBoundaryAdapter = new RefreshScrollBoundaryAdapter();
 
@@ -83,8 +86,29 @@ public class RefreshContentWrapper implements RefreshContent {
         if (mScrollableView instanceof ViewPager) {
             wrapperViewPager((ViewPager) this.mScrollableView);
         }
+        if (mScrollableView instanceof CoordinatorLayout) {
+            wrapperCoordinatorLayout(((CoordinatorLayout) mScrollableView));
+        }
         if (mScrollableView == null) {
             mScrollableView = content;
+        }
+    }
+
+    private void wrapperCoordinatorLayout(CoordinatorLayout layout) {
+        for (int i = layout.getChildCount() - 1; i >= 0; i--) {
+            View view = layout.getChildAt(i);
+            if (view instanceof AppBarLayout) {
+                ((AppBarLayout) view).addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+                    @Override
+                    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                        if (verticalOffset >= 0) {
+                            mEnableRefresh = (true);
+                        } else {
+                            mEnableRefresh = (true);
+                        }
+                    }
+                });
+            }
         }
     }
 
@@ -92,7 +116,7 @@ public class RefreshContentWrapper implements RefreshContent {
         wrapperViewPager(viewPager, null);
     }
 
-    private void wrapperViewPager(final ViewPager viewPager, PagerPrimaryAdapter primaryAdapter) {
+    private void wrapperViewPager(final ViewPager viewPager, final PagerPrimaryAdapter primaryAdapter) {
         viewPager.post(new Runnable() {
             int count = 0;
             PagerPrimaryAdapter mAdapter = primaryAdapter;
@@ -150,6 +174,10 @@ public class RefreshContentWrapper implements RefreshContent {
     @NonNull
     public View getView() {
         return mContentView;
+    }
+
+    public boolean isEnableRefresh() {
+        return mEnableRefresh;
     }
 
     @Override
@@ -312,11 +340,16 @@ public class RefreshContentWrapper implements RefreshContent {
     }
 
     @Override
-    public AnimatorUpdateListener onLoadingFinish(RefreshKernel kernel, int footerHeight, int startDelay, Interpolator interpolator, int duration) {
+    public AnimatorUpdateListener onLoadingFinish(final RefreshKernel kernel, final int footerHeight, int startDelay, Interpolator interpolator, final int duration) {
         if (mScrollableView != null && kernel.getRefreshLayout().isEnableScrollContentWhenLoaded()) {
             if (mScrollableView instanceof AbsListView && Build.VERSION.SDK_INT < 19) {
                 if (startDelay > 0) {
-                    kernel.getRefreshLayout().getLayout().postDelayed(() -> ((AbsListView) mScrollableView).smoothScrollBy(footerHeight, duration), startDelay);
+                    kernel.getRefreshLayout().getLayout().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            ((AbsListView) mScrollableView).smoothScrollBy(footerHeight, duration);
+                        }
+                    }, startDelay);
                 } else {
                     ((AbsListView) mScrollableView).smoothScrollBy(footerHeight, duration);
                 }

@@ -160,9 +160,12 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
                 mWaveView.getWaveHeight(), 0,
                 -(int)(mWaveView.getWaveHeight()*0.8),0,
                 -(int)(mWaveView.getWaveHeight()*0.4f),0);
-        animator.addUpdateListener(animation -> {
-            mWaveView.setWaveHeight((int) animation.getAnimatedValue()/2);
-            mWaveView.invalidate();
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                mWaveView.setWaveHeight((int) animation.getAnimatedValue()/2);
+                mWaveView.invalidate();
+            }
         });
         animator.setInterpolator(new DecelerateInterpolator());
         animator.setDuration(800);
@@ -176,15 +179,23 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
                 mDotView.setVisibility(INVISIBLE);
                 mProgressView.animate().scaleX((float) 1.0);
                 mProgressView.animate().scaleY((float) 1.0);
-                mProgressView.postDelayed(() -> {
-                    mProgressView.startAnim();
-                },200);
+                mProgressView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mProgressView.startAnim();
+                    }
+                }, 200);
             }
         });
 
         valueAnimator.setInterpolator(new DecelerateInterpolator());
         valueAnimator.setDuration(300);
-        valueAnimator.addUpdateListener(animation -> mDotView.setAlpha((Float) animation.getAnimatedValue()));
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                mDotView.setAlpha((Float) animation.getAnimatedValue());
+            }
+        });
         valueAnimator.start();
     }
 
