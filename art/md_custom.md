@@ -127,5 +127,29 @@ public interface RefreshHeader {
 
 ### 实现 RefreshHeader
 
+接下来我们通过实现一个最简单的经典Header（没有更新时间），来慢慢了解自定义Header的流程。
+
+#### 需求分析
+我们的经典Header需要一个标题文本、刷新动画、下拉箭头。由此我们可以选定一个继承RelativeLayout并列出成员变量
+
+~~~java
+public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
+
+    private TextView mHeaderText;//标题文本
+    private PathsView mArrowView;//下拉箭头
+    private ProgressDrawable mProgressDrawable;//刷新动画
+
+    public ClassicsHeader(Context context) {
+        super(context);
+        mHeaderText = new TextView(context);
+        mProgressDrawable = new ProgressDrawable();
+        mArrowView = new PathsView(context);
+        addView(mHeaderText, lpHeaderText);
+        addView(mProgressView);
+        addView(mArrowView, lpProgress);
+    }
+}
+~~~
+
 
 
