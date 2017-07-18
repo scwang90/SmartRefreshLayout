@@ -190,7 +190,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
 ~~~
 
 #### 状态控制
-我们还要在不同的状态控制内部空间的显示和旋转
+我们还要在不同的状态控制内部控件的显示和旋转
 
 ~~~java
 public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
