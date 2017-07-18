@@ -155,7 +155,6 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
 根据我们的常识，经典Header在下拉的时候是贴着列表平移向下冒出，所以我们实现样式直接指定为：平移
 
 ~~~java
-
 public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     @NonNull
     public View getView() {
@@ -164,6 +163,57 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     @Override
     public SpinnerStyle getSpinnerStyle() {
         return SpinnerStyle.Translate;//指定为平移，不能null
+    }
+}
+~~~
+
+#### 动画开关
+接下来我们需要在关键地方对动画进行控制和开启
+
+~~~java
+public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
+    @Override
+    public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
+        mProgressDrawable.start();//开始动画
+    }
+    @Override
+    public int onFinish(RefreshLayout layout, boolean success) {
+        mProgressDrawable.stop();//停止动画
+        if (success){
+            mHeaderText.setText("刷新完成");
+        } else {
+            mHeaderText.setText("刷新失败");        
+        }
+        return 500;//延迟500毫秒之后再弹回
+    }
+}
+~~~
+
+#### 状态控制
+我们还要在不同的状态控制内部空间的显示和旋转
+
+~~~java
+public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
+    @Override
+    public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
+        switch (newState) {
+            case None:
+            case PullDownToRefresh:
+                mHeaderText.setText("下拉开始刷新");
+                mArrowView.setVisibility(VISIBLE);//显示下拉箭头
+                mProgressView.setVisibility(GONE);//隐藏动画
+                mArrowView.animate().rotation(0);//还原箭头方向
+                break;
+            case Refreshing:
+                mHeaderText.setText("正在刷新");
+                mProgressView.setVisibility(VISIBLE);//显示加载动画
+                mArrowView.setVisibility(GONE);//隐藏箭头
+                break;
+            case ReleaseToRefresh:
+                mHeaderText.setText("释放立即刷新");
+                mArrowView.animate().rotation(180);//显示箭头改为朝上
+                break;
+        }
     }
 }
 ~~~
