@@ -76,7 +76,7 @@ public interface RefreshHeader {
     SpinnerStyle getSpinnerStyle();
 
     /**
-     * 设置主题颜色 （如果之定义的Header没有注意颜色，本方法可以什么都不处理）
+     * 设置主题颜色 （如果自定义的Header没有注意颜色，本方法可以什么都不处理）
      * @param colors 对应Xml中配置的 srlPrimaryColor srlAccentColor
      */
     void setPrimaryColors(int... colors);
@@ -125,6 +125,7 @@ public interface RefreshHeader {
 }
 ~~~
 
+### 实现 RefreshHeader
 
 
 
