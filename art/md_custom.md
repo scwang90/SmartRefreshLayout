@@ -151,5 +151,22 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
 }
 ~~~
 
+#### 指定样式
+根据我们的常识，经典Header在下拉的时候是贴着列表平移向下冒出，所以我们实现样式直接指定为：平移
+
+~~~java
+
+public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
+    @NonNull
+    public View getView() {
+        return this;//真实的视图就是自己，不能返回null
+    }
+    @Override
+    public SpinnerStyle getSpinnerStyle() {
+        return SpinnerStyle.Translate;//指定为平移，不能null
+    }
+}
+~~~
+
 
 
