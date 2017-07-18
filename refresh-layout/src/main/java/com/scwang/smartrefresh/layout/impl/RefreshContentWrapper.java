@@ -55,6 +55,8 @@ import static com.scwang.smartrefresh.layout.util.ScrollBoundaryUtil.isTransform
 
 public class RefreshContentWrapper implements RefreshContent {
 
+    private static final String TAG_REFRESH_CONTENT_WRAPPER = "TAG_REFRESH_CONTENT_WRAPPER";
+
     private int mHeaderHeight = Integer.MAX_VALUE;
     private int mFooterHeight = mHeaderHeight - 1;
     private View mContentView;
@@ -63,15 +65,22 @@ public class RefreshContentWrapper implements RefreshContent {
     private View mFixedHeader;
     private View mFixedFooter;
     private boolean mEnableRefresh = true;
+    private boolean mEnableLoadmore = true;
     private MotionEvent mMotionEvent;
     private RefreshScrollBoundaryAdapter mBoundaryAdapter = new RefreshScrollBoundaryAdapter();
 
     public RefreshContentWrapper(View view) {
         this.mContentView = mRealContentView = view;
+        this.mContentView.setTag(TAG_REFRESH_CONTENT_WRAPPER.hashCode(), TAG_REFRESH_CONTENT_WRAPPER);
     }
 
     public RefreshContentWrapper(Context context) {
         this.mContentView = mRealContentView = new View(context);
+        this.mContentView.setTag(TAG_REFRESH_CONTENT_WRAPPER.hashCode(), TAG_REFRESH_CONTENT_WRAPPER);
+    }
+
+    public static boolean isTagedContent(View view) {
+        return TAG_REFRESH_CONTENT_WRAPPER.equals(view.getTag(TAG_REFRESH_CONTENT_WRAPPER.hashCode()));
     }
 
     //<editor-fold desc="findScrollableView">
@@ -82,7 +91,7 @@ public class RefreshContentWrapper implements RefreshContent {
                 kernel.getRefreshLayout().setNestedScrollingEnabled(false);
                 wrapperCoordinatorLayout(((CoordinatorLayout) mScrollableView));
             }
-        } catch (Throwable e) {
+        } catch (Throwable e) {//try 不能删除
             e.printStackTrace();
         }
         if (mScrollableView instanceof NestedScrollingParent
@@ -105,6 +114,7 @@ public class RefreshContentWrapper implements RefreshContent {
                     @Override
                     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                     mEnableRefresh = verticalOffset >= 0;
+                    mEnableLoadmore = verticalOffset >= 0;
                     }
                 });
             }
@@ -175,8 +185,14 @@ public class RefreshContentWrapper implements RefreshContent {
         return mContentView;
     }
 
+    @Override
     public boolean isEnableRefresh() {
         return mEnableRefresh;
+    }
+
+    @Override
+    public boolean isEnableLoadmore() {
+        return mEnableLoadmore;
     }
 
     @Override

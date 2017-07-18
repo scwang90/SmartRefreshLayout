@@ -304,6 +304,12 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
                     || view instanceof NestedScrollingParent
                     || view instanceof ViewPager)) {
                 mRefreshContent = new RefreshContentWrapper(view);
+            } else if (RefreshHeaderWrapper.isTagedHeader(view) && mRefreshHeader == null) {
+                mRefreshHeader = new RefreshHeaderWrapper(view);
+            } else if (RefreshFooterWrapper.isTagedFooter(view) && mRefreshFooter == null) {
+                mRefreshFooter = new RefreshFooterWrapper(view);
+            } else if (RefreshContentWrapper.isTagedContent(view) && mRefreshContent == null) {
+                mRefreshContent = new RefreshContentWrapper(view);
             } else {
                 uncertains[i] = true;//标记未确认
             }
@@ -2088,7 +2094,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
 
     @Override
     public boolean isEnableLoadmore() {
-        return mEnableLoadmore && !mLoadmoreFinished;
+        return mEnableLoadmore && !mLoadmoreFinished && (mRefreshContent != null && mRefreshContent.isEnableLoadmore());
     }
 
     @Override
