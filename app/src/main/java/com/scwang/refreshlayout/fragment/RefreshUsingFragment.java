@@ -7,11 +7,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.activity.using.AssignCodeUsingActivity;
@@ -30,6 +33,7 @@ import java.lang.reflect.Constructor;
 import java.util.Arrays;
 
 import static android.R.layout.simple_list_item_2;
+import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 
 /**
  * 使用示例
@@ -65,11 +69,11 @@ public class RefreshUsingFragment extends Fragment implements AdapterView.OnItem
         super.onViewCreated(root, savedInstanceState);
 
         View view = root.findViewById(R.id.recyclerView);
-        if (view instanceof ListView) {
-            ListView recyclerView = (ListView) view;
-//            recyclerView.setItemAnimator(new DefaultItemAnimator());
-//            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//            recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), VERTICAL));
+        if (view instanceof RecyclerView) {
+            RecyclerView recyclerView = (RecyclerView) view;
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), VERTICAL));
             recyclerView.setAdapter(new BaseRecyclerAdapter<Item>(Arrays.asList(Item.values()), simple_list_item_2,this) {
                 @Override
                 protected void onBindViewHolder(SmartViewHolder holder, Item model, int position) {
