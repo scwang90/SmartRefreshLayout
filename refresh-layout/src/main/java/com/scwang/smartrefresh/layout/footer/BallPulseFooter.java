@@ -60,10 +60,10 @@ public class BallPulseFooter extends ViewGroup implements RefreshFooter {
         int primaryColor = ta.getColor(R.styleable.BallPulseFooter_srlPrimaryColor, 0);
         int accentColor = ta.getColor(R.styleable.BallPulseFooter_srlAccentColor, 0);
         if (primaryColor != 0) {
-            mBallPulseView.setAnimatingColor(primaryColor);
+            mBallPulseView.setNormalColor(primaryColor);
         }
         if (accentColor != 0) {
-            mBallPulseView.setNormalColor(primaryColor);
+            mBallPulseView.setAnimatingColor(accentColor);
         }
 
         mSpinnerStyle = SpinnerStyle.values()[ta.getInt(R.styleable.BallPulseFooter_srlClassicsSpinnerStyle, mSpinnerStyle.ordinal())];
