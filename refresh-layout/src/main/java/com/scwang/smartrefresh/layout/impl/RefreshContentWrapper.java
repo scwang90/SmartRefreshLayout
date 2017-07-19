@@ -17,6 +17,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.PagerAdapterWrapper;
 import android.support.v4.view.ScrollingView;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.Space;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -303,6 +304,9 @@ public class RefreshContentWrapper implements RefreshContent {
         if (mScrollableView instanceof AbsListView) {
             AbsListViewScrollComponent component = new AbsListViewScrollComponent(kernel);
             component.attach(((AbsListView) mScrollableView));
+        } else if (mScrollableView instanceof NestedScrollView) {
+            NestedScrollViewScrollComponent component = new NestedScrollViewScrollComponent(kernel);
+            component.attach((NestedScrollView) mScrollableView);
         } else if (Build.VERSION.SDK_INT >= 23 && mScrollableView != null) {
             mScrollableView.setOnScrollChangeListener(new Api23ViewScrollComponent(kernel));
         }
@@ -434,7 +438,7 @@ public class RefreshContentWrapper implements RefreshContent {
 //                    System.out.println("ValueAnimator - " + (lastTime - lastTimeOld) + " - " + velocity+"("+(lastOldScrollY - oldScrollY)+")");
                 kernel.animSpinnerBounce(Math.min(velocity, mHeaderHeight));
             } else if (oldScrollY < scrollY && mMotionEvent == null && overScroll && layout.isEnableLoadmore()) {
-                if (lastTime - lastTimeOld > 1000 && !ScrollBoundaryUtil.canScrollDown(mScrollableView)) {
+                if (lastTime - lastTimeOld > 1000 && !ScrollBoundaryUtil.canScrollDown(v)) {
                     final int velocity = (lastOldScrollY - oldScrollY) * 16000 / (int)((lastTime - lastTimeOld)/1000f);
 //                    System.out.println("ValueAnimator - " + (lastTime - lastTimeOld) + " - " + velocity+"("+(lastOldScrollY - oldScrollY)+")");
                     kernel.animSpinnerBounce(Math.max(velocity, -mFooterHeight));
@@ -444,6 +448,48 @@ public class RefreshContentWrapper implements RefreshContent {
             lastOldScrollY = oldScrollY;
             lastTimeOld = lastTime;
             lastTime = System.nanoTime();
+        }
+    }
+
+    private class NestedScrollViewScrollComponent implements NestedScrollView.OnScrollChangeListener {
+        long lastTime = 0;
+        long lastTimeOld = 0;
+        int lastScrollY = 0;
+        int lastOldScrollY = 0;
+        RefreshKernel kernel;
+
+        NestedScrollViewScrollComponent(RefreshKernel kernel) {
+            this.kernel = kernel;
+        }
+
+        @Override
+        public void onScrollChange(NestedScrollView scrollView, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+            if (lastScrollY == scrollY && lastOldScrollY == oldScrollY) {
+                return;
+            }
+            RefreshLayout layout = kernel.getRefreshLayout();
+            boolean overScroll = layout.isEnableOverScrollBounce() || layout.isRefreshing() || layout.isLoading();
+            if (scrollY <= 0 && oldScrollY > 0 && mMotionEvent == null && lastTime - lastTimeOld > 1000 && overScroll && layout.isEnableRefresh()) {
+                final int velocity = (lastOldScrollY - oldScrollY) * 16000 / (int)((lastTime - lastTimeOld)/1000f);
+                kernel.animSpinnerBounce(Math.min(velocity, mHeaderHeight));
+            } else if (oldScrollY < scrollY && mMotionEvent == null && layout.isEnableLoadmore()) {
+                if (!layout.isLoadmoreFinished() && layout.isEnableAutoLoadmore()
+                        && layout.getState() == RefreshState.None
+                        && !ScrollBoundaryUtil.canScrollDown(scrollView)) {
+                    kernel.getRefreshLayout().autoLoadmore(0, 1);
+                } else if (overScroll && lastTime - lastTimeOld > 1000 && !ScrollBoundaryUtil.canScrollDown(mScrollableView)) {
+                    final int velocity = (lastOldScrollY - oldScrollY) * 16000 / (int)((lastTime - lastTimeOld)/1000f);
+                    kernel.animSpinnerBounce(Math.max(velocity, -mFooterHeight));
+                }
+            }
+            lastScrollY = scrollY;
+            lastOldScrollY = oldScrollY;
+            lastTimeOld = lastTime;
+            lastTime = System.nanoTime();
+        }
+
+        void attach(NestedScrollView scrollView) {
+            scrollView.setOnScrollChangeListener(this);
         }
     }
 
@@ -483,8 +529,9 @@ public class RefreshContentWrapper implements RefreshContent {
                     }
                 } else if (dy < 0) {
                     int lastVisiblePosition = absListView.getLastVisiblePosition();
-                    if (lastVisiblePosition == totalItemCount - 1 && lastVisiblePosition > 0) {
-                        if (layout.isEnableLoadmore() && !layout.isLoadmoreFinished() && layout.isEnableAutoLoadmore()
+                    if (lastVisiblePosition == totalItemCount - 1 && lastVisiblePosition > 0
+                            && layout.isEnableLoadmore()) {
+                        if (!layout.isLoadmoreFinished() && layout.isEnableAutoLoadmore()
                                 && layout.getState() == RefreshState.None
                                 && !ScrollBoundaryUtil.canScrollDown(absListView)) {
                             kernel.getRefreshLayout().autoLoadmore(0, 1);
