@@ -1,7 +1,6 @@
 apply plugin: 'com.android.library'
-//apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.novoda.bintray-release'
-//apply plugin: 'maven'
+//apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 25
@@ -22,10 +21,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-//    compileOptions {
-//        sourceCompatibility JavaVersion.VERSION_1_8
-//        targetCompatibility JavaVersion.VERSION_1_8
-//    }
     lintOptions {
         abortOnError false
     }
@@ -36,7 +31,7 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.3.1'
+    provided 'com.android.support:appcompat-v7:25.3.1'
     provided 'com.android.support:design:25.3.1'
     provided 'com.android.support:recyclerview-v7:25.3.1'
     testCompile 'junit:junit:4.12'
@@ -46,15 +41,7 @@ publish {
     userOrg = 'scwang90'
     groupId = 'com.scwang.smartrefresh'
     artifactId = 'SmartRefreshLayout'
-    version = '1.0.2-alpha-7'
+    version = '1.0.2-alpha-8'
     description = 'An intelligent refresh layout'
     website = "https://github.com/scwang90/${rootProject.name}"
 }
-//publish {
-//    userOrg = 'scwang90'
-//    groupId = 'com.scwang.smartrefresh'
-//    artifactId = 'SmartRefreshLayout'
-//    publishVersion = '1.0.0-alpha-1'
-//    desc = 'An intelligent refresh layout'
-//    website = "https://github.com/scwang90/${rootProject.name}"
-//}

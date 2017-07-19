@@ -1,7 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
 //apply plugin: 'me.tatarka.retrolambda'
-//apply plugin: 'com.novoda.bintray-release'
-//apply plugin: 'maven'
 
 android {
     compileSdkVersion 25
@@ -22,10 +21,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-//    compileOptions {
-//        sourceCompatibility JavaVersion.VERSION_1_8
-//        targetCompatibility JavaVersion.VERSION_1_8
-//    }
     lintOptions {
         abortOnError false
     }
@@ -37,23 +32,15 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile project(':refresh-layout')
+    provided 'com.android.support:appcompat-v7:25.3.1'
+    provided project(':refresh-layout')
 }
 
-//publish {
-//    userOrg = 'scwang90'
-//    groupId = 'com.scwang.smartrefresh'
-//    artifactId = 'SmartRefreshHeader'
-//    version = '1.0.2-alpha-7'
-//    description = 'Some delicate headers of SmartRefreshLayout'
-//    website = "https://github.com/scwang90/${rootProject.name}"
-//}
-//publish {
-//    userOrg = 'scwang90'
-//    groupId = 'com.scwang.smartrefresh'
-//    artifactId = 'SmartRefreshHeader'
-//    publishVersion = '1.0.0-alpha-1'
-//    desc = 'Some delicate headers of SmartRefreshLayout'
-//    website = "https://github.com/scwang90/${rootProject.name}"
-//}
+publish {
+    userOrg = 'scwang90'
+    groupId = 'com.scwang.smartrefresh'
+    artifactId = 'SmartRefreshHeader'
+    version = '1.0.2-alpha-8'
+    description = 'Some delicate headers of SmartRefreshLayout'
+    website = "https://github.com/scwang90/${rootProject.name}"
+}

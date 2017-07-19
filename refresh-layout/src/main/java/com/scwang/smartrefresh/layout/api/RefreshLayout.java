@@ -99,6 +99,21 @@ public interface RefreshLayout extends NestedScrollingParent, NestedScrollingChi
     RefreshLayout setRefreshFooter(RefreshFooter bottom);
 
     /**
+     * 设置指定的Header
+     */
+    RefreshLayout setRefreshFooter(RefreshFooter footer, int width, int height);
+
+    /**
+     * 设置指定的Header
+     */
+    RefreshLayout setRefreshHeader(RefreshHeader header);
+
+    /**
+     * 设置指定的Header
+     */
+    RefreshLayout setRefreshHeader(RefreshHeader header, int width, int height);
+
+    /**
      * 设置是否启用越界回弹
      */
     RefreshLayout setEnableOverScrollBounce(boolean enable);
@@ -112,11 +127,6 @@ public interface RefreshLayout extends NestedScrollingParent, NestedScrollingChi
      * 设置是否在加载更多完成之后滚动内容显示新数据
      */
     RefreshLayout setEnableScrollContentWhenLoaded(boolean enable);
-
-    /**
-     * 设置指定的Header
-     */
-    RefreshLayout setRefreshHeader(RefreshHeader header);
 
     /**
      * 单独设置刷新监听器

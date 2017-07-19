@@ -1709,16 +1709,44 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
     }
 
     /**
+     * 设置指定的Header
+     */
+    @Override
+    public SmartRefreshLayout setRefreshHeader(RefreshHeader header, int width, int height) {
+        if (mRefreshHeader != null) {
+            removeView(mRefreshHeader.getView());
+        }
+        this.mRefreshHeader = header;
+        this.mHeaderHeightStatus = mHeaderHeightStatus.unNotify();
+        this.addView(mRefreshHeader.getView(), width, height);
+        return this;
+    }
+
+    /**
      * 设置指定的Footer
      */
     @Override
-    public SmartRefreshLayout setRefreshFooter(RefreshFooter bottom) {
+    public SmartRefreshLayout setRefreshFooter(RefreshFooter footer) {
         if (mRefreshFooter != null) {
             removeView(mRefreshFooter.getView());
         }
-        this.mRefreshFooter = bottom;
+        this.mRefreshFooter = footer;
         this.mFooterHeightStatus = mFooterHeightStatus.unNotify();
         this.addView(mRefreshFooter.getView());
+        return this;
+    }
+
+    /**
+     * 设置指定的Footer
+     */
+    @Override
+    public SmartRefreshLayout setRefreshFooter(RefreshFooter footer, int width, int height) {
+        if (mRefreshFooter != null) {
+            removeView(mRefreshFooter.getView());
+        }
+        this.mRefreshFooter = footer;
+        this.mFooterHeightStatus = mFooterHeightStatus.unNotify();
+        this.addView(mRefreshFooter.getView(), width, height);
         return this;
     }
 

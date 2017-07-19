@@ -3,6 +3,7 @@ package com.scwang.smartrefresh.layout.header;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -79,7 +80,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
 
         setMinimumHeight(density.dip2px(80));
 
-        LinearLayout layout = new LinearLayout(context, attrs, defStyleAttr);
+        LinearLayout layout = new LinearLayout(context);
         layout.setId(android.R.id.widget_frame);
         layout.setGravity(Gravity.CENTER_HORIZONTAL);
         layout.setOrientation(LinearLayout.VERTICAL);
@@ -194,13 +195,17 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     @Override
     public void setPrimaryColors(int... colors) {
         if (colors.length > 1) {
-            setBackgroundColor(colors[0]);
+            if (!(getBackground() instanceof BitmapDrawable)) {
+                setBackgroundColor(colors[0]);
+            }
             mArrowView.parserColors(colors[1]);
             mHeaderText.setTextColor(colors[1]);
             mProgressDrawable.setColor(colors[1]);
             mLastUpdateText.setTextColor(colors[1]&0x00ffffff|0x99000000);
         } else if (colors.length > 0) {
-            setBackgroundColor(colors[0]);
+            if (!(getBackground() instanceof BitmapDrawable)) {
+                setBackgroundColor(colors[0]);
+            }
             if (colors[0] == 0xffffffff) {
                 mArrowView.parserColors(0xff666666);
                 mHeaderText.setTextColor(0xff666666);
