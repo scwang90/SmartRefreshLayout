@@ -298,7 +298,8 @@ public class ClassicsHeader extends LinearLayout implements RefreshHeader {
     @Override
     public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
     }
-    void setPrimaryColors(int... colors){
+    @Override
+    public void setPrimaryColors(int... colors){
     }
 }
 ~~~
