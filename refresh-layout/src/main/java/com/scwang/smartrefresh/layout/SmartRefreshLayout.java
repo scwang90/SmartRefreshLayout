@@ -1554,6 +1554,12 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
         return this;
     }
 
+    @Override
+    public SmartRefreshLayout setDragRate(float rate) {
+        this.mDragRate = rate;
+        return this;
+    }
+
     /**
      * 设置下拉最大高度和Header高度的比率（将会影响可以下拉的最大高度）
      */

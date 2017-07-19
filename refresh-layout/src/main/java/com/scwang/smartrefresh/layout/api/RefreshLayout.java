@@ -29,6 +29,11 @@ public interface RefreshLayout extends NestedScrollingParent, NestedScrollingChi
     RefreshLayout setHeaderHeightPx(int px);
 
     /**
+     * 显示拖动高度/真实拖动高度（默认0.5，阻尼效果）
+     */
+    RefreshLayout setDragRate(float rate);
+
+    /**
      * 设置下拉最大高度和Header高度的比率（将会影响可以下拉的最大高度）
      */
     RefreshLayout setHeaderMaxDragRate(float rate);
