@@ -223,6 +223,8 @@ public class ClassicsHeader extends LinearLayout implements RefreshHeader {
 ~~~
 
 #### 最后整合
+虽然接口的其他方法我们不用特意去实现，但是方法体还是要声明一下，整合之后完整的代码如下：
+
 ~~~java
 
 public class ClassicsHeader extends LinearLayout implements RefreshHeader {
@@ -234,6 +236,7 @@ public class ClassicsHeader extends LinearLayout implements RefreshHeader {
 
     public ClassicsHeader(Context context) {
         super(context);
+        setGravity(Gravity.CENTER_HORIZONTAL);
         mHeaderText = new TextView(context);
         mProgressDrawable = new ProgressDrawable();
         mArrowView = new PathsView(context);
@@ -295,7 +298,12 @@ public class ClassicsHeader extends LinearLayout implements RefreshHeader {
     @Override
     public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
     }
+    void setPrimaryColors(int... colors){
+    }
 }
 ~~~
 
 
+### 实现 RefreshFooter
+
+具体方法和 RefreshHeader 非常相似，这里就不再演示了
