@@ -90,7 +90,7 @@ public class RefreshContentWrapper implements RefreshContent {
         try {
             if (mScrollableView instanceof CoordinatorLayout) {
                 kernel.getRefreshLayout().setNestedScrollingEnabled(false);
-                wrapperCoordinatorLayout(((CoordinatorLayout) mScrollableView));
+                wrapperCoordinatorLayout(((CoordinatorLayout) mScrollableView), kernel.getRefreshLayout());
             }
         } catch (Throwable e) {//try 不能删除
             e.printStackTrace();
@@ -107,15 +107,15 @@ public class RefreshContentWrapper implements RefreshContent {
         }
     }
 
-    private void wrapperCoordinatorLayout(CoordinatorLayout layout) {
+    private void wrapperCoordinatorLayout(CoordinatorLayout layout, final RefreshLayout refreshLayout) {
         for (int i = layout.getChildCount() - 1; i >= 0; i--) {
             View view = layout.getChildAt(i);
             if (view instanceof AppBarLayout) {
                 ((AppBarLayout) view).addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
                     @Override
                     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                    mEnableRefresh = verticalOffset >= 0;
-                    mEnableLoadmore = verticalOffset >= 0;
+                        mEnableRefresh = verticalOffset >= 0;
+                        mEnableLoadmore = refreshLayout.isEnableLoadmore() && (appBarLayout.getTotalScrollRange() + verticalOffset) <= 0;
                     }
                 });
             }
@@ -187,16 +187,6 @@ public class RefreshContentWrapper implements RefreshContent {
     }
 
     @Override
-    public boolean isEnableRefresh() {
-        return mEnableRefresh;
-    }
-
-    @Override
-    public boolean isEnableLoadmore() {
-        return mEnableLoadmore;
-    }
-
-    @Override
     public boolean isNestedScrollingChild(MotionEvent e) {
         MotionEvent event = MotionEvent.obtain(e);
         event.offsetLocation(-mContentView.getLeft(), -mContentView.getTop() - mRealContentView.getTranslationY());
@@ -239,12 +229,12 @@ public class RefreshContentWrapper implements RefreshContent {
 
     @Override
     public boolean canScrollUp() {
-        return mBoundaryAdapter.canPullDown(mContentView);
+        return !mEnableRefresh || mBoundaryAdapter.canPullDown(mContentView);
     }
 
     @Override
     public boolean canScrollDown() {
-        return mBoundaryAdapter.canPullUp(mContentView);
+        return !mEnableLoadmore || mBoundaryAdapter.canPullUp(mContentView);
     }
 
     @Override

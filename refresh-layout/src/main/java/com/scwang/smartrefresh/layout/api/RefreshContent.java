@@ -31,10 +31,6 @@ public interface RefreshContent {
     void onInitialHeaderAndFooter(int headerHeight, int footerHeight);
     void setRefreshScrollBoundary(RefreshScrollBoundary boundary);
 
-    boolean isEnableRefresh();
-
-    boolean isEnableLoadmore();
-
     boolean isNestedScrollingChild(MotionEvent e);
 
     AnimatorUpdateListener onLoadingFinish(RefreshKernel layout, int footerHeight, int startDelay, Interpolator reboundInterpolator, int reboundDuration);

@@ -2128,7 +2128,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
 
     @Override
     public boolean isEnableLoadmore() {
-        return mEnableLoadmore && !mLoadmoreFinished && (mRefreshContent != null && mRefreshContent.isEnableLoadmore());
+        return mEnableLoadmore && !mLoadmoreFinished;
     }
 
     @Override
@@ -2143,7 +2143,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
 
     @Override
     public boolean isEnableRefresh() {
-        return mEnableRefresh && (mRefreshContent != null && mRefreshContent.isEnableRefresh());
+        return mEnableRefresh;
     }
 
     @Override
