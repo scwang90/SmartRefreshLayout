@@ -130,23 +130,27 @@ public interface RefreshHeader {
 接下来我们通过实现一个最简单的经典Header（没有更新时间），来慢慢了解自定义Header的流程。
 
 #### 需求分析
-我们的经典Header需要一个标题文本、刷新动画、下拉箭头。由此我们可以选定一个继承RelativeLayout并列出成员变量
+我们的经典Header需要一个标题文本、刷新动画、下拉箭头。由此我们可以选定一个继承LinearLayout并列出成员变量
 
 ~~~java
-public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
+public class ClassicsHeader extends LinearLayout implements RefreshHeader {
 
     private TextView mHeaderText;//标题文本
     private PathsView mArrowView;//下拉箭头
+    private ImageView mProgressView;//刷新动画视图
     private ProgressDrawable mProgressDrawable;//刷新动画
 
     public ClassicsHeader(Context context) {
         super(context);
+        setGravity(Gravity.CENTER_HORIZONTAL);
         mHeaderText = new TextView(context);
         mProgressDrawable = new ProgressDrawable();
         mArrowView = new PathsView(context);
-        addView(mHeaderText, lpHeaderText);
+        mProgressView = new ImageView(context);
+        mProgressView.setImageDrawable(mProgressDrawable);
         addView(mProgressView);
         addView(mArrowView, lpProgress);
+        addView(mHeaderText, lpHeaderText);
     }
 }
 ~~~
@@ -155,7 +159,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
 根据我们的常识，经典Header在下拉的时候是贴着列表平移向下冒出，所以我们实现样式直接指定为：平移
 
 ~~~java
-public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
+public class ClassicsHeader extends LinearLayout implements RefreshHeader {
     @NonNull
     public View getView() {
         return this;//真实的视图就是自己，不能返回null
@@ -171,7 +175,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
 接下来我们需要在关键地方对动画进行控制和开启
 
 ~~~java
-public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
+public class ClassicsHeader extends LinearLayout implements RefreshHeader {
     @Override
     public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
         mProgressDrawable.start();//开始动画
@@ -193,7 +197,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
 我们还要在不同的状态控制内部控件的显示和旋转
 
 ~~~java
-public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
+public class ClassicsHeader extends LinearLayout implements RefreshHeader {
     @Override
     public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
         switch (newState) {
@@ -218,5 +222,80 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
 }
 ~~~
 
+#### 最后整合
+~~~java
+
+public class ClassicsHeader extends LinearLayout implements RefreshHeader {
+
+    private TextView mHeaderText;//标题文本
+    private PathsView mArrowView;//下拉箭头
+    private ImageView mProgressView;//刷新动画视图
+    private ProgressDrawable mProgressDrawable;//刷新动画
+
+    public ClassicsHeader(Context context) {
+        super(context);
+        mHeaderText = new TextView(context);
+        mProgressDrawable = new ProgressDrawable();
+        mArrowView = new PathsView(context);
+        mProgressView = new ImageView(context);
+        mProgressView.setImageDrawable(mProgressDrawable);
+        addView(mHeaderText, lpHeaderText);
+        addView(mProgressView);
+        addView(mArrowView, lpProgress);
+    }
+    @NonNull
+    public View getView() {
+        return this;//真实的视图就是自己，不能返回null
+    }
+    @Override
+    public SpinnerStyle getSpinnerStyle() {
+        return SpinnerStyle.Translate;//指定为平移，不能null
+    }
+    @Override
+    public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
+        mProgressDrawable.start();//开始动画
+    }
+    @Override
+    public int onFinish(RefreshLayout layout, boolean success) {
+        mProgressDrawable.stop();//停止动画
+        if (success){
+            mHeaderText.setText("刷新完成");
+        } else {
+            mHeaderText.setText("刷新失败");        
+        }
+        return 500;//延迟500毫秒之后再弹回
+    }
+    @Override
+    public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
+        switch (newState) {
+            case None:
+            case PullDownToRefresh:
+                mHeaderText.setText("下拉开始刷新");
+                mArrowView.setVisibility(VISIBLE);//显示下拉箭头
+                mProgressView.setVisibility(GONE);//隐藏动画
+                mArrowView.animate().rotation(0);//还原箭头方向
+                break;
+            case Refreshing:
+                mHeaderText.setText("正在刷新");
+                mProgressView.setVisibility(VISIBLE);//显示加载动画
+                mArrowView.setVisibility(GONE);//隐藏箭头
+                break;
+            case ReleaseToRefresh:
+                mHeaderText.setText("释放立即刷新");
+                mArrowView.animate().rotation(180);//显示箭头改为朝上
+                break;
+        }
+    }
+    @Override
+    public void onInitialized(RefreshKernel kernel, int height, int extendHeight) {
+    }
+    @Override
+    public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
+    }
+    @Override
+    public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
+    }
+}
+~~~
 
 
