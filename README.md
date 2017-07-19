@@ -1,14 +1,14 @@
 # Android Smart Refresh Layout Framework
 [![License](https://img.shields.io/badge/license-Apache%202-green.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Download](https://api.bintray.com/packages/scwang90/maven/SmartRefreshLayout/images/download.svg) ](https://bintray.com/scwang90/maven/SmartRefreshLayout/_latestVersion) 
-![MinSdk](https://cdn.rawgit.com/scwang90/SmartRefreshLayout/master/art/svg_minsdkapi.svg)
+[![MinSdk](https://cdn.rawgit.com/scwang90/SmartRefreshLayout/master/art/svg_minsdkapi.svg)](#)
 
 ## English | [中文](README_CN.md)
 
 As the name says, SmartRefreshLayout is a "smart" refresh layout，Because of its "smart", it does not just support all the View as other refresh layouts said, but also support multi-layered nested view structures.   
 In addition to "smart", SmartRefreshLayout also has a lot of features.  
 It extends from ViewGroup rather than the other FrameLayout or LinearLayout, improving performance.  
-It absorbs the advantages of various refresh layout in fashion now，Including Google official [SwipeRefreshLayout](https://developer.android.com/reference/android/support/v4/widget/SwipeRefreshLayout.html)、[TwinklingRefreshLayout](https://github.com/lcodecorex/TwinklingRefreshLayout) 、[android-Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/Ultra-Pull-To-Refresh)。Also integrates various cool Header and Footer.  
+It absorbs the advantages of various refresh layout in fashion now，Including Google official [SwipeRefreshLayout](https://developer.android.com/reference/android/support/v4/widget/SwipeRefreshLayout.html)、[TwinklingRefreshLayout](https://github.com/lcodecorex/TwinklingRefreshLayout) 、[Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)。Also integrates various cool Header and Footer.  
 SmartRefreshLayout's goal is to build a strong, stable and mature refresh layout framework, and integrate all kinds of cool and diverse, practical, beautiful Header and Footer.
 
 ## Features
