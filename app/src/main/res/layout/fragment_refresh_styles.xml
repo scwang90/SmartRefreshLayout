@@ -16,12 +16,6 @@
         android:layout_height="match_parent"
         app:srlEnableLoadmore="false"
         app:srlEnableHeaderTranslationContent="true">
-        <com.scwang.smartrefresh.layout.header.ClassicsHeader
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:background="@mipmap/image_practice_repast_4"
-            app:srlAccentColor="@android:color/white"
-            app:srlPrimaryColor="@android:color/transparent"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
