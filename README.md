@@ -206,7 +206,7 @@ If in the donation message note name, will be record to the list
 
 ## Discuss
 
-Contact me: scwang90@hotmail.com QQ group: 602537182  
+Contact me: scwang90@hotmail.com QQ group: 602537182(pay) 477963933  
 The answers to the join the group can be found in this document~
 
 ## Thanks
