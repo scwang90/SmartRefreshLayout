@@ -1,7 +1,6 @@
 package com.scwang.smartrefresh.header;
 
 import android.animation.ValueAnimator;
-import android.support.annotation.RequiresApi;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -9,7 +8,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
-import android.support.v4.view.ViewCompat;
+import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -368,8 +367,8 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
         }
 
         public void scaleWithKeepingAspectRatio(float scale) {
-            ViewCompat.setScaleX(this, scale);
-            ViewCompat.setScaleY(this, scale);
+            this.setScaleX(scale);
+            this.setScaleY(scale);
         }
     }
     //</editor-fold>

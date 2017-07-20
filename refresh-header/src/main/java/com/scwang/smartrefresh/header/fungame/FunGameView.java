@@ -1,6 +1,5 @@
 package com.scwang.smartrefresh.header.fungame;
 
-import android.support.annotation.RequiresApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -8,7 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Build;
 import android.support.annotation.Nullable;
-import android.support.v4.graphics.ColorUtils;
+import android.support.annotation.RequiresApi;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -17,6 +16,7 @@ import android.view.WindowManager;
 import com.scwang.smartrefresh.header.R;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.util.ColorUtils;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 

@@ -17,13 +17,13 @@
 package com.scwang.smartrefresh.header.waveswipe;
 
 import android.content.Context;
-import android.support.v7.widget.AppCompatImageView;
 import android.view.animation.Animation;
+import android.widget.ImageView;
 
 /**
  * @author amyu
  */
-public class AnimationImageView extends AppCompatImageView {
+public class AnimationImageView extends ImageView {
 
   /**
    * AnimationのStartとEnd時にListenerにアレする

@@ -1,7 +1,6 @@
 package com.scwang.smartrefresh.header;
 
 
-import android.support.annotation.RequiresApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -9,10 +8,11 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.os.Build;
 import android.support.annotation.Nullable;
-import android.support.v4.graphics.ColorUtils;
+import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 
 import com.scwang.smartrefresh.header.fungame.FunGameView;
+import com.scwang.smartrefresh.layout.util.ColorUtils;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import java.util.ArrayList;

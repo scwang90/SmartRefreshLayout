@@ -195,8 +195,8 @@ public class RefreshContentWrapper implements RefreshContent {
     }
 
     private boolean isNestedScrollingChild(View targetView, MotionEvent event) {
-        if (targetView instanceof NestedScrollingChild
-                || (Build.VERSION.SDK_INT >= 21 && targetView.isNestedScrollingEnabled())) {
+        if ((targetView instanceof NestedScrollingChild || Build.VERSION.SDK_INT >= 21)
+                && (Build.VERSION.SDK_INT >= 21 && targetView.isNestedScrollingEnabled())) {
             return true;
         }
         if (targetView instanceof ViewGroup && event != null) {

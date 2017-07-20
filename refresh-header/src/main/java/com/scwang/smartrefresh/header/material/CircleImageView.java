@@ -24,17 +24,16 @@ import android.graphics.RadialGradient;
 import android.graphics.Shader;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewCompat;
+import android.os.Build;
 import android.view.animation.Animation;
-import android.support.v7.widget.AppCompatImageView;
+import android.widget.ImageView;
 
 /**
  * Private class created to work around issues with AnimationListeners being
  * called before the animation is actually complete and support shadows on older
  * platforms.
  */
-public class CircleImageView extends AppCompatImageView {
+public class CircleImageView extends ImageView {
 
     private static final int KEY_SHADOW_COLOR = 0x1E000000;
     private static final int FILL_SHADOW_COLOR = 0x3D000000;
@@ -58,11 +57,11 @@ public class CircleImageView extends AppCompatImageView {
         ShapeDrawable circle;
         if (elevationSupported()) {
             circle = new ShapeDrawable(new OvalShape());
-            ViewCompat.setElevation(this, SHADOW_ELEVATION * density);
+            setElevation(SHADOW_ELEVATION * density);
         } else {
             OvalShape oval = new OvalShadow(mShadowRadius);
             circle = new ShapeDrawable(oval);
-            ViewCompat.setLayerType(this, ViewCompat.LAYER_TYPE_SOFTWARE, circle.getPaint());
+            this.setLayerType(LAYER_TYPE_SOFTWARE, circle.getPaint());
             circle.getPaint().setShadowLayer(mShadowRadius, shadowXOffset, shadowYOffset,
                     KEY_SHADOW_COLOR);
             final int padding = mShadowRadius;
@@ -70,7 +69,12 @@ public class CircleImageView extends AppCompatImageView {
             setPadding(padding, padding, padding, padding);
         }
         circle.getPaint().setColor(color);
-        ViewCompat.setBackground(this, circle);
+        if (Build.VERSION.SDK_INT >= 16) {
+            this.setBackground(circle);
+        } else {
+            //noinspection deprecation
+            this.setBackgroundDrawable(circle);
+        }
     }
 
     private boolean elevationSupported() {
@@ -112,7 +116,13 @@ public class CircleImageView extends AppCompatImageView {
      * @param colorRes Id of a color resource.
      */
     public void setBackgroundColorRes(int colorRes) {
-        setBackgroundColor(ContextCompat.getColor(getContext(), colorRes));
+        Context context = getContext();
+        if (Build.VERSION.SDK_INT >= 23) {
+            setBackgroundColor(context.getResources().getColor(colorRes, context.getTheme()));
+        } else {
+            //noinspection deprecation
+            setBackgroundColor(context.getResources().getColor(colorRes));
+        } 
     }
 
     @Override

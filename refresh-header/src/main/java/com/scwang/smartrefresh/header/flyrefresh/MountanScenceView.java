@@ -1,6 +1,5 @@
 package com.scwang.smartrefresh.header.flyrefresh;
 
-import android.support.annotation.RequiresApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -10,13 +9,13 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.os.Build;
-import android.support.v4.graphics.ColorUtils;
-import android.support.v4.view.animation.PathInterpolatorCompat;
+import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.Interpolator;
 
 import com.scwang.smartrefresh.header.R;
+import com.scwang.smartrefresh.layout.util.ColorUtils;
 
 /**
  * 山丘树木场景视图
