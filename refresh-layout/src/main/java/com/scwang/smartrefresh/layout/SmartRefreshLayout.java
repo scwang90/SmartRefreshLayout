@@ -1909,7 +1909,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
      */
     @Override
     public SmartRefreshLayout finishRefresh(int delayed, final boolean success) {
-        Runnable runnable = new Runnable() {
+        postDelayed(new Runnable() {
             @Override
             public void run() {
                 if (mState == RefreshState.Refreshing && mRefreshHeader != null) {
@@ -1928,12 +1928,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
                     }
                 }
             }
-        };
-        if (delayed > 0) {
-            postDelayed(runnable, delayed);
-        } else {
-            runnable.run();
-        }
+        }, delayed);
         return this;
     }
     /**
@@ -1957,7 +1952,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
      */
     @Override
     public SmartRefreshLayout finishLoadmore(int delayed, final boolean success) {
-        Runnable runnable = new Runnable() {
+        postDelayed(new Runnable() {
             @Override
             public void run() {
                 if (mState == RefreshState.Loading && mRefreshFooter != null) {
@@ -1985,12 +1980,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
                     }
                 }
             }
-        };
-        if (delayed > 0) {
-            postDelayed(runnable, delayed);
-        } else {
-            runnable.run();
-        }
+        }, delayed);
         return this;
     }
     /**
