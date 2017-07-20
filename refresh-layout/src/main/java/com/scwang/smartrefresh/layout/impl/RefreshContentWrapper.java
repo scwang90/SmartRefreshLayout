@@ -31,7 +31,6 @@ import android.view.animation.Interpolator;
 import android.webkit.WebView;
 import android.widget.AbsListView;
 import android.widget.FrameLayout;
-import android.widget.ListView;
 import android.widget.ScrollView;
 
 import com.scwang.smartrefresh.layout.api.RefreshContent;
@@ -300,11 +299,12 @@ public class RefreshContentWrapper implements RefreshContent {
         } else if (Build.VERSION.SDK_INT >= 23 && mScrollableView != null) {
             mScrollableView.setOnScrollChangeListener(new Api23ViewScrollComponent(kernel));
         }
-        if (Build.VERSION.SDK_INT >= 21
-                && mScrollableView instanceof ListView
-                && !(mScrollableView instanceof NestedScrollingChild)) {
-            mScrollableView.setNestedScrollingEnabled(true);
-        }
+//        if (Build.VERSION.SDK_INT >= 21
+//                && mScrollableView instanceof ListView
+//                && kernel.getRefreshLayout().isNestedScrollingEnabled()
+//                && !(mScrollableView instanceof NestedScrollingChild)) {
+//            mScrollableView.setNestedScrollingEnabled(true);
+//        }
         if (fixedHeader != null || fixedFooter != null) {
             mFixedHeader = fixedHeader;
             mFixedFooter = fixedFooter;
