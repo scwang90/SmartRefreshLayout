@@ -89,6 +89,7 @@ public class RefreshStylesFragment extends Fragment implements AdapterView.OnIte
         View view = root.findViewById(recyclerView);
         if (view instanceof RecyclerView) {
             RecyclerView recyclerView = (RecyclerView) view;
+            recyclerView.setNestedScrollingEnabled(false);
             recyclerView.setItemAnimator(new DefaultItemAnimator());
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), VERTICAL));
