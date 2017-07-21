@@ -24,6 +24,8 @@ public interface RefreshKernel {
     RefreshKernel setStatePullUpCanceled() ;
     RefreshKernel setStateLoding() ;
     RefreshKernel setStateRefresing() ;
+    RefreshKernel setStateLodingFinish() ;
+    RefreshKernel setStateRefresingFinish() ;
     RefreshKernel resetStatus();
     //</editor-fold>
 

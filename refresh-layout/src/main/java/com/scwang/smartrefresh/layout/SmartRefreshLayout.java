@@ -697,7 +697,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
         if (!isEnabled() || mNestedScrollInProgress
                 || (!isEnableRefresh() && !(isEnableLoadmore()))
                 || mState == RefreshState.Loading
-                || mState == RefreshState.Refreshing) {
+                || mState == RefreshState.Refreshing
+                || mState == RefreshState.LoadFinish
+                || mState == RefreshState.RefreshFinish) {
             return super.dispatchTouchEvent(e);
         }
         switch (action) {
@@ -938,6 +940,14 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
         resetStatus();
     }
 
+    protected void setStateLodingFinish() {
+        notifyStateChanged(RefreshState.LoadFinish);
+    }
+
+    protected void setStateRefresingFinish() {
+        notifyStateChanged(RefreshState.RefreshFinish);
+    }
+
     protected void setStateLoding() {
         mLastLoadingTime = currentTimeMillis();
         notifyStateChanged(RefreshState.Loading);
@@ -1146,7 +1156,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
         }
         final int oldSpinner = mSpinner;
         this.mSpinner = spinner;
-        if (!isAnimator && mState != RefreshState.Refreshing && mState != RefreshState.Loading) {
+        if (!isAnimator
+                && mState != RefreshState.Refreshing && mState != RefreshState.Loading
+                && mState != RefreshState.RefreshFinish && mState != RefreshState.LoadFinish) {
             if (mSpinner > mHeaderHeight) {
                 setStateReleaseToRefresh();
             } else if (-mSpinner > mFooterHeight && !mLoadmoreFinished) {
@@ -1914,17 +1926,16 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
             public void run() {
                 if (mState == RefreshState.Refreshing && mRefreshHeader != null) {
                     int startDelay = mRefreshHeader.onFinish(SmartRefreshLayout.this, success);
-                    if (startDelay == Integer.MAX_VALUE) {
-                        return;
-                    }
                     SmartRefreshLayout.this.notifyStateChanged(RefreshState.RefreshFinish);
                     if (mOnMultiPurposeListener != null) {
                         mOnMultiPurposeListener.onHeaderFinish(mRefreshHeader, success);
                     }
-                    if (mSpinner == 0) {
-                        SmartRefreshLayout.this.resetStatus();
-                    } else {
-                        SmartRefreshLayout.this.animSpinner(0, startDelay);
+                    if (startDelay < Integer.MAX_VALUE) {
+                        if (mSpinner == 0) {
+                            SmartRefreshLayout.this.resetStatus();
+                        } else {
+                            SmartRefreshLayout.this.animSpinner(0, startDelay);
+                        }
                     }
                 }
             }
@@ -1960,7 +1971,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
                     if (startDelay == Integer.MAX_VALUE) {
                         return;
                     }
-                    SmartRefreshLayout.this.notifyStateChanged(RefreshState.LoadingFinish);
+                    SmartRefreshLayout.this.notifyStateChanged(RefreshState.LoadFinish);
                     AnimatorUpdateListener updateListener = mRefreshContent.onLoadingFinish(mKernel, mFooterHeight, startDelay, mReboundInterpolator, mReboundDuration);
                     if (mOnMultiPurposeListener != null) {
                         mOnMultiPurposeListener.onFooterFinish(mRefreshFooter, success);
@@ -2212,6 +2223,16 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
         }
         public RefreshKernel setStateRefresing() {
             SmartRefreshLayout.this.setStateRefresing();
+            return this;
+        }
+        @Override
+        public RefreshKernel setStateLodingFinish() {
+            SmartRefreshLayout.this.setStateLodingFinish();
+            return this;
+        }
+        @Override
+        public RefreshKernel setStateRefresingFinish() {
+            SmartRefreshLayout.this.setStateRefresingFinish();
             return this;
         }
         public RefreshKernel resetStatus() {

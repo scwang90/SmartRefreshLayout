@@ -105,7 +105,7 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
             mRefreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener(){
                 @Override
                 public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
-                    if (oldState == RefreshState.LoadingFinish && newState == RefreshState.None) {
+                    if (oldState == RefreshState.LoadFinish && newState == RefreshState.None) {
                         mRefreshLayout.autoRefresh();
                         mRefreshLayout.setOnMultiPurposeListener(null);//保准只有第一次关联
                     }

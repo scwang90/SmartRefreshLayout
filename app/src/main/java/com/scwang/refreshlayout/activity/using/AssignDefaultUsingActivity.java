@@ -80,7 +80,7 @@ public class AssignDefaultUsingActivity extends AppCompatActivity {
             refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener(){
                 @Override
                 public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
-                    if (oldState == RefreshState.LoadingFinish
+                    if (oldState == RefreshState.LoadFinish
                             && newState == RefreshState.None) {
                         refreshLayout.autoRefresh();
                         refreshLayout.setOnMultiPurposeListener(null);

@@ -85,7 +85,7 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (mState == RefreshState.Refreshing) {
+        if (mState == RefreshState.Refreshing || mState == RefreshState.RefreshFinish) {
             if (!mManualOperation) {
                 onManualOperationStart();
             }
@@ -157,7 +157,10 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
             mManualOperation = false;
             mRefreshKernel.getRefreshLayout().setEnableLoadmore(enableLoadmore);
             if (mTouchY != -1) {//还没松手
-                mRefreshKernel.getRefreshLayout().finishRefresh(0);
+                onFinish(mRefreshKernel.getRefreshLayout(), true);
+                mRefreshKernel.setStateRefresingFinish();
+                mRefreshKernel.animSpinner(0);
+//                mRefreshKernel.getRefreshLayout().finishRefresh(0);
             } else {
                 mRefreshKernel.moveSpinner(mHeaderHeight, true);
             }

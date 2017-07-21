@@ -54,7 +54,7 @@ public class AssignCodeUsingActivity extends AppCompatActivity {
             refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener(){
                 @Override
                 public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
-                    if (oldState == RefreshState.LoadingFinish && newState == RefreshState.None) {
+                    if (oldState == RefreshState.LoadFinish && newState == RefreshState.None) {
                         refreshLayout.autoRefresh();
                         refreshLayout.setOnMultiPurposeListener(null);
                     }
