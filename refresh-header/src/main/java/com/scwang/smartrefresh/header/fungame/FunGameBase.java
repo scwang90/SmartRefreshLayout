@@ -33,6 +33,7 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
     protected int mScreenHeightPixels;
     protected RefreshState mState;
     protected boolean mIsFinish;
+    protected boolean mLastFinish;
     protected boolean mManualOperation;
     protected float mTouchY;
     protected RefreshKernel mRefreshKernel;
@@ -157,7 +158,7 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
             mManualOperation = false;
             mRefreshKernel.getRefreshLayout().setEnableLoadmore(enableLoadmore);
             if (mTouchY != -1) {//还没松手
-                onFinish(mRefreshKernel.getRefreshLayout(), true);
+                onFinish(mRefreshKernel.getRefreshLayout(), mLastFinish);
                 mRefreshKernel.setStateRefresingFinish();
                 mRefreshKernel.animSpinner(0);
 //                mRefreshKernel.getRefreshLayout().finishRefresh(0);
@@ -208,6 +209,7 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
 
     @Override
     public int onFinish(RefreshLayout layout, boolean success) {
+        mLastFinish = success;
         if (!mIsFinish) {
             mIsFinish = true;
             if (mManualOperation) {

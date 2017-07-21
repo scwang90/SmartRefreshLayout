@@ -1913,7 +1913,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
     @Override
     public SmartRefreshLayout finishRefresh(boolean success){
         long passTime =  System.currentTimeMillis() - mLastRefreshingTime;
-        return finishRefresh(Math.max(0, 1000 - (int)passTime),true);
+        return finishRefresh(Math.max(0, 1000 - (int) passTime), success);
     }
 
     /**
@@ -1956,7 +1956,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
     @Override
     public SmartRefreshLayout finishLoadmore(boolean success){
         long passTime =  System.currentTimeMillis() - mLastLoadingTime;
-        return finishLoadmore(Math.max(0, 1000 - (int)passTime),true);
+        return finishLoadmore(Math.max(0, 1000 - (int) passTime), success);
     }
     /**
      * 完成加载

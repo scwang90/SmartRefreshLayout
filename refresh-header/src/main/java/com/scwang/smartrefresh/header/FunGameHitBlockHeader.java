@@ -142,6 +142,7 @@ public class FunGameHitBlockHeader extends FunGameView {
         drawRacket(canvas);
         if (status == STATUS_GAME_PLAY
                 || status == STATUS_GAME_FINISHED
+                || status == STATUS_GAME_FAIL
                 || isInEditMode()) {
             makeBallPath(canvas, width);
         }

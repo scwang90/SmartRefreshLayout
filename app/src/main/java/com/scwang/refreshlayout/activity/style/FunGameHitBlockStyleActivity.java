@@ -83,7 +83,7 @@ public class FunGameHitBlockStyleActivity extends AppCompatActivity implements A
                 refreshlayout.getLayout().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        refreshlayout.finishRefresh();
+                        refreshlayout.finishRefresh(false);
                         refreshlayout.getLayout().postDelayed(new Runnable() {
                             @Override
                             public void run() {

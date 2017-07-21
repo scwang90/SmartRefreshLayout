@@ -35,14 +35,17 @@ public abstract class FunGameView extends FunGameHeader {
 
     protected static final int STATUS_GAME_FINISHED = 3;
 
+    protected static final int STATUS_GAME_FAIL = 4;
+
     /**
      * 控件高度占屏幕高度比率
      */
     protected static final float VIEW_HEIGHT_RATIO = .161f;
 
-    private String textGameOver = "游戏结束";
-    private String textLoading = "玩个游戏解解闷";
-    private String textLoadingFinished = "加载完成";
+    public static String textGameOver = "游戏结束";
+    public static String textLoading = "玩个游戏解解闷";
+    public static String textLoadingFinished = "刷新完成";
+    public static String textLoadingFail = "刷新失败";
 //    private String loadingText = "Loading...";
 //    private String loadingFinishedText = "Loading Finished";
 //    private String gameOverText = "Game Over";
@@ -161,6 +164,10 @@ public abstract class FunGameView extends FunGameHeader {
                 textPaint.setTextSize(DensityUtil.dp2px(20));
                 promptText(canvas, textLoadingFinished, width, height);
                 break;
+            case STATUS_GAME_FAIL:
+                textPaint.setTextSize(DensityUtil.dp2px(20));
+                promptText(canvas, textLoadingFail, width, height);
+                break;
             case STATUS_GAME_OVER:
                 textPaint.setTextSize(DensityUtil.dp2px(25));
                 promptText(canvas, textGameOver, width, height);
@@ -278,7 +285,7 @@ public abstract class FunGameView extends FunGameHeader {
     @Override
     public int onFinish(RefreshLayout layout, boolean success) {
         if (mManualOperation) {
-            postStatus(FunGameView.STATUS_GAME_FINISHED);
+            postStatus(success ? FunGameView.STATUS_GAME_FINISHED : FunGameView.STATUS_GAME_FAIL);
         } else {
             postStatus(FunGameView.STATUS_GAME_PREPAR);
         }

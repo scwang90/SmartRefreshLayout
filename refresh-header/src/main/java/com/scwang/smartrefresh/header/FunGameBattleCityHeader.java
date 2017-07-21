@@ -151,7 +151,7 @@ public class FunGameBattleCityHeader extends FunGameView {
     @Override
     protected void drawGame(Canvas canvas, int width, int height) {
         drawSelfTank(canvas,width);
-        if (status == STATUS_GAME_PLAY || status == STATUS_GAME_FINISHED) {
+        if (status == STATUS_GAME_PLAY || status == STATUS_GAME_FINISHED || status == STATUS_GAME_FAIL) {
             drawEnemyTank(canvas,width);
             makeBulletPath(canvas,width);
         }
