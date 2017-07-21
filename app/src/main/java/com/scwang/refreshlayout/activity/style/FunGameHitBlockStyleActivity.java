@@ -16,7 +16,6 @@ import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.Arrays;
 
@@ -77,23 +76,6 @@ public class FunGameHitBlockStyleActivity extends AppCompatActivity implements A
             });
         }
 
-        mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(final RefreshLayout refreshlayout) {
-                refreshlayout.getLayout().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        refreshlayout.finishRefresh(false);
-                        refreshlayout.getLayout().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                refreshlayout.finishRefresh();
-                            }
-                        },50);
-                    }
-                },2000);
-            }
-        });
     }
 
     @Override

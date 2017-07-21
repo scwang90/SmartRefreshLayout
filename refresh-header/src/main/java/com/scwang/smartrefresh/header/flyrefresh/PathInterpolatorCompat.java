@@ -36,7 +36,7 @@ public final class PathInterpolatorCompat {
      * must begin at {@code (0, 0)} and end at {@code (1, 1)}. The x-coordinate along the
      * {@link Path} is the input value and the output is the y coordinate of the line at that
      * point. This means that the Path must conform to a function {@code y = f(x)}.
-     * <p/>
+     *
      * The {@link Path} must not have gaps in the x direction and must not
      * loop back on itself such that there can be two points sharing the same x coordinate.
      *
