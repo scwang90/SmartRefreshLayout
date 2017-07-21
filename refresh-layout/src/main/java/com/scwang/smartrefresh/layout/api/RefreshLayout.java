@@ -94,12 +94,12 @@ public interface RefreshLayout extends NestedScrollingParent, NestedScrollingChi
     RefreshLayout setLoadmoreFinished(boolean finished);
 
     /**
-     * 设置指定的Header
+     * 设置指定的Footer
      */
     RefreshLayout setRefreshFooter(RefreshFooter bottom);
 
     /**
-     * 设置指定的Header
+     * 设置指定的Footer
      */
     RefreshLayout setRefreshFooter(RefreshFooter footer, int width, int height);
 
