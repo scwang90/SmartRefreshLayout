@@ -1,9 +1,9 @@
 # Android智能下拉刷新框架-SmartRefreshLayout
-[![License](https://img.shields.io/badge/license-Apache%202-green.svg)](https://www.apache.org/licenses/LICENSE-2.0)
-[![Download](https://api.bintray.com/packages/scwang90/maven/SmartRefreshLayout/images/download.svg) ](https://bintray.com/scwang90/maven/SmartRefreshLayout/_latestVersion) 
-[![API](https://img.shields.io/badge/API-12%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=12)
-[![Author](https://img.shields.io/badge/Author-scwang90-11bbff.svg)](https://github.com/scwang90)
 
+[![License](https://img.shields.io/badge/License-Apache%202-red.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+[![Jcenter](https://img.shields.io/badge/Jcenter-1.0.2-brightgreen.svg) ](https://bintray.com/scwang90/maven/SmartRefreshLayout/_latestVersion) 
+[![API](https://img.shields.io/badge/API-12%2B-blue.svg?style=flat)](https://android-arsenal.com/api?level=12)
+[![Author](https://img.shields.io/badge/Author-scwang90-11bbff.svg)](https://github.com/scwang90)
 
 ## [English](README_EN.md) | 中文
 
