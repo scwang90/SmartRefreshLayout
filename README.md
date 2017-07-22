@@ -1,7 +1,7 @@
 # Android智能下拉刷新框架-SmartRefreshLayout
 
 [![License](https://img.shields.io/badge/License-Apache%202-red.svg)](https://www.apache.org/licenses/LICENSE-2.0)
-[![Android Arsenal](https://img.shields.io/badge/%20Android%20Arsenal%20-%20SmartRefresh%20-orange.svg?style=flat)](https://android-arsenal.com/details/1/6001)
+[![Arsenal](https://img.shields.io/badge/%20Arsenal%20-%20SmartRefresh%20-orange.svg?style=flat)](https://android-arsenal.com/details/1/6001)
 [![Jcenter](https://img.shields.io/badge/Jcenter-1.0.2-brightgreen.svg) ](https://bintray.com/scwang90/maven/SmartRefreshLayout/_latestVersion) 
 [![Platform](https://img.shields.io/badge/Platform-Android-blue.svg)](https://www.android.com)
 [![API](https://img.shields.io/badge/API-12%2B-yellow.svg?style=flat)](https://android-arsenal.com/api?level=12)

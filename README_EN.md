@@ -1,8 +1,12 @@
 # Android Smart Refresh Layout Framework
-[![License](https://img.shields.io/badge/license-Apache%202-green.svg)](https://www.apache.org/licenses/LICENSE-2.0)
-[![Download](https://api.bintray.com/packages/scwang90/maven/SmartRefreshLayout/images/download.svg) ](https://bintray.com/scwang90/maven/SmartRefreshLayout/_latestVersion) 
-[![API](https://img.shields.io/badge/API-12%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=12)
+
+[![License](https://img.shields.io/badge/License-Apache%202-red.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+[![Arsenal](https://img.shields.io/badge/%20Arsenal%20-%20SmartRefresh%20-orange.svg?style=flat)](https://android-arsenal.com/details/1/6001)
+[![Jcenter](https://img.shields.io/badge/Jcenter-1.0.2-brightgreen.svg) ](https://bintray.com/scwang90/maven/SmartRefreshLayout/_latestVersion) 
+[![Platform](https://img.shields.io/badge/Platform-Android-blue.svg)](https://www.android.com)
+[![API](https://img.shields.io/badge/API-12%2B-yellow.svg?style=flat)](https://android-arsenal.com/api?level=12)
 [![Author](https://img.shields.io/badge/Author-scwang90-11bbff.svg)](https://github.com/scwang90)
+
 
 ## English | [中文](README_CN.md)
 
