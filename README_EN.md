@@ -8,7 +8,7 @@
 [![Author](https://img.shields.io/badge/Author-scwang90-11bbff.svg)](https://github.com/scwang90)
 
 
-## English | [中文](README_CN.md)
+## English | [中文](README.md)
 
 As the name says, SmartRefreshLayout is a "smart" refresh layout，Because of its "smart", it does not just support all the View as other refresh layouts said, but also support multi-layered nested view structures.   
 In addition to "smart", SmartRefreshLayout also has a lot of features.  
