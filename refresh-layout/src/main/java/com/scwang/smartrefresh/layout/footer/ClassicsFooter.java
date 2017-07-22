@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -72,7 +71,7 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
         lpPathView.rightMargin = density.dip2px(10);
         addView(mProgressView, lpPathView);
 
-        mBottomText = new AppCompatTextView(context, attrs, defStyleAttr);
+        mBottomText = new TextView(context, attrs, defStyleAttr);
         mBottomText.setTextColor(0xff666666);
         mBottomText.setTextSize(16);
         mBottomText.setText(REFRESH_FOOTER_PULLUP);

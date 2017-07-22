@@ -143,16 +143,21 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
 
         ta.recycle();
 
-        if (context instanceof FragmentActivity) {
-            FragmentManager manager = ((FragmentActivity) context).getSupportFragmentManager();
-            if (manager != null) {
-                List<Fragment> fragments = manager.getFragments();
-                if (fragments != null && fragments.size() > 0) {
-                    setLastUpdateTime(new Date());
-                    return;
+        try {//try 不能删除-否则会出现兼容性问题
+            if (context instanceof FragmentActivity) {
+                FragmentManager manager = ((FragmentActivity) context).getSupportFragmentManager();
+                if (manager != null) {
+                    List<Fragment> fragments = manager.getFragments();
+                    if (fragments != null && fragments.size() > 0) {
+                        setLastUpdateTime(new Date());
+                        return;
+                    }
                 }
             }
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
+
         KEY_LAST_UPDATE_TIME += context.getClass().getName();
         mShared = context.getSharedPreferences("ClassicsHeader", Context.MODE_PRIVATE);
         setLastUpdateTime(new Date(mShared.getLong(KEY_LAST_UPDATE_TIME, System.currentTimeMillis())));
@@ -282,7 +287,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     public ClassicsHeader setLastUpdateTime(Date time) {
         mLastTime = time;
         mLastUpdateText.setText(mFormat.format(time));
-        if (mShared != null) {
+        if (mShared != null && !isInEditMode()) {
             mShared.edit().putLong(KEY_LAST_UPDATE_TIME, time.getTime()).apply();
         }
         return this;
