@@ -1,9 +1,9 @@
 # Android智能下拉刷新框架-SmartRefreshLayout
 
-[![License](https://img.shields.io/badge/License-Apache%202-337ab7.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+[![License](https://img.shields.io/badge/License%20-Apache%202-337ab7.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Arsenal](https://img.shields.io/badge/%20Arsenal%20-%20SmartRefresh%20-4cae4c.svg?style=flat)](https://android-arsenal.com/details/1/6001)
-[![Jcenter](https://img.shields.io/badge/Jcenter-1.0.2-5bc0de.svg) ](https://bintray.com/scwang90/maven/SmartRefreshLayout/_latestVersion) 
-[![API](https://img.shields.io/badge/API-12%2B-f0ad4e.svg?style=flat)](https://android-arsenal.com/api?level=12)
+[![Jcenter](https://img.shields.io/badge/%20Jcenter%20-1.0.2-5bc0de.svg) ](https://bintray.com/scwang90/maven/SmartRefreshLayout/_latestVersion) 
+[![API](https://img.shields.io/badge/%20API%20-%2012%2B%20-f0ad4e.svg?style=flat)](https://android-arsenal.com/api?level=12)
 [![Methods](https://img.shields.io/badge/%20Methods%20%7C%20Size%20-%201251%20%7C%20129%20KB-d9534f.svg)](http://www.methodscount.com/?lib=com.scwang.smartrefresh%3ASmartRefreshLayout%3A1.0.2)
 
 <!-- [![Platform](https://img.shields.io/badge/Platform-Android-f0ad4e.svg)](https://www.android.com) -->
