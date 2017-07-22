@@ -13,7 +13,7 @@
 
 正如名字所说，SmartRefreshLayout是一个“聪明”或者说“智能”的下拉刷新布局，由于它的“智能”，它不只是如其它的刷新布局所说的支持所有的View，还支持多层嵌套的视图结构。  除了“聪明”之外，SmartRefreshLayout还具备了很多的特点。  
 它继承自ViewGroup 而不是其它的FrameLayout或者LinearLayout，提高了性能。  
-吸取了现在流行的各种刷新布局的优点，包括谷歌官方的 SwipeRefreshLayout，现在非常流行的 [TwinklingRefreshLayout](https://github.com/lcodecorex/TwinklingRefreshLayout) 、[Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)。还集成了各种炫酷的 Header 和 Footer。  
+它也吸取了现在流行的各种刷新布局的优点，包括谷歌官方的 SwipeRefreshLayout，现在非常流行的 [TwinklingRefreshLayout](https://github.com/lcodecorex/TwinklingRefreshLayout) 、[Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)。还集成了各种炫酷的 Header 和 Footer。  
 SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷新框架，并集成各种的炫酷、多样、实用、美观的Header和Footer。
 
 ## 特点功能:
