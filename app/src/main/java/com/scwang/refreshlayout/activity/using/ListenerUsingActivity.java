@@ -58,7 +58,7 @@ public class ListenerUsingActivity extends AppCompatActivity {
         final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
         refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
             @Override
-            public void onHeaderPulling(RefreshHeader header, float percent, int offset, int headerHeight, int extendHeight) {
+            public void onHeaderPulling(RefreshHeader header, float percent, int offset, float percentX, int offsetX, int headerHeight, int extendHeight) {
                 mHeaderPulling = String.format(Locale.CHINA, "%s\npercent=%.02f offset=%03d\nheight=%03d extend=%03d",
                         FORMAT.format(new Date()),
                         percent,offset,headerHeight,extendHeight);
@@ -66,7 +66,7 @@ public class ListenerUsingActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onHeaderReleasing(RefreshHeader header, float percent, int offset, int headerHeight, int extendHeight) {
+            public void onHeaderReleasing(RefreshHeader header, float percent, int offset, float percentX, int offsetX, int headerHeight, int extendHeight) {
                 mHeaderReleasing = String.format(Locale.CHINA, "%s\npercent=%.02f offset=%03d\nheight=%03d extend=%03d",
                         FORMAT.format(new Date()),
                         percent,offset,headerHeight,extendHeight);
@@ -88,7 +88,7 @@ public class ListenerUsingActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFooterPulling(RefreshFooter footer, float percent, int offset, int footerHeight, int extendHeight) {
+            public void onFooterPulling(RefreshFooter footer, float percent, int offset, float percentX, int offsetX, int footerHeight, int extendHeight) {
                 mFooterPulling = String.format(Locale.CHINA, "%s\npercent=%.02f\noffset=%03d height=%03d\nextend=%03d",
                         FORMAT.format(new Date()),
                         percent,offset,footerHeight,extendHeight);
@@ -96,7 +96,7 @@ public class ListenerUsingActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFooterReleasing(RefreshFooter footer, float percent, int offset, int footerHeight, int extendHeight) {
+            public void onFooterReleasing(RefreshFooter footer, float percent, int offset, float percentX, int offsetX, int footerHeight, int extendHeight) {
                 mFooterReleasing = String.format(Locale.CHINA, "%s\npercent=%.02f\noffset=%03d height=%03d\nextend=%03d",
                         FORMAT.format(new Date()),
                         percent,offset,footerHeight,extendHeight);

@@ -177,7 +177,7 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
 
     //<editor-fold desc="RefreshHeader">
     @Override
-    public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
+    public void onPullingDown(float percent, int offset, float percentX, int offsetX, int headHeight, int extendHeight) {
         if (mManualOperation) onManualOperationMove(percent, offset, headHeight, extendHeight);
         else {
             mOffset = offset;
@@ -186,8 +186,8 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
     }
 
     @Override
-    public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
-        onPullingDown(percent, offset, headHeight, extendHeight);
+    public void onReleasing(float percent, int offset, float percentX, int offsetX, int headHeight, int extendHeight) {
+        onPullingDown(percent, offset, percentX, extendHeight, headHeight, extendHeight);
     }
 
     @Override

@@ -115,12 +115,12 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
         final AppBarLayout appBar = (AppBarLayout) findViewById(R.id.app_bar);
         mRefreshlayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
             @Override
-            public void onHeaderPulling(RefreshHeader header, float percent, int offset, int footerHeight, int extendHeight) {
+            public void onHeaderPulling(RefreshHeader header, float percent, int offset, float percentX, int offsetX, int footerHeight, int extendHeight) {
                 appBar.setTranslationY(offset);
                 toolbar.setTranslationY(-offset);
             }
             @Override
-            public void onHeaderReleasing(RefreshHeader header, float percent, int offset, int footerHeight, int extendHeight) {
+            public void onHeaderReleasing(RefreshHeader header, float percent, int offset, float percentX, int offsetX, int footerHeight, int extendHeight) {
                 appBar.setTranslationY(offset);
                 toolbar.setTranslationY(-offset);
             }

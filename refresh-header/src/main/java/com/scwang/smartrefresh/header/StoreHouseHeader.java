@@ -341,13 +341,13 @@ public class  StoreHouseHeader extends View implements RefreshHeader {
     }
 
     @Override
-    public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
+    public void onPullingDown(float percent, int offset, float percentX, int offsetX, int headHeight, int extendHeight) {
         setProgress(percent * .8f);
         invalidate();
     }
 
     @Override
-    public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
+    public void onReleasing(float percent, int offset, float percentX, int offsetX, int headHeight, int extendHeight) {
         setProgress(percent * .8f);
         invalidate();
     }

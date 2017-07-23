@@ -86,6 +86,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
     protected int mScreenHeightPixels;
     protected float mTouchX;
     protected float mTouchY;
+    protected float mLastmTouchX;
     protected float mDragRate = .5f;
     protected float mInitialMotionY;
     protected Interpolator mReboundInterpolator;
@@ -678,6 +679,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent e) {
+        mLastmTouchX = e.getX();
         final int action = MotionEventCompat.getActionMasked(e);
         if (mRefreshContent != null) {
             switch (action) {
@@ -1194,15 +1196,22 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
                     mRefreshHeader.getView().requestLayout();
                 }
             }
+
+            final int offsetX = (int)mLastmTouchX;
+            final int offset = spinner;
+            final int headerHeight = mHeaderHeight;
+            final int extendHeight = mHeaderExtendHeight;
+            final float percent = 1f * spinner / mHeaderHeight;
+            final float percentX = mLastmTouchX / getWidth();
             if (isAnimator) {
-                mRefreshHeader.onReleasing(1f * spinner / mHeaderHeight, spinner, mHeaderHeight, mHeaderExtendHeight);
+                mRefreshHeader.onReleasing(percent, offset, percentX, offsetX, headerHeight, extendHeight);
                 if (mOnMultiPurposeListener != null) {
-                    mOnMultiPurposeListener.onHeaderReleasing(mRefreshHeader, 1f * spinner / mHeaderHeight, spinner, mHeaderHeight, mHeaderExtendHeight);
+                    mOnMultiPurposeListener.onHeaderReleasing(mRefreshHeader, percent, offset, percentX, offsetX, headerHeight, extendHeight);
                 }
             } else {
-                mRefreshHeader.onPullingDown(1f * spinner / mHeaderHeight, spinner, mHeaderHeight, mHeaderExtendHeight);
+                mRefreshHeader.onPullingDown(percent, offset, percentX, offsetX, headerHeight, extendHeight);
                 if (mOnMultiPurposeListener != null) {
-                    mOnMultiPurposeListener.onHeaderPulling(mRefreshHeader, 1f * spinner / mHeaderHeight, spinner, mHeaderHeight, mHeaderExtendHeight);
+                    mOnMultiPurposeListener.onHeaderPulling(mRefreshHeader, percent, offset, percentX, offsetX, headerHeight, extendHeight);
                 }
             }
         }
@@ -1214,15 +1223,22 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
                     mRefreshFooter.getView().requestLayout();
                 }
             }
+
+            final int offset = -spinner;
+            final int offsetX = (int)mLastmTouchX;
+            final int footerHeight = mFooterHeight;
+            final int extendHeight = mFooterExtendHeight;
+            final float percent = -spinner*1f / mFooterHeight;
+            final float percentX = mLastmTouchX / getWidth();
             if (isAnimator) {
-                mRefreshFooter.onPullReleasing(1f * spinner / mFooterHeight, spinner, mFooterHeight, mFooterExtendHeight);
+                mRefreshFooter.onPullReleasing(percent, offset, percentX, offsetX, footerHeight, extendHeight);
                 if (mOnMultiPurposeListener != null) {
-                    mOnMultiPurposeListener.onFooterReleasing(mRefreshFooter, 1f * spinner / mFooterHeight, spinner, mFooterHeight, mFooterExtendHeight);
+                    mOnMultiPurposeListener.onFooterReleasing(mRefreshFooter, percent, offset, percentX, offsetX, footerHeight, extendHeight);
                 }
             } else {
-                mRefreshFooter.onPullingUp(1f * spinner / mFooterHeight, spinner, mFooterHeight, mFooterExtendHeight);
+                mRefreshFooter.onPullingUp(percent, offset, percentX, offsetX, footerHeight, extendHeight);
                 if (mOnMultiPurposeListener != null) {
-                    mOnMultiPurposeListener.onFooterPulling(mRefreshFooter, 1f * spinner / mFooterHeight, spinner, mFooterHeight, mFooterExtendHeight);
+                    mOnMultiPurposeListener.onFooterPulling(mRefreshFooter, percent, offset, percentX, offsetX, footerHeight, extendHeight);
                 }
             }
         }

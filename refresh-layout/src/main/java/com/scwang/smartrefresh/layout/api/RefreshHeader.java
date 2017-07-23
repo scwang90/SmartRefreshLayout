@@ -10,17 +10,21 @@ public interface RefreshHeader extends RefreshInternal {
      * 手指拖动下拉（会连续多次调用）
      * @param percent 下拉的百分比 值 = offset/headerHeight (0 - percent - (headerHeight+extendHeight) / headerHeight )
      * @param offset 下拉的像素偏移量  0 - offset - (headerHeight+extendHeight)
+     * @param percentX 下拉时，手指水平坐标对屏幕的占比（0 - percentX - 1）
+     * @param offsetX 下拉时，手指水平坐标对屏幕的偏移（0 - offsetX - LayoutWidth）
      * @param headerHeight Header的高度
      * @param extendHeight Header的扩展高度
      */
-    void onPullingDown(float percent, int offset, int headerHeight, int extendHeight);
+    void onPullingDown(float percent, int offset, float percentX, int offsetX, int headerHeight, int extendHeight);
 
     /**
      * 手指释放之后的持续动画
      * @param percent 下拉的百分比 值 = offset/headerHeight (0 - percent - (headerHeight+extendHeight) / headerHeight )
      * @param offset 下拉的像素偏移量  0 - offset - (headerHeight+extendHeight)
+     * @param percentX 下拉时，手指水平坐标对屏幕的占比（0 - percentX - 1）
+     * @param offsetX 下拉时，手指水平坐标对屏幕的偏移（0 - offsetX - LayoutWidth）
      * @param headerHeight Header的高度
      * @param extendHeight Header的扩展高度
      */
-    void onReleasing(float percent, int offset, int headerHeight, int extendHeight);
+    void onReleasing(float percent, int offset, float percentX, int offsetX, int headerHeight, int extendHeight);
 }

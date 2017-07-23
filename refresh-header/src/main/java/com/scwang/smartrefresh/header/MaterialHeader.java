@@ -209,7 +209,7 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override
-    public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
+    public void onPullingDown(float percent, int offset, float percentX, int offsetX, int headHeight, int extendHeight) {
         if (mShowBezierWave) {
             mHeadHeight = Math.min(offset, headHeight);
             mWaveHeight = Math.max(0, offset - headHeight);
@@ -239,9 +239,9 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override
-    public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
+    public void onReleasing(float percent, int offset, float percentX, int offsetX, int headHeight, int extendHeight) {
         if (!mProgress.isRunning() && !mFinished) {
-            onPullingDown(percent, offset, headHeight, extendHeight);
+            onPullingDown(percent, offset, percentX, extendHeight, headHeight, extendHeight);
         } else {
             if (mShowBezierWave) {
                 mHeadHeight = Math.min(offset, headHeight);

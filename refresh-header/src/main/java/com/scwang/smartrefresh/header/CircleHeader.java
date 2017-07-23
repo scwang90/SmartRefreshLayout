@@ -253,15 +253,15 @@ public class CircleHeader extends View implements RefreshHeader {
     }
 
     @Override
-    public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
+    public void onPullingDown(float percent, int offset, float percentX, int offsetX, int headHeight, int extendHeight) {
         mHeadHeight = headHeight;
         mWaveHeight = Math.max(offset - headHeight, 0) * .8f;
     }
 
     @Override
-    public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
+    public void onReleasing(float percent, int offset, float percentX, int offsetX, int headHeight, int extendHeight) {
         if (mState != RefreshState.Refreshing) {
-            onPullingDown(percent, offset, headHeight, extendHeight);
+            onPullingDown(percent, offset, percentX, extendHeight, headHeight, extendHeight);
         }
     }
 

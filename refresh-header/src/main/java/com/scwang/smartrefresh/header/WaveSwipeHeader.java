@@ -125,7 +125,7 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
         mCircleView.layout((thisWidth - circleWidth) / 2, -circleHeight , (thisWidth + circleWidth) / 2, 0);
 
         if (isInEditMode()) {
-            onPullingDown(0.99f, DensityUtil.dp2px(99), DensityUtil.dp2px(100), DensityUtil.dp2px(100));
+            onPullingDown(0.99f, DensityUtil.dp2px(99), 0, 0, DensityUtil.dp2px(100), DensityUtil.dp2px(100));
         }
     }
 
@@ -150,7 +150,7 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override
-    public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
+    public void onPullingDown(float percent, int offset, float percentX, int offsetX, int headHeight, int extendHeight) {
 
         if (mState == RefreshState.Refreshing) {
             return;
@@ -196,7 +196,7 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override
-    public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
+    public void onReleasing(float percent, int offset, float percentX, int offsetX, int headHeight, int extendHeight) {
     }
 
     @Override

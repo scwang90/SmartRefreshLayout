@@ -193,12 +193,12 @@ public class DeliveryHeader extends View implements RefreshHeader {
 
     //<editor-fold desc="RefreshHeader">
     @Override
-    public void onPullingDown(float percent, int offset, int headerHeight, int extendHeight) {
+    public void onPullingDown(float percent, int offset, float percentX, int offsetX, int headerHeight, int extendHeight) {
         mBoxDrawable.getPaint().setAlpha((int) (255 * (1f - Math.max(0, percent - 1))));
     }
 
     @Override
-    public void onReleasing(float percent, int offset, int headerHeight, int extendHeight) {
+    public void onReleasing(float percent, int offset, float percentX, int offsetX, int headerHeight, int extendHeight) {
         mBoxDrawable.getPaint().setAlpha((int) (255 * (1f - Math.max(0, percent - 1))));
     }
 
