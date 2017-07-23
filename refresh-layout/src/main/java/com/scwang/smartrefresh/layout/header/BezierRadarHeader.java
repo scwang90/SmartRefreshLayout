@@ -88,6 +88,7 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
 
         ta.recycle();
     }
+
     //</editor-fold>
 
     //<editor-fold desc="API">
@@ -138,7 +139,6 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
 
     @Override
     public void onInitialized(RefreshKernel layout, int height, int extendHeight) {
-
     }
 
     @Override
@@ -150,7 +150,7 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
 
     @Override
     public void onReleasing(float percent, int offset, float percentX, int offsetX, int headHeight, int extendHeight) {
-        onPullingDown(percent, offset, percentX, extendHeight, headHeight, extendHeight);
+        onPullingDown(percent, offset, percentX, offsetX, headHeight, extendHeight);
     }
 
     @Override

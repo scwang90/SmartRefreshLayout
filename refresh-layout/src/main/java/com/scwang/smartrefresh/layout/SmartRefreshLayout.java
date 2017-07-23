@@ -86,7 +86,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
     protected int mScreenHeightPixels;
     protected float mTouchX;
     protected float mTouchY;
-    protected float mLastmTouchX;
+    protected float mLastTouchX;
     protected float mDragRate = .5f;
     protected float mInitialMotionY;
     protected Interpolator mReboundInterpolator;
@@ -584,6 +584,8 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
         }
 
         setMeasuredDimension(resolveSize(getSuggestedMinimumWidth(), widthMeasureSpec), resolveSize(minimumHeight, heightMeasureSpec));
+
+        mLastTouchX = getMeasuredWidth() / 2;
     }
 
     @Override
@@ -679,7 +681,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent e) {
-        mLastmTouchX = e.getX();
+        mLastTouchX = e.getX();
         final int action = MotionEventCompat.getActionMasked(e);
         if (mRefreshContent != null) {
             switch (action) {
@@ -696,7 +698,14 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
                 || (mState == RefreshState.Refreshing && mDisableContentWhenRefresh)) {
             return false;
         }
-        if (!isEnabled() || mNestedScrollInProgress
+        if (mNestedScrollInProgress) {//嵌套滚动时，补充竖直方向不滚动，但是水平方向滚动，需要通知 moveSpinner
+            int totalUnconsumed = this.mTotalUnconsumed;
+            boolean ret = super.dispatchTouchEvent(e);
+            if (action == MotionEvent.ACTION_MOVE && totalUnconsumed == mTotalUnconsumed) {
+                moveSpinner(mSpinner, false);
+            }
+            return ret;
+        } else if (!isEnabled()
                 || (!isEnableRefresh() && !(isEnableLoadmore()))
                 || mState == RefreshState.Loading
                 || mState == RefreshState.Refreshing
@@ -1153,9 +1162,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
      * moveSpinner 的取名来自 谷歌官方的 @{@link android.support.v4.widget.SwipeRefreshLayout#moveSpinner(float)}
      */
     protected void moveSpinner(int spinner, boolean isAnimator) {
-        if (mSpinner == spinner) {
-            return;
-        }
+//        if (mSpinner == spinner) {
+//            return;
+//        }
         final int oldSpinner = mSpinner;
         this.mSpinner = spinner;
         if (!isAnimator
@@ -1191,18 +1200,21 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
         if ((spinner >= 0 || oldSpinner > 0) && mRefreshHeader != null) {
             spinner = Math.max(spinner, 0);
             if (isEnableRefresh()) {
-                if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale
-                        || mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Translate) {
+                if (oldSpinner != mSpinner
+                        && (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale
+                        || mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Translate)) {
                     mRefreshHeader.getView().requestLayout();
+                } else {
+                    mRefreshHeader.getView().invalidate();
                 }
             }
 
-            final int offsetX = (int)mLastmTouchX;
+            final int offsetX = (int) mLastTouchX;
             final int offset = spinner;
             final int headerHeight = mHeaderHeight;
             final int extendHeight = mHeaderExtendHeight;
             final float percent = 1f * spinner / mHeaderHeight;
-            final float percentX = mLastmTouchX / getWidth();
+            final float percentX = mLastTouchX / getWidth();
             if (isAnimator) {
                 mRefreshHeader.onReleasing(percent, offset, percentX, offsetX, headerHeight, extendHeight);
                 if (mOnMultiPurposeListener != null) {
@@ -1218,18 +1230,21 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
         if ((spinner <= 0 || oldSpinner < 0) && mRefreshFooter != null) {
             spinner = Math.min(spinner, 0);
             if (mEnableLoadmore) {
-                if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Scale
-                        || mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Translate) {
+                if (oldSpinner != mSpinner
+                        && (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Scale
+                        || mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Translate)) {
                     mRefreshFooter.getView().requestLayout();
+                } else {
+                    mRefreshFooter.getView().invalidate();
                 }
             }
 
             final int offset = -spinner;
-            final int offsetX = (int)mLastmTouchX;
+            final int offsetX = (int) mLastTouchX;
             final int footerHeight = mFooterHeight;
             final int extendHeight = mFooterExtendHeight;
             final float percent = -spinner*1f / mFooterHeight;
-            final float percentX = mLastmTouchX / getWidth();
+            final float percentX = mLastTouchX / getWidth();
             if (isAnimator) {
                 mRefreshFooter.onPullReleasing(percent, offset, percentX, offsetX, footerHeight, extendHeight);
                 if (mOnMultiPurposeListener != null) {
@@ -2063,6 +2078,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
                     reboundAnimator.addListener(new AnimatorListenerAdapter() {
                         @Override
                         public void onAnimationStart(Animator animation) {
+                            mLastTouchX = getMeasuredWidth() / 2;
                             setStatePullDownToRefresh();
                         }
 
@@ -2122,6 +2138,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
                     reboundAnimator.addListener(new AnimatorListenerAdapter() {
                         @Override
                         public void onAnimationStart(Animator animation) {
+                            mLastTouchX = getMeasuredWidth() / 2;
                             setStatePullUpToLoad();
                         }
 
