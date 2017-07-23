@@ -37,6 +37,7 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
     private RippleView mRippleView;
     private RoundDotView mDotView;
     private RoundProgressView mProgressView;
+    private boolean mEnableHorizontalDrag = false;
 
     //<editor-fold desc="FrameLayout">
     public BezierRadarHeader(Context context) {
@@ -77,6 +78,7 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.BezierRadarHeader);
 
+        mEnableHorizontalDrag = ta.getBoolean(R.styleable.BezierRadarHeader_srlEnableHorizontalDrag, mEnableHorizontalDrag);
         int primaryColor = ta.getColor(R.styleable.BezierRadarHeader_srlPrimaryColor, 0);
         int accentColor = ta.getColor(R.styleable.BezierRadarHeader_srlAccentColor, 0);
         if (primaryColor != 0) {
@@ -114,6 +116,15 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
         setAccentColor(ContextCompat.getColor(getContext(), colorId));
         return this;
     }
+
+    public BezierRadarHeader setEnableHorizontalDrag(boolean enable) {
+        this.mEnableHorizontalDrag = enable;
+        if (!enable) {
+            mWaveView.setWaveOffsetX(-1);
+        }
+        return this;
+    }
+
     //</editor-fold>
 
     //<editor-fold desc="RefreshHeader">
@@ -138,19 +149,30 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
     }
 
     @Override
-    public void onInitialized(RefreshKernel layout, int height, int extendHeight) {
+    public void onInitialized(RefreshKernel kernel, int height, int extendHeight) {
     }
 
     @Override
-    public void onPullingDown(float percent, int offset, float percentX, int offsetX, int headHeight, int extendHeight) {
+    public boolean isEnableHorizontalDrag() {
+        return mEnableHorizontalDrag;
+    }
+
+    @Override
+    public void onHorizontalDrag(float percentX, int offsetX, int offsetMax) {
+        mWaveView.setWaveOffsetX(offsetX);
+        mWaveView.invalidate();
+    }
+
+    @Override
+    public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
         mWaveView.setHeadHeight(Math.min(headHeight, offset));
         mWaveView.setWaveHeight((int)(1.9f*Math.max(0, offset - headHeight)));
         mDotView.setFraction(percent);
     }
 
     @Override
-    public void onReleasing(float percent, int offset, float percentX, int offsetX, int headHeight, int extendHeight) {
-        onPullingDown(percent, offset, percentX, offsetX, headHeight, extendHeight);
+    public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
+        onPullingDown(percent, offset, headHeight, extendHeight);
     }
 
     @Override

@@ -67,8 +67,18 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
     //</editor-fold>
 
     //<editor-fold desc="RefreshHeader">
+
     @Override
-    public void onPullingDown(float percent, int offset, float percentX, int offsetX, int headHeight, int extendHeight) {
+    public boolean isEnableHorizontalDrag() {
+        return false;
+    }
+
+    @Override
+    public void onHorizontalDrag(float percentX, int offsetX, int offsetMax) {
+    }
+
+    @Override
+    public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
         if (offset < 0) {
             if (mOffset > 0) {
                 offset = 0;
@@ -93,9 +103,9 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
     }
 
     @Override
-    public void onReleasing(float percent, int offset, float percentX, int offsetX, int headHeight, int extendHeight) {
+    public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
         if (!mIsRefreshing) {
-            onPullingDown(percent, offset, percentX, extendHeight, headHeight, extendHeight);
+            onPullingDown(percent, offset, headHeight, extendHeight);
         }
     }
 
@@ -112,7 +122,7 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
             valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
-                    FlyRefreshHeader.this.onPullingDown((float) animation.getAnimatedValue(), 0, 0, 0, 0, 0);
+                    FlyRefreshHeader.this.onPullingDown((float) animation.getAnimatedValue(), 0, 0, 0);
                 }
             });
             valueAnimator.start();

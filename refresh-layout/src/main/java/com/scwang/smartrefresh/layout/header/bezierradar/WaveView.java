@@ -17,6 +17,7 @@ public class WaveView extends View {
     private int headHeight;
     private Path path;
     private Paint paint;
+    private int mOffsetX = -1;
 
     public WaveView(Context context) {
         this(context, null, 0);
@@ -72,9 +73,12 @@ public class WaveView extends View {
         path.reset();
         //绘制贝塞尔曲线
         path.lineTo(0, headHeight);
-        path.quadTo(width / 2, headHeight + waveHeight, width, headHeight);
+        path.quadTo(mOffsetX >= 0 ? (mOffsetX) : width / 2, headHeight + waveHeight, width, headHeight);
         path.lineTo(width, 0);
         canvas.drawPath(path, paint);
     }
 
+    public void setWaveOffsetX(int offset) {
+        mOffsetX = offset;
+    }
 }

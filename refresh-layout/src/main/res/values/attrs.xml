@@ -2,6 +2,7 @@
 <resources>
     <attr name="srlPrimaryColor" format="color"/><!--主要颜色-->
     <attr name="srlAccentColor" format="color"/><!--强调颜色-->
+    <attr name="srlEnableHorizontalDrag" format="boolean"/><!--支持水平拖动-->
 
     <attr name="srlSpinnerStyle" format="enum">
         <enum name="Translate" value="0"/><!--平行移动-->
@@ -44,6 +45,7 @@
     <declare-styleable name="BezierRadarHeader">
         <attr name="srlPrimaryColor"/>
         <attr name="srlAccentColor"/>
+        <attr name="srlEnableHorizontalDrag"/>
     </declare-styleable>
 
     <declare-styleable name="BallPulseFooter">

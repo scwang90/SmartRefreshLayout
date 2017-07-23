@@ -39,6 +39,13 @@ public interface RefreshInternal extends OnStateChangedListener {
     void onInitialized(RefreshKernel kernel, int height, int extendHeight);
 
     /**
+     * 水平方向的拖动
+     * @param percentX 下拉时，手指水平坐标对屏幕的占比（0 - percentX - 1）
+     * @param offsetX 下拉时，手指水平坐标对屏幕的偏移（0 - offsetX - LayoutWidth）
+     */
+    void onHorizontalDrag(float percentX, int offsetX, int offsetMax);
+
+    /**
      * 开始动画
      * @param layout RefreshLayout
      * @param height HeaderHeight or FooterHeight
@@ -53,4 +60,10 @@ public interface RefreshInternal extends OnStateChangedListener {
      * @return 完成动画所需时间 如果返回 Integer.MAX_VALUE 将取消本次完成事件，继续保持原有状态
      */
     int onFinish(RefreshLayout layout, boolean success);
+
+    /**
+     * 是否支持水平方向的拖动（将会影响到onHorizontalDrag的调用）
+     * @return 水平拖动需要消耗更多的时间和资源，所以如果不支持请返回false
+     */
+    boolean isEnableHorizontalDrag();
 }

@@ -698,11 +698,18 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
                 || (mState == RefreshState.Refreshing && mDisableContentWhenRefresh)) {
             return false;
         }
-        if (mNestedScrollInProgress) {//嵌套滚动时，补充竖直方向不滚动，但是水平方向滚动，需要通知 moveSpinner
+        if (mNestedScrollInProgress) {//嵌套滚动时，补充竖直方向不滚动，但是水平方向滚动，需要通知 onHorizontalDrag
             int totalUnconsumed = this.mTotalUnconsumed;
             boolean ret = super.dispatchTouchEvent(e);
             if (action == MotionEvent.ACTION_MOVE && totalUnconsumed == mTotalUnconsumed) {
-                moveSpinner(mSpinner, false);
+                final int offsetX = (int) mLastTouchX;
+                final int offsetMax = getWidth();
+                final float percentX = mLastTouchX / offsetMax;
+                if (mSpinner > 0 && mRefreshHeader != null && mRefreshHeader.isEnableHorizontalDrag()) {
+                    mRefreshHeader.onHorizontalDrag(percentX, offsetX, offsetMax);
+                } else if (mSpinner < 0 && mRefreshFooter != null && mRefreshFooter.isEnableHorizontalDrag()) {
+                    mRefreshFooter.onHorizontalDrag(percentX, offsetX, offsetMax);
+                }
             }
             return ret;
         } else if (!isEnabled()
@@ -1162,9 +1169,11 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
      * moveSpinner 的取名来自 谷歌官方的 @{@link android.support.v4.widget.SwipeRefreshLayout#moveSpinner(float)}
      */
     protected void moveSpinner(int spinner, boolean isAnimator) {
-//        if (mSpinner == spinner) {
-//            return;
-//        }
+        if (mSpinner == spinner
+                && (mRefreshHeader == null || !mRefreshHeader.isEnableHorizontalDrag())
+                && (mRefreshFooter == null || !mRefreshFooter.isEnableHorizontalDrag())) {
+            return;
+        }
         final int oldSpinner = mSpinner;
         this.mSpinner = spinner;
         if (!isAnimator
@@ -1204,26 +1213,28 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
                         && (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale
                         || mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Translate)) {
                     mRefreshHeader.getView().requestLayout();
-                } else {
-                    mRefreshHeader.getView().invalidate();
                 }
             }
 
-            final int offsetX = (int) mLastTouchX;
             final int offset = spinner;
             final int headerHeight = mHeaderHeight;
             final int extendHeight = mHeaderExtendHeight;
             final float percent = 1f * spinner / mHeaderHeight;
-            final float percentX = mLastTouchX / getWidth();
             if (isAnimator) {
-                mRefreshHeader.onReleasing(percent, offset, percentX, offsetX, headerHeight, extendHeight);
+                mRefreshHeader.onReleasing(percent, offset, headerHeight, extendHeight);
                 if (mOnMultiPurposeListener != null) {
-                    mOnMultiPurposeListener.onHeaderReleasing(mRefreshHeader, percent, offset, percentX, offsetX, headerHeight, extendHeight);
+                    mOnMultiPurposeListener.onHeaderReleasing(mRefreshHeader, percent, offset, headerHeight, extendHeight);
                 }
             } else {
-                mRefreshHeader.onPullingDown(percent, offset, percentX, offsetX, headerHeight, extendHeight);
+                if (mRefreshHeader.isEnableHorizontalDrag()) {
+                    final int offsetX = (int) mLastTouchX;
+                    final int offsetMax = getWidth();
+                    final float percentX = mLastTouchX / offsetMax;
+                    mRefreshHeader.onHorizontalDrag(percentX, offsetX, offsetMax);
+                }
+                mRefreshHeader.onPullingDown(percent, offset, headerHeight, extendHeight);
                 if (mOnMultiPurposeListener != null) {
-                    mOnMultiPurposeListener.onHeaderPulling(mRefreshHeader, percent, offset, percentX, offsetX, headerHeight, extendHeight);
+                    mOnMultiPurposeListener.onHeaderPulling(mRefreshHeader, percent, offset, headerHeight, extendHeight);
                 }
             }
         }
@@ -1234,26 +1245,28 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
                         && (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Scale
                         || mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Translate)) {
                     mRefreshFooter.getView().requestLayout();
-                } else {
-                    mRefreshFooter.getView().invalidate();
                 }
             }
 
             final int offset = -spinner;
-            final int offsetX = (int) mLastTouchX;
             final int footerHeight = mFooterHeight;
             final int extendHeight = mFooterExtendHeight;
             final float percent = -spinner*1f / mFooterHeight;
-            final float percentX = mLastTouchX / getWidth();
             if (isAnimator) {
-                mRefreshFooter.onPullReleasing(percent, offset, percentX, offsetX, footerHeight, extendHeight);
+                mRefreshFooter.onPullReleasing(percent, offset, footerHeight, extendHeight);
                 if (mOnMultiPurposeListener != null) {
-                    mOnMultiPurposeListener.onFooterReleasing(mRefreshFooter, percent, offset, percentX, offsetX, footerHeight, extendHeight);
+                    mOnMultiPurposeListener.onFooterReleasing(mRefreshFooter, percent, offset, footerHeight, extendHeight);
                 }
             } else {
-                mRefreshFooter.onPullingUp(percent, offset, percentX, offsetX, footerHeight, extendHeight);
+                if (mRefreshFooter.isEnableHorizontalDrag()) {
+                    final int offsetX = (int) mLastTouchX;
+                    final int offsetMax = getWidth();
+                    final float percentX = mLastTouchX / offsetMax;
+                    mRefreshFooter.onHorizontalDrag(percentX, offsetX, offsetMax);
+                }
+                mRefreshFooter.onPullingUp(percent, offset, footerHeight, extendHeight);
                 if (mOnMultiPurposeListener != null) {
-                    mOnMultiPurposeListener.onFooterPulling(mRefreshFooter, percent, offset, percentX, offsetX, footerHeight, extendHeight);
+                    mOnMultiPurposeListener.onFooterPulling(mRefreshFooter, percent, offset, footerHeight, extendHeight);
                 }
             }
         }
@@ -1564,6 +1577,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
     public SmartRefreshLayout setFooterHeight(float heightDp) {
         return setFooterHeightPx(dp2px(heightDp));
     }
+
     @Override
     public SmartRefreshLayout setFooterHeightPx(int heightPx) {
         if (mFooterHeightStatus.canReplaceWith(DimensionStatus.CodeExact)) {
@@ -1578,10 +1592,12 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
         }
         return this;
     }
+
     @Override
     public SmartRefreshLayout setHeaderHeight(float heightDp) {
         return setHeaderHeightPx(dp2px(heightDp));
     }
+
     @Override
     public SmartRefreshLayout setHeaderHeightPx(int heightPx) {
         if (mHeaderHeightStatus.canReplaceWith(DimensionStatus.CodeExact)) {
@@ -1746,6 +1762,8 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
             removeView(mRefreshHeader.getView());
         }
         this.mRefreshHeader = header;
+        this.mHeaderHeight = DensityUtil.dp2px(100);
+        this.mHeaderHeightStatus = DimensionStatus.DefaultUnNotify;
         this.mHeaderHeightStatus = mHeaderHeightStatus.unNotify();
         this.addView(mRefreshHeader.getView());
         return this;
@@ -1760,6 +1778,8 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
             removeView(mRefreshHeader.getView());
         }
         this.mRefreshHeader = header;
+        this.mHeaderHeight = DensityUtil.dp2px(100);
+        this.mHeaderHeightStatus = DimensionStatus.DefaultUnNotify;
         this.mHeaderHeightStatus = mHeaderHeightStatus.unNotify();
         this.addView(mRefreshHeader.getView(), width, height);
         return this;
@@ -1774,6 +1794,8 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
             removeView(mRefreshFooter.getView());
         }
         this.mRefreshFooter = footer;
+        this.mFooterHeight = DensityUtil.dp2px(60);
+        this.mFooterHeightStatus = DimensionStatus.DefaultUnNotify;
         this.mFooterHeightStatus = mFooterHeightStatus.unNotify();
         this.addView(mRefreshFooter.getView());
         return this;
@@ -1788,7 +1810,8 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
             removeView(mRefreshFooter.getView());
         }
         this.mRefreshFooter = footer;
-        this.mFooterHeightStatus = mFooterHeightStatus.unNotify();
+        this.mFooterHeight = DensityUtil.dp2px(60);
+        this.mFooterHeightStatus = DimensionStatus.DefaultUnNotify;
         this.addView(mRefreshFooter.getView(), width, height);
         return this;
     }

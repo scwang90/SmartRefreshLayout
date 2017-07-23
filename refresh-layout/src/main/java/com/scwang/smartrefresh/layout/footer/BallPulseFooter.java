@@ -96,15 +96,25 @@ public class BallPulseFooter extends ViewGroup implements RefreshFooter {
 
     //<editor-fold desc="RefreshFooter">
     @Override
-    public void onInitialized(RefreshKernel layout, int height, int extendHeight) {
+    public void onInitialized(RefreshKernel kernel, int height, int extendHeight) {
 
-    }
-    @Override
-    public void onPullingUp(float percent, int offset, float percentX, int offsetX, int footerHeight, int extendHeight) {
     }
 
     @Override
-    public void onPullReleasing(float percent, int offset, float percentX, int offsetX, int footerHeight, int extendHeight) {
+    public boolean isEnableHorizontalDrag() {
+        return false;
+    }
+
+    @Override
+    public void onHorizontalDrag(float percentX, int offsetX, int offsetMax) {
+    }
+
+    @Override
+    public void onPullingUp(float percent, int offset, int footerHeight, int extendHeight) {
+    }
+
+    @Override
+    public void onPullReleasing(float percent, int offset, int footerHeight, int extendHeight) {
     }
 
     @Override

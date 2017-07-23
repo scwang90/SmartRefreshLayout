@@ -16,6 +16,7 @@ import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.header.BezierRadarHeader;
 
 import java.util.Arrays;
 
@@ -31,6 +32,8 @@ public class BezierStyleActivity extends AppCompatActivity implements AdapterVie
         红色主题("更改为红色主题颜色"),
         绿色主题("更改为绿色主题颜色"),
         蓝色主题("更改为蓝色主题颜色"),
+        打开左右拖动("打开左右拖动效果"),
+        关闭左右拖动("关闭左右拖动效果"),
         ;
         public String name;
         Item(String name) {
@@ -40,6 +43,7 @@ public class BezierStyleActivity extends AppCompatActivity implements AdapterVie
 
     private Toolbar mToolbar;
     private RefreshLayout mRefreshLayout;
+    private BezierRadarHeader mRefreshHeader;
     private static boolean isFirstEnter = true;
 
     @Override
@@ -56,6 +60,7 @@ public class BezierStyleActivity extends AppCompatActivity implements AdapterVie
         });
 
         mRefreshLayout = (RefreshLayout)findViewById(R.id.refreshLayout);
+        mRefreshHeader = (BezierRadarHeader) findViewById(R.id.header);
         if (isFirstEnter) {
             isFirstEnter = false;
             mRefreshLayout.autoRefresh();//第一次进入触发自动刷新，演示效果
@@ -98,6 +103,12 @@ public class BezierStyleActivity extends AppCompatActivity implements AdapterVie
                 break;
             case 橙色主题:
                 setThemeColor(android.R.color.holo_orange_light, android.R.color.holo_orange_dark);
+                break;
+            case 打开左右拖动:
+                mRefreshHeader.setEnableHorizontalDrag(true);
+                break;
+            case 关闭左右拖动:
+                mRefreshHeader.setEnableHorizontalDrag(false);
                 break;
         }
         mRefreshLayout.autoRefresh();

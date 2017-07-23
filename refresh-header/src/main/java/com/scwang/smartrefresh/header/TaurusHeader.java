@@ -141,19 +141,28 @@ public class TaurusHeader extends View implements RefreshHeader/*, SizeDefinitio
 
     //<editor-fold desc="RefreshHeader">
     @Override
-    public void onInitialized(RefreshKernel layout, int height, int extendHeight) {
+    public void onInitialized(RefreshKernel kernel, int height, int extendHeight) {
 
     }
 
     @Override
-    public void onPullingDown(float percent, int offset, float percentX, int offsetX, int headHeight, int extendHeight) {
+    public boolean isEnableHorizontalDrag() {
+        return false;
+    }
+
+    @Override
+    public void onHorizontalDrag(float percentX, int offsetX, int offsetMax) {
+    }
+
+    @Override
+    public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
         mEndOfRefreshing = false;
         mPercent = 1f * offset / headHeight;
         mHeaderHeight = headHeight;
     }
 
     @Override
-    public void onReleasing(float percent, int offset, float percentX, int offsetX, int headHeight, int extendHeight) {
+    public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
         mPercent = 1f * offset / headHeight;
         mHeaderHeight = headHeight;
     }

@@ -15,7 +15,7 @@ public interface RefreshHeader extends RefreshInternal {
      * @param headerHeight Header的高度
      * @param extendHeight Header的扩展高度
      */
-    void onPullingDown(float percent, int offset, float percentX, int offsetX, int headerHeight, int extendHeight);
+    void onPullingDown(float percent, int offset, int headerHeight, int extendHeight);
 
     /**
      * 手指释放之后的持续动画
@@ -26,5 +26,5 @@ public interface RefreshHeader extends RefreshInternal {
      * @param headerHeight Header的高度
      * @param extendHeight Header的扩展高度
      */
-    void onReleasing(float percent, int offset, float percentX, int offsetX, int headerHeight, int extendHeight);
+    void onReleasing(float percent, int offset, int headerHeight, int extendHeight);
 }

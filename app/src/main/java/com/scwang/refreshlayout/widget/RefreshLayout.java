@@ -228,6 +228,7 @@ public class RefreshLayout extends ViewGroup implements GestureDetector.OnGestur
             postInvalidate();
         }
     }
+
     @Override
     public void scrollTo(@Px int x, @Px int y) {
         super.scrollTo(x, Math.max(Math.min(y, mFooterHeight), -mHeaderHeight));

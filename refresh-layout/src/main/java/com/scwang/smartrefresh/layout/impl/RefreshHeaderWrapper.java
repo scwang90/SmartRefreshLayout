@@ -61,17 +61,26 @@ public class RefreshHeaderWrapper implements RefreshHeader {
     }
 
     @Override
-    public void onInitialized(RefreshKernel layout, int height, int extendHeight) {
+    public void onInitialized(RefreshKernel kernel, int height, int extendHeight) {
 
     }
 
     @Override
-    public void onPullingDown(float percent, int offset, float percentX, int offsetX, int headHeight, int extendHeight) {
+    public boolean isEnableHorizontalDrag() {
+        return false;
+    }
+
+    @Override
+    public void onHorizontalDrag(float percentX, int offsetX, int offsetMax) {
+    }
+
+    @Override
+    public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
 
     }
 
     @Override
-    public void onReleasing(float percent, int offset, float percentX, int offsetX, int headHeight, int extendHeight) {
+    public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
 
     }
 

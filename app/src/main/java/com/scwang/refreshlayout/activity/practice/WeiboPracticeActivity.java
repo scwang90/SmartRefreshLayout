@@ -46,13 +46,13 @@ public class WeiboPracticeActivity extends AppCompatActivity {
 
         refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
             @Override
-            public void onHeaderPulling(RefreshHeader header, float percent, int offset, float percentX, int offsetX, int bottomHeight, int extendHeight) {
+            public void onHeaderPulling(RefreshHeader header, float percent, int offset, int bottomHeight, int extendHeight) {
                 mOffset = offset / 2;
                 parallax.setTranslationY(mOffset - mScrollY);
                 toolbar.setAlpha(1 - Math.min(percent, 1));
             }
             @Override
-            public void onHeaderReleasing(RefreshHeader header, float percent, int offset, float percentX, int offsetX, int bottomHeight, int extendHeight) {
+            public void onHeaderReleasing(RefreshHeader header, float percent, int offset, int bottomHeight, int extendHeight) {
                 mOffset = offset / 2;
                 parallax.setTranslationY(mOffset - mScrollY);
                 toolbar.setAlpha(1 - Math.min(percent, 1));
