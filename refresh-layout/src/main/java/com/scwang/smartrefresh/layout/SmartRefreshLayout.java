@@ -1182,7 +1182,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
         }
         if ((spinner >= 0 || oldSpinner > 0) && mRefreshHeader != null) {
             spinner = Math.max(spinner, 0);
-            if (isEnableRefresh()) {
+            if (isEnableRefresh() || (mState == RefreshState.RefreshFinish && isAnimator)) {
                 if (oldSpinner != mSpinner
                         && (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale
                         || mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Translate)) {
@@ -1214,7 +1214,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
         }
         if ((spinner <= 0 || oldSpinner < 0) && mRefreshFooter != null) {
             spinner = Math.min(spinner, 0);
-            if (mEnableLoadmore) {
+            if (mEnableLoadmore || (mState == RefreshState.LoadFinish && isAnimator)) {
                 if (oldSpinner != mSpinner
                         && (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Scale
                         || mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Translate)) {
