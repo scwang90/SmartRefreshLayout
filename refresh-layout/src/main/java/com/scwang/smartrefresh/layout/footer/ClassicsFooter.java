@@ -33,6 +33,7 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
     public static String REFRESH_FOOTER_RELEASE = "释放立即加载";
     public static String REFRESH_FOOTER_LOADING = "正在加载...";
     public static String REFRESH_FOOTER_FINISH = "加载完成";
+    public static String REFRESH_FOOTER_FAILED = "加载失败";
     public static String REFRESH_FOOTER_ALLLOADED = "全部加载完成";
 
     private TextView mBottomText;
@@ -143,7 +144,11 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
         if (!mLoadmoreFinished) {
             mProgressDrawable.stop();
             mProgressView.setVisibility(GONE);
-            mBottomText.setText(REFRESH_FOOTER_FINISH);
+            if (success) {
+                mBottomText.setText(REFRESH_FOOTER_FINISH);
+            } else {
+                mBottomText.setText(REFRESH_FOOTER_FAILED);
+            }
             return 500;
         }
         return 0;
