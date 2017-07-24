@@ -3,6 +3,7 @@ package com.scwang.refreshlayout.activity.using;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.TextView;
 
@@ -54,9 +55,11 @@ public class ListenerUsingActivity extends AppCompatActivity {
         });
 
         mTvContent = (TextView) findViewById(R.id.content);
+        mTvContent.setMovementMethod(ScrollingMovementMethod.getInstance());
 
         final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
         refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
+
             @Override
             public void onHeaderPulling(RefreshHeader header, float percent, int offset, int headerHeight, int extendHeight) {
                 mHeaderPulling = String.format(Locale.CHINA, "%s\npercent=%.02f offset=%03d\nheight=%03d extend=%03d",

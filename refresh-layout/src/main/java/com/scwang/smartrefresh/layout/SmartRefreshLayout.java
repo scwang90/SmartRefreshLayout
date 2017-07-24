@@ -850,37 +850,11 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
                     }
                     if (mTotalUnconsumed > 0) {
                         if (mState == RefreshState.Refreshing) {
-//                            if (mRefreshHeader != null && mRefreshHeader.getSpinnerStyle() != SpinnerStyle.FixedFront) {
-                                final int spinner = (int)(mInitialMotionY + dy);
-                                if (spinner < 0 && (mRefreshContent != null && mRefreshContent.canScrollDown())) {
-                                    moveSpinnerInfinitely(0);
-                                    e.setAction(MotionEvent.ACTION_DOWN);
-                                    super.dispatchTouchEvent(e);
-                                    e.setAction(MotionEvent.ACTION_MOVE);
-                                    e.offsetLocation(0, mInitialMotionY + dy);
-                                    super.dispatchTouchEvent(e);
-                                    mTotalUnconsumed = 0;
-                                    mInitialMotionY = 0;
-                                    return false;
-                                }
-                                moveSpinnerInfinitely(spinner);
-//                            }
+                            final int spinner = (int)(mInitialMotionY + dy);
+                            moveSpinnerInfinitely(Math.max(0, spinner));
                         } else {
-//                            if (mRefreshFooter != null && mRefreshFooter.getSpinnerStyle() != SpinnerStyle.FixedFront) {
-                                final int spinner = (int)(mInitialMotionY + dy);
-                                if (spinner > 0 && (mRefreshContent != null && mRefreshContent.canScrollUp())) {
-                                    moveSpinnerInfinitely(0);
-                                    e.setAction(MotionEvent.ACTION_DOWN);
-                                    super.dispatchTouchEvent(e);
-                                    e.setAction(MotionEvent.ACTION_MOVE);
-                                    e.offsetLocation(0, mInitialMotionY + dy);
-                                    super.dispatchTouchEvent(e);
-                                    mTotalUnconsumed = 0;
-                                    mInitialMotionY = 0;
-                                    return false;
-                                }
-                                moveSpinnerInfinitely(spinner);
-//                            }
+                            final int spinner = (int)(mInitialMotionY + dy);
+                            moveSpinnerInfinitely(Math.min(0, spinner));
                         }
                     }
                     break;
