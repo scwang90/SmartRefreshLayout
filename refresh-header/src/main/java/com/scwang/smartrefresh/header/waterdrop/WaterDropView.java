@@ -63,7 +63,7 @@ public class WaterDropView extends View {
 
         mPaint.setColor(Color.GRAY);
         mMaxCircleRadius = DensityUtil.dp2px(20);
-        mMinCircleRaidus = mMaxCircleRadius / 4;
+        mMinCircleRaidus = mMaxCircleRadius / 5;
 
         topCircle.radius = (mMaxCircleRadius);
         bottomCircle.radius = (mMaxCircleRadius);

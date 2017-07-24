@@ -6,8 +6,11 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -66,20 +69,26 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     //<editor-fold desc="RelativeLayout">
     public ClassicsHeader(Context context) {
         super(context);
-        this.initView(context, null, 0);
+        this.initView(context, null);
     }
 
     public ClassicsHeader(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.initView(context, attrs, 0);
+        this.initView(context, attrs);
     }
 
     public ClassicsHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.initView(context, attrs, defStyleAttr);
+        this.initView(context, attrs);
     }
 
-    private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    public ClassicsHeader(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        this.initView(context, attrs);
+    }
+
+    private void initView(Context context, AttributeSet attrs) {
         DensityUtil density = new DensityUtil();
 
         setMinimumHeight(density.dip2px(80));
@@ -284,7 +293,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
         switch (newState) {
             case None:
-                restoreRefreshLayoutBackground();
+//                restoreRefreshLayoutBackground();
             case PullDownToRefresh:
                 mHeaderText.setText(REFRESH_HEADER_PULLDOWN);
                 mArrowView.setVisibility(VISIBLE);
@@ -299,33 +308,33 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
             case ReleaseToRefresh:
                 mHeaderText.setText(REFRESH_HEADER_RELEASE);
                 mArrowView.animate().rotation(180);
-                replaceRefreshLayoutBackground(refreshLayout);
+//                replaceRefreshLayoutBackground(refreshLayout);
                 break;
         }
     }
     //</editor-fold>
 
     //<editor-fold desc="background">
-    private Runnable restoreRunable;
-    private void restoreRefreshLayoutBackground() {
-        if (restoreRunable != null) {
-            restoreRunable.run();
-            restoreRunable = null;
-        }
-    }
-
-    private void replaceRefreshLayoutBackground(final RefreshLayout refreshLayout) {
-        if (restoreRunable == null && mSpinnerStyle == SpinnerStyle.FixedBehind) {
-            restoreRunable = new Runnable() {
-                Drawable drawable = refreshLayout.getLayout().getBackground();
-                @Override
-                public void run() {
-                    refreshLayout.getLayout().setBackgroundDrawable(drawable);
-                }
-            };
-            refreshLayout.getLayout().setBackgroundDrawable(getBackground());
-        }
-    }
+//    private Runnable restoreRunable;
+//    private void restoreRefreshLayoutBackground() {
+//        if (restoreRunable != null) {
+//            restoreRunable.run();
+//            restoreRunable = null;
+//        }
+//    }
+//
+//    private void replaceRefreshLayoutBackground(final RefreshLayout refreshLayout) {
+//        if (restoreRunable == null && mSpinnerStyle == SpinnerStyle.FixedBehind) {
+//            restoreRunable = new Runnable() {
+//                Drawable drawable = refreshLayout.getLayout().getBackground();
+//                @Override
+//                public void run() {
+//                    refreshLayout.getLayout().setBackgroundDrawable(drawable);
+//                }
+//            };
+//            refreshLayout.getLayout().setBackgroundDrawable(getBackground());
+//        }
+//    }
     //</editor-fold>
 
     //<editor-fold desc="API">
