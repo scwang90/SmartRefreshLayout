@@ -1479,10 +1479,10 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
     @Override
     public boolean onNestedPreFling(View target, float velocityX, float velocityY) {
         return reboundAnimator != null
-                || mState == RefreshState.PullDownToRefresh || mState == RefreshState.PullToUpLoad
-                || mState == RefreshState.ReleaseToRefresh || mState == RefreshState.ReleaseToLoad
-//                || (mState == RefreshState.Refreshing && mHeaderTranslationY > -mHeaderHeight)
-//                || (mState == RefreshState.Loading && mFooterTranslationY < mFooterHeight)
+                || mState == RefreshState.ReleaseToRefresh
+                || mState == RefreshState.ReleaseToLoad
+                || (mState == RefreshState.PullDownToRefresh && mSpinner > 0)
+                || (mState == RefreshState.PullToUpLoad && mSpinner > 0)
                 || (mState == RefreshState.Refreshing && mSpinner != 0)
                 || (mState == RefreshState.Loading && mSpinner != 0)
                 || dispatchNestedPreFling(velocityX, velocityY);
@@ -2060,7 +2060,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
                 reboundAnimator.cancel();
             }
             reboundAnimator = new ValueAnimator();
-            postDelayed(new Runnable() {
+            Runnable runnable = new Runnable() {
                 @Override
                 public void run() {
                     reboundAnimator = ValueAnimator.ofInt(mSpinner, (int) (mHeaderHeight * dragrate));
@@ -2078,7 +2078,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
                             mLastTouchX = getMeasuredWidth() / 2;
                             setStatePullDownToRefresh();
                         }
-
                         @Override
                         public void onAnimationEnd(Animator animation) {
                             reboundAnimator = null;
@@ -2090,7 +2089,12 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
                     });
                     reboundAnimator.start();
                 }
-            }, delayed);
+            };
+            if (delayed > 0) {
+                postDelayed(runnable, delayed);
+            } else {
+                runnable.run();
+            }
             return true;
         } else {
             return false;
@@ -2120,7 +2124,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
                 reboundAnimator.cancel();
             }
             reboundAnimator = new ValueAnimator();
-            postDelayed(new Runnable() {
+            Runnable runnable = new Runnable() {
                 @Override
                 public void run() {
                     reboundAnimator = ValueAnimator.ofInt(mSpinner, -(int) (mFooterHeight * dragrate));
@@ -2150,7 +2154,12 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
                     });
                     reboundAnimator.start();
                 }
-            }, delayed);
+            };
+            if (delayed > 0) {
+                postDelayed(runnable, delayed);
+            } else {
+                runnable.run();
+            }
             return true;
         } else {
             return false;

@@ -22,8 +22,13 @@
 >修复：DeliveryHeader,DropboxHeader 在API-17以下显示不全的问题  
 
 ## V 1.0.3(开发中)
->添加: 为Heaer和Footer添加拖动时水平方向坐标 x，实现左右拖动Header的效果
->修复：ClassicsFooter加载失败时，显示成了加载完成 
->修复：正在刷新时，向上拖动导致的栈溢出崩溃
+>添加: 为Heaer和Footer添加拖动时水平方向坐标 x，实现左右拖动Header的效果  
+>添加：为Header添加 srlEnableHorizontalDrag 属性和 setEnableHorizontalDrag 方法  
+>修复：ClassicsFooter加载失败时，显示成了加载完成  
+>修复：正在刷新时，向上拖动导致的栈溢出崩溃  
+>修复：autoRefresh(0) 的 延时为没有延时  
+>修复：StaggeredGridLayoutManager 导致的 autoLoadmore 无效  
+>修复：列表监听滚动无效的问题  
+
  
 

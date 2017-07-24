@@ -19,8 +19,10 @@ import android.support.v4.view.ScrollingView;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.Space;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -40,6 +42,7 @@ import com.scwang.smartrefresh.layout.api.RefreshScrollBoundary;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.util.ScrollBoundaryUtil;
 
+import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -290,14 +293,21 @@ public class RefreshContentWrapper implements RefreshContent {
         } catch (Throwable e) {
             e.printStackTrace();
         }
+        try {
+            if (mScrollableView instanceof NestedScrollView) {
+                NestedScrollViewScrollComponent component = new NestedScrollViewScrollComponent(kernel);
+                component.attach((NestedScrollView) mScrollableView);
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+
         if (mScrollableView instanceof AbsListView) {
             AbsListViewScrollComponent component = new AbsListViewScrollComponent(kernel);
             component.attach(((AbsListView) mScrollableView));
-        } else if (mScrollableView instanceof NestedScrollView) {
-            NestedScrollViewScrollComponent component = new NestedScrollViewScrollComponent(kernel);
-            component.attach((NestedScrollView) mScrollableView);
         } else if (Build.VERSION.SDK_INT >= 23 && mScrollableView != null) {
-            mScrollableView.setOnScrollChangeListener(new Api23ViewScrollComponent(kernel));
+            Api23ViewScrollComponent component = new Api23ViewScrollComponent(kernel);
+            component.attach(mScrollableView);
         }
 //        if (Build.VERSION.SDK_INT >= 21
 //                && mScrollableView instanceof ListView
@@ -409,6 +419,7 @@ public class RefreshContentWrapper implements RefreshContent {
         int lastScrollY = 0;
         int lastOldScrollY = 0;
         RefreshKernel kernel;
+        View.OnScrollChangeListener mScrollListener;
 
         Api23ViewScrollComponent(RefreshKernel kernel) {
             this.kernel = kernel;
@@ -416,6 +427,9 @@ public class RefreshContentWrapper implements RefreshContent {
 
         @Override
         public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+            if (mScrollListener != null) {
+                mScrollListener.onScrollChange(v, scrollX, scrollY, oldScrollX, oldScrollY);
+            }
             if (lastScrollY == scrollY && lastOldScrollY == oldScrollY) {
                 return;
             }
@@ -439,6 +453,23 @@ public class RefreshContentWrapper implements RefreshContent {
             lastTimeOld = lastTime;
             lastTime = System.nanoTime();
         }
+
+        void attach(View view) {
+            Field[] declaredFields = View.class.getDeclaredFields();
+            if (declaredFields != null) {
+                for (Field field : declaredFields) {
+                    if (View.OnScrollChangeListener.class.equals(field.getType())) {
+                        try {
+                            field.setAccessible(true);
+                            mScrollListener = (View.OnScrollChangeListener)field.get(view);
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+            view.setOnScrollChangeListener(new Api23ViewScrollComponent(kernel));
+        }
     }
 
     private class NestedScrollViewScrollComponent implements NestedScrollView.OnScrollChangeListener {
@@ -447,6 +478,7 @@ public class RefreshContentWrapper implements RefreshContent {
         int lastScrollY = 0;
         int lastOldScrollY = 0;
         RefreshKernel kernel;
+        NestedScrollView.OnScrollChangeListener mScrollChangeListener;
 
         NestedScrollViewScrollComponent(RefreshKernel kernel) {
             this.kernel = kernel;
@@ -454,6 +486,9 @@ public class RefreshContentWrapper implements RefreshContent {
 
         @Override
         public void onScrollChange(NestedScrollView scrollView, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+            if (mScrollChangeListener != null) {
+                mScrollChangeListener.onScrollChange(scrollView, scrollX, scrollY, oldScrollX, oldScrollY);
+            }
             if (lastScrollY == scrollY && lastOldScrollY == oldScrollY) {
                 return;
             }
@@ -479,6 +514,19 @@ public class RefreshContentWrapper implements RefreshContent {
         }
 
         void attach(NestedScrollView scrollView) {
+            Field[] declaredFields = NestedScrollView.class.getDeclaredFields();
+            if (declaredFields != null) {
+                for (Field field : declaredFields) {
+                    if (NestedScrollView.OnScrollChangeListener.class.equals(field.getType())) {
+                        try {
+                            field.setAccessible(true);
+                            mScrollChangeListener = (NestedScrollView.OnScrollChangeListener)field.get(scrollView);
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
             scrollView.setOnScrollChangeListener(this);
         }
     }
@@ -491,6 +539,7 @@ public class RefreshContentWrapper implements RefreshContent {
         int lastScrollDy;
         RefreshKernel kernel;
         SparseArray<ItemRecod> recordSp = new SparseArray<>(0);
+        AbsListView.OnScrollListener mScrollListener;
 
         AbsListViewScrollComponent(RefreshKernel kernel) {
             this.kernel = kernel;
@@ -498,10 +547,17 @@ public class RefreshContentWrapper implements RefreshContent {
 
         @Override
         public void onScrollStateChanged(AbsListView view, int scrollState) {
+            if (mScrollListener != null) {
+                mScrollListener.onScrollStateChanged(view, scrollState);
+            }
         }
 
         @Override
         public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+            if (mScrollListener != null) {
+                mScrollListener.onScroll(absListView, firstVisibleItem, visibleItemCount, totalItemCount);
+            }
+
             lastScrolly = scrollY;
             lastScrollDy = scrollDy;
             scrollY = getScrollY(absListView, firstVisibleItem);
@@ -535,6 +591,19 @@ public class RefreshContentWrapper implements RefreshContent {
         }
 
         void attach(AbsListView listView) {
+            Field[] declaredFields = AbsListView.class.getDeclaredFields();
+            if (declaredFields != null) {
+                for (Field field : declaredFields) {
+                    if (AbsListView.OnScrollListener.class.equals(field.getType())) {
+                        try {
+                            field.setAccessible(true);
+                            mScrollListener = (AbsListView.OnScrollListener)field.get(listView);
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
             listView.setOnScrollListener(this);
         }
 
@@ -578,6 +647,7 @@ public class RefreshContentWrapper implements RefreshContent {
         int lastDy;
         long lastFlingTime;
         RefreshKernel kernel;
+        RecyclerView.OnFlingListener mFlingListener;
 
         RecyclerViewScrollComponent(RefreshKernel kernel) {
             this.kernel = kernel;
@@ -619,23 +689,56 @@ public class RefreshContentWrapper implements RefreshContent {
                     && layout.isEnableAutoLoadmore()
                     && layout.getState() == RefreshState.None ){
                 RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
-                if (manager instanceof LinearLayoutManager) {
-                    LinearLayoutManager linearManager = ((LinearLayoutManager) manager);
-                    int lastVisiblePosition = linearManager.findLastVisibleItemPosition();
-                    if(lastVisiblePosition >= linearManager.getItemCount() - 1
-                            && lastVisiblePosition > 0
-                            && !ScrollBoundaryUtil.canScrollDown(recyclerView)){
-                        kernel.getRefreshLayout().autoLoadmore(0,1);
+
+                int lastVisiblePosition = 0;
+                if(manager instanceof GridLayoutManager){
+                    //通过LayoutManager找到当前显示的最后的item的position
+                    lastVisiblePosition = ((GridLayoutManager) manager).findLastVisibleItemPosition();
+                }else if(manager instanceof LinearLayoutManager){
+                    lastVisiblePosition = ((LinearLayoutManager) manager).findLastVisibleItemPosition();
+                }else if(manager instanceof StaggeredGridLayoutManager){
+                    //因为StaggeredGridLayoutManager的特殊性可能导致最后显示的item存在多个，所以这里取到的是一个数组
+                    //得到这个数组后再取到数组中position值最大的那个就是最后显示的position值了
+                    int[] lastPositions = new int[((StaggeredGridLayoutManager) manager).getSpanCount()];
+                    ((StaggeredGridLayoutManager) manager).findLastVisibleItemPositions(lastPositions);
+                    lastVisiblePosition = lastPositions[0];
+                    for (int value : lastPositions) {
+                        if (value > lastVisiblePosition) {
+                            lastVisiblePosition = value;
+                        }
                     }
+                }
+
+                if(lastVisiblePosition >= manager.getItemCount() - 1
+                        && lastVisiblePosition > 0
+                        && !ScrollBoundaryUtil.canScrollDown(recyclerView)){
+                    kernel.getRefreshLayout().autoLoadmore(0,1);
                 }
             }
         }
 
         void attach(RecyclerView recyclerView) {
+            Field[] declaredFields = RecyclerView.class.getDeclaredFields();
+            if (declaredFields != null) {
+                for (Field field : declaredFields) {
+                    if (RecyclerView.OnFlingListener.class.equals(field.getType())) {
+                        try {
+                            field.setAccessible(true);
+                            mFlingListener = (RecyclerView.OnFlingListener)field.get(recyclerView);
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+
             recyclerView.addOnScrollListener(this);
             recyclerView.setOnFlingListener(new RecyclerView.OnFlingListener() {
                 @Override
                 public boolean onFling(int velocityX, int velocityY) {
+                    if (mFlingListener != null) {
+                        mFlingListener.onFling(velocityX, velocityY);
+                    }
                     lastFlingTime = System.currentTimeMillis();
                     return false;
                 }
