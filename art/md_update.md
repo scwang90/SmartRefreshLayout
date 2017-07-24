@@ -22,6 +22,7 @@
 >修复：DeliveryHeader,DropboxHeader 在API-17以下显示不全的问题  
 
 ## V 1.0.3(开发中)
->添加: 为Heaer和Footer添加拖动时水平方向坐标 x，实现左右拖动Header的效果  
+>添加: 为Heaer和Footer添加拖动时水平方向坐标 x，实现左右拖动Header的效果
+>修复：ClassicsFooter加载失败时，显示成了加载完成  
 
 
