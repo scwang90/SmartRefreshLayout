@@ -178,7 +178,7 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
     //<editor-fold desc="RefreshHeader">
 
     @Override
-    public boolean isEnableHorizontalDrag() {
+    public boolean isSupportHorizontalDrag() {
         return false;
     }
 

@@ -171,7 +171,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     }
 
     @Override
-    public boolean isEnableHorizontalDrag() {
+    public boolean isSupportHorizontalDrag() {
         return false;
     }
 

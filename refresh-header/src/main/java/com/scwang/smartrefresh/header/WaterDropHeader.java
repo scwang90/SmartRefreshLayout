@@ -150,7 +150,7 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override
-    public boolean isEnableHorizontalDrag() {
+    public boolean isSupportHorizontalDrag() {
         return false;
     }
 

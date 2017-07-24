@@ -153,7 +153,7 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
     }
 
     @Override
-    public boolean isEnableHorizontalDrag() {
+    public boolean isSupportHorizontalDrag() {
         return mEnableHorizontalDrag;
     }
 

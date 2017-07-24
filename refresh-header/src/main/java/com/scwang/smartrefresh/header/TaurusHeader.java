@@ -146,7 +146,7 @@ public class TaurusHeader extends View implements RefreshHeader/*, SizeDefinitio
     }
 
     @Override
-    public boolean isEnableHorizontalDrag() {
+    public boolean isSupportHorizontalDrag() {
         return false;
     }
 

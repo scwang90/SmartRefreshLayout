@@ -69,7 +69,7 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
     //<editor-fold desc="RefreshHeader">
 
     @Override
-    public boolean isEnableHorizontalDrag() {
+    public boolean isSupportHorizontalDrag() {
         return false;
     }
 

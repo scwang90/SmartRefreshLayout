@@ -91,7 +91,7 @@ public class FalsifyHeader extends View implements RefreshHeader {
     }
 
     @Override
-    public boolean isEnableHorizontalDrag() {
+    public boolean isSupportHorizontalDrag() {
         return false;
     }
 

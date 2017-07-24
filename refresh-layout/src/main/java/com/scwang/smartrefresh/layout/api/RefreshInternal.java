@@ -65,5 +65,5 @@ public interface RefreshInternal extends OnStateChangedListener {
      * 是否支持水平方向的拖动（将会影响到onHorizontalDrag的调用）
      * @return 水平拖动需要消耗更多的时间和资源，所以如果不支持请返回false
      */
-    boolean isEnableHorizontalDrag();
+    boolean isSupportHorizontalDrag();
 }

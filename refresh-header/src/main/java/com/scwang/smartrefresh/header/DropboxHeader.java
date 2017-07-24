@@ -330,7 +330,7 @@ public class DropboxHeader extends View implements RefreshHeader {
     //<editor-fold desc="RefreshHeader">
 
     @Override
-    public boolean isEnableHorizontalDrag() {
+    public boolean isSupportHorizontalDrag() {
         return false;
     }
 
@@ -340,12 +340,16 @@ public class DropboxHeader extends View implements RefreshHeader {
 
     @Override
     public void onPullingDown(float percent, int offset, int headerHeight, int extendHeight) {
-        mReboundPercent = 1f * Math.max(0, offset - headerHeight) / extendHeight;
+        if (mState != RefreshState.Refreshing) {
+            mReboundPercent = 1f * Math.max(0, offset - headerHeight) / extendHeight;
+        }
     }
 
     @Override
     public void onReleasing(float percent, int offset, int headerHeight, int extendHeight) {
-        mReboundPercent = 1f * Math.max(0, offset - headerHeight) / extendHeight;
+        if (mState != RefreshState.Refreshing) {
+            mReboundPercent = 1f * Math.max(0, offset - headerHeight) / extendHeight;
+        }
     }
 
     @Override

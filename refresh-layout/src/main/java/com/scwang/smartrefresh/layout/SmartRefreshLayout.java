@@ -705,9 +705,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
                 final int offsetX = (int) mLastTouchX;
                 final int offsetMax = getWidth();
                 final float percentX = mLastTouchX / offsetMax;
-                if (mSpinner > 0 && mRefreshHeader != null && mRefreshHeader.isEnableHorizontalDrag()) {
+                if (mSpinner > 0 && mRefreshHeader != null && mRefreshHeader.isSupportHorizontalDrag()) {
                     mRefreshHeader.onHorizontalDrag(percentX, offsetX, offsetMax);
-                } else if (mSpinner < 0 && mRefreshFooter != null && mRefreshFooter.isEnableHorizontalDrag()) {
+                } else if (mSpinner < 0 && mRefreshFooter != null && mRefreshFooter.isSupportHorizontalDrag()) {
                     mRefreshFooter.onHorizontalDrag(percentX, offsetX, offsetMax);
                 }
             }
@@ -1144,8 +1144,8 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
      */
     protected void moveSpinner(int spinner, boolean isAnimator) {
         if (mSpinner == spinner
-                && (mRefreshHeader == null || !mRefreshHeader.isEnableHorizontalDrag())
-                && (mRefreshFooter == null || !mRefreshFooter.isEnableHorizontalDrag())) {
+                && (mRefreshHeader == null || !mRefreshHeader.isSupportHorizontalDrag())
+                && (mRefreshFooter == null || !mRefreshFooter.isSupportHorizontalDrag())) {
             return;
         }
         final int oldSpinner = mSpinner;
@@ -1200,7 +1200,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
                     mOnMultiPurposeListener.onHeaderReleasing(mRefreshHeader, percent, offset, headerHeight, extendHeight);
                 }
             } else {
-                if (mRefreshHeader.isEnableHorizontalDrag()) {
+                if (mRefreshHeader.isSupportHorizontalDrag()) {
                     final int offsetX = (int) mLastTouchX;
                     final int offsetMax = getWidth();
                     final float percentX = mLastTouchX / offsetMax;
@@ -1232,7 +1232,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
                     mOnMultiPurposeListener.onFooterReleasing(mRefreshFooter, percent, offset, footerHeight, extendHeight);
                 }
             } else {
-                if (mRefreshFooter.isEnableHorizontalDrag()) {
+                if (mRefreshFooter.isSupportHorizontalDrag()) {
                     final int offsetX = (int) mLastTouchX;
                     final int offsetMax = getWidth();
                     final float percentX = mLastTouchX / offsetMax;

@@ -66,7 +66,7 @@ public class RefreshFooterWrapper implements RefreshFooter {
     }
 
     @Override
-    public boolean isEnableHorizontalDrag() {
+    public boolean isSupportHorizontalDrag() {
         return false;
     }
 

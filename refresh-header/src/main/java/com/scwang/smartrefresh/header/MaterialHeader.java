@@ -57,6 +57,7 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
     private Path mBezierPath;
     private Paint mBezierPaint;
     private boolean mShowBezierWave = false;
+    private RefreshState mState;
 
     //<editor-fold desc="MaterialHeader">
     public MaterialHeader(Context context) {
@@ -209,7 +210,7 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override
-    public boolean isEnableHorizontalDrag() {
+    public boolean isSupportHorizontalDrag() {
         return false;
     }
 
@@ -225,23 +226,25 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
             postInvalidate();
         }
 
-        float originalDragPercent = 1f * offset / headHeight;
+        if (mState != RefreshState.Refreshing) {
+            float originalDragPercent = 1f * offset / headHeight;
 
-        float dragPercent = Math.min(1f, Math.abs(originalDragPercent));
-        float adjustedPercent = (float) Math.max(dragPercent - .4, 0) * 5 / 3;
-        float extraOS = Math.abs(offset) - headHeight;
-        float tensionSlingshotPercent = Math.max(0, Math.min(extraOS, (float) headHeight * 2)
-                / (float) headHeight);
-        float tensionPercent = (float) ((tensionSlingshotPercent / 4) - Math.pow(
-                (tensionSlingshotPercent / 4), 2)) * 2f;
-        float strokeStart = adjustedPercent * .8f;
-        mProgress.showArrow(true);
-        mProgress.setStartEndTrim(0f, Math.min(MAX_PROGRESS_ANGLE, strokeStart));
-        mProgress.setArrowScale(Math.min(1f, adjustedPercent));
+            float dragPercent = Math.min(1f, Math.abs(originalDragPercent));
+            float adjustedPercent = (float) Math.max(dragPercent - .4, 0) * 5 / 3;
+            float extraOS = Math.abs(offset) - headHeight;
+            float tensionSlingshotPercent = Math.max(0, Math.min(extraOS, (float) headHeight * 2)
+                    / (float) headHeight);
+            float tensionPercent = (float) ((tensionSlingshotPercent / 4) - Math.pow(
+                    (tensionSlingshotPercent / 4), 2)) * 2f;
+            float strokeStart = adjustedPercent * .8f;
+            mProgress.showArrow(true);
+            mProgress.setStartEndTrim(0f, Math.min(MAX_PROGRESS_ANGLE, strokeStart));
+            mProgress.setArrowScale(Math.min(1f, adjustedPercent));
 
-        float rotation = (-0.25f + .4f * adjustedPercent + tensionPercent * 2) * .5f;
-        mProgress.setProgressRotation(rotation);
-        mCircleView.setAlpha(Math.min(1f, originalDragPercent*2));
+            float rotation = (-0.25f + .4f * adjustedPercent + tensionPercent * 2) * .5f;
+            mProgress.setProgressRotation(rotation);
+            mCircleView.setAlpha(Math.min(1f, originalDragPercent*2));
+        }
 
         float targetY = offset / 2 + mCircleDiameter / 2;
         mCircleView.setTranslationY(Math.min(offset, targetY));//setTargetOffsetTopAndBottom(targetY - mCurrentTargetOffsetTop, true /* requires update */);
@@ -270,6 +273,7 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
 
     @Override
     public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
+        mState = newState;
         switch (newState) {
             case None:
                 break;
