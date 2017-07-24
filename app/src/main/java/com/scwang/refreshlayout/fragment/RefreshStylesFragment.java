@@ -110,6 +110,7 @@ public class RefreshStylesFragment extends Fragment implements AdapterView.OnIte
                 return false;
             }
         });
+
     }
 
     @Override

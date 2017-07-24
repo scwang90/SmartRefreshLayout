@@ -3,8 +3,10 @@ package com.scwang.smartrefresh.layout.header;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -12,6 +14,7 @@ import android.support.v4.app.FragmentManager;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -24,7 +27,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.internal.ProgressDrawable;
-import com.scwang.smartrefresh.layout.internal.pathview.PathsView;
+import com.scwang.smartrefresh.layout.internal.pathview.PathsDrawable;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import java.text.DateFormat;
@@ -52,8 +55,9 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     private Date mLastTime;
     private TextView mHeaderText;
     private TextView mLastUpdateText;
-    private PathsView mArrowView;
+    private ImageView mArrowView;
     private ImageView mProgressView;
+    private PathsDrawable mArrowDrawable;
     private ProgressDrawable mProgressDrawable;
     private DateFormat mFormat = new SimpleDateFormat("上次更新 M-d HH:mm", Locale.CHINA);
     private SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
@@ -93,8 +97,6 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
         mLastUpdateText.setTextColor(0xff7c7c7c);
         mLastUpdateText.setTextSize(12);
         LinearLayout.LayoutParams lpHeaderText = new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
-        lpHeaderText.leftMargin = density.dip2px(20);
-        lpHeaderText.rightMargin = density.dip2px(20);
         layout.addView(mHeaderText, lpHeaderText);
         LinearLayout.LayoutParams lpUpdateText = new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
         layout.addView(mLastUpdateText, lpUpdateText);
@@ -103,19 +105,15 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
         lpHeaderLayout.addRule(CENTER_IN_PARENT);
         addView(layout,lpHeaderLayout);
 
-        mProgressDrawable = new ProgressDrawable();
-        mProgressDrawable.setColor(0xff666666);
         mProgressView = new ImageView(context);
-        mProgressView.setImageDrawable(mProgressDrawable);
+        mProgressView.animate().setInterpolator(new LinearInterpolator());
         LayoutParams lpProgress = new LayoutParams(density.dip2px(20), density.dip2px(20));
         lpProgress.rightMargin = density.dip2px(20);
         lpProgress.addRule(CENTER_VERTICAL);
         lpProgress.addRule(LEFT_OF, android.R.id.widget_frame);
         addView(mProgressView, lpProgress);
 
-        mArrowView = new PathsView(context);
-        mArrowView.parserColors(0xff666666);
-        mArrowView.parserPaths("M20,12l-1.41,-1.41L13,16.17V4h-2v12.17l-5.58,-5.59L4,12l8,8 8,-8z");
+        mArrowView = new ImageView(context);
         addView(mArrowView, lpProgress);
 
         if (isInEditMode()) {
@@ -128,6 +126,24 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ClassicsHeader);
 
         mSpinnerStyle = SpinnerStyle.values()[ta.getInt(R.styleable.ClassicsHeader_srlClassicsSpinnerStyle,mSpinnerStyle.ordinal())];
+
+        if (ta.hasValue(R.styleable.ClassicsHeader_srlArrowDrawable)) {
+            mArrowView.setImageDrawable(ta.getDrawable(R.styleable.ClassicsHeader_srlArrowDrawable));
+        } else {
+            mArrowDrawable = new PathsDrawable();
+            mArrowDrawable.parserColors(0xff666666);
+            mArrowDrawable.parserPaths("M20,12l-1.41,-1.41L13,16.17V4h-2v12.17l-5.58,-5.59L4,12l8,8 8,-8z");
+            mArrowView.setImageDrawable(mArrowDrawable);
+        }
+
+        if (ta.hasValue(R.styleable.ClassicsHeader_srlProgressDrawable)) {
+            mProgressView.setImageDrawable(ta.getDrawable(R.styleable.ClassicsHeader_srlProgressDrawable));
+        } else {
+            mProgressDrawable = new ProgressDrawable();
+            mProgressDrawable.setColor(0xff666666);
+            mProgressView.setImageDrawable(mProgressDrawable);
+        }
+
 
         int primaryColor = ta.getColor(R.styleable.ClassicsHeader_srlPrimaryColor, 0);
         int accentColor = ta.getColor(R.styleable.ClassicsHeader_srlAccentColor, 0);
@@ -190,12 +206,20 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
 
     @Override
     public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
-        mProgressDrawable.start();
+        if (mProgressDrawable != null) {
+            mProgressDrawable.start();
+        } else {
+            mProgressView.animate().rotation(36000).setDuration(100000);
+        }
     }
 
     @Override
     public int onFinish(RefreshLayout layout, boolean success) {
-        mProgressDrawable.stop();
+        if (mProgressDrawable != null) {
+            mProgressDrawable.stop();
+        } else {
+            mProgressView.animate().rotation(0).setDuration(300);
+        }
         mProgressView.setVisibility(GONE);
         if (success) {
             mHeaderText.setText(REFRESH_HEADER_FINISH);
@@ -212,23 +236,35 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
             if (!(getBackground() instanceof BitmapDrawable)) {
                 setBackgroundColor(colors[0]);
             }
-            mArrowView.parserColors(colors[1]);
+            if (mArrowDrawable != null) {
+                mArrowDrawable.parserColors(colors[1]);
+            }
             mHeaderText.setTextColor(colors[1]);
-            mProgressDrawable.setColor(colors[1]);
+            if (mProgressDrawable != null) {
+                mProgressDrawable.setColor(colors[1]);
+            }
             mLastUpdateText.setTextColor(colors[1]&0x00ffffff|0x99000000);
         } else if (colors.length > 0) {
             if (!(getBackground() instanceof BitmapDrawable)) {
                 setBackgroundColor(colors[0]);
             }
             if (colors[0] == 0xffffffff) {
-                mArrowView.parserColors(0xff666666);
+                if (mArrowDrawable != null) {
+                    mArrowDrawable.parserColors(0xff666666);
+                }
                 mHeaderText.setTextColor(0xff666666);
-                mProgressDrawable.setColor(0xff666666);
+                if (mProgressDrawable != null) {
+                    mProgressDrawable.setColor(0xff666666);
+                }
                 mLastUpdateText.setTextColor(0xff666666&0x00ffffff|0x99000000);
             } else {
-                mArrowView.parserColors(0xffffffff);
+                if (mArrowDrawable != null) {
+                    mArrowDrawable.parserColors(0xffffffff);
+                }
                 mHeaderText.setTextColor(0xffffffff);
-                mProgressDrawable.setColor(0xffffffff);
+                if (mProgressDrawable != null) {
+                    mProgressDrawable.setColor(0xffffffff);
+                }
                 mLastUpdateText.setTextColor(0xaaffffff);
             }
         }
@@ -293,6 +329,37 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     //</editor-fold>
 
     //<editor-fold desc="API">
+    public ClassicsHeader setProgressBitmap(Bitmap bitmap) {
+        mProgressDrawable = null;
+        mProgressView.setImageBitmap(bitmap);
+        return this;
+    }
+    public ClassicsHeader setProgressDrawable(Drawable drawable) {
+        mProgressDrawable = null;
+        mProgressView.setImageDrawable(drawable);
+        return this;
+    }
+    public ClassicsHeader setProgressResource(@DrawableRes int resId) {
+        mProgressDrawable = null;
+        mProgressView.setImageResource(resId);
+        return this;
+    }
+    public ClassicsHeader setArrowBitmap(Bitmap bitmap) {
+        mArrowDrawable = null;
+        mArrowView.setImageBitmap(bitmap);
+        return this;
+    }
+    public ClassicsHeader setArrowDrawable(Drawable drawable) {
+        mArrowDrawable = null;
+        mArrowView.setImageDrawable(drawable);
+        return this;
+    }
+    public ClassicsHeader setArrowResource(@DrawableRes int resId) {
+        mArrowDrawable = null;
+        mArrowView.setImageResource(resId);
+        return this;
+    }
+
     public ClassicsHeader setLastUpdateTime(Date time) {
         mLastTime = time;
         mLastUpdateText.setText(mFormat.format(time));
@@ -314,9 +381,13 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     }
 
     public ClassicsHeader setAccentColor(int accentColor) {
-        mArrowView.parserColors(accentColor);
+        if (mArrowDrawable != null) {
+            mArrowDrawable.parserColors(accentColor);
+        }
+        if (mProgressDrawable != null) {
+            mProgressDrawable.setColor(accentColor);
+        }
         mHeaderText.setTextColor(accentColor);
-        mProgressDrawable.setColor(accentColor);
         mLastUpdateText.setTextColor(accentColor&0x00ffffff|0x99000000);
         return this;
     }

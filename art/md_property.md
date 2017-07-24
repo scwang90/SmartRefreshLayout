@@ -1,7 +1,7 @@
 
-## 属性 Attributes
+## Attributes
 
-|名称-name|格式-format|描述-description|
+|name|format|description|
 |:---:|:---:|:---:|
 |srlPrimaryColor|color|主题颜色|
 |srlAccentColor|color|强调颜色|
@@ -24,9 +24,9 @@
 |srlFixedHeaderViewId|id|指定固定的视图Id|
 |srlFixedFooterViewId|id|指定固定的视图Id|
 
-## 方法 Method
+## Method
 
-|名称-name|格式-format|描述-description|
+|name|format|description|
 |:---:|:---:|:---:|
 |setPrimaryColors|colors|主题\强调颜色|
 |setPrimaryColorsId|colors|主题\强调颜色资源Id|
@@ -67,18 +67,22 @@
 |autoRefresh|(int delayed)|触发自动刷新|
 |autoLoadmore|(int delayed)|触发自动加载|
 
-## Header-属性 Header-Attributes
+## Header-Attributes
 
-|名称-name|格式-format|描述-description|
+|name|format|description|
 |:---:|:---:|:---:|
 |srlPrimaryColor|color|主题颜色|
 |srlAccentColor|color|强调颜色|
+|srlArrowDrawable|drawable|箭头图片|
+|srlProgressDrawable|drawable|转动图片|
 |srlClassicsSpinnerStyle|enum|变换样式：Translate(平行移动)、Scale（拉伸形变）、FixedBehind（固定在背后）|
 |srlSpinnerStyle|enum|变换样式：srlClassicsSpinnerStyle的全部、FixedFront（固定在前面或全屏）|
 
-## Header-方法 Header-Method
-|名称-name|格式-format|描述-description|
+## Header-Method
+|name|format|description|
 |:---:|:---:|:---:|
-|setPrimaryColors|colors|主题\强调颜色|
+|setPrimaryColors|colors|设置主题\强调颜色|
+|setArrowDrawable|drawable|设置箭头图片|
+|setProgressDrawable|drawable|设置转动图片|
 |setSpinnerStyle|enum|变换样式：参考属性srlSpinnerStyle|
 |setClassicsSpinnerStyle|enum|变换样式：参考属性srlClassicsSpinnerStyle|

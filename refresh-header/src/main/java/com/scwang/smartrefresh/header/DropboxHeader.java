@@ -232,7 +232,7 @@ public class DropboxHeader extends View implements RefreshHeader {
 
     //</editor-fold>
 
-    //<editor-fold desc="Description">
+    //<editor-fold desc="路径绘制">
     private int generateSideLength() {
         return mHeaderHeight / 5;
     }
