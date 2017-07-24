@@ -91,8 +91,7 @@ public class RepastPracticeActivity extends AppCompatActivity {
                             refreshlayout.finishLoadmore();
                             if (mAdapter.getCount() > 12) {
                                 Toast.makeText(getBaseContext(), "数据全部加载完毕", Toast.LENGTH_SHORT).show();
-                                refreshlayout.setEnableLoadmore(false);
-//                                refreshlayout.setLoadmoreFinished(true);//设置之后，将不会再触发加载事件
+                                refreshlayout.setLoadmoreFinished(true);//设置之后，将不会再触发加载事件
                             }
                         }
                     }, 1000);
