@@ -26,12 +26,12 @@ import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
  */
 public class AssignDefaultUsingActivity extends AppCompatActivity {
 
-        private static boolean isFirstEnter = true;
+   private static boolean isFirstEnter = true;
 
-    /**
+    /*
      * 关键代码，需要在布局生成之前设置，建议代码放在 Application.onCreate 中
      */
-    public AssignDefaultUsingActivity() {
+    static {
         //设置全局的Header构建器
         SmartRefreshLayout.setDefaultRefreshHeaderCreater(new DefaultRefreshHeaderCreater() {
             @NonNull

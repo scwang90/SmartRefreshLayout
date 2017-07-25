@@ -104,12 +104,12 @@ public class BezierStyleActivity extends AppCompatActivity implements AdapterVie
             case 橙色主题:
                 setThemeColor(android.R.color.holo_orange_light, android.R.color.holo_orange_dark);
                 break;
-//            case 打开左右拖动:
-//                mRefreshHeader.setEnableHorizontalDrag(true);
-//                break;
-//            case 关闭左右拖动:
-//                mRefreshHeader.setEnableHorizontalDrag(false);
-//                break;
+            case 打开左右拖动:
+                mRefreshHeader.setEnableHorizontalDrag(true);
+                break;
+            case 关闭左右拖动:
+                mRefreshHeader.setEnableHorizontalDrag(false);
+                break;
         }
         mRefreshLayout.autoRefresh();
     }

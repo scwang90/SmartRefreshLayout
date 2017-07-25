@@ -133,7 +133,30 @@ public class DropboxHeader extends View implements RefreshHeader {
             mDrawable3 = drawable3;
         }
         ta.recycle();
+    }
 
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        initAnimator();
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if (mReboundAnimator != null) {
+            mReboundAnimator.removeAllUpdateListeners();
+            mReboundAnimator.removeAllListeners();
+            mReboundAnimator = null;
+        }
+        if (mDropOutAnimator != null) {
+            mDropOutAnimator.removeAllUpdateListeners();
+            mDropOutAnimator.removeAllListeners();
+            mDropOutAnimator = null;
+        }
+    }
+
+    private void initAnimator() {
         AccelerateInterpolator interpolator = new AccelerateInterpolator();
         mReboundAnimator = ValueAnimator.ofFloat(0, 1, 0);
         mReboundAnimator.setInterpolator(interpolator);
@@ -149,7 +172,9 @@ public class DropboxHeader extends View implements RefreshHeader {
             @Override
             public void onAnimationEnd(Animator animation) {
                 if (mState == RefreshState.Refreshing) {
-                    mDropOutAnimator.start();
+                    if (mDropOutAnimator != null) {
+                        mDropOutAnimator.start();
+                    }
                 }
             }
         });
@@ -176,7 +201,9 @@ public class DropboxHeader extends View implements RefreshHeader {
         mDropOutAnimator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                mReboundAnimator.start();
+                if (mReboundAnimator != null) {
+                    mReboundAnimator.start();
+                }
             }
         });
     }
@@ -347,9 +374,7 @@ public class DropboxHeader extends View implements RefreshHeader {
 
     @Override
     public void onReleasing(float percent, int offset, int headerHeight, int extendHeight) {
-        if (mState != RefreshState.Refreshing) {
-            mReboundPercent = 1f * Math.max(0, offset - headerHeight) / extendHeight;
-        }
+        mReboundPercent = 1f * Math.max(0, offset - headerHeight) / extendHeight;
     }
 
     @Override
@@ -392,7 +417,9 @@ public class DropboxHeader extends View implements RefreshHeader {
 
     @Override
     public void onStartAnimator(RefreshLayout layout, int height, int extendHeight) {
-        mDropOutAnimator.start();
+        if (mDropOutAnimator != null) {
+            mDropOutAnimator.start();
+        }
     }
 
     @Override
@@ -402,7 +429,7 @@ public class DropboxHeader extends View implements RefreshHeader {
     }
     //</editor-fold>
 
-    private class BoxBody {
+    private static class BoxBody {
 
         private int boxCenterX;
         private int boxCenterY;

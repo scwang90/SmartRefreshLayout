@@ -7,7 +7,6 @@ import android.view.View;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 
 /**
  * 微博列表
@@ -30,25 +29,6 @@ public class FeedlistPracticeActivity extends AppCompatActivity {
         });
 
         final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
-        refreshLayout.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
-            @Override
-            public void onLoadmore(RefreshLayout refreshlayout) {
-
-            }
-
-            @Override
-            public void onRefresh(RefreshLayout refreshlayout) {
-
-            }
-        });
-        toolbar.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                refreshLayout.finishRefresh();
-                refreshLayout.finishLoadmore();
-                return false;
-            }
-        });
         if (isFirstEnter) {
             isFirstEnter = false;
             refreshLayout.autoRefresh();
