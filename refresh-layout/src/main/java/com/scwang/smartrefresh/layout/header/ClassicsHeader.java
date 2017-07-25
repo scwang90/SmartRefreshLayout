@@ -65,6 +65,8 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     private DateFormat mFormat = new SimpleDateFormat("上次更新 M-d HH:mm", Locale.CHINA);
     private SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
     private SharedPreferences mShared;
+    private RefreshKernel mRefreshKernel;
+    private int mBackgroundColor;
 
     //<editor-fold desc="RelativeLayout">
     public ClassicsHeader(Context context) {
@@ -193,6 +195,8 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     //<editor-fold desc="RefreshHeader">
     @Override
     public void onInitialized(RefreshKernel kernel, int height, int extendHeight) {
+        mRefreshKernel = kernel;
+        mRefreshKernel.requestDrawBackgoundForHeader(mBackgroundColor);
     }
 
     @Override
@@ -243,7 +247,10 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     public void setPrimaryColors(int... colors) {
         if (colors.length > 1) {
             if (!(getBackground() instanceof BitmapDrawable)) {
-                setBackgroundColor(colors[0]);
+                setBackgroundColor(mBackgroundColor = colors[0]);
+                if (mRefreshKernel != null) {
+                    mRefreshKernel.requestDrawBackgoundForHeader(colors[0]);
+                }
             }
             if (mArrowDrawable != null) {
                 mArrowDrawable.parserColors(colors[1]);
@@ -255,7 +262,10 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
             mLastUpdateText.setTextColor(colors[1]&0x00ffffff|0x99000000);
         } else if (colors.length > 0) {
             if (!(getBackground() instanceof BitmapDrawable)) {
-                setBackgroundColor(colors[0]);
+                setBackgroundColor(mBackgroundColor = colors[0]);
+                if (mRefreshKernel != null) {
+                    mRefreshKernel.requestDrawBackgoundForHeader(colors[0]);
+                }
             }
             if (colors[0] == 0xffffffff) {
                 if (mArrowDrawable != null) {

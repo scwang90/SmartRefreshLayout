@@ -3,6 +3,7 @@ package com.scwang.refreshlayout.activity.using;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -36,9 +37,9 @@ public class AssignDefaultUsingActivity extends AppCompatActivity {
             @NonNull
             @Override
             public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
-                layout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);//创建同时可以先设置主题颜色
-                ((View) layout).setBackgroundResource(R.color.colorPrimary);//设置刷新布局的背景融合Header主题色
-                return new ClassicsHeader(context).setSpinnerStyle(SpinnerStyle.FixedBehind);//指定为经典Header，默认是 贝塞尔雷达Header
+                ClassicsHeader header = new ClassicsHeader(context).setSpinnerStyle(SpinnerStyle.FixedBehind);
+                header.setPrimaryColors(ContextCompat.getColor(context, R.color.colorPrimary), ContextCompat.getColor(context, android.R.color.white));
+                return header;//指定为经典Header，默认是 贝塞尔雷达Header
             }
         });
         //设置全局的Footer构建器

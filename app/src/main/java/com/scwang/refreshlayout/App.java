@@ -25,8 +25,8 @@ public class App extends Application {
             @NonNull
             @Override
             public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
-                return new ClassicsHeader(context)
-                        .setSpinnerStyle(SpinnerStyle.Translate);
+                layout.setHeaderHeight(100);
+                return new ClassicsHeader(context).setSpinnerStyle(SpinnerStyle.Translate);
             }
         });
     }

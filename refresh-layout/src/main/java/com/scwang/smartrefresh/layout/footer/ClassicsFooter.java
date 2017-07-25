@@ -43,6 +43,8 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
     private ImageView mProgressView;
     private ProgressDrawable mProgressDrawable;
     private SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
+    private RefreshKernel mRefreshKernel;
+    private int mBackgroundColor = 0;
     private boolean mLoadmoreFinished = false;
 
     //<editor-fold desc="LinearLayout">
@@ -118,6 +120,8 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
 
     @Override
     public void onInitialized(RefreshKernel kernel, int height, int extendHeight) {
+        mRefreshKernel = kernel;
+        mRefreshKernel.requestDrawBackgoundForFooter(mBackgroundColor);
     }
 
     @Override
@@ -178,13 +182,19 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
     public void setPrimaryColors(int... colors) {
         if (mSpinnerStyle == SpinnerStyle.FixedBehind) {
             if (colors.length > 1) {
-                setBackgroundColor(colors[0]);
+                setBackgroundColor(mBackgroundColor = colors[0]);
+                if (mRefreshKernel != null) {
+                    mRefreshKernel.requestDrawBackgoundForFooter(mBackgroundColor);
+                }
                 mBottomText.setTextColor(colors[1]);
                 if (mProgressDrawable != null) {
                     mProgressDrawable.setColor(colors[1]);
                 }
             } else if (colors.length > 0) {
-                setBackgroundColor(colors[0]);
+                setBackgroundColor(mBackgroundColor = colors[0]);
+                if (mRefreshKernel != null) {
+                    mRefreshKernel.requestDrawBackgoundForFooter(mBackgroundColor);
+                }
                 if (colors[0] == 0xffffffff) {
                     mBottomText.setTextColor(0xff666666);
                     if (mProgressDrawable != null) {
@@ -237,7 +247,7 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
         if (!mLoadmoreFinished) {
             switch (newState) {
                 case None:
-                    restoreRefreshLayoutBackground();
+//                    restoreRefreshLayoutBackground();
                 case PullToUpLoad:
                     mBottomText.setText(REFRESH_FOOTER_PULLUP);
                     break;
@@ -246,34 +256,34 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
                     break;
                 case ReleaseToLoad:
                     mBottomText.setText(REFRESH_FOOTER_RELEASE);
-                    replaceRefreshLayoutBackground(refreshLayout);
+//                    replaceRefreshLayoutBackground(refreshLayout);
                     break;
             }
         }
     }
     //</editor-fold>
 
-    //<editor-fold desc="private">
-    private Runnable restoreRunable;
-    private void restoreRefreshLayoutBackground() {
-        if (restoreRunable != null) {
-            restoreRunable.run();
-            restoreRunable = null;
-        }
-    }
-
-    private void replaceRefreshLayoutBackground(final RefreshLayout refreshLayout) {
-        if (restoreRunable == null && mSpinnerStyle == SpinnerStyle.FixedBehind) {
-            restoreRunable = new Runnable() {
-                Drawable drawable = refreshLayout.getLayout().getBackground();
-                @Override
-                public void run() {
-                    refreshLayout.getLayout().setBackgroundDrawable(drawable);
-                }
-            };
-            refreshLayout.getLayout().setBackgroundDrawable(getBackground());
-        }
-    }
+    //<editor-fold desc="Background">
+//    private Runnable restoreRunable;
+//    private void restoreRefreshLayoutBackground() {
+//        if (restoreRunable != null) {
+//            restoreRunable.run();
+//            restoreRunable = null;
+//        }
+//    }
+//
+//    private void replaceRefreshLayoutBackground(final RefreshLayout refreshLayout) {
+//        if (restoreRunable == null && mSpinnerStyle == SpinnerStyle.FixedBehind) {
+//            restoreRunable = new Runnable() {
+//                Drawable drawable = refreshLayout.getLayout().getBackground();
+//                @Override
+//                public void run() {
+//                    refreshLayout.getLayout().setBackgroundDrawable(drawable);
+//                }
+//            };
+//            refreshLayout.getLayout().setBackgroundDrawable(getBackground());
+//        }
+//    }
     //</editor-fold>
 
     //<editor-fold desc="API">
