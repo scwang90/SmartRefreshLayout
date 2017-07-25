@@ -16,7 +16,7 @@ public interface RefreshKernel {
     RefreshContent getRefreshContent();
 
     //<editor-fold desc="状态更改 state changes">
-    RefreshKernel setStatePullUpToLoad();
+    RefreshKernel setStatePullUpToLoad() ;
     RefreshKernel setStateReleaseToLoad() ;
     RefreshKernel setStateReleaseToRefresh() ;
     RefreshKernel setStatePullDownToRefresh() ;
@@ -26,7 +26,7 @@ public interface RefreshKernel {
     RefreshKernel setStateRefresing() ;
     RefreshKernel setStateLodingFinish() ;
     RefreshKernel setStateRefresingFinish() ;
-    RefreshKernel resetStatus();
+    RefreshKernel resetStatus() ;
     //</editor-fold>
 
     //<editor-fold desc="视图位移 Spinner">

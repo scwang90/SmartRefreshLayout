@@ -461,7 +461,10 @@ public class RefreshContentWrapper implements RefreshContent {
                     if (View.OnScrollChangeListener.class.equals(field.getType())) {
                         try {
                             field.setAccessible(true);
-                            mScrollListener = (View.OnScrollChangeListener)field.get(view);
+                            Object listener = field.get(view);
+                            if (listener != null && !view.equals(listener)) {
+                                mScrollListener = (View.OnScrollChangeListener) listener;
+                            }
                         } catch (IllegalAccessException e) {
                             e.printStackTrace();
                         }
@@ -520,7 +523,10 @@ public class RefreshContentWrapper implements RefreshContent {
                     if (NestedScrollView.OnScrollChangeListener.class.equals(field.getType())) {
                         try {
                             field.setAccessible(true);
-                            mScrollChangeListener = (NestedScrollView.OnScrollChangeListener)field.get(scrollView);
+                            Object listener = field.get(scrollView);
+                            if (listener != null && !scrollView.equals(listener)) {
+                                mScrollChangeListener = (NestedScrollView.OnScrollChangeListener) listener;
+                            }
                         } catch (IllegalAccessException e) {
                             e.printStackTrace();
                         }
@@ -597,7 +603,10 @@ public class RefreshContentWrapper implements RefreshContent {
                     if (AbsListView.OnScrollListener.class.equals(field.getType())) {
                         try {
                             field.setAccessible(true);
-                            mScrollListener = (AbsListView.OnScrollListener)field.get(listView);
+                            Object listener = field.get(listView);
+                            if (listener != null && !listView.equals(listener)) {
+                                mScrollListener = (AbsListView.OnScrollListener) listener;
+                            }
                         } catch (IllegalAccessException e) {
                             e.printStackTrace();
                         }
@@ -724,7 +733,10 @@ public class RefreshContentWrapper implements RefreshContent {
                     if (RecyclerView.OnFlingListener.class.equals(field.getType())) {
                         try {
                             field.setAccessible(true);
-                            mFlingListener = (RecyclerView.OnFlingListener)field.get(recyclerView);
+                            Object listener = field.get(recyclerView);
+                            if (listener != null && !recyclerView.equals(listener)) {
+                                mFlingListener = (RecyclerView.OnFlingListener) listener;
+                            }
                         } catch (IllegalAccessException e) {
                             e.printStackTrace();
                         }

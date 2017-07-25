@@ -344,7 +344,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
             }
 
             //重新排序
-            bringChildToFront(mRefreshContent.getView());
+            if (mRefreshContent != null) {
+                bringChildToFront(mRefreshContent.getView());
+            }
             if (mRefreshHeader != null && mRefreshHeader.getSpinnerStyle() != SpinnerStyle.FixedBehind) {
                 bringChildToFront(mRefreshHeader.getView());
             }
