@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
@@ -58,7 +59,7 @@ public class BasicUsingActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         mAdapter.refresh(initData());
-//                        refreshlayout.finishRefresh();
+                        refreshlayout.finishRefresh();
                     }
                 }, 2000);
             }
@@ -69,24 +70,24 @@ public class BasicUsingActivity extends AppCompatActivity {
                 ((View) refreshlayout).postDelayed(new Runnable() {
                     @Override
                     public void run() {
-//                        mAdapter.loadmore(initData());
-//                        refreshlayout.finishLoadmore();
-//                        if (mAdapter.getItemCount() > 60) {
-//                            Toast.makeText(getApplication(), "数据全部加载完毕", Toast.LENGTH_SHORT).show();
-//                            refreshlayout.setLoadmoreFinished(true);//将不会再次触发加载更多事件
-//                        }
+                        mAdapter.loadmore(initData());
+                        refreshlayout.finishLoadmore();
+                        if (mAdapter.getItemCount() > 60) {
+                            Toast.makeText(getApplication(), "数据全部加载完毕", Toast.LENGTH_SHORT).show();
+                            refreshlayout.setLoadmoreFinished(true);//将不会再次触发加载更多事件
+                        }
                     }
                 }, 2000);
             }
         });
-        toolbar.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                refreshLayout.finishRefresh();
-                refreshLayout.finishLoadmore();
-                return false;
-            }
-        });
+//        toolbar.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+//                refreshLayout.finishRefresh();
+//                refreshLayout.finishLoadmore();
+//                return false;
+//            }
+//        });
 
         //触发自动刷新
         refreshLayout.autoRefresh();

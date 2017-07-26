@@ -763,38 +763,47 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
                         return super.dispatchTouchEvent(e);
                     }
                 }
-                final float spinner = dy + mTouchY - mInitialMotionY + mTouchSpinner;
-                if ((mRefreshContent != null)
-                        && (mState.isHeader() && (spinner < 0 || mLastSpinner < 0))
-                        || (mState.isFooter() && (spinner > 0 || mLastSpinner > 0))) {
-                    long time = e.getEventTime();
-                    if (mFalsifyEvent == null) {
-                        mFalsifyEvent = MotionEvent.obtain(time, time, MotionEvent.ACTION_DOWN, mTouchX + dx, mInitialMotionY, 0);
-                        super.dispatchTouchEvent(mFalsifyEvent);
-                    }
-                    MotionEvent em = MotionEvent.obtain(time, time, MotionEvent.ACTION_MOVE, mTouchX + dx, mInitialMotionY + spinner, 0);
-                    super.dispatchTouchEvent(em);
-                    if (mSpinner != 0) {
-                        moveSpinnerInfinitely(0);
-                    }
-                    if (((mState.isHeader() && spinner < 0) || (mState.isFooter() && spinner > 0))) {
-                        if (spinner - mLastSpinner > 0) {
-                            if (mRefreshContent.canScrollUp()) {
-                                return true;
-                            }
-                        } else {
-                            if (mRefreshContent.canScrollDown()) {
-                                return true;
-                            }
+                if (mInitialMotionY != -1) {
+                    final float spinner = dy + mTouchY - mInitialMotionY + mTouchSpinner;
+                    if ((mRefreshContent != null)
+                            && (mState.isHeader() && (spinner < 0 || mLastSpinner < 0))
+                            || (mState.isFooter() && (spinner > 0 || mLastSpinner > 0))) {
+                        long time = e.getEventTime();
+                        if (mFalsifyEvent == null) {
+                            mFalsifyEvent = MotionEvent.obtain(time, time, MotionEvent.ACTION_DOWN, mTouchX + dx, mInitialMotionY, 0);
+                            super.dispatchTouchEvent(mFalsifyEvent);
                         }
+                        MotionEvent em = MotionEvent.obtain(time, time, MotionEvent.ACTION_MOVE, mTouchX + dx, mInitialMotionY + spinner, 0);
+                        super.dispatchTouchEvent(em);
+                        if (mSpinner != 0) {
+                            moveSpinnerInfinitely(0);
+                        }
+                        if ((mState.isHeader() && spinner < 0) || (mState.isFooter() && spinner > 0)) {
+                            mLastSpinner = (int)spinner;
+                            return true;
+                        }
+//                        if (((mState.isHeader() && spinner < 0) || (mState.isFooter() && spinner > 0))) {
+//                            if (spinner - mLastSpinner > 0) {
+//                                if (mRefreshContent.canScrollUp()) {
+//                                    mLastSpinner = (int)spinner;
+//                                    return true;
+//                                }
+//                            } else {
+//                                if (mRefreshContent.canScrollDown()) {
+//                                    mLastSpinner = (int)spinner;
+//                                    return true;
+//                                }
+//                            }
+//                        }
+                        mLastSpinner = (int)spinner;
+                        mFalsifyEvent = null;
+                        MotionEvent ec = MotionEvent.obtain(time, time, MotionEvent.ACTION_CANCEL, mTouchX, mInitialMotionY + spinner, 0);
+                        super.dispatchTouchEvent(ec);
                     }
-                    mFalsifyEvent = null;
-                    MotionEvent ec = MotionEvent.obtain(time, time, MotionEvent.ACTION_CANCEL, mTouchX, mInitialMotionY + spinner, 0);
-                    super.dispatchTouchEvent(ec);
-                }
-                if (mState.isDraging() || mState.isAnimating()) {
-                    moveSpinnerInfinitely(spinner);
-                    return true;
+                    if (mState.isDraging() || mState.isAnimating()) {
+                        moveSpinnerInfinitely(spinner);
+                        return true;
+                    }
                 }
                 break;
             case MotionEvent.ACTION_UP:
