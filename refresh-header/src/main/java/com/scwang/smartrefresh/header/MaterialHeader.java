@@ -276,7 +276,6 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
         mState = newState;
         switch (newState) {
             case None:
-                break;
             case PullDownToRefresh:
                 mFinished = false;
                 mCircleView.setVisibility(VISIBLE);

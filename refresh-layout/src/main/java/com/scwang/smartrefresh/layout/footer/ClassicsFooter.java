@@ -34,6 +34,7 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
 
     public static String REFRESH_FOOTER_PULLUP = "上拉加载更多";
     public static String REFRESH_FOOTER_RELEASE = "释放立即加载";
+    public static String REFRESH_HEADER_REFRESHING = "正在刷新...";
     public static String REFRESH_FOOTER_LOADING = "正在加载...";
     public static String REFRESH_FOOTER_FINISH = "加载完成";
     public static String REFRESH_FOOTER_FAILED = "加载失败";
@@ -257,6 +258,9 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
                 case ReleaseToLoad:
                     mBottomText.setText(REFRESH_FOOTER_RELEASE);
 //                    replaceRefreshLayoutBackground(refreshLayout);
+                    break;
+                case Refreshing:
+                    mBottomText.setText(REFRESH_HEADER_REFRESHING);
                     break;
             }
         }

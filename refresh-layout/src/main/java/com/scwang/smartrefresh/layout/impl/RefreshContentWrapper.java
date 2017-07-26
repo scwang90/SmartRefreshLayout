@@ -441,10 +441,20 @@ public class RefreshContentWrapper implements RefreshContent {
                 final int velocity = (lastOldScrollY - oldScrollY) * 16000 / (int)((lastTime - lastTimeOld)/1000f);
 //                    System.out.println("ValueAnimator - " + (lastTime - lastTimeOld) + " - " + velocity+"("+(lastOldScrollY - oldScrollY)+")");
                 kernel.animSpinnerBounce(Math.min(velocity, mHeaderHeight));
-            } else if (oldScrollY < scrollY && mMotionEvent == null && overScroll && layout.isEnableLoadmore()) {
-                if (lastTime - lastTimeOld > 1000 && !ScrollBoundaryUtil.canScrollDown(v)) {
+//            } else if (oldScrollY < scrollY && mMotionEvent == null && overScroll && layout.isEnableLoadmore()) {
+//                if (lastTime - lastTimeOld > 1000 && !ScrollBoundaryUtil.canScrollDown(v)) {
+//                    final int velocity = (lastOldScrollY - oldScrollY) * 16000 / (int)((lastTime - lastTimeOld)/1000f);
+////                    System.out.println("ValueAnimator - " + (lastTime - lastTimeOld) + " - " + velocity+"("+(lastOldScrollY - oldScrollY)+")");
+//                    kernel.animSpinnerBounce(Math.max(velocity, -mFooterHeight));
+//                }
+            } else if (oldScrollY < scrollY && mMotionEvent == null && layout.isEnableLoadmore()) {
+//                if (!layout.isLoadmoreFinished() && layout.isEnableAutoLoadmore()
+//                        && layout.getState() == RefreshState.None
+//                        && !ScrollBoundaryUtil.canScrollDown(v)) {
+//                    kernel.getRefreshLayout().autoLoadmore(0, 1);
+//                } else
+                    if (overScroll && lastTime - lastTimeOld > 1000 && !ScrollBoundaryUtil.canScrollDown(v)) {
                     final int velocity = (lastOldScrollY - oldScrollY) * 16000 / (int)((lastTime - lastTimeOld)/1000f);
-//                    System.out.println("ValueAnimator - " + (lastTime - lastTimeOld) + " - " + velocity+"("+(lastOldScrollY - oldScrollY)+")");
                     kernel.animSpinnerBounce(Math.max(velocity, -mFooterHeight));
                 }
             }
@@ -583,11 +593,12 @@ public class RefreshContentWrapper implements RefreshContent {
                     int lastVisiblePosition = absListView.getLastVisiblePosition();
                     if (lastVisiblePosition == totalItemCount - 1 && lastVisiblePosition > 0
                             && layout.isEnableLoadmore()) {
-                        if (!layout.isLoadmoreFinished() && layout.isEnableAutoLoadmore()
-                                && layout.getState() == RefreshState.None
-                                && !ScrollBoundaryUtil.canScrollDown(absListView)) {
-                            kernel.getRefreshLayout().autoLoadmore(0, 1);
-                        } else if (mMotionEvent == null && overScroll && !ScrollBoundaryUtil.canScrollDown(absListView)) {
+//                        if (!layout.isLoadmoreFinished() && layout.isEnableAutoLoadmore()
+//                                && layout.getState() == RefreshState.None
+//                                && !ScrollBoundaryUtil.canScrollDown(absListView)) {
+//                            kernel.getRefreshLayout().autoLoadmore(0, 1);
+//                        } else
+                            if (mMotionEvent == null && overScroll && !ScrollBoundaryUtil.canScrollDown(absListView)) {
                             kernel.animSpinnerBounce(Math.max(dy, -mFooterHeight));
                         }
                     }

@@ -49,6 +49,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
 
     public static String REFRESH_HEADER_PULLDOWN = "下拉可以刷新";
     public static String REFRESH_HEADER_REFRESHING = "正在刷新";
+    public static String REFRESH_HEADER_LOADING = "正在加载";
     public static String REFRESH_HEADER_RELEASE = "释放立即刷新";
     public static String REFRESH_HEADER_FINISH = "刷新完成";
     public static String REFRESH_HEADER_FAILED = "刷新失败";
@@ -319,6 +320,9 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
                 mHeaderText.setText(REFRESH_HEADER_RELEASE);
                 mArrowView.animate().rotation(180);
 //                replaceRefreshLayoutBackground(refreshLayout);
+                break;
+            case Loading:
+                mHeaderText.setText(REFRESH_HEADER_LOADING);
                 break;
         }
     }

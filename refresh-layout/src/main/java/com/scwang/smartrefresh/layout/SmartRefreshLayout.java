@@ -81,7 +81,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
 
     //<editor-fold desc="滑动属性">
     protected int mTouchSlop;
-    protected int mSpinner;
+    protected int mSpinner;//当前的 Spinner
+    protected int mLastSpinner;//最后的，的Spinner
+    protected int mTouchSpinner;//触摸时候，的Spinner
     protected int mReboundDuration = 250;
     protected int mScreenHeightPixels;
     protected float mTouchX;
@@ -687,6 +689,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
         mLastTouchX = e.getX();
         final int action = MotionEventCompat.getActionMasked(e);
         if (mRefreshContent != null) {
+            //为 RefreshContent 传递当前触摸事件的坐标，用于智能判断对应坐标位置View的滚动边界和相关信息
             switch (action) {
                 case MotionEvent.ACTION_DOWN:
                     mRefreshContent.onActionDown(e);
@@ -717,32 +720,40 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
             return ret;
         } else if (!isEnabled()
                 || (!mEnableRefresh && !mEnableLoadmore)
-                || mState == RefreshState.Loading
-                || mState == RefreshState.Refreshing
-                || mState == RefreshState.LoadFinish
-                || mState == RefreshState.RefreshFinish) {
+//                || mState == RefreshState.Loading
+//                || mState == RefreshState.Refreshing
+//                || mState == RefreshState.LoadFinish
+//                || mState == RefreshState.RefreshFinish
+                ) {
             return super.dispatchTouchEvent(e);
         }
         switch (action) {
             case MotionEvent.ACTION_DOWN:
                 mTouchX = e.getX();
                 mTouchY = e.getY();
+                mLastSpinner = 0;
+                mTouchSpinner = mSpinner;
+                mInitialMotionY = -1;
                 super.dispatchTouchEvent(e);
                 return true;
 
             case MotionEvent.ACTION_MOVE:
                 final float dx = e.getX() - mTouchX;
                 final float dy = e.getY() - mTouchY;
-                if(mState == RefreshState.None) {
+                if(mInitialMotionY == -1) {
                     if (Math.abs(dy) >= mTouchSlop && Math.abs(dx) < Math.abs(dy)) {//滑动允许最大角度为45度
-                        if (dy > 0 && mEnableRefresh && !mRefreshContent.canScrollUp()) {
+                        if (dy > 0 && ((mEnableRefresh && !mRefreshContent.canScrollUp()) || mState == RefreshState.Loading)) {
                             mInitialMotionY = dy + mTouchY - mTouchSlop;
-                            setStatePullDownToRefresh();
+                            if (!mState.isAnimating()) {
+                                setStatePullDownToRefresh();
+                            }
                             e.setAction(MotionEvent.ACTION_CANCEL);
                             super.dispatchTouchEvent(e);
-                        } else if (dy < 0 && mEnableLoadmore && !mRefreshContent.canScrollDown()) {
+                        } else if (dy < 0 && ((mEnableLoadmore && !mRefreshContent.canScrollDown()) || mState == RefreshState.Refreshing)) {
                             mInitialMotionY = dy + mTouchY + mTouchSlop;
-                            setStatePullUpToLoad();
+                            if (!mState.isAnimating()) {
+                                setStatePullUpToLoad();
+                            }
                             e.setAction(MotionEvent.ACTION_CANCEL);
                             super.dispatchTouchEvent(e);
                         } else {
@@ -752,10 +763,11 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
                         return super.dispatchTouchEvent(e);
                     }
                 }
-                final float spinner = dy + mTouchY - mInitialMotionY;
-                if (((mState == RefreshState.PullDownToRefresh || mState == RefreshState.ReleaseToRefresh) && spinner < 0)
-                    ||((mState == RefreshState.PullToUpLoad || mState == RefreshState.ReleaseToLoad) && spinner > 0)) {
-                    long time = currentTimeMillis();
+                final float spinner = dy + mTouchY - mInitialMotionY + mTouchSpinner;
+                if ((mRefreshContent != null)
+                        && (mState.isHeader() && (spinner < 0 || mLastSpinner < 0))
+                        || (mState.isFooter() && (spinner > 0 || mLastSpinner > 0))) {
+                    long time = e.getEventTime();
                     if (mFalsifyEvent == null) {
                         mFalsifyEvent = MotionEvent.obtain(time, time, MotionEvent.ACTION_DOWN, mTouchX + dx, mInitialMotionY, 0);
                         super.dispatchTouchEvent(mFalsifyEvent);
@@ -765,10 +777,22 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
                     if (mSpinner != 0) {
                         moveSpinnerInfinitely(0);
                     }
-                    return true;
+                    if (((mState.isHeader() && spinner < 0) || (mState.isFooter() && spinner > 0))) {
+                        if (spinner - mLastSpinner > 0) {
+                            if (mRefreshContent.canScrollUp()) {
+                                return true;
+                            }
+                        } else {
+                            if (mRefreshContent.canScrollDown()) {
+                                return true;
+                            }
+                        }
+                    }
+                    mFalsifyEvent = null;
+                    MotionEvent ec = MotionEvent.obtain(time, time, MotionEvent.ACTION_CANCEL, mTouchX, mInitialMotionY + spinner, 0);
+                    super.dispatchTouchEvent(ec);
                 }
-                if (mState == RefreshState.PullDownToRefresh || mState == RefreshState.ReleaseToRefresh ||
-                        mState == RefreshState.PullToUpLoad || mState == RefreshState.ReleaseToLoad) {
+                if (mState.isDraging() || mState.isAnimating()) {
                     moveSpinnerInfinitely(spinner);
                     return true;
                 }
@@ -778,8 +802,8 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
                 final float y = e.getY();
                 if (mFalsifyEvent != null) {
                     mFalsifyEvent = null;
-                    long time = currentTimeMillis();
-                    MotionEvent ec = MotionEvent.obtain(time, time, MotionEvent.ACTION_CANCEL, mTouchX, y, 0);
+                    long time = e.getEventTime();
+                    MotionEvent ec = MotionEvent.obtain(time, time, mSpinner == 0 ? MotionEvent.ACTION_UP : MotionEvent.ACTION_CANCEL, mTouchX, y, 0);
                     super.dispatchTouchEvent(ec);
                 }
                 if (overSpinner()) {
@@ -790,71 +814,71 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
         return super.dispatchTouchEvent(e);
     }
 
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent e) {
-        if (mState == RefreshState.Refreshing || mState == RefreshState.Loading) {
-            final int action = MotionEventCompat.getActionMasked(e);
-            if (isNestedScrollingEnabled() && mRefreshContent != null && mRefreshContent.isNestedScrollingChild(e)) {
-                return false;
-            }
-            switch (action) {
-                case MotionEvent.ACTION_DOWN:
-                    mTouchX = e.getX();
-                    mTouchY = e.getY();
-                    mTotalUnconsumed = 0;
-                    break;
-                case MotionEvent.ACTION_MOVE:
-                    final float dy = e.getY() - mTouchY;
-                    final float dx = e.getX() - mTouchX;
-                    if (Math.abs(dy) >= mTouchSlop && Math.abs(dx) < Math.abs(dy)) {//滑动允许最大角度为45度
-                        if ((dy < 0 && (mSpinner > 0 || (mRefreshContent != null && !mRefreshContent.canScrollDown())))
-                                || (dy > 0 && (mSpinner < 0 || (mRefreshContent != null && !mRefreshContent.canScrollUp())))) {
-                            mTouchY += dy + (dy > 0 ? -1 : 1) * mTouchSlop;
-                            mInitialMotionY = mSpinner;
-                            mTotalUnconsumed = 1;
-                            return true;
-                        }
-                    }
-                    break;
-                case MotionEvent.ACTION_UP:
-                case MotionEvent.ACTION_CANCEL:
-                    mTouchX = 0;
-                    mTouchY = 0;
-                    break;
-            }
-        }
-        return super.onInterceptTouchEvent(e);
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent e) {
-        if (mState == RefreshState.Refreshing || mState == RefreshState.Loading) {
-            if (mTotalUnconsumed > 0) {
-                switch (MotionEventCompat.getActionMasked(e)) {
-                    case MotionEvent.ACTION_MOVE:
-                        final float dy = e.getY() - mTouchY;
-                        final int spinner = (int)(mInitialMotionY + dy);
-                        moveSpinnerInfinitely(spinner);
-//                        if (mState == RefreshState.Refreshing) {
-//                            moveSpinnerInfinitely(Math.max(0, spinner));
-//                        } else {
-//                            moveSpinnerInfinitely(Math.min(0, spinner));
+//    @Override
+//    public boolean onInterceptTouchEvent(MotionEvent e) {
+//        if (mState == RefreshState.Refreshing || mState == RefreshState.Loading) {
+//            final int action = MotionEventCompat.getActionMasked(e);
+//            if (isNestedScrollingEnabled() && mRefreshContent != null && mRefreshContent.isNestedScrollingChild(e)) {
+//                return false;
+//            }
+//            switch (action) {
+//                case MotionEvent.ACTION_DOWN:
+//                    mTouchX = e.getX();
+//                    mTouchY = e.getY();
+//                    mTotalUnconsumed = 0;
+//                    break;
+//                case MotionEvent.ACTION_MOVE:
+//                    final float dy = e.getY() - mTouchY;
+//                    final float dx = e.getX() - mTouchX;
+//                    if (Math.abs(dy) >= mTouchSlop && Math.abs(dx) < Math.abs(dy)) {//滑动允许最大角度为45度
+//                        if ((dy < 0 && (mSpinner > 0 || (mRefreshContent != null && !mRefreshContent.canScrollDown())))
+//                                || (dy > 0 && (mSpinner < 0 || (mRefreshContent != null && !mRefreshContent.canScrollUp())))) {
+//                            mTouchY += dy + (dy > 0 ? -1 : 1) * mTouchSlop;
+//                            mInitialMotionY = mSpinner;
+//                            mTotalUnconsumed = 1;
+//                            return true;
 //                        }
-                        break;
-                    case MotionEvent.ACTION_UP:
-                    case MotionEvent.ACTION_CANCEL:
-                        mTouchX = 0;
-                        mTouchY = 0;
-                        mTotalUnconsumed = 0;
-                        mInitialMotionY = 0;
-                        overSpinner();
-                        break;
-                }
-            }
-            return true;
-        }
-        return super.onTouchEvent(e);
-    }
+//                    }
+//                    break;
+//                case MotionEvent.ACTION_UP:
+//                case MotionEvent.ACTION_CANCEL:
+//                    mTouchX = 0;
+//                    mTouchY = 0;
+//                    break;
+//            }
+//        }
+//        return super.onInterceptTouchEvent(e);
+//    }
+//
+//    @Override
+//    public boolean onTouchEvent(MotionEvent e) {
+//        if (mState == RefreshState.Refreshing || mState == RefreshState.Loading) {
+//            if (mTotalUnconsumed > 0) {
+//                switch (MotionEventCompat.getActionMasked(e)) {
+//                    case MotionEvent.ACTION_MOVE:
+//                        final float dy = e.getY() - mTouchY;
+//                        final int spinner = (int)(mInitialMotionY + dy);
+//                        moveSpinnerInfinitely(spinner);
+////                        if (mState == RefreshState.Refreshing) {
+////                            moveSpinnerInfinitely(Math.max(0, spinner));
+////                        } else {
+////                            moveSpinnerInfinitely(Math.min(0, spinner));
+////                        }
+//                        break;
+//                    case MotionEvent.ACTION_UP:
+//                    case MotionEvent.ACTION_CANCEL:
+//                        mTouchX = 0;
+//                        mTouchY = 0;
+//                        mTotalUnconsumed = 0;
+//                        mInitialMotionY = 0;
+//                        overSpinner();
+//                        break;
+//                }
+//            }
+//            return true;
+//        }
+//        return super.onTouchEvent(e);
+//    }
 
     @Override
     public void requestDisallowInterceptTouchEvent(boolean b) {
@@ -1158,9 +1182,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
         }
         final int oldSpinner = mSpinner;
         this.mSpinner = spinner;
-        if (!isAnimator
-                && mState != RefreshState.Refreshing && mState != RefreshState.Loading
-                && mState != RefreshState.RefreshFinish && mState != RefreshState.LoadFinish) {
+        if (!isAnimator && mState.isDraging()) {
             if (mSpinner > mHeaderHeight) {
                 setStateReleaseToRefresh();
             } else if (-mSpinner > mFooterHeight && !mLoadmoreFinished) {
@@ -1172,7 +1194,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
             }
         }
         if (mRefreshContent != null) {
-            if (spinner >= 0) {
+            if (spinner > 0) {
                 if (mEnableHeaderTranslationContent || mRefreshHeader == null || mRefreshHeader.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
                     mRefreshContent.moveSpinner(spinner);
                     if (mHeaderBackgroundColor != 0) {
