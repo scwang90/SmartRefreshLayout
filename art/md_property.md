@@ -17,6 +17,7 @@
 |srlEnableFooterTranslationContent|boolean|拖动Footer的时候是否同时拖动内容（默认true）|
 |srlEnablePreviewInEditMode|boolean|是否在编辑模式时显示预览效果（默认true）|
 |srlEnablePureScrollMode|boolean|是否开启纯滚动模式|
+|srlEnableOverScrollBounce|boolean|设置是否开启越界回弹功能|
 |srlEnableNestedScrolling|boolean|是否开启嵌套滚动NestedScrolling|
 |srlEnableScrollContentWhenLoaded|boolean|是否在加载完成之后滚动内容显示新数据|
 |srlDisableContentWhenRefresh|boolean|是否在刷新的时候禁止内容的一切手势操作（默认false）|
@@ -42,6 +43,7 @@
 |setEnableFooterTranslationContent|boolean|拖动Footer的时候是否同时拖动内容（默认true）|
 |setEnableAutoLoadmore|boolean|是否监听列表滚动到底部时触发加载事件|
 |setEnablePureScrollMode|boolean|是否开启纯滚动模式|
+|setEnableOverScrollBounce|boolean|设置是否开启越界回弹功能|
 |setEnableNestedScrolling|boolean|是否开启嵌套滚动NestedScrolling|
 |setEnableScrollContentWhenLoaded|boolean|是否在加载完成之后滚动内容显示新数据|
 |setDisableContentWhenRefresh|boolean|是否在刷新的时候禁止内容的一切手势操作（默认false）|
