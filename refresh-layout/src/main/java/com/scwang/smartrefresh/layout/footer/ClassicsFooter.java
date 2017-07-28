@@ -7,11 +7,10 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.R;
@@ -21,6 +20,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.internal.ProgressDrawable;
+import com.scwang.smartrefresh.layout.internal.pathview.PathsDrawable;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
@@ -30,7 +30,7 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
  * Created by SCWANG on 2017/5/28.
  */
 
-public class ClassicsFooter extends LinearLayout implements RefreshFooter {
+public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
 
     public static String REFRESH_FOOTER_PULLUP = "上拉加载更多";
     public static String REFRESH_FOOTER_RELEASE = "释放立即加载";
@@ -41,7 +41,9 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
     public static String REFRESH_FOOTER_ALLLOADED = "全部加载完成";
 
     private TextView mBottomText;
+    private ImageView mArrowView;
     private ImageView mProgressView;
+    private PathsDrawable mArrowDrawable;
     private ProgressDrawable mProgressDrawable;
     private SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
     private RefreshKernel mRefreshKernel;
@@ -67,29 +69,46 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
     private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
         DensityUtil density = new DensityUtil();
 
-        setGravity(Gravity.CENTER);
         setMinimumHeight(density.dip2px(60));
 
-        mProgressView = new ImageView(context);
-        mProgressView.animate().setInterpolator(new LinearInterpolator());
-        LayoutParams lpPathView = new LayoutParams(density.dip2px(18), density.dip2px(18));
-        lpPathView.rightMargin = density.dip2px(10);
-        addView(mProgressView, lpPathView);
-
-        mBottomText = new TextView(context, attrs, defStyleAttr);
+        mBottomText = new TextView(context);
+        mBottomText.setId(android.R.id.widget_frame);
         mBottomText.setTextColor(0xff666666);
         mBottomText.setTextSize(16);
         mBottomText.setText(REFRESH_FOOTER_PULLUP);
 
-        addView(mBottomText, WRAP_CONTENT, WRAP_CONTENT);
+        LayoutParams lpBottomText = new LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
+        lpBottomText.addRule(CENTER_IN_PARENT);
+        addView(mBottomText, lpBottomText);
+
+        mProgressView = new ImageView(context);
+        mProgressView.animate().setInterpolator(new LinearInterpolator());
+        LayoutParams lpPathView = new LayoutParams(density.dip2px(18), density.dip2px(18));
+        lpPathView.rightMargin = density.dip2px(20);
+        lpPathView.addRule(CENTER_VERTICAL);
+        lpPathView.addRule(LEFT_OF, android.R.id.widget_frame);
+        addView(mProgressView, lpPathView);
+        mArrowView = new ImageView(context);
+        addView(mArrowView, lpPathView);
 
         if (!isInEditMode()) {
             mProgressView.setVisibility(GONE);
+        } else {
+            mArrowView.setVisibility(GONE);
         }
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ClassicsFooter);
 
         mSpinnerStyle = SpinnerStyle.values()[ta.getInt(R.styleable.ClassicsFooter_srlClassicsSpinnerStyle, mSpinnerStyle.ordinal())];
+
+        if (ta.hasValue(R.styleable.ClassicsFooter_srlArrowDrawable)) {
+            mArrowView.setImageDrawable(ta.getDrawable(R.styleable.ClassicsFooter_srlArrowDrawable));
+        } else {
+            mArrowDrawable = new PathsDrawable();
+            mArrowDrawable.parserColors(0xff666666);
+            mArrowDrawable.parserPaths("M20,12l-1.41,-1.41L13,16.17V4h-2v12.17l-5.58,-5.59L4,12l8,8 8,-8z");
+            mArrowView.setImageDrawable(mArrowDrawable);
+        }
 
         if (ta.hasValue(R.styleable.ClassicsFooter_srlProgressDrawable)) {
             mProgressView.setImageDrawable(ta.getDrawable(R.styleable.ClassicsFooter_srlProgressDrawable));
@@ -191,6 +210,9 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
                 if (mProgressDrawable != null) {
                     mProgressDrawable.setColor(colors[1]);
                 }
+                if (mArrowDrawable != null) {
+                    mArrowDrawable.parserColors(colors[1]);
+                }
             } else if (colors.length > 0) {
                 setBackgroundColor(mBackgroundColor = colors[0]);
                 if (mRefreshKernel != null) {
@@ -201,10 +223,16 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
                     if (mProgressDrawable != null) {
                         mProgressDrawable.setColor(0xff666666);
                     }
+                    if (mArrowDrawable != null) {
+                        mArrowDrawable.parserColors(0xff666666);
+                    }
                 } else {
                     mBottomText.setTextColor(0xffffffff);
                     if (mProgressDrawable != null) {
                         mProgressDrawable.setColor(0xffffffff);
+                    }
+                    if (mArrowDrawable != null) {
+                        mArrowDrawable.parserColors(0xffffffff);
                     }
                 }
             }
@@ -249,18 +277,24 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
             switch (newState) {
                 case None:
 //                    restoreRefreshLayoutBackground();
+                    mArrowView.setVisibility(VISIBLE);
                 case PullToUpLoad:
                     mBottomText.setText(REFRESH_FOOTER_PULLUP);
+                    mArrowView.animate().rotation(180);
                     break;
                 case Loading:
+                    mArrowView.setVisibility(GONE);
                     mBottomText.setText(REFRESH_FOOTER_LOADING);
                     break;
                 case ReleaseToLoad:
                     mBottomText.setText(REFRESH_FOOTER_RELEASE);
+                    mArrowView.animate().rotation(0);
 //                    replaceRefreshLayoutBackground(refreshLayout);
                     break;
                 case Refreshing:
                     mBottomText.setText(REFRESH_HEADER_REFRESHING);
+                    mProgressView.setVisibility(GONE);
+                    mArrowView.setVisibility(GONE);
                     break;
             }
         }
@@ -306,6 +340,21 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
         mProgressView.setImageResource(resId);
         return this;
     }
+    public ClassicsFooter setArrowBitmap(Bitmap bitmap) {
+        mArrowDrawable = null;
+        mArrowView.setImageBitmap(bitmap);
+        return this;
+    }
+    public ClassicsFooter setArrowDrawable(Drawable drawable) {
+        mArrowDrawable = null;
+        mArrowView.setImageDrawable(drawable);
+        return this;
+    }
+    public ClassicsFooter setArrowResource(@DrawableRes int resId) {
+        mArrowDrawable = null;
+        mArrowView.setImageResource(resId);
+        return this;
+    }
     public ClassicsFooter setSpinnerStyle(SpinnerStyle style) {
         this.mSpinnerStyle = style;
         return this;
@@ -314,6 +363,9 @@ public class ClassicsFooter extends LinearLayout implements RefreshFooter {
         mBottomText.setTextColor(accentColor);
         if (mProgressDrawable != null) {
             mProgressDrawable.setColor(accentColor);
+        }
+        if (mArrowDrawable != null) {
+            mArrowDrawable.parserColors(accentColor);
         }
         return this;
     }

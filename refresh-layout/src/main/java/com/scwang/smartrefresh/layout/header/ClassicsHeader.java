@@ -48,8 +48,8 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
 
     public static String REFRESH_HEADER_PULLDOWN = "下拉可以刷新";
-    public static String REFRESH_HEADER_REFRESHING = "正在刷新";
-    public static String REFRESH_HEADER_LOADING = "正在加载";
+    public static String REFRESH_HEADER_REFRESHING = "正在刷新...";
+    public static String REFRESH_HEADER_LOADING = "正在加载...";
     public static String REFRESH_HEADER_RELEASE = "释放立即刷新";
     public static String REFRESH_HEADER_FINISH = "刷新完成";
     public static String REFRESH_HEADER_FAILED = "刷新失败";
@@ -305,6 +305,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
         switch (newState) {
             case None:
 //                restoreRefreshLayoutBackground();
+                mLastUpdateText.setVisibility(VISIBLE);
             case PullDownToRefresh:
                 mHeaderText.setText(REFRESH_HEADER_PULLDOWN);
                 mArrowView.setVisibility(VISIBLE);
@@ -322,6 +323,9 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
 //                replaceRefreshLayoutBackground(refreshLayout);
                 break;
             case Loading:
+                mArrowView.setVisibility(GONE);
+                mProgressView.setVisibility(GONE);
+                mLastUpdateText.setVisibility(GONE);
                 mHeaderText.setText(REFRESH_HEADER_LOADING);
                 break;
         }

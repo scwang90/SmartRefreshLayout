@@ -77,8 +77,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
 
     //<editor-fold desc="属性变量 property and variable">
 
-    protected RefreshState mState = RefreshState.None;
-
     //<editor-fold desc="滑动属性">
     protected int mTouchSlop;
     protected int mSpinner;//当前的 Spinner
@@ -129,8 +127,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
     protected NestedScrollingParentHelper mNestedScrollingParentHelper;
     //</editor-fold>
 
-    protected RefreshKernel mKernel;
-
     //<editor-fold desc="内部视图">
     /**
      * 头部高度
@@ -173,6 +169,21 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
     protected RefreshFooter mRefreshFooter;
     //</editor-fold>
 
+    protected Paint mPaint;
+    protected RefreshKernel mKernel;
+
+    protected RefreshState mState = RefreshState.None;          //主状态
+    protected RefreshState mViceState = RefreshState.None;      //副状态（刷新时候的状态）
+
+    protected long mLastLoadingTime = 0;
+    protected long mLastRefreshingTime = 0;
+
+    protected int mHeaderBackgroundColor = 0;
+    protected int mFooterBackgroundColor = 0;
+
+    protected boolean mHeaderNeedTouchEventWhenRefreshing;
+    protected boolean mFooterNeedTouchEventWhenRefreshing;
+
     protected static DefaultRefreshFooterCreater mFooterCreater = new DefaultRefreshFooterCreater() {
         @NonNull
         @Override
@@ -187,13 +198,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
             return new BezierRadarHeader(context);
         }
     };
-
-    protected long mLastLoadingTime = 0;
-    protected long mLastRefreshingTime = 0;
-
-    protected Paint mPaint;
-    protected int mHeaderBackgroundColor = 0;
-    protected int mFooterBackgroundColor = 0;
 
     //</editor-fold>
 
@@ -721,10 +725,8 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
             return ret;
         } else if (!isEnabled()
                 || (!mEnableRefresh && !mEnableLoadmore)
-//                || mState == RefreshState.Loading
-//                || mState == RefreshState.Refreshing
-//                || mState == RefreshState.LoadFinish
-//                || mState == RefreshState.RefreshFinish
+                || (mHeaderNeedTouchEventWhenRefreshing && (mState == RefreshState.Refreshing||mState == RefreshState.RefreshFinish))
+                || (mFooterNeedTouchEventWhenRefreshing && (mState == RefreshState.Loading||mState == RefreshState.LoadFinish))
                 ) {
             return super.dispatchTouchEvent(e);
         }
@@ -743,18 +745,22 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
                 final float dy = e.getY() - mTouchY;
                 if(mInitialMotionY == -1) {
                     if (Math.abs(dy) >= mTouchSlop && Math.abs(dx) < Math.abs(dy)) {//滑动允许最大角度为45度
-                        if (dy > 0 && ((mEnableRefresh && !mRefreshContent.canScrollUp()) || mState == RefreshState.Loading)) {
-                            mInitialMotionY = dy + mTouchY - mTouchSlop;
-                            if (!mState.isAnimating()) {
+                        if (dy > 0 && (mSpinner < 0 || (mEnableRefresh && !mRefreshContent.canScrollUp()))) {
+                            if (mSpinner < 0) {
+                                setStatePullUpToLoad();
+                            } else {
                                 setStatePullDownToRefresh();
                             }
+                            mInitialMotionY = dy + mTouchY - mTouchSlop;
                             e.setAction(MotionEvent.ACTION_CANCEL);
                             super.dispatchTouchEvent(e);
-                        } else if (dy < 0 && ((mEnableLoadmore && !mRefreshContent.canScrollDown()) || mState == RefreshState.Refreshing)) {
-                            mInitialMotionY = dy + mTouchY + mTouchSlop;
-                            if (!mState.isAnimating()) {
+                        } else if (dy < 0 && (mSpinner > 0 || (mEnableLoadmore && !mRefreshContent.canScrollDown()))) {
+                            if (mSpinner > 0) {
+                                setStatePullDownToRefresh();
+                            } else {
                                 setStatePullUpToLoad();
                             }
+                            mInitialMotionY = dy + mTouchY + mTouchSlop;
                             e.setAction(MotionEvent.ACTION_CANCEL);
                             super.dispatchTouchEvent(e);
                         } else {
@@ -767,8 +773,8 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
                 if (mInitialMotionY != -1) {
                     final float spinner = dy + mTouchY - mInitialMotionY + mTouchSpinner;
                     if ((mRefreshContent != null)
-                            && (mState.isHeader() && (spinner < 0 || mLastSpinner < 0))
-                            || (mState.isFooter() && (spinner > 0 || mLastSpinner > 0))) {
+                            && (getViceState().isHeader() && (spinner < 0 || mLastSpinner < 0))
+                            || (getViceState().isFooter() && (spinner > 0 || mLastSpinner > 0))) {
                         long time = e.getEventTime();
                         if (mFalsifyEvent == null) {
                             mFalsifyEvent = MotionEvent.obtain(time, time, MotionEvent.ACTION_DOWN, mTouchX + dx, mInitialMotionY, 0);
@@ -776,32 +782,19 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
                         }
                         MotionEvent em = MotionEvent.obtain(time, time, MotionEvent.ACTION_MOVE, mTouchX + dx, mInitialMotionY + spinner, 0);
                         super.dispatchTouchEvent(em);
-                        if (mSpinner != 0) {
-                            moveSpinnerInfinitely(0);
-                        }
-                        if ((mState.isHeader() && spinner < 0) || (mState.isFooter() && spinner > 0)) {
+                        if ((getViceState().isHeader() && spinner < 0) || (getViceState().isFooter() && spinner > 0)) {
                             mLastSpinner = (int)spinner;
+                            if (mSpinner != 0) {
+                                moveSpinnerInfinitely(0);
+                            }
                             return true;
                         }
-//                        if (((mState.isHeader() && spinner < 0) || (mState.isFooter() && spinner > 0))) {
-//                            if (spinner - mLastSpinner > 0) {
-//                                if (mRefreshContent.canScrollUp()) {
-//                                    mLastSpinner = (int)spinner;
-//                                    return true;
-//                                }
-//                            } else {
-//                                if (mRefreshContent.canScrollDown()) {
-//                                    mLastSpinner = (int)spinner;
-//                                    return true;
-//                                }
-//                            }
-//                        }
                         mLastSpinner = (int)spinner;
                         mFalsifyEvent = null;
                         MotionEvent ec = MotionEvent.obtain(time, time, MotionEvent.ACTION_CANCEL, mTouchX, mInitialMotionY + spinner, 0);
                         super.dispatchTouchEvent(ec);
                     }
-                    if (mState.isDraging() || mState.isAnimating()) {
+                    if (getViceState().isDraging()) {
                         moveSpinnerInfinitely(spinner);
                         return true;
                     }
@@ -912,6 +905,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
         final RefreshState oldState = mState;
         if (oldState != state) {
             mState = state;
+            mViceState = RefreshState.None;
             if (mRefreshFooter != null) {
                 mRefreshFooter.onStateChanged(this, oldState, state);
             }
@@ -925,29 +919,53 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
     }
 
     protected void setStatePullUpToLoad() {
-        notifyStateChanged(RefreshState.PullToUpLoad);
+        if (mState != RefreshState.Refreshing && mState != RefreshState.Loading) {
+            notifyStateChanged(RefreshState.PullToUpLoad);
+        } else {
+            setViceState(RefreshState.PullToUpLoad);
+        }
     }
 
     protected void setStateReleaseToLoad() {
-        notifyStateChanged(RefreshState.ReleaseToLoad);
+        if (mState != RefreshState.Refreshing && mState != RefreshState.Loading) {
+            notifyStateChanged(RefreshState.ReleaseToLoad);
+        } else {
+            setViceState(RefreshState.ReleaseToLoad);
+        }
     }
 
     protected void setStateReleaseToRefresh() {
-        notifyStateChanged(RefreshState.ReleaseToRefresh);
+        if (mState != RefreshState.Refreshing && mState != RefreshState.Loading) {
+            notifyStateChanged(RefreshState.ReleaseToRefresh);
+        } else {
+            setViceState(RefreshState.ReleaseToRefresh);
+        }
     }
 
     protected void setStatePullDownToRefresh() {
-        notifyStateChanged(RefreshState.PullDownToRefresh);
+        if (mState != RefreshState.Refreshing && mState != RefreshState.Loading) {
+            notifyStateChanged(RefreshState.PullDownToRefresh);
+        } else {
+            setViceState(RefreshState.PullDownToRefresh);
+        }
     }
 
     protected void setStatePullDownCanceled() {
-        notifyStateChanged(RefreshState.PullDownCanceled);
-        resetStatus();
+        if (mState != RefreshState.Refreshing && mState != RefreshState.Loading) {
+            notifyStateChanged(RefreshState.PullDownCanceled);
+            resetStatus();
+        } else {
+            setViceState(RefreshState.PullDownCanceled);
+        }
     }
 
     protected void setStatePullUpCanceled() {
-        notifyStateChanged(RefreshState.PullUpCanceled);
-        resetStatus();
+        if (mState != RefreshState.Refreshing && mState != RefreshState.Loading) {
+            notifyStateChanged(RefreshState.PullUpCanceled);
+            resetStatus();
+        } else {
+            setViceState(RefreshState.PullUpCanceled);
+        }
     }
 
     protected void setStateLodingFinish() {
@@ -1003,6 +1021,20 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
             animSpinner(0);
         }
     }
+
+
+    protected RefreshState getViceState() {
+        return (mState == RefreshState.Refreshing || mState == RefreshState.Loading) ? mViceState : mState;
+    }
+
+    protected void setViceState(RefreshState state) {
+        if (mState == RefreshState.Refreshing || mState == RefreshState.Loading) {
+            if (mViceState != state) {
+                mViceState = state;
+            }
+        }
+    }
+
     //</editor-fold>
 
     //<editor-fold desc="视图位移 displacement">
@@ -1192,7 +1224,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
         }
         final int oldSpinner = mSpinner;
         this.mSpinner = spinner;
-        if (!isAnimator && mState.isDraging()) {
+        if (!isAnimator && getViceState().isDraging()) {
             if (mSpinner > mHeaderHeight) {
                 setStateReleaseToRefresh();
             } else if (-mSpinner > mFooterHeight && !mLoadmoreFinished) {
@@ -2346,6 +2378,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
         //</editor-fold>
 
         //<editor-fold desc="绘制背景 Backgound">
+        @Override
         public RefreshKernel requestDrawBackgoundForHeader(int backgroundColor) {
             if (mPaint == null && backgroundColor != 0) {
                 mPaint = new Paint();
@@ -2353,11 +2386,25 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
             mHeaderBackgroundColor = backgroundColor;
             return this;
         }
+        @Override
         public RefreshKernel requestDrawBackgoundForFooter(int backgroundColor) {
             if (mPaint == null && backgroundColor != 0) {
                 mPaint = new Paint();
             }
             mFooterBackgroundColor = backgroundColor;
+            return this;
+        }
+        //</editor-fold>
+
+        //<editor-fold desc="注册事件">
+        @Override
+        public RefreshKernel requestHeaderNeedTouchEventWhenRefreshing(boolean request) {
+            mHeaderNeedTouchEventWhenRefreshing = request;
+            return this;
+        }
+        @Override
+        public RefreshKernel requestFooterNeedTouchEventWhenLoading(boolean request) {
+            mFooterNeedTouchEventWhenRefreshing = request;
             return this;
         }
         //</editor-fold>

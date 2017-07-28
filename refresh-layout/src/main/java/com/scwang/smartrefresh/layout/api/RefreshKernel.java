@@ -86,4 +86,15 @@ public interface RefreshKernel {
 
     //</editor-fold>
 
+    //<editor-fold desc="请求事件">
+    /**
+     * 请求事件
+     */
+    RefreshKernel requestHeaderNeedTouchEventWhenRefreshing(boolean request);
+
+    /**
+     * 请求事件
+     */
+    RefreshKernel requestFooterNeedTouchEventWhenLoading(boolean request);
+    //</editor-fold>
 }

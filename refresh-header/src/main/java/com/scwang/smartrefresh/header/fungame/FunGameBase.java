@@ -31,11 +31,11 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
     protected int mOffset;
     protected int mHeaderHeight;
     protected int mScreenHeightPixels;
-    protected RefreshState mState;
+    protected float mTouchY;
     protected boolean mIsFinish;
     protected boolean mLastFinish;
     protected boolean mManualOperation;
-    protected float mTouchY;
+    protected RefreshState mState;
     protected RefreshKernel mRefreshKernel;
     protected RefreshContent mRefreshContent;
     //</editor-fold>
@@ -215,6 +215,7 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
         mRefreshKernel = kernel;
         mHeaderHeight = height;
         setTranslationY(mOffset - mHeaderHeight);
+        kernel.requestHeaderNeedTouchEventWhenRefreshing(true);
     }
 
     @Override

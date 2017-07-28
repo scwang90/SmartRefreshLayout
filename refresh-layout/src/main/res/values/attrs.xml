@@ -68,6 +68,7 @@
         <attr name="srlClassicsSpinnerStyle"/>
         <attr name="srlPrimaryColor"/>
         <attr name="srlAccentColor"/>
+        <attr name="srlArrowDrawable"/>
         <attr name="srlProgressDrawable"/>
     </declare-styleable>
 </resources>
