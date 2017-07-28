@@ -397,6 +397,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
         if (mFixedFooterViewId > 0 && mFixedFooterView == null) {
             mFixedFooterView = findViewById(mFixedFooterViewId);
         }
+
         mRefreshContent.setupComponent(mKernel, mFixedHeaderView, mFixedFooterView);
 
         if (mRefreshHeader == null) {
@@ -1588,7 +1589,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
         if (mFooterHeightStatus.canReplaceWith(DimensionStatus.CodeExact)) {
             mFooterHeight = heightPx;
             mFooterExtendHeight = (int) Math.max((heightPx * (mFooterMaxDragRate - 1)), 0);
-            if (mRefreshFooter != null) {
+            if (mRefreshFooter != null && mKernel != null) {
                 mFooterHeightStatus = DimensionStatus.CodeExact;
                 mRefreshFooter.onInitialized(mKernel, mFooterHeight, mFooterExtendHeight);
             } else {
@@ -1608,7 +1609,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
         if (mHeaderHeightStatus.canReplaceWith(DimensionStatus.CodeExact)) {
             mHeaderHeight = heightPx;
             mHeaderExtendHeight = (int) Math.max((heightPx * (mHeaderMaxDragRate - 1)), 0);
-            if (mRefreshHeader != null) {
+            if (mRefreshHeader != null && mKernel != null) {
                 mHeaderHeightStatus = DimensionStatus.CodeExact;
                 mRefreshHeader.onInitialized(mKernel, mHeaderHeight, mHeaderExtendHeight);
             } else {
@@ -1631,8 +1632,10 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
     public SmartRefreshLayout setHeaderMaxDragRate(float rate) {
         this.mHeaderMaxDragRate = rate;
         this.mHeaderExtendHeight = (int) Math.max((mHeaderHeight * (mHeaderMaxDragRate - 1)), 0);
-        if (mRefreshHeader != null) {
+        if (mRefreshHeader != null && mKernel != null) {
             mRefreshHeader.onInitialized(mKernel, mHeaderHeight, mHeaderExtendHeight);
+        } else {
+            mHeaderHeightStatus = mHeaderHeightStatus.unNotify();
         }
         return this;
     }
@@ -1644,8 +1647,10 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
     public SmartRefreshLayout setFooterMaxDragRate(float rate) {
         this.mFooterMaxDragRate = rate;
         this.mFooterExtendHeight = (int) Math.max((mFooterHeight * (mFooterMaxDragRate - 1)), 0);
-        if (mRefreshFooter != null) {
+        if (mRefreshFooter != null && mKernel != null) {
             mRefreshFooter.onInitialized(mKernel, mFooterHeight, mFooterExtendHeight);
+        } else {
+            mFooterHeightStatus = mFooterHeightStatus.unNotify();
         }
         return this;
     }
@@ -2025,7 +2030,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
         postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (mState == RefreshState.Loading && mRefreshFooter != null) {
+                if (mState == RefreshState.Loading && mRefreshFooter != null && mKernel != null) {
                     int startDelay = mRefreshFooter.onFinish(SmartRefreshLayout.this, success);
                     if (startDelay == Integer.MAX_VALUE) {
                         return;

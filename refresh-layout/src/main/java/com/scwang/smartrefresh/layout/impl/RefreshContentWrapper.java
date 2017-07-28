@@ -396,16 +396,6 @@ public class RefreshContentWrapper implements RefreshContent {
                     lastValue = thisValue;
                 }
             };
-//                    if (mScrollableView instanceof RecyclerView) ((RecyclerView) mScrollableView).smoothScrollBy(0, footerHeight, interpolator);
-//                    else if (mScrollableView instanceof ScrollView) ((ScrollView) mScrollableView).smoothScrollBy(0, footerHeight);
-//                    else if (mScrollableView instanceof AbsListView) ((AbsListView) mScrollableView).smoothScrollBy(footerHeight, duration);
-//                    else {
-//                        try {
-//                            Method method = mScrollableView.getClass().getDeclaredMethod("smoothScrollBy", Integer.class, Integer.class);
-//                            method.invoke(mScrollableView, 0, footerHeight);
-//                        } catch (Exception ignored) {
-//                        }
-//                    }
         }
         return null;
     }
@@ -433,26 +423,18 @@ public class RefreshContentWrapper implements RefreshContent {
             if (lastScrollY == scrollY && lastOldScrollY == oldScrollY) {
                 return;
             }
-//            System.out.printf("%d,%d,%d,%d\n", scrollX, scrollY, oldScrollX, oldScrollY);
             RefreshLayout layout = kernel.getRefreshLayout();
             boolean overScroll = layout.isEnableOverScrollBounce() || layout.isRefreshing() || layout.isLoading();
             if (scrollY <= 0 && oldScrollY > 0 && mMotionEvent == null && lastTime - lastTimeOld > 1000 && overScroll && layout.isEnableRefresh()) {
                 //time:16000000 value:160
                 final int velocity = (lastOldScrollY - oldScrollY) * 16000 / (int)((lastTime - lastTimeOld)/1000f);
-//                    System.out.println("ValueAnimator - " + (lastTime - lastTimeOld) + " - " + velocity+"("+(lastOldScrollY - oldScrollY)+")");
                 kernel.animSpinnerBounce(Math.min(velocity, mHeaderHeight));
-//            } else if (oldScrollY < scrollY && mMotionEvent == null && overScroll && layout.isEnableLoadmore()) {
-//                if (lastTime - lastTimeOld > 1000 && !ScrollBoundaryUtil.canScrollDown(v)) {
-//                    final int velocity = (lastOldScrollY - oldScrollY) * 16000 / (int)((lastTime - lastTimeOld)/1000f);
-////                    System.out.println("ValueAnimator - " + (lastTime - lastTimeOld) + " - " + velocity+"("+(lastOldScrollY - oldScrollY)+")");
-//                    kernel.animSpinnerBounce(Math.max(velocity, -mFooterHeight));
-//                }
             } else if (oldScrollY < scrollY && mMotionEvent == null && layout.isEnableLoadmore()) {
-                if (!layout.isLoadmoreFinished() && layout.isEnableAutoLoadmore()
-                        && layout.getState() == RefreshState.None
-                        && !ScrollBoundaryUtil.canScrollDown(v)) {
-                    kernel.getRefreshLayout().autoLoadmore(0, 1);
-                } else
+//                if (!layout.isLoadmoreFinished() && layout.isEnableAutoLoadmore()
+//                        && layout.getState() == RefreshState.None
+//                        && !ScrollBoundaryUtil.canScrollDown(v)) {
+//                    kernel.getRefreshLayout().autoLoadmore(0, 1);
+//                } else
                     if (overScroll && lastTime - lastTimeOld > 1000 && !ScrollBoundaryUtil.canScrollDown(v)) {
                     final int velocity = (lastOldScrollY - oldScrollY) * 16000 / (int)((lastTime - lastTimeOld)/1000f);
                     kernel.animSpinnerBounce(Math.max(velocity, -mFooterHeight));
