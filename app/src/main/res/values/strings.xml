@@ -90,4 +90,5 @@
     <string name="title_activity_using_overscroll">越界回弹</string>
     <string name="title_activity_practice_webview">Github</string>
     <string name="title_activity_practice_feedlist">微博列表</string>
+    <string name="title_activity_practice_banner">滚动广告</string>
 </resources>

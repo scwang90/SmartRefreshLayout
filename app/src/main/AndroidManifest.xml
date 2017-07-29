@@ -2,7 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.scwang.refreshlayout">
 
+    <!-- 读取SD卡权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 网络状态权限 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 网络访问权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 设备编号权限 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:name=".App"
@@ -124,6 +132,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.practice.WeiboPracticeActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.practice.BannerPracticeActivity"
             android:screenOrientation="portrait" />
     </application>
 

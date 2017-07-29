@@ -35,6 +35,11 @@ android {
     }
 }
 
+
+repositories {
+    maven { url "https://jitpack.io" }
+}
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -51,8 +56,11 @@ dependencies {
 //    compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:cardview-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
+    compile 'com.bigkoo:convenientbanner:2.0.5'
     compile 'com.flyco.roundview:FlycoRoundView_Lib:1.1.4@aar'
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.22'
     compile 'com.github.mmin18:realtimeblurview:1.0.6'
+    compile 'com.youth.banner:banner:1.4.9'  //最新版本
     compile 'cn.carbs.android:AvatarImageView:1.0.4'
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'jp.wasabeef:recyclerview-animators:2.2.6'
@@ -62,4 +70,12 @@ dependencies {
 //        compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.2'
 //        compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.2'
     testCompile 'junit:junit:4.12'
+
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    compile 'com.squareup.okhttp:okhttp:2.4.0'
+    compile 'com.facebook.fresco:fresco:1.4.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'com.github.bumptech.glide:glide:4.0.0-RC1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0-RC1'
 }

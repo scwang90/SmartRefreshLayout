@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 import com.scwang.refreshlayout.R;
+import com.scwang.refreshlayout.activity.practice.BannerPracticeActivity;
 import com.scwang.refreshlayout.activity.practice.FeedlistPracticeActivity;
 import com.scwang.refreshlayout.activity.practice.ProfilePracticeActivity;
 import com.scwang.refreshlayout.activity.practice.RepastPracticeActivity;
@@ -46,6 +47,7 @@ public class RefreshPractiveFragment extends Fragment implements AdapterView.OnI
         Webview("网页引用-WebView", WebviewPracticeActivity.class),
         FeedList("微博列表-智能识别", FeedlistPracticeActivity.class),
         Weibo("微博主页-CoordinatorLayout", WeiboPracticeActivity.class),
+        Banner("滚动广告-Banner", BannerPracticeActivity.class),
         ;
         public String name;
         public Class<?> clazz;
