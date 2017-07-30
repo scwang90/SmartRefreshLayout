@@ -43,7 +43,7 @@ public class RefreshPractiveFragment extends Fragment implements AdapterView.OnI
 
     private enum Item {
         Repast("餐饮美食-简单自定义Header-外边距magin", RepastPracticeActivity.class),
-        Profile("个人中心-OverScroll", ProfilePracticeActivity.class),
+        Profile("个人中心-PureScrollMode-纯滚动模式", ProfilePracticeActivity.class),
         Webview("网页引用-WebView", WebviewPracticeActivity.class),
         FeedList("微博列表-智能识别", FeedlistPracticeActivity.class),
         Weibo("微博主页-CoordinatorLayout", WeiboPracticeActivity.class),

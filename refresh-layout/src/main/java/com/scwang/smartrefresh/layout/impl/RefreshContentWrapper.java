@@ -306,12 +306,6 @@ public class RefreshContentWrapper implements RefreshContent {
             Api23ViewScrollComponent component = new Api23ViewScrollComponent(kernel);
             component.attach(mScrollableView);
         }
-//        if (Build.VERSION.SDK_INT >= 21
-//                && mScrollableView instanceof ListView
-//                && kernel.getRefreshLayout().isNestedScrollingEnabled()
-//                && !(mScrollableView instanceof NestedScrollingChild)) {
-//            mScrollableView.setNestedScrollingEnabled(true);
-//        }
         if (fixedHeader != null || fixedFooter != null) {
             mFixedHeader = fixedHeader;
             mFixedFooter = fixedFooter;
@@ -427,11 +421,11 @@ public class RefreshContentWrapper implements RefreshContent {
                 final int velocity = (lastOldScrollY - oldScrollY) * 16000 / (int)((lastTime - lastTimeOld)/1000f);
                 kernel.animSpinnerBounce(Math.min(velocity, mHeaderHeight));
             } else if (oldScrollY < scrollY && mMotionEvent == null && layout.isEnableLoadmore()) {
-//                if (!layout.isLoadmoreFinished() && layout.isEnableAutoLoadmore()
-//                        && layout.getState() == RefreshState.None
-//                        && !ScrollBoundaryUtil.canScrollDown(v)) {
-//                    kernel.getRefreshLayout().autoLoadmore(0, 1);
-//                } else
+                if (!layout.isLoadmoreFinished() && layout.isEnableAutoLoadmore()
+                        && layout.getState() == RefreshState.None
+                        && !ScrollBoundaryUtil.canScrollDown(v)) {
+                    kernel.getRefreshLayout().autoLoadmore(0, 1);
+                } else
                     if (overScroll && lastTime - lastTimeOld > 1000 && !ScrollBoundaryUtil.canScrollDown(v)) {
                     final int velocity = (lastOldScrollY - oldScrollY) * 16000 / (int)((lastTime - lastTimeOld)/1000f);
                     kernel.animSpinnerBounce(Math.max(velocity, -mFooterHeight));

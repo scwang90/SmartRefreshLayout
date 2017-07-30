@@ -21,13 +21,16 @@
 >添加：finishLoadmore(boolean success);方法，完成加载,并设置是否成功  
 >修复：DeliveryHeader,DropboxHeader 在API-17以下显示不全的问题  
 
-## V 1.0.3(开发中)
->添加: 为Heaer和Footer添加拖动时水平方向坐标 x，实现左右拖动Header的效果  
->添加：为Header添加 srlEnableHorizontalDrag 属性和 setEnableHorizontalDrag 方法
->添加：为ClassicsHeader 添加 setArrowResource 方法改变箭头图片  
->添加：为ClassicsHeader 添加 setProgressResource 方法改变转动图片  
->添加：为ClassicsHeader 添加 srlArrowDrawable 属性改变箭头图片  
->添加：为ClassicsHeader 添加 srlProgressDrawable 属性改变转动图片  
+## V 1.0.3 (开发中)
+>添加: 为 Heaer和Footer添加拖动时水平方向坐标 x，实现左右拖动Header的效果  
+>添加：为 Refreshlayout 添加多点触摸支持，在多个手指触摸式不会发生冲突，并且随意拖动  
+>添加：为 Header添加 srlEnableHorizontalDrag 属性和 setEnableHorizontalDrag 方法  
+>添加：为 ClassicsHeader 添加 setArrowResource 方法改变箭头图片  
+>添加：为 ClassicsHeader 添加 setProgressResource 方法改变转动图片  
+>添加：为 ClassicsHeader 添加 srlArrowDrawable 属性改变箭头图片  
+>添加：为 ClassicsHeader 添加 srlProgressDrawable 属性改变转动图片  
+>修改：改 EnableLoadMore 由默认true->变为false，并增加智能开启功能  
+>修改：改 EnableNestedScrolling 由默认true->变为false，并增加智能开启功能  
 >修复：为ClassicsFooter加载失败时，显示成了加载完成  
 >修复：正在刷新时，向上拖动导致的栈溢出崩溃  
 >修复：autoRefresh(0) 的 延时为没有延时  

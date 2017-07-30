@@ -793,7 +793,8 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
                 mLastSpinner = 0;
                 mTouchSpinner = mSpinner;
                 mIsBeingDragged = false;
-                break;
+                super.dispatchTouchEvent(e);
+                return true;
 
             case MotionEvent.ACTION_MOVE:
                 float dx = touchX - mTouchX;
