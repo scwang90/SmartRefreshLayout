@@ -14,7 +14,6 @@
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srlEnableLoadmore="false"
         app:srlEnableHeaderTranslationContent="true">
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
@@ -23,6 +22,5 @@
             android:background="@android:color/white"
             tools:listitem="@android:layout/simple_list_item_2"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-
 
 </LinearLayout>

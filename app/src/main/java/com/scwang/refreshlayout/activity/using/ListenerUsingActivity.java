@@ -28,7 +28,6 @@ public class ListenerUsingActivity extends AppCompatActivity {
     private static DateFormat FORMAT = new SimpleDateFormat("HH:mm sss", Locale.CHINA);
 
     private TextView mTvContent;
-    private static boolean isFirstEnter = true;
     private String mHeaderPulling;
     private String mHeaderReleasing;
     private String mFooterPulling;
@@ -40,6 +39,8 @@ public class ListenerUsingActivity extends AppCompatActivity {
     private String mRefresh;
     private String mLoadmore;
     private String mStateChanged;
+
+    private static boolean isFirstEnter = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,8 +148,9 @@ public class ListenerUsingActivity extends AppCompatActivity {
             isFirstEnter = false;
             //触发自动刷新
             refreshLayout.autoRefresh();
+        } else {
+            updateContent();
         }
-
     }
 
     private void updateContent() {

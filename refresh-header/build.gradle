@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.novoda.bintray-release'
-//apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 25
@@ -40,7 +39,7 @@ publish {
     userOrg = 'scwang90'
     groupId = 'com.scwang.smartrefresh'
     artifactId = 'SmartRefreshHeader'
-    version = '1.0.3-alpha-3'
+    version = '1.0.3-alpha-4'
     description = 'Some delicate headers of SmartRefreshLayout'
     website = "https://github.com/scwang90/${rootProject.name}"
 }

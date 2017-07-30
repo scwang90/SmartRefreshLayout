@@ -119,16 +119,10 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
         }
 
         if (ta.hasValue(R.styleable.ClassicsFooter_srlPrimaryColor)) {
-            int primaryColor = ta.getColor(R.styleable.ClassicsFooter_srlPrimaryColor, 0);
-            if (ta.hasValue(R.styleable.ClassicsFooter_srlAccentColor)) {
-                int accentColor = ta.getColor(R.styleable.ClassicsFooter_srlAccentColor, 0);
-                setPrimaryColors(primaryColor, accentColor);
-            } else {
-                setPrimaryColors(primaryColor);
-            }
-        } else if (ta.hasValue(R.styleable.ClassicsFooter_srlAccentColor)) {
-            int accentColor = ta.getColor(R.styleable.ClassicsFooter_srlAccentColor, 0);
-            setPrimaryColors(0, accentColor);
+            setPrimaryColor(ta.getColor(R.styleable.ClassicsFooter_srlPrimaryColor, 0));
+        }
+        if (ta.hasValue(R.styleable.ClassicsFooter_srlAccentColor)) {
+            setAccentColor(ta.getColor(R.styleable.ClassicsFooter_srlAccentColor, 0));
         }
 
         ta.recycle();
@@ -366,6 +360,13 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
         }
         if (mArrowDrawable != null) {
             mArrowDrawable.parserColors(accentColor);
+        }
+        return this;
+    }
+    public ClassicsFooter setPrimaryColor(int primaryColor) {
+        setBackgroundColor(mBackgroundColor = primaryColor);
+        if (mRefreshKernel != null) {
+            mRefreshKernel.requestDrawBackgoundForFooter(mBackgroundColor);
         }
         return this;
     }
