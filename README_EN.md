@@ -205,7 +205,7 @@ This library does't use serialization and deserialization, JNI, reflection, so t
 If you like this library's design, feel it help to you, you can point the upper right corner "Star" support Thank you! ^ _ ^  
 You can also scan the qr code below to ask the author to drink a cup of coffee.
 
-![](art/pay_alipay.jpg) ![](art/pay_wxpay.jpg)
+![](art/pay_alipay.jpg) ![](art/pay_wxpay.jpg) ![](art/pay_tencent.jpg)
 
 If in the donation message note name, will be record to the list  
 [Donation list](art/md_donationlist.md)
