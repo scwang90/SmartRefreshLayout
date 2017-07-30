@@ -103,12 +103,6 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override
-    public void setLayoutParams(ViewGroup.LayoutParams params) {
-        super.setLayoutParams(params);
-        params.height = -3;
-    }
-
-    @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         setMeasuredDimension(getSize(widthMeasureSpec), getSize(heightMeasureSpec));
         mCircleView.measure();
@@ -291,7 +285,7 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
 
     @Override
     public SpinnerStyle getSpinnerStyle() {
-        return SpinnerStyle.FixedFront;
+        return SpinnerStyle.MatchLayout;
     }
     //</editor-fold>
 

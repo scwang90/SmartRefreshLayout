@@ -95,7 +95,6 @@ public class RefreshContentWrapper implements RefreshContent {
                 wrapperCoordinatorLayout(((CoordinatorLayout) mScrollableView), kernel.getRefreshLayout());
             }
         } catch (Throwable e) {//try 不能删除
-            e.printStackTrace();
         }
         if (mScrollableView instanceof NestedScrollingParent
                 && !(mScrollableView instanceof NestedScrollingChild)) {
@@ -290,16 +289,14 @@ public class RefreshContentWrapper implements RefreshContent {
                 RecyclerViewScrollComponent component = new RecyclerViewScrollComponent(kernel);
                 component.attach((RecyclerView) mScrollableView);
             }
-        } catch (Throwable e) {
-            e.printStackTrace();
+        } catch (Throwable ignored) {
         }
         try {
             if (mScrollableView instanceof NestedScrollView) {
                 NestedScrollViewScrollComponent component = new NestedScrollViewScrollComponent(kernel);
                 component.attach((NestedScrollView) mScrollableView);
             }
-        } catch (Throwable e) {
-            e.printStackTrace();
+        } catch (Throwable ignored) {
         }
 
         if (mScrollableView instanceof AbsListView) {

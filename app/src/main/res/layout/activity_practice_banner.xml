@@ -14,7 +14,8 @@
         app:srlPrimaryColor="@color/colorPrimary"
         app:srlAccentColor="@android:color/white"
         app:srlEnableHeaderTranslationContent="false"
-        app:srlEnablePreviewInEditMode="false">
+        app:srlEnablePreviewInEditMode="false"
+        app:srlEnableNestedScrolling="false">
         <com.scwang.smartrefresh.header.MaterialHeader
             android:id="@+id/header"
             android:layout_width="match_parent"
@@ -36,12 +37,7 @@
         android:layout_height="?attr/actionBarSize"
         app:realtimeBlurRadius="10dp"
         app:realtimeOverlayColor="@color/colorPrimaryOverlay"/>
-    <!--((0xFF * fgC * fgA) + (bgC * bgA * (0xFF - fgA))) / (a * 0xFF);-->
-    <!--((0xFF * fgC * 0xcc) + (0xff * 0xff * (0xFF - 0xcc))) / (0xff * 0xFF) = YY -->
-    <!--(0xFF * fgC * 0xcc) = YY * (0xff * 0xFF) - (0xff * 0xff * (0xFF - 0xcc))  -->
-    <!--fgC = (YY * (0xff * 0xFF) - (0xff * 0xff * (0xFF - 0xcc)))/(0xFF*0xcc)  -->
-    <!--fgC = (0xff * 0xFF)*(YY - 0x33)/(0xFF*0xcc)  -->
-    <!--fgC = 0xF*(YY - 0x33)/0xc  -->
+
     <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"
         android:background="@android:color/transparent"

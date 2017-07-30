@@ -115,12 +115,6 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override
-    public void setLayoutParams(ViewGroup.LayoutParams params) {
-        super.setLayoutParams(params);
-        params.height = -3;
-    }
-
-    @Override
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         setMeasuredDimension(getSize(widthMeasureSpec), getSize(heightMeasureSpec));
         mCircleView.measure(MeasureSpec.makeMeasureSpec(mCircleDiameter, MeasureSpec.EXACTLY),
@@ -276,6 +270,7 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
         mState = newState;
         switch (newState) {
             case None:
+                break;
             case PullDownToRefresh:
                 mFinished = false;
                 mCircleView.setVisibility(VISIBLE);
@@ -313,7 +308,7 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
 
     @Override
     public SpinnerStyle getSpinnerStyle() {
-        return SpinnerStyle.FixedFront;
+        return SpinnerStyle.MatchLayout;
     }
     //</editor-fold>
 
