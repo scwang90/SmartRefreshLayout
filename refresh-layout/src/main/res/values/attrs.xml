@@ -44,6 +44,11 @@
         <attr name="srlFixedFooterViewId" format="reference"/>
     </declare-styleable>
 
+    <declare-styleable name="SmartRefreshLayout_Layout">
+        <attr name="srlSpinnerStyle"/>
+        <attr name="srlBackgroundColor" format="color"/>
+    </declare-styleable>
+
     <declare-styleable name="BezierRadarHeader">
         <attr name="srlPrimaryColor"/>
         <attr name="srlAccentColor"/>
@@ -71,4 +76,5 @@
         <attr name="srlArrowDrawable"/>
         <attr name="srlProgressDrawable"/>
     </declare-styleable>
+
 </resources>

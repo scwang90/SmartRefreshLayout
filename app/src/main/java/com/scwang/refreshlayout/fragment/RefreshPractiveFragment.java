@@ -20,6 +20,7 @@ import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.activity.practice.BannerPracticeActivity;
 import com.scwang.refreshlayout.activity.practice.FeedlistPracticeActivity;
 import com.scwang.refreshlayout.activity.practice.ProfilePracticeActivity;
+import com.scwang.refreshlayout.activity.practice.QQBrowserPracticeActivity;
 import com.scwang.refreshlayout.activity.practice.RepastPracticeActivity;
 import com.scwang.refreshlayout.activity.practice.WebviewPracticeActivity;
 import com.scwang.refreshlayout.activity.practice.WeiboPracticeActivity;
@@ -48,6 +49,7 @@ public class RefreshPractiveFragment extends Fragment implements AdapterView.OnI
         FeedList("微博列表-智能识别", FeedlistPracticeActivity.class),
         Weibo("微博主页-CoordinatorLayout", WeiboPracticeActivity.class),
         Banner("滚动广告-Banner", BannerPracticeActivity.class),
+        QQBrowser("QQ浏览器-模拟QQ浏览器内核提示", QQBrowserPracticeActivity.class),
         ;
         public String name;
         public Class<?> clazz;

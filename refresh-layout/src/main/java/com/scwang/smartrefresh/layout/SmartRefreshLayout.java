@@ -1355,8 +1355,14 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
 
     public static class LayoutParams extends MarginLayoutParams {
 
-        public LayoutParams(Context c, AttributeSet attrs) {
-            super(c, attrs);
+        public LayoutParams(Context context, AttributeSet attrs) {
+            super(context, attrs);
+            TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.SmartRefreshLayout_Layout);
+            backgroundColor = ta.getColor(R.styleable.SmartRefreshLayout_Layout_srlBackgroundColor, backgroundColor);
+            if (ta.hasValue(R.styleable.SmartRefreshLayout_Layout_srlSpinnerStyle)) {
+                spinnerStyle = SpinnerStyle.values()[ta.getInt(R.styleable.SmartRefreshLayout_Layout_srlSpinnerStyle,SpinnerStyle.Translate.ordinal())];
+            }
+            ta.recycle();
         }
 
         public LayoutParams(int width, int height) {
@@ -1370,6 +1376,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
         public LayoutParams(ViewGroup.LayoutParams source) {
             super(source);
         }
+
+        public int backgroundColor = 0;
+        public SpinnerStyle spinnerStyle = null;
     }
     //</editor-fold>
 

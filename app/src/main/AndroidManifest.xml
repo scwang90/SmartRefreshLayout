@@ -132,8 +132,13 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.practice.WeiboPracticeActivity"
+            android:label="@string/title_activity_practice_weibo"
             android:screenOrientation="portrait" />
         <activity android:name=".activity.practice.BannerPracticeActivity"
+            android:label="@string/title_activity_practice_banner"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.practice.QQBrowserPracticeActivity"
+            android:label="@string/title_activity_practice_qqbrowser"
             android:screenOrientation="portrait" />
     </application>
 
