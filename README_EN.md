@@ -40,7 +40,7 @@ SmartRefreshLayout's goal is to build a strong, stable and mature refresh layout
  - [Update log](art/md_update.md)
  - [Attribute method](art/md_property.md)
  - [Blog posts](https://segmentfault.com/a/1190000010066071) 
- - [Download the source code](releases) 
+ - [Download the source code](https://github.com/scwang90/SmartRefreshLayout/releases) 
  
 ## Demo
 [Download APK-Demo](art/app-debug.apk)
