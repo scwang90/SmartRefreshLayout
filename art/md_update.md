@@ -22,7 +22,7 @@
 >修复：DeliveryHeader,DropboxHeader 在API-17以下显示不全的问题  
 
 ## V 1.0.3 (开发中)
->添加: 为 Heaer和Footer添加拖动时水平方向坐标 x，实现左右拖动Header的效果  
+>添加：为 Heaer和Footer添加拖动时水平方向坐标 x，实现左右拖动Header的效果  
 >添加：为 Refreshlayout 添加多点触摸支持，在多个手指触摸式不会发生冲突，并且随意拖动  
 >添加：为 Header添加 srlEnableHorizontalDrag 属性和 setEnableHorizontalDrag 方法  
 >添加：为 ClassicsHeader 添加 setArrowResource 方法改变箭头图片  
