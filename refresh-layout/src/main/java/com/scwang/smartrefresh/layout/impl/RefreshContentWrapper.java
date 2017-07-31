@@ -39,6 +39,7 @@ import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshScrollBoundary;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
+import com.scwang.smartrefresh.layout.util.PostRunable;
 import com.scwang.smartrefresh.layout.util.ScrollBoundaryUtil;
 
 import java.lang.reflect.Field;
@@ -126,7 +127,7 @@ public class RefreshContentWrapper implements RefreshContent {
     }
 
     private void wrapperViewPager(final ViewPager viewPager, final PagerPrimaryAdapter primaryAdapter) {
-        viewPager.post(new Runnable() {
+        viewPager.post(new PostRunable(new Runnable() {
             int count = 0;
             PagerPrimaryAdapter mAdapter = primaryAdapter;
             @Override
@@ -136,7 +137,7 @@ public class RefreshContentWrapper implements RefreshContent {
                 if (adapter != null) {
                     if (adapter instanceof PagerPrimaryAdapter) {
                         if (adapter == primaryAdapter) {
-                            viewPager.postDelayed(this, 500);
+                            viewPager.postDelayed(new PostRunable(this), 500);
                         }
                     } else {
                         if (mAdapter == null) {
@@ -147,10 +148,10 @@ public class RefreshContentWrapper implements RefreshContent {
                         mAdapter.attachViewPager(viewPager);
                     }
                 } else if (count < 10) {
-                    viewPager.postDelayed(this, 500);
+                    viewPager.postDelayed(new PostRunable(this), 500);
                 }
             }
-        });
+        }));
     }
 
     private View findScrollableViewInternal(View content, boolean selfable) {

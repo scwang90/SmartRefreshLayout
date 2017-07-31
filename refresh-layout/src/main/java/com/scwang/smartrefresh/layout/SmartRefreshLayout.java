@@ -57,6 +57,7 @@ import com.scwang.smartrefresh.layout.listener.OnMultiPurposeListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
+import com.scwang.smartrefresh.layout.util.PostRunable;
 import com.scwang.smartrefresh.layout.util.ViscousFluidInterpolator;
 
 import static android.view.View.MeasureSpec.AT_MOST;
@@ -2442,6 +2443,18 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
             return this;
         }
         //</editor-fold>
+    }
+    //</editor-fold>
+
+
+    //<editor-fold desc="postDelayed 优化,防止内存泄漏">
+    @Override
+    public boolean post(Runnable action) {
+        return super.post(new PostRunable(action));
+    }
+    @Override
+    public boolean postDelayed(Runnable action, long delayMillis) {
+        return super.postDelayed(new PostRunable(action), delayMillis);
     }
     //</editor-fold>
 }

@@ -251,6 +251,7 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
                 mProgressView.animate().rotation(0).setDuration(300);
             }
             mProgressView.setVisibility(GONE);
+            mArrowView.setVisibility(GONE);
         }
         return true;
     }

@@ -19,16 +19,20 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/padding_common"
-            android:background="@android:color/white"
-            android:clipToPadding="false">
-            <TextView
-                android:id="@+id/content"
+            android:background="@android:color/white">
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scrollbars="vertical"
-                android:fadeScrollbars="false"
-                tools:text="@string/description_define_in_xml"/>
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/padding_common"
+                    android:scrollbars="vertical"
+                    android:fadeScrollbars="false"
+                    android:textSize="18sp"
+                    tools:text="@string/description_define_in_xml"/>
+            </FrameLayout>
         </ScrollView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 

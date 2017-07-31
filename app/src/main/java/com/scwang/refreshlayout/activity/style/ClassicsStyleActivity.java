@@ -113,29 +113,6 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
             });
         }
 
-//        mRefreshLayout.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
-//            @Override
-//            public void onRefresh(RefreshLayout refreshlayout) {
-//                refreshlayout.getLayout().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        mRefreshLayout.finishRefresh();
-//                        mAdpater.refresh(Arrays.asList(Item.values()));
-//                    }
-//                },2000);
-//            }
-//
-//            @Override
-//            public void onLoadmore(RefreshLayout refreshlayout) {
-//                refreshlayout.getLayout().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        mRefreshLayout.finishLoadmore();
-//                        mAdpater.loadmore(Arrays.asList(Item.values()));
-//                    }
-//                },2000);
-//            }
-//        });
     }
 
     @Override

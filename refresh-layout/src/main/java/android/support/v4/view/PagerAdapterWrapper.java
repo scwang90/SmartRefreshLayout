@@ -5,6 +5,8 @@ import android.os.Parcelable;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.lang.reflect.Field;
+
 @SuppressWarnings("deprecation")
 public class PagerAdapterWrapper extends PagerAdapter {
 
@@ -15,7 +17,21 @@ public class PagerAdapterWrapper extends PagerAdapter {
     }
 
     public void attachViewPager(ViewPager viewPager) {
-        viewPager.mAdapter = this;
+        //viewPager.mAdapter = this;
+        try {
+            Field[] fields = ViewPager.class.getDeclaredFields();
+            if (fields != null && fields.length > 0) {
+                for (Field field : fields) {
+                    if (PagerAdapter.class.equals(field.getType())) {
+                        field.setAccessible(true);
+                        field.set(viewPager, this);
+                        break;
+                    }
+                }
+            }
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
