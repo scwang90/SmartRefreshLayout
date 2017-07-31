@@ -49,7 +49,7 @@ public enum DimensionStatus {
      * 小于等于
      */
     public boolean canReplaceWith(DimensionStatus status) {
-        return ordinal() < status.ordinal() || ((!notifyed||CodeExact==this) && ordinal() == status.ordinal());
+        return ordinal() < status.ordinal() || ((!notifyed || CodeExact == this) && ordinal() == status.ordinal());
     }
 
     /**

@@ -81,18 +81,18 @@
         //设置 Footer 为 三球动画\n
         refreshLayout.setRefreshFooter(new BallPulseFooter(this));\n\n
     </string>
-    <string name="title_activity_using_listener">多功能监听器</string>
     <string name="title_activity_style_dropbox">掉落盒子</string>
     <string name="title_activity_style_delivery">气球快递</string>
     <string name="title_activity_style_flyrefresh">纸飞机</string>
+    <string name="title_activity_using_overscroll">越界回弹</string>
+    <string name="title_activity_using_listener">多功能监听器</string>
+    <string name="title_activity_using_custom">自定义Header</string>
     <string name="title_activity_practice_repast">餐饮美食</string>
     <string name="title_activity_practice_profile">个人中心</string>
-    <string name="title_activity_using_overscroll">越界回弹</string>
     <string name="title_activity_practice_webview">Github</string>
     <string name="title_activity_practice_feedlist">微博列表</string>
     <string name="title_activity_practice_banner">滚动广告</string>
     <string name="title_activity_practice_weibo">微博主页</string>
     <string name="title_activity_practice_qqbrowser">QQ浏览器</string>
     <string name="github_qqbrowser_kernel">网页由 github.com 提供\n已启用QQ浏览器X5内核</string>
-    <string name="title_activity_practice_custom">自定义Header</string>
 </resources>

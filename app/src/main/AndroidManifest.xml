@@ -141,7 +141,7 @@
             android:label="@string/title_activity_practice_qqbrowser"
             android:screenOrientation="portrait" />
         <activity android:name=".activity.using.CustomUsingActivity"
-            android:label="@string/title_activity_practice_custom"
+            android:label="@string/title_activity_using_custom"
             android:screenOrientation="portrait" />
     </application>
 

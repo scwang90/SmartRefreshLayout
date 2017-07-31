@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
@@ -24,7 +23,6 @@ import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.internal.ProgressDrawable;
 import com.scwang.smartrefresh.layout.internal.pathview.PathsView;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
@@ -41,10 +39,12 @@ public class CustomUsingActivity extends AppCompatActivity {
 
     private BaseRecyclerAdapter<Void> mAdapter;
 
+    private static boolean isFirstEnter = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_using_basic);
+        setContentView(R.layout.activity_using_custom);
 
         final Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -65,7 +65,6 @@ public class CustomUsingActivity extends AppCompatActivity {
         });
 
         final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
-        refreshLayout.setEnableAutoLoadmore(true);//开启自动加载功能（非必须）
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(final RefreshLayout refreshlayout) {
@@ -78,28 +77,25 @@ public class CustomUsingActivity extends AppCompatActivity {
                 }, 2000);
             }
         });
-        refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
-            @Override
-            public void onLoadmore(final RefreshLayout refreshlayout) {
-                ((View) refreshlayout).postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mAdapter.loadmore(initData());
-                        refreshlayout.finishLoadmore();
-                        if (mAdapter.getItemCount() > 60) {
-                            Toast.makeText(getApplication(), "数据全部加载完毕", Toast.LENGTH_SHORT).show();
-                            refreshlayout.setLoadmoreFinished(true);//将不会再次触发加载更多事件
-                        }
-                    }
-                }, 2000);
-            }
-        });
 
         refreshLayout.setRefreshHeader(new ClassicsHeader(this));
         refreshLayout.setHeaderHeight(60);
 
+        toolbar.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                refreshLayout.setHeaderHeight(120);
+                return false;
+            }
+        });
+
         //触发自动刷新
-        refreshLayout.autoRefresh();
+        if (isFirstEnter) {
+            isFirstEnter = false;
+            refreshLayout.autoRefresh();
+        } else {
+            mAdapter.refresh(initData());
+        }
 
     }
 

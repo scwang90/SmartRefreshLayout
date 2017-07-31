@@ -1642,11 +1642,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
         if (mFooterHeightStatus.canReplaceWith(DimensionStatus.CodeExact)) {
             mFooterHeight = heightPx;
             mFooterExtendHeight = (int) Math.max((heightPx * (mFooterMaxDragRate - 1)), 0);
-            if (mRefreshFooter != null && mKernel != null) {
-                mFooterHeightStatus = DimensionStatus.CodeExact;
-                mRefreshFooter.onInitialized(mKernel, mFooterHeight, mFooterExtendHeight);
-            } else {
-                mFooterHeightStatus = DimensionStatus.CodeExactUnNotify;
+            mFooterHeightStatus = DimensionStatus.CodeExactUnNotify;
+            if (mRefreshFooter != null) {
+                mRefreshFooter.getView().requestLayout();
             }
         }
         return this;
@@ -1662,11 +1660,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
         if (mHeaderHeightStatus.canReplaceWith(DimensionStatus.CodeExact)) {
             mHeaderHeight = heightPx;
             mHeaderExtendHeight = (int) Math.max((heightPx * (mHeaderMaxDragRate - 1)), 0);
-            if (mRefreshHeader != null && mKernel != null) {
-                mHeaderHeightStatus = DimensionStatus.CodeExact;
-                mRefreshHeader.onInitialized(mKernel, mHeaderHeight, mHeaderExtendHeight);
-            } else {
-                mHeaderHeightStatus = DimensionStatus.CodeExactUnNotify;
+            mHeaderHeightStatus = DimensionStatus.CodeExactUnNotify;
+            if (mRefreshHeader != null) {
+                mRefreshHeader.getView().requestLayout();
             }
         }
         return this;
@@ -1826,8 +1822,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
             removeView(mRefreshHeader.getView());
         }
         this.mRefreshHeader = header;
-        this.mHeaderHeight = DensityUtil.dp2px(100);
-        this.mHeaderHeightStatus = DimensionStatus.DefaultUnNotify;
         this.mHeaderHeightStatus = mHeaderHeightStatus.unNotify();
         this.addView(mRefreshHeader.getView());
         return this;
@@ -1842,8 +1836,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
             removeView(mRefreshHeader.getView());
         }
         this.mRefreshHeader = header;
-        this.mHeaderHeight = DensityUtil.dp2px(100);
-        this.mHeaderHeightStatus = DimensionStatus.DefaultUnNotify;
         this.mHeaderHeightStatus = mHeaderHeightStatus.unNotify();
         this.addView(mRefreshHeader.getView(), width, height);
         return this;
@@ -1858,8 +1850,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
             removeView(mRefreshFooter.getView());
         }
         this.mRefreshFooter = footer;
-        this.mFooterHeight = DensityUtil.dp2px(60);
-        this.mFooterHeightStatus = DimensionStatus.DefaultUnNotify;
         this.mFooterHeightStatus = mFooterHeightStatus.unNotify();
         this.mEnableLoadmore = !mManualLoadmore || mEnableLoadmore;
         this.addView(mRefreshFooter.getView());
@@ -1875,8 +1865,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
             removeView(mRefreshFooter.getView());
         }
         this.mRefreshFooter = footer;
-        this.mFooterHeight = DensityUtil.dp2px(60);
-        this.mFooterHeightStatus = DimensionStatus.DefaultUnNotify;
+        this.mFooterHeightStatus = mFooterHeightStatus.unNotify();
         this.mEnableLoadmore = !mManualLoadmore || mEnableLoadmore;
         this.addView(mRefreshFooter.getView(), width, height);
         return this;
