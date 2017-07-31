@@ -60,6 +60,7 @@ public class BasicUsingActivity extends AppCompatActivity {
                     public void run() {
                         mAdapter.refresh(initData());
                         refreshlayout.finishRefresh();
+                        refreshlayout.setLoadmoreFinished(false);
                     }
                 }, 2000);
             }
@@ -80,14 +81,6 @@ public class BasicUsingActivity extends AppCompatActivity {
                 }, 2000);
             }
         });
-//        toolbar.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-//                refreshLayout.finishRefresh();
-//                refreshLayout.finishLoadmore();
-//                return false;
-//            }
-//        });
 
         //触发自动刷新
         refreshLayout.autoRefresh();
