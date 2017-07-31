@@ -81,14 +81,6 @@ public class CustomUsingActivity extends AppCompatActivity {
         refreshLayout.setRefreshHeader(new ClassicsHeader(this));
         refreshLayout.setHeaderHeight(60);
 
-        toolbar.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                refreshLayout.setHeaderHeight(120);
-                return false;
-            }
-        });
-
         //触发自动刷新
         if (isFirstEnter) {
             isFirstEnter = false;
