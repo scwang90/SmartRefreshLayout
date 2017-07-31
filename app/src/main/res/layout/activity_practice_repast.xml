@@ -34,8 +34,7 @@
         <com.scwang.smartrefresh.layout.footer.ClassicsFooter
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:srlAccentColor="#888"
-            app:srlProgressDrawable="@drawable/ic_index_dashboard"/>
+            app:srlAccentColor="#888"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <com.github.mmin18.widget.RealtimeBlurView

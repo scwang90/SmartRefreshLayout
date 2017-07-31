@@ -13,7 +13,7 @@
 |srlFooterMaxDragRate|float|Footer最大拖动高度/Footer标准高度（默认2，要求>=1）|
 |srlEnableRefresh|boolean|是否开启下拉刷新功能（默认true）|
 |srlEnableLoadmore|boolean|是否开启加上拉加载功能（默认false-智能开启）|
-|srlEnableAutoLoadmore|boolean|是否监听列表滚动到底部时触发加载事件（默认true）|
+|srlEnableAutoLoadmore|boolean|是否监听列表惯性滚动到底部时触发加载事件（默认true）|
 |srlEnableHeaderTranslationContent|boolean|拖动Header的时候是否同时拖动内容（默认true）|
 |srlEnableFooterTranslationContent|boolean|拖动Footer的时候是否同时拖动内容（默认true）|
 |srlEnablePreviewInEditMode|boolean|是否在编辑模式时显示预览效果（默认true）|
@@ -42,7 +42,7 @@
 |setEnableLoadmore|boolean|是否开启加上拉加载功能（默认false-智能开启）|
 |setEnableHeaderTranslationContent|boolean|拖动Header的时候是否同时拖动内容（默认true）|
 |setEnableFooterTranslationContent|boolean|拖动Footer的时候是否同时拖动内容（默认true）|
-|setEnableAutoLoadmore|boolean|是否监听列表滚动到底部时触发加载事件（默认true）|
+|setEnableAutoLoadmore|boolean|是否监听列表惯性滚动到底部时触发加载事件（默认true）|
 |setEnablePureScrollMode|boolean|是否开启纯滚动模式（默认false-开启时只支持一个子视图）|
 |setEnableOverScrollBounce|boolean|设置是否开启越界回弹功能（默认true）|
 |setEnableNestedScrolling|boolean|是否开启嵌套滚动NestedScrolling（默认false-智能开启）|

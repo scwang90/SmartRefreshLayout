@@ -561,7 +561,7 @@ public class RefreshContentWrapper implements RefreshContent {
                             && !ScrollBoundaryUtil.canScrollUp(absListView)) {
                         kernel.animSpinnerBounce(Math.min(dy, mHeaderHeight));
                     }
-                } else if (dy < 0) {
+                } else if (dy < 0 && mMotionEvent == null) {
                     int lastVisiblePosition = absListView.getLastVisiblePosition();
                     if (lastVisiblePosition == totalItemCount - 1 && lastVisiblePosition > 0
                             && layout.isEnableLoadmore()) {
@@ -570,7 +570,7 @@ public class RefreshContentWrapper implements RefreshContent {
                                 && !ScrollBoundaryUtil.canScrollDown(absListView)) {
                             kernel.getRefreshLayout().autoLoadmore(0, 1);
                         } else
-                            if (mMotionEvent == null && overScroll && !ScrollBoundaryUtil.canScrollDown(absListView)) {
+                            if (overScroll && !ScrollBoundaryUtil.canScrollDown(absListView)) {
                             kernel.animSpinnerBounce(Math.max(dy, -mFooterHeight));
                         }
                     }
@@ -676,7 +676,7 @@ public class RefreshContentWrapper implements RefreshContent {
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             lastDy = dy;
             RefreshLayout layout = kernel.getRefreshLayout();
-            if (dy > 0
+            if (dy > 0 && mMotionEvent == null
                     && layout.isEnableLoadmore()
                     && !layout.isLoadmoreFinished()
                     && layout.isEnableAutoLoadmore()
@@ -687,9 +687,9 @@ public class RefreshContentWrapper implements RefreshContent {
                 if(manager instanceof GridLayoutManager){
                     //通过LayoutManager找到当前显示的最后的item的position
                     lastVisiblePosition = ((GridLayoutManager) manager).findLastVisibleItemPosition();
-                }else if(manager instanceof LinearLayoutManager){
+                } else if(manager instanceof LinearLayoutManager){
                     lastVisiblePosition = ((LinearLayoutManager) manager).findLastVisibleItemPosition();
-                }else if(manager instanceof StaggeredGridLayoutManager){
+                } else if(manager instanceof StaggeredGridLayoutManager){
                     //因为StaggeredGridLayoutManager的特殊性可能导致最后显示的item存在多个，所以这里取到的是一个数组
                     //得到这个数组后再取到数组中position值最大的那个就是最后显示的position值了
                     int[] lastPositions = new int[((StaggeredGridLayoutManager) manager).getSpanCount()];

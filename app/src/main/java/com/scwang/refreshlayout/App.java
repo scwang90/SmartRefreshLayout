@@ -13,6 +13,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.squareup.leakcanary.LeakCanary;
 
 /**
  *
@@ -37,5 +38,11 @@ public class App extends Application {
                 return new ClassicsFooter(context);
             }
         });
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        LeakCanary.install(this);
     }
 }

@@ -23,7 +23,7 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
  - 支持和ListView的同步滚动 和 RecyclerView、AppBarLayout、CoordinatorLayout 的嵌套滚动 NestedScrolling.
  - 支持在Android Studio Xml 编辑器中预览 效果（图）
  - 支持分别在 Default（默认）、Xml、JavaCode 三个中设置 Header 和 Footer.
- - 支持自动刷新、自动上拉加载（自动检测列表滚动到底部，而不用手动上拉）.
+ - 支持自动刷新、自动上拉加载（自动检测列表惯性滚动到底部，而不用手动上拉）.
  - 支持通用的刷新监听器 OnRefreshListener 和更详细的滚动监听 OnMultiPurposeListener.
  - 支持自定义回弹动画的插值器，实现各种炫酷的动画效果.
  - 支持设置主题来适配任何场景的App，不会出现炫酷但很尴尬的情况.
