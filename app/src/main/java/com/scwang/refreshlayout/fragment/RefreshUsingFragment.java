@@ -21,6 +21,7 @@ import com.scwang.refreshlayout.activity.using.AssignCodeUsingActivity;
 import com.scwang.refreshlayout.activity.using.AssignDefaultUsingActivity;
 import com.scwang.refreshlayout.activity.using.AssignXmlUsingActivity;
 import com.scwang.refreshlayout.activity.using.BasicUsingActivity;
+import com.scwang.refreshlayout.activity.using.CustomUsingActivity;
 import com.scwang.refreshlayout.activity.using.ListenerUsingActivity;
 import com.scwang.refreshlayout.activity.using.NestLayoutUsingActivity;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
@@ -47,8 +48,8 @@ public class RefreshUsingFragment extends Fragment implements AdapterView.OnItem
         XmlDefine("在XML中定义Header和Footer", AssignXmlUsingActivity.class),
         CodeDefine("在代码中指定Header和Footer", AssignCodeUsingActivity.class),
         Listener("多功能监听器", ListenerUsingActivity.class),
-//        OverScroll("越界回弹", OverScrollUsingActivity.class),
         NestLayout("嵌套Layout作为内容", NestLayoutUsingActivity.class),
+        Custom("自定义Header", CustomUsingActivity.class),
         ;
         public String name;
         public Class<?> clazz;

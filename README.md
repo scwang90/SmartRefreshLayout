@@ -136,14 +136,14 @@ refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
 #### 1.方法一 全局设置
 ```java
 public class App extends Application {
-    public void onCreate() {
-        super.onCreate();
+    //static 代码段可以防止内存泄露
+    static {
         //设置全局的Header构建器
         SmartRefreshLayout.setDefaultRefreshHeaderCreater(new DefaultRefreshHeaderCreater() {
                 @Override
                 public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
-                    //指定为经典Header，默认是 贝塞尔雷达Header
-                    return new ClassicsHeader(context).setSpinnerStyle(SpinnerStyle.Translate);
+                    layout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);//全局设置主题颜色
+                    return new ClassicsHeader(context).setSpinnerStyle(SpinnerStyle.Translate);//指定为经典Header，默认是 贝塞尔雷达Header
                 }
             });
         //设置全局的Footer构建器
