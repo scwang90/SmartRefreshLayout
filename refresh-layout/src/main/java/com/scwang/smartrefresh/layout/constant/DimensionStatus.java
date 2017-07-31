@@ -8,9 +8,9 @@ public enum DimensionStatus {
     DefaultUnNotify(false),//默认值，但是还没通知确认
     Default(true),//默认值
     XmlWrap(true),//Xml计算
+    XmlExact(true),//Xml 的view 指定
     XmlLayoutUnNotify(false),//Xml 的layout 中指定，但是还没通知确认
     XmlLayout(true),//Xml 的layout 中指定
-    XmlExact(true),//Xml 的view 指定
     CodeExactUnNotify(false),//代码指定，但是还没通知确认
     CodeExact(true),//代码指定
     DeadLockUnNotify(false),//锁死，但是还没通知确认
@@ -49,7 +49,7 @@ public enum DimensionStatus {
      * 小于等于
      */
     public boolean canReplaceWith(DimensionStatus status) {
-        return ordinal() < status.ordinal() || (!notifyed && ordinal() == status.ordinal());
+        return ordinal() < status.ordinal() || ((!notifyed||CodeExact==this) && ordinal() == status.ordinal());
     }
 
     /**

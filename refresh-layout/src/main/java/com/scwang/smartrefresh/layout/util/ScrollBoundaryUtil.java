@@ -11,12 +11,13 @@ import android.widget.AbsListView;
  * Created by SCWANG on 2017/7/8.
  */
 
+@SuppressWarnings("WeakerAccess")
 public class ScrollBoundaryUtil {
 
     //<editor-fold desc="滚动判断">
-    public static boolean canScrollUp(View targetView, MotionEvent event) {
+    public static boolean canRefresh(View targetView, MotionEvent event) {
         if (canScrollUp(targetView)) {
-            return true;
+            return false;
         }
         if (targetView instanceof ViewGroup && event != null) {
             ViewGroup viewGroup = (ViewGroup) targetView;
@@ -27,7 +28,27 @@ public class ScrollBoundaryUtil {
                 if (isTransformedTouchPointInView(viewGroup,child, event.getX(), event.getY() , point)) {
                     event = MotionEvent.obtain(event);
                     event.offsetLocation(point.x, point.y);
-                    return canScrollUp(child, event);
+                    return canRefresh(child, event);
+                }
+            }
+        }
+        return true;
+    }
+
+    public static boolean canLoadmore(View targetView, MotionEvent event) {
+        if (!canScrollDown(targetView) && canScrollUp(targetView)) {
+            return true;
+        }
+        if (targetView instanceof ViewGroup && event != null) {
+            ViewGroup viewGroup = (ViewGroup) targetView;
+            final int childCount = viewGroup.getChildCount();
+            PointF point = new PointF();
+            for (int i = 0; i < childCount; i++) {
+                View child = viewGroup.getChildAt(i);
+                if (isTransformedTouchPointInView(viewGroup,child, event.getX(), event.getY() , point)) {
+                    event = MotionEvent.obtain(event);
+                    event.offsetLocation(point.x, point.y);
+                    return canLoadmore(child, event);
                 }
             }
         }
@@ -47,26 +68,6 @@ public class ScrollBoundaryUtil {
         } else {
             return targetView.canScrollVertically(-1);
         }
-    }
-
-    public static boolean canScrollDown(View targetView, MotionEvent event) {
-        if (canScrollDown(targetView)) {
-            return true;
-        }
-        if (targetView instanceof ViewGroup && event != null) {
-            ViewGroup viewGroup = (ViewGroup) targetView;
-            final int childCount = viewGroup.getChildCount();
-            PointF point = new PointF();
-            for (int i = 0; i < childCount; i++) {
-                View child = viewGroup.getChildAt(i);
-                if (isTransformedTouchPointInView(viewGroup,child, event.getX(), event.getY() , point)) {
-                    event = MotionEvent.obtain(event);
-                    event.offsetLocation(point.x, point.y);
-                    return canScrollDown(child, event);
-                }
-            }
-        }
-        return false;
     }
 
     public static boolean canScrollDown(View targetView) {

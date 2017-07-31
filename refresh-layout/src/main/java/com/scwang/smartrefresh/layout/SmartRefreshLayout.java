@@ -265,16 +265,11 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
 
         mManualLoadmore = ta.hasValue(R.styleable.SmartRefreshLayout_srlEnableLoadmore);
         mManualNestedScrolling = ta.hasValue(R.styleable.SmartRefreshLayout_srlEnableNestedScrolling);
+        mHeaderHeightStatus = ta.hasValue(R.styleable.SmartRefreshLayout_srlHeaderHeight) ? DimensionStatus.XmlLayoutUnNotify : mHeaderHeightStatus;
+        mFooterHeightStatus = ta.hasValue(R.styleable.SmartRefreshLayout_srlFooterHeight) ? DimensionStatus.XmlLayoutUnNotify : mFooterHeightStatus;
 
         mFooterExtendHeight = (int) Math.max((mFooterHeight * (mHeaderMaxDragRate - 1)), 0);
         mHeaderExtendHeight = (int) Math.max((mHeaderHeight * (mHeaderMaxDragRate - 1)), 0);
-
-        if (ta.hasValue(R.styleable.SmartRefreshLayout_srlHeaderHeight)) {
-            mHeaderHeightStatus = DimensionStatus.XmlLayoutUnNotify;
-        }
-        if (ta.hasValue(R.styleable.SmartRefreshLayout_srlFooterHeight)) {
-            mFooterHeightStatus = DimensionStatus.XmlLayoutUnNotify;
-        }
 
         int accentColor = ta.getColor(R.styleable.SmartRefreshLayout_srlAccentColor, 0);
         int primaryColor = ta.getColor(R.styleable.SmartRefreshLayout_srlPrimaryColor, 0);
@@ -496,7 +491,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
             final int widthSpec = getChildMeasureSpec(widthMeasureSpec, lp.leftMargin + lp.rightMargin, lp.width);
             int heightSpec = heightMeasureSpec;
 
-            if (mHeaderHeightStatus.gteReplaceWith(DimensionStatus.CodeExactUnNotify)) {
+            if (mHeaderHeightStatus.gteReplaceWith(DimensionStatus.XmlLayoutUnNotify)) {
                 heightSpec = makeMeasureSpec(Math.max(mHeaderHeight - lp.bottomMargin, 0), EXACTLY);
                 headerView.measure(widthSpec, heightSpec);
             } else if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.MatchLayout) {
@@ -550,7 +545,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
             final LayoutParams lp = (LayoutParams) footerView.getLayoutParams();
             final int widthSpec = getChildMeasureSpec(widthMeasureSpec, lp.leftMargin + lp.rightMargin, lp.width);
             int heightSpec = heightMeasureSpec;
-            if (mFooterHeightStatus.gteReplaceWith(DimensionStatus.CodeExactUnNotify)) {
+            if (mFooterHeightStatus.gteReplaceWith(DimensionStatus.XmlLayoutUnNotify)) {
                 heightSpec = makeMeasureSpec(Math.max(mFooterHeight - lp.topMargin, 0), EXACTLY);
                 footerView.measure(widthSpec, heightSpec);
             } else if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.MatchLayout) {
@@ -689,7 +684,10 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
         mFixedHeaderView = null;
         mFixedFooterView = null;
         mManualLoadmore = true;
+        mRefreshListener = null;
+        mLoadmoreListener = null;
         mManualNestedScrolling = true;
+        mOnMultiPurposeListener = null;
     }
 
     @Override
@@ -802,7 +800,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
                 mLastTouchY = touchY;
                 if(!mIsBeingDragged) {
                     if (Math.abs(dy) >= mTouchSlop && Math.abs(dx) < Math.abs(dy)) {//滑动允许最大角度为45度
-                        if (dy > 0 && (mSpinner < 0 || (mEnableRefresh && !mRefreshContent.canScrollUp()))) {
+                        if (dy > 0 && (mSpinner < 0 || (mEnableRefresh && mRefreshContent.canRefresh()))) {
                             if (mSpinner < 0) {
                                 setStatePullUpToLoad();
                             } else {
@@ -813,7 +811,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
                             dy = touchY - mTouchY;
                             e.setAction(MotionEvent.ACTION_CANCEL);
                             super.dispatchTouchEvent(e);
-                        } else if (dy < 0 && (mSpinner > 0 || (mEnableLoadmore && !mRefreshContent.canScrollDown()))) {
+                        } else if (dy < 0 && (mSpinner > 0 || (mEnableLoadmore && mRefreshContent.canLoadmore()))) {
                             if (mSpinner > 0) {
                                 setStatePullDownToRefresh();
                             } else {
@@ -1543,22 +1541,22 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
 
         final int dy = dyUnconsumed + mParentOffsetInWindow[1];
         if (mState == RefreshState.Refreshing || mState == RefreshState.Loading) {
-            if (mEnableRefresh && dy < 0 && (mRefreshContent == null || !mRefreshContent.canScrollUp())) {
+            if (mEnableRefresh && dy < 0 && (mRefreshContent == null || mRefreshContent.canRefresh())) {
                 mTotalUnconsumed += Math.abs(dy);
                 moveSpinnerInfinitely(mTotalUnconsumed + mTouchSpinner);
-            } else if (mEnableLoadmore && dy > 0 && (mRefreshContent == null || !mRefreshContent.canScrollDown())) {
+            } else if (mEnableLoadmore && dy > 0 && (mRefreshContent == null || mRefreshContent.canLoadmore())) {
                 mTotalUnconsumed -= Math.abs(dy);
                 moveSpinnerInfinitely(mTotalUnconsumed + mTouchSpinner);
             }
         } else {
-            if (mEnableRefresh && dy < 0 && (mRefreshContent == null || !mRefreshContent.canScrollUp())) {
+            if (mEnableRefresh && dy < 0 && (mRefreshContent == null || mRefreshContent.canRefresh())) {
                 if (mState == RefreshState.None) {
                     setStatePullDownToRefresh();
                 }
                 mTotalUnconsumed += Math.abs(dy);
                 moveSpinnerInfinitely(mTotalUnconsumed);
             } else if (mEnableLoadmore && dy > 0
-                    && (mRefreshContent == null || !mRefreshContent.canScrollDown())) {
+                    && (mRefreshContent == null || mRefreshContent.canLoadmore())) {
                 if (mState == RefreshState.None && !mLoadmoreFinished) {
                     setStatePullUpToLoad();
                 }
@@ -1932,6 +1930,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
     @Override
     public SmartRefreshLayout setOnLoadmoreListener(OnLoadmoreListener listener) {
         this.mLoadmoreListener = listener;
+        this.mEnableLoadmore = mEnableLoadmore || !mManualLoadmore;
         return this;
     }
 
@@ -1942,6 +1941,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
     public SmartRefreshLayout setOnRefreshLoadmoreListener(OnRefreshLoadmoreListener listener) {
         this.mRefreshListener = listener;
         this.mLoadmoreListener = listener;
+        this.mEnableLoadmore = mEnableLoadmore || !mManualLoadmore;
         return this;
     }
 

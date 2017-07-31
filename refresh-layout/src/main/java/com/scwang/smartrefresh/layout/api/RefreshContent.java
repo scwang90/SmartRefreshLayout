@@ -13,8 +13,8 @@ import android.view.animation.Interpolator;
 
 public interface RefreshContent {
     void moveSpinner(int spinner);
-    boolean canScrollUp();
-    boolean canScrollDown();
+    boolean canRefresh();
+    boolean canLoadmore();
     int getMeasuredWidth();
     int getMeasuredHeight();
     void measure(int widthSpec, int heightSpec);
@@ -31,7 +31,7 @@ public interface RefreshContent {
     void onInitialHeaderAndFooter(int headerHeight, int footerHeight);
     void setRefreshScrollBoundary(RefreshScrollBoundary boundary);
 
-    boolean isNestedScrollingChild(MotionEvent e);
+//    boolean isNestedScrollingChild(MotionEvent e);
 
     AnimatorUpdateListener onLoadingFinish(RefreshKernel kernel, int footerHeight, int startDelay, Interpolator reboundInterpolator, int reboundDuration);
 

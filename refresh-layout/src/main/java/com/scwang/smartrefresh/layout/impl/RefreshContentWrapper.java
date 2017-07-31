@@ -4,7 +4,6 @@ import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.content.Context;
 import android.database.DataSetObserver;
-import android.graphics.PointF;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -49,7 +48,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-import static com.scwang.smartrefresh.layout.util.ScrollBoundaryUtil.isTransformedTouchPointInView;
 
 /**
  * 刷新内容包装
@@ -187,35 +185,35 @@ public class RefreshContentWrapper implements RefreshContent {
         return mContentView;
     }
 
-    @Override
-    public boolean isNestedScrollingChild(MotionEvent e) {
-        MotionEvent event = MotionEvent.obtain(e);
-        event.offsetLocation(-mContentView.getLeft(), -mContentView.getTop() - mRealContentView.getTranslationY());
-        boolean isNested = isNestedScrollingChild(mContentView, event);
-        event.recycle();
-        return isNested;
-    }
-
-    private boolean isNestedScrollingChild(View targetView, MotionEvent event) {
-        if ((targetView instanceof NestedScrollingChild || Build.VERSION.SDK_INT >= 21)
-                && (Build.VERSION.SDK_INT >= 21 && targetView.isNestedScrollingEnabled())) {
-            return true;
-        }
-        if (targetView instanceof ViewGroup && event != null) {
-            ViewGroup viewGroup = (ViewGroup) targetView;
-            final int childCount = viewGroup.getChildCount();
-            PointF point = new PointF();
-            for (int i = childCount; i > 0; i--) {
-                View child = viewGroup.getChildAt(i - 1);
-                if (isTransformedTouchPointInView(viewGroup,child, event.getX(), event.getY() , point)) {
-                    event = MotionEvent.obtain(event);
-                    event.offsetLocation(point.x, point.y);
-                    return isNestedScrollingChild(child, event);
-                }
-            }
-        }
-        return false;
-    }
+//    @Override
+//    public boolean isNestedScrollingChild(MotionEvent e) {
+//        MotionEvent event = MotionEvent.obtain(e);
+//        event.offsetLocation(-mContentView.getLeft(), -mContentView.getTop() - mRealContentView.getTranslationY());
+//        boolean isNested = isNestedScrollingChild(mContentView, event);
+//        event.recycle();
+//        return isNested;
+//    }
+//
+//    private boolean isNestedScrollingChild(View targetView, MotionEvent event) {
+//        if ((targetView instanceof NestedScrollingChild || Build.VERSION.SDK_INT >= 21)
+//                && (Build.VERSION.SDK_INT >= 21 && targetView.isNestedScrollingEnabled())) {
+//            return true;
+//        }
+//        if (targetView instanceof ViewGroup && event != null) {
+//            ViewGroup viewGroup = (ViewGroup) targetView;
+//            final int childCount = viewGroup.getChildCount();
+//            PointF point = new PointF();
+//            for (int i = childCount; i > 0; i--) {
+//                View child = viewGroup.getChildAt(i - 1);
+//                if (isTransformedTouchPointInView(viewGroup,child, event.getX(), event.getY() , point)) {
+//                    event = MotionEvent.obtain(event);
+//                    event.offsetLocation(point.x, point.y);
+//                    return isNestedScrollingChild(child, event);
+//                }
+//            }
+//        }
+//        return false;
+//    }
 
     @Override
     public void moveSpinner(int spinner) {
@@ -229,13 +227,13 @@ public class RefreshContentWrapper implements RefreshContent {
     }
 
     @Override
-    public boolean canScrollUp() {
-        return !mEnableRefresh || mBoundaryAdapter.canPullDown(mContentView);
+    public boolean canRefresh() {
+        return mEnableRefresh && mBoundaryAdapter.canRefresh(mContentView);
     }
 
     @Override
-    public boolean canScrollDown() {
-        return !mEnableLoadmore || mBoundaryAdapter.canPullUp(mContentView);
+    public boolean canLoadmore() {
+        return mEnableLoadmore && mBoundaryAdapter.canLoadmore(mContentView);
     }
 
     @Override
@@ -500,6 +498,7 @@ public class RefreshContentWrapper implements RefreshContent {
         }
 
         void attach(NestedScrollView scrollView) {
+            //获得原始监听器，用作转发
             Field[] declaredFields = NestedScrollView.class.getDeclaredFields();
             if (declaredFields != null) {
                 for (Field field : declaredFields) {
@@ -581,6 +580,7 @@ public class RefreshContentWrapper implements RefreshContent {
         }
 
         void attach(AbsListView listView) {
+            //获得原始监听器，用作转发
             Field[] declaredFields = AbsListView.class.getDeclaredFields();
             if (declaredFields != null) {
                 for (Field field : declaredFields) {
@@ -711,6 +711,7 @@ public class RefreshContentWrapper implements RefreshContent {
         }
 
         void attach(RecyclerView recyclerView) {
+            //获得原始监听器，用作转发
             Field[] declaredFields = RecyclerView.class.getDeclaredFields();
             if (declaredFields != null) {
                 for (Field field : declaredFields) {
@@ -727,7 +728,6 @@ public class RefreshContentWrapper implements RefreshContent {
                     }
                 }
             }
-
             recyclerView.addOnScrollListener(this);
             recyclerView.setOnFlingListener(new RecyclerView.OnFlingListener() {
                 @Override
