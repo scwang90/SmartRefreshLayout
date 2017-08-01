@@ -57,9 +57,8 @@ import com.scwang.smartrefresh.layout.listener.OnMultiPurposeListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
+import com.scwang.smartrefresh.layout.util.PostRunable;
 import com.scwang.smartrefresh.layout.util.ViscousFluidInterpolator;
-
-import java.lang.ref.WeakReference;
 
 import static android.view.View.MeasureSpec.AT_MOST;
 import static android.view.View.MeasureSpec.EXACTLY;
@@ -2439,20 +2438,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
     @Override
     public boolean postDelayed(Runnable action, long delayMillis) {
         return super.postDelayed(new PostRunable(action), delayMillis);
-    }
-    public class PostRunable implements Runnable {
-        private WeakReference<Runnable> runnableWeakReference = null;
-        public PostRunable(Runnable runnable) {
-            this.runnableWeakReference = new WeakReference<>(runnable);
-        }
-        @Override
-        public void run() {
-            Runnable runnable = runnableWeakReference.get();
-            if (runnable != null) {
-                runnable.run();
-            }
-            runnableWeakReference = null;
-        }
     }
     //</editor-fold>
 }
