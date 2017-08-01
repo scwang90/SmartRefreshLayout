@@ -56,7 +56,7 @@ public class BasicUsingActivity extends AppCompatActivity {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(final RefreshLayout refreshlayout) {
-                ((View) refreshlayout).postDelayed(new Runnable() {
+                refreshlayout.getLayout().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         mAdapter.refresh(initData());
@@ -69,7 +69,7 @@ public class BasicUsingActivity extends AppCompatActivity {
         refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(final RefreshLayout refreshlayout) {
-                ((View) refreshlayout).postDelayed(new Runnable() {
+                refreshlayout.getLayout().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         mAdapter.loadmore(initData());

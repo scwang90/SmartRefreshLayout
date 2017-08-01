@@ -55,6 +55,26 @@ public class ScrollBoundaryUtil {
         return false;
     }
 
+    public static boolean canScrollDown(View targetView, MotionEvent event) {
+        if (canScrollDown(targetView)) {
+            return true;
+        }
+        if (targetView instanceof ViewGroup && event != null) {
+            ViewGroup viewGroup = (ViewGroup) targetView;
+            final int childCount = viewGroup.getChildCount();
+            PointF point = new PointF();
+            for (int i = 0; i < childCount; i++) {
+                View child = viewGroup.getChildAt(i);
+                if (isTransformedTouchPointInView(viewGroup,child, event.getX(), event.getY() , point)) {
+                    event = MotionEvent.obtain(event);
+                    event.offsetLocation(point.x, point.y);
+                    return canScrollDown(child, event);
+                }
+            }
+        }
+        return false;
+    }
+
     public static boolean canScrollUp(View targetView) {
         if (android.os.Build.VERSION.SDK_INT < 14) {
             if (targetView instanceof AbsListView) {

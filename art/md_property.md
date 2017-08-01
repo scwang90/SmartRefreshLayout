@@ -21,6 +21,7 @@
 |srlEnableOverScrollBounce|boolean|设置是否开启越界回弹功能（默认true）|
 |srlEnableNestedScrolling|boolean|是否开启嵌套滚动NestedScrolling(默认false-智能开启)|
 |srlEnableScrollContentWhenLoaded|boolean|是否在加载完成之后滚动内容显示新数据（默认-true）|
+|srlEnableLoadmoreWhenContentNotFull|boolean|在内容不满一页的时候，是否可以上拉加载更多（默认-false）|
 |srlDisableContentWhenRefresh|boolean|是否在刷新的时候禁止内容的一切手势操作（默认false）|
 |srlDisableContentWhenLoading|boolean|是否在加载的时候禁止内容的一切手势操作（默认false）|
 |srlFixedHeaderViewId|id|指定固定的视图Id|
@@ -47,6 +48,7 @@
 |setEnableOverScrollBounce|boolean|设置是否开启越界回弹功能（默认true）|
 |setEnableNestedScrolling|boolean|是否开启嵌套滚动NestedScrolling（默认false-智能开启）|
 |setEnableScrollContentWhenLoaded|boolean|是否在加载完成之后滚动内容显示新数据（默认-true）|
+|setEnableLoadmoreWhenContentNotFull|boolean|在内容不满一页的时候，是否可以上拉加载更多（默认-false）|
 |setDisableContentWhenRefresh|boolean|是否在刷新的时候禁止内容的一切手势操作（默认false）|
 |setDisableContentWhenLoading|boolean|是否在加载的时候禁止内容的一切手势操作（默认false）|
 |setReboundInterpolator|Interpolator|设置回弹动画的插值器（默认减速）|

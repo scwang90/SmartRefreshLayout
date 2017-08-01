@@ -129,6 +129,11 @@ public interface RefreshLayout extends NestedScrollingParent, NestedScrollingChi
     RefreshLayout setEnableScrollContentWhenLoaded(boolean enable);
 
     /**
+     * 设置在内容不满一页的时候，是否可以上拉加载更多
+     */
+    RefreshLayout setEnableLoadmoreWhenContentNotFull(boolean enable);
+
+    /**
      * 单独设置刷新监听器
      */
     RefreshLayout setOnRefreshListener(OnRefreshListener listener);

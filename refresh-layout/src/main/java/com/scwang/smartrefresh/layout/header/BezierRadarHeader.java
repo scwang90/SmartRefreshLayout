@@ -23,7 +23,7 @@ import com.scwang.smartrefresh.layout.header.bezierradar.RoundDotView;
 import com.scwang.smartrefresh.layout.header.bezierradar.RoundProgressView;
 import com.scwang.smartrefresh.layout.header.bezierradar.WaveView;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
-import com.scwang.smartrefresh.layout.util.PostRunable;
+import com.scwang.smartrefresh.layout.util.DelayedRunable;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
@@ -177,7 +177,7 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
     }
 
     @Override
-    public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
+    public void onStartAnimator(final RefreshLayout layout, int headHeight, int extendHeight) {
         mWaveView.setHeadHeight(headHeight);
         ValueAnimator animator = ValueAnimator.ofInt(
                 mWaveView.getWaveHeight(), 0,
@@ -202,7 +202,7 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
                 mDotView.setVisibility(INVISIBLE);
                 mProgressView.animate().scaleX((float) 1.0);
                 mProgressView.animate().scaleY((float) 1.0);
-                mProgressView.postDelayed(new PostRunable(new Runnable() {
+                layout.getLayout().postDelayed(new DelayedRunable(new Runnable() {
                     @Override
                     public void run() {
                         mProgressView.startAnim();

@@ -11,11 +11,13 @@ import com.scwang.smartrefresh.layout.util.ScrollBoundaryUtil;
  * Created by SCWANG on 2017/7/8.
  */
 
+@SuppressWarnings("WeakerAccess")
 public class RefreshScrollBoundaryAdapter implements RefreshScrollBoundary {
 
     //<editor-fold desc="Internal">
-    private MotionEvent mActionEvent;
-    private RefreshScrollBoundary boundary;
+    protected MotionEvent mActionEvent;
+    protected RefreshScrollBoundary boundary;
+    protected boolean mEnableLoadmoreWhenContentNotFull;
 
     void setRefreshScrollBoundary(RefreshScrollBoundary boundary){
         this.boundary = boundary;
@@ -40,7 +42,14 @@ public class RefreshScrollBoundaryAdapter implements RefreshScrollBoundary {
         if (boundary != null) {
             return boundary.canLoadmore(content);
         }
+        if (mEnableLoadmoreWhenContentNotFull) {
+            return !ScrollBoundaryUtil.canScrollDown(content, mActionEvent);
+        }
         return ScrollBoundaryUtil.canLoadmore(content, mActionEvent);
+    }
+
+    public void setEnableLoadmoreWhenContentNotFull(boolean enable) {
+        mEnableLoadmoreWhenContentNotFull = enable;
     }
     //</editor-fold>
 }

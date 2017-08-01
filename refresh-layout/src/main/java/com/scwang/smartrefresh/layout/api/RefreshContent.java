@@ -30,9 +30,7 @@ public interface RefreshContent {
     void setupComponent(RefreshKernel kernel, View fixedHeader, View fixedFooter);
     void onInitialHeaderAndFooter(int headerHeight, int footerHeight);
     void setRefreshScrollBoundary(RefreshScrollBoundary boundary);
-
-//    boolean isNestedScrollingChild(MotionEvent e);
+    void setEnableLoadmoreWhenContentNotFull(boolean enable);
 
     AnimatorUpdateListener onLoadingFinish(RefreshKernel kernel, int footerHeight, int startDelay, Interpolator reboundInterpolator, int reboundDuration);
-
 }

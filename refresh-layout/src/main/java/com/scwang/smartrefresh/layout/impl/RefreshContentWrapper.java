@@ -39,7 +39,7 @@ import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshScrollBoundary;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
-import com.scwang.smartrefresh.layout.util.PostRunable;
+import com.scwang.smartrefresh.layout.util.DelayedRunable;
 import com.scwang.smartrefresh.layout.util.ScrollBoundaryUtil;
 
 import java.lang.reflect.Field;
@@ -54,22 +54,22 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
  * 刷新内容包装
  * Created by SCWANG on 2017/5/26.
  */
-
+@SuppressWarnings("WeakerAccess")
 public class RefreshContentWrapper implements RefreshContent {
 
-    private static final String TAG_REFRESH_CONTENT_WRAPPER = "TAG_REFRESH_CONTENT_WRAPPER";
+    protected static final String TAG_REFRESH_CONTENT_WRAPPER = "TAG_REFRESH_CONTENT_WRAPPER";
 
-    private int mHeaderHeight = Integer.MAX_VALUE;
-    private int mFooterHeight = mHeaderHeight - 1;
-    private View mContentView;
-    private View mRealContentView;
-    private View mScrollableView;
-    private View mFixedHeader;
-    private View mFixedFooter;
-    private boolean mEnableRefresh = true;
-    private boolean mEnableLoadmore = true;
-    private MotionEvent mMotionEvent;
-    private RefreshScrollBoundaryAdapter mBoundaryAdapter = new RefreshScrollBoundaryAdapter();
+    protected int mHeaderHeight = Integer.MAX_VALUE;
+    protected int mFooterHeight = mHeaderHeight - 1;
+    protected View mContentView;//直接内容视图
+    protected View mRealContentView;//被包裹的原真实视图
+    protected View mScrollableView;
+    protected View mFixedHeader;
+    protected View mFixedFooter;
+    protected boolean mEnableRefresh = true;
+    protected boolean mEnableLoadmore = true;
+    protected MotionEvent mMotionEvent;
+    protected RefreshScrollBoundaryAdapter mBoundaryAdapter = new RefreshScrollBoundaryAdapter();
 
     public RefreshContentWrapper(View view) {
         this.mContentView = mRealContentView = view;
@@ -86,7 +86,7 @@ public class RefreshContentWrapper implements RefreshContent {
     }
 
     //<editor-fold desc="findScrollableView">
-    private void findScrollableView(View content, RefreshKernel kernel) {
+    protected void findScrollableView(View content, RefreshKernel kernel) {
         mScrollableView = findScrollableViewInternal(content, true);
         try {
             if (mScrollableView instanceof CoordinatorLayout) {
@@ -107,7 +107,7 @@ public class RefreshContentWrapper implements RefreshContent {
         }
     }
 
-    private void wrapperCoordinatorLayout(CoordinatorLayout layout, final RefreshLayout refreshLayout) {
+    protected void wrapperCoordinatorLayout(CoordinatorLayout layout, final RefreshLayout refreshLayout) {
         for (int i = layout.getChildCount() - 1; i >= 0; i--) {
             View view = layout.getChildAt(i);
             if (view instanceof AppBarLayout) {
@@ -122,12 +122,12 @@ public class RefreshContentWrapper implements RefreshContent {
         }
     }
 
-    private void wrapperViewPager(final ViewPager viewPager) {
+    protected void wrapperViewPager(final ViewPager viewPager) {
         wrapperViewPager(viewPager, null);
     }
 
-    private void wrapperViewPager(final ViewPager viewPager, final PagerPrimaryAdapter primaryAdapter) {
-        viewPager.post(new PostRunable(new Runnable() {
+    protected void wrapperViewPager(final ViewPager viewPager, final PagerPrimaryAdapter primaryAdapter) {
+        viewPager.post(new DelayedRunable(new Runnable() {
             int count = 0;
             PagerPrimaryAdapter mAdapter = primaryAdapter;
             @Override
@@ -137,7 +137,7 @@ public class RefreshContentWrapper implements RefreshContent {
                 if (adapter != null) {
                     if (adapter instanceof PagerPrimaryAdapter) {
                         if (adapter == primaryAdapter) {
-                            viewPager.postDelayed(new PostRunable(this), 500);
+                            viewPager.postDelayed(new DelayedRunable(this), 500);
                         }
                     } else {
                         if (mAdapter == null) {
@@ -148,13 +148,13 @@ public class RefreshContentWrapper implements RefreshContent {
                         mAdapter.attachViewPager(viewPager);
                     }
                 } else if (count < 10) {
-                    viewPager.postDelayed(new PostRunable(this), 500);
+                    viewPager.postDelayed(new DelayedRunable(this), 500);
                 }
             }
         }));
     }
 
-    private View findScrollableViewInternal(View content, boolean selfable) {
+    protected View findScrollableViewInternal(View content, boolean selfable) {
         View scrollableView = null;
         Queue<View> views = new LinkedBlockingQueue<>(Collections.singletonList(content));
         while (!views.isEmpty() && scrollableView == null) {
@@ -185,36 +185,6 @@ public class RefreshContentWrapper implements RefreshContent {
     public View getView() {
         return mContentView;
     }
-
-//    @Override
-//    public boolean isNestedScrollingChild(MotionEvent e) {
-//        MotionEvent event = MotionEvent.obtain(e);
-//        event.offsetLocation(-mContentView.getLeft(), -mContentView.getTop() - mRealContentView.getTranslationY());
-//        boolean isNested = isNestedScrollingChild(mContentView, event);
-//        event.recycle();
-//        return isNested;
-//    }
-//
-//    private boolean isNestedScrollingChild(View targetView, MotionEvent event) {
-//        if ((targetView instanceof NestedScrollingChild || Build.VERSION.SDK_INT >= 21)
-//                && (Build.VERSION.SDK_INT >= 21 && targetView.isNestedScrollingEnabled())) {
-//            return true;
-//        }
-//        if (targetView instanceof ViewGroup && event != null) {
-//            ViewGroup viewGroup = (ViewGroup) targetView;
-//            final int childCount = viewGroup.getChildCount();
-//            PointF point = new PointF();
-//            for (int i = childCount; i > 0; i--) {
-//                View child = viewGroup.getChildAt(i - 1);
-//                if (isTransformedTouchPointInView(viewGroup,child, event.getX(), event.getY() , point)) {
-//                    event = MotionEvent.obtain(event);
-//                    event.offsetLocation(point.x, point.y);
-//                    return isNestedScrollingChild(child, event);
-//                }
-//            }
-//        }
-//        return false;
-//    }
 
     @Override
     public void moveSpinner(int spinner) {
@@ -283,14 +253,14 @@ public class RefreshContentWrapper implements RefreshContent {
     @Override
     public void setupComponent(RefreshKernel kernel, View fixedHeader, View fixedFooter) {
         this.findScrollableView(mContentView, kernel);
-        try {
+        try {//try 不能删除，不然会出现兼容性问题
             if (mScrollableView instanceof RecyclerView) {
                 RecyclerViewScrollComponent component = new RecyclerViewScrollComponent(kernel);
                 component.attach((RecyclerView) mScrollableView);
             }
         } catch (Throwable ignored) {
         }
-        try {
+        try {//try 不能删除，不然会出现兼容性问题
             if (mScrollableView instanceof NestedScrollView) {
                 NestedScrollViewScrollComponent component = new NestedScrollViewScrollComponent(kernel);
                 component.attach((NestedScrollView) mScrollableView);
@@ -305,6 +275,7 @@ public class RefreshContentWrapper implements RefreshContent {
             Api23ViewScrollComponent component = new Api23ViewScrollComponent(kernel);
             component.attach(mScrollableView);
         }
+
         if (fixedHeader != null || fixedFooter != null) {
             mFixedHeader = fixedHeader;
             mFixedFooter = fixedFooter;
@@ -355,6 +326,11 @@ public class RefreshContentWrapper implements RefreshContent {
     }
 
     @Override
+    public void setEnableLoadmoreWhenContentNotFull(boolean enable) {
+        mBoundaryAdapter.setEnableLoadmoreWhenContentNotFull(enable);
+    }
+
+    @Override
     public AnimatorUpdateListener onLoadingFinish(final RefreshKernel kernel, final int footerHeight, int startDelay, Interpolator interpolator, final int duration) {
         if (mScrollableView != null && kernel.getRefreshLayout().isEnableScrollContentWhenLoaded()) {
             if (mScrollableView instanceof AbsListView && Build.VERSION.SDK_INT < 19) {
@@ -393,7 +369,7 @@ public class RefreshContentWrapper implements RefreshContent {
 
     //<editor-fold desc="滚动组件">
     @RequiresApi(api = Build.VERSION_CODES.M)
-    private class Api23ViewScrollComponent implements View.OnScrollChangeListener {
+    protected class Api23ViewScrollComponent implements View.OnScrollChangeListener {
         long lastTime = 0;
         long lastTimeOld = 0;
         int lastScrollY = 0;
@@ -457,7 +433,7 @@ public class RefreshContentWrapper implements RefreshContent {
         }
     }
 
-    private class NestedScrollViewScrollComponent implements NestedScrollView.OnScrollChangeListener {
+    protected class NestedScrollViewScrollComponent implements NestedScrollView.OnScrollChangeListener {
         long lastTime = 0;
         long lastTimeOld = 0;
         int lastScrollY = 0;
@@ -520,7 +496,7 @@ public class RefreshContentWrapper implements RefreshContent {
         }
     }
 
-    private class AbsListViewScrollComponent implements AbsListView.OnScrollListener {
+    protected class AbsListViewScrollComponent implements AbsListView.OnScrollListener {
 
         int scrollY;
         int scrollDy;
@@ -601,7 +577,7 @@ public class RefreshContentWrapper implements RefreshContent {
             listView.setOnScrollListener(this);
         }
 
-        private int getScrollY(AbsListView view, int firstVisibleItem) {
+        protected int getScrollY(AbsListView view, int firstVisibleItem) {
             View firstView = view.getChildAt(0);
             if (null != firstView) {
                 ItemRecod itemRecord = recordSp.get(firstVisibleItem);
@@ -637,7 +613,7 @@ public class RefreshContentWrapper implements RefreshContent {
         }
     }
 
-    private class RecyclerViewScrollComponent extends RecyclerView.OnScrollListener {
+    protected class RecyclerViewScrollComponent extends RecyclerView.OnScrollListener {
         int lastDy;
         long lastFlingTime;
         RefreshKernel kernel;
@@ -744,8 +720,8 @@ public class RefreshContentWrapper implements RefreshContent {
     }
     //</editor-fold>
 
-    //<editor-fold desc="private">
-    private static int measureViewHeight(View view) {
+    //<editor-fold desc="protected">
+    protected static int measureViewHeight(View view) {
         ViewGroup.LayoutParams p = view.getLayoutParams();
         if (p == null) {
             p = new ViewGroup.LayoutParams(MATCH_PARENT,WRAP_CONTENT);
@@ -762,8 +738,8 @@ public class RefreshContentWrapper implements RefreshContent {
     }
     //</editor-fold>
 
-    private class PagerPrimaryAdapter extends PagerAdapterWrapper {
-        private ViewPager mViewPager;
+    protected class PagerPrimaryAdapter extends PagerAdapterWrapper {
+        protected ViewPager mViewPager;
 
         PagerPrimaryAdapter(PagerAdapter wrapped) {
             super(wrapped);

@@ -68,7 +68,7 @@ public class CustomUsingActivity extends AppCompatActivity {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(final RefreshLayout refreshlayout) {
-                ((View) refreshlayout).postDelayed(new Runnable() {
+                refreshlayout.getLayout().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         mAdapter.refresh(initData());
