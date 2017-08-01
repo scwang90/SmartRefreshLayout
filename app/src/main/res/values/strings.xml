@@ -32,7 +32,7 @@
     <string name="title_activity_using_assign_xml">XML配置</string>
     <string name="title_activity_using_assign_code">java代码设置</string>
     <string name="description_set_default_creater">这是使用定制Header和Footer的第一种方法-全局默认\n\n
-        本方法是实际项目中最常用的方法，起特点有：\n\n
+        本方法是实际项目中最常用的方法，其特点有：\n\n
         1.设置一次全部生效，不用多次写重复的代码\n
         2.优先级最低，在特别页面可以轻松的覆盖替换\n\n
         使用方法： \n
@@ -71,7 +71,7 @@
         </com.scwang.smartrefresh.SmartRefreshLayout>\n
     ]]></string>
     <string name="description_define_in_code">这是使用定制Header和Footer的第三种方法-代码设置\n\n
-        本方法是实际项目中比较少用的方法，起特点有：\n\n
+        本方法是实际项目中比较少用的方法，其特点有：\n\n
         1.设置一次生效一次，需要多处设置，建议特别的页面使用\n
         2.优先级最高，即使使用了会覆盖方法一和方法二的设置\n\n
         使用方法： \n
