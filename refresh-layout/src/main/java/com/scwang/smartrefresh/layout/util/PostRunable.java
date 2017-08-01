@@ -1,20 +1,17 @@
 package com.scwang.smartrefresh.layout.util;
 
+import java.lang.ref.WeakReference;
+
 public class PostRunable implements Runnable {
-    Runnable runnable = null;
+    private WeakReference<Runnable> runnableWeakReference = null;
     public PostRunable(Runnable runnable) {
-        this.runnable = runnable;
+        this.runnableWeakReference = new WeakReference<>(runnable);
     }
     @Override
     public void run() {
+        Runnable runnable = runnableWeakReference.get();
         if (runnable != null) {
-            try {
-                runnable.run();
-            } catch (Throwable e) {
-                e.printStackTrace();
-            } finally {
-                runnable = null;
-            }
+            runnable.run();
         }
     }
 }
