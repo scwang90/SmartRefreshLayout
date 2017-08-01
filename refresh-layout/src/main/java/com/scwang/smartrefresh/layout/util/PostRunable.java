@@ -13,5 +13,6 @@ public class PostRunable implements Runnable {
         if (runnable != null) {
             runnable.run();
         }
+        runnableWeakReference = null;
     }
 }
