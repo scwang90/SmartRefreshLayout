@@ -192,10 +192,10 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
     protected long mLastLoadingTime = 0;
     protected long mLastRefreshingTime = 0;
 
-    protected int mHeaderBackgroundColor = 0;
+    protected int mHeaderBackgroundColor = 0;                   //为Header绘制纯色背景
     protected int mFooterBackgroundColor = 0;
 
-    protected boolean mHeaderNeedTouchEventWhenRefreshing;
+    protected boolean mHeaderNeedTouchEventWhenRefreshing;      //为游戏Header提供独立事件
     protected boolean mFooterNeedTouchEventWhenRefreshing;
 
     protected static boolean sManualFooterCreater = false;
@@ -2136,7 +2136,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
                             return;
                         }
                         notifyStateChanged(RefreshState.LoadFinish);
-                        AnimatorUpdateListener updateListener = mRefreshContent.onLoadingFinish(mKernel, mFooterHeight, startDelay, mReboundInterpolator, mReboundDuration);
+                        AnimatorUpdateListener updateListener = mRefreshContent.onLoadingFinish(mKernel, mFooterHeight, startDelay, mReboundDuration);
                         if (mOnMultiPurposeListener != null) {
                             mOnMultiPurposeListener.onFooterFinish(mRefreshFooter, success);
                         }

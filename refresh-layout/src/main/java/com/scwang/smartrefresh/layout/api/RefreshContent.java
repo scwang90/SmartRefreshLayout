@@ -4,7 +4,6 @@ import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Interpolator;
 
 /**
  * 刷新内容组件
@@ -32,5 +31,5 @@ public interface RefreshContent {
     void setRefreshScrollBoundary(RefreshScrollBoundary boundary);
     void setEnableLoadmoreWhenContentNotFull(boolean enable);
 
-    AnimatorUpdateListener onLoadingFinish(RefreshKernel kernel, int footerHeight, int startDelay, Interpolator reboundInterpolator, int reboundDuration);
+    AnimatorUpdateListener onLoadingFinish(RefreshKernel kernel, int footerHeight, int startDelay, int reboundDuration);
 }

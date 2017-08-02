@@ -16,22 +16,20 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.PagerAdapterWrapper;
 import android.support.v4.view.ScrollingView;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.ListViewCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.Space;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.MeasureSpec;
 import android.view.ViewGroup;
-import android.view.animation.Interpolator;
 import android.webkit.WebView;
 import android.widget.AbsListView;
 import android.widget.FrameLayout;
+import android.widget.ListView;
 import android.widget.ScrollView;
 
 import com.scwang.smartrefresh.layout.api.RefreshContent;
@@ -40,7 +38,6 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshScrollBoundary;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.util.DelayedRunable;
-import com.scwang.smartrefresh.layout.util.ScrollBoundaryUtil;
 
 import java.lang.reflect.Field;
 import java.util.Collections;
@@ -49,6 +46,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+import static com.scwang.smartrefresh.layout.util.ScrollBoundaryUtil.canScrollDown;
+import static com.scwang.smartrefresh.layout.util.ScrollBoundaryUtil.canScrollUp;
 
 /**
  * 刷新内容包装
@@ -331,9 +330,12 @@ public class RefreshContentWrapper implements RefreshContent {
     }
 
     @Override
-    public AnimatorUpdateListener onLoadingFinish(final RefreshKernel kernel, final int footerHeight, int startDelay, Interpolator interpolator, final int duration) {
+    public AnimatorUpdateListener onLoadingFinish(final RefreshKernel kernel, final int footerHeight, int startDelay, final int duration) {
         if (mScrollableView != null && kernel.getRefreshLayout().isEnableScrollContentWhenLoaded()) {
-            if (mScrollableView instanceof AbsListView && Build.VERSION.SDK_INT < 19) {
+            if (!canScrollDown(mScrollableView)) {
+                return null;
+            }
+            if (mScrollableView instanceof AbsListView && !(mScrollableView instanceof ListView) && Build.VERSION.SDK_INT < 19) {
                 if (startDelay > 0) {
                     kernel.getRefreshLayout().getLayout().postDelayed(new Runnable() {
                         @Override
@@ -346,20 +348,17 @@ public class RefreshContentWrapper implements RefreshContent {
                 }
                 return null;
             }
-            if (!ScrollBoundaryUtil.canScrollDown(mScrollableView)) {
-                return null;
-            }
             return new AnimatorUpdateListener() {
                 int lastValue = kernel.getSpinner();
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
-                    int thisValue = (int) animation.getAnimatedValue();
-                    if (mScrollableView instanceof AbsListView && Build.VERSION.SDK_INT >= 19) {
-                        ((AbsListView) mScrollableView).scrollListBy(thisValue - lastValue);
+                    int value = (int) animation.getAnimatedValue();
+                    if (mScrollableView instanceof ListView) {
+                        ListViewCompat.scrollListBy((ListView) mScrollableView, value - lastValue);
                     } else {
-                        mScrollableView.scrollBy(0, thisValue - lastValue);
+                        mScrollableView.scrollBy(0, value - lastValue);
                     }
-                    lastValue = thisValue;
+                    lastValue = value;
                 }
             };
         }
@@ -398,10 +397,10 @@ public class RefreshContentWrapper implements RefreshContent {
             } else if (oldScrollY < scrollY && mMotionEvent == null && layout.isEnableLoadmore()) {
                 if (!layout.isLoadmoreFinished() && layout.isEnableAutoLoadmore()
                         && layout.getState() == RefreshState.None
-                        && !ScrollBoundaryUtil.canScrollDown(v)) {
+                        && !canScrollDown(v)) {
                     kernel.getRefreshLayout().autoLoadmore(0, 1);
                 } else
-                    if (overScroll && lastTime - lastTimeOld > 1000 && !ScrollBoundaryUtil.canScrollDown(v)) {
+                    if (overScroll && lastTime - lastTimeOld > 1000 && !canScrollDown(v)) {
                     final int velocity = (lastOldScrollY - oldScrollY) * 16000 / (int)((lastTime - lastTimeOld)/1000f);
                     kernel.animSpinnerBounce(Math.max(velocity, -mFooterHeight));
                 }
@@ -461,9 +460,9 @@ public class RefreshContentWrapper implements RefreshContent {
             } else if (oldScrollY < scrollY && mMotionEvent == null && layout.isEnableLoadmore()) {
                 if (!layout.isLoadmoreFinished() && layout.isEnableAutoLoadmore()
                         && layout.getState() == RefreshState.None
-                        && !ScrollBoundaryUtil.canScrollDown(scrollView)) {
+                        && !canScrollDown(scrollView)) {
                     kernel.getRefreshLayout().autoLoadmore(0, 1);
-                } else if (overScroll && lastTime - lastTimeOld > 1000 && !ScrollBoundaryUtil.canScrollDown(mScrollableView)) {
+                } else if (overScroll && lastTime - lastTimeOld > 1000 && !canScrollDown(mScrollableView)) {
                     final int velocity = (lastOldScrollY - oldScrollY) * 16000 / (int)((lastTime - lastTimeOld)/1000f);
                     kernel.animSpinnerBounce(Math.max(velocity, -mFooterHeight));
                 }
@@ -528,26 +527,26 @@ public class RefreshContentWrapper implements RefreshContent {
             scrollY = getScrollY(absListView, firstVisibleItem);
             scrollDy = lastScrolly - scrollY;
 
-            final int dy =lastScrollDy + scrollDy;
-            if (totalItemCount > 0) {
+            final int dy = lastScrollDy + scrollDy;
+            if (totalItemCount > 0 && mMotionEvent == null) {
                 RefreshLayout layout = kernel.getRefreshLayout();
-                boolean overScroll = (layout.isEnableOverScrollBounce() || layout.isRefreshing() || layout.isLoading());
-                if (mMotionEvent == null && dy > 0 && firstVisibleItem == 0) {
-                    if (overScroll
+                if (dy > 0) {
+                    if (firstVisibleItem == 0
                             && layout.isEnableRefresh()
-                            && !ScrollBoundaryUtil.canScrollUp(absListView)) {
+                            && (layout.isEnableOverScrollBounce() || layout.isRefreshing())
+                            && !canScrollUp(absListView)) {
                         kernel.animSpinnerBounce(Math.min(dy, mHeaderHeight));
                     }
-                } else if (dy < 0 && mMotionEvent == null) {
+                } else if (dy < 0) {
                     int lastVisiblePosition = absListView.getLastVisiblePosition();
                     if (lastVisiblePosition == totalItemCount - 1 && lastVisiblePosition > 0
-                            && layout.isEnableLoadmore()) {
-                        if (!layout.isLoadmoreFinished() && layout.isEnableAutoLoadmore()
-                                && layout.getState() == RefreshState.None
-                                && !ScrollBoundaryUtil.canScrollDown(absListView)) {
-                            kernel.getRefreshLayout().autoLoadmore(0, 1);
-                        } else
-                            if (overScroll && !ScrollBoundaryUtil.canScrollDown(absListView)) {
+                            && layout.isEnableLoadmore()
+                            && !canScrollDown(absListView)) {
+                        if (layout.getState() == RefreshState.None
+                                && !layout.isLoadmoreFinished()
+                                && layout.isEnableAutoLoadmore()) {
+                            layout.autoLoadmore(0, 1);
+                        } else if (layout.isEnableOverScrollBounce() || layout.isLoading()) {
                             kernel.animSpinnerBounce(Math.max(dy, -mFooterHeight));
                         }
                     }
@@ -614,108 +613,33 @@ public class RefreshContentWrapper implements RefreshContent {
     }
 
     protected class RecyclerViewScrollComponent extends RecyclerView.OnScrollListener {
-        int lastDy;
-        long lastFlingTime;
         RefreshKernel kernel;
-        RecyclerView.OnFlingListener mFlingListener;
-
         RecyclerViewScrollComponent(RefreshKernel kernel) {
             this.kernel = kernel;
         }
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-            RefreshLayout layout = kernel.getRefreshLayout();
-            if (newState == RecyclerView.SCROLL_STATE_IDLE && mMotionEvent == null) {
-                boolean intime = System.currentTimeMillis() - lastFlingTime < 1000;
-                boolean overScroll = layout.isEnableOverScrollBounce() || layout.isRefreshing() || layout.isLoading();
-                if (lastDy < -1 && intime && overScroll && layout.isEnableRefresh()) {
-                    kernel.animSpinnerBounce(Math.min(-lastDy * 2, mHeaderHeight));
-                } else if (layout.isEnableLoadmore()
-                        && !layout.isLoadmoreFinished()
-                        && layout.isEnableAutoLoadmore()
-                        && layout.getState() == RefreshState.None) {
-//                    RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
-//                    if (manager instanceof LinearLayoutManager) {
-//                        LinearLayoutManager linearManager = ((LinearLayoutManager) manager);
-//                        int lastVisiblePosition = linearManager.findLastVisibleItemPosition();
-//                        if(lastVisiblePosition >= linearManager.getItemCount() - 1){
-//                            kernel.getRefreshLayout().autoLoadmore(0,1);
-//                        }
-//                    }
-                } else if (lastDy > 1 && intime && overScroll && layout.isEnableLoadmore()) {
-                    kernel.animSpinnerBounce(Math.max(-lastDy * 2, -mFooterHeight));
-                }
-                lastDy = 0;
-            }
         }
-
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-            lastDy = dy;
-            RefreshLayout layout = kernel.getRefreshLayout();
-            if (dy > 0 && mMotionEvent == null
-                    && layout.isEnableLoadmore()
-                    && !layout.isLoadmoreFinished()
-                    && layout.isEnableAutoLoadmore()
-                    && layout.getState() == RefreshState.None ){
-                RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
-
-                int lastVisiblePosition = 0;
-                if(manager instanceof GridLayoutManager){
-                    //通过LayoutManager找到当前显示的最后的item的position
-                    lastVisiblePosition = ((GridLayoutManager) manager).findLastVisibleItemPosition();
-                } else if(manager instanceof LinearLayoutManager){
-                    lastVisiblePosition = ((LinearLayoutManager) manager).findLastVisibleItemPosition();
-                } else if(manager instanceof StaggeredGridLayoutManager){
-                    //因为StaggeredGridLayoutManager的特殊性可能导致最后显示的item存在多个，所以这里取到的是一个数组
-                    //得到这个数组后再取到数组中position值最大的那个就是最后显示的position值了
-                    int[] lastPositions = new int[((StaggeredGridLayoutManager) manager).getSpanCount()];
-                    ((StaggeredGridLayoutManager) manager).findLastVisibleItemPositions(lastPositions);
-                    lastVisiblePosition = lastPositions[0];
-                    for (int value : lastPositions) {
-                        if (value > lastVisiblePosition) {
-                            lastVisiblePosition = value;
-                        }
+            if (mMotionEvent == null) {
+                final RefreshLayout layout = kernel.getRefreshLayout();
+                if (dy < 0 && layout.isEnableRefresh()
+                        && (layout.isEnableOverScrollBounce() || layout.isRefreshing())
+                        && !canScrollUp(recyclerView)) {
+                    kernel.animSpinnerBounce(Math.min(-dy * 2, mHeaderHeight));
+                } else if (dy > 0 && layout.isEnableLoadmore() && !canScrollDown(recyclerView)) {
+                    if (layout.getState() == RefreshState.None
+                            && layout.isEnableAutoLoadmore() && !layout.isLoadmoreFinished()) {
+                        layout.autoLoadmore(0,1);
+                    } else if (layout.isEnableOverScrollBounce() || layout.isLoading()) {
+                        kernel.animSpinnerBounce(Math.max(-dy * 2, -mFooterHeight));
                     }
-                }
-
-                if(lastVisiblePosition >= manager.getItemCount() - 1
-                        && lastVisiblePosition > 0
-                        && !ScrollBoundaryUtil.canScrollDown(recyclerView)){
-                    kernel.getRefreshLayout().autoLoadmore(0,1);
                 }
             }
         }
-
         void attach(RecyclerView recyclerView) {
-            //获得原始监听器，用作转发
-            Field[] declaredFields = RecyclerView.class.getDeclaredFields();
-            if (declaredFields != null) {
-                for (Field field : declaredFields) {
-                    if (RecyclerView.OnFlingListener.class.equals(field.getType())) {
-                        try {
-                            field.setAccessible(true);
-                            Object listener = field.get(recyclerView);
-                            if (listener != null && !recyclerView.equals(listener)) {
-                                mFlingListener = (RecyclerView.OnFlingListener) listener;
-                            }
-                        } catch (IllegalAccessException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
             recyclerView.addOnScrollListener(this);
-            recyclerView.setOnFlingListener(new RecyclerView.OnFlingListener() {
-                @Override
-                public boolean onFling(int velocityX, int velocityY) {
-                    if (mFlingListener != null) {
-                        mFlingListener.onFling(velocityX, velocityY);
-                    }
-                    lastFlingTime = System.currentTimeMillis();
-                    return false;
-                }
-            });
         }
     }
     //</editor-fold>

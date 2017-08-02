@@ -9,7 +9,7 @@
     <ImageView
         android:id="@+id/parallax"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="670dp"
         android:layout_marginTop="-300dp"
         android:adjustViewBounds="true"
         android:contentDescription="@string/app_name"

@@ -10,7 +10,6 @@ import android.widget.Toast;
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
-import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -82,7 +81,6 @@ public class BasicUsingActivity extends AppCompatActivity {
                 }, 2000);
             }
         });
-        refreshLayout.setRefreshHeader(new MaterialHeader(this));
 
         //触发自动刷新
         refreshLayout.autoRefresh();
