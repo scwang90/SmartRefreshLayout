@@ -22,10 +22,10 @@
 >修复：DeliveryHeader,DropboxHeader 在API-17以下显示不全的问题  
 
 ## V 1.0.3 (开发中)
->添加：当 内容视图不满一页时，不能上拉加载更多  
+>添加：当 内容视图不满一页时，默认不能上拉加载更多，不过必要时，通过设置还是可以上拉的  
 >添加：为 Heaer和Footer添加拖动时水平方向坐标 x，实现左右拖动Header的效果  
 >添加：为 Refreshlayout 添加多点触摸支持，在多个手指触摸式不会发生冲突，并且随意拖动  
->添加：为 Refreshlayout 添加 srlEnableLoadmoreWhenContentNotFull 属性和 setEnableLoadmoreWhenContentNotFull 方法  
+>添加：为 Refreshlayout 添加 EnableLoadmoreWhenContentNotFull 功能  
 >添加：为 RefreshHeader 添加 srlEnableHorizontalDrag 属性 和 setEnableHorizontalDrag 方法  
 >添加：为 ClassicsHeader 添加 srlArrowDrawable 属性 和 setArrowResource 方法 改变箭头图片  
 >添加：为 ClassicsHeader 添加 srlProgressDrawable 属性 和 setProgressResource 改变转动图片  
