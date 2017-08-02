@@ -12,6 +12,7 @@ import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 
 import java.text.DateFormat;
@@ -23,7 +24,6 @@ import java.util.Locale;
  * 多功能监听器的使用
  */
 public class ListenerUsingActivity extends AppCompatActivity {
-
 
     private static DateFormat FORMAT = new SimpleDateFormat("HH:mm sss", Locale.CHINA);
 
@@ -143,6 +143,12 @@ public class ListenerUsingActivity extends AppCompatActivity {
             }
         });
 
+        refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+
+            }
+        });
 
         if (isFirstEnter) {
             isFirstEnter = false;

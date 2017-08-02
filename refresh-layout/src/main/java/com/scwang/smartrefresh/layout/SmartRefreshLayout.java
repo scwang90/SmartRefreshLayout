@@ -1864,12 +1864,14 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
      */
     @Override
     public SmartRefreshLayout setRefreshHeader(RefreshHeader header) {
-        if (mRefreshHeader != null) {
-            removeView(mRefreshHeader.getView());
+        if (header != null) {
+            if (mRefreshHeader != null) {
+                removeView(mRefreshHeader.getView());
+            }
+            this.mRefreshHeader = header;
+            this.mHeaderHeightStatus = mHeaderHeightStatus.unNotify();
+            this.addView(mRefreshHeader.getView());
         }
-        this.mRefreshHeader = header;
-        this.mHeaderHeightStatus = mHeaderHeightStatus.unNotify();
-        this.addView(mRefreshHeader.getView());
         return this;
     }
 
@@ -1878,12 +1880,14 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
      */
     @Override
     public SmartRefreshLayout setRefreshHeader(RefreshHeader header, int width, int height) {
-        if (mRefreshHeader != null) {
-            removeView(mRefreshHeader.getView());
+        if (header != null) {
+            if (mRefreshHeader != null) {
+                removeView(mRefreshHeader.getView());
+            }
+            this.mRefreshHeader = header;
+            this.mHeaderHeightStatus = mHeaderHeightStatus.unNotify();
+            this.addView(mRefreshHeader.getView(), width, height);
         }
-        this.mRefreshHeader = header;
-        this.mHeaderHeightStatus = mHeaderHeightStatus.unNotify();
-        this.addView(mRefreshHeader.getView(), width, height);
         return this;
     }
 
@@ -1892,13 +1896,15 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
      */
     @Override
     public SmartRefreshLayout setRefreshFooter(RefreshFooter footer) {
-        if (mRefreshFooter != null) {
-            removeView(mRefreshFooter.getView());
+        if (footer != null) {
+            if (mRefreshFooter != null) {
+                removeView(mRefreshFooter.getView());
+            }
+            this.mRefreshFooter = footer;
+            this.mFooterHeightStatus = mFooterHeightStatus.unNotify();
+            this.mEnableLoadmore = !mManualLoadmore || mEnableLoadmore;
+            this.addView(mRefreshFooter.getView());
         }
-        this.mRefreshFooter = footer;
-        this.mFooterHeightStatus = mFooterHeightStatus.unNotify();
-        this.mEnableLoadmore = !mManualLoadmore || mEnableLoadmore;
-        this.addView(mRefreshFooter.getView());
         return this;
     }
 
@@ -1907,13 +1913,15 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
      */
     @Override
     public SmartRefreshLayout setRefreshFooter(RefreshFooter footer, int width, int height) {
-        if (mRefreshFooter != null) {
-            removeView(mRefreshFooter.getView());
+        if (footer != null) {
+            if (mRefreshFooter != null) {
+                removeView(mRefreshFooter.getView());
+            }
+            this.mRefreshFooter = footer;
+            this.mFooterHeightStatus = mFooterHeightStatus.unNotify();
+            this.mEnableLoadmore = !mManualLoadmore || mEnableLoadmore;
+            this.addView(mRefreshFooter.getView(), width, height);
         }
-        this.mRefreshFooter = footer;
-        this.mFooterHeightStatus = mFooterHeightStatus.unNotify();
-        this.mEnableLoadmore = !mManualLoadmore || mEnableLoadmore;
-        this.addView(mRefreshFooter.getView(), width, height);
         return this;
     }
 
@@ -1966,7 +1974,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
     @Override
     public SmartRefreshLayout setOnLoadmoreListener(OnLoadmoreListener listener) {
         this.mLoadmoreListener = listener;
-        this.mEnableLoadmore = mEnableLoadmore || !mManualLoadmore;
+        this.mEnableLoadmore = mEnableLoadmore || (!mManualLoadmore && listener != null);
         return this;
     }
 
@@ -1977,7 +1985,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
     public SmartRefreshLayout setOnRefreshLoadmoreListener(OnRefreshLoadmoreListener listener) {
         this.mRefreshListener = listener;
         this.mLoadmoreListener = listener;
-        this.mEnableLoadmore = mEnableLoadmore || !mManualLoadmore;
+        this.mEnableLoadmore = mEnableLoadmore || (!mManualLoadmore && listener != null);
         return this;
     }
 
@@ -2130,7 +2138,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
             @Override
             public void run() {
                 if (mState == RefreshState.Loading) {
-                    if (mRefreshFooter != null && mKernel != null) {
+                    if (mRefreshFooter != null && mKernel != null && mRefreshContent != null) {
                         int startDelay = mRefreshFooter.onFinish(SmartRefreshLayout.this, success);
                         if (startDelay == Integer.MAX_VALUE) {
                             return;
