@@ -46,9 +46,9 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
 
     compile project(':refresh-footer')
     compile project(':refresh-header')
@@ -64,8 +64,8 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'jp.wasabeef:recyclerview-animators:2.2.6'
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
-//    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3-alpha-6'
-//    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3-alpha-6'
+//    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3-alpha-5'
+//    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3-alpha-5'
     testCompile 'junit:junit:4.12'
 
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'

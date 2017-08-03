@@ -1,8 +1,6 @@
 package com.scwang.refreshlayout.fragment;
 
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -26,11 +24,8 @@ import com.scwang.refreshlayout.activity.using.ListenerUsingActivity;
 import com.scwang.refreshlayout.activity.using.NestLayoutUsingActivity;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
-import com.scwang.smartrefresh.layout.api.RefreshHeader;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.scwang.refreshlayout.util.StatusBarUtil;
 
-import java.lang.reflect.Constructor;
 import java.util.Arrays;
 
 import static android.R.layout.simple_list_item_2;
@@ -68,6 +63,7 @@ public class RefreshUsingFragment extends Fragment implements AdapterView.OnItem
     @Override
     public void onViewCreated(View root, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(root, savedInstanceState);
+        StatusBarUtil.setPaddingSmart(getContext(), root.findViewById(R.id.toolbar));
 
         View view = root.findViewById(R.id.recyclerView);
         if (view instanceof RecyclerView) {
@@ -89,21 +85,6 @@ public class RefreshUsingFragment extends Fragment implements AdapterView.OnItem
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Item item = Item.values()[position];
-        if (Activity.class.isAssignableFrom(item.clazz)) {
-            startActivity(new Intent(getContext(), item.clazz));
-        } else if (RefreshHeader.class.isAssignableFrom(item.clazz)) {
-            try {
-                Constructor<?> constructor = item.clazz.getConstructor(Context.class);
-                RefreshHeader header = (RefreshHeader) constructor.newInstance(getContext());
-                RefreshLayout layout = (RefreshLayout) getView().findViewById(R.id.refreshLayout);
-                layout.setRefreshHeader(header);
-                if (!(header instanceof ClassicsHeader)) {
-                    layout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);
-                }
-                layout.autoRefresh();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        startActivity(new Intent(getContext(), item.clazz));
     }
 }

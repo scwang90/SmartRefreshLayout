@@ -37,7 +37,6 @@ import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshScrollBoundary;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
-import com.scwang.smartrefresh.layout.util.DelayedRunable;
 
 import java.lang.reflect.Field;
 import java.util.Collections;
@@ -87,19 +86,22 @@ public class RefreshContentWrapper implements RefreshContent {
     //<editor-fold desc="findScrollableView">
     protected void findScrollableView(View content, RefreshKernel kernel) {
         mScrollableView = findScrollableViewInternal(content, true);
-        try {
+        try {//try 不能删除，不然会出现兼容性问题
             if (mScrollableView instanceof CoordinatorLayout) {
                 kernel.getRefreshLayout().setNestedScrollingEnabled(false);
                 wrapperCoordinatorLayout(((CoordinatorLayout) mScrollableView), kernel.getRefreshLayout());
             }
-        } catch (Throwable e) {//try 不能删除
+        } catch (Exception ignored) {
+        }
+        try {//try 不能删除，不然会出现兼容性问题
+            if (mScrollableView instanceof ViewPager) {
+                wrapperViewPager((ViewPager) this.mScrollableView);
+            }
+        } catch (Exception ignored) {
         }
         if (mScrollableView instanceof NestedScrollingParent
                 && !(mScrollableView instanceof NestedScrollingChild)) {
             mScrollableView = findScrollableViewInternal(mScrollableView, false);
-        }
-        if (mScrollableView instanceof ViewPager) {
-            wrapperViewPager((ViewPager) this.mScrollableView);
         }
         if (mScrollableView == null) {
             mScrollableView = content;
@@ -126,7 +128,7 @@ public class RefreshContentWrapper implements RefreshContent {
     }
 
     protected void wrapperViewPager(final ViewPager viewPager, final PagerPrimaryAdapter primaryAdapter) {
-        viewPager.post(new DelayedRunable(new Runnable() {
+        viewPager.post(new Runnable() {
             int count = 0;
             PagerPrimaryAdapter mAdapter = primaryAdapter;
             @Override
@@ -135,8 +137,8 @@ public class RefreshContentWrapper implements RefreshContent {
                 PagerAdapter adapter = viewPager.getAdapter();
                 if (adapter != null) {
                     if (adapter instanceof PagerPrimaryAdapter) {
-                        if (adapter == primaryAdapter) {
-                            viewPager.postDelayed(new DelayedRunable(this), 500);
+                        if (adapter == primaryAdapter && count < 10) {
+                            viewPager.postDelayed(this, 500);
                         }
                     } else {
                         if (mAdapter == null) {
@@ -147,10 +149,10 @@ public class RefreshContentWrapper implements RefreshContent {
                         mAdapter.attachViewPager(viewPager);
                     }
                 } else if (count < 10) {
-                    viewPager.postDelayed(new DelayedRunable(this), 500);
+                    viewPager.postDelayed(this, 500);
                 }
             }
-        }));
+        });
     }
 
     protected View findScrollableViewInternal(View content, boolean selfable) {

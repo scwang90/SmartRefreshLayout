@@ -30,6 +30,7 @@ import static android.view.View.MeasureSpec.getSize;
  * Created by SCWANG on 2017/6/2.
  */
 
+@SuppressWarnings("unused")
 public class MaterialHeader extends ViewGroup implements RefreshHeader {
 
     // Maps to ProgressBar.Large style
@@ -297,7 +298,6 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
         if (colors.length > 0) {
             mBezierPaint.setColor(colors[0]);
         }
-        //mProgress.setColorSchemeColors(colors);
     }
 
     @NonNull
