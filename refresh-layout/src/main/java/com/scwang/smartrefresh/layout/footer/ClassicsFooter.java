@@ -30,6 +30,7 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
  * Created by SCWANG on 2017/5/28.
  */
 
+@SuppressWarnings("unused")
 public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
 
     public static String REFRESH_FOOTER_PULLUP = "上拉加载更多";
@@ -40,15 +41,15 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
     public static String REFRESH_FOOTER_FAILED = "加载失败";
     public static String REFRESH_FOOTER_ALLLOADED = "全部加载完成";
 
-    private TextView mBottomText;
-    private ImageView mArrowView;
-    private ImageView mProgressView;
-    private PathsDrawable mArrowDrawable;
-    private ProgressDrawable mProgressDrawable;
-    private SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
-    private RefreshKernel mRefreshKernel;
-    private int mBackgroundColor = 0;
-    private boolean mLoadmoreFinished = false;
+    protected TextView mBottomText;
+    protected ImageView mArrowView;
+    protected ImageView mProgressView;
+    protected PathsDrawable mArrowDrawable;
+    protected ProgressDrawable mProgressDrawable;
+    protected SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
+    protected RefreshKernel mRefreshKernel;
+    protected int mBackgroundColor = 0;
+    protected boolean mLoadmoreFinished = false;
 
     //<editor-fold desc="LinearLayout">
     public ClassicsFooter(Context context) {

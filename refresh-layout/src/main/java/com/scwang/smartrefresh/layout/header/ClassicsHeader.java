@@ -45,6 +45,7 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
  * 经典下拉头部
  * Created by SCWANG on 2017/5/28.
  */
+@SuppressWarnings("unused")
 public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
 
     public static String REFRESH_HEADER_PULLDOWN = "下拉可以刷新";
@@ -54,20 +55,20 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     public static String REFRESH_HEADER_FINISH = "刷新完成";
     public static String REFRESH_HEADER_FAILED = "刷新失败";
 
-    private String KEY_LAST_UPDATE_TIME = "LAST_UPDATE_TIME";
+    protected String KEY_LAST_UPDATE_TIME = "LAST_UPDATE_TIME";
 
-    private Date mLastTime;
-    private TextView mHeaderText;
-    private TextView mLastUpdateText;
-    private ImageView mArrowView;
-    private ImageView mProgressView;
-    private PathsDrawable mArrowDrawable;
-    private ProgressDrawable mProgressDrawable;
-    private DateFormat mFormat = new SimpleDateFormat("上次更新 M-d HH:mm", Locale.CHINA);
-    private SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
-    private SharedPreferences mShared;
-    private RefreshKernel mRefreshKernel;
-    private int mBackgroundColor;
+    protected Date mLastTime;
+    protected TextView mHeaderText;
+    protected TextView mLastUpdateText;
+    protected ImageView mArrowView;
+    protected ImageView mProgressView;
+    protected PathsDrawable mArrowDrawable;
+    protected ProgressDrawable mProgressDrawable;
+    protected DateFormat mFormat = new SimpleDateFormat("上次更新 M-d HH:mm", Locale.CHINA);
+    protected SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
+    protected SharedPreferences mShared;
+    protected RefreshKernel mRefreshKernel;
+    protected int mBackgroundColor;
 
     //<editor-fold desc="RelativeLayout">
     public ClassicsHeader(Context context) {
