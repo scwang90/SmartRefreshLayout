@@ -2184,7 +2184,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
      */
     @Override
     public boolean autoRefresh() {
-        return autoRefresh(350);
+        return autoRefresh(400);
     }
     /**
      * 自动刷新
@@ -2249,7 +2249,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout {
      */
     @Override
     public boolean autoLoadmore() {
-        return autoLoadmore(350);
+        return autoLoadmore(0);
     }
     /**
      * 自动加载
