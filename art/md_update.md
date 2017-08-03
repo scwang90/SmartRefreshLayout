@@ -22,6 +22,7 @@
 >修复：DeliveryHeader,DropboxHeader 在API-17以下显示不全的问题  
 
 ## V 1.0.3 (开发中)
+>添加：下拉和上拉时，支持多点触摸，手势不冲突
 >添加：当 内容视图不满一页时，默认不能上拉加载更多，不过必要时，通过设置还是可以上拉的  
 >添加：为 Heaer和Footer添加拖动时水平方向坐标 x，实现左右拖动Header的效果  
 >添加：为 Refreshlayout 添加多点触摸支持，在多个手指触摸式不会发生冲突，并且随意拖动  
@@ -38,6 +39,6 @@
 >修复：autoRefresh(0) 的 延时为没有延时  
 >修复：StaggeredGridLayoutManager 导致的 autoLoadmore 无效  
 >修复：列表监听滚动无效的问题  
-
+>修复：内存泄漏问题
  
 
