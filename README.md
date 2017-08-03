@@ -31,6 +31,7 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
  - 支持内容尺寸自适应 Content-wrap_content
  - 支持继承重写和扩展功能，内部实现没有 private 方法和字段，继承之后都可以重写覆盖
  - 支持越界回弹（Listview、RecyclerView、ScrollView、WebView...View）
+ - 支持下拉、上拉多点触摸，各种手势冲突
  
 ## 传送门
 
@@ -39,6 +40,7 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
  - [属性方法](art/md_property.md)
  - [博客文章](https://segmentfault.com/a/1190000010066071) 
  - [源码下载](https://github.com/scwang90/SmartRefreshLayout/releases) 
+ - [多点触摸](art/md_multitouch.md)
  - [自定义Header](art/md_custom.md)
  
 ## Demo
