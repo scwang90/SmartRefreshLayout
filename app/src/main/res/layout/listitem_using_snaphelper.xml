@@ -13,6 +13,7 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:maxHeight="550dp"
         android:scaleType="centerCrop"
         android:adjustViewBounds="true"
         android:contentDescription="@string/app_name"
