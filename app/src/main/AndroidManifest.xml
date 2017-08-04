@@ -143,6 +143,9 @@
         <activity android:name=".activity.using.CustomUsingActivity"
             android:label="@string/title_activity_using_custom"
             android:screenOrientation="portrait" />
+        <activity android:name=".activity.using.SnapHelperUsingActivity"
+            android:label="@string/title_activity_using_snaphelper"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

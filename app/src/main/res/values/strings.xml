@@ -95,4 +95,5 @@
     <string name="title_activity_practice_weibo">微博主页</string>
     <string name="title_activity_practice_qqbrowser">QQ浏览器</string>
     <string name="github_qqbrowser_kernel">网页由 github.com 提供\n已启用QQ浏览器X5内核</string>
+    <string name="title_activity_using_snaphelper">SnapHelper</string>
 </resources>
