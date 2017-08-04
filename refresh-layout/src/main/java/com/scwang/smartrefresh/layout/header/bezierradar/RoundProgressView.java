@@ -48,6 +48,13 @@ public class RoundProgressView extends View {
 
         mAnimator = ValueAnimator.ofInt(0,360);
         mAnimator.setDuration(720);
+        mAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        mAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
         mAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -55,8 +62,12 @@ public class RoundProgressView extends View {
                 postInvalidate();
             }
         });
-        mAnimator.setRepeatCount(ValueAnimator.INFINITE);
-        mAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        mAnimator.removeAllUpdateListeners();
     }
 
     @Override
