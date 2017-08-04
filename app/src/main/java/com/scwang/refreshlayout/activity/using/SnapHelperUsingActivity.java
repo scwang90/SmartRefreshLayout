@@ -49,8 +49,8 @@ public class SnapHelperUsingActivity extends AppCompatActivity {
                     holder.image(R.id.imageView, model);
                 }
             });
-            SnapHelper mMySnapHelper = new PagerSnapHelper();
-            mMySnapHelper.attachToRecyclerView(recyclerView);
+            SnapHelper snapHelper = new PagerSnapHelper();
+            snapHelper.attachToRecyclerView(recyclerView);
         }
 
     }
