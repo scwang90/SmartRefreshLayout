@@ -233,6 +233,7 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
                 mCircleView.makeProgressTransparent();
                 break;
             case PullDownCanceled:
+                mCircleView.showArrow(false);
                 mCircleView.setProgressStartEndTrim(0f, 0f);
                 mWaveView.startWaveAnimation(mLastFirstBounds);
                 mLastFirstBounds = 0;
