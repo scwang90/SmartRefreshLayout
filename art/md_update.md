@@ -17,7 +17,7 @@
 >添加：为 ClassicsFooter 添加 srlProgressDrawable 属性 和 setProgressResource 改变转动图片  
 >修改：改 EnableLoadMore 由默认true->变为false，并增加智能开启功能  
 >修改：改 EnableNestedScrolling 由默认true->变为false，并增加智能开启功能  
->修复：为ClassicsFooter加载失败时，显示成了加载完成  
+>修复：在 ClassicsFooter 加载失败时，显示成了加载完成的错误  
 >修复：正在刷新时，向上拖动导致的栈溢出崩溃  
 >修复：autoRefresh(0) 的 延时为没有延时  
 >修复：StaggeredGridLayoutManager 导致的 autoLoadmore 无效  
