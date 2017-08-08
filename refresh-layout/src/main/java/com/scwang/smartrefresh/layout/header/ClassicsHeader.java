@@ -290,46 +290,14 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
 
     @Override
     public void setPrimaryColors(int... colors) {
-        if (colors.length > 1) {
+        if (colors.length > 0) {
             if (!(getBackground() instanceof BitmapDrawable)) {
-                setBackgroundColor(mBackgroundColor = colors[0]);
-                if (mRefreshKernel != null) {
-                    mRefreshKernel.requestDrawBackgoundForHeader(colors[0]);
-                }
+                setPrimaryColor(colors[0]);
             }
-            if (mArrowDrawable != null) {
-                mArrowDrawable.parserColors(colors[1]);
-            }
-            mTitleText.setTextColor(colors[1]);
-            if (mProgressDrawable != null) {
-                mProgressDrawable.setColor(colors[1]);
-            }
-            mLastUpdateText.setTextColor(colors[1]&0x00ffffff|0xcc000000);
-        } else if (colors.length > 0) {
-            if (!(getBackground() instanceof BitmapDrawable)) {
-                setBackgroundColor(mBackgroundColor = colors[0]);
-                if (mRefreshKernel != null) {
-                    mRefreshKernel.requestDrawBackgoundForHeader(colors[0]);
-                }
-            }
-            if (colors[0] == 0xffffffff) {
-                if (mArrowDrawable != null) {
-                    mArrowDrawable.parserColors(0xff666666);
-                }
-                mTitleText.setTextColor(0xff666666);
-                if (mProgressDrawable != null) {
-                    mProgressDrawable.setColor(0xff666666);
-                }
-                mLastUpdateText.setTextColor(0xff666666&0x00ffffff|0xcc000000);
+            if (colors.length > 1) {
+                setAccentColor(colors[1]);
             } else {
-                if (mArrowDrawable != null) {
-                    mArrowDrawable.parserColors(0xffffffff);
-                }
-                mTitleText.setTextColor(0xffffffff);
-                if (mProgressDrawable != null) {
-                    mProgressDrawable.setColor(0xffffffff);
-                }
-                mLastUpdateText.setTextColor(0xaaffffff);
+                setAccentColor(colors[0] == 0xffffffff ? 0xff666666 : 0xffffffff);
             }
         }
     }
@@ -448,6 +416,14 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
 
     public ClassicsHeader setSpinnerStyle(SpinnerStyle style) {
         this.mSpinnerStyle = style;
+        return this;
+    }
+
+    public ClassicsHeader setPrimaryColor(int primaryColor) {
+        setBackgroundColor(mBackgroundColor = primaryColor);
+        if (mRefreshKernel != null) {
+            mRefreshKernel.requestDrawBackgoundForHeader(mBackgroundColor);
+        }
         return this;
     }
 

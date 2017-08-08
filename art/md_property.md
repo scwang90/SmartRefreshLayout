@@ -92,7 +92,8 @@
 ## Header-Method
 |name|format|description|
 |:---:|:---:|:---:|
-|setPrimaryColors|colors|设置主题\强调颜色|
+|setPrimaryColor|color|主题颜色|
+|setAccentColor|color|强调颜色|
 |setArrowDrawable|drawable|设置箭头图片|
 |setProgressDrawable|drawable|设置转动图片|
 |setArrowBitmap|bitmap|设置箭头图片|

@@ -3,6 +3,7 @@ package com.scwang.smartrefresh.layout.footer;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
@@ -202,39 +203,14 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
     @Override
     public void setPrimaryColors(int... colors) {
         if (mSpinnerStyle == SpinnerStyle.FixedBehind) {
-            if (colors.length > 1) {
-                setBackgroundColor(mBackgroundColor = colors[0]);
-                if (mRefreshKernel != null) {
-                    mRefreshKernel.requestDrawBackgoundForFooter(mBackgroundColor);
+            if (colors.length > 0) {
+                if (!(getBackground() instanceof BitmapDrawable)) {
+                    setPrimaryColor(colors[0]);
                 }
-                mTitleText.setTextColor(colors[1]);
-                if (mProgressDrawable != null) {
-                    mProgressDrawable.setColor(colors[1]);
-                }
-                if (mArrowDrawable != null) {
-                    mArrowDrawable.parserColors(colors[1]);
-                }
-            } else if (colors.length > 0) {
-                setBackgroundColor(mBackgroundColor = colors[0]);
-                if (mRefreshKernel != null) {
-                    mRefreshKernel.requestDrawBackgoundForFooter(mBackgroundColor);
-                }
-                if (colors[0] == 0xffffffff) {
-                    mTitleText.setTextColor(0xff666666);
-                    if (mProgressDrawable != null) {
-                        mProgressDrawable.setColor(0xff666666);
-                    }
-                    if (mArrowDrawable != null) {
-                        mArrowDrawable.parserColors(0xff666666);
-                    }
+                if (colors.length > 1) {
+                    setAccentColor(colors[1]);
                 } else {
-                    mTitleText.setTextColor(0xffffffff);
-                    if (mProgressDrawable != null) {
-                        mProgressDrawable.setColor(0xffffffff);
-                    }
-                    if (mArrowDrawable != null) {
-                        mArrowDrawable.parserColors(0xffffffff);
-                    }
+                    setAccentColor(colors[0] == 0xffffffff ? 0xff666666 : 0xffffffff);
                 }
             }
         }
