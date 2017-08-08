@@ -48,6 +48,7 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
     protected ProgressDrawable mProgressDrawable;
     protected SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
     protected RefreshKernel mRefreshKernel;
+    protected int mFinishDelay = 500;
     protected int mBackgroundColor = 0;
     protected boolean mLoadmoreFinished = false;
 
@@ -101,6 +102,10 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ClassicsFooter);
 
         mSpinnerStyle = SpinnerStyle.values()[ta.getInt(R.styleable.ClassicsFooter_srlClassicsSpinnerStyle, mSpinnerStyle.ordinal())];
+
+        if (ta.hasValue(R.styleable.ClassicsFooter_srlFinishDelay)) {
+            mFinishDelay = ta.getIndex(R.styleable.ClassicsFooter_srlFinishDelay);
+        }
 
         if (ta.hasValue(R.styleable.ClassicsFooter_srlArrowDrawable)) {
             mArrowView.setImageDrawable(ta.getDrawable(R.styleable.ClassicsFooter_srlArrowDrawable));
@@ -184,7 +189,7 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
             } else {
                 mBottomText.setText(REFRESH_FOOTER_FAILED);
             }
-            return 500;
+            return mFinishDelay;
         }
         return 0;
     }
@@ -370,6 +375,10 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
         if (mRefreshKernel != null) {
             mRefreshKernel.requestDrawBackgoundForFooter(mBackgroundColor);
         }
+        return this;
+    }
+    public ClassicsFooter setFinishDelay(int delay) {
+        this.mFinishDelay = delay;
         return this;
     }
     //</editor-fold>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="srlFinishDelay" format="integer"/><!--完成时停留时间-->
     <attr name="srlPrimaryColor" format="color"/><!--主要颜色-->
     <attr name="srlAccentColor" format="color"/><!--强调颜色-->
     <attr name="srlArrowDrawable" format="reference"/><!--箭头图片-->
@@ -68,6 +69,7 @@
         <attr name="srlAccentColor"/>
         <attr name="srlArrowDrawable"/>
         <attr name="srlProgressDrawable"/>
+        <attr name="srlFinishDelay"/>
     </declare-styleable>
 
     <declare-styleable name="ClassicsFooter">
@@ -76,6 +78,7 @@
         <attr name="srlAccentColor"/>
         <attr name="srlArrowDrawable"/>
         <attr name="srlProgressDrawable"/>
+        <attr name="srlFinishDelay"/>
     </declare-styleable>
 
 </resources>

@@ -88,16 +88,16 @@ public class RefreshContentWrapper implements RefreshContent {
         mScrollableView = findScrollableViewInternal(content, true);
         try {//try 不能删除，不然会出现兼容性问题
             if (mScrollableView instanceof CoordinatorLayout) {
-                kernel.getRefreshLayout().setNestedScrollingEnabled(false);
+                kernel.getRefreshLayout().setEnabledNestedScroll(false);
                 wrapperCoordinatorLayout(((CoordinatorLayout) mScrollableView), kernel.getRefreshLayout());
             }
-        } catch (Exception ignored) {
+        } catch (Throwable ignored) {
         }
         try {//try 不能删除，不然会出现兼容性问题
             if (mScrollableView instanceof ViewPager) {
                 wrapperViewPager((ViewPager) this.mScrollableView);
             }
-        } catch (Exception ignored) {
+        } catch (Throwable ignored) {
         }
         if (mScrollableView instanceof NestedScrollingParent
                 && !(mScrollableView instanceof NestedScrollingChild)) {

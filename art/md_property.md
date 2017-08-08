@@ -82,6 +82,7 @@
 |srlProgressDrawable|drawable|转动图片|
 |srlClassicsSpinnerStyle|enum|变换样式：Translate(平行移动)、Scale（拉伸形变）、FixedBehind（固定在背后）|
 |srlSpinnerStyle|enum|变换样式：srlClassicsSpinnerStyle的全部、FixedFront（固定在前面或全屏）|
+|srlFinishDelay|int|动画结束时，显示完成状态停留的时间（毫秒）|
 
 ## Header-Method
 |name|format|description|
@@ -91,3 +92,4 @@
 |setProgressDrawable|drawable|设置转动图片|
 |setSpinnerStyle|enum|变换样式：参考属性srlSpinnerStyle|
 |setClassicsSpinnerStyle|enum|变换样式：参考属性srlClassicsSpinnerStyle|
+|setFinishDelay|int|设置动画结束时，显示完成状态停留的时间（毫秒）|

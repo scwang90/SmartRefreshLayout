@@ -68,6 +68,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     protected SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
     protected SharedPreferences mShared;
     protected RefreshKernel mRefreshKernel;
+    protected int mFinishDelay = 500;
     protected int mBackgroundColor;
 
     //<editor-fold desc="RelativeLayout">
@@ -139,6 +140,10 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ClassicsHeader);
 
         mSpinnerStyle = SpinnerStyle.values()[ta.getInt(R.styleable.ClassicsHeader_srlClassicsSpinnerStyle,mSpinnerStyle.ordinal())];
+
+        if (ta.hasValue(R.styleable.ClassicsHeader_srlFinishDelay)) {
+            mFinishDelay = ta.getIndex(R.styleable.ClassicsHeader_srlFinishDelay);
+        }
 
         if (ta.hasValue(R.styleable.ClassicsHeader_srlArrowDrawable)) {
             mArrowView.setImageDrawable(ta.getDrawable(R.styleable.ClassicsHeader_srlArrowDrawable));
@@ -242,7 +247,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
         } else {
             mHeaderText.setText(REFRESH_HEADER_FAILED);
         }
-        return 500;//延迟500毫秒之后再弹回
+        return mFinishDelay;//延迟500毫秒之后再弹回
     }
 
     @Override
@@ -419,6 +424,12 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
         mLastUpdateText.setTextColor(accentColor&0x00ffffff|0x99000000);
         return this;
     }
+
+    public ClassicsHeader setFinishDelay(int delay) {
+        this.mFinishDelay = delay;
+        return this;
+    }
+
     //</editor-fold>
 
 }
