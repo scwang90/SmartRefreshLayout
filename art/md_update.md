@@ -12,11 +12,16 @@
 >添加：为 Refreshlayout 添加 EnableLoadmoreWhenContentNotFull 功能  
 >添加：为 Refreshlayout 添加 srlEnabledNestedScroll 属性 和 srlEnabledNestedScroll 方法  
 >添加：为 RefreshHeader 添加 srlEnableHorizontalDrag 属性 和 setEnableHorizontalDrag 方法  
->添加：为 ClassicsHeader 添加 srlArrowDrawable 属性 和 setArrowResource 方法 改变箭头图片  
+>添加：为 ClassicsHeader 添加 srlEnableLastTime 属性 和 setEnableLastTime 方法 控制时间显示  
+>添加：为 ClassicsHeader 添加 srlDrawableArrow 属性 和 setArrowResource 方法 改变箭头图片  
 >添加：为 ClassicsHeader 添加 srlProgressDrawable 属性 和 setProgressResource 改变转动图片  
->添加：为 ClassicsFooter 添加 srlArrowDrawable 属性 和 setArrowResource 方法 改变箭头图片  
->添加：为 ClassicsFooter 添加 srlProgressDrawable 属性 和 setProgressResource 改变转动图片
+>添加：为 ClassicsHeader 添加 srlTextSizeTime 属性 和 setTextSizeTime 方法 设置字体大小  
+>添加：为 ClassicsHeader 添加 srlTextTimeMarginTop 属性 时间文字的上间距  
+>添加：为 ClassicsFooter 添加 srlDrawableArrow 属性 和 setArrowResource 方法 改变箭头图片  
+>添加：为 ClassicsFooter 添加 srlDrawableProgress 属性 和 setProgressResource 改变转动图片  
 >添加：为 ClassicsHeader 和 ClassicsFooter 添加 srlFinishDelay 属性 和 setFinishDelay 方法  
+>添加：为 ClassicsHeader 和 ClassicsFooter 添加 srlDrawableMarginRight 属性 设置图片间距  
+>添加：为 ClassicsHeader 和 ClassicsFooter 添加 srlTextSizeTitle 属性 和 setTextSizeTitle 方法  
 >修改：改 EnableLoadMore 由默认true->变为false，并增加智能开启功能  
 >修改：改 EnableNestedScrolling 由默认true->变为false，并增加智能开启功能  
 >修复：在 ClassicsFooter 加载失败时，显示成了加载完成的错误  

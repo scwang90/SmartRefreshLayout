@@ -78,11 +78,16 @@
 |:---:|:---:|:---:|
 |srlPrimaryColor|color|主题颜色|
 |srlAccentColor|color|强调颜色|
-|srlArrowDrawable|drawable|箭头图片|
-|srlProgressDrawable|drawable|转动图片|
+|srlDrawableArrow|drawable|箭头图片|
+|srlDrawableProgress|drawable|转动图片|
 |srlClassicsSpinnerStyle|enum|变换样式：Translate(平行移动)、Scale（拉伸形变）、FixedBehind（固定在背后）|
 |srlSpinnerStyle|enum|变换样式：srlClassicsSpinnerStyle的全部、FixedFront（固定在前面或全屏）|
 |srlFinishDelay|int|动画结束时，显示完成状态停留的时间（毫秒）|
+|srlEnableLastTime|boolean|是否显示上次更新时间（默认true）|
+|srlDrawableMarginRight|dimension|图片相对右边文字的距离（默认20dp）|
+|srlTextTimeMarginTop|dimension|更新时间相对上面标题的距离（默认2dp）|
+|srlTextSizeTitle|dimension|标题文字大小（默认16sp）|
+|srlTextSizeTime|dimension|时间文字大小（默认12sp）|
 
 ## Header-Method
 |name|format|description|
@@ -90,6 +95,13 @@
 |setPrimaryColors|colors|设置主题\强调颜色|
 |setArrowDrawable|drawable|设置箭头图片|
 |setProgressDrawable|drawable|设置转动图片|
+|setArrowBitmap|bitmap|设置箭头图片|
+|setProgressBitmap|bitmap|设置转动图片|
+|setArrowResource|int|设置箭头图片|
+|setProgressResource|int|设置转动图片|
 |setSpinnerStyle|enum|变换样式：参考属性srlSpinnerStyle|
 |setClassicsSpinnerStyle|enum|变换样式：参考属性srlClassicsSpinnerStyle|
 |setFinishDelay|int|设置动画结束时，显示完成状态停留的时间（毫秒）|
+|setEnableLastTime|boolean|是否显示上次更新时间（默认true）|
+|setTextSizeTitle|dimension|标题文字大小（默认16sp）|
+|setTextSizeTime|dimension|时间文字大小（默认12sp）|

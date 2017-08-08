@@ -2493,7 +2493,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         }
         //</editor-fold>
 
-        //<editor-fold desc="绘制背景 Backgound">
+        //<editor-fold desc="请求事件">
         @Override
         public RefreshKernel requestDrawBackgoundForHeader(int backgroundColor) {
             if (mPaint == null && backgroundColor != 0) {
@@ -2511,18 +2511,28 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             mFooterBackgroundColor = backgroundColor;
             return this;
         }
-        //</editor-fold>
-
-        //<editor-fold desc="注册事件">
         @Override
         public RefreshKernel requestHeaderNeedTouchEventWhenRefreshing(boolean request) {
             mHeaderNeedTouchEventWhenRefreshing = request;
             return this;
         }
-
         @Override
         public RefreshKernel requestFooterNeedTouchEventWhenLoading(boolean request) {
             mFooterNeedTouchEventWhenRefreshing = request;
+            return this;
+        }
+        @Override
+        public RefreshKernel requestRemeasureHeightForHeader() {
+            if (mHeaderHeightStatus.notifyed) {
+                mHeaderHeightStatus = mHeaderHeightStatus.unNotify();
+            }
+            return this;
+        }
+        @Override
+        public RefreshKernel requestRemeasureHeightForFooter() {
+            if (mFooterHeightStatus.notifyed) {
+                mFooterHeightStatus = mFooterHeightStatus.unNotify();
+            }
             return this;
         }
         //</editor-fold>

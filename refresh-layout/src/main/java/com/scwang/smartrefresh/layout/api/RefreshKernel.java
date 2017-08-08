@@ -71,7 +71,7 @@ public interface RefreshKernel {
     int getSpinner();
     //</editor-fold>
 
-    //<editor-fold desc="绘制背景 Backgound">
+    //<editor-fold desc="请求事件">
 
     /**
      * 指定在下拉时候为 Header 绘制背景
@@ -83,18 +83,21 @@ public interface RefreshKernel {
      * @param backgroundColor 背景颜色
      */
     RefreshKernel requestDrawBackgoundForFooter(int backgroundColor);
-
-    //</editor-fold>
-
-    //<editor-fold desc="请求事件">
     /**
      * 请求事件
      */
     RefreshKernel requestHeaderNeedTouchEventWhenRefreshing(boolean request);
-
     /**
      * 请求事件
      */
     RefreshKernel requestFooterNeedTouchEventWhenLoading(boolean request);
+    /**
+     * 请求重新测量
+     */
+    RefreshKernel requestRemeasureHeightForHeader();
+    /**
+     * 请求重新测量
+     */
+    RefreshKernel requestRemeasureHeightForFooter();
     //</editor-fold>
 }
