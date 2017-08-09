@@ -1,4 +1,203 @@
+# 代码示例
 
+## SmartRefreshLayout
+~~~java
+public class RefreshActivity extends Activity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        //下面示例中的值等于默认值
+        RefreshLayout refreshLayout = (RefreshLayout)findViewById(R.id.refreshLayout);
+        refreshLayout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);
+        refreshLayout.setDragRate(0.5f);//显示下拉高度/手指真实下拉高度=阻尼效果
+        refreshLayout.setReboundDuration(300);//回弹动画时长（毫秒）
+        refreshLayout.setHeaderMaxDragRate(2);//最大显示下拉高度/Header标准高度
+        refreshLayout.setFooterMaxDragRate(2);//最大显示下拉高度/Footer标准高度
+        refreshLayout.setHeaderHeight(100);//Header标准高度（显示下拉高度>=标准高度 触发刷新）
+        refreshLayout.setHeaderHeightPx(100);//同上-像素为单位
+        refreshLayout.setFooterHeight(100);//Footer标准高度（显示上拉高度>=标准高度 触发加载）
+        refreshLayout.setFooterHeightPx(100);//同上-像素为单位
+        refreshLayout.setEnableRefresh(true);//是否启用下拉刷新功能
+        refreshLayout.setEnableLoadmore(true);//是否启用下拉刷新功能
+        refreshLayout.setEnableAutoLoadmore(true);//是否启用列表惯性滑动到底部时自动加载更多
+        refreshLayout.setEnablePureScrollMode(false);//是否启用纯滚动模式
+        refreshLayout.setEnableNestedScroll(false);//是否启用嵌套滚动
+        refreshLayout.setEnableOverScrollBounce(true);//是否启用越界回弹
+        refreshLayout.setEnableScrollContentWhenLoaded(true);//是否在加载完成时滚动列表显示新的内容
+        refreshLayout.setEnableHeaderTranslationContent(true);//是否下拉Header的时候向下平移列表或者内容
+        refreshLayout.setEnableFooterTranslationContent(true);//是否上啦Footer的时候向上平移列表或者内容
+        refreshLayout.setEnableLoadmoreWhenContentNotFull(true);//是否在列表不满一页时候开启上拉加载功能
+        refreshLayout.setDisableContentWhenRefresh(false);//是否在刷新的时候禁止列表的操作
+        refreshLayout.setDisableContentWhenLoading(false);//是否在加载的时候禁止列表的操作
+    }
+}
+~~~
+~~~xml
+<!-- 下面示例中的值等于默认值 -->
+<com.scwang.smartrefresh.layout.SmartRefreshLayout
+    android:id="@+id/refreshLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:srlAccentColor="@android:color/white"
+    app:srlPrimaryColor="@color/colorPrimary"
+    app:srlReboundDuration="300"
+    app:srlDragRate="0.5"
+    app:srlHeaderMaxDragRate="2"
+    app:srlFooterMaxDragRate="2"
+    app:srlHeaderHeight="100dp"
+    app:srlFooterHeight="100dp"
+    app:srlEnableRefresh="true"
+    app:srlEnableLoadmore="true"
+    app:srlEnableAutoLoadmore="true"
+    app:srlEnablePureScrollMode="false"
+    app:srlEnableNestedScrolling="false"
+    app:srlEnableOverScrollBounce="true"
+    app:srlEnablePreviewInEditMode="true"
+    app:srlEnableScrollContentWhenLoaded="true"
+    app:srlEnableHeaderTranslationContent="true"
+    app:srlEnableFooterTranslationContent="true"
+    app:srlEnableLoadmoreWhenContentNotFull="false"
+    app:srlDisableContentWhenRefresh="false"
+    app:srlDisableContentWhenLoading="false"
+    app:srlFixedFooterViewId="@+id/header_fixed"
+    app:srlFixedHeaderViewId="@+id/footer_fixed"/>
+    <!--srlAccentColor:强调颜色-->
+    <!--srlPrimaryColor:主题颜色-->
+    <!--srlEnablePreviewInEditMode:是否启用Android Studio编辑xml时预览效果-->
+    <!--srlFixedFooterViewId:指定一个View在内容列表滚动时固定-->
+    <!--srlFixedHeaderViewId:指定一个View在内容列表滚动时固定-->
+    <!--未说明的：看上面的set方法说明-->
+~~~
+
+## ClassicsHeader
+~~~java
+public class RefreshActivity extends Activity {
+    static {
+        ClassicsHeader.REFRESH_HEADER_PULLDOWN = "下拉可以刷新";
+        ClassicsHeader.REFRESH_HEADER_REFRESHING = "正在刷新...";
+        ClassicsHeader.REFRESH_HEADER_LOADING = "正在加载...";
+        ClassicsHeader.REFRESH_HEADER_RELEASE = "释放立即刷新";
+        ClassicsHeader.REFRESH_HEADER_FINISH = "刷新完成";
+        ClassicsHeader.REFRESH_HEADER_FAILED = "刷新失败";
+        ClassicsHeader.REFRESH_HEADER_LASTTIME = "上次更新 M-d HH:mm";
+    }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        //下面示例中的值等于默认值
+        ClassicsFooter header = (ClassicsFooter)findViewById(R.id.footer);
+        header.setAccentColor(android.R.color.white);//设置强调颜色
+        header.setPrimaryColor(R.color.colorPrimary);//设置主题颜色
+        header.setTextSizeTitle(16);//设置标题文字大小（sp单位）
+        header.setTextSizeTitle(16, TypedValue.COMPLEX_UNIT_SP);//同上
+        header.setTextSizeTime(10);//设置时间文字大小（sp单位）
+        header.setTextSizeTime(10, TypedValue.COMPLEX_UNIT_SP);//同上
+        header.setTextTimeMarginTop(10);//设置时间文字的上边距（dp单位）
+        header.setTextTimeMarginTopPx(10);//同上-像素单位
+        header.setEnableLastTime(true);//是否显示时间
+        header.setFinishDuration(500);//设置刷新完成显示的停留时间
+        header.setDrawableSize(20);//同时设置箭头和图片的大小（dp单位）
+        header.setDrawableArrowSize(20);//设置箭头的大小（dp单位）
+        header.setDrawableProgressSize(20);//设置图片的大小（dp单位）
+        header.setDrawableMarginRight(20);//设置图片和箭头和文字的间距（dp单位）
+        header.setDrawableSizePx(20);//同上-像素单位
+        header.setDrawableArrowSizePx(20);//同上-像素单位
+        header.setDrawableProgressSizePx(20);//同上-像素单位
+        header.setDrawableMarginRightPx(20);//同上-像素单位
+        header.setArrowBitmap(bitmap);//设置箭头位图
+        header.setArrowDrawable(drawable);//设置箭头图片
+        header.setArrowResource(R.drawable.ic_arrow);//设置箭头资源
+        header.setProgressBitmap(bitmap);//设置图片位图
+        header.setProgressDrawable(drawable);//设置图片
+        header.setProgressResource(R.drawable.ic_progress);//设置图片资源
+        header.setTimeFormat(new DynamicTimeFormat("上次更新 %s"));//设置时间格式化
+        header.setSpinnerStyle(SpinnerStyle.Translate);//设置状态（不支持：MatchLayout）
+    }
+}
+~~~
+~~~xml
+<!-- 下面示例中的值等于默认值 -->
+<com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    <com.scwang.smartrefresh.layout.header.ClassicsHeader
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srlAccentColor="@android:color/white"
+        app:srlPrimaryColor="@color/colorPrimary"
+        app:srlTextSizeTitle="16sp"
+        app:srlTextSizeTime="10dp"
+        app:srlTextTimeMarginTop="2dp"
+        app:srlEnableLastTime="true"
+        app:srlFinishDuration="500"
+        app:srlDrawableSize="20dp"
+        app:srlDrawableArrowSize="20dp"
+        app:srlDrawableProgressSize="20dp"
+        app:srlDrawableMarginRight="20dp"
+        app:srlDrawableArrow="@drawable/ic_arrow"
+        app:srlDrawableProgress="@drawable/ic_progress"
+        app:srlClassicsSpinnerStyle="Translate"/>
+</com.scwang.smartrefresh.layout.SmartRefreshLayout>
+~~~
+
+
+## ClassicsFooter
+~~~java
+public class RefreshActivity extends Activity {
+    static {
+        ClassicsFooter.REFRESH_FOOTER_PULLUP = "上拉加载更多";
+        ClassicsFooter.REFRESH_FOOTER_RELEASE = "释放立即加载";
+        ClassicsFooter.REFRESH_FOOTER_REFRESHING = "正在刷新...";
+        ClassicsFooter.REFRESH_FOOTER_LOADING = "正在加载...";
+        ClassicsFooter.REFRESH_FOOTER_FINISH = "加载完成";
+        ClassicsFooter.REFRESH_FOOTER_FAILED = "加载失败";
+        ClassicsFooter.REFRESH_FOOTER_ALLLOADED = "全部加载完成";
+    }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        //下面示例中的值等于默认值
+        ClassicsFooter footer = (ClassicsFooter)findViewById(R.id.footer);
+        footer.setAccentColor(android.R.color.white);//设置强调颜色
+        footer.setPrimaryColor(R.color.colorPrimary);//设置主题颜色
+        footer.setTextSizeTitle(16);//设置标题文字大小（sp单位）
+        footer.setTextSizeTitle(16, TypedValue.COMPLEX_UNIT_SP);//同上
+        footer.setFinishDuration(500);//设置刷新完成显示的停留时间
+        footer.setDrawableSize(20);//同时设置箭头和图片的大小（dp单位）
+        footer.setDrawableArrowSize(20);//设置箭头的大小（dp单位）
+        footer.setDrawableProgressSize(20);//设置图片的大小（dp单位）
+        footer.setDrawableMarginRight(20);//设置图片和箭头和文字的间距（dp单位）
+        footer.setDrawableSizePx(20);//同上-像素单位
+        footer.setDrawableArrowSizePx(20);//同上-像素单位
+        footer.setDrawableProgressSizePx(20);//同上-像素单位
+        footer.setDrawableMarginRightPx(20);//同上-像素单位
+        footer.setArrowBitmap(bitmap);//设置箭头位图
+        footer.setArrowDrawable(drawable);//设置箭头图片
+        footer.setArrowResource(R.drawable.ic_arrow);//设置箭头资源
+        footer.setProgressBitmap(bitmap);//设置图片位图
+        footer.setProgressDrawable(drawable);//设置图片
+        footer.setProgressResource(R.drawable.ic_progress);//设置图片资源
+        footer.setSpinnerStyle(SpinnerStyle.Translate);//设置状态（不支持：MatchLayout）
+    }
+}
+~~~
+~~~xml
+<!-- 下面示例中的值等于默认值 -->
+<com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    <com.scwang.smartrefresh.layout.header.ClassicsFooter
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srlAccentColor="@android:color/white"
+        app:srlPrimaryColor="@color/colorPrimary"
+        app:srlTextSizeTitle="16sp"
+        app:srlFinishDuration="500"
+        app:srlDrawableSize="20dp"
+        app:srlDrawableArrowSize="20dp"
+        app:srlDrawableProgressSize="20dp"
+        app:srlDrawableMarginRight="20dp"
+        app:srlDrawableArrow="@drawable/ic_arrow"
+        app:srlDrawableProgress="@drawable/ic_progress"
+        app:srlClassicsSpinnerStyle="Translate"/>
+</com.scwang.smartrefresh.layout.SmartRefreshLayout>
+~~~
+
+
+# 属性表格
 ## Attributes
 
 |name|format|description|
@@ -82,7 +281,7 @@
 |srlDrawableProgress|drawable|转动图片|
 |srlClassicsSpinnerStyle|enum|变换样式：Translate(平行移动)、Scale（拉伸形变）、FixedBehind（固定在背后）|
 |srlSpinnerStyle|enum|变换样式：srlClassicsSpinnerStyle的全部、FixedFront（固定在前面或全屏）|
-|srlFinishDelay|int|动画结束时，显示完成状态停留的时间（毫秒）|
+|srlFinishDuration|int|动画结束时，显示完成状态停留的时间（毫秒）|
 |srlEnableLastTime|boolean|是否显示上次更新时间（默认true）|
 |srlDrawableMarginRight|dimension|图片相对右边文字的距离（默认20dp）|
 |srlTextTimeMarginTop|dimension|更新时间相对上面标题的距离（默认2dp）|
@@ -102,7 +301,7 @@
 |setProgressResource|int|设置转动图片|
 |setSpinnerStyle|enum|变换样式：参考属性srlSpinnerStyle|
 |setClassicsSpinnerStyle|enum|变换样式：参考属性srlClassicsSpinnerStyle|
-|setFinishDelay|int|设置动画结束时，显示完成状态停留的时间（毫秒）|
+|setFinishDuration|int|设置动画结束时，显示完成状态停留的时间（毫秒）|
 |setEnableLastTime|boolean|是否显示上次更新时间（默认true）|
 |setTextSizeTitle|dimension|标题文字大小（默认16sp）|
 |setTextSizeTime|dimension|时间文字大小（默认12sp）|

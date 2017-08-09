@@ -30,6 +30,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.webkit.WebView;
@@ -57,8 +58,8 @@ import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnMultiPurposeListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
-import com.scwang.smartrefresh.layout.util.DensityUtil;
 import com.scwang.smartrefresh.layout.util.DelayedRunable;
+import com.scwang.smartrefresh.layout.util.DensityUtil;
 import com.scwang.smartrefresh.layout.util.ViscousFluidInterpolator;
 
 import java.util.ArrayList;
@@ -166,7 +167,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     /**
      * 最大拖动比率(最大高度/Footer高度)
      */
-    protected float mFooterMaxDragRate = 3.0f;
+    protected float mFooterMaxDragRate = 2.0f;
     /**
      * 下拉头部视图
      */
@@ -494,11 +495,15 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             mRefreshHeader.setPrimaryColors(mPrimaryColors);
             mRefreshFooter.setPrimaryColors(mPrimaryColors);
         }
-
         try {
-            if (!mManualNestedScrolling && !isNestedScrollingEnabled()
-                    && getLayoutParams() instanceof CoordinatorLayout.LayoutParams) {
-                setNestedScrollingEnabled(true);
+            if (!mManualNestedScrolling && !isNestedScrollingEnabled()) {
+                for (ViewParent parent = this ; parent != null ; parent = parent.getParent()) {
+                    if (parent instanceof CoordinatorLayout) {
+                        setNestedScrollingEnabled(true);
+                        mManualNestedScrolling = false;
+                        break;
+                    }
+                }
             }
         } catch (Throwable e) {//try 不能删除，否则会出现兼容性问题
         }
@@ -1393,9 +1398,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         public LayoutParams(Context context, AttributeSet attrs) {
             super(context, attrs);
             TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.SmartRefreshLayout_Layout);
-            backgroundColor = ta.getColor(R.styleable.SmartRefreshLayout_Layout_srlBackgroundColor, backgroundColor);
-            if (ta.hasValue(R.styleable.SmartRefreshLayout_Layout_srlSpinnerStyle)) {
-                spinnerStyle = SpinnerStyle.values()[ta.getInt(R.styleable.SmartRefreshLayout_Layout_srlSpinnerStyle, SpinnerStyle.Translate.ordinal())];
+            backgroundColor = ta.getColor(R.styleable.SmartRefreshLayout_Layout_layout_srlBackgroundColor, backgroundColor);
+            if (ta.hasValue(R.styleable.SmartRefreshLayout_Layout_layout_srlSpinnerStyle)) {
+                spinnerStyle = SpinnerStyle.values()[ta.getInt(R.styleable.SmartRefreshLayout_Layout_layout_srlSpinnerStyle, SpinnerStyle.Translate.ordinal())];
             }
             ta.recycle();
         }
@@ -1868,7 +1873,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      * 设置是会否启用嵌套滚动功能（默认关闭+智能开启）
      */
     @Override
-    public RefreshLayout setEnabledNestedScroll(boolean enabled) {
+    public RefreshLayout setEnableNestedScroll(boolean enabled) {
         setNestedScrollingEnabled(enabled);
         return this;
     }
@@ -1884,7 +1889,11 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             }
             this.mRefreshHeader = header;
             this.mHeaderHeightStatus = mHeaderHeightStatus.unNotify();
-            this.addView(mRefreshHeader.getView());
+            if (header.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
+                this.addView(mRefreshHeader.getView(), 0);
+            } else {
+                this.addView(mRefreshHeader.getView());
+            }
         }
         return this;
     }
@@ -1901,6 +1910,11 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             this.mRefreshHeader = header;
             this.mHeaderHeightStatus = mHeaderHeightStatus.unNotify();
             this.addView(mRefreshHeader.getView(), width, height);
+            if (header.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
+                this.addView(mRefreshHeader.getView(), 0, new LayoutParams(width, height));
+            } else {
+                this.addView(mRefreshHeader.getView(), width, height);
+            }
         }
         return this;
     }
@@ -1917,7 +1931,11 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             this.mRefreshFooter = footer;
             this.mFooterHeightStatus = mFooterHeightStatus.unNotify();
             this.mEnableLoadmore = !mManualLoadmore || mEnableLoadmore;
-            this.addView(mRefreshFooter.getView());
+            if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
+                this.addView(mRefreshFooter.getView(), 0);
+            } else {
+                this.addView(mRefreshFooter.getView());
+            }
         }
         return this;
     }
@@ -1934,7 +1952,11 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             this.mRefreshFooter = footer;
             this.mFooterHeightStatus = mFooterHeightStatus.unNotify();
             this.mEnableLoadmore = !mManualLoadmore || mEnableLoadmore;
-            this.addView(mRefreshFooter.getView(), width, height);
+            if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
+                this.addView(mRefreshFooter.getView(), 0, new LayoutParams(width, height));
+            } else {
+                this.addView(mRefreshFooter.getView(), width, height);
+            }
         }
         return this;
     }

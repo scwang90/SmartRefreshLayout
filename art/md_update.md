@@ -19,9 +19,12 @@
 >添加：为 ClassicsHeader 添加 srlTextTimeMarginTop 属性 时间文字的上间距  
 >添加：为 ClassicsFooter 添加 srlDrawableArrow 属性 和 setArrowResource 方法 改变箭头图片  
 >添加：为 ClassicsFooter 添加 srlDrawableProgress 属性 和 setProgressResource 改变转动图片  
->添加：为 ClassicsHeader 和 ClassicsFooter 添加 srlFinishDelay 属性 和 setFinishDelay 方法  
+>添加：为 ClassicsHeader 和 ClassicsFooter 添加 srlFinishDuration 属性 和 setFinishDuration 方法  
 >添加：为 ClassicsHeader 和 ClassicsFooter 添加 srlDrawableMarginRight 属性 设置图片间距  
 >添加：为 ClassicsHeader 和 ClassicsFooter 添加 srlTextSizeTitle 属性 和 setTextSizeTitle 方法  
+>添加：为 ClassicsHeader 和 ClassicsFooter 添加 srlDrawableSize 属性 和 setDrawableSize 方法  
+>添加：为 ClassicsHeader 和 ClassicsFooter 添加 srlDrawableArrowSize 属性 和 setDrawableArrowSize 方法  
+>添加：为 ClassicsHeader 和 ClassicsFooter 添加 srlDrawableProgressSize 属性 和 setDrawableProgressSize 方法  
 >修改：改 EnableLoadMore 由默认true->变为false，并增加智能开启功能  
 >修改：改 EnableNestedScrolling 由默认true->变为false，并增加智能开启功能  
 >修复：在 ClassicsFooter 加载失败时，显示成了加载完成的错误  

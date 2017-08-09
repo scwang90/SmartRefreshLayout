@@ -9,6 +9,7 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -49,9 +50,11 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
     protected ProgressDrawable mProgressDrawable;
     protected SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
     protected RefreshKernel mRefreshKernel;
-    protected int mFinishDelay = 500;
+    protected int mFinishDuration = 500;
     protected int mBackgroundColor = 0;
     protected boolean mLoadmoreFinished = false;
+    protected int mPaddingTop = 20;
+    protected int mPaddingBottom = 20;
 
     //<editor-fold desc="LinearLayout">
     public ClassicsFooter(Context context) {
@@ -72,8 +75,6 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
     private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
         DensityUtil density = new DensityUtil();
 
-        setMinimumHeight(density.dip2px(60));
-
         mTitleText = new TextView(context);
         mTitleText.setId(android.R.id.widget_frame);
         mTitleText.setTextColor(0xff666666);
@@ -83,15 +84,18 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
         lpBottomText.addRule(CENTER_IN_PARENT);
         addView(mTitleText, lpBottomText);
 
+        LayoutParams lpArrow = new LayoutParams(density.dip2px(20), density.dip2px(20));
+        lpArrow.addRule(CENTER_VERTICAL);
+        lpArrow.addRule(LEFT_OF, android.R.id.widget_frame);
+        mArrowView = new ImageView(context);
+        addView(mArrowView, lpArrow);
+
+        LayoutParams lpProgress = new LayoutParams((ViewGroup.LayoutParams)lpArrow);
+        lpProgress.addRule(CENTER_VERTICAL);
+        lpProgress.addRule(LEFT_OF, android.R.id.widget_frame);
         mProgressView = new ImageView(context);
         mProgressView.animate().setInterpolator(new LinearInterpolator());
-        LayoutParams lpPathView = new LayoutParams(density.dip2px(18), density.dip2px(18));
-        lpPathView.rightMargin = density.dip2px(20);
-        lpPathView.addRule(CENTER_VERTICAL);
-        lpPathView.addRule(LEFT_OF, android.R.id.widget_frame);
-        addView(mProgressView, lpPathView);
-        mArrowView = new ImageView(context);
-        addView(mArrowView, lpPathView);
+        addView(mProgressView, lpProgress);
 
         if (!isInEditMode()) {
             mProgressView.setVisibility(GONE);
@@ -101,7 +105,20 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ClassicsFooter);
 
-        mFinishDelay = ta.getInt(R.styleable.ClassicsFooter_srlFinishDelay, mFinishDelay);
+        lpProgress.rightMargin = ta.getDimensionPixelSize(R.styleable.ClassicsFooter_srlDrawableMarginRight, density.dip2px(20));
+        lpArrow.rightMargin = lpProgress.rightMargin;
+
+        lpArrow.width = ta.getLayoutDimension(R.styleable.ClassicsHeader_srlDrawableArrowSize, lpArrow.width);
+        lpArrow.height = ta.getLayoutDimension(R.styleable.ClassicsHeader_srlDrawableArrowSize, lpArrow.height);
+        lpProgress.width = ta.getLayoutDimension(R.styleable.ClassicsHeader_srlDrawableProgressSize, lpProgress.width);
+        lpProgress.height = ta.getLayoutDimension(R.styleable.ClassicsHeader_srlDrawableProgressSize, lpProgress.height);
+
+        lpArrow.width = ta.getLayoutDimension(R.styleable.ClassicsHeader_srlDrawableSize, lpArrow.width);
+        lpArrow.height = ta.getLayoutDimension(R.styleable.ClassicsHeader_srlDrawableSize, lpArrow.height);
+        lpProgress.width = ta.getLayoutDimension(R.styleable.ClassicsHeader_srlDrawableSize, lpProgress.width);
+        lpProgress.height = ta.getLayoutDimension(R.styleable.ClassicsHeader_srlDrawableSize, lpProgress.height);
+
+        mFinishDuration = ta.getInt(R.styleable.ClassicsFooter_srlFinishDuration, mFinishDuration);
         mSpinnerStyle = SpinnerStyle.values()[ta.getInt(R.styleable.ClassicsFooter_srlClassicsSpinnerStyle, mSpinnerStyle.ordinal())];
 
         if (ta.hasValue(R.styleable.ClassicsFooter_srlDrawableArrow)) {
@@ -121,8 +138,8 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
             mProgressView.setImageDrawable(mProgressDrawable);
         }
 
-        if (ta.hasValue(R.styleable.ClassicsHeader_srlTextSizeTitle)) {
-            mTitleText.setTextSize(ta.getDimensionPixelSize(R.styleable.ClassicsHeader_srlTextSizeTitle, 16));
+        if (ta.hasValue(R.styleable.ClassicsFooter_srlTextSizeTitle)) {
+            mTitleText.setTextSize(ta.getDimensionPixelSize(R.styleable.ClassicsFooter_srlTextSizeTitle, 16));
         } else {
             mTitleText.setTextSize(16);
         }
@@ -135,6 +152,32 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
         }
 
         ta.recycle();
+
+        if (getPaddingTop() == 0) {
+            if (getPaddingBottom() == 0) {
+                setPadding(getPaddingLeft(), mPaddingTop = density.dip2px(20), getPaddingRight(), mPaddingBottom = density.dip2px(20));
+            } else {
+                setPadding(getPaddingLeft(), mPaddingTop = density.dip2px(20), getPaddingRight(), mPaddingBottom = getPaddingBottom());
+            }
+        } else {
+            if (getPaddingBottom() == 0) {
+                setPadding(getPaddingLeft(), mPaddingTop = getPaddingTop(), getPaddingRight(), mPaddingBottom = density.dip2px(20));
+            } else {
+                mPaddingTop = getPaddingTop();
+                mPaddingBottom = getPaddingBottom();
+            }
+        }
+
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        if (MeasureSpec.getMode(heightMeasureSpec) == MeasureSpec.EXACTLY) {
+            setPadding(getPaddingLeft(), 0, getPaddingRight(), 0);
+        } else {
+            setPadding(getPaddingLeft(), mPaddingTop, getPaddingRight(), mPaddingBottom);
+        }
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
     //</editor-fold>
@@ -192,7 +235,7 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
             } else {
                 mTitleText.setText(REFRESH_FOOTER_FAILED);
             }
-            return mFinishDelay;
+            return mFinishDuration;
         }
         return 0;
     }
@@ -354,8 +397,8 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
         }
         return this;
     }
-    public ClassicsFooter setFinishDelay(int delay) {
-        mFinishDelay = delay;
+    public ClassicsFooter setFinishDuration(int delay) {
+        mFinishDuration = delay;
         return this;
     }
 
@@ -372,6 +415,57 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
         if (mRefreshKernel != null) {
             mRefreshKernel.requestRemeasureHeightForFooter();
         }
+        return this;
+    }
+
+    public ClassicsFooter setDrawableMarginRight(float dp) {
+        return setDrawableMarginRightPx(DensityUtil.dp2px(dp));
+    }
+
+    public ClassicsFooter setDrawableMarginRightPx(int px) {
+        MarginLayoutParams lpArrow = (MarginLayoutParams)mArrowView.getLayoutParams();
+        MarginLayoutParams lpProgress = (MarginLayoutParams)mProgressView.getLayoutParams();
+        lpArrow.rightMargin = lpProgress.rightMargin = px;
+        mArrowView.setLayoutParams(lpArrow);
+        mProgressView.setLayoutParams(lpProgress);
+        return this;
+    }
+
+    public ClassicsFooter setDrawableSize(float dp) {
+        return setDrawableSizePx(DensityUtil.dp2px(dp));
+    }
+
+    public ClassicsFooter setDrawableSizePx(int px) {
+        ViewGroup.LayoutParams lpArrow = mArrowView.getLayoutParams();
+        ViewGroup.LayoutParams lpProgress = mProgressView.getLayoutParams();
+        lpArrow.width = lpProgress.width = px;
+        lpArrow.height = lpProgress.height = px;
+        mArrowView.setLayoutParams(lpArrow);
+        mProgressView.setLayoutParams(lpProgress);
+        return this;
+    }
+
+    public ClassicsFooter setDrawableArrowSize(float dp) {
+        return setDrawableArrowSizePx(DensityUtil.dp2px(dp));
+    }
+
+    public ClassicsFooter setDrawableArrowSizePx(int px) {
+        ViewGroup.LayoutParams lpArrow = mArrowView.getLayoutParams();
+        lpArrow.width = px;
+        lpArrow.height = px;
+        mArrowView.setLayoutParams(lpArrow);
+        return this;
+    }
+
+    public ClassicsFooter setDrawableProgressSize(float dp) {
+        return setDrawableProgressSizePx(DensityUtil.dp2px(dp));
+    }
+
+    public ClassicsFooter setDrawableProgressSizePx(int px) {
+        ViewGroup.LayoutParams lpProgress = mProgressView.getLayoutParams();
+        lpProgress.width = px;
+        lpProgress.height = px;
+        mProgressView.setLayoutParams(lpProgress);
         return this;
     }
 

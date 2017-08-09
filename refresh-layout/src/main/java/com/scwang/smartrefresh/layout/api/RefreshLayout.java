@@ -134,7 +134,7 @@ public interface RefreshLayout {
     /**
      * 设置是会否启用嵌套滚动功能（默认关闭+智能开启）
      */
-    RefreshLayout setEnabledNestedScroll(boolean enabled);
+    RefreshLayout setEnableNestedScroll(boolean enabled);
 
     /**
      * 单独设置刷新监听器

@@ -88,7 +88,7 @@ public class RefreshContentWrapper implements RefreshContent {
         mScrollableView = findScrollableViewInternal(content, true);
         try {//try 不能删除，不然会出现兼容性问题
             if (mScrollableView instanceof CoordinatorLayout) {
-                kernel.getRefreshLayout().setEnabledNestedScroll(false);
+                kernel.getRefreshLayout().setEnableNestedScroll(false);
                 wrapperCoordinatorLayout(((CoordinatorLayout) mScrollableView), kernel.getRefreshLayout());
             }
         } catch (Throwable ignored) {
@@ -398,6 +398,7 @@ public class RefreshContentWrapper implements RefreshContent {
                 kernel.animSpinnerBounce(Math.min(velocity, mHeaderHeight));
             } else if (oldScrollY < scrollY && mMotionEvent == null && layout.isEnableLoadmore()) {
                 if (!layout.isLoadmoreFinished() && layout.isEnableAutoLoadmore()
+                        && !layout.isEnablePureScrollMode()
                         && layout.getState() == RefreshState.None
                         && !canScrollDown(v)) {
                     kernel.getRefreshLayout().autoLoadmore(0, 1);
@@ -461,6 +462,7 @@ public class RefreshContentWrapper implements RefreshContent {
                 kernel.animSpinnerBounce(Math.min(velocity, mHeaderHeight));
             } else if (oldScrollY < scrollY && mMotionEvent == null && layout.isEnableLoadmore()) {
                 if (!layout.isLoadmoreFinished() && layout.isEnableAutoLoadmore()
+                        && !layout.isEnablePureScrollMode()
                         && layout.getState() == RefreshState.None
                         && !canScrollDown(scrollView)) {
                     kernel.getRefreshLayout().autoLoadmore(0, 1);
@@ -545,8 +547,9 @@ public class RefreshContentWrapper implements RefreshContent {
                             && layout.isEnableLoadmore()
                             && !canScrollDown(absListView)) {
                         if (layout.getState() == RefreshState.None
+                                && layout.isEnableAutoLoadmore()
                                 && !layout.isLoadmoreFinished()
-                                && layout.isEnableAutoLoadmore()) {
+                                && !layout.isEnablePureScrollMode()) {
                             layout.autoLoadmore(0, 1);
                         } else if (layout.isEnableOverScrollBounce() || layout.isLoading()) {
                             kernel.animSpinnerBounce(Math.max(dy, -mFooterHeight));
@@ -632,7 +635,9 @@ public class RefreshContentWrapper implements RefreshContent {
                     kernel.animSpinnerBounce(Math.min(-dy * 2, mHeaderHeight));
                 } else if (dy > 0 && layout.isEnableLoadmore() && !canScrollDown(recyclerView)) {
                     if (layout.getState() == RefreshState.None
-                            && layout.isEnableAutoLoadmore() && !layout.isLoadmoreFinished()) {
+                            && layout.isEnableAutoLoadmore()
+                            && !layout.isLoadmoreFinished()
+                            && !layout.isEnablePureScrollMode()) {
                         layout.autoLoadmore(0,1);
                     } else if (layout.isEnableOverScrollBounce() || layout.isLoading()) {
                         kernel.animSpinnerBounce(Math.max(-dy * 2, -mFooterHeight));
