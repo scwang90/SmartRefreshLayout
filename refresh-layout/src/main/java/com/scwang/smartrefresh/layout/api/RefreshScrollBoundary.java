@@ -13,11 +13,11 @@ public interface RefreshScrollBoundary {
      * @param content 内容视图
      * @return false 将会触发下拉刷新
      */
-    boolean canPullDown(View content);
+    boolean canRefresh(View content);
     /**
      * 内容是否可以上拉滚动
      * @param content 内容视图
      * @return false 将会触发加载更多
      */
-    boolean canPullUp(View content);
+    boolean canLoadmore(View content);
 }

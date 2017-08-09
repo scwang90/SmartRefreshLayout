@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/badge/License%20-Apache%202-337ab7.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Arsenal](https://img.shields.io/badge/%20Arsenal%20-%20SmartRefresh%20-4cae4c.svg?style=flat)](https://android-arsenal.com/details/1/6001)
-[![Jcenter](https://img.shields.io/badge/%20Jcenter%20-1.0.2-5bc0de.svg) ](https://bintray.com/scwang90/maven/SmartRefreshLayout/_latestVersion) 
+[![Jcenter](https://img.shields.io/badge/%20Jcenter%20-1.0.3-5bc0de.svg) ](https://bintray.com/scwang90/maven/SmartRefreshLayout/_latestVersion) 
 [![MinSdk](https://img.shields.io/badge/%20MinSdk%20-%2012%2B%20-f0ad4e.svg?style=flat)](https://android-arsenal.com/api?level=12)
 [![Methods](https://img.shields.io/badge/%20Methods%20%7C%20Size%20-%201251%20%7C%20129%20KB-d9534f.svg)](http://www.methodscount.com/?lib=com.scwang.smartrefresh%3ASmartRefreshLayout%3A1.0.2)
 
@@ -23,7 +23,7 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
  - 支持和ListView的同步滚动 和 RecyclerView、AppBarLayout、CoordinatorLayout 的嵌套滚动 NestedScrolling.
  - 支持在Android Studio Xml 编辑器中预览 效果（图）
  - 支持分别在 Default（默认）、Xml、JavaCode 三个中设置 Header 和 Footer.
- - 支持自动刷新、自动上拉加载（自动检测列表滚动到底部，而不用手动上拉）.
+ - 支持自动刷新、自动上拉加载（自动检测列表惯性滚动到底部，而不用手动上拉）.
  - 支持通用的刷新监听器 OnRefreshListener 和更详细的滚动监听 OnMultiPurposeListener.
  - 支持自定义回弹动画的插值器，实现各种炫酷的动画效果.
  - 支持设置主题来适配任何场景的App，不会出现炫酷但很尴尬的情况.
@@ -31,6 +31,7 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
  - 支持内容尺寸自适应 Content-wrap_content
  - 支持继承重写和扩展功能，内部实现没有 private 方法和字段，继承之后都可以重写覆盖
  - 支持越界回弹（Listview、RecyclerView、ScrollView、WebView...View）
+ - 支持多点触摸，下拉、上拉各种手势冲突
  
 ## 传送门
 
@@ -38,6 +39,8 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
  - [更新日志](art/md_update.md)
  - [属性方法](art/md_property.md)
  - [博客文章](https://segmentfault.com/a/1190000010066071) 
+ - [源码下载](https://github.com/scwang90/SmartRefreshLayout/releases) 
+ - [多点触摸](art/md_multitouch.md)
  - [自定义Header](art/md_custom.md)
  
 ## Demo
@@ -93,8 +96,8 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
 #### 1.在 buld.gradle 中添加依赖
 ```
 compile 'com.android.support:appcompat-v7:25.3.1'//版本随意
-compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3-alpha-3'
-compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3-alpha-3'//没有使用特殊Header，可以不加这行
+compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
+compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'//没有使用特殊Header，可以不加这行
 ```
 
 #### 2.在XML布局文件中添加 SmartRefreshLayout
@@ -135,14 +138,14 @@ refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
 #### 1.方法一 全局设置
 ```java
 public class App extends Application {
-    public void onCreate() {
-        super.onCreate();
+    //static 代码段可以防止内存泄露
+    static {
         //设置全局的Header构建器
         SmartRefreshLayout.setDefaultRefreshHeaderCreater(new DefaultRefreshHeaderCreater() {
                 @Override
                 public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
-                    //指定为经典Header，默认是 贝塞尔雷达Header
-                    return new ClassicsHeader(context).setSpinnerStyle(SpinnerStyle.Translate);
+                    layout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);//全局设置主题颜色
+                    return new ClassicsHeader(context).setSpinnerStyle(SpinnerStyle.Translate);//指定为经典Header，默认是 贝塞尔雷达Header
                 }
             });
         //设置全局的Footer构建器
@@ -219,11 +222,11 @@ SmartRefreshLayout 没有使用到：序列化、反序列化、JNI、反射，�
 
 ## 讨论
 
-### QQ咨询群 - 602537182 （付费）  
+### QQ解决群 - 602537182 （付费）  
 #### 进群须知
 自开群以来，还是有很多的朋友提出了很多问题，我也解决了很多问题，其中有大半问题是本库的Bug导致，也有些是使用者项目本
 身的环境问题，这花费了我大量的时间，经过我的观察和测试，到目前为止，本库的bug已经越来越少，当然不能说完全没有，但是
-已经能满足很大部分项目的需求。所以从现在起，我做出一个决定：把之前的讨论群改成咨询群，并开启付费入群功能，专为解决大
+已经能满足很大部分项目的需求。所以从现在起，我做出一个决定：把之前的讨论群改成解决群，并开启付费入群功能，专为解决大
 家在使用本库时遇到的问题，不管是本库bug还是，特殊的项目环境导致（包含项目本身的bug）。
 我也有自己的工作和娱乐时间，只有大家理解和支持我，我才能专心的为大家解决问题。不过用担心，我已经建立了另一个可以免费
 进入的QQ讨论群。
@@ -232,10 +235,10 @@ SmartRefreshLayout 没有使用到：序列化、反序列化、JNI、反射，�
 #### 进群须知
 这个群，免费进入，大家可以相互讨论本库的相关使用和出现的问题，群主也会在里面解决问题，如果提出的问题，群成员不
 能帮助解决，需要群主解决，但是要花费群主五分钟以上的时间（本库Bug除外），群主将不会解决这个问题，如果项目紧急，请付
-费进入咨询群解决（不过注意，付费群中群主会很认真很努力的解决问题，但也不能保证已经能完美解决）或者转换使用其他的刷新
+费进入解决群解决（不过注意，付费群中群主会很认真很努力的解决问题，但也不能保证已经能完美解决）或者转换使用其他的刷新
 库。
 
-<!-- 本群专为 【Android智能下拉刷新框架-SmartRefreshLayout】开设，请不要讨论安卓和下拉刷新之外的内容。本群中后期会改为收费咨询群，并再开启免费讨论群，还没进群的童鞋赶紧~ -->
+<!-- 本群专为 【Android智能下拉刷新框架-SmartRefreshLayout】开设，请不要讨论安卓和下拉刷新之外的内容。本群中后期会改为收费解决群，并再开启免费讨论群，还没进群的童鞋赶紧~ -->
 #### 温馨提示
 加入群的答案在本文档中可以找到~
 

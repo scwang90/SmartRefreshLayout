@@ -98,7 +98,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
                     bounceAnimateView(child.findViewById(R.id.icon));
                 }
                 updateTheme();//改变主题颜色
-                mListView.postDelayed(new Runnable() {
+                mRefreshlayout.getLayout().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         //通知刷新完成，这里改为通知Header，让纸飞机飞回来

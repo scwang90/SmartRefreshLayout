@@ -30,6 +30,7 @@ import static android.view.View.MeasureSpec.getSize;
  * Created by SCWANG on 2017/6/2.
  */
 
+@SuppressWarnings("unused")
 public class MaterialHeader extends ViewGroup implements RefreshHeader {
 
     // Maps to ProgressBar.Large style
@@ -112,12 +113,6 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
         }
         ta.recycle();
 
-    }
-
-    @Override
-    public void setLayoutParams(ViewGroup.LayoutParams params) {
-        super.setLayoutParams(params);
-        params.height = -3;
     }
 
     @Override
@@ -276,6 +271,7 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
         mState = newState;
         switch (newState) {
             case None:
+                break;
             case PullDownToRefresh:
                 mFinished = false;
                 mCircleView.setVisibility(VISIBLE);
@@ -302,7 +298,6 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
         if (colors.length > 0) {
             mBezierPaint.setColor(colors[0]);
         }
-        //mProgress.setColorSchemeColors(colors);
     }
 
     @NonNull
@@ -313,7 +308,7 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
 
     @Override
     public SpinnerStyle getSpinnerStyle() {
-        return SpinnerStyle.FixedFront;
+        return SpinnerStyle.MatchLayout;
     }
     //</editor-fold>
 

@@ -1,8 +1,6 @@
 package com.scwang.refreshlayout.fragment;
 
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,18 +15,17 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 import com.scwang.refreshlayout.R;
+import com.scwang.refreshlayout.activity.practice.BannerPracticeActivity;
 import com.scwang.refreshlayout.activity.practice.FeedlistPracticeActivity;
 import com.scwang.refreshlayout.activity.practice.ProfilePracticeActivity;
+import com.scwang.refreshlayout.activity.practice.QQBrowserPracticeActivity;
 import com.scwang.refreshlayout.activity.practice.RepastPracticeActivity;
 import com.scwang.refreshlayout.activity.practice.WebviewPracticeActivity;
 import com.scwang.refreshlayout.activity.practice.WeiboPracticeActivity;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
-import com.scwang.smartrefresh.layout.api.RefreshHeader;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.scwang.refreshlayout.util.StatusBarUtil;
 
-import java.lang.reflect.Constructor;
 import java.util.Arrays;
 
 import static android.R.layout.simple_list_item_2;
@@ -42,10 +39,12 @@ public class RefreshPractiveFragment extends Fragment implements AdapterView.OnI
 
     private enum Item {
         Repast("餐饮美食-简单自定义Header-外边距magin", RepastPracticeActivity.class),
-        Profile("个人中心-OverScroll", ProfilePracticeActivity.class),
+        Profile("个人中心-PureScrollMode-纯滚动模式", ProfilePracticeActivity.class),
         Webview("网页引用-WebView", WebviewPracticeActivity.class),
         FeedList("微博列表-智能识别", FeedlistPracticeActivity.class),
         Weibo("微博主页-CoordinatorLayout", WeiboPracticeActivity.class),
+        Banner("滚动广告-Banner", BannerPracticeActivity.class),
+        QQBrowser("QQ浏览器-模拟QQ浏览器内核提示", QQBrowserPracticeActivity.class),
         ;
         public String name;
         public Class<?> clazz;
@@ -64,6 +63,7 @@ public class RefreshPractiveFragment extends Fragment implements AdapterView.OnI
     @Override
     public void onViewCreated(View root, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(root, savedInstanceState);
+        StatusBarUtil.setPaddingSmart(getContext(), root.findViewById(R.id.toolbar));
 
         View view = root.findViewById(R.id.recyclerView);
         if (view instanceof RecyclerView) {
@@ -85,22 +85,6 @@ public class RefreshPractiveFragment extends Fragment implements AdapterView.OnI
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Item item = Item.values()[position];
-        if (Activity.class.isAssignableFrom(item.clazz)) {
-            startActivity(new Intent(getContext(), item.clazz));
-        } else if (RefreshHeader.class.isAssignableFrom(item.clazz)) {
-            try {
-                Constructor<?> constructor = item.clazz.getConstructor(Context.class);
-                RefreshHeader header = (RefreshHeader) constructor.newInstance(getContext());
-                RefreshLayout layout = (RefreshLayout) getView().findViewById(R.id.refreshLayout);
-                layout.setRefreshHeader(header);
-                if (!(header instanceof ClassicsHeader)) {
-                    layout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);
-                }
-                layout.autoRefresh();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        startActivity(new Intent(getContext(), Item.values()[position].clazz));
     }
 }

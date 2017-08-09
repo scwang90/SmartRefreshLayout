@@ -79,6 +79,7 @@ public class RepastPracticeActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             refreshlayout.finishRefresh();
+                            refreshlayout.setLoadmoreFinished(false);//恢复上拉状态
                         }
                     }, 2000);
                 }

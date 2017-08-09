@@ -22,7 +22,8 @@
             android:layout_height="match_parent"
             android:layout_marginTop="?attr/actionBarSize"
             android:scaleType="centerCrop"
-            android:src="@mipmap/gif_header_repast"/>
+            android:src="@mipmap/gif_header_repast"
+            app:srlSpinnerStyle="Scale"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
@@ -30,6 +31,12 @@
             android:paddingTop="?attr/actionBarSize"
             android:clipToPadding="false"
             tools:listitem="@layout/listitem_practive_repast"/>
+        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlAccentColor="#888"
+            app:srlSpinnerStyle="Translate"
+            app:srlDrawableProgress="@drawable/ic_progress_hojder"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <com.github.mmin18.widget.RealtimeBlurView

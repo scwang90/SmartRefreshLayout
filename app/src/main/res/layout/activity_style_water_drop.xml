@@ -16,9 +16,11 @@
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:srlHeaderMaxDragRate="2.5"
         app:srlPrimaryColor="@android:color/darker_gray"
         app:srlAccentColor="@android:color/white"
         app:srlEnableLoadmore="false">
+        <!--srlHeaderMaxDragRate=2.5时候WaterDropHeader的下拉效果最好-->
         <com.scwang.smartrefresh.header.WaterDropHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

@@ -212,7 +212,7 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override
-    public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
+    public void onStartAnimator(final RefreshLayout layout, int headHeight, int extendHeight) {
         Animator animator = mWaterDropView.createAnimator();
         animator.addListener(new AnimatorListenerAdapter() {
             @Override
@@ -226,13 +226,13 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
             }
         });
         animator.start();//开始回弹
-        postDelayed(new Runnable() {
+        layout.getLayout().postDelayed(new Runnable() {
             @Override
             public void run() {
                 mProgressDegree = (mProgressDegree + 30) % 360;
                 invalidate();
                 if (mState == RefreshState.Refreshing) {
-                    postDelayed(this, 100);
+                    layout.getLayout().postDelayed(this, 100);
                 }
             }
         },100);

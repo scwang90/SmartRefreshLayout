@@ -449,8 +449,8 @@ public class  StoreHouseHeader extends View implements RefreshHeader {
             }
 
             mTick++;
-            if (mRunning) {
-                postDelayed(this, mInterval);
+            if (mRunning && mRefreshKernel != null) {
+                mRefreshKernel.getRefreshLayout().getLayout().postDelayed(this, mInterval);
             }
         }
 

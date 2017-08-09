@@ -176,7 +176,7 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
     }
 
     @Override
-    public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
+    public void onStartAnimator(final RefreshLayout layout, int headHeight, int extendHeight) {
         mWaveView.setHeadHeight(headHeight);
         ValueAnimator animator = ValueAnimator.ofInt(
                 mWaveView.getWaveHeight(), 0,
@@ -201,7 +201,7 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
                 mDotView.setVisibility(INVISIBLE);
                 mProgressView.animate().scaleX((float) 1.0);
                 mProgressView.animate().scaleY((float) 1.0);
-                mProgressView.postDelayed(new Runnable() {
+                layout.getLayout().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         mProgressView.startAnim();

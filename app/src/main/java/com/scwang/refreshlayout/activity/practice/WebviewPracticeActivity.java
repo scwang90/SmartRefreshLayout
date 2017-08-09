@@ -11,7 +11,6 @@ import android.webkit.WebViewClient;
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.util.StatusBarUtil;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
@@ -44,21 +43,6 @@ public class WebviewPracticeActivity extends AppCompatActivity {
                 webView.loadUrl("https://github.com/scwang90/SmartRefreshLayout");
             }
         });
-        refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
-            @Override
-            public void onLoadmore(RefreshLayout refreshlayout) {
-
-            }
-        });
-        toolbar.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                refreshLayout.finishRefresh();
-                refreshLayout.finishLoadmore();
-                return false;
-            }
-        });
-
         refreshLayout.autoRefresh();
 
 
@@ -69,9 +53,11 @@ public class WebviewPracticeActivity extends AppCompatActivity {
                 view.loadUrl(url);
                 return true;
             }
+
             @Override
-            public void onPageCommitVisible(WebView view, String url) {
-//                refreshLayout.finishRefresh();
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                refreshLayout.finishRefresh();
                 view.loadUrl(String.format(Locale.CHINA, "javascript:document.body.style.paddingTop='%fpx'; void 0", DensityUtil.px2dp(webView.getPaddingTop())));
             }
         });

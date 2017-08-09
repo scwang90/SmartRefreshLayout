@@ -226,7 +226,6 @@ public class ClassicsHeader extends LinearLayout implements RefreshHeader {
 虽然接口的其他方法我们不用特意去实现，但是方法体还是要声明一下，整合之后完整的代码如下：
 
 ~~~java
-
 public class ClassicsHeader extends LinearLayout implements RefreshHeader {
 
     private TextView mHeaderText;//标题文本
@@ -236,15 +235,29 @@ public class ClassicsHeader extends LinearLayout implements RefreshHeader {
 
     public ClassicsHeader(Context context) {
         super(context);
-        setGravity(Gravity.CENTER_HORIZONTAL);
+        initView(context);
+    }
+    public ClassicsHeader(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        this.initView(context);
+    }
+    public ClassicsHeader(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        this.initView(context);
+    }
+    private void initView(Context context) {
+        setGravity(Gravity.CENTER);
         mHeaderText = new TextView(context);
         mProgressDrawable = new ProgressDrawable();
         mArrowView = new PathsView(context);
         mProgressView = new ImageView(context);
         mProgressView.setImageDrawable(mProgressDrawable);
-        addView(mHeaderText, lpHeaderText);
-        addView(mProgressView);
-        addView(mArrowView, lpProgress);
+        mArrowView.parserPaths("M20,12l-1.41,-1.41L13,16.17V4h-2v12.17l-5.58,-5.59L4,12l8,8 8,-8z");
+        addView(mProgressView, DensityUtil.dp2px(20), DensityUtil.dp2px(20));
+        addView(mArrowView, DensityUtil.dp2px(20), DensityUtil.dp2px(20));
+        addView(new View(context), DensityUtil.dp2px(20), DensityUtil.dp2px(20));
+        addView(mHeaderText, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        setMinimumHeight(DensityUtil.dp2px(60));
     }
     @NonNull
     public View getView() {
@@ -264,9 +277,13 @@ public class ClassicsHeader extends LinearLayout implements RefreshHeader {
         if (success){
             mHeaderText.setText("刷新完成");
         } else {
-            mHeaderText.setText("刷新失败");        
+            mHeaderText.setText("刷新失败");
         }
         return 500;//延迟500毫秒之后再弹回
+    }
+    @Override
+    public boolean isSupportHorizontalDrag() {
+        return false;
     }
     @Override
     public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
@@ -291,6 +308,9 @@ public class ClassicsHeader extends LinearLayout implements RefreshHeader {
     }
     @Override
     public void onInitialized(RefreshKernel kernel, int height, int extendHeight) {
+    }
+    @Override
+    public void onHorizontalDrag(float percentX, int offsetX, int offsetMax) {
     }
     @Override
     public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {

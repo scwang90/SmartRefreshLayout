@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.scwang.refreshlayout.activity.style.BezierStyleActivity"
+    tools:context="com.scwang.refreshlayout.activity.style.ClassicsStyleActivity"
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
@@ -21,7 +21,14 @@
         <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:srlClassicsSpinnerStyle="FixedBehind"/>
+            app:srlFinishDelay="500"
+            app:srlEnableLastTime="false"
+            app:srlClassicsSpinnerStyle="FixedBehind"
+            app:srlTextSizeTitle="16sp"
+            app:srlTextSizeTime="10dp"
+            app:srlTextTimeMarginTop="2dp"
+            app:srlDrawableMarginRight="20dp"
+            app:srlDrawableProgress="@drawable/ic_progress_hojder"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"

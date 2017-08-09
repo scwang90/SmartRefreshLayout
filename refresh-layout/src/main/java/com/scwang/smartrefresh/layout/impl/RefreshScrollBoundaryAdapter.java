@@ -4,20 +4,20 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.scwang.smartrefresh.layout.api.RefreshScrollBoundary;
-
-import static com.scwang.smartrefresh.layout.util.ScrollBoundaryUtil.canScrollDown;
-import static com.scwang.smartrefresh.layout.util.ScrollBoundaryUtil.canScrollUp;
+import com.scwang.smartrefresh.layout.util.ScrollBoundaryUtil;
 
 /**
  * 滚动边界
  * Created by SCWANG on 2017/7/8.
  */
 
+@SuppressWarnings("WeakerAccess")
 public class RefreshScrollBoundaryAdapter implements RefreshScrollBoundary {
 
     //<editor-fold desc="Internal">
-    MotionEvent mActionEvent;
-    RefreshScrollBoundary boundary;
+    protected MotionEvent mActionEvent;
+    protected RefreshScrollBoundary boundary;
+    protected boolean mEnableLoadmoreWhenContentNotFull;
 
     void setRefreshScrollBoundary(RefreshScrollBoundary boundary){
         this.boundary = boundary;
@@ -30,19 +30,26 @@ public class RefreshScrollBoundaryAdapter implements RefreshScrollBoundary {
 
     //<editor-fold desc="RefreshScrollBoundary">
     @Override
-    public boolean canPullDown(View content) {
+    public boolean canRefresh(View content) {
         if (boundary != null) {
-            return boundary.canPullDown(content);
+            return boundary.canRefresh(content);
         }
-        return canScrollUp(content, mActionEvent);
+        return ScrollBoundaryUtil.canRefresh(content, mActionEvent);
     }
 
     @Override
-    public boolean canPullUp(View content) {
+    public boolean canLoadmore(View content) {
         if (boundary != null) {
-            return boundary.canPullUp(content);
+            return boundary.canLoadmore(content);
         }
-        return canScrollDown(content, mActionEvent);
+        if (mEnableLoadmoreWhenContentNotFull) {
+            return !ScrollBoundaryUtil.canScrollDown(content, mActionEvent);
+        }
+        return ScrollBoundaryUtil.canLoadmore(content, mActionEvent);
+    }
+
+    public void setEnableLoadmoreWhenContentNotFull(boolean enable) {
+        mEnableLoadmoreWhenContentNotFull = enable;
     }
     //</editor-fold>
 }

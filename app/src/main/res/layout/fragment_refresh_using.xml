@@ -7,15 +7,13 @@
     tools:context="com.scwang.refreshlayout.fragment.RefreshUsingFragment">
 
     <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
+        android:id="@+id/toolbar"
         app:title="@string/fragment_refresh_using"/>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:srlPrimaryColor="@color/colorPrimary"
-        app:srlAccentColor="@android:color/white"
-        app:srlEnableLoadmore="true">
+        android:layout_height="match_parent">
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"

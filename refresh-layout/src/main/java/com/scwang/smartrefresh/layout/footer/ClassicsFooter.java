@@ -3,6 +3,7 @@ package com.scwang.smartrefresh.layout.footer;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
@@ -30,25 +31,27 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
  * Created by SCWANG on 2017/5/28.
  */
 
+@SuppressWarnings("unused")
 public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
 
     public static String REFRESH_FOOTER_PULLUP = "上拉加载更多";
     public static String REFRESH_FOOTER_RELEASE = "释放立即加载";
-    public static String REFRESH_HEADER_REFRESHING = "正在刷新...";
     public static String REFRESH_FOOTER_LOADING = "正在加载...";
+    public static String REFRESH_FOOTER_REFRESHING = "正在刷新...";
     public static String REFRESH_FOOTER_FINISH = "加载完成";
     public static String REFRESH_FOOTER_FAILED = "加载失败";
     public static String REFRESH_FOOTER_ALLLOADED = "全部加载完成";
 
-    private TextView mBottomText;
-    private ImageView mArrowView;
-    private ImageView mProgressView;
-    private PathsDrawable mArrowDrawable;
-    private ProgressDrawable mProgressDrawable;
-    private SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
-    private RefreshKernel mRefreshKernel;
-    private int mBackgroundColor = 0;
-    private boolean mLoadmoreFinished = false;
+    protected TextView mTitleText;
+    protected ImageView mArrowView;
+    protected ImageView mProgressView;
+    protected PathsDrawable mArrowDrawable;
+    protected ProgressDrawable mProgressDrawable;
+    protected SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
+    protected RefreshKernel mRefreshKernel;
+    protected int mFinishDelay = 500;
+    protected int mBackgroundColor = 0;
+    protected boolean mLoadmoreFinished = false;
 
     //<editor-fold desc="LinearLayout">
     public ClassicsFooter(Context context) {
@@ -71,15 +74,14 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
 
         setMinimumHeight(density.dip2px(60));
 
-        mBottomText = new TextView(context);
-        mBottomText.setId(android.R.id.widget_frame);
-        mBottomText.setTextColor(0xff666666);
-        mBottomText.setTextSize(16);
-        mBottomText.setText(REFRESH_FOOTER_PULLUP);
+        mTitleText = new TextView(context);
+        mTitleText.setId(android.R.id.widget_frame);
+        mTitleText.setTextColor(0xff666666);
+        mTitleText.setText(REFRESH_FOOTER_PULLUP);
 
         LayoutParams lpBottomText = new LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
         lpBottomText.addRule(CENTER_IN_PARENT);
-        addView(mBottomText, lpBottomText);
+        addView(mTitleText, lpBottomText);
 
         mProgressView = new ImageView(context);
         mProgressView.animate().setInterpolator(new LinearInterpolator());
@@ -99,10 +101,11 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ClassicsFooter);
 
+        mFinishDelay = ta.getInt(R.styleable.ClassicsFooter_srlFinishDelay, mFinishDelay);
         mSpinnerStyle = SpinnerStyle.values()[ta.getInt(R.styleable.ClassicsFooter_srlClassicsSpinnerStyle, mSpinnerStyle.ordinal())];
 
-        if (ta.hasValue(R.styleable.ClassicsFooter_srlArrowDrawable)) {
-            mArrowView.setImageDrawable(ta.getDrawable(R.styleable.ClassicsFooter_srlArrowDrawable));
+        if (ta.hasValue(R.styleable.ClassicsFooter_srlDrawableArrow)) {
+            mArrowView.setImageDrawable(ta.getDrawable(R.styleable.ClassicsFooter_srlDrawableArrow));
         } else {
             mArrowDrawable = new PathsDrawable();
             mArrowDrawable.parserColors(0xff666666);
@@ -110,25 +113,25 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
             mArrowView.setImageDrawable(mArrowDrawable);
         }
 
-        if (ta.hasValue(R.styleable.ClassicsFooter_srlProgressDrawable)) {
-            mProgressView.setImageDrawable(ta.getDrawable(R.styleable.ClassicsFooter_srlProgressDrawable));
+        if (ta.hasValue(R.styleable.ClassicsFooter_srlDrawableProgress)) {
+            mProgressView.setImageDrawable(ta.getDrawable(R.styleable.ClassicsFooter_srlDrawableProgress));
         } else {
             mProgressDrawable = new ProgressDrawable();
             mProgressDrawable.setColor(0xff666666);
             mProgressView.setImageDrawable(mProgressDrawable);
         }
 
+        if (ta.hasValue(R.styleable.ClassicsHeader_srlTextSizeTitle)) {
+            mTitleText.setTextSize(ta.getDimensionPixelSize(R.styleable.ClassicsHeader_srlTextSizeTitle, 16));
+        } else {
+            mTitleText.setTextSize(16);
+        }
+
         if (ta.hasValue(R.styleable.ClassicsFooter_srlPrimaryColor)) {
-            int primaryColor = ta.getColor(R.styleable.ClassicsFooter_srlPrimaryColor, 0);
-            if (ta.hasValue(R.styleable.ClassicsFooter_srlAccentColor)) {
-                int accentColor = ta.getColor(R.styleable.ClassicsFooter_srlAccentColor, 0);
-                setPrimaryColors(primaryColor, accentColor);
-            } else {
-                setPrimaryColors(primaryColor);
-            }
-        } else if (ta.hasValue(R.styleable.ClassicsFooter_srlAccentColor)) {
-            int accentColor = ta.getColor(R.styleable.ClassicsFooter_srlAccentColor, 0);
-            setPrimaryColors(0, accentColor);
+            setPrimaryColor(ta.getColor(R.styleable.ClassicsFooter_srlPrimaryColor, 0));
+        }
+        if (ta.hasValue(R.styleable.ClassicsFooter_srlAccentColor)) {
+            setAccentColor(ta.getColor(R.styleable.ClassicsFooter_srlAccentColor, 0));
         }
 
         ta.recycle();
@@ -185,55 +188,29 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
             }
             mProgressView.setVisibility(GONE);
             if (success) {
-                mBottomText.setText(REFRESH_FOOTER_FINISH);
+                mTitleText.setText(REFRESH_FOOTER_FINISH);
             } else {
-                mBottomText.setText(REFRESH_FOOTER_FAILED);
+                mTitleText.setText(REFRESH_FOOTER_FAILED);
             }
-            return 500;
+            return mFinishDelay;
         }
         return 0;
     }
 
     /**
-     * ClassicsFooter 没有主题色
-     * ClassicsFooter has no primary colors
+     * ClassicsFooter 在(SpinnerStyle.FixedBehind)时才有主题色
      */
     @Override
     public void setPrimaryColors(int... colors) {
         if (mSpinnerStyle == SpinnerStyle.FixedBehind) {
-            if (colors.length > 1) {
-                setBackgroundColor(mBackgroundColor = colors[0]);
-                if (mRefreshKernel != null) {
-                    mRefreshKernel.requestDrawBackgoundForFooter(mBackgroundColor);
+            if (colors.length > 0) {
+                if (!(getBackground() instanceof BitmapDrawable)) {
+                    setPrimaryColor(colors[0]);
                 }
-                mBottomText.setTextColor(colors[1]);
-                if (mProgressDrawable != null) {
-                    mProgressDrawable.setColor(colors[1]);
-                }
-                if (mArrowDrawable != null) {
-                    mArrowDrawable.parserColors(colors[1]);
-                }
-            } else if (colors.length > 0) {
-                setBackgroundColor(mBackgroundColor = colors[0]);
-                if (mRefreshKernel != null) {
-                    mRefreshKernel.requestDrawBackgoundForFooter(mBackgroundColor);
-                }
-                if (colors[0] == 0xffffffff) {
-                    mBottomText.setTextColor(0xff666666);
-                    if (mProgressDrawable != null) {
-                        mProgressDrawable.setColor(0xff666666);
-                    }
-                    if (mArrowDrawable != null) {
-                        mArrowDrawable.parserColors(0xff666666);
-                    }
+                if (colors.length > 1) {
+                    setAccentColor(colors[1]);
                 } else {
-                    mBottomText.setTextColor(0xffffffff);
-                    if (mProgressDrawable != null) {
-                        mProgressDrawable.setColor(0xffffffff);
-                    }
-                    if (mArrowDrawable != null) {
-                        mArrowDrawable.parserColors(0xffffffff);
-                    }
+                    setAccentColor(colors[0] == 0xffffffff ? 0xff666666 : 0xffffffff);
                 }
             }
         }
@@ -247,9 +224,9 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
         if (mLoadmoreFinished != finished) {
             mLoadmoreFinished = finished;
             if (finished) {
-                mBottomText.setText(REFRESH_FOOTER_ALLLOADED);
+                mTitleText.setText(REFRESH_FOOTER_ALLLOADED);
             } else {
-                mBottomText.setText(REFRESH_FOOTER_PULLUP);
+                mTitleText.setText(REFRESH_FOOTER_PULLUP);
             }
             if (mProgressDrawable != null) {
                 mProgressDrawable.stop();
@@ -257,6 +234,7 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
                 mProgressView.animate().rotation(0).setDuration(300);
             }
             mProgressView.setVisibility(GONE);
+            mArrowView.setVisibility(GONE);
         }
         return true;
     }
@@ -279,20 +257,20 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
 //                    restoreRefreshLayoutBackground();
                     mArrowView.setVisibility(VISIBLE);
                 case PullToUpLoad:
-                    mBottomText.setText(REFRESH_FOOTER_PULLUP);
+                    mTitleText.setText(REFRESH_FOOTER_PULLUP);
                     mArrowView.animate().rotation(180);
                     break;
                 case Loading:
                     mArrowView.setVisibility(GONE);
-                    mBottomText.setText(REFRESH_FOOTER_LOADING);
+                    mTitleText.setText(REFRESH_FOOTER_LOADING);
                     break;
                 case ReleaseToLoad:
-                    mBottomText.setText(REFRESH_FOOTER_RELEASE);
+                    mTitleText.setText(REFRESH_FOOTER_RELEASE);
                     mArrowView.animate().rotation(0);
 //                    replaceRefreshLayoutBackground(refreshLayout);
                     break;
                 case Refreshing:
-                    mBottomText.setText(REFRESH_HEADER_REFRESHING);
+                    mTitleText.setText(REFRESH_FOOTER_REFRESHING);
                     mProgressView.setVisibility(GONE);
                     mArrowView.setVisibility(GONE);
                     break;
@@ -360,7 +338,7 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
         return this;
     }
     public ClassicsFooter setAccentColor(int accentColor) {
-        mBottomText.setTextColor(accentColor);
+        mTitleText.setTextColor(accentColor);
         if (mProgressDrawable != null) {
             mProgressDrawable.setColor(accentColor);
         }
@@ -369,6 +347,46 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
         }
         return this;
     }
+    public ClassicsFooter setPrimaryColor(int primaryColor) {
+        setBackgroundColor(mBackgroundColor = primaryColor);
+        if (mRefreshKernel != null) {
+            mRefreshKernel.requestDrawBackgoundForFooter(mBackgroundColor);
+        }
+        return this;
+    }
+    public ClassicsFooter setFinishDelay(int delay) {
+        mFinishDelay = delay;
+        return this;
+    }
+
+    public ClassicsFooter setTextSizeTitle(float size) {
+        mTitleText.setTextSize(size);
+        if (mRefreshKernel != null) {
+            mRefreshKernel.requestRemeasureHeightForFooter();
+        }
+        return this;
+    }
+
+    public ClassicsFooter setTextSizeTitle(int unit, float size) {
+        mTitleText.setTextSize(unit, size);
+        if (mRefreshKernel != null) {
+            mRefreshKernel.requestRemeasureHeightForFooter();
+        }
+        return this;
+    }
+
+    public TextView getTitleText() {
+        return mTitleText;
+    }
+
+    public ImageView getProgressView() {
+        return mProgressView;
+    }
+
+    public ImageView getArrowView() {
+        return mArrowView;
+    }
+
     //</editor-fold>
 
 }

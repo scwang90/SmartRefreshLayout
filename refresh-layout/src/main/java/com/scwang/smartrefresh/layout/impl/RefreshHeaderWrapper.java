@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -52,6 +53,12 @@ public class RefreshHeaderWrapper implements RefreshHeader {
             return mSpinnerStyle;
         }
         ViewGroup.LayoutParams params = mWrapperView.getLayoutParams();
+        if (params instanceof SmartRefreshLayout.LayoutParams) {
+            mSpinnerStyle = ((SmartRefreshLayout.LayoutParams) params).spinnerStyle;
+            if (mSpinnerStyle != null) {
+                return mSpinnerStyle;
+            }
+        }
         if (params != null) {
             if (params.height == ViewGroup.LayoutParams.MATCH_PARENT) {
                 return mSpinnerStyle = SpinnerStyle.Scale;
@@ -62,7 +69,10 @@ public class RefreshHeaderWrapper implements RefreshHeader {
 
     @Override
     public void onInitialized(RefreshKernel kernel, int height, int extendHeight) {
-
+        ViewGroup.LayoutParams params = mWrapperView.getLayoutParams();
+        if (params instanceof SmartRefreshLayout.LayoutParams) {
+            kernel.requestDrawBackgoundForHeader(((SmartRefreshLayout.LayoutParams) params).backgroundColor);
+        }
     }
 
     @Override

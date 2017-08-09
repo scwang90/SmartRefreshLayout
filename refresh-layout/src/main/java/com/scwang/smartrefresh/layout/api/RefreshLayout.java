@@ -2,8 +2,6 @@ package com.scwang.smartrefresh.layout.api;
 
 import android.support.annotation.ColorRes;
 import android.support.annotation.Nullable;
-import android.support.v4.view.NestedScrollingChild;
-import android.support.v4.view.NestedScrollingParent;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
 
@@ -18,7 +16,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
  * Created by SCWANG on 2017/5/26.
  */
 
-public interface RefreshLayout extends NestedScrollingParent, NestedScrollingChild {
+public interface RefreshLayout {
 
     RefreshLayout setFooterHeight(float dp);
 
@@ -127,6 +125,16 @@ public interface RefreshLayout extends NestedScrollingParent, NestedScrollingChi
      * 设置是否在加载更多完成之后滚动内容显示新数据
      */
     RefreshLayout setEnableScrollContentWhenLoaded(boolean enable);
+
+    /**
+     * 设置在内容不满一页的时候，是否可以上拉加载更多
+     */
+    RefreshLayout setEnableLoadmoreWhenContentNotFull(boolean enable);
+
+    /**
+     * 设置是会否启用嵌套滚动功能（默认关闭+智能开启）
+     */
+    RefreshLayout setEnabledNestedScroll(boolean enabled);
 
     /**
      * 单独设置刷新监听器
