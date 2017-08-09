@@ -1,6 +1,7 @@
 # 代码示例
 
 ## SmartRefreshLayout
+java代码设置
 ~~~java
 public class RefreshActivity extends Activity {
     @Override
@@ -31,6 +32,7 @@ public class RefreshActivity extends Activity {
     }
 }
 ~~~
+xml代码设置
 ~~~xml
 <!-- 下面示例中的值等于默认值 -->
 <com.scwang.smartrefresh.layout.SmartRefreshLayout
@@ -69,6 +71,7 @@ public class RefreshActivity extends Activity {
 ~~~
 
 ## ClassicsHeader
+java代码设置
 ~~~java
 public class RefreshActivity extends Activity {
     static {
@@ -83,7 +86,7 @@ public class RefreshActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //下面示例中的值等于默认值
-        ClassicsFooter header = (ClassicsFooter)findViewById(R.id.footer);
+        ClassicsHeader header = (ClassicsHeader)findViewById(R.id.header);
         header.setAccentColor(android.R.color.white);//设置强调颜色
         header.setPrimaryColor(R.color.colorPrimary);//设置主题颜色
         header.setTextSizeTitle(16);//设置标题文字大小（sp单位）
@@ -113,6 +116,7 @@ public class RefreshActivity extends Activity {
     }
 }
 ~~~
+xml代码设置
 ~~~xml
 <!-- 下面示例中的值等于默认值 -->
 <com.scwang.smartrefresh.layout.SmartRefreshLayout>
@@ -138,6 +142,7 @@ public class RefreshActivity extends Activity {
 
 
 ## ClassicsFooter
+java代码设置
 ~~~java
 public class RefreshActivity extends Activity {
     static {
@@ -176,6 +181,7 @@ public class RefreshActivity extends Activity {
     }
 }
 ~~~
+xml代码设置
 ~~~xml
 <!-- 下面示例中的值等于默认值 -->
 <com.scwang.smartrefresh.layout.SmartRefreshLayout>

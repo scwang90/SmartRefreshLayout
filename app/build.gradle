@@ -65,8 +65,8 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'jp.wasabeef:recyclerview-animators:2.2.6'
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
-//    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3-alpha-5'
-//    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3-alpha-5'
+//    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
+//    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'
     testCompile 'junit:junit:4.12'
 
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
