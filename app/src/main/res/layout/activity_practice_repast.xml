@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srlAccentColor="#888"
-            app:srlSpinnerStyle="Translate"
+            app:srlClassicsSpinnerStyle="Translate"
             app:srlDrawableProgress="@drawable/ic_progress_hojder"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
