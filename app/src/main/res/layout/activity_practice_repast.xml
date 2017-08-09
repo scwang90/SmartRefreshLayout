@@ -23,7 +23,7 @@
             android:layout_marginTop="?attr/actionBarSize"
             android:scaleType="centerCrop"
             android:src="@mipmap/gif_header_repast"
-            app:srlSpinnerStyle="Scale"/>
+            app:layout_srlSpinnerStyle="Scale"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"

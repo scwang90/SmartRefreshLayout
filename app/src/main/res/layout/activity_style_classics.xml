@@ -21,7 +21,7 @@
         <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:srlFinishDelay="500"
+            app:srlFinishDuration="500"
             app:srlEnableLastTime="false"
             app:srlClassicsSpinnerStyle="FixedBehind"
             app:srlTextSizeTitle="16sp"

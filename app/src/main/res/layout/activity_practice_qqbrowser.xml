@@ -30,8 +30,8 @@
             android:textColor="#aaa"
             android:textSize="16sp"
             android:text="@string/github_qqbrowser_kernel"
-            app:srlBackgroundColor="#555"
-            app:srlSpinnerStyle="FixedBehind"/>
+            app:layout_srlBackgroundColor="#555"
+            app:layout_srlSpinnerStyle="FixedBehind"/>
         <WebView
             android:id="@+id/webView"
             android:layout_width="match_parent"
