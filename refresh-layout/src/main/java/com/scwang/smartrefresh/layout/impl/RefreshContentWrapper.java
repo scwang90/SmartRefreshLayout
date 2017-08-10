@@ -35,7 +35,7 @@ import android.widget.ScrollView;
 import com.scwang.smartrefresh.layout.api.RefreshContent;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshScrollBoundary;
+import com.scwang.smartrefresh.layout.api.ScrollBoundaryDecider;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 
 import java.lang.reflect.Field;
@@ -67,7 +67,7 @@ public class RefreshContentWrapper implements RefreshContent {
     protected boolean mEnableRefresh = true;
     protected boolean mEnableLoadmore = true;
     protected MotionEvent mMotionEvent;
-    protected RefreshScrollBoundaryAdapter mBoundaryAdapter = new RefreshScrollBoundaryAdapter();
+    protected ScrollBoundaryDeciderAdapter mBoundaryAdapter = new ScrollBoundaryDeciderAdapter();
 
     public RefreshContentWrapper(View view) {
         this.mContentView = mRealContentView = view;
@@ -318,11 +318,11 @@ public class RefreshContentWrapper implements RefreshContent {
     }
 
     @Override
-    public void setRefreshScrollBoundary(RefreshScrollBoundary boundary) {
-        if (boundary instanceof RefreshScrollBoundaryAdapter) {
-            mBoundaryAdapter = ((RefreshScrollBoundaryAdapter) boundary);
+    public void setScrollBoundaryDecider(ScrollBoundaryDecider boundary) {
+        if (boundary instanceof ScrollBoundaryDeciderAdapter) {
+            mBoundaryAdapter = ((ScrollBoundaryDeciderAdapter) boundary);
         } else {
-            mBoundaryAdapter.setRefreshScrollBoundary(boundary);
+            mBoundaryAdapter.setScrollBoundaryDecider(boundary);
         }
     }
 

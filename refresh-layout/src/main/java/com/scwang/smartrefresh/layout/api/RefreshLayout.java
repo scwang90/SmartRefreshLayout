@@ -94,7 +94,7 @@ public interface RefreshLayout {
     /**
      * 设置指定的Footer
      */
-    RefreshLayout setRefreshFooter(RefreshFooter bottom);
+    RefreshLayout setRefreshFooter(RefreshFooter footer);
 
     /**
      * 设置指定的Footer
@@ -167,9 +167,9 @@ public interface RefreshLayout {
     RefreshLayout setPrimaryColors(int... colors);
 
     /**
-     * 设置滚动边界
+     * 设置滚动边界判断器
      */
-    RefreshLayout setRefreshScrollBoundary(RefreshScrollBoundary boundary);
+    RefreshLayout setScrollBoundaryDecider(ScrollBoundaryDecider boundary);
 
     /**
      * 完成刷新

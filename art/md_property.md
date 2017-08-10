@@ -29,6 +29,20 @@ public class RefreshActivity extends Activity {
         refreshLayout.setEnableLoadmoreWhenContentNotFull(true);//是否在列表不满一页时候开启上拉加载功能
         refreshLayout.setDisableContentWhenRefresh(false);//是否在刷新的时候禁止列表的操作
         refreshLayout.setDisableContentWhenLoading(false);//是否在加载的时候禁止列表的操作
+        refreshLayout.setOnMultiPurposeListener(new OnMultiPurposeListener());//设置多功能监听器
+        refreshLayout.setScrollBoundaryDecider(new ScrollBoundaryDecider());//设置滚动边界判断
+        refreshLayout.setRefreshHeader(new ClassicsHeader(this));//设置Header
+        refreshLayout.setRefreshFooter(new ClassicsFooter(this));//设置Footer
+        refreshLayout.autoRefresh();//自动刷新
+        refreshLayout.autoLoadmore();//自动加载
+        refreshLayout.autoRefresh(400);//延迟400毫秒后自动刷新
+        refreshLayout.autoLoadmore(400);//延迟400毫秒后自动加载
+        refreshlayout.finishRefresh();//结束刷新
+        refreshlayout.finishLoadmore();//结束加载
+        refreshlayout.finishRefresh(3000);//延迟3000毫秒后家属刷新
+        refreshlayout.finishLoadmore(3000);//延迟3000毫秒后结束加载
+        refreshlayout.finishRefresh(false);//结束刷新（刷新失败）
+        refreshlayout.finishLoadmore(false);//结束加载（加载失败）
     }
 }
 ~~~
@@ -264,7 +278,7 @@ xml代码设置
 |setOnRefreshLoadmoreListener|OnRefreshLoadmoreListener|同时设置上面两个监听器|
 |setOnMultiPurposeListener|OnMultiPurposeListener|设置多功能监听器|
 |setLoadmoreFinished|boolean|设置全部数据加载完成，之后不会触发加载事件|
-|setRefreshScrollBoundary|boundary|设置滚动边界判断|
+|setScrollBoundaryDecider|boundary|设置滚动边界判断|
 |finishRefresh|(int delayed)|完成刷新，结束刷新动画|
 |finishLoadmore|(int delayed)|完成加载，结束加载动画|
 |finishRefresh|(boolean success)|完成刷新，并设置是否成功|

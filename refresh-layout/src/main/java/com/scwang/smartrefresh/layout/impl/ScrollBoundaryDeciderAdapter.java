@@ -3,7 +3,7 @@ package com.scwang.smartrefresh.layout.impl;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.scwang.smartrefresh.layout.api.RefreshScrollBoundary;
+import com.scwang.smartrefresh.layout.api.ScrollBoundaryDecider;
 import com.scwang.smartrefresh.layout.util.ScrollBoundaryUtil;
 
 /**
@@ -12,14 +12,14 @@ import com.scwang.smartrefresh.layout.util.ScrollBoundaryUtil;
  */
 
 @SuppressWarnings("WeakerAccess")
-public class RefreshScrollBoundaryAdapter implements RefreshScrollBoundary {
+public class ScrollBoundaryDeciderAdapter implements ScrollBoundaryDecider {
 
     //<editor-fold desc="Internal">
     protected MotionEvent mActionEvent;
-    protected RefreshScrollBoundary boundary;
+    protected ScrollBoundaryDecider boundary;
     protected boolean mEnableLoadmoreWhenContentNotFull;
 
-    void setRefreshScrollBoundary(RefreshScrollBoundary boundary){
+    void setScrollBoundaryDecider(ScrollBoundaryDecider boundary){
         this.boundary = boundary;
     }
 
@@ -28,7 +28,7 @@ public class RefreshScrollBoundaryAdapter implements RefreshScrollBoundary {
     }
     //</editor-fold>
 
-    //<editor-fold desc="RefreshScrollBoundary">
+    //<editor-fold desc="ScrollBoundaryDecider">
     @Override
     public boolean canRefresh(View content) {
         if (boundary != null) {

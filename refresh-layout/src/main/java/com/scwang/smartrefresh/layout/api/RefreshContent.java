@@ -28,7 +28,7 @@ public interface RefreshContent {
 
     void setupComponent(RefreshKernel kernel, View fixedHeader, View fixedFooter);
     void onInitialHeaderAndFooter(int headerHeight, int footerHeight);
-    void setRefreshScrollBoundary(RefreshScrollBoundary boundary);
+    void setScrollBoundaryDecider(ScrollBoundaryDecider boundary);
     void setEnableLoadmoreWhenContentNotFull(boolean enable);
 
     AnimatorUpdateListener onLoadingFinish(RefreshKernel kernel, int footerHeight, int startDelay, int reboundDuration);

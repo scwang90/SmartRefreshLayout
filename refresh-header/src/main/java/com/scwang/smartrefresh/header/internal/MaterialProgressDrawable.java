@@ -529,8 +529,10 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
             final float endAngle = (mEndTrim + mRotation) * 360;
             float sweepAngle = endAngle - startAngle;
 
-            mPaint.setColor(mCurrentColor);
-            c.drawArc(arcBounds, startAngle, sweepAngle, false, mPaint);
+            if (sweepAngle != 0) {
+                mPaint.setColor(mCurrentColor);
+                c.drawArc(arcBounds, startAngle, sweepAngle, false, mPaint);
+            }
 
             drawTriangle(c, startAngle, sweepAngle, bounds);
 

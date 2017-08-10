@@ -42,7 +42,7 @@
 >添加：srlEnablePureScrollMode 属性，是否开启纯滚动模式  
 >添加：srlEnableNestedScrolling 属性，是否开启嵌套滚动NestedScrolling  
 >添加：srlEnableScrollContentWhenLoaded 属性，是否在加载完成之后滚动内容显示新数据  
->添加：setRefreshScrollBoundary 方法，设置滚动边界判断  
+>添加：setScrollBoundaryDecider 方法，设置滚动边界判断  
 >添加：finishRefresh(boolean success);方法，完成刷新,并设置是否成功  
 >添加：finishLoadmore(boolean success);方法，完成加载,并设置是否成功  
 >修复：DeliveryHeader,DropboxHeader 在API-17以下显示不全的问题  

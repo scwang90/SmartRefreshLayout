@@ -44,7 +44,7 @@ import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshScrollBoundary;
+import com.scwang.smartrefresh.layout.api.ScrollBoundaryDecider;
 import com.scwang.smartrefresh.layout.constant.DimensionStatus;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
@@ -128,7 +128,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     protected OnRefreshListener mRefreshListener;
     protected OnLoadmoreListener mLoadmoreListener;
     protected OnMultiPurposeListener mOnMultiPurposeListener;
-    protected RefreshScrollBoundary mRefreshScrollBoundary;
+    protected ScrollBoundaryDecider mScrollBoundaryDecider;
     //</editor-fold>
 
     //<editor-fold desc="嵌套滚动">
@@ -411,30 +411,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             onFinishInflate();
         }
 
-        if (mRefreshContent == null) {
-            for (int i = 0, len = getChildCount(); i < len; i++) {
-                View view = getChildAt(i);
-                if ((mRefreshHeader == null || view != mRefreshHeader.getView()) &&
-                        (mRefreshFooter == null || view != mRefreshFooter.getView())) {
-                    mRefreshContent = new RefreshContentWrapper(view);
-                }
-            }
-            if (mRefreshContent == null) {
-                mRefreshContent = new RefreshContentWrapper(getContext());
-                mRefreshContent.getView().setLayoutParams(new LayoutParams(MATCH_PARENT, MATCH_PARENT));
-            }
-        }
-        if (mFixedHeaderViewId > 0 && mFixedHeaderView == null) {
-            mFixedHeaderView = findViewById(mFixedHeaderViewId);
-        }
-        if (mFixedFooterViewId > 0 && mFixedFooterView == null) {
-            mFixedFooterView = findViewById(mFixedFooterViewId);
-        }
-
-        mRefreshContent.setRefreshScrollBoundary(mRefreshScrollBoundary);
-        mRefreshContent.setEnableLoadmoreWhenContentNotFull(mEnableLoadmoreWhenContentNotFull || mEnablePureScrollMode);
-        mRefreshContent.setupComponent(mKernel, mFixedHeaderView, mFixedFooterView);
-
         if (mRefreshHeader == null) {
             if (mEnablePureScrollMode) {
                 mRefreshHeader = new FalsifyHeader(getContext());
@@ -464,6 +440,35 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     addView(mRefreshFooter.getView(), MATCH_PARENT, WRAP_CONTENT);
                 }
             }
+        }
+
+        if (mRefreshContent == null) {
+            for (int i = 0, len = getChildCount(); i < len; i++) {
+                View view = getChildAt(i);
+                if ((mRefreshHeader == null || view != mRefreshHeader.getView()) &&
+                        (mRefreshFooter == null || view != mRefreshFooter.getView())) {
+                    mRefreshContent = new RefreshContentWrapper(view);
+                }
+            }
+            if (mRefreshContent == null) {
+                mRefreshContent = new RefreshContentWrapper(getContext());
+                mRefreshContent.getView().setLayoutParams(new LayoutParams(MATCH_PARENT, MATCH_PARENT));
+            }
+        }
+        if (mFixedHeaderViewId > 0 && mFixedHeaderView == null) {
+            mFixedHeaderView = findViewById(mFixedHeaderViewId);
+        }
+        if (mFixedFooterViewId > 0 && mFixedFooterView == null) {
+            mFixedFooterView = findViewById(mFixedFooterViewId);
+        }
+
+        mRefreshContent.setScrollBoundaryDecider(mScrollBoundaryDecider);
+        mRefreshContent.setEnableLoadmoreWhenContentNotFull(mEnableLoadmoreWhenContentNotFull || mEnablePureScrollMode);
+        mRefreshContent.setupComponent(mKernel, mFixedHeaderView, mFixedFooterView);
+
+        if (mSpinner != 0) {
+            notifyStateChanged(RefreshState.None);
+            mRefreshContent.moveSpinner(mSpinner = 0);
         }
 
         //重新排序
@@ -733,7 +738,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         mRefreshListener = null;
         mLoadmoreListener = null;
         mOnMultiPurposeListener = null;
-        mRefreshScrollBoundary = null;
+        mScrollBoundaryDecider = null;
         mManualLoadmore = true;
         mManualNestedScrolling = true;
     }
@@ -2066,10 +2071,10 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      * 设置滚动边界
      */
     @Override
-    public RefreshLayout setRefreshScrollBoundary(RefreshScrollBoundary boundary) {
-        mRefreshScrollBoundary = boundary;
+    public RefreshLayout setScrollBoundaryDecider(ScrollBoundaryDecider boundary) {
+        mScrollBoundaryDecider = boundary;
         if (mRefreshContent != null) {
-            mRefreshContent.setRefreshScrollBoundary(boundary);
+            mRefreshContent.setScrollBoundaryDecider(boundary);
         }
         return this;
     }

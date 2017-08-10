@@ -7,7 +7,7 @@ import android.view.View;
  * Created by SCWANG on 2017/7/8.
  */
 
-public interface RefreshScrollBoundary {
+public interface ScrollBoundaryDecider {
     /**
      * 内容是否可以下拉滚动
      * @param content 内容视图
