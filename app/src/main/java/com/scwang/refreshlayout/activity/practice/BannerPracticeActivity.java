@@ -63,8 +63,10 @@ public class BannerPracticeActivity extends AppCompatActivity {
                 refreshlayout.getLayout().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        List<Movie> movies = new Gson().fromJson(JSON_MOVIES, new TypeToken<ArrayList<Movie>>() {}.getType());
-                        mAdapter.replaceData(movies);
+                        if (mAdapter.getItemCount() < 2) {
+                            List<Movie> movies = new Gson().fromJson(JSON_MOVIES, new TypeToken<ArrayList<Movie>>() {}.getType());
+                            mAdapter.replaceData(movies);
+                        }
                         refreshlayout.finishRefresh();
                     }
                 },2000);

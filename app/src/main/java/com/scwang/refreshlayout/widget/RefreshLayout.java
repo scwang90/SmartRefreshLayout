@@ -233,23 +233,28 @@ public class RefreshLayout extends ViewGroup implements GestureDetector.OnGestur
     int currllY;
     @Override
     public void computeScroll() {
-        int currY = mScroller.getCurrY();
         if (mScroller.computeScrollOffset()) {
-            int dy = mScroller.getCurrY() - currY;
             if (isFling) {
+                scrollTo(0, mScroller.getCurrY());
+//                scrollTo(0, (mScroller.getCurrY()-currllY)/2 + scrollY);
             } else {
+                scrollTo(0, mScroller.getCurrY());
+                int dy = currllY;
+                currllY = mScroller.getCurrY();
+                dy = dy - currllY;
                 if (dy > 0 && mRefreshContent.canRefresh()) {
                     isFling = true;
                     scrollY = getScrollY();
                     currllY = mScroller.getCurrY();
+//                    scrollTo(0, scrollY + dy / 2);
                 } else if (dy < 0 && mRefreshContent.canLoadmore()) {
                     isFling = true;
                     scrollY = getScrollY();
                     currllY = mScroller.getCurrY();
-                    scrollTo(mScroller.getCurrX(), mScroller.getCurrY());
-                    postInvalidate();
+//                    scrollTo(0, scrollY + dy / 2);
                 }
             }
+            postInvalidate();
         } else {
             isFling = false;
         }
@@ -292,6 +297,7 @@ public class RefreshLayout extends ViewGroup implements GestureDetector.OnGestur
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
         isFling = false;
         mScroller.fling(0, getScrollY(), 0, -(int)velocityY, 0, 0, -mHeaderHeight, mFooterHeight);
+        currllY = mScroller.getCurrY();
         postInvalidate();
         return true;
     }
