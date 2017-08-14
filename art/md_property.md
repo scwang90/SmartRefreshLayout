@@ -18,7 +18,7 @@ public class RefreshActivity extends Activity {
         refreshLayout.setFooterHeight(100);//Footer标准高度（显示上拉高度>=标准高度 触发加载）
         refreshLayout.setFooterHeightPx(100);//同上-像素为单位
         refreshLayout.setEnableRefresh(true);//是否启用下拉刷新功能
-        refreshLayout.setEnableLoadmore(true);//是否启用下拉刷新功能
+        refreshLayout.setEnableLoadmore(true);//是否启用上拉加载功能
         refreshLayout.setEnableAutoLoadmore(true);//是否启用列表惯性滑动到底部时自动加载更多
         refreshLayout.setEnablePureScrollMode(false);//是否启用纯滚动模式
         refreshLayout.setEnableNestedScroll(false);//是否启用嵌套滚动

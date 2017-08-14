@@ -733,12 +733,12 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         mRefreshHeader = null;
         mRefreshFooter = null;
         mRefreshContent = null;
-        mFixedHeaderView = null;
-        mFixedFooterView = null;
-        mRefreshListener = null;
-        mLoadmoreListener = null;
-        mOnMultiPurposeListener = null;
-        mScrollBoundaryDecider = null;
+//        mFixedHeaderView = null;
+//        mFixedFooterView = null;
+//        mRefreshListener = null;
+//        mLoadmoreListener = null;
+//        mOnMultiPurposeListener = null;
+//        mScrollBoundaryDecider = null;
         mManualLoadmore = true;
         mManualNestedScrolling = true;
     }
@@ -747,11 +747,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
     //<editor-fold desc="滑动判断 judgement of slide">
     MotionEvent mFalsifyEvent = null;
-
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
-        return super.onInterceptTouchEvent(ev);
-    }
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent e) {
