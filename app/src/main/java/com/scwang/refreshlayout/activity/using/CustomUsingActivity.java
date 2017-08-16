@@ -151,10 +151,6 @@ public class CustomUsingActivity extends AppCompatActivity {
             return 500;//延迟500毫秒之后再弹回
         }
         @Override
-        public boolean isSupportHorizontalDrag() {
-            return false;
-        }
-        @Override
         public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
             switch (newState) {
                 case None:
@@ -174,6 +170,10 @@ public class CustomUsingActivity extends AppCompatActivity {
                     mArrowView.animate().rotation(180);//显示箭头改为朝上
                     break;
             }
+        }
+        @Override
+        public boolean isSupportHorizontalDrag() {
+            return false;
         }
         @Override
         public void onInitialized(RefreshKernel kernel, int height, int extendHeight) {
