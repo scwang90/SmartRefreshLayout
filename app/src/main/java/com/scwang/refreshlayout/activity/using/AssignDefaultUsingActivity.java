@@ -29,7 +29,7 @@ public class AssignDefaultUsingActivity extends AppCompatActivity {
    private static boolean isFirstEnter = true;
 
     /*
-     * 关键代码，需要在布局生成之前设置，建议代码放在 Application.onCreate 中
+     * 关键代码，需要在布局生成之前设置，建议代码放在 Application 中
      */
     static {
         //设置全局的Header构建器
@@ -47,6 +47,7 @@ public class AssignDefaultUsingActivity extends AppCompatActivity {
             @NonNull
             @Override
             public RefreshFooter createRefreshFooter(Context context, RefreshLayout layout) {
+                layout.setEnableLoadmoreWhenContentNotFull(true);
                 ClassicsFooter footer = new ClassicsFooter(context);
                 footer.setBackgroundResource(android.R.color.white);
                 footer.setSpinnerStyle(SpinnerStyle.Scale);//设置为拉伸模式
