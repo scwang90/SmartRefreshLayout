@@ -292,7 +292,7 @@ public abstract class FunGameView extends FunGameHeader {
         return super.onFinish(layout, success);
     }
 
-    @Override
+    @Override@Deprecated
     public void setPrimaryColors(int... colors) {
         super.setPrimaryColors(colors);
         if (colors.length > 0) {

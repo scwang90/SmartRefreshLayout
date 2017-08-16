@@ -304,7 +304,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
         return mFinishDuration;//延迟500毫秒之后再弹回
     }
 
-    @Override
+    @Override@Deprecated
     public void setPrimaryColors(int... colors) {
         if (colors.length > 0) {
             if (!(getBackground() instanceof BitmapDrawable)) {

@@ -137,7 +137,7 @@ public class BallPulseFooter extends ViewGroup implements RefreshFooter {
         return false;
     }
 
-    @Override
+    @Override@Deprecated
     public void setPrimaryColors(int... colors) {
         if (colors.length > 1) {
             mBallPulseView.setNormalColor(colors[1]);

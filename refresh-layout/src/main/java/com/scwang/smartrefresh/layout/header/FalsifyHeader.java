@@ -128,7 +128,7 @@ public class FalsifyHeader extends View implements RefreshHeader {
         return 0;
     }
 
-    @Override
+    @Override@Deprecated
     public void setPrimaryColors(int... colors) {
 
     }

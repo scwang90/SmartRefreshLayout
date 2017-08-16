@@ -162,7 +162,7 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
         }
     }
 
-    @Override
+    @Override@Deprecated
     public void setPrimaryColors(int... colors) {
         if (colors.length > 0) {
             if (mScenceView != null) {

@@ -128,7 +128,7 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
     //</editor-fold>
 
     //<editor-fold desc="RefreshHeader">
-    @Override
+    @Override@Deprecated
     public void setPrimaryColors(int... colors) {
         if (colors.length > 0) {
             setPrimaryColor(colors[0]);

@@ -384,7 +384,7 @@ public class  StoreHouseHeader extends View implements RefreshHeader {
         return 0;
     }
 
-    @Override
+    @Override@Deprecated
     public void setPrimaryColors(int... colors) {
         if (colors.length > 0) {
             mBackgroundColor = colors[0];

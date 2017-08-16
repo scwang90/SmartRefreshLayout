@@ -42,7 +42,7 @@ public class RefreshFooterWrapper implements RefreshFooter {
 		return 0;
 	}
 
-    @Override
+    @Override@Deprecated
     public void setPrimaryColors(int... colors) {
 
     }

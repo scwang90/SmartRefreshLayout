@@ -269,7 +269,7 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
         return 0;
     }
 
-    @Override
+    @Override@Deprecated
     public void setPrimaryColors(int... colors) {
         if (colors.length > 0) {
             mWaveView.setWaveColor(colors[0]);

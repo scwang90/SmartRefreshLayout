@@ -191,7 +191,7 @@ public class FunGameHeader extends FunGameBase implements RefreshHeader {
     //<editor-fold desc="RefreshHeader">
 
 
-    @Override
+    @Override@Deprecated
     public void setPrimaryColors(int... colors) {
         super.setPrimaryColors(colors);
         if (colors.length > 0) {

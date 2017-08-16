@@ -228,7 +228,7 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
         return 0;
     }
 
-    @Override
+    @Override@Deprecated
     public void setPrimaryColors(int... colors) {
     }
 

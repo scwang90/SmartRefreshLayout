@@ -1909,7 +1909,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             }
             this.mRefreshHeader = header;
             this.mHeaderHeightStatus = mHeaderHeightStatus.unNotify();
-            this.addView(mRefreshHeader.getView(), width, height);
             if (header.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
                 this.addView(mRefreshHeader.getView(), 0, new LayoutParams(width, height));
             } else {

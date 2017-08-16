@@ -241,7 +241,7 @@ public class PhoenixHeader extends View implements RefreshHeader/*, SizeDefiniti
         return 0;
     }
 
-    @Override
+    @Override@Deprecated
     public void setPrimaryColors(int... colors) {
         if (mDrawableSky != null) {
             if (colors.length > 1) {

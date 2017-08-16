@@ -236,7 +236,7 @@ public class DeliveryHeader extends View implements RefreshHeader {
         return SpinnerStyle.Scale;
     }
 
-    @Override
+    @Override@Deprecated
     public void setPrimaryColors(int... colors) {
         if (colors.length > 0) {
             setBackgroundColor(colors[0]);

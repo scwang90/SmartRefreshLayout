@@ -243,7 +243,7 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
     /**
      * ClassicsFooter 在(SpinnerStyle.FixedBehind)时才有主题色
      */
-    @Override
+    @Override@Deprecated
     public void setPrimaryColors(int... colors) {
         if (mSpinnerStyle == SpinnerStyle.FixedBehind) {
             if (colors.length > 0) {

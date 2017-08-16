@@ -185,7 +185,7 @@ public class TaurusHeader extends View implements RefreshHeader/*, SizeDefinitio
         return 0;
     }
 
-    @Override
+    @Override@Deprecated
     public void setPrimaryColors(int... colors) {
         setBackgroundColor(colors[0]);
     }

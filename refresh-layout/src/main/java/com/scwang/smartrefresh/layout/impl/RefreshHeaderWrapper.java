@@ -41,7 +41,7 @@ public class RefreshHeaderWrapper implements RefreshHeader {
         return 0;
     }
 
-    @Override
+    @Override@Deprecated
     public void setPrimaryColors(int... colors) {
 
     }

@@ -359,7 +359,7 @@ public class CircleHeader extends View implements RefreshHeader {
         return DURATION_FINISH;
     }
 
-    @Override
+    @Override@Deprecated
     public void setPrimaryColors(int... colors) {
         if (colors.length > 0) {
             mBackPaint.setColor(colors[0]);
