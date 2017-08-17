@@ -98,8 +98,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     protected float mDragRate = .5f;
     protected boolean mIsBeingDragged;
     protected Interpolator mReboundInterpolator;
-    protected View mFixedHeaderView;//固定在头部的视图
-    protected View mFixedFooterView;//固定在底部的视图
     protected int mFixedHeaderViewId;//固定在头部的视图Id
     protected int mFixedFooterViewId;//固定在 头部的视图Id
     //</editor-fold>
@@ -455,16 +453,13 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 mRefreshContent.getView().setLayoutParams(new LayoutParams(MATCH_PARENT, MATCH_PARENT));
             }
         }
-        if (mFixedHeaderViewId > 0 && mFixedHeaderView == null) {
-            mFixedHeaderView = findViewById(mFixedHeaderViewId);
-        }
-        if (mFixedFooterViewId > 0 && mFixedFooterView == null) {
-            mFixedFooterView = findViewById(mFixedFooterViewId);
-        }
+
+        View fixedHeaderView = mFixedHeaderViewId > 0 ? findViewById(mFixedHeaderViewId) : null;
+        View fixedFooterView = mFixedFooterViewId > 0 ? findViewById(mFixedFooterViewId) : null;
 
         mRefreshContent.setScrollBoundaryDecider(mScrollBoundaryDecider);
         mRefreshContent.setEnableLoadmoreWhenContentNotFull(mEnableLoadmoreWhenContentNotFull || mEnablePureScrollMode);
-        mRefreshContent.setupComponent(mKernel, mFixedHeaderView, mFixedFooterView);
+        mRefreshContent.setupComponent(mKernel, fixedHeaderView, fixedFooterView);
 
         if (mSpinner != 0) {
             notifyStateChanged(RefreshState.None);
@@ -730,15 +725,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         handler.removeCallbacksAndMessages(null);
         handler = null;
         mKernel = null;
-        mRefreshHeader = null;
-        mRefreshFooter = null;
-        mRefreshContent = null;
-//        mFixedHeaderView = null;
-//        mFixedFooterView = null;
-//        mRefreshListener = null;
-//        mLoadmoreListener = null;
-//        mOnMultiPurposeListener = null;
-//        mScrollBoundaryDecider = null;
+//        mRefreshHeader = null;
+//        mRefreshFooter = null;
+//        mRefreshContent = null;
         mManualLoadmore = true;
         mManualNestedScrolling = true;
     }
