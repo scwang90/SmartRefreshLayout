@@ -721,6 +721,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         mSpinner = 0;
+        mRefreshContent.moveSpinner(0);
         notifyStateChanged(RefreshState.None);
         handler.removeCallbacksAndMessages(null);
         handler = null;
