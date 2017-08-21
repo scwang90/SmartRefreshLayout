@@ -134,7 +134,9 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
             canvas.save();
             canvas.translate(
                     getWidth()/2-mProgressDrawable.width()/2,
-                    getHeight()/2-mProgressDrawable.height()/2
+                    mWaterDropView.getMaxCircleRadius()
+                            +mWaterDropView.getPaddingTop()
+                            -mProgressDrawable.height()/2
             );
             canvas.rotate(mProgressDegree, mProgressDrawable.width() / 2, mProgressDrawable.height() / 2);
             mProgressDrawable.draw(canvas);

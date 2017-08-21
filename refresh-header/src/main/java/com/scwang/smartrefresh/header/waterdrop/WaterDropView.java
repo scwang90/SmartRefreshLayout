@@ -25,8 +25,8 @@ public class WaterDropView extends View {
 
     private Path mPath;
     private Paint mPaint;
-    private float mMaxCircleRadius;//圆半径最大值
-    private float mMinCircleRaidus;//圆半径最小值
+    private int mMaxCircleRadius;//圆半径最大值
+    private int mMinCircleRaidus;//圆半径最小值
     private static int STROKE_WIDTH = 2;//边线宽度
     private final static int BACK_ANIM_DURATION = 180;
 
@@ -73,6 +73,10 @@ public class WaterDropView extends View {
 
         bottomCircle.x = (STROKE_WIDTH + mMaxCircleRadius);
         bottomCircle.y = (STROKE_WIDTH + mMaxCircleRadius);
+    }
+
+    public int getMaxCircleRadius() {
+        return mMaxCircleRadius;
     }
 
     @Override
