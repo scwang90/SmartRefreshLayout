@@ -119,6 +119,11 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
             case 背后固定:
                 mClassicsHeader.setSpinnerStyle(SpinnerStyle.FixedBehind);
                 mRefreshLayout.setPrimaryColors(0xff444444, 0xffffffff);
+                if (Build.VERSION.SDK_INT >= 21) {
+                    mDrawableProgress.setTint(0xffffffff);
+                } else if (mDrawableProgress instanceof VectorDrawableCompat) {
+                    ((VectorDrawableCompat) mDrawableProgress).setTint(0xffffffff);
+                }
                 /*
                  * 由于是后面才设置，需要手动更改视图的位置
                  * 如果在 onCreate 或者 xml 中设置好[SpinnerStyle] 就不用手动调整位置了

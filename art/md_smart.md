@@ -49,12 +49,16 @@
 compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'//一个开源gif控件
 ```
 ```xml
-    <SmartRefreshLayout>
+    <SmartRefreshLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:srlDragRate="0.7"
+        app:srlHeaderMaxDragRate="1.3">
         <pl.droidsonroids.gif.GifImageView
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:scaleType="centerCrop"
-            android:src="@mipmap/gif_header_repast"/>
+            android:src="@mipmap/gif_header_repast"
+            app:layout_srlSpinnerStyle="Scale"
+            app:layout_srlBackgroundColor="@android:color/transparent"/>
         <ListView/>
         <ClassicsFooter/>
     </SmartRefreshLayout>

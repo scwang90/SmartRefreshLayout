@@ -1880,9 +1880,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             this.mRefreshHeader = header;
             this.mHeaderHeightStatus = mHeaderHeightStatus.unNotify();
             if (header.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
-                this.addView(mRefreshHeader.getView(), 0);
+                this.addView(mRefreshHeader.getView(), 0, new LayoutParams(MATCH_PARENT, WRAP_CONTENT));
             } else {
-                this.addView(mRefreshHeader.getView());
+                this.addView(mRefreshHeader.getView(), MATCH_PARENT, WRAP_CONTENT);
             }
         }
         return this;
@@ -1921,9 +1921,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             this.mFooterHeightStatus = mFooterHeightStatus.unNotify();
             this.mEnableLoadmore = !mManualLoadmore || mEnableLoadmore;
             if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
-                this.addView(mRefreshFooter.getView(), 0);
+                this.addView(mRefreshFooter.getView(), 0, new LayoutParams(MATCH_PARENT, WRAP_CONTENT));
             } else {
-                this.addView(mRefreshFooter.getView());
+                this.addView(mRefreshFooter.getView(), MATCH_PARENT, WRAP_CONTENT);
             }
         }
         return this;

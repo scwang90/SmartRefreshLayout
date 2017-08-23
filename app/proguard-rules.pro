@@ -32,3 +32,5 @@
   native *** rsn*(...);
   native *** n*(...);
 }
+
+-keep enum com.scwang.smartrefresh.layout.impl.** {*;}

@@ -26,7 +26,7 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig = signingConfigs.debug
         }
@@ -61,6 +61,7 @@ dependencies {
     compile 'com.flyco.roundview:FlycoRoundView_Lib:1.1.4@aar'
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.22'
     compile 'com.github.mmin18:realtimeblurview:1.0.6'
+    compile 'com.google.code.gson:gson:2.7'
     compile 'com.youth.banner:banner:1.4.9'  //最新版本
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'jp.wasabeef:recyclerview-animators:2.2.6'
@@ -69,7 +70,6 @@ dependencies {
 //    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'
     testCompile 'junit:junit:4.12'
 
-    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.github.bumptech.glide:glide:4.0.0-RC1'
-//    annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0-RC1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0-RC1'
 }

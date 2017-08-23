@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Animatable;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -181,13 +182,13 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
         }
 
         if (ta.hasValue(R.styleable.ClassicsHeader_srlTextSizeTitle)) {
-            mTitleText.setTextSize(TypedValue.COMPLEX_UNIT_PX, ta.getDimensionPixelSize(R.styleable.ClassicsHeader_srlTextSizeTitle, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16, getResources().getDisplayMetrics())));
+            mTitleText.setTextSize(TypedValue.COMPLEX_UNIT_PX, DensityUtil.dp2px(16));
         } else {
             mTitleText.setTextSize(16);
         }
 
         if (ta.hasValue(R.styleable.ClassicsHeader_srlTextSizeTime)) {
-            mLastUpdateText.setTextSize(TypedValue.COMPLEX_UNIT_PX, ta.getDimensionPixelSize(R.styleable.ClassicsHeader_srlTextSizeTime, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics())));
+            mLastUpdateText.setTextSize(TypedValue.COMPLEX_UNIT_PX, DensityUtil.dp2px(12));
         } else {
             mLastUpdateText.setTextSize(12);
         }
@@ -284,7 +285,12 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
         if (mProgressDrawable != null) {
             mProgressDrawable.start();
         } else {
-            mProgressView.animate().rotation(36000).setDuration(100000);
+            Drawable drawable = mProgressView.getDrawable();
+            if (drawable instanceof Animatable) {
+                ((Animatable) drawable).start();
+            } else {
+                mProgressView.animate().rotation(36000).setDuration(100000);
+            }
         }
     }
 
@@ -293,7 +299,12 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
         if (mProgressDrawable != null) {
             mProgressDrawable.stop();
         } else {
-            mProgressView.animate().rotation(0).setDuration(300);
+            Drawable drawable = mProgressView.getDrawable();
+            if (drawable instanceof Animatable) {
+                ((Animatable) drawable).stop();
+            } else {
+                mProgressView.animate().rotation(0).setDuration(300);
+            }
         }
         mProgressView.setVisibility(GONE);
         if (success) {
