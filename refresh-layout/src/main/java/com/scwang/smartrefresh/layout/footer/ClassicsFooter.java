@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
@@ -139,7 +140,7 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
         }
 
         if (ta.hasValue(R.styleable.ClassicsFooter_srlTextSizeTitle)) {
-            mTitleText.setTextSize(ta.getDimensionPixelSize(R.styleable.ClassicsFooter_srlTextSizeTitle, 16));
+            mTitleText.setTextSize(TypedValue.COMPLEX_UNIT_PX, ta.getDimensionPixelSize(R.styleable.ClassicsFooter_srlTextSizeTitle, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16, getResources().getDisplayMetrics())));
         } else {
             mTitleText.setTextSize(16);
         }

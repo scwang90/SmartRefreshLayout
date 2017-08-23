@@ -15,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -180,13 +181,13 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
         }
 
         if (ta.hasValue(R.styleable.ClassicsHeader_srlTextSizeTitle)) {
-            mTitleText.setTextSize(ta.getDimensionPixelSize(R.styleable.ClassicsHeader_srlTextSizeTitle, 16));
+            mTitleText.setTextSize(TypedValue.COMPLEX_UNIT_PX, ta.getDimensionPixelSize(R.styleable.ClassicsHeader_srlTextSizeTitle, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16, getResources().getDisplayMetrics())));
         } else {
             mTitleText.setTextSize(16);
         }
 
         if (ta.hasValue(R.styleable.ClassicsHeader_srlTextSizeTime)) {
-            mLastUpdateText.setTextSize(ta.getDimensionPixelSize(R.styleable.ClassicsHeader_srlTextSizeTime, 12));
+            mLastUpdateText.setTextSize(TypedValue.COMPLEX_UNIT_PX, ta.getDimensionPixelSize(R.styleable.ClassicsHeader_srlTextSizeTime, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics())));
         } else {
             mLastUpdateText.setTextSize(12);
         }
