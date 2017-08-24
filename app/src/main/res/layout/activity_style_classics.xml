@@ -29,7 +29,7 @@
             app:srlDrawableArrowSize="20dp"
             app:srlDrawableProgressSize="20dp"
             app:srlDrawableMarginRight="20dp"
-            app:srlDrawableProgress="@drawable/ic_index_dashboard"/>
+            app:srlDrawableProgress="@drawable/ic_progress_hojder"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"

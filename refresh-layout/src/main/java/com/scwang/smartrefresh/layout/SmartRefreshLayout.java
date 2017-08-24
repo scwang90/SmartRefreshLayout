@@ -277,8 +277,8 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         mHeaderHeightStatus = ta.hasValue(R.styleable.SmartRefreshLayout_srlHeaderHeight) ? DimensionStatus.XmlLayoutUnNotify : mHeaderHeightStatus;
         mFooterHeightStatus = ta.hasValue(R.styleable.SmartRefreshLayout_srlFooterHeight) ? DimensionStatus.XmlLayoutUnNotify : mFooterHeightStatus;
 
-        mFooterExtendHeight = (int) Math.max((mFooterHeight * (mHeaderMaxDragRate - 1)), 0);
         mHeaderExtendHeight = (int) Math.max((mHeaderHeight * (mHeaderMaxDragRate - 1)), 0);
+        mFooterExtendHeight = (int) Math.max((mFooterHeight * (mFooterMaxDragRate - 1)), 0);
 
         int accentColor = ta.getColor(R.styleable.SmartRefreshLayout_srlAccentColor, 0);
         int primaryColor = ta.getColor(R.styleable.SmartRefreshLayout_srlPrimaryColor, 0);
