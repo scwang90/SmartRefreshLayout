@@ -140,7 +140,7 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
         }
 
         if (ta.hasValue(R.styleable.ClassicsFooter_srlTextSizeTitle)) {
-            mTitleText.setTextSize(TypedValue.COMPLEX_UNIT_PX, ta.getDimensionPixelSize(R.styleable.ClassicsFooter_srlTextSizeTitle, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16, getResources().getDisplayMetrics())));
+            mTitleText.setTextSize(TypedValue.COMPLEX_UNIT_PX, ta.getDimensionPixelSize(R.styleable.ClassicsFooter_srlTextSizeTitle, DensityUtil.dp2px(16)));
         } else {
             mTitleText.setTextSize(16);
         }

@@ -182,13 +182,13 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
         }
 
         if (ta.hasValue(R.styleable.ClassicsHeader_srlTextSizeTitle)) {
-            mTitleText.setTextSize(TypedValue.COMPLEX_UNIT_PX, DensityUtil.dp2px(16));
+            mTitleText.setTextSize(TypedValue.COMPLEX_UNIT_PX, ta.getDimensionPixelSize(R.styleable.ClassicsHeader_srlTextSizeTitle, DensityUtil.dp2px(16)));
         } else {
             mTitleText.setTextSize(16);
         }
 
         if (ta.hasValue(R.styleable.ClassicsHeader_srlTextSizeTime)) {
-            mLastUpdateText.setTextSize(TypedValue.COMPLEX_UNIT_PX, DensityUtil.dp2px(12));
+            mLastUpdateText.setTextSize(TypedValue.COMPLEX_UNIT_PX, ta.getDimensionPixelSize(R.styleable.ClassicsHeader_srlTextSizeTime, DensityUtil.dp2px(12)));
         } else {
             mLastUpdateText.setTextSize(12);
         }
