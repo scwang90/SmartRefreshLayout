@@ -1294,7 +1294,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 }
             }
         }
-        if ((spinner >= 0 || oldSpinner > 0) && mRefreshHeader != null) {
+        if ((spinner > 0 || oldSpinner > 0) && mRefreshHeader != null) {
             spinner = Math.max(spinner, 0);
             if (mEnableRefresh || (mState == RefreshState.RefreshFinish && isAnimator)) {
                 if (oldSpinner != mSpinner
@@ -1326,7 +1326,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 }
             }
         }
-        if ((spinner <= 0 || oldSpinner < 0) && mRefreshFooter != null) {
+        if ((spinner < 0 || oldSpinner < 0) && mRefreshFooter != null) {
             spinner = Math.min(spinner, 0);
             if (mEnableLoadmore || (mState == RefreshState.LoadFinish && isAnimator)) {
                 if (oldSpinner != mSpinner
