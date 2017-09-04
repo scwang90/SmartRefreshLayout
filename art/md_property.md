@@ -39,7 +39,7 @@ public class RefreshActivity extends Activity {
         refreshLayout.autoLoadmore(400);//延迟400毫秒后自动加载
         refreshlayout.finishRefresh();//结束刷新
         refreshlayout.finishLoadmore();//结束加载
-        refreshlayout.finishRefresh(3000);//延迟3000毫秒后家属刷新
+        refreshlayout.finishRefresh(3000);//延迟3000毫秒后结束刷新
         refreshlayout.finishLoadmore(3000);//延迟3000毫秒后结束加载
         refreshlayout.finishRefresh(false);//结束刷新（刷新失败）
         refreshlayout.finishLoadmore(false);//结束加载（加载失败）
