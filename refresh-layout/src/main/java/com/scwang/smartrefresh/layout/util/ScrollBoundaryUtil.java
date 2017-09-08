@@ -25,7 +25,7 @@ public class ScrollBoundaryUtil {
             PointF point = new PointF();
             for (int i = childCount; i > 0; i--) {
                 View child = viewGroup.getChildAt(i - 1);
-                if (isTransformedTouchPointInView(viewGroup,child, event.getX(), event.getY() , point)) {
+                if (isTransformedTouchPointInView(viewGroup, child, event.getX(), event.getY(), point)) {
                     event = MotionEvent.obtain(event);
                     event.offsetLocation(point.x, point.y);
                     return canRefresh(child, event);
@@ -45,7 +45,7 @@ public class ScrollBoundaryUtil {
             PointF point = new PointF();
             for (int i = 0; i < childCount; i++) {
                 View child = viewGroup.getChildAt(i);
-                if (isTransformedTouchPointInView(viewGroup,child, event.getX(), event.getY() , point)) {
+                if (isTransformedTouchPointInView(viewGroup, child, event.getX(), event.getY(), point)) {
                     event = MotionEvent.obtain(event);
                     event.offsetLocation(point.x, point.y);
                     return canLoadmore(child, event);
@@ -65,7 +65,7 @@ public class ScrollBoundaryUtil {
             PointF point = new PointF();
             for (int i = 0; i < childCount; i++) {
                 View child = viewGroup.getChildAt(i);
-                if (isTransformedTouchPointInView(viewGroup,child, event.getX(), event.getY() , point)) {
+                if (isTransformedTouchPointInView(viewGroup, child, event.getX(), event.getY(), point)) {
                     event = MotionEvent.obtain(event);
                     event.offsetLocation(point.x, point.y);
                     return canScrollDown(child, event);
@@ -119,6 +119,9 @@ public class ScrollBoundaryUtil {
     }
 
     public static boolean isTransformedTouchPointInView(ViewGroup group, View child, float x, float y,PointF outLocalPoint) {
+        if (child.getVisibility() != View.VISIBLE) {
+            return false;
+        }
         final float[] point = new float[2];
         point[0] = x;
         point[1] = y;

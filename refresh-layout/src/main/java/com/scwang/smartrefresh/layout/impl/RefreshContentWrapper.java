@@ -355,10 +355,14 @@ public class RefreshContentWrapper implements RefreshContent {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
                     int value = (int) animation.getAnimatedValue();
-                    if (mScrollableView instanceof ListView) {
-                        ListViewCompat.scrollListBy((ListView) mScrollableView, value - lastValue);
-                    } else {
-                        mScrollableView.scrollBy(0, value - lastValue);
+                    try {
+                        if (mScrollableView instanceof ListView) {
+                            ListViewCompat.scrollListBy((ListView) mScrollableView, value - lastValue);
+                        } else {
+                            mScrollableView.scrollBy(0, value - lastValue);
+                        }
+                    } catch (Exception ignored) {
+                        //根据用户反馈，此处可能会有BUG
                     }
                     lastValue = value;
                 }
