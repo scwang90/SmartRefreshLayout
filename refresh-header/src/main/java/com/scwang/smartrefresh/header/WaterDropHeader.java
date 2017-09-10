@@ -8,11 +8,12 @@ package com.scwang.smartrefresh.header;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.support.annotation.RequiresApi;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.os.Build;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -246,7 +247,7 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override@Deprecated
-    public void setPrimaryColors(int... colors) {
+    public void setPrimaryColors(@ColorInt int ... colors) {
         if (colors.length > 0) {
             mWaterDropView.setIndicatorColor(colors[0]);
         }

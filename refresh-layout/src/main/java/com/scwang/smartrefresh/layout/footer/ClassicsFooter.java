@@ -5,8 +5,11 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.ColorInt;
+import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
@@ -245,7 +248,7 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
      * ClassicsFooter 在(SpinnerStyle.FixedBehind)时才有主题色
      */
     @Override@Deprecated
-    public void setPrimaryColors(int... colors) {
+    public void setPrimaryColors(@ColorInt int ... colors) {
         if (mSpinnerStyle == SpinnerStyle.FixedBehind) {
             if (colors.length > 0) {
                 if (!(getBackground() instanceof BitmapDrawable)) {
@@ -381,7 +384,7 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
         this.mSpinnerStyle = style;
         return this;
     }
-    public ClassicsFooter setAccentColor(int accentColor) {
+    public ClassicsFooter setAccentColor(@ColorInt int accentColor) {
         mTitleText.setTextColor(accentColor);
         if (mProgressDrawable != null) {
             mProgressDrawable.setColor(accentColor);
@@ -391,13 +394,24 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
         }
         return this;
     }
-    public ClassicsFooter setPrimaryColor(int primaryColor) {
+    public ClassicsFooter setPrimaryColor(@ColorInt int primaryColor) {
         setBackgroundColor(mBackgroundColor = primaryColor);
         if (mRefreshKernel != null) {
             mRefreshKernel.requestDrawBackgoundForFooter(mBackgroundColor);
         }
         return this;
     }
+
+    public ClassicsFooter setPrimaryColorId(@ColorRes int colorId) {
+        setPrimaryColor(ContextCompat.getColor(getContext(), colorId));
+        return this;
+    }
+
+    public ClassicsFooter setAccentColorId(@ColorRes int colorId) {
+        setAccentColor(ContextCompat.getColor(getContext(), colorId));
+        return this;
+    }
+
     public ClassicsFooter setFinishDuration(int delay) {
         mFinishDuration = delay;
         return this;

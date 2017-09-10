@@ -1,13 +1,14 @@
 package com.scwang.smartrefresh.header;
 
-import android.support.annotation.RequiresApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.os.Build;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.annotation.VisibleForTesting;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -294,7 +295,7 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override@Deprecated
-    public void setPrimaryColors(int... colors) {
+    public void setPrimaryColors(@ColorInt int ... colors) {
         if (colors.length > 0) {
             mBezierPaint.setColor(colors[0]);
         }

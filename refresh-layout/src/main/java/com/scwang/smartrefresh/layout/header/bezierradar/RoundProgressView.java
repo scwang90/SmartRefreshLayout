@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.support.annotation.ColorInt;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
@@ -76,11 +77,11 @@ public class RoundProgressView extends View {
                 resolveSize(getSuggestedMinimumHeight(), heightMeasureSpec));
     }
 
-    public void setBackColor(int backColor) {
+    public void setBackColor(@ColorInt int backColor) {
         mPantR.setColor(backColor&0x00ffffff|0x55000000);
     }
 
-    public void setFrontColor(int color) {
+    public void setFrontColor(@ColorInt int color) {
         mPath.setColor(color);
     }
 

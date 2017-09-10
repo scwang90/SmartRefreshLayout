@@ -2,6 +2,7 @@ package com.scwang.refreshlayout.activity.using;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -188,7 +189,7 @@ public class CustomUsingActivity extends AppCompatActivity {
         public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
         }
         @Override
-        public void setPrimaryColors(int... colors){
+        public void setPrimaryColors(@ColorInt int ... colors){
         }
     }
 }

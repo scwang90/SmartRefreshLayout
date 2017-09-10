@@ -1,14 +1,15 @@
 package com.scwang.smartrefresh.layout.header;
 
 import android.annotation.SuppressLint;
-import android.support.annotation.RequiresApi;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.os.Build;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -129,7 +130,7 @@ public class FalsifyHeader extends View implements RefreshHeader {
     }
 
     @Override@Deprecated
-    public void setPrimaryColors(int... colors) {
+    public void setPrimaryColors(@ColorInt int ... colors) {
 
     }
 

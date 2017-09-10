@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.annotation.ColorInt;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -270,7 +271,7 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override@Deprecated
-    public void setPrimaryColors(int... colors) {
+    public void setPrimaryColors(@ColorInt int ... colors) {
         if (colors.length > 0) {
             mWaveView.setWaveColor(colors[0]);
             if (colors.length > 1) {

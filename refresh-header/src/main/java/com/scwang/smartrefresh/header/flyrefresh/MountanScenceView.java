@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.os.Build;
+import android.support.annotation.ColorInt;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.View;
@@ -276,7 +277,7 @@ public class MountanScenceView extends View {
 
     //</editor-fold>
 
-    public void setPrimaryColor(int color) {
+    public void setPrimaryColor(@ColorInt int color) {
 //        private int COLOR_BACKGROUND = Color.parseColor("#7ECEC9");
 //        private int COLOR_MOUNTAIN_1 = Color.parseColor("#86DAD7");
 //        private int COLOR_MOUNTAIN_2 = Color.parseColor("#3C929C");

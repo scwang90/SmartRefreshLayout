@@ -8,6 +8,8 @@ import android.graphics.drawable.Animatable;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.ColorInt;
+import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,6 +17,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -317,7 +320,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     }
 
     @Override@Deprecated
-    public void setPrimaryColors(int... colors) {
+    public void setPrimaryColors(@ColorInt int ... colors) {
         if (colors.length > 0) {
             if (!(getBackground() instanceof BitmapDrawable)) {
                 setPrimaryColor(colors[0]);
@@ -447,7 +450,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
         return this;
     }
 
-    public ClassicsHeader setPrimaryColor(int primaryColor) {
+    public ClassicsHeader setPrimaryColor(@ColorInt int primaryColor) {
         setBackgroundColor(mBackgroundColor = primaryColor);
         if (mRefreshKernel != null) {
             mRefreshKernel.requestDrawBackgoundForHeader(mBackgroundColor);
@@ -455,7 +458,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
         return this;
     }
 
-    public ClassicsHeader setAccentColor(int accentColor) {
+    public ClassicsHeader setAccentColor(@ColorInt int accentColor) {
         if (mArrowDrawable != null) {
             mArrowDrawable.parserColors(accentColor);
         }
@@ -464,6 +467,16 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
         }
         mTitleText.setTextColor(accentColor);
         mLastUpdateText.setTextColor(accentColor&0x00ffffff|0xcc000000);
+        return this;
+    }
+
+    public ClassicsHeader setPrimaryColorId(@ColorRes int colorId) {
+        setPrimaryColor(ContextCompat.getColor(getContext(), colorId));
+        return this;
+    }
+
+    public ClassicsHeader setAccentColorId(@ColorRes int colorId) {
+        setAccentColor(ContextCompat.getColor(getContext(), colorId));
         return this;
     }
 

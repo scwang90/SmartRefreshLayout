@@ -5,6 +5,8 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.annotation.ColorInt;
+import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
@@ -94,25 +96,25 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
     //</editor-fold>
 
     //<editor-fold desc="API">
-    public BezierRadarHeader setPrimaryColor(int color) {
+    public BezierRadarHeader setPrimaryColor(@ColorInt int color) {
         mWaveView.setWaveColor(color);
         mProgressView.setBackColor(color);
         return this;
     }
 
-    public BezierRadarHeader setAccentColor(int color) {
+    public BezierRadarHeader setAccentColor(@ColorInt int color) {
         mDotView.setDotColor(color);
         mRippleView.setFrontColor(color);
         mProgressView.setFrontColor(color);
         return this;
     }
 
-    public BezierRadarHeader setPrimaryColorId(int colorId) {
+    public BezierRadarHeader setPrimaryColorId(@ColorRes int colorId) {
         setPrimaryColor(ContextCompat.getColor(getContext(), colorId));
         return this;
     }
 
-    public BezierRadarHeader setAccentColorId(int colorId) {
+    public BezierRadarHeader setAccentColorId(@ColorRes int colorId) {
         setAccentColor(ContextCompat.getColor(getContext(), colorId));
         return this;
     }
@@ -129,7 +131,7 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
 
     //<editor-fold desc="RefreshHeader">
     @Override@Deprecated
-    public void setPrimaryColors(int... colors) {
+    public void setPrimaryColors(@ColorInt int ... colors) {
         if (colors.length > 0) {
             setPrimaryColor(colors[0]);
         }

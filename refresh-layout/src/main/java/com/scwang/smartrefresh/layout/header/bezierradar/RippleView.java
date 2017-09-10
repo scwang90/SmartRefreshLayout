@@ -7,6 +7,7 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.support.annotation.ColorInt;
 import android.view.View;
 
 /**
@@ -32,7 +33,7 @@ public class RippleView extends View {
                 resolveSize(getSuggestedMinimumHeight(), heightMeasureSpec));
     }
 
-    public void setFrontColor(int color) {
+    public void setFrontColor(@ColorInt int color) {
         mPaint.setColor(color);
     }
 

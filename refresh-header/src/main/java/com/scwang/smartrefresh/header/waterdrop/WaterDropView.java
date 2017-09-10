@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.support.annotation.ColorInt;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
@@ -236,7 +237,7 @@ public class WaterDropView extends View {
         return bottomCircle;
     }
 
-    public void setIndicatorColor(int color) {
+    public void setIndicatorColor(@ColorInt int color) {
         mPaint.setColor(color);
     }
 

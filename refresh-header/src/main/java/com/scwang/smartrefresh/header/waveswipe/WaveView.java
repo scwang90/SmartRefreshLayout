@@ -24,6 +24,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.os.Build;
+import android.support.annotation.ColorInt;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -679,7 +680,7 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
      * @param color ARGB color. WaveView will be colored by Black if rgb color is provided.
      * @see Paint#setColor(int)
      */
-    public void setWaveColor(int color) {
+    public void setWaveColor(@ColorInt int color) {
         mPaint.setColor(color);
         invalidate();
     }

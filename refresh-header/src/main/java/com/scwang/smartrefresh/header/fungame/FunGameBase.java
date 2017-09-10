@@ -2,6 +2,7 @@ package com.scwang.smartrefresh.header.fungame;
 
 import android.content.Context;
 import android.os.Build;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
@@ -229,7 +230,7 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
     }
 
     @Override@Deprecated
-    public void setPrimaryColors(int... colors) {
+    public void setPrimaryColors(@ColorInt int ... colors) {
     }
 
     @NonNull

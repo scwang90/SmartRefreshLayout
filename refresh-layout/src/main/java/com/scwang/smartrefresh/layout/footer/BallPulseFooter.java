@@ -3,6 +3,7 @@ package com.scwang.smartrefresh.layout.footer;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.AttrRes;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.graphics.ColorUtils;
@@ -138,7 +139,7 @@ public class BallPulseFooter extends ViewGroup implements RefreshFooter {
     }
 
     @Override@Deprecated
-    public void setPrimaryColors(int... colors) {
+    public void setPrimaryColors(@ColorInt int... colors) {
         if (colors.length > 1) {
             mBallPulseView.setNormalColor(colors[1]);
             mBallPulseView.setAnimatingColor(colors[0]);
@@ -147,7 +148,6 @@ public class BallPulseFooter extends ViewGroup implements RefreshFooter {
             mBallPulseView.setAnimatingColor(colors[0]);
         }
     }
-
     @NonNull
     @Override
     public View getView() {
@@ -165,5 +165,21 @@ public class BallPulseFooter extends ViewGroup implements RefreshFooter {
         this.mSpinnerStyle = mSpinnerStyle;
         return this;
     }
+
+    public BallPulseFooter setIndicatorColor(@ColorInt int color) {
+        mBallPulseView.setIndicatorColor(color);
+        return this;
+    }
+
+    public BallPulseFooter setNormalColor(@ColorInt int color) {
+        mBallPulseView.setNormalColor(color);
+        return this;
+    }
+
+    public BallPulseFooter setAnimatingColor(@ColorInt int color) {
+        mBallPulseView.setAnimatingColor(color);
+        return this;
+    }
+
     //</editor-fold>
 }

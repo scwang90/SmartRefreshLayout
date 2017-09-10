@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
@@ -195,7 +196,7 @@ public class FunGameHeader extends FunGameBase implements RefreshHeader {
 
 
     @Override@Deprecated
-    public void setPrimaryColors(int... colors) {
+    public void setPrimaryColors(@ColorInt int ... colors) {
         super.setPrimaryColors(colors);
         if (colors.length > 0) {
             topMaskView.setTextColor(colors[0]);

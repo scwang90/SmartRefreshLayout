@@ -1,5 +1,6 @@
 package com.scwang.smartrefresh.layout.impl;
 
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +44,7 @@ public class RefreshFooterWrapper implements RefreshFooter {
 	}
 
     @Override@Deprecated
-    public void setPrimaryColors(int... colors) {
+    public void setPrimaryColors(@ColorInt int ... colors) {
 
     }
 

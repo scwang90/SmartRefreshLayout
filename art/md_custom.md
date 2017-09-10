@@ -79,7 +79,7 @@ public interface RefreshHeader {
      * 设置主题颜色 （如果自定义的Header没有注意颜色，本方法可以什么都不处理）
      * @param colors 对应Xml中配置的 srlPrimaryColor srlAccentColor
      */
-    void setPrimaryColors(int... colors);
+    void setPrimaryColors(@ColorInt int ... colors);
 
     /**
      * 尺寸定义初始化完成 （如果高度不改变（代码修改：setHeader），只调用一次, 在RefreshLayout#onMeasure中调用）
@@ -319,7 +319,7 @@ public class ClassicsHeader extends LinearLayout implements RefreshHeader {
     public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
     }
     @Override
-    public void setPrimaryColors(int... colors){
+    public void setPrimaryColors(@ColorInt int ... colors){
     }
 }
 ~~~
