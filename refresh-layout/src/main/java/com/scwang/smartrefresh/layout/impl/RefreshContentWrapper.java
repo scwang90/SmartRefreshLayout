@@ -16,7 +16,6 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.PagerAdapterWrapper;
 import android.support.v4.view.ScrollingView;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.ListViewCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.Space;
 import android.support.v7.widget.RecyclerView;
@@ -357,11 +356,26 @@ public class RefreshContentWrapper implements RefreshContent {
                     int value = (int) animation.getAnimatedValue();
                     try {
                         if (mScrollableView instanceof ListView) {
-                            ListViewCompat.scrollListBy((ListView) mScrollableView, value - lastValue);
+                            if (Build.VERSION.SDK_INT >= 19) {
+                                ((ListView) RefreshContentWrapper.this.mScrollableView).scrollListBy(value - lastValue);
+                            } else {
+//                                ListViewCompat.scrollListBy((ListView) mScrollableView, value - lastValue);
+                                ListView listView = (ListView) RefreshContentWrapper.this.mScrollableView;
+                                final int firstPosition = listView.getFirstVisiblePosition();
+                                if (firstPosition == ListView.INVALID_POSITION) {
+                                    return;
+                                }
+                                final View firstView = listView.getChildAt(0);
+                                if (firstView == null) {
+                                    return;
+                                }
+                                final int newTop = firstView.getTop() - (value - lastValue);
+                                listView.setSelectionFromTop(firstPosition, newTop);
+                            }
                         } else {
                             mScrollableView.scrollBy(0, value - lastValue);
                         }
-                    } catch (Exception ignored) {
+                    } catch (Throwable ignored) {
                         //根据用户反馈，此处可能会有BUG
                     }
                     lastValue = value;

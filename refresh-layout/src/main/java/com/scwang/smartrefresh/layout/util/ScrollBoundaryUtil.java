@@ -16,7 +16,7 @@ public class ScrollBoundaryUtil {
 
     //<editor-fold desc="滚动判断">
     public static boolean canRefresh(View targetView, MotionEvent event) {
-        if (canScrollUp(targetView)) {
+        if (canScrollUp(targetView) && targetView.getVisibility() == View.VISIBLE) {
             return false;
         }
         if (targetView instanceof ViewGroup && event != null) {
@@ -36,7 +36,7 @@ public class ScrollBoundaryUtil {
     }
 
     public static boolean canLoadmore(View targetView, MotionEvent event) {
-        if (!canScrollDown(targetView) && canScrollUp(targetView)) {
+        if (!canScrollDown(targetView) && canScrollUp(targetView) && targetView.getVisibility() == View.VISIBLE) {
             return true;
         }
         if (targetView instanceof ViewGroup && event != null) {
@@ -56,7 +56,7 @@ public class ScrollBoundaryUtil {
     }
 
     public static boolean canScrollDown(View targetView, MotionEvent event) {
-        if (canScrollDown(targetView)) {
+        if (canScrollDown(targetView) && targetView.getVisibility() == View.VISIBLE) {
             return true;
         }
         if (targetView instanceof ViewGroup && event != null) {
