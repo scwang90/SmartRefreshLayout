@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.annotation.ColorInt;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -233,6 +234,8 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
                 mCircleView.makeProgressTransparent();
                 break;
             case PullDownCanceled:
+                mCircleView.showArrow(false);
+                mCircleView.setProgressRotation(0);
                 mCircleView.setProgressStartEndTrim(0f, 0f);
                 mWaveView.startWaveAnimation(mLastFirstBounds);
                 mLastFirstBounds = 0;
@@ -267,8 +270,8 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
         return 0;
     }
 
-    @Override
-    public void setPrimaryColors(int... colors) {
+    @Override@Deprecated
+    public void setPrimaryColors(@ColorInt int ... colors) {
         if (colors.length > 0) {
             mWaveView.setWaveColor(colors[0]);
             if (colors.length > 1) {

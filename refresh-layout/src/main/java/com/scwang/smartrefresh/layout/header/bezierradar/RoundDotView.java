@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.support.annotation.ColorInt;
 import android.view.View;
 
 import com.scwang.smartrefresh.layout.util.DensityUtil;
@@ -33,7 +34,7 @@ public class RoundDotView extends View {
                 resolveSize(getSuggestedMinimumHeight(), heightMeasureSpec));
     }
 
-    public void setDotColor(int color) {
+    public void setDotColor(@ColorInt int color) {
         mPath.setColor(color);
     }
 

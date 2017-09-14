@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.support.annotation.ColorInt;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
@@ -48,6 +49,13 @@ public class RoundProgressView extends View {
 
         mAnimator = ValueAnimator.ofInt(0,360);
         mAnimator.setDuration(720);
+        mAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        mAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
         mAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -55,8 +63,12 @@ public class RoundProgressView extends View {
                 postInvalidate();
             }
         });
-        mAnimator.setRepeatCount(ValueAnimator.INFINITE);
-        mAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        mAnimator.removeAllUpdateListeners();
     }
 
     @Override
@@ -65,11 +77,11 @@ public class RoundProgressView extends View {
                 resolveSize(getSuggestedMinimumHeight(), heightMeasureSpec));
     }
 
-    public void setBackColor(int backColor) {
+    public void setBackColor(@ColorInt int backColor) {
         mPantR.setColor(backColor&0x00ffffff|0x55000000);
     }
 
-    public void setFrontColor(int color) {
+    public void setFrontColor(@ColorInt int color) {
         mPath.setColor(color);
     }
 

@@ -209,29 +209,57 @@ public class RefreshLayout extends ViewGroup implements GestureDetector.OnGestur
 //        return mIsBeingDragged;//super.dispatchTouchEvent(ev);
 //    }
 
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
-        return true;//super.onInterceptTouchEvent(ev);
-    }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        return mGesture.onTouchEvent(event);
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        mGesture.onTouchEvent(ev);
+        return super.dispatchTouchEvent(ev);
     }
+
+//    @Override
+//    public boolean onInterceptTouchEvent(MotionEvent ev) {
+//        return false;//super.onInterceptTouchEvent(ev);
+//    }
+
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//        return mGesture.onTouchEvent(event);
+//    }
     //</editor-fold>
 
     //<editor-fold desc="滚动计算">
+    private int mlastScrollY;
+    boolean isFling = false;
+    int scrollY;
+    int currllY;
     @Override
     public void computeScroll() {
         if (mScroller.computeScrollOffset()) {
-            scrollTo(mScroller.getCurrX(), mScroller.getCurrY());
+            int currY = mScroller.getCurrY();
+            int dy = currY - mlastScrollY;
+//            if (isFling) {
+//                scrollTo(0, getScrollY() + dy);
+//            } else {
+//                if (dy < 0 && mRefreshContent.canRefresh()) {
+//                    isFling = true;
+//                    scrollY = getScrollY();
+//                    currllY = mScroller.getCurrY();
+//                } else if (dy > 0 && mRefreshContent.canLoadmore()) {
+//                    isFling = true;
+//                    scrollY = getScrollY();
+//                    currllY = mScroller.getCurrY();
+//                }
+//            }
+//            mlastScrollY = currY;
             postInvalidate();
+        } else {
+            isFling = false;
         }
     }
 
     @Override
     public void scrollTo(@Px int x, @Px int y) {
-        super.scrollTo(x, Math.max(Math.min(y, mFooterHeight), -mHeaderHeight));
+        super.scrollTo(x, y);
     }
     //</editor-fold>
 
@@ -253,7 +281,7 @@ public class RefreshLayout extends ViewGroup implements GestureDetector.OnGestur
 
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-        scrollBy(0, (int)distanceY);
+//        scrollBy(0, (int)distanceY);
         return true;
     }
 
@@ -264,7 +292,10 @@ public class RefreshLayout extends ViewGroup implements GestureDetector.OnGestur
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        isFling = false;
         mScroller.fling(0, getScrollY(), 0, -(int)velocityY, 0, 0, -mHeaderHeight, mFooterHeight);
+        mlastScrollY = mScroller.getCurrY();
+        postInvalidate();
         return true;
     }
     //</editor-fold>

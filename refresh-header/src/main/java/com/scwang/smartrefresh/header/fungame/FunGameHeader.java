@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
@@ -50,9 +51,9 @@ public class FunGameHeader extends FunGameBase implements RefreshHeader {
     private String topMaskViewText = "下拉即将展开";//"Pull To Break Out!";
     private String bottomMaskViewText = "拖动控制游戏";//"Scrooll to move handle";
 
-    private int topMaskTextSize = 16;
+    private int topMaskTextSize;
 
-    private int bottomMaskTextSize = 16;
+    private int bottomMaskTextSize;
 
     //</editor-fold>
 
@@ -89,6 +90,9 @@ public class FunGameHeader extends FunGameBase implements RefreshHeader {
             bottomMaskViewText = ta.getString(R.styleable.FunGameHeader_fgvMaskBottomText);
         }
 
+        topMaskTextSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16, getResources().getDisplayMetrics());
+        bottomMaskTextSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16, getResources().getDisplayMetrics());
+
         topMaskTextSize = ta.getDimensionPixelSize(R.styleable.FunGameHeader_fgvBottomTextSize, topMaskTextSize);
         bottomMaskTextSize = ta.getDimensionPixelSize(R.styleable.FunGameHeader_fgvBottomTextSize, bottomMaskTextSize);
 
@@ -110,7 +114,7 @@ public class FunGameHeader extends FunGameBase implements RefreshHeader {
         maskTextView.setTextColor(Color.BLACK);
         maskTextView.setBackgroundColor(Color.WHITE);
         maskTextView.setGravity(gravity | Gravity.CENTER_HORIZONTAL);
-        maskTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP,textSize);
+        maskTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
         maskTextView.setText(text);
         return maskTextView;
     }
@@ -191,8 +195,8 @@ public class FunGameHeader extends FunGameBase implements RefreshHeader {
     //<editor-fold desc="RefreshHeader">
 
 
-    @Override
-    public void setPrimaryColors(int... colors) {
+    @Override@Deprecated
+    public void setPrimaryColors(@ColorInt int ... colors) {
         super.setPrimaryColors(colors);
         if (colors.length > 0) {
             topMaskView.setTextColor(colors[0]);

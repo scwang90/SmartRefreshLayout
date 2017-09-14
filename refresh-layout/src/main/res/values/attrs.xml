@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="srlDrawableSize" format="dimension"/><!--图片尺寸-->
+    <attr name="srlDrawableArrowSize" format="dimension"/><!--箭头图片尺寸-->
+    <attr name="srlDrawableProgressSize" format="dimension"/><!--箭头图片尺寸-->
+    <attr name="srlDrawableMarginRight" format="dimension"/><!--图片和文字的间距-->
+    <attr name="srlTextSizeTitle" format="dimension"/><!--标题字体-->
+    <attr name="srlTextSizeTime" format="dimension"/><!--时间字体-->
+    <attr name="srlFinishDuration" format="integer"/><!--完成时停留时间-->
     <attr name="srlPrimaryColor" format="color"/><!--主要颜色-->
     <attr name="srlAccentColor" format="color"/><!--强调颜色-->
-    <attr name="srlArrowDrawable" format="reference"/><!--箭头图片-->
-    <attr name="srlProgressDrawable" format="reference"/><!--转动图片-->
+    <attr name="srlDrawableArrow" format="reference"/><!--箭头图片-->
+    <attr name="srlDrawableProgress" format="reference"/><!--转动图片-->
     <attr name="srlEnableHorizontalDrag" format="boolean"/><!--支持水平拖动-->
-
-    <attr name="srlSpinnerStyle" format="enum">
-        <enum name="Translate" value="0"/><!--平行移动-->
-        <enum name="Scale" value="1"/><!--拉伸形变-->
-        <enum name="FixedFront" value="2"/><!--固定在前面-->
-        <enum name="FixedBehind" value="3"/><!--固定在背后-->
-    </attr>
 
     <attr name="srlClassicsSpinnerStyle" format="enum">
         <enum name="Translate" value="0"/><!--平行移动-->
         <enum name="Scale" value="1"/><!--拉伸形变-->
-        <enum name="FixedBehind" value="3"/><!--固定在背后-->
+        <enum name="FixedBehind" value="2"/><!--固定在背后-->
+    </attr>
+
+    <attr name="layout_srlSpinnerStyle" format="enum">
+        <enum name="Translate" value="0"/><!--平行移动-->
+        <enum name="Scale" value="1"/><!--拉伸形变-->
+        <enum name="FixedBehind" value="2"/><!--固定在背后-->
+        <enum name="FixedFront" value="3"/><!--固定在前面-->
+        <enum name="MatchLayout" value="4"/><!--填满布局-->
     </attr>
 
     <declare-styleable name="SmartRefreshLayout">
@@ -46,8 +54,8 @@
     </declare-styleable>
 
     <declare-styleable name="SmartRefreshLayout_Layout">
-        <attr name="srlSpinnerStyle"/>
-        <attr name="srlBackgroundColor" format="color"/>
+        <attr name="layout_srlSpinnerStyle"/>
+        <attr name="layout_srlBackgroundColor" format="color"/>
     </declare-styleable>
 
     <declare-styleable name="BezierRadarHeader">
@@ -66,16 +74,31 @@
         <attr name="srlClassicsSpinnerStyle"/>
         <attr name="srlPrimaryColor"/>
         <attr name="srlAccentColor"/>
-        <attr name="srlArrowDrawable"/>
-        <attr name="srlProgressDrawable"/>
+        <attr name="srlFinishDuration"/>
+        <attr name="srlDrawableArrow"/>
+        <attr name="srlDrawableProgress"/>
+        <attr name="srlDrawableMarginRight"/>
+        <attr name="srlDrawableSize"/>
+        <attr name="srlDrawableArrowSize"/>
+        <attr name="srlDrawableProgressSize"/>
+        <attr name="srlTextSizeTitle"/>
+        <attr name="srlTextSizeTime"/>
+        <attr name="srlTextTimeMarginTop" format="dimension"/>
+        <attr name="srlEnableLastTime" format="boolean"/>
     </declare-styleable>
 
     <declare-styleable name="ClassicsFooter">
         <attr name="srlClassicsSpinnerStyle"/>
         <attr name="srlPrimaryColor"/>
         <attr name="srlAccentColor"/>
-        <attr name="srlArrowDrawable"/>
-        <attr name="srlProgressDrawable"/>
+        <attr name="srlFinishDuration"/>
+        <attr name="srlTextSizeTitle"/>
+        <attr name="srlDrawableArrow"/>
+        <attr name="srlDrawableProgress"/>
+        <attr name="srlDrawableMarginRight"/>
+        <attr name="srlDrawableSize"/>
+        <attr name="srlDrawableArrowSize"/>
+        <attr name="srlDrawableProgressSize"/>
     </declare-styleable>
 
 </resources>

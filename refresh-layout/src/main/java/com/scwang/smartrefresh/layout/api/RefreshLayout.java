@@ -2,8 +2,6 @@ package com.scwang.smartrefresh.layout.api;
 
 import android.support.annotation.ColorRes;
 import android.support.annotation.Nullable;
-import android.support.v4.view.NestedScrollingChild;
-import android.support.v4.view.NestedScrollingParent;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
 
@@ -18,7 +16,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
  * Created by SCWANG on 2017/5/26.
  */
 
-public interface RefreshLayout extends NestedScrollingParent, NestedScrollingChild {
+public interface RefreshLayout {
 
     RefreshLayout setFooterHeight(float dp);
 
@@ -96,7 +94,7 @@ public interface RefreshLayout extends NestedScrollingParent, NestedScrollingChi
     /**
      * 设置指定的Footer
      */
-    RefreshLayout setRefreshFooter(RefreshFooter bottom);
+    RefreshLayout setRefreshFooter(RefreshFooter footer);
 
     /**
      * 设置指定的Footer
@@ -134,6 +132,11 @@ public interface RefreshLayout extends NestedScrollingParent, NestedScrollingChi
     RefreshLayout setEnableLoadmoreWhenContentNotFull(boolean enable);
 
     /**
+     * 设置是会否启用嵌套滚动功能（默认关闭+智能开启）
+     */
+    RefreshLayout setEnableNestedScroll(boolean enabled);
+
+    /**
      * 单独设置刷新监听器
      */
     RefreshLayout setOnRefreshListener(OnRefreshListener listener);
@@ -164,9 +167,9 @@ public interface RefreshLayout extends NestedScrollingParent, NestedScrollingChi
     RefreshLayout setPrimaryColors(int... colors);
 
     /**
-     * 设置滚动边界
+     * 设置滚动边界判断器
      */
-    RefreshLayout setRefreshScrollBoundary(RefreshScrollBoundary boundary);
+    RefreshLayout setScrollBoundaryDecider(ScrollBoundaryDecider boundary);
 
     /**
      * 完成刷新

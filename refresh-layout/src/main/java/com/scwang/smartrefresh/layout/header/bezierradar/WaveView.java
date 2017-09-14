@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.support.annotation.ColorInt;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -45,7 +46,7 @@ public class WaveView extends View {
                 resolveSize(getSuggestedMinimumHeight(), heightMeasureSpec));
     }
 
-    public void setWaveColor(int color) {
+    public void setWaveColor(@ColorInt int color) {
         paint.setColor(color);
     }
 

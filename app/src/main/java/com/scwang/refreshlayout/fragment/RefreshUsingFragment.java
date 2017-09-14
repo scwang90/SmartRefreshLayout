@@ -22,6 +22,7 @@ import com.scwang.refreshlayout.activity.using.BasicUsingActivity;
 import com.scwang.refreshlayout.activity.using.CustomUsingActivity;
 import com.scwang.refreshlayout.activity.using.ListenerUsingActivity;
 import com.scwang.refreshlayout.activity.using.NestLayoutUsingActivity;
+import com.scwang.refreshlayout.activity.using.SnapHelperUsingActivity;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.refreshlayout.util.StatusBarUtil;
@@ -45,6 +46,7 @@ public class RefreshUsingFragment extends Fragment implements AdapterView.OnItem
         Listener("多功能监听器", ListenerUsingActivity.class),
         NestLayout("嵌套Layout作为内容", NestLayoutUsingActivity.class),
         Custom("自定义Header", CustomUsingActivity.class),
+        SnapHelper("结合 SnapHelper 使用", SnapHelperUsingActivity.class),
         ;
         public String name;
         public Class<?> clazz;
@@ -52,7 +54,6 @@ public class RefreshUsingFragment extends Fragment implements AdapterView.OnItem
             this.name = name;
             this.clazz = clazz;
         }
-
     }
 
     @Override

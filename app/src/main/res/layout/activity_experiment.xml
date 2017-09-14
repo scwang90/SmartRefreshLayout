@@ -15,10 +15,12 @@
             android:layout_height="wrap_content"
             app:srlPrimaryColor="#444"
             app:srlAccentColor="@android:color/white"/>
-        <View
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#1bf"/>
+            android:background="#1bf"
+            tools:listitem="@android:layout/simple_list_item_2"/>
         <com.scwang.smartrefresh.layout.footer.ClassicsFooter
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

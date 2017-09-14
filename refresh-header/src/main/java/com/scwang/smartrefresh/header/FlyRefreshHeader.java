@@ -7,6 +7,7 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.os.Build;
+import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
@@ -162,8 +163,8 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
         }
     }
 
-    @Override
-    public void setPrimaryColors(int... colors) {
+    @Override@Deprecated
+    public void setPrimaryColors(@ColorInt int ... colors) {
         if (colors.length > 0) {
             if (mScenceView != null) {
                 mScenceView.setPrimaryColor(colors[0]);

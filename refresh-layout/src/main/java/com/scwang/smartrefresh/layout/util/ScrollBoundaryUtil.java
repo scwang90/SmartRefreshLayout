@@ -16,7 +16,7 @@ public class ScrollBoundaryUtil {
 
     //<editor-fold desc="滚动判断">
     public static boolean canRefresh(View targetView, MotionEvent event) {
-        if (canScrollUp(targetView)) {
+        if (canScrollUp(targetView) && targetView.getVisibility() == View.VISIBLE) {
             return false;
         }
         if (targetView instanceof ViewGroup && event != null) {
@@ -25,7 +25,7 @@ public class ScrollBoundaryUtil {
             PointF point = new PointF();
             for (int i = childCount; i > 0; i--) {
                 View child = viewGroup.getChildAt(i - 1);
-                if (isTransformedTouchPointInView(viewGroup,child, event.getX(), event.getY() , point)) {
+                if (isTransformedTouchPointInView(viewGroup, child, event.getX(), event.getY(), point)) {
                     event = MotionEvent.obtain(event);
                     event.offsetLocation(point.x, point.y);
                     return canRefresh(child, event);
@@ -36,7 +36,7 @@ public class ScrollBoundaryUtil {
     }
 
     public static boolean canLoadmore(View targetView, MotionEvent event) {
-        if (!canScrollDown(targetView) && canScrollUp(targetView)) {
+        if (!canScrollDown(targetView) && canScrollUp(targetView) && targetView.getVisibility() == View.VISIBLE) {
             return true;
         }
         if (targetView instanceof ViewGroup && event != null) {
@@ -45,7 +45,7 @@ public class ScrollBoundaryUtil {
             PointF point = new PointF();
             for (int i = 0; i < childCount; i++) {
                 View child = viewGroup.getChildAt(i);
-                if (isTransformedTouchPointInView(viewGroup,child, event.getX(), event.getY() , point)) {
+                if (isTransformedTouchPointInView(viewGroup, child, event.getX(), event.getY(), point)) {
                     event = MotionEvent.obtain(event);
                     event.offsetLocation(point.x, point.y);
                     return canLoadmore(child, event);
@@ -56,7 +56,7 @@ public class ScrollBoundaryUtil {
     }
 
     public static boolean canScrollDown(View targetView, MotionEvent event) {
-        if (canScrollDown(targetView)) {
+        if (canScrollDown(targetView) && targetView.getVisibility() == View.VISIBLE) {
             return true;
         }
         if (targetView instanceof ViewGroup && event != null) {
@@ -65,7 +65,7 @@ public class ScrollBoundaryUtil {
             PointF point = new PointF();
             for (int i = 0; i < childCount; i++) {
                 View child = viewGroup.getChildAt(i);
-                if (isTransformedTouchPointInView(viewGroup,child, event.getX(), event.getY() , point)) {
+                if (isTransformedTouchPointInView(viewGroup, child, event.getX(), event.getY(), point)) {
                     event = MotionEvent.obtain(event);
                     event.offsetLocation(point.x, point.y);
                     return canScrollDown(child, event);
@@ -119,6 +119,9 @@ public class ScrollBoundaryUtil {
     }
 
     public static boolean isTransformedTouchPointInView(ViewGroup group, View child, float x, float y,PointF outLocalPoint) {
+        if (child.getVisibility() != View.VISIBLE) {
+            return false;
+        }
         final float[] point = new float[2];
         point[0] = x;
         point[1] = y;

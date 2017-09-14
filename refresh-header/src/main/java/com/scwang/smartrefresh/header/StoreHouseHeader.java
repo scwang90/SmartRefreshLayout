@@ -1,6 +1,5 @@
 package com.scwang.smartrefresh.header;
 
-import android.support.annotation.RequiresApi;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -9,8 +8,10 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.PointF;
 import android.os.Build;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.Transformation;
@@ -204,7 +205,7 @@ public class  StoreHouseHeader extends View implements RefreshHeader {
         return this;
     }
 
-    public StoreHouseHeader setTextColor(int color) {
+    public StoreHouseHeader setTextColor(@ColorInt int color) {
         mTextColor = color;
         for (int i = 0; i < mItemList.size(); i++) {
             mItemList.get(i).setColor(color);
@@ -384,8 +385,8 @@ public class  StoreHouseHeader extends View implements RefreshHeader {
         return 0;
     }
 
-    @Override
-    public void setPrimaryColors(int... colors) {
+    @Override@Deprecated
+    public void setPrimaryColors(@ColorInt int ... colors) {
         if (colors.length > 0) {
             mBackgroundColor = colors[0];
             if (mRefreshKernel != null) {

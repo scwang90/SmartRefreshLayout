@@ -116,7 +116,7 @@ public class BallPulseView extends View {
     //</editor-fold>
 
     //<editor-fold desc="API">
-    public void setIndicatorColor(int color) {
+    public void setIndicatorColor(@ColorInt int color) {
         mPaint.setColor(color);
     }
 

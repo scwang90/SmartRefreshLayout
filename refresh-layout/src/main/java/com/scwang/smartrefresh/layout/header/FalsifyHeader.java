@@ -1,14 +1,15 @@
 package com.scwang.smartrefresh.layout.header;
 
 import android.annotation.SuppressLint;
-import android.support.annotation.RequiresApi;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.os.Build;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -33,6 +34,8 @@ import static android.view.View.MeasureSpec.makeMeasureSpec;
  */
 
 public class FalsifyHeader extends View implements RefreshHeader {
+
+    protected RefreshKernel mRefreshKernel;
 
     //<editor-fold desc="FalsifyHeader">
     public FalsifyHeader(Context context) {
@@ -59,7 +62,7 @@ public class FalsifyHeader extends View implements RefreshHeader {
     }
 
     @Override@SuppressLint("DrawAllocation")
-    protected final void onDraw(Canvas canvas) {
+    protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (isInEditMode()) {//这段代码在运行时不会执行，只会在Studio编辑预览时运行，不用在意性能问题
             int d = DensityUtil.dp2px(5);
@@ -87,7 +90,7 @@ public class FalsifyHeader extends View implements RefreshHeader {
 
     @Override
     public void onInitialized(RefreshKernel kernel, int height, int extendHeight) {
-
+        mRefreshKernel = kernel;
     }
 
     @Override
@@ -111,7 +114,9 @@ public class FalsifyHeader extends View implements RefreshHeader {
 
     @Override
     public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
-
+        if (mRefreshKernel != null) {
+            mRefreshKernel.resetStatus();
+        }
     }
 
     @Override
@@ -124,8 +129,8 @@ public class FalsifyHeader extends View implements RefreshHeader {
         return 0;
     }
 
-    @Override
-    public void setPrimaryColors(int... colors) {
+    @Override@Deprecated
+    public void setPrimaryColors(@ColorInt int ... colors) {
 
     }
 

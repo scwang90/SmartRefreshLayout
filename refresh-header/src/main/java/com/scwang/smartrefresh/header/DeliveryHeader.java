@@ -1,13 +1,14 @@
 package com.scwang.smartrefresh.header;
 
-import android.support.annotation.RequiresApi;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Build;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -236,8 +237,8 @@ public class DeliveryHeader extends View implements RefreshHeader {
         return SpinnerStyle.Scale;
     }
 
-    @Override
-    public void setPrimaryColors(int... colors) {
+    @Override@Deprecated
+    public void setPrimaryColors(@ColorInt int ... colors) {
         if (colors.length > 0) {
             setBackgroundColor(colors[0]);
             if (colors.length > 1) {

@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Build;
+import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.text.TextPaint;
@@ -292,8 +293,8 @@ public abstract class FunGameView extends FunGameHeader {
         return super.onFinish(layout, success);
     }
 
-    @Override
-    public void setPrimaryColors(int... colors) {
+    @Override@Deprecated
+    public void setPrimaryColors(@ColorInt int ... colors) {
         super.setPrimaryColors(colors);
         if (colors.length > 0) {
             mBoundaryColor = mBackColor = colors[0];

@@ -16,7 +16,6 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.PagerAdapterWrapper;
 import android.support.v4.view.ScrollingView;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.ListViewCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.Space;
 import android.support.v7.widget.RecyclerView;
@@ -35,7 +34,7 @@ import android.widget.ScrollView;
 import com.scwang.smartrefresh.layout.api.RefreshContent;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshScrollBoundary;
+import com.scwang.smartrefresh.layout.api.ScrollBoundaryDecider;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 
 import java.lang.reflect.Field;
@@ -67,7 +66,7 @@ public class RefreshContentWrapper implements RefreshContent {
     protected boolean mEnableRefresh = true;
     protected boolean mEnableLoadmore = true;
     protected MotionEvent mMotionEvent;
-    protected RefreshScrollBoundaryAdapter mBoundaryAdapter = new RefreshScrollBoundaryAdapter();
+    protected ScrollBoundaryDeciderAdapter mBoundaryAdapter = new ScrollBoundaryDeciderAdapter();
 
     public RefreshContentWrapper(View view) {
         this.mContentView = mRealContentView = view;
@@ -88,16 +87,16 @@ public class RefreshContentWrapper implements RefreshContent {
         mScrollableView = findScrollableViewInternal(content, true);
         try {//try 不能删除，不然会出现兼容性问题
             if (mScrollableView instanceof CoordinatorLayout) {
-                kernel.getRefreshLayout().setNestedScrollingEnabled(false);
+                kernel.getRefreshLayout().setEnableNestedScroll(false);
                 wrapperCoordinatorLayout(((CoordinatorLayout) mScrollableView), kernel.getRefreshLayout());
             }
-        } catch (Exception ignored) {
+        } catch (Throwable ignored) {
         }
         try {//try 不能删除，不然会出现兼容性问题
             if (mScrollableView instanceof ViewPager) {
                 wrapperViewPager((ViewPager) this.mScrollableView);
             }
-        } catch (Exception ignored) {
+        } catch (Throwable ignored) {
         }
         if (mScrollableView instanceof NestedScrollingParent
                 && !(mScrollableView instanceof NestedScrollingChild)) {
@@ -318,11 +317,11 @@ public class RefreshContentWrapper implements RefreshContent {
     }
 
     @Override
-    public void setRefreshScrollBoundary(RefreshScrollBoundary boundary) {
-        if (boundary instanceof RefreshScrollBoundaryAdapter) {
-            mBoundaryAdapter = ((RefreshScrollBoundaryAdapter) boundary);
+    public void setScrollBoundaryDecider(ScrollBoundaryDecider boundary) {
+        if (boundary instanceof ScrollBoundaryDeciderAdapter) {
+            mBoundaryAdapter = ((ScrollBoundaryDeciderAdapter) boundary);
         } else {
-            mBoundaryAdapter.setRefreshScrollBoundary(boundary);
+            mBoundaryAdapter.setScrollBoundaryDecider(boundary);
         }
     }
 
@@ -355,10 +354,29 @@ public class RefreshContentWrapper implements RefreshContent {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
                     int value = (int) animation.getAnimatedValue();
-                    if (mScrollableView instanceof ListView) {
-                        ListViewCompat.scrollListBy((ListView) mScrollableView, value - lastValue);
-                    } else {
-                        mScrollableView.scrollBy(0, value - lastValue);
+                    try {
+                        if (mScrollableView instanceof ListView) {
+                            if (Build.VERSION.SDK_INT >= 19) {
+                                ((ListView) RefreshContentWrapper.this.mScrollableView).scrollListBy(value - lastValue);
+                            } else {
+//                                ListViewCompat.scrollListBy((ListView) mScrollableView, value - lastValue);
+                                ListView listView = (ListView) RefreshContentWrapper.this.mScrollableView;
+                                final int firstPosition = listView.getFirstVisiblePosition();
+                                if (firstPosition == ListView.INVALID_POSITION) {
+                                    return;
+                                }
+                                final View firstView = listView.getChildAt(0);
+                                if (firstView == null) {
+                                    return;
+                                }
+                                final int newTop = firstView.getTop() - (value - lastValue);
+                                listView.setSelectionFromTop(firstPosition, newTop);
+                            }
+                        } else {
+                            mScrollableView.scrollBy(0, value - lastValue);
+                        }
+                    } catch (Throwable ignored) {
+                        //根据用户反馈，此处可能会有BUG
                     }
                     lastValue = value;
                 }
@@ -398,6 +416,7 @@ public class RefreshContentWrapper implements RefreshContent {
                 kernel.animSpinnerBounce(Math.min(velocity, mHeaderHeight));
             } else if (oldScrollY < scrollY && mMotionEvent == null && layout.isEnableLoadmore()) {
                 if (!layout.isLoadmoreFinished() && layout.isEnableAutoLoadmore()
+                        && !layout.isEnablePureScrollMode()
                         && layout.getState() == RefreshState.None
                         && !canScrollDown(v)) {
                     kernel.getRefreshLayout().autoLoadmore(0, 1);
@@ -461,6 +480,7 @@ public class RefreshContentWrapper implements RefreshContent {
                 kernel.animSpinnerBounce(Math.min(velocity, mHeaderHeight));
             } else if (oldScrollY < scrollY && mMotionEvent == null && layout.isEnableLoadmore()) {
                 if (!layout.isLoadmoreFinished() && layout.isEnableAutoLoadmore()
+                        && !layout.isEnablePureScrollMode()
                         && layout.getState() == RefreshState.None
                         && !canScrollDown(scrollView)) {
                     kernel.getRefreshLayout().autoLoadmore(0, 1);
@@ -545,8 +565,9 @@ public class RefreshContentWrapper implements RefreshContent {
                             && layout.isEnableLoadmore()
                             && !canScrollDown(absListView)) {
                         if (layout.getState() == RefreshState.None
+                                && layout.isEnableAutoLoadmore()
                                 && !layout.isLoadmoreFinished()
-                                && layout.isEnableAutoLoadmore()) {
+                                && !layout.isEnablePureScrollMode()) {
                             layout.autoLoadmore(0, 1);
                         } else if (layout.isEnableOverScrollBounce() || layout.isLoading()) {
                             kernel.animSpinnerBounce(Math.max(dy, -mFooterHeight));
@@ -632,7 +653,9 @@ public class RefreshContentWrapper implements RefreshContent {
                     kernel.animSpinnerBounce(Math.min(-dy * 2, mHeaderHeight));
                 } else if (dy > 0 && layout.isEnableLoadmore() && !canScrollDown(recyclerView)) {
                     if (layout.getState() == RefreshState.None
-                            && layout.isEnableAutoLoadmore() && !layout.isLoadmoreFinished()) {
+                            && layout.isEnableAutoLoadmore()
+                            && !layout.isLoadmoreFinished()
+                            && !layout.isEnablePureScrollMode()) {
                         layout.autoLoadmore(0,1);
                     } else if (layout.isEnableOverScrollBounce() || layout.isLoading()) {
                         kernel.animSpinnerBounce(Math.max(-dy * 2, -mFooterHeight));

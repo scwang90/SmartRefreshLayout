@@ -3,6 +3,7 @@ package com.scwang.refreshlayout;
 import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatDelegate;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreater;
@@ -20,6 +21,7 @@ import com.squareup.leakcanary.LeakCanary;
 public class App extends Application {
 
     static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         SmartRefreshLayout.setDefaultRefreshHeaderCreater(new DefaultRefreshHeaderCreater() {
             @NonNull
             @Override
