@@ -23,4 +23,12 @@ public interface RefreshHeader extends RefreshInternal {
      * @param extendHeight Header的扩展高度
      */
     void onReleasing(float percent, int offset, int headerHeight, int extendHeight);
+
+    /**
+     * 释放时刻（调用一次，将会触发加载）
+     * @param layout RefreshLayout
+     * @param headerHeight HeaderHeight
+     * @param extendHeight extendHeaderHeight or extendFooterHeight
+     */
+    void onRefreshReleased(RefreshLayout layout, int headerHeight, int extendHeight);
 }

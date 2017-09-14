@@ -189,6 +189,9 @@ public class CustomUsingActivity extends AppCompatActivity {
         public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
         }
         @Override
+        public void onRefreshReleased(RefreshLayout layout, int headerHeight, int extendHeight) {
+        }
+        @Override
         public void setPrimaryColors(@ColorInt int ... colors){
         }
     }

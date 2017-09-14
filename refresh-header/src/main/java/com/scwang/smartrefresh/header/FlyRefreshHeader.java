@@ -104,14 +104,7 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
     }
 
     @Override
-    public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
-        if (!mIsRefreshing) {
-            onPullingDown(percent, offset, headHeight, extendHeight);
-        }
-    }
-
-    @Override
-    public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
+    public void onRefreshReleased(RefreshLayout layout, int headerHeight, int extendHeight) {
         /**
          * 提前关闭 下拉视图偏移
          */
@@ -161,6 +154,18 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
             mFlyAnimator = flyUpAnim;
             mFlyAnimator.start();
         }
+    }
+
+    @Override
+    public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
+        if (!mIsRefreshing) {
+            onPullingDown(percent, offset, headHeight, extendHeight);
+        }
+    }
+
+    @Override
+    public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
+
     }
 
     @Override@Deprecated

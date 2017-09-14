@@ -214,7 +214,7 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
     }
 
     @Override
-    public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
+    public void onLoadmoreReleased(RefreshLayout layout, int footerHeight, int extendHeight) {
         if (!mLoadmoreFinished) {
             mProgressView.setVisibility(VISIBLE);
             if (mProgressDrawable != null) {
@@ -223,6 +223,11 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
                 mProgressView.animate().rotation(36000).setDuration(100000);
             }
         }
+    }
+
+    @Override
+    public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
+
     }
 
     @Override
@@ -308,6 +313,7 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
                     mArrowView.animate().rotation(180);
                     break;
                 case Loading:
+                case LoadReleased:
                     mArrowView.setVisibility(GONE);
                     mTitleText.setText(REFRESH_FOOTER_LOADING);
                     break;

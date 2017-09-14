@@ -204,7 +204,7 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override
-    public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
+    public void onRefreshReleased(RefreshLayout layout, int headerHeight, int extendHeight) {
         mLastFirstBounds = 0;
         mWaveView.animationDropCircle();
         mCircleView.makeProgressTransparent();
@@ -220,6 +220,11 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
             }
         });
         animator.start();
+    }
+
+    @Override
+    public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
+
     }
 
     @Override

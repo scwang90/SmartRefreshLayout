@@ -363,8 +363,13 @@ public class  StoreHouseHeader extends View implements RefreshHeader {
     }
 
     @Override
-    public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
+    public void onRefreshReleased(RefreshLayout layout, int headerHeight, int extendHeight) {
         beginLoading();
+    }
+
+    @Override
+    public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
+
     }
 
     @Override

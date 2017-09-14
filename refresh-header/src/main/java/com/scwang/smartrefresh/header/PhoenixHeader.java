@@ -225,9 +225,14 @@ public class PhoenixHeader extends View implements RefreshHeader/*, SizeDefiniti
     }
 
     @Override
-    public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
+    public void onRefreshReleased(RefreshLayout layout, int headerHeight, int extendHeight) {
         isRefreshing = true;
         startAnimation(mAnimation);
+    }
+
+    @Override
+    public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
+
     }
 
     @Override

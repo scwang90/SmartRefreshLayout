@@ -185,7 +185,7 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
 
     @Override
     public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
-        if (mState != RefreshState.Refreshing) {
+        if (mState != RefreshState.Refreshing && mState != RefreshState.RefreshReleased) {
             mWaterDropView.updateComleteState(Math.max(offset, 0), headHeight + extendHeight);
             mWaterDropView.postInvalidate();
         }
@@ -215,7 +215,7 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override
-    public void onStartAnimator(final RefreshLayout layout, int headHeight, int extendHeight) {
+    public void onRefreshReleased(final RefreshLayout layout, int headerHeight, int extendHeight) {
         Animator animator = mWaterDropView.createAnimator();
         animator.addListener(new AnimatorListenerAdapter() {
             @Override
@@ -234,11 +234,16 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
             public void run() {
                 mProgressDegree = (mProgressDegree + 30) % 360;
                 invalidate();
-                if (mState == RefreshState.Refreshing) {
+                if (mState == RefreshState.Refreshing || mState == RefreshState.RefreshReleased) {
                     layout.getLayout().postDelayed(this, 100);
                 }
             }
         },100);
+    }
+
+    @Override
+    public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
+
     }
 
     @Override

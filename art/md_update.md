@@ -2,7 +2,8 @@
 
 ## V 1.0.4 (开发中)  
 >添加：类似淘宝二楼的二级下拉刷新  
->添加：srlEnableBounceShowHeaderAndFooter 属性和对应的set方法，控制越界回弹时候是否显示Header和Footer  
+>添加：srlHeaderTriggerRate 属性和对应的set方法 设置 Header触发刷新距离 与 HeaderHieght 的比率（默认1）  
+>添加：srlFooterTriggerRate 属性和对应的set方法 设置 Footer触发加载距离 与 FooterHieght 的比率（默认1）
 
 ## V 1.0.3
 >添加：下拉和上拉时，支持多点触摸，手势不冲突  

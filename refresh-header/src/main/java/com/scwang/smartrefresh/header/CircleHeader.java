@@ -263,27 +263,15 @@ public class CircleHeader extends View implements RefreshHeader {
     }
 
     @Override
-    public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
-        mHeadHeight = headHeight;
-        mWaveHeight = Math.max(offset - headHeight, 0) * .8f;
+    public void onPullingDown(float percent, int offset, int headerHeight, int extendHeight) {
+        mHeadHeight = headerHeight;
+        mWaveHeight = Math.max(offset - headerHeight, 0) * .8f;
     }
 
     @Override
-    public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
-        if (mState != RefreshState.Refreshing) {
-            onPullingDown(percent, offset, headHeight, extendHeight);
-        }
-    }
-
-    @Override
-    public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
-        mState = newState;
-    }
-
-    @Override
-    public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
-        mHeadHeight = headHeight;
-        mBollRadius = headHeight / 6;
+    public void onRefreshReleased(RefreshLayout layout, int headerHeight, int extendHeight) {
+        mHeadHeight = headerHeight;
+        mBollRadius = headerHeight / 6;
         DecelerateInterpolator interpolator = new DecelerateInterpolator();
         final float reboundHeight = Math.min(mWaveHeight * 0.8f, mHeadHeight / 2);
         ValueAnimator waveAnimator = ValueAnimator.ofFloat(
@@ -340,6 +328,22 @@ public class CircleHeader extends View implements RefreshHeader {
         waveAnimator.setInterpolator(interpolator);
         waveAnimator.setDuration(1000);
         waveAnimator.start();
+    }
+
+    @Override
+    public void onReleasing(float percent, int offset, int headerHeight, int extendHeight) {
+        if (mState != RefreshState.Refreshing && mState != RefreshState.RefreshReleased) {
+            onPullingDown(percent, offset, headerHeight, extendHeight);
+        }
+    }
+
+    @Override
+    public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
+        mState = newState;
+    }
+
+    @Override
+    public void onStartAnimator(RefreshLayout layout, int headerHeight, int extendHeight) {
     }
 
     @Override

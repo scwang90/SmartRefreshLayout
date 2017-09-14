@@ -119,6 +119,11 @@ public class BallPulseFooter extends ViewGroup implements RefreshFooter {
     }
 
     @Override
+    public void onLoadmoreReleased(RefreshLayout layout, int footerHeight, int extendHeight) {
+
+    }
+
+    @Override
     public void onStartAnimator(RefreshLayout layout, int footerHeight, int extendHeight) {
         mBallPulseView.startAnim();
     }

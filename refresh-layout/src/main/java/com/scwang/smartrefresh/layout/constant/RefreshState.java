@@ -5,13 +5,14 @@ public enum RefreshState {
     PullDownToRefresh, PullToUpLoad,
     PullDownCanceled, PullUpCanceled,
     ReleaseToRefresh, ReleaseToLoad,
+    RefreshReleased, LoadReleased,
     Refreshing, Loading,
     RefreshFinish, LoadFinish,;
 
-    public boolean isAnimating() {
-        return this == Refreshing ||
-                this == Loading;
-    }
+//    public boolean isAnimating() {
+//        return this == Refreshing ||
+//                this == Loading;
+//    }
 
     public boolean isDraging() {
         return ordinal() >= PullDownToRefresh.ordinal()
@@ -20,15 +21,15 @@ public enum RefreshState {
                 && this != PullUpCanceled;
     }
 
-    public boolean isDragingHeader() {
-        return this == PullDownToRefresh ||
-                this == ReleaseToRefresh;
-    }
-
-    public boolean isDragingFooter() {
-        return this == PullToUpLoad ||
-                this == ReleaseToLoad;
-    }
+//    public boolean isDragingHeader() {
+//        return this == PullDownToRefresh ||
+//                this == ReleaseToRefresh;
+//    }
+//
+//    public boolean isDragingFooter() {
+//        return this == PullToUpLoad ||
+//                this == ReleaseToLoad;
+//    }
 
     public boolean isHeader() {
         return (ordinal() & 1) == 1;

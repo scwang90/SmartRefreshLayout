@@ -36,6 +36,8 @@
         <attr name="srlDragRate" format="float"/>
         <attr name="srlHeaderMaxDragRate" format="float"/>
         <attr name="srlFooterMaxDragRate" format="float"/>
+        <attr name="srlHeaderTriggerRate" format="float"/>
+        <attr name="srlFooterTriggerRate" format="float"/>
         <attr name="srlEnableRefresh" format="boolean"/>
         <attr name="srlEnableLoadmore" format="boolean"/>
         <attr name="srlEnableHeaderTranslationContent" format="boolean"/>

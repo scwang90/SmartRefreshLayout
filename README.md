@@ -99,6 +99,10 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
 compile 'com.android.support:appcompat-v7:25.3.1'//版本随意
 compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
 compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'//没有使用特殊Header，可以不加这行
+
+//新版本预览版-可能不稳定
+compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-alpha-1'
+compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4-alpha-1'
 ```
 
 #### 2.在XML布局文件中添加 SmartRefreshLayout

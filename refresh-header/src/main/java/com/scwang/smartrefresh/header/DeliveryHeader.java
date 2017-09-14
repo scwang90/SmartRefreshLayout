@@ -211,6 +211,11 @@ public class DeliveryHeader extends View implements RefreshHeader {
     }
 
     @Override
+    public void onRefreshReleased(RefreshLayout layout, int headerHeight, int extendHeight) {
+        onStartAnimator(layout, headerHeight, extendHeight);
+    }
+
+    @Override
     public void onReleasing(float percent, int offset, int headerHeight, int extendHeight) {
         if (mState != RefreshState.Refreshing) {
             mBoxDrawable.getPaint().setAlpha((int) (255 * (1f - Math.max(0, percent - 1))));

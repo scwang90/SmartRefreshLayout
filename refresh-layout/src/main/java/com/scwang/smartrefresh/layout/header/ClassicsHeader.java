@@ -284,7 +284,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     }
 
     @Override
-    public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
+    public void onRefreshReleased(RefreshLayout layout, int headerHeight, int extendHeight) {
         if (mProgressDrawable != null) {
             mProgressDrawable.start();
         } else {
@@ -295,6 +295,11 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
                 mProgressView.animate().rotation(36000).setDuration(100000);
             }
         }
+    }
+
+    @Override
+    public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
+
     }
 
     @Override
@@ -356,6 +361,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
                 mArrowView.animate().rotation(0);
                 break;
             case Refreshing:
+            case RefreshReleased:
                 mTitleText.setText(REFRESH_HEADER_REFRESHING);
                 mProgressView.setVisibility(VISIBLE);
                 mArrowView.setVisibility(GONE);

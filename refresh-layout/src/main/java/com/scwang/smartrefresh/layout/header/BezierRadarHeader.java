@@ -166,20 +166,20 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
     }
 
     @Override
-    public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
-        mWaveView.setHeadHeight(Math.min(headHeight, offset));
-        mWaveView.setWaveHeight((int)(1.9f*Math.max(0, offset - headHeight)));
+    public void onPullingDown(float percent, int offset, int headerHeight, int extendHeight) {
+        mWaveView.setHeadHeight(Math.min(headerHeight, offset));
+        mWaveView.setWaveHeight((int)(1.9f*Math.max(0, offset - headerHeight)));
         mDotView.setFraction(percent);
     }
 
     @Override
-    public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
-        onPullingDown(percent, offset, headHeight, extendHeight);
+    public void onReleasing(float percent, int offset, int headerHeight, int extendHeight) {
+        onPullingDown(percent, offset, headerHeight, extendHeight);
     }
 
     @Override
-    public void onStartAnimator(final RefreshLayout layout, int headHeight, int extendHeight) {
-        mWaveView.setHeadHeight(headHeight);
+    public void onRefreshReleased(final RefreshLayout layout, int headerHeight, int extendHeight) {
+        mWaveView.setHeadHeight(headerHeight);
         ValueAnimator animator = ValueAnimator.ofInt(
                 mWaveView.getWaveHeight(), 0,
                 -(int)(mWaveView.getWaveHeight()*0.8),0,
@@ -221,6 +221,11 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
             }
         });
         valueAnimator.start();
+    }
+
+    @Override
+    public void onStartAnimator(RefreshLayout layout, int headerHeight, int extendHeight) {
+
     }
 
     @Override

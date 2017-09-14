@@ -175,6 +175,11 @@ public class TaurusHeader extends View implements RefreshHeader/*, SizeDefinitio
     }
 
     @Override
+    public void onRefreshReleased(RefreshLayout layout, int headerHeight, int extendHeight) {
+
+    }
+
+    @Override
     public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
     }
 

@@ -13,6 +13,8 @@ public class RefreshActivity extends Activity {
         refreshLayout.setReboundDuration(300);//回弹动画时长（毫秒）
         refreshLayout.setHeaderMaxDragRate(2);//最大显示下拉高度/Header标准高度
         refreshLayout.setFooterMaxDragRate(2);//最大显示下拉高度/Footer标准高度
+        refreshLayout.setHeaderTriggerRate(1);//触发刷新距离 与 HeaderHieght 的比率
+        refreshLayout.setFooterTriggerRate(1);//触发加载距离 与 FooterHieght 的比率
         refreshLayout.setHeaderHeight(100);//Header标准高度（显示下拉高度>=标准高度 触发刷新）
         refreshLayout.setHeaderHeightPx(100);//同上-像素为单位
         refreshLayout.setFooterHeight(100);//Footer标准高度（显示上拉高度>=标准高度 触发加载）
@@ -59,6 +61,8 @@ xml代码设置
     app:srlDragRate="0.5"
     app:srlHeaderMaxDragRate="2"
     app:srlFooterMaxDragRate="2"
+    app:srlHeaderTriggerRate="1"
+    app:srlFooterTriggerRate="1"
     app:srlHeaderHeight="100dp"
     app:srlFooterHeight="100dp"
     app:srlEnableRefresh="true"
@@ -230,6 +234,8 @@ xml代码设置
 |srlDragRate|float|显示拖动高度/真实拖动高度（默认0.5，阻尼效果）|
 |srlHeaderMaxDragRate|float|Header最大拖动高度/Header标准高度（默认2，要求>=1）|
 |srlFooterMaxDragRate|float|Footer最大拖动高度/Footer标准高度（默认2，要求>=1）|
+|srlHeaderTriggerRate|float|Header触发刷新距离 与 HeaderHieght 的比率（默认1）|
+|srlFooterTriggerRate|float|Footer触发加载距离 与 FooterHieght 的比率（默认1）|
 |srlEnableRefresh|boolean|是否开启下拉刷新功能（默认true）|
 |srlEnableLoadmore|boolean|是否开启加上拉加载功能（默认false-智能开启）|
 |srlEnableAutoLoadmore|boolean|是否监听列表惯性滚动到底部时触发加载事件（默认true）|
@@ -258,6 +264,8 @@ xml代码设置
 |setDragRate|float|显示拖动高度/真实拖动高度（默认0.5，阻尼效果）|
 |setHeaderMaxDragRate|float|Header最大拖动高度/Header标准高度（默认2，要求>=1）|
 |setFooterMaxDragRate|float|Footer最大拖动高度/Footer标准高度（默认2，要求>=1）|
+|setHeaderTriggerRate|float|Header触发刷新距离 与 HeaderHieght 的比率（默认1）|
+|setFooterTriggerRate|float|Footer触发加载距离 与 FooterHieght 的比率（默认1）|
 |setEnableRefresh|boolean|是否开启下拉刷新功能（默认true）|
 |setEnableLoadmore|boolean|是否开启加上拉加载功能（默认false-智能开启）|
 |setEnableHeaderTranslationContent|boolean|拖动Header的时候是否同时拖动内容（默认true）|

@@ -42,6 +42,16 @@ public interface RefreshLayout {
     RefreshLayout setFooterMaxDragRate(float rate);
 
     /**
+     * 设置 触发刷新距离 与 HeaderHieght 的比率
+     */
+    RefreshLayout setHeaderTriggerRate(float rate);
+
+    /**
+     * 设置 触发加载距离 与 FooterHieght 的比率
+     */
+    RefreshLayout setFooterTriggerRate(float rate);
+
+    /**
      * 设置回弹显示插值器
      */
     RefreshLayout setReboundInterpolator(Interpolator interpolator);
