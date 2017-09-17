@@ -4,6 +4,11 @@
 >添加：类似淘宝二楼的二级下拉刷新  
 >添加：srlHeaderTriggerRate 属性和对应的set方法 设置 Header触发刷新距离 与 HeaderHieght 的比率（默认1）  
 >添加：srlFooterTriggerRate 属性和对应的set方法 设置 Footer触发加载距离 与 FooterHieght 的比率（默认1）
+>添加：refreshHeader 添加 onRefreshReleased 方法 手势释放时调用 
+>添加：refreshFooter 添加 onLoadmoreReleased 方法 手势释放时调用
+>修改：改变 onStartAnimator 的调用时机为 释放之后会回弹到标准高度调用
+>修改：srlEnableLoadmoreWhenContentNotFull 的默认值 由 false 改成 true
+
 
 ## V 1.0.3
 >添加：下拉和上拉时，支持多点触摸，手势不冲突  

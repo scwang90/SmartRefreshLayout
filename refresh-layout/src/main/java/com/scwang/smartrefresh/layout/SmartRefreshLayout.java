@@ -32,6 +32,7 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.webkit.WebView;
@@ -753,6 +754,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
     @Override
     public void computeScroll() {
+        int lastCurY = mScroller.getCurrY();
         if (mScroller.computeScrollOffset()) {
             int finay = mScroller.getFinalY();
             if ((finay > 0 && mRefreshContent.canLoadmore())
@@ -763,10 +765,21 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 } else {
                     velocity = (finay - mScroller.getCurrY()) / (mScroller.getDuration() - mScroller.timePassed());
                 }
-                if (finay > 0) {// 手势向上划
-                    onFlingToFooter(velocity);
-                } else {// 手势向下划
-                    onFlingToHeader(velocity);
+                long lastTime = AnimationUtils.currentAnimationTimeMillis() - 1000 * Math.abs(mScroller.getCurrY() - lastCurY) / velocity;
+                if (finay > 0) {// 手势向上划 Footer
+                    if (mEnableLoadmore) {
+                        if (mEnableAutoLoadmore && !mLoadmoreFinished) {
+                            autoLoadmore(0, 1);
+                        } else if (mEnableOverScrollBounce) {
+                            animSpinnerBounce((int) (mFooterHeight * Math.pow(1.0 * velocity / mMaximumVelocity, 0.5)));
+                        }
+                    }
+                } else {// 手势向下划 Header
+                    if (mEnableRefresh) {
+                        if (mEnableOverScrollBounce) {
+                            animSpinnerBounce((int) (mHeaderHeight * Math.pow(1.0 * velocity / mMaximumVelocity, 0.5)));
+                        }
+                    }
                 }
                 mScroller.forceFinished(true);
             } else {
@@ -774,25 +787,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             }
         }
     }
-
-    protected void onFlingToHeader(int velocity) {
-        if (mEnableRefresh) {
-            if (mEnableOverScrollBounce) {
-                animSpinnerBounce(mHeaderHeight * velocity / mMaximumVelocity);
-            }
-        }
-    }
-
-    protected void onFlingToFooter(int velocity) {
-        if (mEnableLoadmore) {
-            if (mEnableAutoLoadmore && !mLoadmoreFinished) {
-                autoLoadmore(0, 1);
-            } else if (mEnableOverScrollBounce) {
-                animSpinnerBounce(-mFooterHeight * velocity / mMaximumVelocity);
-            }
-        }
-    }
-
 
     //</editor-fold>
 
@@ -1254,6 +1248,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      */
     protected ValueAnimator animSpinnerBounce(int bounceSpinner) {
         if (reboundAnimator == null) {
+            int duration = 0;
             mLastTouchX = getMeasuredWidth() / 2;
             if (mState == RefreshState.Refreshing && bounceSpinner > 0) {
                 reboundAnimator = ValueAnimator.ofInt(mSpinner, Math.min(2 * bounceSpinner, mHeaderHeight));
@@ -1266,13 +1261,16 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     if (mState != RefreshState.Loading) {
                         setStatePullDownToRefresh();
                     }
-                    reboundAnimator = ValueAnimator.ofInt(0, Math.min(bounceSpinner, mHeaderHeight + mHeaderExtendHeight));
+                    duration = Math.max(150, bounceSpinner * 250 / mHeaderHeight);
+                    reboundAnimator = ValueAnimator.ofInt(0, Math.min(bounceSpinner, mHeaderHeight));
                 } else {
                     if (mState != RefreshState.Refreshing) {
                         setStatePullUpToLoad();
                     }
-                    reboundAnimator = ValueAnimator.ofInt(0, Math.max(bounceSpinner, -mFooterHeight - mFooterExtendHeight));
+                    duration = Math.max(150, -bounceSpinner * 250 / mFooterHeight);
+                    reboundAnimator = ValueAnimator.ofInt(0, Math.max(bounceSpinner, -mFooterHeight));
                 }
+                final int finalDuration = duration;
                 reboundAnimator.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationStart(Animator animation) {
@@ -1281,7 +1279,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         reboundAnimator = ValueAnimator.ofInt(mSpinner, 0);
-                        reboundAnimator.setDuration(mReboundDuration * 2 / 3);
+                        reboundAnimator.setDuration(finalDuration);
                         reboundAnimator.setInterpolator(new DecelerateInterpolator());
                         reboundAnimator.addUpdateListener(reboundUpdateListener);
                         reboundAnimator.addListener(reboundAnimatorEndListener);
@@ -1290,7 +1288,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 });
             }
             if (reboundAnimator != null) {
-                reboundAnimator.setDuration(mReboundDuration * 2 / 3);
+                reboundAnimator.setDuration(duration);
                 reboundAnimator.setInterpolator(new DecelerateInterpolator());
                 reboundAnimator.addUpdateListener(reboundUpdateListener);
                 reboundAnimator.start();
