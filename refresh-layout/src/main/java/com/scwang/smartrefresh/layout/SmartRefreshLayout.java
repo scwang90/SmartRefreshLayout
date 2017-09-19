@@ -709,7 +709,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             final LayoutParams lp = (LayoutParams) footerView.getLayoutParams();
             final SpinnerStyle style = mRefreshFooter.getSpinnerStyle();
             int left = lp.leftMargin;
-            int top = lp.topMargin + getMeasuredHeight();
+            int top = lp.topMargin + getMeasuredHeight() - lp.bottomMargin;
 
             if (isInEditMode
                     || style == SpinnerStyle.FixedFront
