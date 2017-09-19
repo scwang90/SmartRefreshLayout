@@ -115,6 +115,8 @@ public class TaurusHeader extends View implements RefreshHeader/*, SizeDefinitio
     }
 
     private void initView(Context context, AttributeSet attrs) {
+        setMinimumHeight(DensityUtil.dp2px(100));
+
         mMatrix = new Matrix();
         mWinds = new HashMap<>();
         mRandom = new Random();
@@ -138,6 +140,13 @@ public class TaurusHeader extends View implements RefreshHeader/*, SizeDefinitio
 
         ta.recycle();
     }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        setMeasuredDimension(resolveSize(getSuggestedMinimumWidth(), widthMeasureSpec),
+                resolveSize(getSuggestedMinimumHeight(), heightMeasureSpec));
+    }
+
     //</editor-fold>
 
     //<editor-fold desc="RefreshHeader">

@@ -170,11 +170,11 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     /**
      * 最大拖动比率(最大高度/Header高度)
      */
-    protected float mHeaderMaxDragRate = 2.0f;
+    protected float mHeaderMaxDragRate = 2.5f;
     /**
      * 最大拖动比率(最大高度/Footer高度)
      */
-    protected float mFooterMaxDragRate = 2.0f;
+    protected float mFooterMaxDragRate = 2.5f;
     /**
      * 触发刷新距离 与 HeaderHieght 的比率
      */

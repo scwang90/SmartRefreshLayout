@@ -93,6 +93,8 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
         }
         if (accentColor != 0) {
             mCircleView.setProgressColorSchemeColors(accentColor);
+        } else {
+            mCircleView.setProgressColorSchemeColors(0xffffffff);
         }
         if (ta.hasValue(R.styleable.WaveSwipeHeader_wshShadowRadius)) {
             int radius = ta.getDimensionPixelOffset(R.styleable.WaveSwipeHeader_wshShadowRadius, 0);

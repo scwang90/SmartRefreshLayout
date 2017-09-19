@@ -260,6 +260,7 @@ public class DeliveryHeader extends View implements RefreshHeader {
     @Override
     public void onStartAnimator(RefreshLayout layout, int height, int extendHeight) {
         mState = RefreshState.Refreshing;
+        mBoxDrawable.getPaint().setAlpha(255);
         invalidate();
     }
 
