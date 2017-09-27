@@ -93,7 +93,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     protected int mLastSpinner;//最后的，的Spinner
     protected int mTouchSpinner;//触摸时候，的Spinner
     protected int mReboundDuration = 250;
-    protected int mScreenHeightPixels;
+    protected int mScreenHeightPixels;//屏幕高度
     protected float mTouchX;
     protected float mTouchY;
     protected float mLastTouchX;//用于实现Header的左右拖动效果
@@ -188,13 +188,13 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      */
     protected RefreshHeader mRefreshHeader;
     /**
-     * 显示内容视图
-     */
-    protected RefreshContent mRefreshContent;
-    /**
      * 上拉底部视图
      */
     protected RefreshFooter mRefreshFooter;
+    /**
+     * 显示内容视图
+     */
+    protected RefreshContent mRefreshContent;
     //</editor-fold>
 
     protected Paint mPaint;
@@ -257,17 +257,19 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     private void initView(Context context, AttributeSet attrs) {
         setClipToPadding(false);
 
+        DensityUtil density = new DensityUtil();
+        ViewConfiguration configuration = ViewConfiguration.get(context);
+
         mScroller = new Scroller(context);
         mScreenHeightPixels = context.getResources().getDisplayMetrics().heightPixels;
         mReboundInterpolator = new ViscousFluidInterpolator();
-        mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
-        mMinimumVelocity = ViewConfiguration.get(context).getScaledMinimumFlingVelocity();
-        mMaximumVelocity = ViewConfiguration.get(context).getScaledMaximumFlingVelocity();
+        mTouchSlop = configuration.getScaledTouchSlop();
+        mMinimumVelocity = configuration.getScaledMinimumFlingVelocity();
+        mMaximumVelocity = configuration.getScaledMaximumFlingVelocity();
 
         mNestedScrollingParentHelper = new NestedScrollingParentHelper(this);
         mNestedScrollingChildHelper = new NestedScrollingChildHelper(this);
 
-        DensityUtil density = new DensityUtil();
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.SmartRefreshLayout);
 
         ViewCompat.setNestedScrollingEnabled(this, ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnableNestedScrolling, false));
@@ -347,12 +349,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     || view instanceof NestedScrollingParent
                     || view instanceof ViewPager)) {
                 mRefreshContent = new RefreshContentWrapper(view);
-//            } else if (RefreshHeaderWrapper.isTagedHeader(view) && mRefreshHeader == null) {
-//                mRefreshHeader = new RefreshHeaderWrapper(view);
-//            } else if (RefreshFooterWrapper.isTagedFooter(view) && mRefreshFooter == null) {
-//                mRefreshFooter = new RefreshFooterWrapper(view);
-//            } else if (RefreshContentWrapper.isTagedContent(view) && mRefreshContent == null) {
-//                mRefreshContent = new RefreshContentWrapper(view);
             } else {
                 uncertains[i] = true;//标记未确认
             }
@@ -424,12 +420,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             mDelayedRunables.clear();
             mDelayedRunables = null;
         }
-
-//        if (mRefreshContent == null
-//                && mRefreshHeader == null
-//                && mRefreshFooter == null) {
-//            onFinishInflate();
-//        }
 
         if (mRefreshHeader == null) {
             if (mEnablePureScrollMode) {
@@ -671,9 +661,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         final int paddingLeft = getPaddingLeft();
         final int paddingTop = getPaddingTop();
         final int paddingBottom = getPaddingBottom();
-        final boolean isInEditMode = isInEditMode() && mEnablePreviewInEditMode;
 
         if (mRefreshContent != null) {
+            boolean isInEditMode = isInEditMode() && mEnablePreviewInEditMode;
             final LayoutParams lp = (LayoutParams) mRefreshContent.getLayoutParams();
             int left = paddingLeft + lp.leftMargin;
             int top = paddingTop + lp.topMargin;
@@ -686,49 +676,13 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             mRefreshContent.layout(left, top, right, bottom);
         }
 
-        if (mRefreshHeader != null) {
-            final View headerView = mRefreshHeader.getView();
-            final LayoutParams lp = (LayoutParams) headerView.getLayoutParams();
-            int left = lp.leftMargin;
-            int top = lp.topMargin;
-            int right = left + headerView.getMeasuredWidth();
-            int bottom = top + headerView.getMeasuredHeight();
-            if (!isInEditMode) {
-                if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Translate) {
-                    top = top - mHeaderHeight + Math.max(0, mSpinner);
-                    bottom = top + headerView.getMeasuredHeight();
-                } else if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale) {
-                    bottom = top + Math.max(Math.max(0, mSpinner) - lp.bottomMargin, 0);
-                }
-            }
-            headerView.layout(left, top, right, bottom);
-        }
-
-        if (mRefreshFooter != null) {
-            final View footerView = mRefreshFooter.getView();
-            final LayoutParams lp = (LayoutParams) footerView.getLayoutParams();
-            final SpinnerStyle style = mRefreshFooter.getSpinnerStyle();
-            int left = lp.leftMargin;
-            int top = lp.topMargin + getMeasuredHeight() - lp.bottomMargin;
-
-            if (isInEditMode
-                    || style == SpinnerStyle.FixedFront
-                    || style == SpinnerStyle.FixedBehind) {
-                top = top - mFooterHeight;
-            } else if (style == SpinnerStyle.Scale || style == SpinnerStyle.Translate) {
-                top = top - Math.max(Math.max(-mSpinner, 0) - lp.topMargin, 0);
-            }
-
-            int right = left + footerView.getMeasuredWidth();
-            int bottom = top + footerView.getMeasuredHeight();
-            footerView.layout(left, top, right, bottom);
-        }
+        layoutHeader();
+        layoutFooter();
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        mSpinner = 0;
         moveSpinner(0, false);
         notifyStateChanged(RefreshState.None);
         handler.removeCallbacksAndMessages(null);
@@ -1422,7 +1376,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 if (oldSpinner != mSpinner
                         && (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale
                         || mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Translate)) {
-                    mRefreshHeader.getView().requestLayout();
+                    layoutHeader();
                 }
             }
 
@@ -1454,7 +1408,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 if (oldSpinner != mSpinner
                         && (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Scale
                         || mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Translate)) {
-                    mRefreshFooter.getView().requestLayout();
+                    layoutFooter();
                 }
             }
 
@@ -1482,6 +1436,50 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         }
     }
 
+
+    protected void layoutFooter() {
+        if (mRefreshFooter != null) {
+            boolean isInEditMode = isInEditMode() && mEnablePreviewInEditMode;
+            final View footerView = mRefreshFooter.getView();
+            final LayoutParams lp = (LayoutParams) footerView.getLayoutParams();
+            final SpinnerStyle style = mRefreshFooter.getSpinnerStyle();
+            int left = lp.leftMargin;
+            int top = lp.topMargin + getMeasuredHeight() - lp.bottomMargin;
+
+            if (isInEditMode
+                    || style == SpinnerStyle.FixedFront
+                    || style == SpinnerStyle.FixedBehind) {
+                top = top - mFooterHeight;
+            } else if (style == SpinnerStyle.Scale || style == SpinnerStyle.Translate) {
+                top = top - Math.max(Math.max(-mSpinner, 0) - lp.topMargin, 0);
+            }
+
+            int right = left + footerView.getMeasuredWidth();
+            int bottom = top + footerView.getMeasuredHeight();
+            footerView.layout(left, top, right, bottom);
+        }
+    }
+
+    protected void layoutHeader() {
+        if (mRefreshHeader != null) {
+            boolean isInEditMode = isInEditMode() && mEnablePreviewInEditMode;
+            final View headerView = mRefreshHeader.getView();
+            final LayoutParams lp = (LayoutParams) headerView.getLayoutParams();
+            int left = lp.leftMargin;
+            int top = lp.topMargin;
+            int right = left + headerView.getMeasuredWidth();
+            int bottom = top + headerView.getMeasuredHeight();
+            if (!isInEditMode) {
+                if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Translate) {
+                    top = top - mHeaderHeight + Math.max(0, mSpinner);
+                    bottom = top + headerView.getMeasuredHeight();
+                } else if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale) {
+                    bottom = top + Math.max(Math.max(0, mSpinner) - lp.bottomMargin, 0);
+                }
+            }
+            headerView.layout(left, top, right, bottom);
+        }
+    }
     //</editor-fold>
 
     //<editor-fold desc="布局参数 LayoutParams">
@@ -1722,7 +1720,10 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
     @Override
     public boolean onNestedPreFling(View target, float velocityX, float velocityY) {
-        return reboundAnimator != null || mState == RefreshState.ReleaseToRefresh || mState == RefreshState.ReleaseToLoad || (mState == RefreshState.PullDownToRefresh && mSpinner > 0) || (mState == RefreshState.PullToUpLoad && mSpinner > 0) || (mState == RefreshState.Refreshing && mSpinner != 0) || (mState == RefreshState.Loading && mSpinner != 0) || dispatchNestedPreFling(velocityX, velocityY);
+        if ((mState == RefreshState.Refreshing && mSpinner != 0) || (mState == RefreshState.Loading && mSpinner != 0)) {
+            animSpinner(0);
+        }
+        return reboundAnimator != null || mState == RefreshState.ReleaseToRefresh || mState == RefreshState.ReleaseToLoad || (mState == RefreshState.PullDownToRefresh && mSpinner > 0) || (mState == RefreshState.PullToUpLoad && mSpinner > 0) || dispatchNestedPreFling(velocityX, velocityY);
     }
 
     @Override
