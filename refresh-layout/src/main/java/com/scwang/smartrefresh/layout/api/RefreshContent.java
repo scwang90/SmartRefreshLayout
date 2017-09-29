@@ -17,7 +17,7 @@ public interface RefreshContent {
     int getMeasuredWidth();
     int getMeasuredHeight();
     void measure(int widthSpec, int heightSpec);
-    void layout(int left, int top, int right, int bottom);
+    void layout(int left, int top, int right, int bottom, boolean skip);
 
     View getView();
     View getScrollableView();

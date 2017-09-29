@@ -100,6 +100,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     protected float mLastTouchY;//用于实现多点触摸
     protected float mDragRate = .5f;
     protected boolean mIsBeingDragged;
+    protected boolean mIsSkipContentLayout;
     protected Interpolator mReboundInterpolator;
     protected int mFixedHeaderViewId;//固定在头部的视图Id
     protected int mFixedFooterViewId;//固定在 头部的视图Id
@@ -673,11 +674,48 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 top = top + mHeaderHeight;
                 bottom = bottom + mHeaderHeight;
             }
-            mRefreshContent.layout(left, top, right, bottom);
-        }
 
-        layoutHeader();
-        layoutFooter();
+            mRefreshContent.layout(left, top, right, bottom, mIsSkipContentLayout);
+            mIsSkipContentLayout = false;
+        }
+        if (mRefreshHeader != null) {
+            boolean isInEditMode = isInEditMode() && mEnablePreviewInEditMode;
+            final View headerView = mRefreshHeader.getView();
+            final LayoutParams lp = (LayoutParams) headerView.getLayoutParams();
+            int left = lp.leftMargin;
+            int top = lp.topMargin;
+            int right = left + headerView.getMeasuredWidth();
+            int bottom = top + headerView.getMeasuredHeight();
+            if (!isInEditMode) {
+                if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Translate) {
+                    top = top - mHeaderHeight + Math.max(0, mSpinner);
+                    bottom = top + headerView.getMeasuredHeight();
+                } else if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale) {
+                    bottom = top + Math.max(Math.max(0, mSpinner) - lp.bottomMargin, 0);
+                }
+            }
+            headerView.layout(left, top, right, bottom);
+        }
+        if (mRefreshFooter != null) {
+            boolean isInEditMode = isInEditMode() && mEnablePreviewInEditMode;
+            final View footerView = mRefreshFooter.getView();
+            final LayoutParams lp = (LayoutParams) footerView.getLayoutParams();
+            final SpinnerStyle style = mRefreshFooter.getSpinnerStyle();
+            int left = lp.leftMargin;
+            int top = lp.topMargin + getMeasuredHeight() - lp.bottomMargin;
+
+            if (isInEditMode
+                    || style == SpinnerStyle.FixedFront
+                    || style == SpinnerStyle.FixedBehind) {
+                top = top - mFooterHeight;
+            } else if (style == SpinnerStyle.Scale || style == SpinnerStyle.Translate) {
+                top = top - Math.max(Math.max(-mSpinner, 0) - lp.topMargin, 0);
+            }
+
+            int right = left + footerView.getMeasuredWidth();
+            int bottom = top + footerView.getMeasuredHeight();
+            footerView.layout(left, top, right, bottom);
+        }
     }
 
     @Override
@@ -1376,7 +1414,8 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 if (oldSpinner != mSpinner
                         && (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale
                         || mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Translate)) {
-                    layoutHeader();
+                    mIsSkipContentLayout = true;
+                    mRefreshHeader.getView().requestLayout();
                 }
             }
 
@@ -1408,7 +1447,8 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 if (oldSpinner != mSpinner
                         && (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Scale
                         || mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Translate)) {
-                    layoutFooter();
+                    mIsSkipContentLayout = true;
+                    mRefreshFooter.getView().requestLayout();
                 }
             }
 
@@ -1436,50 +1476,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         }
     }
 
-
-    protected void layoutFooter() {
-        if (mRefreshFooter != null) {
-            boolean isInEditMode = isInEditMode() && mEnablePreviewInEditMode;
-            final View footerView = mRefreshFooter.getView();
-            final LayoutParams lp = (LayoutParams) footerView.getLayoutParams();
-            final SpinnerStyle style = mRefreshFooter.getSpinnerStyle();
-            int left = lp.leftMargin;
-            int top = lp.topMargin + getMeasuredHeight() - lp.bottomMargin;
-
-            if (isInEditMode
-                    || style == SpinnerStyle.FixedFront
-                    || style == SpinnerStyle.FixedBehind) {
-                top = top - mFooterHeight;
-            } else if (style == SpinnerStyle.Scale || style == SpinnerStyle.Translate) {
-                top = top - Math.max(Math.max(-mSpinner, 0) - lp.topMargin, 0);
-            }
-
-            int right = left + footerView.getMeasuredWidth();
-            int bottom = top + footerView.getMeasuredHeight();
-            footerView.layout(left, top, right, bottom);
-        }
-    }
-
-    protected void layoutHeader() {
-        if (mRefreshHeader != null) {
-            boolean isInEditMode = isInEditMode() && mEnablePreviewInEditMode;
-            final View headerView = mRefreshHeader.getView();
-            final LayoutParams lp = (LayoutParams) headerView.getLayoutParams();
-            int left = lp.leftMargin;
-            int top = lp.topMargin;
-            int right = left + headerView.getMeasuredWidth();
-            int bottom = top + headerView.getMeasuredHeight();
-            if (!isInEditMode) {
-                if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Translate) {
-                    top = top - mHeaderHeight + Math.max(0, mSpinner);
-                    bottom = top + headerView.getMeasuredHeight();
-                } else if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale) {
-                    bottom = top + Math.max(Math.max(0, mSpinner) - lp.bottomMargin, 0);
-                }
-            }
-            headerView.layout(left, top, right, bottom);
-        }
-    }
     //</editor-fold>
 
     //<editor-fold desc="布局参数 LayoutParams">

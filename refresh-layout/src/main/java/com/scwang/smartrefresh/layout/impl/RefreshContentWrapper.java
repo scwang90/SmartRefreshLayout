@@ -221,8 +221,16 @@ public class RefreshContentWrapper implements RefreshContent {
     }
 
     @Override
-    public void layout(int left, int top, int right, int bottom) {
-        mContentView.layout(left, top, right, bottom);
+    public void layout(int left, int top, int right, int bottom, boolean skip) {
+        if (!skip
+                || mContentView.getLeft() != left
+                || mContentView.getTop() != top
+                || mContentView.getRight() != right
+                || mContentView.getBottom() != bottom) {
+            mContentView.layout(left, top, right, bottom);
+        } else {
+            System.out.println("skip!");
+        }
     }
 
     @Override
