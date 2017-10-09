@@ -87,7 +87,7 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
             setPrimaryColor(primaryColor);
         }
         if (accentColor != 0) {
-            setAccentColor(primaryColor);
+            setAccentColor(accentColor);
         }
 
         ta.recycle();
