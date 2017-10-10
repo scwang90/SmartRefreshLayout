@@ -6,38 +6,43 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/colorBackgroudDark"
-    tools:context="com.scwang.refreshlayout.activity.practice.WebviewPracticeActivity">
+    tools:context="com.scwang.refreshlayout.activity.practice.QQBrowserPracticeActivity">
 
     <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"
         app:navigationIcon="?attr/homeAsUpIndicator"
         app:title="@string/title_activity_practice_webview"/>
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/refreshLayout"
+    <ezy.ui.layout.LoadingLayout
+        android:id="@+id/loading"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:srlHeaderHeight="150dp"
-        app:srlHeaderMaxDragRate="1">
-        <TextView
-            android:id="@+id/header"
+        android:layout_height="match_parent">
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/refreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:lineSpacingExtra="5dp"
-            android:padding="20dp"
-            android:background="#555"
-            android:gravity="center_horizontal"
-            android:textColor="#aaa"
-            android:textSize="16sp"
-            android:text="@string/github_qqbrowser_kernel"
-            app:layout_srlBackgroundColor="#555"
-            app:layout_srlSpinnerStyle="FixedBehind"/>
-        <WebView
-            android:id="@+id/webView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:paddingTop="?attr/actionBarSize"/>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+            app:srlHeaderHeight="150dp"
+            app:srlHeaderMaxDragRate="1">
+            <TextView
+                android:id="@+id/header"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:lineSpacingExtra="5dp"
+                android:padding="20dp"
+                android:background="#555"
+                android:gravity="center_horizontal"
+                android:textColor="#aaa"
+                android:textSize="16sp"
+                android:text="@string/github_qqbrowser_kernel"
+                app:layout_srlBackgroundColor="#555"
+                app:layout_srlSpinnerStyle="FixedBehind"/>
+            <WebView
+                android:id="@+id/webView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingTop="?attr/actionBarSize"/>
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    </ezy.ui.layout.LoadingLayout>
 
 </LinearLayout>

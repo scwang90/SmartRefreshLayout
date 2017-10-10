@@ -13,8 +13,9 @@
     </style>
 
     <style name="LoadingLayoutStyle" parent="LoadingLayout.Style">
-        <item name="llEmptyImage">@mipmap/icon_empty</item>
-        <item name="llErrorImage">@mipmap/icon_error</item>
+        <item name="llEmptyImage">@drawable/ic_empty</item>
+        <item name="llErrorImage">@drawable/ic_error</item>
+        <item name="llLoadingResId">@layout/common_loading</item>
     </style>
 
     <style name="AppTheme" parent="AppThemeBase">

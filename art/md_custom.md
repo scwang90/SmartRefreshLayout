@@ -331,3 +331,8 @@ public class ClassicsHeader extends LinearLayout implements RefreshHeader {
 ### 实现 RefreshFooter
 
 具体方法和 RefreshHeader 非常相似，这里就不再演示了
+
+### 成功案例
+
+[YanXuanRefresh](https://github.com/ChaserSheng/YanXuanRefresh)
+[838514984](https://github.com/838514984/smartrefreshlayout-statusUtils)

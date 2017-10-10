@@ -71,7 +71,7 @@ public class EmptyLayoutUsingFragmentOuter extends Fragment implements AdapterVi
         mEmptyLayout = root.findViewById(R.id.empty);
 
         ImageView image = (ImageView) root.findViewById(R.id.empty_image);
-        image.setImageResource(R.mipmap.icon_empty);
+        image.setImageResource(R.drawable.ic_empty);
 
         TextView empty = (TextView) root.findViewById(R.id.empty_text);
         empty.setText("暂无数据点击刷新");
