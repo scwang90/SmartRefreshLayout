@@ -102,4 +102,5 @@
     <string name="fragment_using_emptylayout_inner">空页面-内部嵌套</string>
     <string name="fragment_using_emptylayout_outer">空页面-外部嵌套</string>
     <string name="fragment_using_nestscroll">嵌套滚动</string>
+    <string name="fragment_using_nestedscroll_integral">嵌套滚动-整体嵌套</string>
 </resources>

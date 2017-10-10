@@ -77,25 +77,26 @@ public class RefreshContentWrapper implements RefreshContent {
 
     //<editor-fold desc="findScrollableView">
     protected void findScrollableView(View content, RefreshKernel kernel) {
-        mScrollableView = findScrollableViewInternal(content, true);
-        if (mScrollableView instanceof NestedScrollingParent
-                && !(mScrollableView instanceof NestedScrollingChild)) {
-            mScrollableView = findScrollableViewInternal(mScrollableView, false);
-        }
-        try {//try 不能删除，不然会出现兼容性问题
-            if (mScrollableView instanceof CoordinatorLayout) {
-                kernel.getRefreshLayout().setEnableNestedScroll(false);
-                wrapperCoordinatorLayout(((CoordinatorLayout) mScrollableView), kernel.getRefreshLayout());
+        mScrollableView = null;
+        while (mScrollableView == null || (mScrollableView instanceof NestedScrollingParent
+                && !(mScrollableView instanceof NestedScrollingChild))) {
+            content = findScrollableViewInternal(content, mScrollableView == null);
+            if (content == mScrollableView) {
+                break;
             }
-        } catch (Throwable ignored) {
-        }
-        try {//try 不能删除，不然会出现兼容性问题
-            if (mScrollableView instanceof ViewPager) {
-                wrapperViewPager((ViewPager) this.mScrollableView);
+            try {//try 不能删除，不然会出现兼容性问题
+                if (content instanceof CoordinatorLayout) {
+                    kernel.getRefreshLayout().setEnableNestedScroll(false);
+                    wrapperCoordinatorLayout(((CoordinatorLayout) content), kernel.getRefreshLayout());
+                }
+            } catch (Throwable ignored) {
             }
-        } catch (Throwable ignored) {
-        }
-        if (mScrollableView == null) {
+            try {//try 不能删除，不然会出现兼容性问题
+                if (content instanceof ViewPager) {
+                    wrapperViewPager((ViewPager) content);
+                }
+            } catch (Throwable ignored) {
+            }
             mScrollableView = content;
         }
     }
@@ -169,7 +170,7 @@ public class RefreshContentWrapper implements RefreshContent {
                 }
             }
         }
-        return scrollableView;
+        return scrollableView == null ? content : scrollableView;
     }
     //</editor-fold>
 
@@ -716,16 +717,22 @@ public class RefreshContentWrapper implements RefreshContent {
         @Override
         public void setPrimaryItem(ViewGroup container, int position, Object object) {
             super.setPrimaryItem(container, position, object);
+            View content = null;
             if (object instanceof View) {
-                mScrollableView = ((View) object);
+                content = ((View) object);
             } else if (object instanceof Fragment) {
-                mScrollableView = ((Fragment) object).getView();
+                content = ((Fragment) object).getView();
             }
-            if (mScrollableView != null) {
-                mScrollableView = findScrollableViewInternal(mScrollableView, true);
-                if (mScrollableView instanceof NestedScrollingParent
-                        && !(mScrollableView instanceof NestedScrollingChild)) {
-                    mScrollableView = findScrollableViewInternal(mScrollableView, false);
+            if (content != null) {
+                mScrollableView = null;
+                while (mScrollableView == null
+                        || (mScrollableView instanceof NestedScrollingParent
+                        && !(mScrollableView instanceof NestedScrollingChild))) {
+                    content = findScrollableViewInternal(content, mScrollableView == null);
+                    if (content == mScrollableView) {
+                        break;
+                    }
+                    mScrollableView = content;
                 }
             }
         }

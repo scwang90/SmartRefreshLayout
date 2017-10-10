@@ -40,7 +40,7 @@ import static com.scwang.refreshlayout.R.id.refreshLayout;
  */
 public class EmptyLayoutUsingFragment extends Fragment implements AdapterView.OnItemClickListener, OnRefreshListener {
 
-    private enum Item {
+    public enum Item {
         ThirdParty("集成第三方控件", EmptyLayoutUsingFragment.class),
         NestedInner("内部嵌套", EmptyLayoutUsingFragmentInner.class),
         NestedOuter("外部嵌套", EmptyLayoutUsingFragmentOuter.class),

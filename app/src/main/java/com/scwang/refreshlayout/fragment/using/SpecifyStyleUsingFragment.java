@@ -18,11 +18,11 @@ import android.widget.AdapterView;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.activity.FragmentActivity;
+import com.scwang.refreshlayout.activity.using.AssignCodeUsingActivity;
+import com.scwang.refreshlayout.activity.using.AssignDefaultUsingActivity;
+import com.scwang.refreshlayout.activity.using.AssignXmlUsingActivity;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
-import com.scwang.refreshlayout.fragment.using.PureScrollUsingFragment.Item;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.header.FalsifyHeader;
 
 import java.util.Arrays;
 
@@ -30,14 +30,27 @@ import static android.R.layout.simple_list_item_2;
 import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 
 /**
- * 使用示例-纯滚动模式
+ * 使用示例-指定样式
  * A simple {@link Fragment} subclass.
  */
-public class PureScrollUsingFragmentHeader extends Fragment implements AdapterView.OnItemClickListener {
+public class SpecifyStyleUsingFragment extends Fragment implements AdapterView.OnItemClickListener {
+
+    public enum Item {
+        Global("全局指定", AssignDefaultUsingActivity.class),
+        Code("代码指定", AssignCodeUsingActivity.class),
+        Xml("XML指定", AssignXmlUsingActivity.class),
+        ;
+        public String name;
+        public Class<?> clazz;
+        Item(String name, Class<?> clazz) {
+            this.name = name;
+            this.clazz = clazz;
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_using_purescroll_header, container, false);
+        return inflater.inflate(R.layout.common_independence_recycler, container, false);
     }
 
     @Override
@@ -51,9 +64,7 @@ public class PureScrollUsingFragmentHeader extends Fragment implements AdapterVi
                 getActivity().finish();
             }
         });
-
-        RefreshLayout refreshLayout = (RefreshLayout) root.findViewById(R.id.refreshLayout);
-        refreshLayout.setRefreshHeader(new FalsifyHeader(getContext()));
+        toolbar.setTitle("指定样式");
 
         View view = root.findViewById(R.id.recyclerView);
         if (view instanceof RecyclerView) {

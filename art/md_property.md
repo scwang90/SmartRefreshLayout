@@ -35,6 +35,7 @@ public class RefreshActivity extends Activity {
         refreshLayout.setScrollBoundaryDecider(new ScrollBoundaryDecider());//设置滚动边界判断
         refreshLayout.setRefreshHeader(new ClassicsHeader(this));//设置Header
         refreshLayout.setRefreshFooter(new ClassicsFooter(this));//设置Footer
+        refreshLayout.setRefreshContent(new View(this));//设置刷新Content（用于动态替换空布局）
         refreshLayout.autoRefresh();//自动刷新
         refreshLayout.autoLoadmore();//自动加载
         refreshLayout.autoRefresh(400);//延迟400毫秒后自动刷新
@@ -130,6 +131,7 @@ public class RefreshActivity extends Activity {
         header.setProgressDrawable(drawable);//设置图片
         header.setProgressResource(R.drawable.ic_progress);//设置图片资源
         header.setTimeFormat(new DynamicTimeFormat("上次更新 %s"));//设置时间格式化
+        header.setLastUpdateText("上次更新 3秒前");//手动更新时间文字设置
         header.setSpinnerStyle(SpinnerStyle.Translate);//设置状态（不支持：MatchLayout）
     }
 }
@@ -281,6 +283,7 @@ xml代码设置
 |setReboundInterpolator|Interpolator|设置回弹动画的插值器（默认减速）|
 |setRefreshHeader|RefreshHeader|设置指定的Header（默认贝塞尔雷达）|
 |setRefreshFooter|RefreshFooter|设置指定的Footer（默认球脉冲）|
+|setRefreshContent|View|设置刷新Content（用于动态替换空布局）|
 |setOnRefreshListener|OnRefreshListener|设置刷新监听器（默认3秒后关刷新）|
 |setOnLoadmoreListener|OnLoadmoreListener|设置加载监听器（默认3秒后关加载）|
 |setOnRefreshLoadmoreListener|OnRefreshLoadmoreListener|同时设置上面两个监听器|
@@ -333,3 +336,4 @@ xml代码设置
 |setEnableLastTime|boolean|是否显示上次更新时间（默认true）|
 |setTextSizeTitle|dimension|标题文字大小（默认16sp）|
 |setTextSizeTime|dimension|时间文字大小（默认12sp）|
+|setLastUpdateText|string|手动设置更新时间|

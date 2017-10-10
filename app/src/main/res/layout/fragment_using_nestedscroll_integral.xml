@@ -10,13 +10,18 @@
     <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"
         app:navigationIcon="?attr/homeAsUpIndicator"
-        app:title="@string/fragment_using_emptylayout"/>
+        app:title="@string/fragment_using_nestedscroll_integral"/>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_scrollFlags="scroll|snap"
-        app:srlEnableLoadmore="false">
+        app:layout_scrollFlags="scroll|snap">
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlClassicsSpinnerStyle="FixedBehind"
+            app:srlPrimaryColor="#444"/>
         <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -25,7 +30,8 @@
                 android:id="@+id/app_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorBackgroudDark">
+                android:background="@color/colorBackgroudDark"
+                app:elevation="0dp">
 
                 <android.support.design.widget.CollapsingToolbarLayout
                     android:id="@+id/toolbar_layout"
@@ -33,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:paddingBottom="@dimen/padding_common"
                     android:fitsSystemWindows="true"
-                    app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                    app:layout_scrollFlags="scroll|snap">
                     <com.youth.banner.Banner
                         android:id="@+id/banner"
                         android:layout_width="match_parent"
@@ -50,7 +56,7 @@
                     android:orientation="vertical"
                     android:divider="@android:drawable/divider_horizontal_dark"
                     android:showDividers="beginning|end"
-                    app:layout_scrollFlags="scroll">
+                    app:layout_scrollFlags="scroll|snap">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -188,6 +194,7 @@
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/colorBackgroudDark"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 tools:listitem="@android:layout/simple_list_item_2"/>
 

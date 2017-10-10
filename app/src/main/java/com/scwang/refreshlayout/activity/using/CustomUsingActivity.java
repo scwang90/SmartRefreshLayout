@@ -188,7 +188,7 @@ public class CustomUsingActivity extends AppCompatActivity {
         @Override
         public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
         }
-        @Override
+//        @Override
         public void onRefreshReleased(RefreshLayout layout, int headerHeight, int extendHeight) {
         }
         @Override

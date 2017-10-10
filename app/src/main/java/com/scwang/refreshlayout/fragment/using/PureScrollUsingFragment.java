@@ -32,7 +32,7 @@ import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
  */
 public class PureScrollUsingFragment extends Fragment implements AdapterView.OnItemClickListener {
 
-    private enum Item {
+    public enum Item {
         Basic("基本的使用", PureScrollUsingFragment.class),
         HeaderOnly("代码中单独指定Header", PureScrollUsingFragmentHeader.class),
         FooterOnly("XML中单独指定Footer", PureScrollUsingFragmentFooter.class),

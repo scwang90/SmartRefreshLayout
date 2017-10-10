@@ -20,6 +20,7 @@ import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.activity.FragmentActivity;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
+import com.scwang.refreshlayout.fragment.using.PureScrollUsingFragment.Item;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.FalsifyFooter;
 
@@ -33,19 +34,6 @@ import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
  * A simple {@link Fragment} subclass.
  */
 public class PureScrollUsingFragmentFooter extends Fragment implements AdapterView.OnItemClickListener {
-
-    private enum Item {
-        Basic("基本的使用", PureScrollUsingFragment.class),
-        HeaderOnly("代码中指定Header", PureScrollUsingFragmentHeader.class),
-        FooterOnly("在XML中指定Footer", PureScrollUsingFragmentFooter.class),
-        ;
-        public String name;
-        public Class<?> clazz;
-        Item(String name, Class<?> clazz) {
-            this.name = name;
-            this.clazz = clazz;
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

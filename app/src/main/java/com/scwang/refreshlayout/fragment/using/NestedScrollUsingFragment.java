@@ -33,7 +33,7 @@ import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
  */
 public class NestedScrollUsingFragment extends Fragment implements AdapterView.OnItemClickListener {
 
-    private enum Item {
+    public enum Item {
         NestedStandard("标准嵌套", NestedScrollUsingFragment.class),
         NestedIntegral("整体嵌套", NestedScrollUsingFragmentIntegral.class),
         ;

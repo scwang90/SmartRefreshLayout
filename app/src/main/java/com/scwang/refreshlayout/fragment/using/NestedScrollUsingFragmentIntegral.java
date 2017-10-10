@@ -22,14 +22,20 @@ import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.activity.FragmentActivity;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
+import com.scwang.refreshlayout.fragment.using.NestedScrollUsingFragment.Item;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 import static android.R.layout.simple_list_item_2;
 import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
-import static com.scwang.refreshlayout.R.mipmap.image_weibo_home_1;
+import static com.scwang.refreshlayout.R.mipmap.gif_header_repast;
 import static com.scwang.refreshlayout.R.mipmap.image_weibo_home_2;
 
 /**
@@ -38,17 +44,7 @@ import static com.scwang.refreshlayout.R.mipmap.image_weibo_home_2;
  */
 public class NestedScrollUsingFragmentIntegral extends Fragment implements AdapterView.OnItemClickListener {
 
-    private enum Item {
-        NestedStandard("标准嵌套", NestedScrollUsingFragment.class),
-        NestedIntegral("整体嵌套", NestedScrollUsingFragmentIntegral.class),
-        ;
-        public String name;
-        public Class<?> clazz;
-        Item(String name, Class<?> clazz) {
-            this.name = name;
-            this.clazz = clazz;
-        }
-    }
+    private BaseRecyclerAdapter<Item> mAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -69,13 +65,14 @@ public class NestedScrollUsingFragmentIntegral extends Fragment implements Adapt
 
         Banner banner = (Banner) root.findViewById(R.id.banner);
         banner.setImageLoader(new BannerImageLoader());
-        banner.setImages(Arrays.asList(image_weibo_home_1,image_weibo_home_2));
+        banner.setImages(Arrays.asList(image_weibo_home_2,gif_header_repast));
+        banner.start();
 
         RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recyclerView);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), VERTICAL));
-        recyclerView.setAdapter(new BaseRecyclerAdapter<Item>(Arrays.asList(Item.values()), simple_list_item_2,NestedScrollUsingFragmentIntegral.this) {
+        recyclerView.setAdapter(mAdapter = new BaseRecyclerAdapter<Item>(buildItems(), simple_list_item_2, NestedScrollUsingFragmentIntegral.this) {
             @Override
             protected void onBindViewHolder(SmartViewHolder holder, Item model, int position) {
                 holder.text(android.R.id.text1, model.name());
@@ -84,6 +81,27 @@ public class NestedScrollUsingFragmentIntegral extends Fragment implements Adapt
             }
         });
 
+        RefreshLayout refreshLayout = (RefreshLayout) root.findViewById(R.id.refreshLayout);
+        refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(final RefreshLayout refreshlayout) {
+                refreshlayout.getLayout().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mAdapter.loadmore(buildItems());
+                        refreshlayout.finishLoadmore();
+                    }
+                }, 2000);
+            }
+        });
+    }
+
+    private Collection<Item> buildItems() {
+        List<Item> items = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            items.addAll(Arrays.asList(Item.values()));
+        }
+        return items;
     }
 
     @Override
@@ -99,6 +117,7 @@ public class NestedScrollUsingFragmentIntegral extends Fragment implements Adapt
     private class BannerImageLoader extends ImageLoader {
         @Override
         public void displayImage(Context context, Object path, ImageView imageView) {
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setImageResource((Integer)path);
         }
     }

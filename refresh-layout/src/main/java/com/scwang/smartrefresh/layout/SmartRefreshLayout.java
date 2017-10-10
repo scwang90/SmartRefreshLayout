@@ -2010,19 +2010,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      */
     @Override
     public SmartRefreshLayout setRefreshHeader(RefreshHeader header) {
-        if (header != null) {
-            if (mRefreshHeader != null) {
-                removeView(mRefreshHeader.getView());
-            }
-            this.mRefreshHeader = header;
-            this.mHeaderHeightStatus = mHeaderHeightStatus.unNotify();
-            if (header.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
-                this.addView(mRefreshHeader.getView(), 0, new LayoutParams(MATCH_PARENT, WRAP_CONTENT));
-            } else {
-                this.addView(mRefreshHeader.getView(), MATCH_PARENT, WRAP_CONTENT);
-            }
-        }
-        return this;
+        return setRefreshHeader(header, MATCH_PARENT, WRAP_CONTENT);
     }
 
     /**
@@ -2050,20 +2038,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      */
     @Override
     public SmartRefreshLayout setRefreshFooter(RefreshFooter footer) {
-        if (footer != null) {
-            if (mRefreshFooter != null) {
-                removeView(mRefreshFooter.getView());
-            }
-            this.mRefreshFooter = footer;
-            this.mFooterHeightStatus = mFooterHeightStatus.unNotify();
-            this.mEnableLoadmore = !mManualLoadmore || mEnableLoadmore;
-            if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
-                this.addView(mRefreshFooter.getView(), 0, new LayoutParams(MATCH_PARENT, WRAP_CONTENT));
-            } else {
-                this.addView(mRefreshFooter.getView(), MATCH_PARENT, WRAP_CONTENT);
-            }
-        }
-        return this;
+        return setRefreshFooter(footer, MATCH_PARENT, WRAP_CONTENT);
     }
 
     /**
@@ -2082,6 +2057,48 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 this.addView(mRefreshFooter.getView(), 0, new LayoutParams(width, height));
             } else {
                 this.addView(mRefreshFooter.getView(), width, height);
+            }
+        }
+        return this;
+    }
+
+    /**
+     * 设置指定的Content
+     */
+    @Override
+    public RefreshLayout setRefreshContent(View content) {
+        return setRefreshContent(content, MATCH_PARENT, MATCH_PARENT);
+    }
+
+    /**
+     * 设置指定的Content
+     */
+    @Override
+    public RefreshLayout setRefreshContent(View content, int width, int height) {
+        if (content != null) {
+            if (mRefreshContent != null) {
+                removeView(mRefreshContent.getView());
+            }
+            addView(content, 0, new LayoutParams(width, height));
+            if (mRefreshHeader != null && mRefreshHeader.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
+                bringChildToFront(content);
+                if (mRefreshFooter != null && mRefreshFooter.getSpinnerStyle() != SpinnerStyle.FixedBehind) {
+                    bringChildToFront(mRefreshFooter.getView());
+                }
+            } else if (mRefreshFooter != null && mRefreshFooter.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
+                bringChildToFront(content);
+                if (mRefreshHeader != null && mRefreshHeader.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
+                    bringChildToFront(mRefreshHeader.getView());
+                }
+            }
+            mRefreshContent = new RefreshContentWrapper(content);
+            if (mKernel != null) {
+                View fixedHeaderView = mFixedHeaderViewId > 0 ? findViewById(mFixedHeaderViewId) : null;
+                View fixedFooterView = mFixedFooterViewId > 0 ? findViewById(mFixedFooterViewId) : null;
+
+                mRefreshContent.setScrollBoundaryDecider(mScrollBoundaryDecider);
+                mRefreshContent.setEnableLoadmoreWhenContentNotFull(mEnableLoadmoreWhenContentNotFull || mEnablePureScrollMode);
+                mRefreshContent.setupComponent(mKernel, fixedHeaderView, fixedFooterView);
             }
         }
         return this;

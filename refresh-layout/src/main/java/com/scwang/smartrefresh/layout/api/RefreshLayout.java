@@ -2,6 +2,7 @@ package com.scwang.smartrefresh.layout.api;
 
 import android.support.annotation.ColorRes;
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
 
@@ -120,6 +121,16 @@ public interface RefreshLayout {
      * 设置指定的Header
      */
     RefreshLayout setRefreshHeader(RefreshHeader header, int width, int height);
+
+    /**
+     * 设置指定的Content
+     */
+    RefreshLayout setRefreshContent(View content);
+
+    /**
+     * 设置指定的Content
+     */
+    RefreshLayout setRefreshContent(View content, int width, int height);
 
     /**
      * 设置是否启用越界回弹

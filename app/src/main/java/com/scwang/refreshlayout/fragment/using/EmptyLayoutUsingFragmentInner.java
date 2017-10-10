@@ -22,6 +22,7 @@ import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.activity.FragmentActivity;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
+import com.scwang.refreshlayout.fragment.using.EmptyLayoutUsingFragment.Item;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -39,19 +40,6 @@ import static com.scwang.refreshlayout.R.id.refreshLayout;
  * A simple {@link Fragment} subclass.
  */
 public class EmptyLayoutUsingFragmentInner extends Fragment implements AdapterView.OnItemClickListener, OnRefreshListener {
-
-    private enum Item {
-        ThirdParty("集成第三方控件", EmptyLayoutUsingFragmentInner.class),
-        NestedInner("内部嵌套", EmptyLayoutUsingFragmentInner.class),
-        NestedOuter("外部嵌套", EmptyLayoutUsingFragmentOuter.class),
-        ;
-        public String name;
-        public Class<?> clazz;
-        Item(String name, Class<?> clazz) {
-            this.name = name;
-            this.clazz = clazz;
-        }
-    }
 
     private View mEmptyLayout;
     private RecyclerView mRecyclerView;
