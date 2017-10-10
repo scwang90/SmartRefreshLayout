@@ -100,7 +100,10 @@ public class FalsifyFooter extends FalsifyHeader implements RefreshFooter {
         switch (newState) {
             case None:
             case PullToUpLoad:
-                refreshLayout.setEnablePureScrollMode(mPureScrollMode);
+                if (mPureScrollMode != null
+                        && mPureScrollMode != refreshLayout.isEnablePureScrollMode()) {
+                    refreshLayout.setEnablePureScrollMode(mPureScrollMode);
+                }
                 break;
             case ReleaseToLoad:
                 mPureScrollMode = refreshLayout.isEnablePureScrollMode();

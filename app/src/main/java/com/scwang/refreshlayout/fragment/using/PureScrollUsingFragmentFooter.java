@@ -20,6 +20,8 @@ import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.activity.FragmentActivity;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.footer.FalsifyFooter;
 
 import java.util.Arrays;
 
@@ -30,12 +32,12 @@ import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
  * 使用示例-纯滚动模式
  * A simple {@link Fragment} subclass.
  */
-public class PureScrollUsingFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class PureScrollUsingFragmentFooter extends Fragment implements AdapterView.OnItemClickListener {
 
     private enum Item {
         Basic("基本的使用", PureScrollUsingFragment.class),
-        HeaderOnly("代码中单独指定Header", PureScrollUsingFragmentHeader.class),
-        FooterOnly("XML中单独指定Footer", PureScrollUsingFragmentFooter.class),
+        HeaderOnly("代码中指定Header", PureScrollUsingFragmentHeader.class),
+        FooterOnly("在XML中指定Footer", PureScrollUsingFragmentFooter.class),
         ;
         public String name;
         public Class<?> clazz;
@@ -54,13 +56,18 @@ public class PureScrollUsingFragment extends Fragment implements AdapterView.OnI
     public void onViewCreated(View root, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(root, savedInstanceState);
 
-        final Toolbar toolbar = (Toolbar)root.findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) root.findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getActivity().finish();
             }
         });
+        toolbar.setTitle("Footer单独使用");
+
+        RefreshLayout refreshLayout = (RefreshLayout) root.findViewById(R.id.refreshLayout);
+        refreshLayout.setEnablePureScrollMode(false);
+        refreshLayout.setRefreshFooter(new FalsifyFooter(getContext()));
 
         View view = root.findViewById(R.id.recyclerView);
         if (view instanceof RecyclerView) {

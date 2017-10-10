@@ -90,7 +90,7 @@ public class TaurusStyleActivity extends AppCompatActivity implements AdapterVie
         }
 
         /**
-         * 监听 AppBarLayout 的关闭和开启 给 FlyView（纸飞机） 和 ActionButton 设置关闭隐藏动画
+         * 监听 AppBarLayout 的关闭和开启 给 ActionButton 设置关闭隐藏动画
          */
         mActionButton = (FloatingActionButton) findViewById(R.id.fab);
         mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {

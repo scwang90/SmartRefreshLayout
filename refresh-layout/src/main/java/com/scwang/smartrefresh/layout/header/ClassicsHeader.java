@@ -317,7 +317,9 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
         mProgressView.setVisibility(GONE);
         if (success) {
             mTitleText.setText(REFRESH_HEADER_FINISH);
-            setLastUpdateTime(new Date());
+            if (mLastTime != null) {
+                setLastUpdateTime(new Date());
+            }
         } else {
             mTitleText.setText(REFRESH_HEADER_FAILED);
         }
@@ -445,9 +447,17 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
         return this;
     }
 
+    public ClassicsHeader setLastUpdateText(CharSequence text) {
+        mLastTime = null;
+        mLastUpdateText.setText(text);
+        return this;
+    }
+
     public ClassicsHeader setTimeFormat(DateFormat format) {
         mFormat = format;
-        mLastUpdateText.setText(mFormat.format(mLastTime));
+        if (mLastTime != null) {
+            mLastUpdateText.setText(mFormat.format(mLastTime));
+        }
         return this;
     }
 

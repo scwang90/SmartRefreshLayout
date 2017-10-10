@@ -32,12 +32,12 @@ import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
  * 使用示例-纯滚动模式
  * A simple {@link Fragment} subclass.
  */
-public class PureScrollUsingHeaderFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class PureScrollUsingFragmentHeader extends Fragment implements AdapterView.OnItemClickListener {
 
     private enum Item {
         Basic("基本的使用", PureScrollUsingFragment.class),
-        HeaderOnly("代码中指定Header", PureScrollUsingHeaderFragment.class),
-        FooterOnly("在XML中指定Footer", PureScrollUsingFooterFragment.class),
+        HeaderOnly("代码中指定Header", PureScrollUsingFragmentHeader.class),
+        FooterOnly("在XML中指定Footer", PureScrollUsingFragmentFooter.class),
         ;
         public String name;
         public Class<?> clazz;

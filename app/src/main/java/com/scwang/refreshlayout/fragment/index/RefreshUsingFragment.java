@@ -23,10 +23,12 @@ import com.scwang.refreshlayout.activity.using.AssignXmlUsingActivity;
 import com.scwang.refreshlayout.activity.using.BasicUsingActivity;
 import com.scwang.refreshlayout.activity.using.CustomUsingActivity;
 import com.scwang.refreshlayout.activity.using.ListenerUsingActivity;
-import com.scwang.refreshlayout.activity.using.NestLayoutUsingActivity;
+import com.scwang.refreshlayout.activity.using.NestedLayoutUsingActivity;
 import com.scwang.refreshlayout.activity.using.SnapHelperUsingActivity;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
+import com.scwang.refreshlayout.fragment.using.EmptyLayoutUsingFragment;
+import com.scwang.refreshlayout.fragment.using.NestedScrollUsingFragment;
 import com.scwang.refreshlayout.fragment.using.PureScrollUsingFragment;
 import com.scwang.refreshlayout.util.StatusBarUtil;
 
@@ -46,14 +48,16 @@ public class RefreshUsingFragment extends Fragment implements AdapterView.OnItem
         DefaultCreater("设置全局默认的Header和Footer", AssignDefaultUsingActivity.class),
         XmlDefine("在XML中定义Header和Footer", AssignXmlUsingActivity.class),
         CodeDefine("在代码中指定Header和Footer", AssignCodeUsingActivity.class),
-        NestLayout("嵌套Layout作为内容", NestLayoutUsingActivity.class),
+        EmptyLayout("整合空页面", EmptyLayoutUsingFragment.class),
+        NestedLayout("嵌套Layout作为内容", NestedLayoutUsingActivity.class),
+        NestedScroll("嵌套滚动使用", NestedScrollUsingFragment.class),
         PureScroll("纯滚动模式", PureScrollUsingFragment.class),
         Listener("多功能监听器", ListenerUsingActivity.class),
         Custom("自定义Header", CustomUsingActivity.class),
-        SnapHelper("结合 SnapHelper 使用", SnapHelperUsingActivity.class),
-        ;
+        SnapHelper("结合 SnapHelper 使用", SnapHelperUsingActivity.class),;
         public String name;
         public Class<?> clazz;
+
         Item(String name, Class<?> clazz) {
             this.name = name;
             this.clazz = clazz;

@@ -9,6 +9,12 @@
         <item name="android:dividerHeight">@dimen/division_line</item>
         <item name="android:listDivider">@drawable/ic_list_divider</item>
         <item name="android:homeAsUpIndicator">@drawable/ic_arrow_back_white_24dp</item>
+        <item name="styleLoadingLayout">@style/LoadingLayoutStyle</item>
+    </style>
+
+    <style name="LoadingLayoutStyle" parent="LoadingLayout.Style">
+        <item name="llEmptyImage">@mipmap/icon_empty</item>
+        <item name="llErrorImage">@mipmap/icon_error</item>
     </style>
 
     <style name="AppTheme" parent="AppThemeBase">

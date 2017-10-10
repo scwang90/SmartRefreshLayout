@@ -97,5 +97,9 @@
     <string name="github_qqbrowser_kernel">网页由 github.com 提供\n已启用QQ浏览器X5内核</string>
     <string name="title_activity_using_snaphelper">SnapHelper</string>
     <string name="fragment_using_purescroll">纯滚动模式</string>
-    <string name="fragment_using_purescroll_header">单独指定Header</string>
+    <string name="fragment_using_purescroll_header">纯滚动模式-单独指定Header</string>
+    <string name="fragment_using_emptylayout">空页面</string>
+    <string name="fragment_using_emptylayout_inner">空页面-内部嵌套</string>
+    <string name="fragment_using_emptylayout_outer">空页面-外部嵌套</string>
+    <string name="fragment_using_nestscroll">嵌套滚动</string>
 </resources>

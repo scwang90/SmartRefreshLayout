@@ -4,27 +4,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.scwang.refreshlayout.fragment.using.PureScrollUsingFragmentHeader">
+    tools:context="com.scwang.refreshlayout.fragment.using.EmptyLayoutUsingFragment">
 
     <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"
         app:navigationIcon="?attr/homeAsUpIndicator"
-        app:title="@string/fragment_using_purescroll_header"/>
+        app:title="@string/fragment_using_emptylayout"/>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:srlEnablePureScrollMode="false">
-        <com.scwang.smartrefresh.layout.header.FalsifyHeader
+        android:layout_height="match_parent">
+        <ezy.ui.layout.LoadingLayout
+            android:id="@+id/loading"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/white"
-            tools:listitem="@android:layout/simple_list_item_2"/>
+            android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/white"
+                tools:listitem="@android:layout/simple_list_item_2"/>
+        </ezy.ui.layout.LoadingLayout>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

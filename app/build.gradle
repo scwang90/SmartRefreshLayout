@@ -40,7 +40,6 @@ android {
 repositories {
     maven { url "https://jitpack.io" }
 }
-
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -60,6 +59,7 @@ dependencies {
     compile 'com.android.support:design:25.3.1'
     compile 'com.flyco.roundview:FlycoRoundView_Lib:1.1.4@aar'
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.22'
+    compile 'com.github.czy1121:loadinglayout:1.0.1'
     compile 'com.github.mmin18:realtimeblurview:1.0.6'
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.youth.banner:banner:1.4.9'  //最新版本

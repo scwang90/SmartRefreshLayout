@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.scwang.refreshlayout">
 
     <!-- 读取SD卡权限 -->
@@ -11,6 +12,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- 设备编号权限 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <uses-sdk
+        tools:overrideLibrary="com.github.czy1121.loadinglayout"/>
 
     <application
         android:name=".App"
@@ -38,7 +42,7 @@
             android:label="@string/title_activity_fly_refresh"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.using.NestLayoutUsingActivity"
+            android:name=".activity.using.NestedLayoutUsingActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.style.WaveSwipStyleActivity"

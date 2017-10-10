@@ -18,7 +18,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 
 import java.util.Arrays;
 
-public class NestLayoutUsingActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class NestedLayoutUsingActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private static String[] provinces = new String[]{
             "北京","天津","上海","重庆",
