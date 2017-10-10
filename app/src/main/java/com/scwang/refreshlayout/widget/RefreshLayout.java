@@ -139,7 +139,7 @@ public class RefreshLayout extends ViewGroup implements GestureDetector.OnGestur
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         if (mRefreshContent != null) {
-//            mRefreshContent.layout(0, 0, getMeasuredWidth(), getMeasuredHeight(), false);
+            mRefreshContent.layout(0, 0, getMeasuredWidth(), getMeasuredHeight(), false);
         }
         if (mRefreshHeader != null) {
             final View headerView = mRefreshHeader.getView();
