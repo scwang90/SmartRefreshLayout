@@ -4,16 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.scwang.refreshlayout.fragment.index.RefreshStylesFragment">
+    tools:context="com.scwang.refreshlayout.fragment.index.RefreshUsingFragment">
 
     <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
-        android:id="@id/toolbar"
-        app:title="@string/fragment_refresh_practive"/>
+        android:id="@+id/toolbar"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:title="@string/fragment_using_purescroll"/>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:srlEnablePureScrollMode="true">
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"

@@ -18,8 +18,11 @@
         android:layout_margin="10dp"
         android:text="Hello World!" />
 
-    <com.scwang.smartrefresh.header.PhoenixHeader
+    <com.scwang.smartrefresh.layout.footer.FalsifyFooter
         android:layout_width="match_parent"
-        android:layout_height="100dp" />
+        android:layout_height="wrap_content" />
+    <!--<com.scwang.smartrefresh.header.PhoenixHeader-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="100dp" />-->
 
 </com.scwang.smartrefresh.layout.SmartRefreshLayout>

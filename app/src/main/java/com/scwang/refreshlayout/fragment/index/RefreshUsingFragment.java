@@ -1,6 +1,7 @@
-package com.scwang.refreshlayout.fragment;
+package com.scwang.refreshlayout.fragment.index;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 import com.scwang.refreshlayout.R;
+import com.scwang.refreshlayout.activity.FragmentActivity;
 import com.scwang.refreshlayout.activity.using.AssignCodeUsingActivity;
 import com.scwang.refreshlayout.activity.using.AssignDefaultUsingActivity;
 import com.scwang.refreshlayout.activity.using.AssignXmlUsingActivity;
@@ -25,6 +27,7 @@ import com.scwang.refreshlayout.activity.using.NestLayoutUsingActivity;
 import com.scwang.refreshlayout.activity.using.SnapHelperUsingActivity;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
+import com.scwang.refreshlayout.fragment.using.PureScrollUsingFragment;
 import com.scwang.refreshlayout.util.StatusBarUtil;
 
 import java.util.Arrays;
@@ -43,8 +46,9 @@ public class RefreshUsingFragment extends Fragment implements AdapterView.OnItem
         DefaultCreater("设置全局默认的Header和Footer", AssignDefaultUsingActivity.class),
         XmlDefine("在XML中定义Header和Footer", AssignXmlUsingActivity.class),
         CodeDefine("在代码中指定Header和Footer", AssignCodeUsingActivity.class),
-        Listener("多功能监听器", ListenerUsingActivity.class),
         NestLayout("嵌套Layout作为内容", NestLayoutUsingActivity.class),
+        PureScroll("纯滚动模式", PureScrollUsingFragment.class),
+        Listener("多功能监听器", ListenerUsingActivity.class),
         Custom("自定义Header", CustomUsingActivity.class),
         SnapHelper("结合 SnapHelper 使用", SnapHelperUsingActivity.class),
         ;
@@ -86,6 +90,10 @@ public class RefreshUsingFragment extends Fragment implements AdapterView.OnItem
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Item item = Item.values()[position];
-        startActivity(new Intent(getContext(), item.clazz));
+        if (Activity.class.isAssignableFrom(item.clazz)) {
+            startActivity(new Intent(getContext(), item.clazz));
+        } else if (Fragment.class.isAssignableFrom(item.clazz)) {
+            FragmentActivity.start(this, item.clazz);
+        }
     }
 }

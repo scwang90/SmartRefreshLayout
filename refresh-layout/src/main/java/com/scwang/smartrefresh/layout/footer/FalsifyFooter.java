@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.header.FalsifyHeader;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
@@ -92,6 +93,22 @@ public class FalsifyFooter extends FalsifyHeader implements RefreshFooter {
     @Override
     public boolean setLoadmoreFinished(boolean finished) {
         return false;
+    }
+
+    @Override
+    public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
+        switch (newState) {
+            case None:
+            case PullToUpLoad:
+                refreshLayout.setEnablePureScrollMode(mPureScrollMode);
+                break;
+            case ReleaseToLoad:
+                mPureScrollMode = refreshLayout.isEnablePureScrollMode();
+                if (!mPureScrollMode) {
+                    refreshLayout.setEnablePureScrollMode(true);
+                }
+                break;
+        }
     }
 
     //</editor-fold>

@@ -11,9 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.scwang.refreshlayout.R;
-import com.scwang.refreshlayout.fragment.RefreshPractiveFragment;
-import com.scwang.refreshlayout.fragment.RefreshStylesFragment;
-import com.scwang.refreshlayout.fragment.RefreshUsingFragment;
+import com.scwang.refreshlayout.fragment.index.RefreshPractiveFragment;
+import com.scwang.refreshlayout.fragment.index.RefreshStylesFragment;
+import com.scwang.refreshlayout.fragment.index.RefreshUsingFragment;
 import com.scwang.refreshlayout.util.StatusBarUtil;
 
 public class IndexMainActivity extends AppCompatActivity implements OnNavigationItemSelectedListener {

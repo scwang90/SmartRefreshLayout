@@ -31,12 +31,13 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    compile project(':refresh-header')
-    compile project(':refresh-layout')
+//    compile project(':refresh-header')
+//    compile project(':refresh-layout')
 
-//    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-alpha-1'
-//    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4-alpha-1'
+    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-alpha-3'
+    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4-alpha-3'
 
+    compile 'com.android.support:design:26.0.0-alpha1'
     compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'

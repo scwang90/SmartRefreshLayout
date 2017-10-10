@@ -54,7 +54,7 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
 
 ![](art/gif_practive_repast.gif) ![](art/gif_practive_profile.gif)
 
-#### 风格演示
+#### 样式演示
 ![](art/gif_Delivery.gif) ![](art/gif_Dropbox.gif)
 
 上面这两个是我自己实现的Header，设计来自：[Refresh-your-delivery](https://dribbble.com/shots/2753803-Refresh-your-delivery)，[Dropbox-Refresh](https://dribbble.com/shots/3470499-Dropbox-Refresh)
@@ -205,7 +205,7 @@ public class App extends Application {
 #### 3.方法三 Java代码设置
 ```java
 final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
-//设置 Header 为 Material风格
+//设置 Header 为 Material样式
 refreshLayout.setRefreshHeader(new MaterialHeader(this).setShowBezierWave(true));
 //设置 Footer 为 球脉冲
 refreshLayout.setRefreshFooter(new BallPulseFooter(this).setSpinnerStyle(SpinnerStyle.Scale));

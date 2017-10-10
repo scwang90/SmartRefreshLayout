@@ -21,6 +21,7 @@ import com.scwang.smartrefresh.header.flyrefresh.PathInterpolatorCompat;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.header.FalsifyHeader;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
@@ -189,6 +190,10 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
             finishRefresh();
         }
         return super.onFinish(layout, success);
+    }
+
+    @Override
+    public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
     }
 
     //</editor-fold>

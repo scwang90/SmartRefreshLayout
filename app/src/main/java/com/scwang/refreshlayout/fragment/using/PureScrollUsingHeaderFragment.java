@@ -1,6 +1,7 @@
-package com.scwang.refreshlayout.fragment;
+package com.scwang.refreshlayout.fragment.using;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,22 +10,18 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 import com.scwang.refreshlayout.R;
-import com.scwang.refreshlayout.activity.practice.BannerPracticeActivity;
-import com.scwang.refreshlayout.activity.practice.FeedlistPracticeActivity;
-import com.scwang.refreshlayout.activity.practice.ProfilePracticeActivity;
-import com.scwang.refreshlayout.activity.practice.QQBrowserPracticeActivity;
-import com.scwang.refreshlayout.activity.practice.RepastPracticeActivity;
-import com.scwang.refreshlayout.activity.practice.WebviewPracticeActivity;
-import com.scwang.refreshlayout.activity.practice.WeiboPracticeActivity;
+import com.scwang.refreshlayout.activity.FragmentActivity;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
-import com.scwang.refreshlayout.util.StatusBarUtil;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.header.FalsifyHeader;
 
 import java.util.Arrays;
 
@@ -32,19 +29,15 @@ import static android.R.layout.simple_list_item_2;
 import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 
 /**
- * 实战演示
+ * 使用示例-纯滚动模式
  * A simple {@link Fragment} subclass.
  */
-public class RefreshPractiveFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class PureScrollUsingHeaderFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private enum Item {
-        Repast("餐饮美食-简单自定义Header-外边距magin", RepastPracticeActivity.class),
-        Profile("个人中心-PureScrollMode-纯滚动模式", ProfilePracticeActivity.class),
-        Webview("网页引用-WebView", WebviewPracticeActivity.class),
-        FeedList("微博列表-智能识别", FeedlistPracticeActivity.class),
-        Weibo("微博主页-CoordinatorLayout", WeiboPracticeActivity.class),
-        Banner("滚动广告-Banner", BannerPracticeActivity.class),
-        QQBrowser("QQ浏览器-模拟QQ浏览器内核提示", QQBrowserPracticeActivity.class),
+        Basic("基本的使用", PureScrollUsingFragment.class),
+        HeaderOnly("代码中指定Header", PureScrollUsingHeaderFragment.class),
+        FooterOnly("在XML中指定Footer", PureScrollUsingFooterFragment.class),
         ;
         public String name;
         public Class<?> clazz;
@@ -52,18 +45,27 @@ public class RefreshPractiveFragment extends Fragment implements AdapterView.OnI
             this.name = name;
             this.clazz = clazz;
         }
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_refresh_practive, container, false);
+        return inflater.inflate(R.layout.fragment_using_purescroll_header, container, false);
     }
 
     @Override
     public void onViewCreated(View root, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(root, savedInstanceState);
-        StatusBarUtil.setPaddingSmart(getContext(), root.findViewById(R.id.toolbar));
+
+        final Toolbar toolbar = (Toolbar)root.findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
+
+        RefreshLayout refreshLayout = (RefreshLayout) root.findViewById(R.id.refreshLayout);
+        refreshLayout.setRefreshHeader(new FalsifyHeader(getContext()));
 
         View view = root.findViewById(R.id.recyclerView);
         if (view instanceof RecyclerView) {
@@ -80,11 +82,15 @@ public class RefreshPractiveFragment extends Fragment implements AdapterView.OnI
                 }
             });
         }
-
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        startActivity(new Intent(getContext(), Item.values()[position].clazz));
+        Item item = Item.values()[position];
+        if (Activity.class.isAssignableFrom(item.clazz)) {
+            startActivity(new Intent(getContext(), item.clazz));
+        } else if (Fragment.class.isAssignableFrom(item.clazz)) {
+            FragmentActivity.start(this, item.clazz);
+        }
     }
 }

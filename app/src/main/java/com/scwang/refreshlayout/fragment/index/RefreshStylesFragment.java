@@ -1,4 +1,4 @@
-package com.scwang.refreshlayout.fragment;
+package com.scwang.refreshlayout.fragment.index;
 
 
 import android.content.Intent;

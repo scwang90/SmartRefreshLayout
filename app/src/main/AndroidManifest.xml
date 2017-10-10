@@ -29,6 +29,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.FragmentActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".activity.ExperimentActivity"
             android:screenOrientation="portrait"/>
         <activity

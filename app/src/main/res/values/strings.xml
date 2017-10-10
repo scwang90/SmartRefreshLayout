@@ -7,7 +7,7 @@
 
     <string name="title_activity_fly_refresh">FlyRefresh</string>
     <string name="title_activity_index_main">Refresh</string>
-    <string name="title_style">风格</string>
+    <string name="title_style">样式</string>
     <string name="title_using">使用</string>
     <string name="title_practice">实战</string>
     <string name="region_hint">未选择</string>
@@ -96,4 +96,6 @@
     <string name="title_activity_practice_qqbrowser">QQ浏览器</string>
     <string name="github_qqbrowser_kernel">网页由 github.com 提供\n已启用QQ浏览器X5内核</string>
     <string name="title_activity_using_snaphelper">SnapHelper</string>
+    <string name="fragment_using_purescroll">纯滚动模式</string>
+    <string name="fragment_using_purescroll_header">单独指定Header</string>
 </resources>

@@ -36,6 +36,7 @@ import static android.view.View.MeasureSpec.makeMeasureSpec;
 public class FalsifyHeader extends View implements RefreshHeader {
 
     protected RefreshKernel mRefreshKernel;
+    protected boolean mPureScrollMode;
 
     //<editor-fold desc="FalsifyHeader">
     public FalsifyHeader(Context context) {
@@ -126,7 +127,26 @@ public class FalsifyHeader extends View implements RefreshHeader {
 
     @Override
     public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
-
+        switch (newState) {
+            case None:
+            case PullDownToRefresh:
+                refreshLayout.setEnablePureScrollMode(mPureScrollMode);
+                break;
+            case PullDownCanceled:
+                break;
+            case ReleaseToRefresh:
+                mPureScrollMode = refreshLayout.isEnablePureScrollMode();
+                if (!mPureScrollMode) {
+                    refreshLayout.setEnablePureScrollMode(true);
+                }
+                break;
+            case RefreshReleased:
+                break;
+            case Refreshing:
+                break;
+            case RefreshFinish:
+                break;
+        }
     }
 
     @Override
