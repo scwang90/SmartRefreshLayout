@@ -15,6 +15,7 @@
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layout_scrollFlags="scroll|snap"
         app:srlEnableLoadmore="false">
         <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
