@@ -98,8 +98,8 @@ compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
 compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'//If you use the special Header
 
 //alpha-version
-compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-alpha-4'
-compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4-alpha-4'
+compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-alpha-5'
+compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4-alpha-5'
 ```
 
 #### 2.Add SmartRefreshLayout in the layout xml.
