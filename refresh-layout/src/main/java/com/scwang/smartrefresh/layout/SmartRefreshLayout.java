@@ -763,7 +763,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                         if (mEnableAutoLoadmore && !mLoadmoreFinished) {
                             autoLoadmore(0, 1);
                         } else if (mEnableOverScrollBounce) {
-                            animSpinnerBounce((int) (mFooterHeight * Math.pow(1.0 * velocity / mMaximumVelocity, 0.5)));
+                            animSpinnerBounce(-(int) (mFooterHeight * Math.pow(1.0 * velocity / mMaximumVelocity, 0.5)));
                         }
                     }
                 } else {// 手势向下划 Header
