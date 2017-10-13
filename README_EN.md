@@ -59,7 +59,7 @@ SmartRefreshLayout's goal is to build a strong, stable and mature refresh layout
 |Demo|![](art/gif_Delivery.gif)|![](art/gif_Dropbox.gif)|
 |Design|[Refresh-your-delivery](https://dribbble.com/shots/2753803-Refresh-your-delivery)|[Dropbox-Refresh](https://dribbble.com/shots/3470499-Dropbox-Refresh)|
 
-The two above headers are implemented by my self, The following headers are collect and optimization from excellent Headers on github  
+The two above headers are implemented by myself, The following headers are collected and optimized from excellent Headers on github
 
 |Style|BezierRadar|BezierCircle|
 |:---:|:---:|:---:|
