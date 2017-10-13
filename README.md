@@ -11,27 +11,22 @@
 
 ## [English](README_EN.md) | 中文
 
-正如名字所说，SmartRefreshLayout是一个“聪明”或者说“智能”的下拉刷新布局，由于它的“智能”，它不只是如其它的刷新布局所说的支持所有的View，还支持多层嵌套的视图结构。  除了“聪明”之外，SmartRefreshLayout还具备了很多的特点。  
-它继承自ViewGroup 而不是其它的FrameLayout或者LinearLayout，提高了性能。  
-它也吸取了现在流行的各种刷新布局的优点，包括谷歌官方的 SwipeRefreshLayout，现在非常流行的 [TwinklingRefreshLayout](https://github.com/lcodecorex/TwinklingRefreshLayout) 、[Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)。还集成了各种炫酷的 Header 和 Footer。  
+正如名字所说，SmartRefreshLayout是一个“聪明”或者“智能”的下拉刷新布局，由于它的“智能”，它不只是支持所有的View，还支持多层嵌套的视图结构。它继承自ViewGroup 而不是FrameLayout或LinearLayout，提高了性能。
+也吸取了现在流行的各种刷新布局的优点，包括谷歌官方的 SwipeRefreshLayout，其他第三方的 [TwinklingRefreshLayout](https://github.com/lcodecorex/TwinklingRefreshLayout) 、[Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)。还集成了各种炫酷的 Header 和 Footer。  
 SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷新框架，并集成各种的炫酷、多样、实用、美观的Header和Footer。
 
 ## 特点功能:
 
- - 支持所有的 View（AbsListView、RecyclerView、WebView....View） 和多层嵌套的视图结构
- - 支持自定义并且已经集成了很多炫酷的 Header 和 Footer （图）.
- - 支持和ListView的同步滚动 和 RecyclerView、AppBarLayout、CoordinatorLayout 的嵌套滚动 NestedScrolling.
- - 支持在Android Studio Xml 编辑器中预览 效果（图）
- - 支持分别在 Default（默认）、Xml、JavaCode 三个中设置 Header 和 Footer.
+ - 支持多点触摸
+ - 支持嵌套多层的视图结构
+ - 支持所有的 View（AbsListView、RecyclerView、WebView....View）  
+ - 支持自定义并且已经集成了很多炫酷的 Header 和 Footer.
+ - 支持和ListView的无缝同步滚动 和 CoordinatorLayout 的嵌套滚动 .
  - 支持自动刷新、自动上拉加载（自动检测列表惯性滚动到底部，而不用手动上拉）.
- - 支持通用的刷新监听器 OnRefreshListener 和更详细的滚动监听 OnMultiPurposeListener.
  - 支持自定义回弹动画的插值器，实现各种炫酷的动画效果.
  - 支持设置主题来适配任何场景的App，不会出现炫酷但很尴尬的情况.
- - 支持设置多种滑动方式来适配各种效果的Header和Footer：平移、拉伸、背后固定、顶层固定、全屏
- - 支持内容尺寸自适应 Content-wrap_content
- - 支持继承重写和扩展功能，内部实现没有 private 方法和字段，继承之后都可以重写覆盖
- - 支持越界回弹（Listview、RecyclerView、ScrollView、WebView...View）
- - 支持多点触摸，下拉、上拉各种手势冲突
+ - 支持设多种滑动方式：平移、拉伸、背后固定、顶层固定、全屏
+ - 支持所有可滚动视图的越界回弹
  
 ## 传送门
 
@@ -50,14 +45,18 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
 ![](art/png_apk_rqcode.png)
 
 #### 项目演示
-![](art/gif_practive_weibo.gif) ![](art/gif_practive_feedlist.gif)
+|个人首页|微博列表|
+|:---:|:---:|
+|![](art/gif_practive_weibo.gif)|![](art/gif_practive_feedlist.gif)|
 
-![](art/gif_practive_repast.gif) ![](art/gif_practive_profile.gif)
+|餐饮美食|个人中心|
+|:---:|:---:|
+|![](art/gif_practive_repast.gif)|![](art/gif_practive_profile.gif)|
 
 #### 样式演示
 ![](art/gif_Delivery.gif) ![](art/gif_Dropbox.gif)
 
-上面这两个是我自己实现的Header，设计来自：[Refresh-your-delivery](https://dribbble.com/shots/2753803-Refresh-your-delivery)，[Dropbox-Refresh](https://dribbble.com/shots/3470499-Dropbox-Refresh)
+上面这两个是我自己实现的，设计来自：[Refresh-your-delivery](https://dribbble.com/shots/2753803-Refresh-your-delivery)，[Dropbox-Refresh](https://dribbble.com/shots/3470499-Dropbox-Refresh)
 
 下面的Header是我把github上其它优秀的Header进行的整理和集合还有优化：
 
