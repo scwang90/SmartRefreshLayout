@@ -57,7 +57,7 @@ SmartRefreshLayout's goal is to build a strong, stable and mature refresh layout
 |Style|Delivery|Dropbox|
 |:---:|:---:|:---:|
 |Demo|![](art/gif_Delivery.gif)|![](art/gif_Dropbox.gif)|
-|design|[Refresh-your-delivery](https://dribbble.com/shots/2753803-Refresh-your-delivery)|[Dropbox-Refresh](https://dribbble.com/shots/3470499-Dropbox-Refresh)|
+|Design|[Refresh-your-delivery](https://dribbble.com/shots/2753803-Refresh-your-delivery)|[Dropbox-Refresh](https://dribbble.com/shots/3470499-Dropbox-Refresh)|
 
 The two above headers are implemented by my self, The following headers are collect and optimization from excellent Headers on github  
 
@@ -102,10 +102,11 @@ Please rest assured that I have divided it into three packages, when used to ref
 ## Usage
 #### 1.Add a gradle dependency.
 ```
-compile 'com.android.support:design:25.3.1'//（Not necessary，Can solve problems that cannot be previewed）
-compile 'com.android.support:appcompat-v7:25.3.1'
 compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
 compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'//If you use the special Header
+
+compile 'com.android.support:appcompat-v7:25.3.1'
+compile 'com.android.support:design:25.3.1'//（Not necessary，Can solve problems that cannot be previewed）
 
 //alpha-version
 compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-alpha-5'
