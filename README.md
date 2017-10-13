@@ -96,7 +96,7 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
 |:---:|:---:|:---:|
 |演示|![](art/gif_StoreHouse.gif)|![](art/gif_WaterDrop.gif)|
 |名称|闪耀文字|苹果水滴|
-|来自|[Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)，[WaterDrop](https://github.com/THEONE10211024/WaterDropListView)
+|来自|[Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)|[WaterDrop](https://github.com/THEONE10211024/WaterDropListView)
 
 
 看到这么多炫酷的Header，是不是觉得很棒？这时你或许会担心这么多的Header集成在一起，但是平时只会用到一个，是不是要引入很多无用的代码和资源？  
