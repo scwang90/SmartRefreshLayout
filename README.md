@@ -84,13 +84,13 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
 |:---:|:---:|:---:|
 |演示|![](art/gif_BattleCity.gif)|![](art/gif_HitBlock.gif)|
 |名称|战争城市|休闲砖块|
-|来自|[FunGame/BattleCity](https://github.com/Hitomis/FunGameRefresh)，[FunGame/HitBlock](https://github.com/Hitomis/FunGameRefresh)
+|来自|[FunGame/BattleCity](https://github.com/Hitomis/FunGameRefresh)|[FunGame/HitBlock](https://github.com/Hitomis/FunGameRefresh)
 
 |Style|WaveSwipe|Material|
 |:---:|:---:|:---:|
 |演示|![](art/gif_WaveSwipe.gif)|![](art/gif_Material.gif)|
 |名称|全屏水波|安卓官方|
-|来自|[WaveSwipeRefreshLayout](https://github.com/recruit-lifestyle/WaveSwipeRefreshLayout)，[MaterialHeader](https://developer.android.com/reference/android/support/v4/widget/SwipeRefreshLayout.html)
+|来自|[WaveSwipeRefreshLayout](https://github.com/recruit-lifestyle/WaveSwipeRefreshLayout)|[MaterialHeader](https://developer.android.com/reference/android/support/v4/widget/SwipeRefreshLayout.html)
 
 |Style|StoreHouse|WaterDrop|
 |:---:|:---:|:---:|

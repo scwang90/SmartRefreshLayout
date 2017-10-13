@@ -79,17 +79,17 @@ The two above headers are implemented by my self, The following headers are coll
 |Style|BattleCity|HitBlock|
 |:---:|:---:|:---:|
 |Demo|![](art/gif_BattleCity.gif)|![](art/gif_HitBlock.gif)|
-|From|[FunGame/BattleCity](https://github.com/Hitomis/FunGameRefresh)，[FunGame/HitBlock](https://github.com/Hitomis/FunGameRefresh)
+|From|[FunGame/BattleCity](https://github.com/Hitomis/FunGameRefresh)|[FunGame/HitBlock](https://github.com/Hitomis/FunGameRefresh)
 
 |Style|WaveSwipe|Material|
 |:---:|:---:|:---:|
 |Demo|![](art/gif_WaveSwipe.gif)|![](art/gif_Material.gif)|
-|From|[WaveSwipeRefreshLayout](https://github.com/recruit-lifestyle/WaveSwipeRefreshLayout)，[MaterialHeader](https://developer.android.com/reference/android/support/v4/widget/SwipeRefreshLayout.html)
+|From|[WaveSwipeRefreshLayout](https://github.com/recruit-lifestyle/WaveSwipeRefreshLayout)|[MaterialHeader](https://developer.android.com/reference/android/support/v4/widget/SwipeRefreshLayout.html)
 
 |Style|StoreHouse|WaterDrop|
 |:---:|:---:|:---:|
 |Demo|![](art/gif_StoreHouse.gif)|![](art/gif_WaterDrop.gif)|
-|From|[Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)，[WaterDrop](https://github.com/THEONE10211024/WaterDropListView)
+|From|[Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)|[WaterDrop](https://github.com/THEONE10211024/WaterDropListView)
 
 
 See so many cool headers, is not it feel great? At this point you may be worried that so many headers together, but usually only use one, is not to introduce a lot of useless code and resources?    
