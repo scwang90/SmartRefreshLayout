@@ -53,12 +53,14 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
 |:---:|:---:|
 |![](art/gif_practive_repast.gif)|![](art/gif_practive_profile.gif)|
 
-#### 样式演示
-![](art/gif_Delivery.gif) ![](art/gif_Dropbox.gif)
+#### 样式演示 Stype
+|Stype|Delivery|Dropbox|
+|:---:|:---:|:---:|
+|Demo|![](art/gif_Delivery.gif)|![](art/gif_Dropbox.gif)|
+|名称|气球快递|掉落盒子|
+|设计|[Refresh-your-delivery](https://dribbble.com/shots/2753803-Refresh-your-delivery)|[Dropbox-Refresh](https://dribbble.com/shots/3470499-Dropbox-Refresh)|
 
-上面这两个是我自己实现的，设计来自：[Refresh-your-delivery](https://dribbble.com/shots/2753803-Refresh-your-delivery)，[Dropbox-Refresh](https://dribbble.com/shots/3470499-Dropbox-Refresh)
-
-下面的Header是我把github上其它优秀的Header进行的整理和集合还有优化：
+上面这两个是我自己实现的，下面的是我把github上其它优秀的Header进行的整理和集合还有优化：
 
 ![](art/gif_BezierRadar.gif) ![](art/gif_Circle.gif)
 
