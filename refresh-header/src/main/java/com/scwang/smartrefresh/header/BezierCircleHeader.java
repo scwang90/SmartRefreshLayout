@@ -29,7 +29,7 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
  * https://github.com/tuesda/CircleRefreshLayout
  * Created by zhanglei on 15/7/18.
  */
-public class CircleHeader extends View implements RefreshHeader {
+public class BezierCircleHeader extends View implements RefreshHeader {
 
     //<editor-fold desc="Field">
 
@@ -61,23 +61,23 @@ public class CircleHeader extends View implements RefreshHeader {
 
     //<editor-fold desc="View">
 
-    public CircleHeader(Context context) {
+    public BezierCircleHeader(Context context) {
         super(context, null, 0);
         initView(context, null);
     }
 
-    public CircleHeader(Context context, AttributeSet attrs) {
+    public BezierCircleHeader(Context context, AttributeSet attrs) {
         super(context, attrs, 0);
         initView(context, attrs);
     }
 
-    public CircleHeader(Context context, AttributeSet attrs, int defStyleAttr) {
+    public BezierCircleHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initView(context, attrs);
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    public CircleHeader(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public BezierCircleHeader(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initView(context, attrs);
     }
@@ -322,7 +322,7 @@ public class CircleHeader extends View implements RefreshHeader {
                     mRefreshStop = 90;
                 }
                 mWaveHeight = curValue;
-                CircleHeader.this.invalidate();
+                BezierCircleHeader.this.invalidate();
             }
         });
         waveAnimator.setInterpolator(interpolator);
@@ -355,7 +355,7 @@ public class CircleHeader extends View implements RefreshHeader {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 mFinishRatio = (float) animation.getAnimatedValue();
-                CircleHeader.this.invalidate();
+                BezierCircleHeader.this.invalidate();
             }
         });
         animator.setInterpolator(new AccelerateInterpolator());

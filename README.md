@@ -56,35 +56,47 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
 #### 样式演示 Stype
 |Stype|Delivery|Dropbox|
 |:---:|:---:|:---:|
-|Demo|![](art/gif_Delivery.gif)|![](art/gif_Dropbox.gif)|
+|演示|![](art/gif_Delivery.gif)|![](art/gif_Dropbox.gif)|
 |名称|气球快递|掉落盒子|
 |设计|[Refresh-your-delivery](https://dribbble.com/shots/2753803-Refresh-your-delivery)|[Dropbox-Refresh](https://dribbble.com/shots/3470499-Dropbox-Refresh)|
 
 上面这两个是我自己实现的，下面的是我把github上其它优秀的Header进行的整理和集合还有优化：
 
-![](art/gif_BezierRadar.gif) ![](art/gif_Circle.gif)
+|Stype|BezierRadar|BezierCircle|
+|:---:|:---:|:---:|
+|演示|![](art/gif_BezierRadar.gif)|![](art/gif_BezierCircle.gif)|
+|名称|贝塞尔雷达|贝塞尔弹球|
+|来自|[TwinklingRefreshLayout](https://github.com/lcodecorex/TwinklingRefreshLayout/blob/master/art/gif_recyclerview2.gif)|[Pull Down To Refresh](https://dribbble.com/shots/1797373-Pull-Down-To-Refresh)|
 
-整理来自：[TwinklingRefreshLayout](https://github.com/lcodecorex/TwinklingRefreshLayout/blob/master/art/gif_recyclerview2.gif)，[Pull Down To Refresh](https://dribbble.com/shots/1797373-Pull-Down-To-Refresh)
+|Stype|FlyRefresh|Classics|
+|:---:|:---:|:---:|
+|演示|![](art/gif_FlyRefresh.gif)|![](art/gif_Classics.gif)|
+|名称|纸飞机|金典|
+|来自|[FlyRefresh](https://github.com/race604/FlyRefresh)|[ClassicsHeader](#1)|
 
-![](art/gif_FlyRefresh.gif) ![](art/gif_Classics.gif)
+|Stype|Phoenix|Taurus|
+|:---:|:---:|:---:|
+|演示|![](art/gif_Phoenix.gif)|![](art/gif_Taurus.gif)|
+|名称|金色校园|冲上云霄|
+|来自|[Yalantis/Phoenix](https://github.com/Yalantis/Phoenix)，[Yalantis/Taurus](https://github.com/Yalantis/Taurus)
 
-整理来自：[FlyRefresh](https://github.com/race604/FlyRefresh)，[ClassicsHeader](#1)
+|Stype|BattleCity|HitBlock|
+|:---:|:---:|:---:|
+|演示|![](art/gif_BattleCity.gif)|![](art/gif_HitBlock.gif)|
+|名称|战争城市|休闲砖块|
+|来自|[FunGame/BattleCity](https://github.com/Hitomis/FunGameRefresh)，[FunGame/HitBlock](https://github.com/Hitomis/FunGameRefresh)
 
-![](art/gif_Phoenix.gif) ![](art/gif_Taurus.gif)
-
-整理来自：[Yalantis/Phoenix](https://github.com/Yalantis/Phoenix)，[Yalantis/Taurus](https://github.com/Yalantis/Taurus)
-
-![](art/gif_BattleCity.gif) ![](art/gif_HitBlock.gif)
-
-整理来自：[FunGame/BattleCity](https://github.com/Hitomis/FunGameRefresh)，[FunGame/HitBlock](https://github.com/Hitomis/FunGameRefresh)
-
-![](art/gif_WaveSwipe.gif) ![](art/gif_Material.gif)
-
-整理来自：[WaveSwipeRefreshLayout](https://github.com/recruit-lifestyle/WaveSwipeRefreshLayout)，[MaterialHeader](https://developer.android.com/reference/android/support/v4/widget/SwipeRefreshLayout.html)
-
-![](art/gif_StoreHouse.gif) ![](art/gif_WaterDrop.gif)
-
-整理来自：[Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)，[WaterDrop](https://github.com/THEONE10211024/WaterDropListView)
+|Stype|WaveSwipe|Material|
+|:---:|:---:|:---:|
+|演示|![](art/gif_WaveSwipe.gif)|![](art/gif_Material.gif)|
+|名称|全屏水波|安卓官方|
+|来自|[WaveSwipeRefreshLayout](https://github.com/recruit-lifestyle/WaveSwipeRefreshLayout)，[MaterialHeader](https://developer.android.com/reference/android/support/v4/widget/SwipeRefreshLayout.html)
+|
+|Stype|StoreHouse|WaterDrop|
+|:---:|:---:|:---:|
+|演示|![](art/gif_StoreHouse.gif)|![](art/gif_WaterDrop.gif)|
+|名称|闪耀文字|苹果水滴|
+|来自|[Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)，[WaterDrop](https://github.com/THEONE10211024/WaterDropListView)
 
 
 看到这么多炫酷的Header，是不是觉得很棒？这时你或许会担心这么多的Header集成在一起，但是平时只会用到一个，是不是要引入很多无用的代码和资源？  
