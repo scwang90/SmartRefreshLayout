@@ -85,7 +85,7 @@ The two above headers are implemented by my self, The following headers are coll
 |:---:|:---:|:---:|
 |Demo|![](art/gif_WaveSwipe.gif)|![](art/gif_Material.gif)|
 |From|[WaveSwipeRefreshLayout](https://github.com/recruit-lifestyle/WaveSwipeRefreshLayout)，[MaterialHeader](https://developer.android.com/reference/android/support/v4/widget/SwipeRefreshLayout.html)
-|
+
 |Style|StoreHouse|WaterDrop|
 |:---:|:---:|:---:|
 |Demo|![](art/gif_StoreHouse.gif)|![](art/gif_WaterDrop.gif)|

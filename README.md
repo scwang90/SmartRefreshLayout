@@ -91,7 +91,7 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
 |演示|![](art/gif_WaveSwipe.gif)|![](art/gif_Material.gif)|
 |名称|全屏水波|安卓官方|
 |来自|[WaveSwipeRefreshLayout](https://github.com/recruit-lifestyle/WaveSwipeRefreshLayout)，[MaterialHeader](https://developer.android.com/reference/android/support/v4/widget/SwipeRefreshLayout.html)
-|
+
 |Style|StoreHouse|WaterDrop|
 |:---:|:---:|:---:|
 |演示|![](art/gif_StoreHouse.gif)|![](art/gif_WaterDrop.gif)|
