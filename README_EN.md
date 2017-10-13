@@ -12,25 +12,21 @@
 
 ## English | [中文](README.md)
 
-As the name says, SmartRefreshLayout is a "smart" refresh layout，Because of its "smart", it does not just support all the View as other refresh layouts said, but also support multi-layered nested view structures.   
-In addition to "smart", SmartRefreshLayout also has a lot of features.  
+As the name says, SmartRefreshLayout is a "smart" refresh layout，Because of its "smart", it does not just support all the View , but also support multi-layered nested view structures.  
 It extends from ViewGroup rather than the other FrameLayout or LinearLayout, improving performance.  
 It absorbs the advantages of various refresh layout in fashion now，Including Google official [SwipeRefreshLayout](https://developer.android.com/reference/android/support/v4/widget/SwipeRefreshLayout.html)、[TwinklingRefreshLayout](https://github.com/lcodecorex/TwinklingRefreshLayout) 、[Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)。Also integrates various cool Header and Footer.  
 SmartRefreshLayout's goal is to build a strong, stable and mature refresh layout framework, and integrate all kinds of cool and diverse, practical, beautiful Header and Footer.
 
 ## Features
 
- - Support all of the View (AbsListView RecyclerView WebView... View) and  multi-layered nested view structures.
+ - Support all of the View 
+ - Support multi-layered nested view structures.
  - Support custom Header and Footer, and has integrated a lot of cool Header and Footer.
- - Support synchronous scrolling with ListView and NestedScrolling width RecyclerView、AppBarLayout、CoordinatorLayout.
- - Support preview in the Android Studio xml editor.
- - Support three ways (default、xml、java) to set the Header and Footer.
+ - Support synchronous scrolling with ListView and NestedScrolling width CoordinatorLayout.
  - Support automatic refresh, automatic loading (automatic detection list, scroll to the bottom without having to manually pull).
- - Support generic refresh listener (OnRefreshListener) and more detailed scrolling listener (OnMultiPurposeListener).
  - Support custom rebound animation interpolator, to achieve a variety of cool animation effects.
  - Support set the theme to fit any scene of App, won't appear cool but very awkward situation.
  - Support for setting a variety of transformations (Translation, stretching, behind the fixed, top fixed, full screen) for Header and Footer.
- - Support content size adaptation (wrap_content).
  - Support rewrite and extension, internal implementation without private methods and fields.
  - Support cross-border rebound (Listview、RecyclerView、ScrollView、WebView...View).
  
@@ -41,45 +37,59 @@ SmartRefreshLayout's goal is to build a strong, stable and mature refresh layout
  - [Attribute method](art/md_property.md)
  - [Blog posts](https://segmentfault.com/a/1190000010066071) 
  - [Download the source code](https://github.com/scwang90/SmartRefreshLayout/releases) 
- 
+ - [Multi-touch](art/md_multitouch.md) 
 ## Demo
 [Download APK-Demo](art/app-debug.apk)
 
 ![](art/png_apk_rqcode.png)
 
 #### Practical
-![](art/gif_practive_weibo.gif) ![](art/gif_practive_feedlist.gif)
+|Weibo|Feedlist|
+|:---:|:---:|
+|![](art/gif_practive_weibo.gif)|![](art/gif_practive_feedlist.gif)|
 
-![](art/gif_practive_repast.gif) ![](art/gif_practive_profile.gif)
+|Repast|Profile|
+|:---:|:---:|
+|![](art/gif_practive_repast.gif)|![](art/gif_practive_profile.gif)|
 
 #### Style
-![](art/gif_Delivery.gif) ![](art/gif_Dropbox.gif)
 
-The two above is my own implementation of the Header, the design comes from: [Refresh-your-delivery](https://dribbble.com/shots/2753803-Refresh-your-delivery)，[Dropbox-Refresh](https://dribbble.com/shots/3470499-Dropbox-Refresh)
+|Style|Delivery|Dropbox|
+|:---:|:---:|:---:|
+|Demo|![](art/gif_Delivery.gif)|![](art/gif_Dropbox.gif)|
+|design|[Refresh-your-delivery](https://dribbble.com/shots/2753803-Refresh-your-delivery)|[Dropbox-Refresh](https://dribbble.com/shots/3470499-Dropbox-Refresh)|
 
-![](art/gif_BezierRadar.gif) ![](art/gif_Circle.gif)
+The two above headers are implemented by my self, The following headers are collect and optimization from excellent Headers on github  
 
-[TwinklingRefreshLayout](https://github.com/lcodecorex/TwinklingRefreshLayout/blob/master/art/gif_recyclerview2.gif)，[Pull Down To Refresh](https://dribbble.com/shots/1797373-Pull-Down-To-Refresh)
+|Style|BezierRadar|BezierCircle|
+|:---:|:---:|:---:|
+|Demo|![](art/gif_BezierRadar.gif)|![](art/gif_BezierCircle.gif)|
+|From|[TwinklingRefreshLayout](https://github.com/lcodecorex/TwinklingRefreshLayout/blob/master/art/gif_recyclerview2.gif)|[Pull Down To Refresh](https://dribbble.com/shots/1797373-Pull-Down-To-Refresh)|
 
-![](art/gif_FlyRefresh.gif) ![](art/gif_Classics.gif)
+|Style|FlyRefresh|Classics|
+|:---:|:---:|:---:|
+|Demo|![](art/gif_FlyRefresh.gif)|![](art/gif_Classics.gif)|
+|From|[FlyRefresh](https://github.com/race604/FlyRefresh)|[ClassicsHeader](#1)|
 
-[FlyRefresh](https://github.com/race604/FlyRefresh)，[ClassicsHeader](#1)
+|Style|Phoenix|Taurus|
+|:---:|:---:|:---:|
+|Demo|![](art/gif_Phoenix.gif)|![](art/gif_Taurus.gif)|
+|From|[Yalantis/Phoenix](https://github.com/Yalantis/Phoenix)|[Yalantis/Taurus](https://github.com/Yalantis/Taurus)
 
-![](art/gif_Phoenix.gif) ![](art/gif_Taurus.gif)
+|Style|BattleCity|HitBlock|
+|:---:|:---:|:---:|
+|Demo|![](art/gif_BattleCity.gif)|![](art/gif_HitBlock.gif)|
+|From|[FunGame/BattleCity](https://github.com/Hitomis/FunGameRefresh)，[FunGame/HitBlock](https://github.com/Hitomis/FunGameRefresh)
 
-[Yalantis/Phoenix](https://github.com/Yalantis/Phoenix)，[Yalantis/Taurus](https://github.com/Yalantis/Taurus)
-
-![](art/gif_BattleCity.gif) ![](art/gif_HitBlock.gif)
-
-[FunGame/BattleCity](https://github.com/Hitomis/FunGameRefresh)，[FunGame/HitBlock](https://github.com/Hitomis/FunGameRefresh)
-
-![](art/gif_WaveSwipe.gif) ![](art/gif_Material.gif)
-
-[WaveSwipeRefreshLayout](https://github.com/recruit-lifestyle/WaveSwipeRefreshLayout)，[MaterialHeader](https://developer.android.com/reference/android/support/v4/widget/SwipeRefreshLayout.html)
-
-![](art/gif_StoreHouse.gif) ![](art/gif_WaterDrop.gif)
-
-[Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)，[WaterDrop](https://github.com/THEONE10211024/WaterDropListView)
+|Style|WaveSwipe|Material|
+|:---:|:---:|:---:|
+|Demo|![](art/gif_WaveSwipe.gif)|![](art/gif_Material.gif)|
+|From|[WaveSwipeRefreshLayout](https://github.com/recruit-lifestyle/WaveSwipeRefreshLayout)，[MaterialHeader](https://developer.android.com/reference/android/support/v4/widget/SwipeRefreshLayout.html)
+|
+|Style|StoreHouse|WaterDrop|
+|:---:|:---:|:---:|
+|Demo|![](art/gif_StoreHouse.gif)|![](art/gif_WaterDrop.gif)|
+|From|[Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)，[WaterDrop](https://github.com/THEONE10211024/WaterDropListView)
 
 
 See so many cool headers, is not it feel great? At this point you may be worried that so many headers together, but usually only use one, is not to introduce a lot of useless code and resources?    

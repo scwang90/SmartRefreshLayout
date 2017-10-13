@@ -53,8 +53,8 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
 |:---:|:---:|
 |![](art/gif_practive_repast.gif)|![](art/gif_practive_profile.gif)|
 
-#### 样式演示 Stype
-|Stype|Delivery|Dropbox|
+#### 样式演示 Style
+|Style|Delivery|Dropbox|
 |:---:|:---:|:---:|
 |演示|![](art/gif_Delivery.gif)|![](art/gif_Dropbox.gif)|
 |名称|气球快递|掉落盒子|
@@ -62,37 +62,37 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
 
 上面这两个是我自己实现的，下面的是我把github上其它优秀的Header进行的整理和集合还有优化：
 
-|Stype|BezierRadar|BezierCircle|
+|Style|BezierRadar|BezierCircle|
 |:---:|:---:|:---:|
 |演示|![](art/gif_BezierRadar.gif)|![](art/gif_BezierCircle.gif)|
 |名称|贝塞尔雷达|贝塞尔弹球|
 |来自|[TwinklingRefreshLayout](https://github.com/lcodecorex/TwinklingRefreshLayout/blob/master/art/gif_recyclerview2.gif)|[Pull Down To Refresh](https://dribbble.com/shots/1797373-Pull-Down-To-Refresh)|
 
-|Stype|FlyRefresh|Classics|
+|Style|FlyRefresh|Classics|
 |:---:|:---:|:---:|
 |演示|![](art/gif_FlyRefresh.gif)|![](art/gif_Classics.gif)|
 |名称|纸飞机|金典|
 |来自|[FlyRefresh](https://github.com/race604/FlyRefresh)|[ClassicsHeader](#1)|
 
-|Stype|Phoenix|Taurus|
+|Style|Phoenix|Taurus|
 |:---:|:---:|:---:|
 |演示|![](art/gif_Phoenix.gif)|![](art/gif_Taurus.gif)|
 |名称|金色校园|冲上云霄|
-|来自|[Yalantis/Phoenix](https://github.com/Yalantis/Phoenix)，[Yalantis/Taurus](https://github.com/Yalantis/Taurus)
+|来自|[Yalantis/Phoenix](https://github.com/Yalantis/Phoenix)|[Yalantis/Taurus](https://github.com/Yalantis/Taurus)
 
-|Stype|BattleCity|HitBlock|
+|Style|BattleCity|HitBlock|
 |:---:|:---:|:---:|
 |演示|![](art/gif_BattleCity.gif)|![](art/gif_HitBlock.gif)|
 |名称|战争城市|休闲砖块|
 |来自|[FunGame/BattleCity](https://github.com/Hitomis/FunGameRefresh)，[FunGame/HitBlock](https://github.com/Hitomis/FunGameRefresh)
 
-|Stype|WaveSwipe|Material|
+|Style|WaveSwipe|Material|
 |:---:|:---:|:---:|
 |演示|![](art/gif_WaveSwipe.gif)|![](art/gif_Material.gif)|
 |名称|全屏水波|安卓官方|
 |来自|[WaveSwipeRefreshLayout](https://github.com/recruit-lifestyle/WaveSwipeRefreshLayout)，[MaterialHeader](https://developer.android.com/reference/android/support/v4/widget/SwipeRefreshLayout.html)
 |
-|Stype|StoreHouse|WaterDrop|
+|Style|StoreHouse|WaterDrop|
 |:---:|:---:|:---:|
 |演示|![](art/gif_StoreHouse.gif)|![](art/gif_WaterDrop.gif)|
 |名称|闪耀文字|苹果水滴|
