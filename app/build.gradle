@@ -4,7 +4,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.3"
     defaultConfig {
-        applicationId "com.scwang.refreshlayout"
+        applicationId "com.scwang.refreshlayout.app"
         minSdkVersion 15
         targetSdkVersion 25
         versionCode 1
@@ -25,6 +25,9 @@ android {
         }
     }
     buildTypes {
+        debug{
+            signingConfig = signingConfigs.debug
+        }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'

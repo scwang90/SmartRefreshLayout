@@ -199,7 +199,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     //</editor-fold>
 
     protected Paint mPaint;
-    protected Handler handler;
+    protected Handler mHandler;
     protected RefreshKernel mKernel;
     protected List<DelayedRunable> mDelayedRunables;
 
@@ -261,6 +261,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         DensityUtil density = new DensityUtil();
         ViewConfiguration configuration = ViewConfiguration.get(context);
 
+        mKernel = new RefreshKernelImpl();
         mScroller = new Scroller(context);
         mScreenHeightPixels = context.getResources().getDisplayMetrics().heightPixels;
         mReboundInterpolator = new ViscousFluidInterpolator();
@@ -394,9 +395,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 bringChildToFront(mRefreshFooter.getView());
             }
 
-            if (mKernel == null) {
-                mKernel = new RefreshKernelImpl();
-            }
         }
 
     }
@@ -406,17 +404,13 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         super.onAttachedToWindow();
         if (isInEditMode()) return;
 
-        if (mKernel == null) {
-            mKernel = new RefreshKernelImpl();
-        }
-
-        if (handler == null) {
-            handler = new Handler();
+        if (mHandler == null) {
+            mHandler = new Handler();
         }
 
         if (mDelayedRunables != null) {
             for (DelayedRunable runable : mDelayedRunables) {
-                handler.postDelayed(runable, runable.delayMillis);
+                mHandler.postDelayed(runable, runable.delayMillis);
             }
             mDelayedRunables.clear();
             mDelayedRunables = null;
@@ -723,9 +717,8 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         super.onDetachedFromWindow();
         moveSpinner(0, false);
         notifyStateChanged(RefreshState.None);
-        handler.removeCallbacksAndMessages(null);
-        handler = null;
-        mKernel = null;
+        mHandler.removeCallbacksAndMessages(null);
+        mHandler = null;
         mManualLoadmore = true;
         mManualNestedScrolling = true;
     }
@@ -1831,7 +1824,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     public SmartRefreshLayout setHeaderMaxDragRate(float rate) {
         this.mHeaderMaxDragRate = rate;
         this.mHeaderExtendHeight = (int) Math.max((mHeaderHeight * (mHeaderMaxDragRate - 1)), 0);
-        if (mRefreshHeader != null && mKernel != null) {
+        if (mRefreshHeader != null && mHandler != null) {
             mRefreshHeader.onInitialized(mKernel, mHeaderHeight, mHeaderExtendHeight);
         } else {
             mHeaderHeightStatus = mHeaderHeightStatus.unNotify();
@@ -1846,7 +1839,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     public SmartRefreshLayout setFooterMaxDragRate(float rate) {
         this.mFooterMaxDragRate = rate;
         this.mFooterExtendHeight = (int) Math.max((mFooterHeight * (mFooterMaxDragRate - 1)), 0);
-        if (mRefreshFooter != null && mKernel != null) {
+        if (mRefreshFooter != null && mHandler != null) {
             mRefreshFooter.onInitialized(mKernel, mFooterHeight, mFooterExtendHeight);
         } else {
             mFooterHeightStatus = mFooterHeightStatus.unNotify();
@@ -2092,7 +2085,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 }
             }
             mRefreshContent = new RefreshContentWrapper(content);
-            if (mKernel != null) {
+            if (mHandler != null) {
                 View fixedHeaderView = mFixedHeaderViewId > 0 ? findViewById(mFixedHeaderViewId) : null;
                 View fixedFooterView = mFixedFooterViewId > 0 ? findViewById(mFixedFooterViewId) : null;
 
@@ -2321,7 +2314,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             @Override
             public void run() {
                 if (mState == RefreshState.Loading) {
-                    if (mRefreshFooter != null && mKernel != null && mRefreshContent != null) {
+                    if (mRefreshFooter != null && mRefreshContent != null) {
                         int startDelay = mRefreshFooter.onFinish(SmartRefreshLayout.this, success);
                         if (startDelay == Integer.MAX_VALUE) {
                             return;
@@ -2708,22 +2701,22 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
     @Override
     public boolean post(Runnable action) {
-        if (handler == null) {
+        if (mHandler == null) {
             mDelayedRunables = mDelayedRunables == null ? new ArrayList<DelayedRunable>() : mDelayedRunables;
             mDelayedRunables.add(new DelayedRunable(action));
             return false;
         }
-        return handler.post(new DelayedRunable(action));
+        return mHandler.post(new DelayedRunable(action));
     }
 
     @Override
     public boolean postDelayed(Runnable action, long delayMillis) {
-        if (handler == null) {
+        if (mHandler == null) {
             mDelayedRunables = mDelayedRunables == null ? new ArrayList<DelayedRunable>() : mDelayedRunables;
             mDelayedRunables.add(new DelayedRunable(action, delayMillis));
             return false;
         }
-        return handler.postDelayed(new DelayedRunable(action), delayMillis);
+        return mHandler.postDelayed(new DelayedRunable(action), delayMillis);
     }
 
     //</editor-fold>

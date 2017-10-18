@@ -7,20 +7,20 @@
     android:background="@color/colorBackgroudDark"
     tools:context="com.scwang.refreshlayout.activity.practice.WebviewPracticeActivity">
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/refreshLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:srlPrimaryColor="@color/colorPrimary"
-        app:srlAccentColor="@android:color/white"
-        app:srlEnableHeaderTranslationContent="false"
-        app:srlEnablePreviewInEditMode="false"
-        app:srlEnableNestedScrolling="false">
-        <com.scwang.smartrefresh.header.MaterialHeader
-            android:id="@+id/header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="?attr/actionBarSize"/>
+    <!--<com.scwang.smartrefresh.layout.SmartRefreshLayout-->
+        <!--android:id="@+id/refreshLayout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--app:srlPrimaryColor="@color/colorPrimary"-->
+        <!--app:srlAccentColor="@android:color/white"-->
+        <!--app:srlEnableHeaderTranslationContent="false"-->
+        <!--app:srlEnablePreviewInEditMode="false"-->
+        <!--app:srlEnableNestedScrolling="false">-->
+        <!--<com.scwang.smartrefresh.header.MaterialHeader-->
+            <!--android:id="@+id/header"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="?attr/actionBarSize"/>-->
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
@@ -29,7 +29,7 @@
             android:paddingTop="?attr/actionBarSize"
             android:background="@android:color/white"
             tools:listitem="@layout/listitem_movie_item"/>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    <!--</com.scwang.smartrefresh.layout.SmartRefreshLayout>-->
 
     <com.github.mmin18.widget.RealtimeBlurView
         android:id="@+id/blurview"

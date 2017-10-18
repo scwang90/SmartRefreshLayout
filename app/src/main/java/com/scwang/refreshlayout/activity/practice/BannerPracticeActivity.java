@@ -50,28 +50,30 @@ public class BannerPracticeActivity extends AppCompatActivity {
         });
 
         final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
+//        final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
 
         mAdapter = new QuickAdapter();
         recyclerView.addItemDecoration(new DividerItemDecoration(this, VERTICAL));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(mAdapter);
-        refreshLayout.autoRefresh();
-        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(final RefreshLayout refreshlayout) {
-                refreshlayout.getLayout().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (mAdapter.getItemCount() < 2) {
-                            List<Movie> movies = new Gson().fromJson(JSON_MOVIES, new TypeToken<ArrayList<Movie>>() {}.getType());
-                            mAdapter.replaceData(movies);
-                        }
-                        refreshlayout.finishRefresh();
-                    }
-                },2000);
-            }
-        });
+        List<Movie> movies = new Gson().fromJson(JSON_MOVIES, new TypeToken<ArrayList<Movie>>() {}.getType());
+        mAdapter.replaceData(movies);
+//        refreshLayout.autoRefresh();
+//        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+//            @Override
+//            public void onRefresh(final RefreshLayout refreshlayout) {
+//                refreshlayout.getLayout().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        if (mAdapter.getItemCount() < 2) {
+//                            List<Movie> movies = new Gson().fromJson(JSON_MOVIES, new TypeToken<ArrayList<Movie>>() {}.getType());
+//                            mAdapter.replaceData(movies);
+//                        }
+//                        refreshlayout.finishRefresh();
+//                    }
+//                },2000);
+//            }
+//        });
 
         //添加Header
         View header = LayoutInflater.from(this).inflate(R.layout.listitem_movie_header, recyclerView, false);
