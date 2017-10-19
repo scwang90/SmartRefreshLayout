@@ -37,6 +37,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.webkit.WebView;
 import android.widget.AbsListView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Scroller;
 
@@ -205,6 +206,8 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
     protected RefreshState mState = RefreshState.None;          //主状态
     protected RefreshState mViceState = RefreshState.None;      //副状态（主状态刷新时候的滚动状态）
+
+    protected boolean mVerticalPermit = false;                  //竖直通信证（用于特殊事件的权限判定）
 
     protected long mLastLoadingTime = 0;
     protected long mLastRefreshingTime = 0;
@@ -865,6 +868,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 mLastTouchY = touchY;
                 if (!mIsBeingDragged) {
                     if (Math.abs(dy) >= mTouchSlop && Math.abs(dx) < Math.abs(dy)) {//滑动允许最大角度为45度
+                        mVerticalPermit = true;
                         if (dy > 0 && (mSpinner < 0 || (mEnableRefresh && mRefreshContent.canRefresh()))) {
                             if (mSpinner < 0) {
                                 setStatePullUpToLoad();
@@ -926,7 +930,8 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-                mIsBeingDragged = false;
+                mIsBeingDragged = false;//关闭拖动状态
+                mVerticalPermit = false;//关闭竖直通行证
                 if (mFalsifyEvent != null) {
                     mFalsifyEvent = null;
                     long time = e.getEventTime();
