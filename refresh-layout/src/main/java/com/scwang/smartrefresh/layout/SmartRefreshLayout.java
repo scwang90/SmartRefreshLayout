@@ -747,30 +747,34 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             int finay = mScroller.getFinalY();
             if ((finay > 0 && mRefreshContent.canLoadmore())
                     || (finay < 0 && mRefreshContent.canRefresh())) {
-                int velocity;
-                if (Build.VERSION.SDK_INT >= 14) {
-                    velocity = (int) mScroller.getCurrVelocity();
-                } else {
-                    velocity = (finay - mScroller.getCurrY()) / (mScroller.getDuration() - mScroller.timePassed());
-                }
-                long lastTime = AnimationUtils.currentAnimationTimeMillis() - 1000 * Math.abs(mScroller.getCurrY() - lastCurY) / velocity;
-                if (finay > 0) {// 手势向上划 Footer
-                    if (mEnableLoadmore) {
-                        if (mEnableAutoLoadmore && !mLoadmoreFinished) {
-                            autoLoadmore(0, 1);
-                        } else if (mEnableOverScrollBounce) {
-                            animSpinnerBounce(-(int) (mFooterHeight * Math.pow(1.0 * velocity / mMaximumVelocity, 0.5)));
+                if(mVerticalPermit) {
+                    int velocity;
+                    if (Build.VERSION.SDK_INT >= 14) {
+                        velocity = (int) mScroller.getCurrVelocity();
+                    } else {
+                        velocity = (finay - mScroller.getCurrY()) / (mScroller.getDuration() - mScroller.timePassed());
+                    }
+                    long lastTime = AnimationUtils.currentAnimationTimeMillis() - 1000 * Math.abs(mScroller.getCurrY() - lastCurY) / velocity;
+                    if (finay > 0) {// 手势向上划 Footer
+                        if (mEnableLoadmore) {
+                            if (mEnableAutoLoadmore && !mLoadmoreFinished) {
+                                autoLoadmore(0, 1);
+                            } else if (mEnableOverScrollBounce) {
+                                animSpinnerBounce(-(int) (mFooterHeight * Math.pow(1.0 * velocity / mMaximumVelocity, 0.5)));
+                            }
+                        }
+                    } else {// 手势向下划 Header
+                        if (mEnableRefresh) {
+                            if (mEnableOverScrollBounce) {
+                                animSpinnerBounce((int) (mHeaderHeight * Math.pow(1.0 * velocity / mMaximumVelocity, 0.5)));
+                            }
                         }
                     }
-                } else {// 手势向下划 Header
-                    if (mEnableRefresh) {
-                        if (mEnableOverScrollBounce) {
-                            animSpinnerBounce((int) (mHeaderHeight * Math.pow(1.0 * velocity / mMaximumVelocity, 0.5)));
-                        }
-                    }
+                    mVerticalPermit = false;//关闭竖直通行证
                 }
                 mScroller.forceFinished(true);
             } else {
+                mVerticalPermit = true;//打开竖直通行证
                 invalidate();
             }
         }
@@ -868,7 +872,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 mLastTouchY = touchY;
                 if (!mIsBeingDragged) {
                     if (Math.abs(dy) >= mTouchSlop && Math.abs(dx) < Math.abs(dy)) {//滑动允许最大角度为45度
-                        mVerticalPermit = true;
                         if (dy > 0 && (mSpinner < 0 || (mEnableRefresh && mRefreshContent.canRefresh()))) {
                             if (mSpinner < 0) {
                                 setStatePullUpToLoad();
@@ -931,7 +934,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
                 mIsBeingDragged = false;//关闭拖动状态
-                mVerticalPermit = false;//关闭竖直通行证
                 if (mFalsifyEvent != null) {
                     mFalsifyEvent = null;
                     long time = e.getEventTime();
@@ -968,6 +970,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 float velocity = -mVelocityTracker.getYVelocity();
                 if (Math.abs(velocity) > mMinimumVelocity) {
                     if (mSpinner == 0 && mTouchSpinner == 0) {
+                        mVerticalPermit = false;//关闭竖直通行证
                         mScroller.fling(0, getScrollY(), 0, (int) velocity, 0, 0, -Integer.MAX_VALUE, Integer.MAX_VALUE);
                         mScroller.computeScrollOffset();
                         invalidate();
