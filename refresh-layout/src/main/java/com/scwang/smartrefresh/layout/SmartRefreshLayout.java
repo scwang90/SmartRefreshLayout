@@ -37,7 +37,6 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.webkit.WebView;
 import android.widget.AbsListView;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Scroller;
 
@@ -450,18 +449,15 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             }
         }
 
+        for (int i = 0, len = getChildCount(); mRefreshContent == null && i < len ; i++) {
+            View view = getChildAt(i);
+            if ((mRefreshHeader == null || view != mRefreshHeader.getView()) &&
+                    (mRefreshFooter == null || view != mRefreshFooter.getView())) {
+                mRefreshContent = new RefreshContentWrapper(view);
+            }
+        }
         if (mRefreshContent == null) {
-            for (int i = 0, len = getChildCount(); i < len; i++) {
-                View view = getChildAt(i);
-                if ((mRefreshHeader == null || view != mRefreshHeader.getView()) &&
-                        (mRefreshFooter == null || view != mRefreshFooter.getView())) {
-                    mRefreshContent = new RefreshContentWrapper(view);
-                }
-            }
-            if (mRefreshContent == null) {
-                mRefreshContent = new RefreshContentWrapper(getContext());
-                mRefreshContent.getView().setLayoutParams(new LayoutParams(MATCH_PARENT, MATCH_PARENT));
-            }
+            mRefreshContent = new RefreshContentWrapper(getContext());
         }
 
         View fixedHeaderView = mFixedHeaderViewId > 0 ? findViewById(mFixedHeaderViewId) : null;
@@ -867,38 +863,28 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 return true;
 
             case MotionEvent.ACTION_MOVE:
+                mLastTouchY = touchY;
                 float dx = touchX - mTouchX;
                 float dy = touchY - mTouchY;
-                mLastTouchY = touchY;
                 if (!mIsBeingDragged) {
                     if (Math.abs(dy) >= mTouchSlop && Math.abs(dx) < Math.abs(dy)) {//滑动允许最大角度为45度
                         if (dy > 0 && (mSpinner < 0 || (mEnableRefresh && mRefreshContent.canRefresh()))) {
-                            if (mSpinner < 0) {
-                                setStatePullUpToLoad();
-                            } else {
-                                setStatePullDownToRefresh();
-                            }
                             mIsBeingDragged = true;
                             mTouchY = touchY - mTouchSlop;
+                        } else if (dy < 0 && (mSpinner > 0 || (mEnableLoadmore && mRefreshContent.canLoadmore()))) {
+                            mIsBeingDragged = true;
+                            mTouchY = touchY + mTouchSlop;
+                        }
+                        if (mIsBeingDragged) {
                             dy = touchY - mTouchY;
                             e.setAction(MotionEvent.ACTION_CANCEL);
                             superDispatchTouchEvent(e);
-                        } else if (dy < 0 && (mSpinner > 0 || (mEnableLoadmore && mRefreshContent.canLoadmore()))) {
-                            if (mSpinner > 0) {
+                            if (mSpinner > 0 || (mSpinner == 0 && dy > 0)) {
                                 setStatePullDownToRefresh();
                             } else {
                                 setStatePullUpToLoad();
                             }
-                            mIsBeingDragged = true;
-                            mTouchY = touchY + mTouchSlop;
-                            dy = touchY - mTouchY;
-                            e.setAction(MotionEvent.ACTION_CANCEL);
-                            superDispatchTouchEvent(e);
-                        } else {
-                            return superDispatchTouchEvent(e);
                         }
-                    } else {
-                        return superDispatchTouchEvent(e);
                     }
                 }
                 if (mIsBeingDragged) {
@@ -1241,7 +1227,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      */
     protected ValueAnimator animSpinnerBounce(int bounceSpinner) {
         if (reboundAnimator == null) {
-            int duration = 0;
+            int duration = mReboundDuration * 2 / 3;
             mLastTouchX = getMeasuredWidth() / 2;
             if (mState == RefreshState.Refreshing && bounceSpinner > 0) {
                 reboundAnimator = ValueAnimator.ofInt(mSpinner, Math.min(2 * bounceSpinner, mHeaderHeight));

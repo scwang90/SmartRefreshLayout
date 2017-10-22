@@ -3,19 +3,17 @@ package com.scwang.refreshlayout.widget;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
-import android.support.annotation.Px;
-import android.support.v4.view.GestureDetectorCompat;
 import android.util.AttributeSet;
-import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
-import android.widget.OverScroller;
 
 import com.scwang.smartrefresh.layout.api.RefreshContent;
 import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smartrefresh.layout.constant.RefreshState;
+import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.impl.RefreshContentWrapper;
 import com.scwang.smartrefresh.layout.impl.RefreshFooterWrapper;
 import com.scwang.smartrefresh.layout.impl.RefreshHeaderWrapper;
@@ -32,14 +30,11 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
  * Created by SCWANG on 2017/7/10.
  */
 
-public class RefreshLayout extends ViewGroup implements GestureDetector.OnGestureListener {
+public class RefreshLayout extends ViewGroup {
 
-    private OverScroller mScroller;
     private RefreshHeader mRefreshHeader;
     private RefreshFooter mRefreshFooter;
     private RefreshContent mRefreshContent;
-    private GestureDetectorCompat mGesture;
-    private int mTouchSlop;
     /**
      * 头部高度
      */
@@ -48,6 +43,19 @@ public class RefreshLayout extends ViewGroup implements GestureDetector.OnGestur
      * 底部高度
      */
     protected int mFooterHeight;
+    private int mSpinner;
+    private RefreshState mState;
+    private int mFooterExtendHeight;
+    private int mHeaderExtendHeight;
+    private int mScreenHeightPixels;
+    private float mDragRate = 0.5f;
+    protected float mTouchX;
+    protected float mTouchY;
+    private int mTouchSpinner;
+    private boolean mIsBeingDragged;
+    private int mTouchSlop;
+    private boolean mEnableRefresh = true;
+    private boolean mEnableLoadmore = true;
 
 
     //<editor-fold desc="构造方法">
@@ -73,10 +81,10 @@ public class RefreshLayout extends ViewGroup implements GestureDetector.OnGestur
     }
 
     private void initView(Context context) {
-        mScroller = new OverScroller(context);
-        mGesture = new GestureDetectorCompat(context, this);
-        mGesture.setIsLongpressEnabled(false);
-        mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
+        ViewConfiguration configuration = ViewConfiguration.get(context);
+
+        mScreenHeightPixels = context.getResources().getDisplayMetrics().heightPixels;
+        mTouchSlop = configuration.getScaledTouchSlop();
     }
     //</editor-fold>
 
@@ -195,108 +203,179 @@ public class RefreshLayout extends ViewGroup implements GestureDetector.OnGestur
     //</editor-fold>
 
     //<editor-fold desc="触摸事件">
-
-//    @Override
-//    public boolean dispatchTouchEvent(MotionEvent ev) {
-//        switch (MotionEventCompat.getActionMasked(ev)) {
-//            case MotionEvent.ACTION_DOWN:
-//                mIsBeingDragged = false;
-//                mInitialDownY = ev.getY();
-//                mGesture.onTouchEvent(ev);
-//                break;
-//
-//        }
-//        return mIsBeingDragged;//super.dispatchTouchEvent(ev);
-//    }
-
-
     @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        mGesture.onTouchEvent(ev);
-        return super.dispatchTouchEvent(ev);
+    public boolean dispatchTouchEvent(MotionEvent e) {
+        int actionMasked = e.getActionMasked();
+        float touchX = e.getX();
+        float touchY = e.getY();
+        switch (actionMasked) {
+            case MotionEvent.ACTION_DOWN:
+                mTouchX = touchX;
+                mTouchY = touchY;
+                mTouchSpinner = mSpinner;
+                mIsBeingDragged = false;
+                break;
+            case MotionEvent.ACTION_MOVE:
+                float dx = touchX - mTouchX;
+                float dy = touchY - mTouchY;
+                if (!mIsBeingDragged && Math.abs(dy) >= mTouchSlop && Math.abs(dx) < Math.abs(dy)) {//滑动允许最大角度为45度
+                    if (dy > 0 && (mSpinner < 0 || (mEnableRefresh && mRefreshContent.canRefresh()))) {
+                        dy = touchY - mTouchY;
+                        mIsBeingDragged = true;
+                        mTouchY = touchY - mTouchSlop;
+                        e.setAction(MotionEvent.ACTION_CANCEL);
+                        superDispatchTouchEvent(e);
+                    } else if (dy < 0 && (mSpinner > 0 || (mEnableLoadmore && mRefreshContent.canLoadmore()))) {
+                        dy = touchY - mTouchY;
+                        mIsBeingDragged = true;
+                        mTouchY = touchY + mTouchSlop;
+                        e.setAction(MotionEvent.ACTION_CANCEL);
+                        superDispatchTouchEvent(e);
+                    }
+                }
+                if (mIsBeingDragged) {
+//                    final float spinner = dy + mTouchSpinner;
+//                    if ((mRefreshContent != null)
+//                            && (getViceState().isHeader() && (spinner < 0 || mLastSpinner < 0))
+//                            || (getViceState().isFooter() && (spinner > 0 || mLastSpinner > 0))) {
+//                        long time = e.getEventTime();
+//                        if (mFalsifyEvent == null) {
+//                            mFalsifyEvent = MotionEvent.obtain(time, time, MotionEvent.ACTION_DOWN, mTouchX + dx, mTouchY, 0);
+//                            superDispatchTouchEvent(mFalsifyEvent);
+//                        }
+//                        MotionEvent em = MotionEvent.obtain(time, time, MotionEvent.ACTION_MOVE, mTouchX + dx, mTouchY + spinner, 0);
+//                        superDispatchTouchEvent(em);
+//                        if ((getViceState().isHeader() && spinner < 0) || (getViceState().isFooter() && spinner > 0)) {
+//                            mLastSpinner = (int) spinner;
+//                            if (mSpinner != 0) {
+//                                moveSpinnerInfinitely(0);
+//                            }
+//                            return true;
+//                        }
+//                        mLastSpinner = (int) spinner;
+//                        mFalsifyEvent = null;
+//                        MotionEvent ec = MotionEvent.obtain(time, time, MotionEvent.ACTION_CANCEL, mTouchX, mTouchY + spinner, 0);
+//                        superDispatchTouchEvent(ec);
+//                    }
+//                    if (getViceState().isDraging()) {
+//                        moveSpinnerInfinitely(spinner);
+//                        return true;
+//                    }
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                break;
+
+        }
+        return superDispatchTouchEvent(e);
     }
 
-//    @Override
-//    public boolean onInterceptTouchEvent(MotionEvent ev) {
-//        return false;//super.onInterceptTouchEvent(ev);
-//    }
+    private boolean superDispatchTouchEvent(MotionEvent e) {
+        return super.dispatchTouchEvent(e);
+    }
 
-//    @Override
-//    public boolean onTouchEvent(MotionEvent event) {
-//        return mGesture.onTouchEvent(event);
-//    }
     //</editor-fold>
 
-    //<editor-fold desc="滚动计算">
-    private int mlastScrollY;
-    boolean isFling = false;
-    int scrollY;
-    int currllY;
-    @Override
-    public void computeScroll() {
-        if (mScroller.computeScrollOffset()) {
-            int currY = mScroller.getCurrY();
-            int dy = currY - mlastScrollY;
-//            if (isFling) {
-//                scrollTo(0, getScrollY() + dy);
-//            } else {
-//                if (dy < 0 && mRefreshContent.canRefresh()) {
-//                    isFling = true;
-//                    scrollY = getScrollY();
-//                    currllY = mScroller.getCurrY();
-//                } else if (dy > 0 && mRefreshContent.canLoadmore()) {
-//                    isFling = true;
-//                    scrollY = getScrollY();
-//                    currllY = mScroller.getCurrY();
-//                }
-//            }
-//            mlastScrollY = currY;
-            postInvalidate();
+
+    protected void moveSpinnerInfinitely(float dy) {
+        if (mState == RefreshState.Refreshing && dy >= 0) {
+            if (dy < mHeaderHeight) {
+                moveSpinner((int) dy, false);
+            } else {
+                final double M = mHeaderExtendHeight;
+                final double H = Math.max(mScreenHeightPixels * 4 / 3, getHeight()) - mHeaderHeight;
+                final double x = Math.max(0, (dy - mHeaderHeight) * mDragRate);
+                final double y = Math.min(M * (1 - Math.pow(100, -x / H)), x);// 公式 y = M(1-40^(-x/H))
+                moveSpinner((int) y + mHeaderHeight, false);
+            }
+        } else if (mState == RefreshState.Loading && dy < 0) {
+            if (dy > -mFooterHeight) {
+                moveSpinner((int) dy, false);
+            } else {
+                final double M = mFooterExtendHeight;
+                final double H = Math.max(mScreenHeightPixels * 4 / 3, getHeight()) - mFooterHeight;
+                final double x = -Math.min(0, (dy + mHeaderHeight) * mDragRate);
+                final double y = -Math.min(M * (1 - Math.pow(100, -x / H)), x);// 公式 y = M(1-40^(-x/H))
+                moveSpinner((int) y - mFooterHeight, false);
+            }
+        } else if (dy >= 0) {
+            final double M = mHeaderExtendHeight + mHeaderHeight;
+            final double H = Math.max(mScreenHeightPixels / 2, getHeight());
+            final double x = Math.max(0, dy * mDragRate);
+            final double y = Math.min(M * (1 - Math.pow(100, -x / H)), x);// 公式 y = M(1-40^(-x/H))
+            moveSpinner((int) y, false);
         } else {
-            isFling = false;
+            final double M = mFooterExtendHeight + mFooterHeight;
+            final double H = Math.max(mScreenHeightPixels / 2, getHeight());
+            final double x = -Math.min(0, dy * mDragRate);
+            final double y = -Math.min(M * (1 - Math.pow(100, -x / H)), x);// 公式 y = M(1-40^(-x/H))
+            moveSpinner((int) y, false);
         }
     }
 
-    @Override
-    public void scrollTo(@Px int x, @Px int y) {
-        super.scrollTo(x, y);
+    /**
+     * 移动滚动 Scroll
+     * moveSpinner 的取名来自 谷歌官方的 @{@link android.support.v4.widget.SwipeRefreshLayout#moveSpinner(float)}
+     */
+    protected void moveSpinner(int spinner, boolean isAnimator) {
+        if (mSpinner == spinner
+                && (mRefreshHeader == null || !mRefreshHeader.isSupportHorizontalDrag())
+                && (mRefreshFooter == null || !mRefreshFooter.isSupportHorizontalDrag())) {
+            return;
+        }
+        final int oldSpinner = mSpinner;
+        this.mSpinner = spinner;
+        if (mRefreshContent != null) {
+            if (spinner > 0) {
+                if (mRefreshHeader == null || mRefreshHeader.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
+                    mRefreshContent.moveSpinner(spinner);
+                }
+            } else {
+                if (mRefreshFooter == null || mRefreshFooter.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
+                    mRefreshContent.moveSpinner(spinner);
+                }
+            }
+        }
+        if ((spinner > 0 || oldSpinner > 0) && mRefreshHeader != null) {
+            spinner = Math.max(spinner, 0);
+            if ((mState == RefreshState.RefreshFinish && isAnimator)) {
+                if (oldSpinner != mSpinner
+                        && (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale
+                        || mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Translate)) {
+                    mRefreshHeader.getView().requestLayout();
+                }
+            }
+
+            final int offset = spinner;
+            final int headerHeight = mHeaderHeight;
+            final int extendHeight = mHeaderExtendHeight;
+            final float percent = 1f * spinner / mHeaderHeight;
+            if (isAnimator) {
+                mRefreshHeader.onReleasing(percent, offset, headerHeight, extendHeight);
+            } else {
+                mRefreshHeader.onPullingDown(percent, offset, headerHeight, extendHeight);
+            }
+        }
+        if ((spinner < 0 || oldSpinner < 0) && mRefreshFooter != null) {
+            spinner = Math.min(spinner, 0);
+            if ((mState == RefreshState.LoadFinish && isAnimator)) {
+                if (oldSpinner != mSpinner
+                        && (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Scale
+                        || mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Translate)) {
+                    mRefreshFooter.getView().requestLayout();
+                }
+            }
+
+            final int offset = -spinner;
+            final int footerHeight = mFooterHeight;
+            final int extendHeight = mFooterExtendHeight;
+            final float percent = -spinner * 1f / mFooterHeight;
+            if (isAnimator) {
+                mRefreshFooter.onPullReleasing(percent, offset, footerHeight, extendHeight);
+            } else {
+                mRefreshFooter.onPullingUp(percent, offset, footerHeight, extendHeight);
+            }
+        }
     }
-    //</editor-fold>
-
-    //<editor-fold desc="OnGestureListener">
-    @Override
-    public boolean onDown(MotionEvent e) {
-        return true;
-    }
-
-    @Override
-    public void onShowPress(MotionEvent e) {
-
-    }
-
-    @Override
-    public boolean onSingleTapUp(MotionEvent e) {
-        return false;
-    }
-
-    @Override
-    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-//        scrollBy(0, (int)distanceY);
-        return true;
-    }
-
-    @Override
-    public void onLongPress(MotionEvent e) {
-
-    }
-
-    @Override
-    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        isFling = false;
-        mScroller.fling(0, getScrollY(), 0, -(int)velocityY, 0, 0, -mHeaderHeight, mFooterHeight);
-        mlastScrollY = mScroller.getCurrY();
-        postInvalidate();
-        return true;
-    }
-    //</editor-fold>
 }
