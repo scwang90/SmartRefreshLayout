@@ -10,10 +10,10 @@
 >添加：srlEnableOverScrollDrag 属性和对应的set方法 设置 是否启用越界拖动（仿苹果效果）
 >添加：srlEnableFooterFollowWhenLoadFinished 属性和对应的set方法 设置 是否在全部加载结束之后Footer跟随内容
 >添加：refreshHeader 添加 setLastUpdateText 方法 手动设置更新时间
->添加：refreshHeader 添加 onRefreshReleased 方法 手势释放时调用  
+>添加：refreshHeader 添加 onRefreshReleased 方法 手势释放时调用
 >添加：refreshFooter 添加 onLoadmoreReleased 方法 手势释放时调用
 >修改：修改Header 名称 Circle 为 BezierCircle
->修改：改变 onStartAnimator 的调用时机为 释放之后会回弹到标准高度调用  
+>修改：改变 onStartAnimator 的调用时机为 释放之后会回弹到标准高度调用
 >修改：srlEnableLoadmoreWhenContentNotFull 的默认值 由 false 改成 true
 
 
