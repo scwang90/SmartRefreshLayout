@@ -760,7 +760,11 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                             if (mEnableAutoLoadmore && mEnableLoadmore && !mLoadmoreFinished) {
 //                                autoLoadmore(0, 1);
                                 animSpinnerBounce(-(int) (mFooterHeight * Math.pow(1.0 * velocity / mMaximumVelocity, 0.5)));
-                                setStateDirectLoding();
+                                if (mState != RefreshState.Refreshing
+                                        && mState != RefreshState.Loading
+                                        && mState != RefreshState.LoadFinish) {
+                                    setStateDirectLoding();
+                                }
                             } else if (mEnableOverScrollBounce) {
                                 animSpinnerBounce(-(int) (mFooterHeight * Math.pow(1.0 * velocity / mMaximumVelocity, 0.5)));
                             }
@@ -923,6 +927,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     moveSpinnerInfinitely(spinner);
                     if (mEnableAutoLoadmore && mEnableLoadmore
                             && spinner < 0
+                            && mState != RefreshState.Refreshing
                             && mState != RefreshState.Loading
                             && mState != RefreshState.LoadFinish
                             && !mLoadmoreFinished) {
@@ -1260,7 +1265,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 reboundAnimator.addListener(reboundAnimatorEndListener);
             } else if (bounceSpinner < 0 && (mState == RefreshState.Loading
                     || (mEnableFooterFollowWhenLoadFinished && mLoadmoreFinished)
-                    || (mEnableAutoLoadmore && mEnableLoadmore && !mLoadmoreFinished))) {
+                    || (mEnableAutoLoadmore && mEnableLoadmore && !mLoadmoreFinished && mState != RefreshState.Refreshing))) {
                 reboundAnimator = ValueAnimator.ofInt(mSpinner, Math.max(2 * bounceSpinner, -mFooterHeight));
                 reboundAnimator.addListener(reboundAnimatorEndListener);
             } else if (mSpinner == 0 && mEnableOverScrollBounce) {
@@ -1310,7 +1315,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      */
     protected boolean overSpinner() {
         if (mState == RefreshState.Loading
-                || (mEnableAutoLoadmore && mEnableLoadmore && !mLoadmoreFinished && mSpinner < 0)
+                || (mEnableAutoLoadmore && mEnableLoadmore && !mLoadmoreFinished && mSpinner < 0 && mState != RefreshState.Refreshing)
                 || (mEnableFooterFollowWhenLoadFinished && mLoadmoreFinished && mSpinner < 0)) {
             if (mSpinner < -mFooterHeight) {
                 mTotalUnconsumed = -mFooterHeight;

@@ -19,19 +19,12 @@ import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 
 public class RefreshHeaderWrapper implements RefreshHeader {
 
-//    private static final String TAG_REFRESH_HEADER_WRAPPER = "TAG_REFRESH_HEADER_WRAPPER";
-
     private View mWrapperView;
     private SpinnerStyle mSpinnerStyle;
 
     public RefreshHeaderWrapper(View wrapper) {
         this.mWrapperView = wrapper;
-//        this.mWrapperView.setTag(TAG_REFRESH_HEADER_WRAPPER.hashCode(), TAG_REFRESH_HEADER_WRAPPER);
     }
-
-//    public static boolean isTagedHeader(View view) {
-//        return TAG_REFRESH_HEADER_WRAPPER.equals(view.getTag(TAG_REFRESH_HEADER_WRAPPER.hashCode()));
-//    }
 
     @NonNull
     public View getView() {

@@ -19,19 +19,12 @@ import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 
 public class RefreshFooterWrapper implements RefreshFooter {
 
-//    private static final String TAG_REFRESH_FOOTER_WRAPPER = "TAG_REFRESH_FOOTER_WRAPPER";
-
     private View mWrapperView;
     private SpinnerStyle mSpinnerStyle;
 
     public RefreshFooterWrapper(View wrapper) {
         this.mWrapperView = wrapper;
-//        this.mWrapperView.setTag(TAG_REFRESH_FOOTER_WRAPPER.hashCode(), TAG_REFRESH_FOOTER_WRAPPER);
     }
-
-//    public static boolean isTagedFooter(View view) {
-//        return TAG_REFRESH_FOOTER_WRAPPER.equals(view.getTag(TAG_REFRESH_FOOTER_WRAPPER.hashCode()));
-//    }
 
     @NonNull
     public View getView() {

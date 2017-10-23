@@ -28,6 +28,7 @@ import com.scwang.refreshlayout.fragment.using.EmptyLayoutUsingFragment;
 import com.scwang.refreshlayout.fragment.using.NestedScrollUsingFragment;
 import com.scwang.refreshlayout.fragment.using.PureScrollUsingFragment;
 import com.scwang.refreshlayout.fragment.using.SpecifyStyleUsingFragment;
+import com.scwang.refreshlayout.fragment.using.ViewPagerUsingFragment;
 import com.scwang.refreshlayout.util.StatusBarUtil;
 
 import java.util.Arrays;
@@ -50,7 +51,8 @@ public class RefreshUsingFragment extends Fragment implements AdapterView.OnItem
         PureScroll("纯滚动模式", PureScrollUsingFragment.class),
         Listener("多功能监听器", ListenerUsingActivity.class),
         Custom("自定义Header", CustomUsingActivity.class),
-        SnapHelper("结合 SnapHelper 使用", SnapHelperUsingActivity.class),;
+        SnapHelper("结合 SnapHelper 使用", SnapHelperUsingActivity.class),
+        ViewPager("ViewPager 多页面共用一个 RefreshLayout", ViewPagerUsingFragment.class),;
         public String name;
         public Class<?> clazz;
 

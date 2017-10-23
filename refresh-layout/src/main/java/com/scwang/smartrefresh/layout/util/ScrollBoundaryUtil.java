@@ -109,15 +109,6 @@ public class ScrollBoundaryUtil {
 
     //<editor-fold desc="transform Point">
 
-    public static boolean pointInView(View view, float localX, float localY, float slop) {
-        final float left = /*Math.max(view.getPaddingLeft(), 0)*/ - slop;
-        final float top = /*Math.max(view.getPaddingTop(), 0)*/ - slop;
-        final float width = view.getWidth()/* - Math.max(view.getPaddingLeft(), 0) - Math.max(view.getPaddingRight(), 0)*/;
-        final float height = view.getHeight()/* - Math.max(view.getPaddingTop(), 0) - Math.max(view.getPaddingBottom(), 0)*/;
-        return localX >= left && localY >= top && localX < ((width) + slop) &&
-                localY < ((height) + slop);
-    }
-
     public static boolean isTransformedTouchPointInView(ViewGroup group, View child, float x, float y,PointF outLocalPoint) {
         if (child.getVisibility() != View.VISIBLE) {
             return false;
@@ -131,6 +122,15 @@ public class ScrollBoundaryUtil {
             outLocalPoint.set(point[0]-x, point[1]-y);
         }
         return isInView;
+    }
+
+    public static boolean pointInView(View view, float localX, float localY, float slop) {
+        final float left = /*Math.max(view.getPaddingLeft(), 0)*/ - slop;
+        final float top = /*Math.max(view.getPaddingTop(), 0)*/ - slop;
+        final float width = view.getWidth()/* - Math.max(view.getPaddingLeft(), 0) - Math.max(view.getPaddingRight(), 0)*/;
+        final float height = view.getHeight()/* - Math.max(view.getPaddingTop(), 0) - Math.max(view.getPaddingBottom(), 0)*/;
+        return localX >= left && localY >= top && localX < ((width) + slop) &&
+                localY < ((height) + slop);
     }
 
     public static void transformPointToViewLocal(ViewGroup group, View child, float[] point) {
