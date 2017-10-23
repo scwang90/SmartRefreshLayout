@@ -268,6 +268,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
         mKernel = new RefreshKernelImpl();
         mScroller = new Scroller(context);
+        mVelocityTracker = VelocityTracker.obtain();
         mScreenHeightPixels = context.getResources().getDisplayMetrics().heightPixels;
         mReboundInterpolator = new ViscousFluidInterpolator();
         mTouchSlop = configuration.getScaledTouchSlop();
@@ -863,9 +864,14 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 mLastSpinner = 0;
                 mTouchSpinner = mSpinner;
                 mIsBeingDragged = false;
+
+                mVelocityTracker.clear();
+                mVelocityTracker.addMovement(e);
+                mScroller.forceFinished(true);
                 break;
             case MotionEvent.ACTION_MOVE:
                 mLastTouchY = touchY;
+                mVelocityTracker.addMovement(e);
                 float dx = touchX - mTouchX;
                 float dy = touchY - mTouchY;
                 if (!mIsBeingDragged && !mHorizontalDragged) {
@@ -926,18 +932,26 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 }
                 break;
             case MotionEvent.ACTION_UP:
+                mVelocityTracker.computeCurrentVelocity(1000, mMaximumVelocity);
             case MotionEvent.ACTION_CANCEL:
                 mIsBeingDragged = false;//关闭拖动状态
                 mHorizontalDragged = false;//关闭水平拖动
                 if (mFalsifyEvent != null) {
                     mFalsifyEvent = null;
                     long time = e.getEventTime();
-                    int actionc = (mSpinner == 0 && action == MotionEvent.ACTION_UP) ? MotionEvent.ACTION_UP : MotionEvent.ACTION_CANCEL;
-                    MotionEvent ec = MotionEvent.obtain(time, time, actionc, mTouchX, touchY, 0);
+                    MotionEvent ec = MotionEvent.obtain(time, time, action, mTouchX, touchY, 0);
                     superDispatchTouchEvent(ec);
                 }
                 if (overSpinner()) {
                     return true;
+                } else if (isViceStateEnable() && mSpinner != 0) {
+                    float velocity = -mVelocityTracker.getYVelocity();
+                    if (Math.abs(velocity) > mMinimumVelocity) {
+                        animSpinner(0);
+                        if (mRefreshContent != null) {
+                            mRefreshContent.fling((int) velocity);
+                        }
+                    }
                 }
                 break;
         }
@@ -945,24 +959,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     }
 
     protected boolean superDispatchTouchEvent(MotionEvent ev) {
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                if (mVelocityTracker == null) {
-                    mVelocityTracker = VelocityTracker.obtain();
-                } else {
-                    mVelocityTracker.clear();
-                }
-                mVelocityTracker.addMovement(ev);
-                mScroller.forceFinished(true);
-                break;
-            case MotionEvent.ACTION_MOVE:
-                if (mVelocityTracker == null) {
-                    mVelocityTracker = VelocityTracker.obtain();
-                }
-                mVelocityTracker.addMovement(ev);
-                break;
-            case MotionEvent.ACTION_UP:
-                mVelocityTracker.computeCurrentVelocity(1000, mMaximumVelocity);
+        if (ev.getActionMasked() == MotionEvent.ACTION_UP) {
                 float velocity = -mVelocityTracker.getYVelocity();
                 if (Math.abs(velocity) > mMinimumVelocity) {
                     if (mSpinner == 0 && mTouchSpinner == 0) {
@@ -972,9 +969,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                         invalidate();
                     }
                 }
-                break;
-            default:
-                break;
         }
         return super.dispatchTouchEvent(ev);
     }
@@ -1186,15 +1180,19 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
 
     protected RefreshState getViceState() {
-        return (mState == RefreshState.Refreshing || mState == RefreshState.Loading) ? mViceState : mState;
+        return isViceStateEnable() ? mViceState : mState;
     }
 
     protected void setViceState(RefreshState state) {
-        if (mState == RefreshState.Refreshing || mState == RefreshState.Loading) {
-            if (mViceState != state) {
-                mViceState = state;
-            }
+        if (isViceStateEnable() && mViceState != state) {
+            mViceState = state;
         }
+    }
+
+    protected boolean isViceStateEnable() {
+        return (mEnableOverScrollDrag && mState == RefreshState.None)
+                || mState == RefreshState.Refreshing
+                || mState == RefreshState.Loading;
     }
 
     //</editor-fold>

@@ -15,7 +15,9 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.PagerAdapterWrapper;
 import android.support.v4.view.ScrollingView;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.Space;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -250,6 +252,26 @@ public class RefreshContentWrapper implements RefreshContent {
     public void onActionUpOrCancel() {
         mMotionEvent = null;
 //        mBoundaryAdapter.setActionEvent(null);
+    }
+
+    @Override
+    public boolean fling(int velocity) {
+        if (mScrollableView instanceof ScrollView) {
+            ((ScrollView) mScrollableView).fling(velocity);
+        } else if (mScrollableView instanceof AbsListView) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                ((AbsListView) mScrollableView).fling(velocity);
+            }
+        } else if (mScrollableView instanceof WebView) {
+            ((WebView) mScrollableView).flingScroll(0, velocity);
+        } else if (mScrollableView instanceof RecyclerView) {
+            ((RecyclerView) mScrollableView).fling(0, velocity);
+        } else if (mScrollableView instanceof NestedScrollView) {
+            ((NestedScrollView) mScrollableView).fling(velocity);
+        } else {
+            return false;
+        }
+        return true;
     }
 
     @Override
