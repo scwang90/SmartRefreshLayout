@@ -38,7 +38,8 @@ public class AssignDefaultUsingActivity extends AppCompatActivity {
             @Override
             public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
                 ClassicsHeader header = new ClassicsHeader(context).setSpinnerStyle(SpinnerStyle.FixedBehind);
-                header.setPrimaryColors(ContextCompat.getColor(context, R.color.colorPrimary), ContextCompat.getColor(context, android.R.color.white));
+                header.setPrimaryColorId(R.color.colorPrimary);
+                header.setAccentColorId(android.R.color.white);
                 return header;//指定为经典Header，默认是 贝塞尔雷达Header
             }
         });
@@ -47,7 +48,7 @@ public class AssignDefaultUsingActivity extends AppCompatActivity {
             @NonNull
             @Override
             public RefreshFooter createRefreshFooter(Context context, RefreshLayout layout) {
-                layout.setEnableLoadmoreWhenContentNotFull(true);
+                layout.setEnableLoadmoreWhenContentNotFull(true);//内容不满一页时候启用加载更多
                 ClassicsFooter footer = new ClassicsFooter(context);
                 footer.setBackgroundResource(android.R.color.white);
                 footer.setSpinnerStyle(SpinnerStyle.Scale);//设置为拉伸模式

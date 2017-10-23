@@ -66,6 +66,7 @@
             android:paddingTop="25dp"
             android:clipToPadding="false"
             android:background="@android:color/white"
+            android:overScrollMode="never"
             tools:listitem="@layout/activity_fly_refresh_item"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 

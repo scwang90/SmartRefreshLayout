@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
 
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnMultiPurposeListener;
@@ -98,8 +99,10 @@ public interface RefreshLayout {
     RefreshLayout setEnableAutoLoadmore(boolean enable);
 
     /**
-     * 设置数据全部加载完成，将不能再次触发加载功能
+     * 标记数据全部加载完成，将不能再次触发加载功能（true）
+     * @deprecated 请使用 finishLoadmoreWithNoMoreData 和 resetNoMoreData 代替
      */
+    @Deprecated
     RefreshLayout setLoadmoreFinished(boolean finished);
 
     /**
@@ -151,6 +154,16 @@ public interface RefreshLayout {
      * 设置在内容不满一页的时候，是否可以上拉加载更多
      */
     RefreshLayout setEnableLoadmoreWhenContentNotFull(boolean enable);
+
+    /**
+     * 设置是否启用越界拖动（仿苹果效果）
+     */
+    RefreshLayout setEnableOverScrollDrag(boolean enable);
+
+    /**
+     * 设置是否在全部加载结束之后Footer跟随内容
+     */
+    RefreshLayout setEnableFooterFollowWhenLoadFinished(boolean enable);
 
     /**
      * 设置是会否启用嵌套滚动功能（默认关闭+智能开启）
@@ -232,6 +245,16 @@ public interface RefreshLayout {
      * 完成加载
      */
     RefreshLayout finishLoadmore(int delayed, boolean success);
+
+    /**
+     * 完成加载并标记没有更多数据
+     */
+    RefreshLayout finishLoadmoreWithNoMoreData();
+
+    /**
+     * 恢复没有更多数据的原始状态
+     */
+    RefreshLayout resetNoMoreData();
 
     /**
      * 获取当前 Header

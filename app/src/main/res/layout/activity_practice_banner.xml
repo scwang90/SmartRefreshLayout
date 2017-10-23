@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         app:srlPrimaryColor="@color/colorPrimary"
         app:srlAccentColor="@android:color/white"
-        app:srlEnableHeaderTranslationContent="true"
+        app:srlEnableHeaderTranslationContent="false"
         app:srlEnablePreviewInEditMode="false"
         app:srlEnableNestedScrolling="false">
         <com.scwang.smartrefresh.header.MaterialHeader
@@ -28,6 +28,7 @@
             android:clipToPadding="false"
             android:paddingTop="?attr/actionBarSize"
             android:background="@android:color/white"
+            android:overScrollMode="never"
             tools:listitem="@layout/listitem_movie_item"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 

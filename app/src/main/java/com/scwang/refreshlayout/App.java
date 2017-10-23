@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatDelegate;
 
+import com.scwang.refreshlayout.util.DynamicTimeFormat;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreater;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
@@ -27,7 +28,7 @@ public class App extends Application {
             @Override
             public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
                 layout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);//全局设置主题颜色
-                return new ClassicsHeader(context).setSpinnerStyle(SpinnerStyle.Translate);
+                return new ClassicsHeader(context).setTimeFormat(new DynamicTimeFormat("更新于 %s"));
             }
         });
     }

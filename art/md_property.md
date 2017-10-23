@@ -29,6 +29,8 @@ public class RefreshActivity extends Activity {
         refreshLayout.setEnableHeaderTranslationContent(true);//是否下拉Header的时候向下平移列表或者内容
         refreshLayout.setEnableFooterTranslationContent(true);//是否上啦Footer的时候向上平移列表或者内容
         refreshLayout.setEnableLoadmoreWhenContentNotFull(true);//是否在列表不满一页时候开启上拉加载功能
+        refreshLayout.setEnableFooterFollowWhenLoadFinished(false);//是否在全部加载结束之后Footer跟随内容1.0.4-6
+        refreshLayout.setEnableOverScrollDrag(true);//是否启用越界拖动（仿苹果效果）1.0.4-6
         refreshLayout.setDisableContentWhenRefresh(false);//是否在刷新的时候禁止列表的操作
         refreshLayout.setDisableContentWhenLoading(false);//是否在加载的时候禁止列表的操作
         refreshLayout.setOnMultiPurposeListener(new OnMultiPurposeListener());//设置多功能监听器
@@ -46,6 +48,9 @@ public class RefreshActivity extends Activity {
         refreshlayout.finishLoadmore(3000);//延迟3000毫秒后结束加载
         refreshlayout.finishRefresh(false);//结束刷新（刷新失败）
         refreshlayout.finishLoadmore(false);//结束加载（加载失败）
+        refreshLayout.finishLoadmoreWithNoMoreData();//完成加载并标记没有更多数据
+        refreshLayout.resetNoMoreData();//恢复没有更多数据的原始状态
+
     }
 }
 ~~~
@@ -77,6 +82,8 @@ xml代码设置
     app:srlEnableHeaderTranslationContent="true"
     app:srlEnableFooterTranslationContent="true"
     app:srlEnableLoadmoreWhenContentNotFull="false"
+    app:srlEnableFooterFollowWhenLoadFinished="false"
+    app:srlEnableOverScrollDrag="true"
     app:srlDisableContentWhenRefresh="false"
     app:srlDisableContentWhenLoading="false"
     app:srlFixedFooterViewId="@+id/header_fixed"
@@ -249,6 +256,8 @@ xml代码设置
 |srlEnableNestedScrolling|boolean|是否开启嵌套滚动NestedScrolling(默认false-智能开启)|
 |srlEnableScrollContentWhenLoaded|boolean|是否在加载完成之后滚动内容显示新数据（默认-true）|
 |srlEnableLoadmoreWhenContentNotFull|boolean|在内容不满一页的时候，是否可以上拉加载更多（默认-false）|
+|srlEnableFooterFollowWhenLoadFinished|boolean|是否在全部加载结束之后Footer跟随内容|
+|srlEnableOverScrollDrag|boolean|是否启用越界拖动（仿苹果效果）|
 |srlDisableContentWhenRefresh|boolean|是否在刷新的时候禁止内容的一切手势操作（默认false）|
 |srlDisableContentWhenLoading|boolean|是否在加载的时候禁止内容的一切手势操作（默认false）|
 |srlFixedHeaderViewId|id|指定固定的视图Id|
@@ -278,6 +287,8 @@ xml代码设置
 |setEnableNestedScrolling|boolean|是否开启嵌套滚动NestedScrolling（默认false-智能开启）|
 |setEnableScrollContentWhenLoaded|boolean|是否在加载完成之后滚动内容显示新数据（默认-true）|
 |setEnableLoadmoreWhenContentNotFull|boolean|在内容不满一页的时候，是否可以上拉加载更多（默认-false）|
+|setEnableFooterFollowWhenLoadFinished|boolean|是否在全部加载结束之后Footer跟随内容|
+|setEnableOverScrollDrag|boolean|是否启用越界拖动（仿苹果效果）|
 |setDisableContentWhenRefresh|boolean|是否在刷新的时候禁止内容的一切手势操作（默认false）|
 |setDisableContentWhenLoading|boolean|是否在加载的时候禁止内容的一切手势操作（默认false）|
 |setReboundInterpolator|Interpolator|设置回弹动画的插值器（默认减速）|
@@ -294,6 +305,8 @@ xml代码设置
 |finishLoadmore|(int delayed)|完成加载，结束加载动画|
 |finishRefresh|(boolean success)|完成刷新，并设置是否成功|
 |finishLoadmore|(boolean success)|完成加载，并设置是否成功|
+|finishLoadmoreWithNoMoreData||完成加载并标记没有更多数据|
+|resetNoMoreData||恢复没有更多数据的原始状态|
 |getRefreshHeader|RefreshHeader|获取Header|
 |getRefreshFooter|RefreshFooter|获取Footer|
 |getState|RefreshState|获取当前状态|

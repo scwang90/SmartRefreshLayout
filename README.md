@@ -109,10 +109,10 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
 ## 简单用例
 #### 1.在 buld.gradle 中添加依赖
 ```
-compile 'com.android.support:design:25.3.1'//版本随意（非必须，引用可以解决无法预览问题）
-compile 'com.android.support:appcompat-v7:25.3.1'//版本随意（必须）
 compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
 compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'//没有使用特殊Header，可以不加这行
+compile 'com.android.support:appcompat-v7:25.3.1'//版本随意（必须）
+provided 'com.android.support:design:25.3.1'//版本随意（非必须，引用可以解决无法预览问题）
 
 //新版本预览版-可能不稳定
 compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-alpha-5'
@@ -164,7 +164,7 @@ public class App extends Application {
                 @Override
                 public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
                     layout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);//全局设置主题颜色
-                    return new ClassicsHeader(context).setSpinnerStyle(SpinnerStyle.Translate);//指定为经典Header，默认是 贝塞尔雷达Header
+                    return new ClassicsHeader(context).setTimeFormat(new DynamicTimeFormat("更新于 %s"));//指定为经典Header，默认是 贝塞尔雷达Header
                 }
             });
         //设置全局的Footer构建器
@@ -172,7 +172,7 @@ public class App extends Application {
                 @Override
                 public RefreshFooter createRefreshFooter(Context context, RefreshLayout layout) {
                     //指定为经典Footer，默认是 BallPulseFooter
-                    return new ClassicsFooter(context).setSpinnerStyle(SpinnerStyle.Translate);
+                    return new ClassicsFooter(context).setDrawableSize(20);
                 }
             });
     }

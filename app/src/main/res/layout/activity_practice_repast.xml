@@ -31,6 +31,7 @@
             android:layout_height="match_parent"
             android:paddingTop="?attr/actionBarSize"
             android:clipToPadding="false"
+            android:overScrollMode="never"
             tools:listitem="@layout/listitem_practive_repast"/>
         <com.scwang.smartrefresh.layout.footer.ClassicsFooter
             android:layout_width="match_parent"
