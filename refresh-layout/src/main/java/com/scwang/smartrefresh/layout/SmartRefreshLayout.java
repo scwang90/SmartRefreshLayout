@@ -959,7 +959,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     return true;
                 } else if (isViceStateEnable() && mSpinner != 0) {
                     float velocity = -mVelocityTracker.getYVelocity();
-                    if (Math.abs(velocity) > mMinimumVelocity) {
+                    if (Math.abs(velocity) > mMinimumVelocity && velocity * mSpinner > 0) {
                         animSpinner(0);
                         if (mRefreshContent != null) {
                             mRefreshContent.fling((int) velocity);
@@ -1042,7 +1042,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     }
 
     protected void setStatePullUpToLoad() {
-        if (mState != RefreshState.Refreshing && mState != RefreshState.Loading && mEnableLoadmore) {
+        if (mEnableLoadmore && !mLoadmoreFinished
+                && mState != RefreshState.Refreshing
+                && mState != RefreshState.Loading) {
             notifyStateChanged(RefreshState.PullToUpLoad);
         } else {
             setViceState(RefreshState.PullToUpLoad);
@@ -1050,7 +1052,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     }
 
     protected void setStateReleaseToLoad() {
-        if (mState != RefreshState.Refreshing && mState != RefreshState.Loading && mEnableLoadmore) {
+        if (mEnableLoadmore && !mLoadmoreFinished
+                && mState != RefreshState.Refreshing
+                && mState != RefreshState.Loading) {
             notifyStateChanged(RefreshState.ReleaseToLoad);
         } else {
             setViceState(RefreshState.ReleaseToLoad);
@@ -1083,7 +1087,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     }
 
     protected void setStatePullUpCanceled() {
-        if (mState != RefreshState.Refreshing && mState != RefreshState.Loading && mEnableLoadmore) {
+        if (mEnableLoadmore && !mLoadmoreFinished
+                && mState != RefreshState.Refreshing
+                && mState != RefreshState.Loading) {
             notifyStateChanged(RefreshState.PullUpCanceled);
             resetStatus();
         } else {

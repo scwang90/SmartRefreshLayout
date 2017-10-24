@@ -33,7 +33,5 @@
   native *** n*(...);
 }
 
-#-keep enum com.scwang.smartrefresh.layout.impl.** {*;}
-
 -keep class com.wang.avi.** { *; }
 -keep class com.wang.avi.indicators.** { *; }

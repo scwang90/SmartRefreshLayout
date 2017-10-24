@@ -67,27 +67,27 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
 |[Pull To Refresh](https://dribbble.com/shots/1936194-Pull-To-Refresh)|[Pull Down To Refresh](https://dribbble.com/shots/1797373-Pull-Down-To-Refresh)|
 
 |FlyRefresh|Classics|
-|:---:|:---:|:---:|
+|:---:|:---:|
 |![](art/gif_FlyRefresh.gif)|![](art/gif_Classics.gif)|
 |[FlyRefresh](https://github.com/race604/FlyRefresh)|[ClassicsHeader](#1)|
 
 |Phoenix|Taurus|
-|:---:|:---:|:---:|
+|:---:|:---:|
 |![](art/gif_Phoenix.gif)|![](art/gif_Taurus.gif)|
 |[Yalantis/Phoenix](https://github.com/Yalantis/Phoenix)|[Yalantis/Taurus](https://github.com/Yalantis/Taurus)
 
 |BattleCity|HitBlock|
-|:---:|:---:|:---:|
+|:---:|:---:|
 |![](art/gif_BattleCity.gif)|![](art/gif_HitBlock.gif)|
 |[FunGame/BattleCity](https://github.com/Hitomis/FunGameRefresh)|[FunGame/HitBlock](https://github.com/Hitomis/FunGameRefresh)
 
 |WaveSwipe|Material|
-|:---:|:---:|:---:|
+|:---:|:---:|
 |![](art/gif_WaveSwipe.gif)|![](art/gif_Material.gif)|
 |[WaveSwipeRefreshLayout](https://github.com/recruit-lifestyle/WaveSwipeRefreshLayout)|[MaterialHeader](https://developer.android.com/reference/android/support/v4/widget/SwipeRefreshLayout.html)
 
 |StoreHouse|WaterDrop|
-|:---:|:---:|:---:|
+|:---:|:---:|
 |![](art/gif_StoreHouse.gif)|![](art/gif_WaterDrop.gif)|
 |[Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)|[WaterDrop](https://github.com/THEONE10211024/WaterDropListView)
 
