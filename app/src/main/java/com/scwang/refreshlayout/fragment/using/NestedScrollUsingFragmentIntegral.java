@@ -1,9 +1,7 @@
 package com.scwang.refreshlayout.fragment.using;
 
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,7 +17,6 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 
 import com.scwang.refreshlayout.R;
-import com.scwang.refreshlayout.activity.FragmentActivity;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.refreshlayout.fragment.using.NestedScrollUsingFragment.Item;
@@ -106,12 +103,6 @@ public class NestedScrollUsingFragmentIntegral extends Fragment implements Adapt
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Item item = Item.values()[position];
-        if (Activity.class.isAssignableFrom(item.clazz)) {
-            startActivity(new Intent(getContext(), item.clazz));
-        } else if (Fragment.class.isAssignableFrom(item.clazz)) {
-            FragmentActivity.start(this, item.clazz);
-        }
     }
 
     private class BannerImageLoader extends ImageLoader {

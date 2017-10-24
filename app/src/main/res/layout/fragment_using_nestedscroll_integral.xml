@@ -39,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:paddingBottom="@dimen/padding_common"
                     android:fitsSystemWindows="true"
-                    app:layout_scrollFlags="scroll|snap">
+                    app:layout_scrollFlags="scroll">
                     <com.youth.banner.Banner
                         android:id="@+id/banner"
                         android:layout_width="match_parent"
@@ -56,7 +56,7 @@
                     android:orientation="vertical"
                     android:divider="@android:drawable/divider_horizontal_dark"
                     android:showDividers="beginning|end"
-                    app:layout_scrollFlags="scroll|snap">
+                    app:layout_scrollFlags="scroll">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -167,7 +167,7 @@
                     android:background="@color/colorBackgroud"
                     android:orientation="vertical"
                     app:layout_collapseMode="pin"
-                    app:layout_scrollFlags="snap|exitUntilCollapsed|enterAlways|enterAlwaysCollapsed">
+                    app:layout_scrollFlags="exitUntilCollapsed|enterAlways|enterAlwaysCollapsed">
                     <View style="@style/AppTheme.Divison"/>
                     <LinearLayout
                         android:layout_width="match_parent"
