@@ -106,11 +106,11 @@ compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
 compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'//If you use the special Header
 
 compile 'com.android.support:appcompat-v7:25.3.1'
-provided 'com.android.support:design:25.3.1'//（Not necessary，Can solve problems that cannot be previewed）
+compile 'com.android.support:design:25.3.1'//（Not necessary，Can solve problems that cannot be previewed）
 
 //alpha-version
-compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-alpha-6'
-compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4-alpha-6'
+compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-alpha-7'
+compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4-alpha-7'
 ```
 
 #### 2.Add SmartRefreshLayout in the layout xml.
