@@ -66,27 +66,27 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
 |![](art/gif_BezierRadar.gif)|![](art/gif_BezierCircle.gif)|
 |[Pull To Refresh](https://dribbble.com/shots/1936194-Pull-To-Refresh)|[Pull Down To Refresh](https://dribbble.com/shots/1797373-Pull-Down-To-Refresh)|
 
-|Style|FlyRefresh|Classics|
+|FlyRefresh|Classics|
 |:---:|:---:|:---:|
 |![](art/gif_FlyRefresh.gif)|![](art/gif_Classics.gif)|
 |[FlyRefresh](https://github.com/race604/FlyRefresh)|[ClassicsHeader](#1)|
 
-|Style|Phoenix|Taurus|
+|Phoenix|Taurus|
 |:---:|:---:|:---:|
 |![](art/gif_Phoenix.gif)|![](art/gif_Taurus.gif)|
 |[Yalantis/Phoenix](https://github.com/Yalantis/Phoenix)|[Yalantis/Taurus](https://github.com/Yalantis/Taurus)
 
-|Style|BattleCity|HitBlock|
+|BattleCity|HitBlock|
 |:---:|:---:|:---:|
 |![](art/gif_BattleCity.gif)|![](art/gif_HitBlock.gif)|
 |[FunGame/BattleCity](https://github.com/Hitomis/FunGameRefresh)|[FunGame/HitBlock](https://github.com/Hitomis/FunGameRefresh)
 
-|Style|WaveSwipe|Material|
+|WaveSwipe|Material|
 |:---:|:---:|:---:|
 |![](art/gif_WaveSwipe.gif)|![](art/gif_Material.gif)|
 |[WaveSwipeRefreshLayout](https://github.com/recruit-lifestyle/WaveSwipeRefreshLayout)|[MaterialHeader](https://developer.android.com/reference/android/support/v4/widget/SwipeRefreshLayout.html)
 
-|Style|StoreHouse|WaterDrop|
+|StoreHouse|WaterDrop|
 |:---:|:---:|:---:|
 |![](art/gif_StoreHouse.gif)|![](art/gif_WaterDrop.gif)|
 |[Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)|[WaterDrop](https://github.com/THEONE10211024/WaterDropListView)
@@ -102,15 +102,17 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
 ## 简单用例
 #### 1.在 buld.gradle 中添加依赖
 ```
-compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
-compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'//没有使用特殊Header，可以不加这行
+//新版本预览版-发现bug请加群提出，并切换 1.0.3 版本
+compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-alpha-7'
+compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4-alpha-7'//没有使用特殊Header，可以不加这行
 
 compile 'com.android.support:appcompat-v7:25.3.1'//版本随意（必须）
 compile 'com.android.support:design:25.3.1'//版本随意（非必须，引用可以解决无法预览问题）
 
-//新版本预览版-可能不稳定
-compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-alpha-7'
-compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4-alpha-7'
+//稳定版
+compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
+compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'//没有使用特殊Header，可以不加这行
+
 ```
 
 #### 2.在XML布局文件中添加 SmartRefreshLayout
@@ -256,8 +258,9 @@ SmartRefreshLayout 没有使用到：序列化、反序列化、JNI、反射，�
 
 ## 感谢
 [SwipeRefreshLayout](https://developer.android.com/reference/android/support/v4/widget/SwipeRefreshLayout.html)  
-[TwinklingRefreshLayout](https://github.com/lcodecorex/TwinklingRefreshLayout)  
 [Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)  
+[TwinklingRefreshLayout](https://github.com/lcodecorex/TwinklingRefreshLayout)  
+[BeautifulRefreshLayout](https://github.com/android-cjj/BeautifulRefreshLayout)
 
 License
 -------
