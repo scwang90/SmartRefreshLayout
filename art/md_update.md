@@ -2,19 +2,19 @@
 
 ## V 1.0.4 (开发中)  
 <!-- >添加：类似淘宝二楼的二级下拉刷新 -->
->添加：finishLoadmoreWithNoMoreData 方法 完成加载并标记没有更多数据
->添加：resetNoMoreData 方法 恢复没有更多数据的原始状态
+>添加：finishLoadmoreWithNoMoreData 方法 完成加载并标记没有更多数据  
+>添加：resetNoMoreData 方法 恢复没有更多数据的原始状态  
 >添加：setRefreshContent 方法 设置刷新Content（用于动态替换空布局）  
 >添加：srlHeaderTriggerRate 属性和对应的set方法 设置 Header触发刷新距离 与 HeaderHieght 的比率（默认1）  
->添加：srlFooterTriggerRate 属性和对应的set方法 设置 Footer触发加载距离 与 FooterHieght 的比率（默认1）
->添加：srlEnableOverScrollDrag 属性和对应的set方法 设置 是否启用越界拖动（仿苹果效果）
->添加：srlEnableFooterFollowWhenLoadFinished 属性和对应的set方法 设置 是否在全部加载结束之后Footer跟随内容
->添加：refreshHeader 添加 setLastUpdateText 方法 手动设置更新时间
->添加：refreshHeader 添加 onRefreshReleased 方法 手势释放时调用
->添加：refreshFooter 添加 onLoadmoreReleased 方法 手势释放时调用
->修改：修改Header 名称 Circle 为 BezierCircle
->修改：改变 onStartAnimator 的调用时机为 释放之后会回弹到标准高度调用
->修改：srlEnableLoadmoreWhenContentNotFull 的默认值 由 false 改成 true
+>添加：srlFooterTriggerRate 属性和对应的set方法 设置 Footer触发加载距离 与 FooterHieght 的比率（默认1）  
+>添加：srlEnableOverScrollDrag 属性和对应的set方法 设置 是否启用越界拖动（仿苹果效果）  
+>添加：srlEnableFooterFollowWhenLoadFinished 属性和对应的set方法 设置 是否在全部加载结束之后Footer跟随内容  
+>添加：refreshHeader 添加 setLastUpdateText 方法 手动设置更新时间  
+>添加：refreshHeader 添加 onRefreshReleased 方法 手势释放时调用  
+>添加：refreshFooter 添加 onLoadmoreReleased 方法 手势释放时调用  
+>修改：修改Header 名称 Circle 为 BezierCircle  
+>修改：改变 onStartAnimator 的调用时机为 释放之后会回弹到标准高度调用  
+>修改：srlEnableLoadmoreWhenContentNotFull 的默认值 由 false 改成 true  
 
 
 ## V 1.0.3
