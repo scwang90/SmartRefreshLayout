@@ -68,6 +68,7 @@ import com.scwang.smartrefresh.layout.util.ViscousFluidInterpolator;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.view.MotionEvent.obtain;
 import static android.view.View.MeasureSpec.AT_MOST;
 import static android.view.View.MeasureSpec.EXACTLY;
 import static android.view.View.MeasureSpec.getSize;
@@ -867,7 +868,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             case MotionEvent.ACTION_DOWN:
                 mTouchX = touchX;
                 mTouchY = touchY;
-                mLastTouchY = touchY;
+//                mLastTouchY = touchY;
                 mLastSpinner = 0;
                 mTouchSpinner = mSpinner;
                 mIsBeingDragged = false;
@@ -879,12 +880,12 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 mSuperDispatchTouchEvent = superDispatchTouchEvent(e);
                 return true;
             case MotionEvent.ACTION_MOVE:
-                mLastTouchY = touchY;
+//                mLastTouchY = touchY;
                 mVelocityTracker.addMovement(e);
                 float dx = touchX - mTouchX;
                 float dy = touchY - mTouchY;
                 if (!mIsBeingDragged && !mHorizontalDragged) {
-                    if (Math.abs(dy) >= mTouchSlop && Math.abs(dx) < Math.abs(dy)) {//滑动允许最大角度为45度
+                    if (mVerticalDragged || (Math.abs(dy) >= mTouchSlop && Math.abs(dx) < Math.abs(dy))) {//滑动允许最大角度为45度
                         mVerticalDragged = true;
                         if (dy > 0 && (mSpinner < 0 || ((mEnableRefresh || mEnableOverScrollDrag) && mRefreshContent.canRefresh()))) {
                             mIsBeingDragged = true;
@@ -904,6 +905,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                             } else {
                                 setStatePullUpToLoad();
                             }
+                            getParent().requestDisallowInterceptTouchEvent(true);
                         }
                     } else if (Math.abs(dx) >= mTouchSlop && Math.abs(dx) > Math.abs(dy) && !mVerticalDragged) {
                         mHorizontalDragged = true;
@@ -916,19 +918,19 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                         mLastSpinner = spinner;
                         long time = e.getEventTime();
                         if (mFalsifyEvent == null) {
-                            mFalsifyEvent = MotionEvent.obtain(time, time, MotionEvent.ACTION_DOWN, mTouchX + dx, mTouchY, 0);
+                            mFalsifyEvent = obtain(time, time, MotionEvent.ACTION_DOWN, mTouchX + dx, mTouchY, 0);
                             superDispatchTouchEvent(mFalsifyEvent);
                         }
-                        MotionEvent em = MotionEvent.obtain(time, time, MotionEvent.ACTION_MOVE, mTouchX + dx, mTouchY + spinner, 0);
+                        MotionEvent em = obtain(time, time, MotionEvent.ACTION_MOVE, mTouchX + dx, mTouchY + spinner, 0);
                         if (mFalsifyEvent != null) {
                             superDispatchTouchEvent(em);
                         }
                         if (spinner > 0 && ((mEnableRefresh || mEnableOverScrollDrag) && mRefreshContent.canRefresh())) {
-                            mTouchY = touchY;
+                            mTouchY = mLastTouchY = touchY;
                             mTouchSpinner = spinner = 0;
                             setStatePullDownToRefresh();
                         } else if (spinner < 0 && ((mEnableLoadmore||mEnableOverScrollDrag) && mRefreshContent.canLoadmore())) {
-                            mTouchY = touchY;
+                            mTouchY = mLastTouchY = touchY;
                             mTouchSpinner = spinner = 0;
                             setStatePullUpToLoad();
                         }
@@ -964,7 +966,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 if (mFalsifyEvent != null) {
                     mFalsifyEvent = null;
                     long time = e.getEventTime();
-                    MotionEvent ec = MotionEvent.obtain(time, time, action, mTouchX, touchY, 0);
+                    MotionEvent ec = obtain(time, time, action, mTouchX, touchY, 0);
                     superDispatchTouchEvent(ec);
                 }
                 if (overSpinner()) {
@@ -2336,6 +2338,13 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             public void run() {
                 if (mState == RefreshState.Refreshing) {
                     if (mRefreshHeader != null) {
+                        if (mIsBeingDragged) {
+                            mTouchSpinner = 0;
+                            mTouchY = mLastTouchY;
+                            mIsBeingDragged = false;
+                            long time = System.currentTimeMillis();
+                            superDispatchTouchEvent(obtain(time, time, MotionEvent.ACTION_DOWN, mLastTouchX, mTouchY + mSpinner, 0));
+                        }
                         int startDelay = mRefreshHeader.onFinish(SmartRefreshLayout.this, success);
                         notifyStateChanged(RefreshState.RefreshFinish);
                         if (mOnMultiPurposeListener != null) {
@@ -2388,15 +2397,27 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                         if (startDelay == Integer.MAX_VALUE) {
                             return;
                         }
+                        if (mIsBeingDragged) {
+                            mTouchSpinner = 0;
+                            mTouchY = mLastTouchY;
+                            mIsBeingDragged = false;
+                            long time = System.currentTimeMillis();
+                            superDispatchTouchEvent(obtain(time, time, MotionEvent.ACTION_DOWN, mLastTouchX, mTouchY + mSpinner, 0));
+                        }
                         notifyStateChanged(RefreshState.LoadFinish);
-                        AnimatorUpdateListener updateListener = mRefreshContent.onLoadingFinish(mKernel, mFooterHeight, startDelay, mReboundDuration);
+                        final AnimatorUpdateListener updateListener = mRefreshContent.onLoadingFinish(mKernel, mFooterHeight, startDelay, mReboundDuration);
                         if (mOnMultiPurposeListener != null) {
                             mOnMultiPurposeListener.onFooterFinish(mRefreshFooter, success);
                         }
                         if (mEnableAutoLoadmore && updateListener != null) {
-                            updateListener.onAnimationUpdate(ValueAnimator.ofInt(0, 0));
-                            moveSpinner(0, true);
-                            resetStatus();
+                            postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    updateListener.onAnimationUpdate(ValueAnimator.ofInt(0, 0));
+                                    moveSpinner(0, true);
+                                    resetStatus();
+                                }
+                            }, startDelay);
                         } else if (mSpinner == 0) {
                             resetStatus();
                         } else {
@@ -2404,12 +2425,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                             if (updateListener != null && valueAnimator != null) {
                                 valueAnimator.addUpdateListener(updateListener);
                             }
-                        }
-                        if (mIsBeingDragged) {
-                            long time = System.currentTimeMillis();
-                            dispatchTouchEvent(MotionEvent.obtain(time, time, MotionEvent.ACTION_CANCEL, 0, 0, 0));
-//                            dispatchTouchEvent(MotionEvent.obtain(time+1, time+1, MotionEvent.ACTION_DOWN, mTouchX, mLastTouchY, 0));
-//                            dispatchTouchEvent(MotionEvent.obtain(time+2, time+2, MotionEvent.ACTION_MOVE, mTouchX, mLastTouchY, 0));
                         }
                     } else {
                         resetStatus();

@@ -15,7 +15,8 @@
         app:srlHeaderMaxDragRate="1.3"
         app:srlHeaderHeight="150dp"
         app:srlEnableAutoLoadmore="true"
-        app:srlEnablePreviewInEditMode="true">
+        app:srlEnablePreviewInEditMode="true"
+        app:srlHeaderTriggerRate="0.5">
         <pl.droidsonroids.gif.GifImageView
             android:id="@+id/gifview"
             android:layout_width="match_parent"
