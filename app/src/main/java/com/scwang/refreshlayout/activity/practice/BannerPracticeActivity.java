@@ -19,6 +19,7 @@ import com.google.gson.reflect.TypeToken;
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.util.StatusBarUtil;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
@@ -56,7 +57,7 @@ public class BannerPracticeActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(new DividerItemDecoration(this, VERTICAL));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(mAdapter);
-        List<Movie> movies = new Gson().fromJson(JSON_MOVIES, new TypeToken<ArrayList<Movie>>() {}.getType());
+        final List<Movie> movies = new Gson().fromJson(JSON_MOVIES, new TypeToken<ArrayList<Movie>>() {}.getType());
         mAdapter.replaceData(movies);
         refreshLayout.autoRefresh();
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
@@ -74,6 +75,14 @@ public class BannerPracticeActivity extends AppCompatActivity {
                 },2000);
             }
         });
+        refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                mAdapter.addData(movies);
+                refreshlayout.finishLoadmoreWithNoMoreData();
+            }
+        });
+
 
         //添加Header
         View header = LayoutInflater.from(this).inflate(R.layout.listitem_movie_header, recyclerView, false);
@@ -82,6 +91,7 @@ public class BannerPracticeActivity extends AppCompatActivity {
         banner.setImages(BANNER_ITEMS);
         banner.start();
         mAdapter.addHeaderView(banner);
+        mAdapter.openLoadAnimation();
 
         //状态栏透明和间距处理
         StatusBarUtil.immersive(this);
