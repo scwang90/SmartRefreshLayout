@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.api.RefreshFooter;
+import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.header.FalsifyHeader;
@@ -74,6 +75,13 @@ public class FalsifyFooter extends FalsifyHeader implements RefreshFooter {
     //</editor-fold>
 
     //<editor-fold desc="RefreshFooter">
+
+
+    @Override
+    public void onInitialized(RefreshKernel kernel, int height, int extendHeight) {
+        super.onInitialized(kernel, height, extendHeight);
+        kernel.getRefreshLayout().setEnableAutoLoadmore(false);
+    }
 
     @Override
     public void onPullingUp(float percent, int offset, int footerHeight, int extendHeight) {
