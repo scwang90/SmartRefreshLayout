@@ -1,5 +1,6 @@
 package com.scwang.smartrefresh.layout.header;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
@@ -51,7 +52,7 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
  * 经典下拉头部
  * Created by SCWANG on 2017/5/28.
  */
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "UnusedReturnValue"})
 public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
 
     public static String REFRESH_HEADER_PULLDOWN = "下拉可以刷新";
@@ -196,16 +197,11 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
             mLastUpdateText.setTextSize(12);
         }
 
-        int primaryColor = ta.getColor(R.styleable.ClassicsHeader_srlPrimaryColor, 0);
-        int accentColor = ta.getColor(R.styleable.ClassicsHeader_srlAccentColor, 0);
-        if (primaryColor != 0) {
-            if (accentColor != 0) {
-                setPrimaryColors(primaryColor, accentColor);
-            } else {
-                setPrimaryColors(primaryColor);
-            }
-        } else if (accentColor != 0) {
-            setPrimaryColors(0, accentColor);
+        if (ta.hasValue(R.styleable.ClassicsHeader_srlPrimaryColor)) {
+            setPrimaryColor(ta.getColor(R.styleable.ClassicsHeader_srlPrimaryColor, 0));
+        }
+        if (ta.hasValue(R.styleable.ClassicsHeader_srlAccentColor)) {
+            setAccentColor(ta.getColor(R.styleable.ClassicsHeader_srlAccentColor, 0));
         }
 
         ta.recycle();
@@ -229,6 +225,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
             if (context instanceof FragmentActivity) {
                 FragmentManager manager = ((FragmentActivity) context).getSupportFragmentManager();
                 if (manager != null) {
+                    @SuppressLint("RestrictedApi")
                     List<Fragment> fragments = manager.getFragments();
                     if (fragments != null && fragments.size() > 0) {
                         setLastUpdateTime(new Date());
@@ -381,29 +378,6 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
                 break;
         }
     }
-    //</editor-fold>
-
-    //<editor-fold desc="background">
-//    private Runnable restoreRunable;
-//    private void restoreRefreshLayoutBackground() {
-//        if (restoreRunable != null) {
-//            restoreRunable.run();
-//            restoreRunable = null;
-//        }
-//    }
-//
-//    private void replaceRefreshLayoutBackground(final RefreshLayout refreshLayout) {
-//        if (restoreRunable == null && mSpinnerStyle == SpinnerStyle.FixedBehind) {
-//            restoreRunable = new Runnable() {
-//                Drawable drawable = refreshLayout.getLayout().getBackground();
-//                @Override
-//                public void run() {
-//                    refreshLayout.getLayout().setBackgroundDrawable(drawable);
-//                }
-//            };
-//            refreshLayout.getLayout().setBackgroundDrawable(getBackground());
-//        }
-//    }
     //</editor-fold>
 
     //<editor-fold desc="API">

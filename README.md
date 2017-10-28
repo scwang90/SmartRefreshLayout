@@ -4,7 +4,7 @@
 [![Arsenal](https://img.shields.io/badge/%20Arsenal%20-%20SmartRefresh%20-4cae4c.svg?style=flat)](https://android-arsenal.com/details/1/6001)
 [![Jcenter](https://img.shields.io/badge/%20Jcenter%20-1.0.3-5bc0de.svg) ](https://bintray.com/scwang90/maven/SmartRefreshLayout/_latestVersion) 
 [![MinSdk](https://img.shields.io/badge/%20MinSdk%20-%2012%2B%20-f0ad4e.svg?style=flat)](https://android-arsenal.com/api?level=12)
-[![Methods](https://img.shields.io/badge/%20Methods%20%7C%20Size%20-%201251%20%7C%20129%20KB-d9534f.svg)](http://www.methodscount.com/?lib=com.scwang.smartrefresh%3ASmartRefreshLayout%3A1.0.3)
+[![Methods](https://img.shields.io/badge/%20Methods%20%7C%20Size%20-%201382%20%7C%20143%20KB-d9534f.svg)](http://www.methodscount.com/?lib=com.scwang.smartrefresh%3ASmartRefreshLayout%3A1.0.3)
 
 <!-- [![Platform](https://img.shields.io/badge/Platform-Android-f0ad4e.svg)](https://www.android.com) -->
 <!-- [![Author](https://img.shields.io/badge/Author-scwang90-11bbff.svg)](https://github.com/scwang90) -->
@@ -103,8 +103,8 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
 #### 1.在 buld.gradle 中添加依赖
 ```
 //新版本预览版-发现bug请加群提出，并切换 1.0.3 版本
-compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-alpha-8'
-compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4-alpha-8'//没有使用特殊Header，可以不加这行
+compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-alpha-9'
+compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4-alpha-9'//没有使用特殊Header，可以不加这行
 
 compile 'com.android.support:appcompat-v7:25.3.1'//版本随意（必须）
 compile 'com.android.support:design:25.3.1'//版本随意（非必须，引用可以解决无法预览问题）

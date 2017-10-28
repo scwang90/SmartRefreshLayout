@@ -2,7 +2,7 @@
 
 buildscript {
     repositories {
-//        google()
+        google()
         jcenter()
     }
     dependencies {
@@ -15,7 +15,7 @@ buildscript {
 
 allprojects {
     repositories {
-//        google()
+        google()
         jcenter()
     }
     tasks.withType(Javadoc) {
