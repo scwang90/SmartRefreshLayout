@@ -1,10 +1,9 @@
 apply plugin: 'com.android.library'
 //apply plugin: 'com.novoda.bintray-release'
-//apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         minSdkVersion 12

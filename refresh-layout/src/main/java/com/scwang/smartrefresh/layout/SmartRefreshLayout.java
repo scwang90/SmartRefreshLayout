@@ -1493,7 +1493,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 if (oldSpinner != mSpinner
                         && (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Scale
                         || mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Translate)) {
-                    mIsSkipContentLayout = true;
+                    //mIsSkipContentLayout = true;
                     mRefreshFooter.getView().requestLayout();
                 }
             }
