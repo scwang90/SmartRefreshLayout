@@ -21,7 +21,7 @@ SmartRefreshLayout's goal is to build a strong, stable and mature pull-down refr
  - Support multi-touch.
  - Support multi-layered nested view structures.
  - Support all the Views（AbsListView、RecyclerView、WebView....View）
- - Support customizing Headers and Footers, and has integrated a lot of cool Heades and Footers.
+ - Support customizing Headers and Footers, and has integrated a lot of cool Headers and Footers.
  - Support synchronous scrolling with ListView and NestedScrolling with CoordinatorLayout.
  - Support automatically refresh, automatically pull-up loading (automatically detect list inertance and scroll to the bottom without having to manually pull).
  - Support customizing rebound animation interpolator, to achieve a variety of cool animation effects.
