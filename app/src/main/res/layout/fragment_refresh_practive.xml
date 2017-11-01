@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:srlEnableRefresh="false"
-        app:srlEnableOverScrollDrag="false">
+        app:srlEnableLoadmore="false">
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
