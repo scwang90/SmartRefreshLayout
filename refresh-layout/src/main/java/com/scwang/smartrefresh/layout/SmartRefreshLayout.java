@@ -1020,15 +1020,20 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         return false;
     }
 
+    /**
+     * 这段代码来自谷歌官方的 SwipeRefreshLayout
+     * 应用场景已经在英文注释中解释清楚
+     * 大部分第三方下拉刷新库都保留了这段代码，本库也不例外
+     */
     @Override
-    public void requestDisallowInterceptTouchEvent(boolean b) {
+    public void requestDisallowInterceptTouchEvent(boolean disallowIntercept) {
         // if this is a List < L or another view that doesn't support nested
         // scrolling, ignore this request so that the vertical scroll event
         // isn't stolen
         View target = mRefreshContent.getScrollableView();
         if ((android.os.Build.VERSION.SDK_INT >= 21 || !(target instanceof AbsListView))
                 && (target == null || ViewCompat.isNestedScrollingEnabled(target))) {
-            super.requestDisallowInterceptTouchEvent(b);
+            super.requestDisallowInterceptTouchEvent(disallowIntercept);
             //} else {
             // Nope.
         }
