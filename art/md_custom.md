@@ -336,3 +336,4 @@ public class ClassicsHeader extends LinearLayout implements RefreshHeader {
 
 [YanXuanRefresh](https://github.com/ChaserSheng/YanXuanRefresh)
 [838514984](https://github.com/838514984/smartrefreshlayout-statusUtils)
+[一个Android下拉刷新样式](http://www.jianshu.com/p/8f29c97eefd8)
