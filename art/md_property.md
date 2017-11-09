@@ -13,8 +13,8 @@ public class RefreshActivity extends Activity {
         refreshLayout.setReboundDuration(300);//回弹动画时长（毫秒）
         refreshLayout.setHeaderMaxDragRate(2);//最大显示下拉高度/Header标准高度
         refreshLayout.setFooterMaxDragRate(2);//最大显示下拉高度/Footer标准高度
-        refreshLayout.setHeaderTriggerRate(1);//触发刷新距离 与 HeaderHieght 的比率
-        refreshLayout.setFooterTriggerRate(1);//触发加载距离 与 FooterHieght 的比率
+        refreshLayout.setHeaderTriggerRate(1);//触发刷新距离 与 HeaderHieght 的比率1.0.4-6
+        refreshLayout.setFooterTriggerRate(1);//触发加载距离 与 FooterHieght 的比率1.0.4-6
         refreshLayout.setHeaderHeight(100);//Header标准高度（显示下拉高度>=标准高度 触发刷新）
         refreshLayout.setHeaderHeightPx(100);//同上-像素为单位
         refreshLayout.setFooterHeight(100);//Footer标准高度（显示上拉高度>=标准高度 触发加载）
@@ -37,7 +37,7 @@ public class RefreshActivity extends Activity {
         refreshLayout.setScrollBoundaryDecider(new ScrollBoundaryDecider());//设置滚动边界判断
         refreshLayout.setRefreshHeader(new ClassicsHeader(this));//设置Header
         refreshLayout.setRefreshFooter(new ClassicsFooter(this));//设置Footer
-        refreshLayout.setRefreshContent(new View(this));//设置刷新Content（用于动态替换空布局）
+        refreshLayout.setRefreshContent(new View(this));//设置刷新Content（用于动态替换空布局）1.0.4-6
         refreshLayout.autoRefresh();//自动刷新
         refreshLayout.autoLoadmore();//自动加载
         refreshLayout.autoRefresh(400);//延迟400毫秒后自动刷新
