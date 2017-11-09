@@ -48,8 +48,8 @@ public class RefreshActivity extends Activity {
         refreshlayout.finishLoadmore(3000);//延迟3000毫秒后结束加载
         refreshlayout.finishRefresh(false);//结束刷新（刷新失败）
         refreshlayout.finishLoadmore(false);//结束加载（加载失败）
-        refreshLayout.finishLoadmoreWithNoMoreData();//完成加载并标记没有更多数据
-        refreshLayout.resetNoMoreData();//恢复没有更多数据的原始状态
+        refreshLayout.finishLoadmoreWithNoMoreData();//完成加载并标记没有更多数据 1.0.4-6
+        refreshLayout.resetNoMoreData();//恢复没有更多数据的原始状态 1.0.4-6
 
     }
 }
