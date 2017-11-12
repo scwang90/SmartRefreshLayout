@@ -528,129 +528,133 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         int minimumHeight = 0;
         final boolean isInEditMode = isInEditMode() && mEnablePreviewInEditMode;
 
-        if (mRefreshHeader != null) {
-            final View headerView = mRefreshHeader.getView();
-            final LayoutParams lp = (LayoutParams) headerView.getLayoutParams();
-            final int widthSpec = getChildMeasureSpec(widthMeasureSpec, lp.leftMargin + lp.rightMargin, lp.width);
-            int heightSpec = heightMeasureSpec;
+        for (int i = 0, len = getChildCount(); i < len; i++) {
+            View child = getChildAt(i);
 
-            if (mHeaderHeightStatus.gteReplaceWith(DimensionStatus.XmlLayoutUnNotify)) {
-                heightSpec = makeMeasureSpec(Math.max(mHeaderHeight - lp.bottomMargin, 0), EXACTLY);
-                headerView.measure(widthSpec, heightSpec);
-            } else if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.MatchLayout) {
-                headerView.measure(widthSpec, heightSpec);
-            } else if (lp.height > 0) {
-                if (mHeaderHeightStatus.canReplaceWith(DimensionStatus.XmlExact)) {
-                    mHeaderHeightStatus = DimensionStatus.XmlExact;
-                    mHeaderHeight = lp.height + lp.bottomMargin;
-                    mHeaderExtendHeight = (int) Math.max((mHeaderHeight * (mHeaderMaxDragRate - 1)), 0);
-                    mRefreshHeader.onInitialized(mKernel, mHeaderHeight, mHeaderExtendHeight);
-                }
-                heightSpec = makeMeasureSpec(lp.height, EXACTLY);
-                headerView.measure(widthSpec, heightSpec);
-            } else if (lp.height == WRAP_CONTENT) {
-                heightSpec = makeMeasureSpec(Math.max(getSize(heightMeasureSpec) - lp.bottomMargin, 0), AT_MOST);
-                headerView.measure(widthSpec, heightSpec);
-                int measuredHeight = headerView.getMeasuredHeight();
-                if (measuredHeight > 0 && mHeaderHeightStatus.canReplaceWith(DimensionStatus.XmlWrap)) {
-                    mHeaderHeightStatus = DimensionStatus.XmlWrap;
-                    mHeaderHeight = headerView.getMeasuredHeight() + lp.bottomMargin;
-                    mHeaderExtendHeight = (int) Math.max((mHeaderHeight * (mHeaderMaxDragRate - 1)), 0);
-                    mRefreshHeader.onInitialized(mKernel, mHeaderHeight, mHeaderExtendHeight);
-                } else if (measuredHeight <= 0) {
+            if (mRefreshHeader != null && mRefreshHeader == child) {
+                final View headerView = mRefreshHeader.getView();
+                final LayoutParams lp = (LayoutParams) headerView.getLayoutParams();
+                final int widthSpec = getChildMeasureSpec(widthMeasureSpec, lp.leftMargin + lp.rightMargin, lp.width);
+                int heightSpec = heightMeasureSpec;
+
+                if (mHeaderHeightStatus.gteReplaceWith(DimensionStatus.XmlLayoutUnNotify)) {
                     heightSpec = makeMeasureSpec(Math.max(mHeaderHeight - lp.bottomMargin, 0), EXACTLY);
                     headerView.measure(widthSpec, heightSpec);
+                } else if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.MatchLayout) {
+                    headerView.measure(widthSpec, heightSpec);
+                } else if (lp.height > 0) {
+                    if (mHeaderHeightStatus.canReplaceWith(DimensionStatus.XmlExact)) {
+                        mHeaderHeightStatus = DimensionStatus.XmlExact;
+                        mHeaderHeight = lp.height + lp.bottomMargin;
+                        mHeaderExtendHeight = (int) Math.max((mHeaderHeight * (mHeaderMaxDragRate - 1)), 0);
+                        mRefreshHeader.onInitialized(mKernel, mHeaderHeight, mHeaderExtendHeight);
+                    }
+                    heightSpec = makeMeasureSpec(lp.height, EXACTLY);
+                    headerView.measure(widthSpec, heightSpec);
+                } else if (lp.height == WRAP_CONTENT) {
+                    heightSpec = makeMeasureSpec(Math.max(getSize(heightMeasureSpec) - lp.bottomMargin, 0), AT_MOST);
+                    headerView.measure(widthSpec, heightSpec);
+                    int measuredHeight = headerView.getMeasuredHeight();
+                    if (measuredHeight > 0 && mHeaderHeightStatus.canReplaceWith(DimensionStatus.XmlWrap)) {
+                        mHeaderHeightStatus = DimensionStatus.XmlWrap;
+                        mHeaderHeight = headerView.getMeasuredHeight() + lp.bottomMargin;
+                        mHeaderExtendHeight = (int) Math.max((mHeaderHeight * (mHeaderMaxDragRate - 1)), 0);
+                        mRefreshHeader.onInitialized(mKernel, mHeaderHeight, mHeaderExtendHeight);
+                    } else if (measuredHeight <= 0) {
+                        heightSpec = makeMeasureSpec(Math.max(mHeaderHeight - lp.bottomMargin, 0), EXACTLY);
+                        headerView.measure(widthSpec, heightSpec);
+                    }
+                } else if (lp.height == MATCH_PARENT) {
+                    heightSpec = makeMeasureSpec(Math.max(mHeaderHeight - lp.bottomMargin, 0), EXACTLY);
+                    headerView.measure(widthSpec, heightSpec);
+                } else {
+                    headerView.measure(widthSpec, heightSpec);
                 }
-            } else if (lp.height == MATCH_PARENT) {
-                heightSpec = makeMeasureSpec(Math.max(mHeaderHeight - lp.bottomMargin, 0), EXACTLY);
-                headerView.measure(widthSpec, heightSpec);
-            } else {
-                headerView.measure(widthSpec, heightSpec);
-            }
-            if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale && !isInEditMode) {
-                final int height = Math.max(0, mSpinner);
-                heightSpec = makeMeasureSpec(Math.max(height - lp.bottomMargin, 0), EXACTLY);
-                headerView.measure(widthSpec, heightSpec);
-            }
-
-            if (!mHeaderHeightStatus.notifyed) {
-                mHeaderHeightStatus = mHeaderHeightStatus.notifyed();
-                mRefreshHeader.onInitialized(mKernel, mHeaderHeight, mHeaderExtendHeight);
-            }
-
-            if (isInEditMode) {
-                minimumHeight += headerView.getMeasuredHeight();
-            }
-        }
-
-        if (mRefreshFooter != null) {
-            final View footerView = mRefreshFooter.getView();
-            final LayoutParams lp = (LayoutParams) footerView.getLayoutParams();
-            final int widthSpec = getChildMeasureSpec(widthMeasureSpec, lp.leftMargin + lp.rightMargin, lp.width);
-            int heightSpec = heightMeasureSpec;
-            if (mFooterHeightStatus.gteReplaceWith(DimensionStatus.XmlLayoutUnNotify)) {
-                heightSpec = makeMeasureSpec(Math.max(mFooterHeight - lp.topMargin, 0), EXACTLY);
-                footerView.measure(widthSpec, heightSpec);
-            } else if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.MatchLayout) {
-                footerView.measure(widthSpec, heightSpec);
-            } else if (lp.height > 0) {
-                if (mFooterHeightStatus.canReplaceWith(DimensionStatus.XmlExact)) {
-                    mFooterHeightStatus = DimensionStatus.XmlExact;
-                    mFooterHeight = lp.height + lp.topMargin;
-                    mFooterExtendHeight = (int) Math.max((mFooterHeight * (mFooterMaxDragRate - 1)), 0);
-                    mRefreshFooter.onInitialized(mKernel, mFooterHeight, mFooterExtendHeight);
+                if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale && !isInEditMode) {
+                    final int height = Math.max(0, mSpinner);
+                    heightSpec = makeMeasureSpec(Math.max(height - lp.bottomMargin, 0), EXACTLY);
+                    headerView.measure(widthSpec, heightSpec);
                 }
-                heightSpec = makeMeasureSpec(lp.height - lp.topMargin, EXACTLY);
-                footerView.measure(widthSpec, heightSpec);
-            } else if (lp.height == WRAP_CONTENT) {
-                heightSpec = makeMeasureSpec(Math.max(getSize(heightMeasureSpec) - lp.topMargin, 0), AT_MOST);
-                footerView.measure(widthSpec, heightSpec);
-                int measuredHeight = footerView.getMeasuredHeight();
-                if (measuredHeight > 0 && mFooterHeightStatus.canReplaceWith(DimensionStatus.XmlWrap)) {
-                    mFooterHeightStatus = DimensionStatus.XmlWrap;
-                    mFooterHeight = footerView.getMeasuredHeight() + lp.topMargin;
-                    mFooterExtendHeight = (int) Math.max((mFooterHeight * (mFooterMaxDragRate - 1)), 0);
-                    mRefreshFooter.onInitialized(mKernel, mFooterHeight, mFooterExtendHeight);
-                } else if (measuredHeight <= 0) {
+
+                if (!mHeaderHeightStatus.notifyed) {
+                    mHeaderHeightStatus = mHeaderHeightStatus.notifyed();
+                    mRefreshHeader.onInitialized(mKernel, mHeaderHeight, mHeaderExtendHeight);
+                }
+
+                if (isInEditMode) {
+                    minimumHeight += headerView.getMeasuredHeight();
+                }
+            }
+
+            if (mRefreshFooter != null && mRefreshFooter == child) {
+                final View footerView = mRefreshFooter.getView();
+                final LayoutParams lp = (LayoutParams) footerView.getLayoutParams();
+                final int widthSpec = getChildMeasureSpec(widthMeasureSpec, lp.leftMargin + lp.rightMargin, lp.width);
+                int heightSpec = heightMeasureSpec;
+                if (mFooterHeightStatus.gteReplaceWith(DimensionStatus.XmlLayoutUnNotify)) {
                     heightSpec = makeMeasureSpec(Math.max(mFooterHeight - lp.topMargin, 0), EXACTLY);
                     footerView.measure(widthSpec, heightSpec);
+                } else if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.MatchLayout) {
+                    footerView.measure(widthSpec, heightSpec);
+                } else if (lp.height > 0) {
+                    if (mFooterHeightStatus.canReplaceWith(DimensionStatus.XmlExact)) {
+                        mFooterHeightStatus = DimensionStatus.XmlExact;
+                        mFooterHeight = lp.height + lp.topMargin;
+                        mFooterExtendHeight = (int) Math.max((mFooterHeight * (mFooterMaxDragRate - 1)), 0);
+                        mRefreshFooter.onInitialized(mKernel, mFooterHeight, mFooterExtendHeight);
+                    }
+                    heightSpec = makeMeasureSpec(lp.height - lp.topMargin, EXACTLY);
+                    footerView.measure(widthSpec, heightSpec);
+                } else if (lp.height == WRAP_CONTENT) {
+                    heightSpec = makeMeasureSpec(Math.max(getSize(heightMeasureSpec) - lp.topMargin, 0), AT_MOST);
+                    footerView.measure(widthSpec, heightSpec);
+                    int measuredHeight = footerView.getMeasuredHeight();
+                    if (measuredHeight > 0 && mFooterHeightStatus.canReplaceWith(DimensionStatus.XmlWrap)) {
+                        mFooterHeightStatus = DimensionStatus.XmlWrap;
+                        mFooterHeight = footerView.getMeasuredHeight() + lp.topMargin;
+                        mFooterExtendHeight = (int) Math.max((mFooterHeight * (mFooterMaxDragRate - 1)), 0);
+                        mRefreshFooter.onInitialized(mKernel, mFooterHeight, mFooterExtendHeight);
+                    } else if (measuredHeight <= 0) {
+                        heightSpec = makeMeasureSpec(Math.max(mFooterHeight - lp.topMargin, 0), EXACTLY);
+                        footerView.measure(widthSpec, heightSpec);
+                    }
+                } else if (lp.height == MATCH_PARENT) {
+                    heightSpec = makeMeasureSpec(Math.max(mFooterHeight - lp.topMargin, 0), EXACTLY);
+                    footerView.measure(widthSpec, heightSpec);
+                } else {
+                    footerView.measure(widthSpec, heightSpec);
                 }
-            } else if (lp.height == MATCH_PARENT) {
-                heightSpec = makeMeasureSpec(Math.max(mFooterHeight - lp.topMargin, 0), EXACTLY);
-                footerView.measure(widthSpec, heightSpec);
-            } else {
-                footerView.measure(widthSpec, heightSpec);
+
+                if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Scale && !isInEditMode) {
+                    final int height = Math.max(0, -mSpinner);
+                    heightSpec = makeMeasureSpec(Math.max(height - lp.topMargin, 0), EXACTLY);
+                    footerView.measure(widthSpec, heightSpec);
+                }
+
+                if (!mFooterHeightStatus.notifyed) {
+                    mFooterHeightStatus = mFooterHeightStatus.notifyed();
+                    mRefreshFooter.onInitialized(mKernel, mFooterHeight, mFooterExtendHeight);
+                }
+
+                if (isInEditMode) {
+                    minimumHeight += footerView.getMeasuredHeight();
+                }
             }
 
-            if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Scale && !isInEditMode) {
-                final int height = Math.max(0, -mSpinner);
-                heightSpec = makeMeasureSpec(Math.max(height - lp.topMargin, 0), EXACTLY);
-                footerView.measure(widthSpec, heightSpec);
+            if (mRefreshContent != null && mRefreshContent == child) {
+                final LayoutParams lp = (LayoutParams) mRefreshContent.getLayoutParams();
+                final int widthSpec = getChildMeasureSpec(widthMeasureSpec,
+                        getPaddingLeft() + getPaddingRight() +
+                                lp.leftMargin + lp.rightMargin, lp.width);
+                final int heightSpec = getChildMeasureSpec(heightMeasureSpec,
+                        getPaddingTop() + getPaddingBottom() +
+                                lp.topMargin + lp.bottomMargin +
+                                ((isInEditMode && mRefreshHeader != null && (mEnableHeaderTranslationContent || mRefreshHeader.getSpinnerStyle() == SpinnerStyle.FixedBehind)) ? mHeaderHeight : 0) +
+                                ((isInEditMode && mRefreshFooter != null && (mEnableFooterTranslationContent || mRefreshFooter.getSpinnerStyle() == SpinnerStyle.FixedBehind)) ? mFooterHeight : 0), lp.height);
+                mRefreshContent.measure(widthSpec, heightSpec);
+                mRefreshContent.onInitialHeaderAndFooter(mHeaderHeight, mFooterHeight);
+                minimumHeight += mRefreshContent.getMeasuredHeight();
             }
-
-            if (!mFooterHeightStatus.notifyed) {
-                mFooterHeightStatus = mFooterHeightStatus.notifyed();
-                mRefreshFooter.onInitialized(mKernel, mFooterHeight, mFooterExtendHeight);
-            }
-
-            if (isInEditMode) {
-                minimumHeight += footerView.getMeasuredHeight();
-            }
-        }
-
-        if (mRefreshContent != null) {
-            final LayoutParams lp = (LayoutParams) mRefreshContent.getLayoutParams();
-            final int widthSpec = getChildMeasureSpec(widthMeasureSpec,
-                    getPaddingLeft() + getPaddingRight() +
-                            lp.leftMargin + lp.rightMargin, lp.width);
-            final int heightSpec = getChildMeasureSpec(heightMeasureSpec,
-                    getPaddingTop() + getPaddingBottom() +
-                            lp.topMargin + lp.bottomMargin +
-                            ((isInEditMode && mRefreshHeader != null && (mEnableHeaderTranslationContent || mRefreshHeader.getSpinnerStyle() == SpinnerStyle.FixedBehind)) ? mHeaderHeight : 0) +
-                            ((isInEditMode && mRefreshFooter != null && (mEnableFooterTranslationContent || mRefreshFooter.getSpinnerStyle() == SpinnerStyle.FixedBehind)) ? mFooterHeight : 0), lp.height);
-            mRefreshContent.measure(widthSpec, heightSpec);
-            mRefreshContent.onInitialHeaderAndFooter(mHeaderHeight, mFooterHeight);
-            minimumHeight += mRefreshContent.getMeasuredHeight();
         }
 
         setMeasuredDimension(resolveSize(getSuggestedMinimumWidth(), widthMeasureSpec), resolveSize(minimumHeight, heightMeasureSpec));
@@ -664,58 +668,63 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         final int paddingTop = getPaddingTop();
         final int paddingBottom = getPaddingBottom();
 
-        if (mRefreshContent != null) {
-            boolean isInEditMode = isInEditMode() && mEnablePreviewInEditMode;
-            final LayoutParams lp = (LayoutParams) mRefreshContent.getLayoutParams();
-            int left = paddingLeft + lp.leftMargin;
-            int top = paddingTop + lp.topMargin;
-            int right = left + mRefreshContent.getMeasuredWidth();
-            int bottom = top + mRefreshContent.getMeasuredHeight();
-            if (isInEditMode && mRefreshHeader != null && (mEnableHeaderTranslationContent || mRefreshHeader.getSpinnerStyle() == SpinnerStyle.FixedBehind)) {
-                top = top + mHeaderHeight;
-                bottom = bottom + mHeaderHeight;
-            }
 
-            mRefreshContent.layout(left, top, right, bottom, mIsSkipContentLayout);
-            mIsSkipContentLayout = false;
-        }
-        if (mRefreshHeader != null) {
-            boolean isInEditMode = isInEditMode() && mEnablePreviewInEditMode;
-            final View headerView = mRefreshHeader.getView();
-            final LayoutParams lp = (LayoutParams) headerView.getLayoutParams();
-            int left = lp.leftMargin;
-            int top = lp.topMargin;
-            int right = left + headerView.getMeasuredWidth();
-            int bottom = top + headerView.getMeasuredHeight();
-            if (!isInEditMode) {
-                if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Translate) {
-                    top = top - mHeaderHeight + Math.max(0, mSpinner);
-                    bottom = top + headerView.getMeasuredHeight();
-                } else if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale) {
-                    bottom = top + Math.max(Math.max(0, mSpinner) - lp.bottomMargin, 0);
+        for (int i = 0, len = getChildCount(); i < len; i++) {
+            View child = getChildAt(i);
+
+            if (mRefreshContent != null && mRefreshContent == child) {
+                boolean isInEditMode = isInEditMode() && mEnablePreviewInEditMode;
+                final LayoutParams lp = (LayoutParams) mRefreshContent.getLayoutParams();
+                int left = paddingLeft + lp.leftMargin;
+                int top = paddingTop + lp.topMargin;
+                int right = left + mRefreshContent.getMeasuredWidth();
+                int bottom = top + mRefreshContent.getMeasuredHeight();
+                if (isInEditMode && mRefreshHeader != null && (mEnableHeaderTranslationContent || mRefreshHeader.getSpinnerStyle() == SpinnerStyle.FixedBehind)) {
+                    top = top + mHeaderHeight;
+                    bottom = bottom + mHeaderHeight;
                 }
-            }
-            headerView.layout(left, top, right, bottom);
-        }
-        if (mRefreshFooter != null) {
-            boolean isInEditMode = isInEditMode() && mEnablePreviewInEditMode;
-            final View footerView = mRefreshFooter.getView();
-            final LayoutParams lp = (LayoutParams) footerView.getLayoutParams();
-            final SpinnerStyle style = mRefreshFooter.getSpinnerStyle();
-            int left = lp.leftMargin;
-            int top = lp.topMargin + getMeasuredHeight() - lp.bottomMargin;
 
-            if (isInEditMode
-                    || style == SpinnerStyle.FixedFront
-                    || style == SpinnerStyle.FixedBehind) {
-                top = top - mFooterHeight;
-            } else if (style == SpinnerStyle.Scale || style == SpinnerStyle.Translate) {
-                top = top - Math.max(Math.max(-mSpinner, 0) - lp.topMargin, 0);
+                mRefreshContent.layout(left, top, right, bottom, mIsSkipContentLayout);
+                mIsSkipContentLayout = false;
             }
+            if (mRefreshHeader != null && mRefreshHeader == child) {
+                boolean isInEditMode = isInEditMode() && mEnablePreviewInEditMode;
+                final View headerView = mRefreshHeader.getView();
+                final LayoutParams lp = (LayoutParams) headerView.getLayoutParams();
+                int left = lp.leftMargin;
+                int top = lp.topMargin;
+                int right = left + headerView.getMeasuredWidth();
+                int bottom = top + headerView.getMeasuredHeight();
+                if (!isInEditMode) {
+                    if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Translate) {
+                        top = top - mHeaderHeight + Math.max(0, mSpinner);
+                        bottom = top + headerView.getMeasuredHeight();
+                    } else if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale) {
+                        bottom = top + Math.max(Math.max(0, mSpinner) - lp.bottomMargin, 0);
+                    }
+                }
+                headerView.layout(left, top, right, bottom);
+            }
+            if (mRefreshFooter != null && mRefreshFooter == child) {
+                boolean isInEditMode = isInEditMode() && mEnablePreviewInEditMode;
+                final View footerView = mRefreshFooter.getView();
+                final LayoutParams lp = (LayoutParams) footerView.getLayoutParams();
+                final SpinnerStyle style = mRefreshFooter.getSpinnerStyle();
+                int left = lp.leftMargin;
+                int top = lp.topMargin + getMeasuredHeight() - lp.bottomMargin;
 
-            int right = left + footerView.getMeasuredWidth();
-            int bottom = top + footerView.getMeasuredHeight();
-            footerView.layout(left, top, right, bottom);
+                if (isInEditMode
+                        || style == SpinnerStyle.FixedFront
+                        || style == SpinnerStyle.FixedBehind) {
+                    top = top - mFooterHeight;
+                } else if (style == SpinnerStyle.Scale || style == SpinnerStyle.Translate) {
+                    top = top - Math.max(Math.max(-mSpinner, 0) - lp.topMargin, 0);
+                }
+
+                int right = left + footerView.getMeasuredWidth();
+                int bottom = top + footerView.getMeasuredHeight();
+                footerView.layout(left, top, right, bottom);
+            }
         }
     }
 

@@ -6,3 +6,4 @@ gradle
 /build
 /gradlew
 /gradlew.bat
+/bintrayUpload-key.bat
