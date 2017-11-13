@@ -531,7 +531,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         for (int i = 0, len = getChildCount(); i < len; i++) {
             View child = getChildAt(i);
 
-            if (mRefreshHeader != null && mRefreshHeader == child) {
+            if (mRefreshHeader != null && mRefreshHeader.getView() == child) {
                 final View headerView = mRefreshHeader.getView();
                 final LayoutParams lp = (LayoutParams) headerView.getLayoutParams();
                 final int widthSpec = getChildMeasureSpec(widthMeasureSpec, lp.leftMargin + lp.rightMargin, lp.width);
@@ -586,7 +586,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 }
             }
 
-            if (mRefreshFooter != null && mRefreshFooter == child) {
+            if (mRefreshFooter != null && mRefreshFooter.getView() == child) {
                 final View footerView = mRefreshFooter.getView();
                 final LayoutParams lp = (LayoutParams) footerView.getLayoutParams();
                 final int widthSpec = getChildMeasureSpec(widthMeasureSpec, lp.leftMargin + lp.rightMargin, lp.width);
@@ -641,7 +641,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 }
             }
 
-            if (mRefreshContent != null && mRefreshContent == child) {
+            if (mRefreshContent != null && mRefreshContent.getView() == child) {
                 final LayoutParams lp = (LayoutParams) mRefreshContent.getLayoutParams();
                 final int widthSpec = getChildMeasureSpec(widthMeasureSpec,
                         getPaddingLeft() + getPaddingRight() +
@@ -672,7 +672,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         for (int i = 0, len = getChildCount(); i < len; i++) {
             View child = getChildAt(i);
 
-            if (mRefreshContent != null && mRefreshContent == child) {
+            if (mRefreshContent != null && mRefreshContent.getView() == child) {
                 boolean isInEditMode = isInEditMode() && mEnablePreviewInEditMode;
                 final LayoutParams lp = (LayoutParams) mRefreshContent.getLayoutParams();
                 int left = paddingLeft + lp.leftMargin;
@@ -687,7 +687,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 mRefreshContent.layout(left, top, right, bottom, mIsSkipContentLayout);
                 mIsSkipContentLayout = false;
             }
-            if (mRefreshHeader != null && mRefreshHeader == child) {
+            if (mRefreshHeader != null && mRefreshHeader.getView() == child) {
                 boolean isInEditMode = isInEditMode() && mEnablePreviewInEditMode;
                 final View headerView = mRefreshHeader.getView();
                 final LayoutParams lp = (LayoutParams) headerView.getLayoutParams();
@@ -705,7 +705,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 }
                 headerView.layout(left, top, right, bottom);
             }
-            if (mRefreshFooter != null && mRefreshFooter == child) {
+            if (mRefreshFooter != null && mRefreshFooter.getView() == child) {
                 boolean isInEditMode = isInEditMode() && mEnablePreviewInEditMode;
                 final View footerView = mRefreshFooter.getView();
                 final LayoutParams lp = (LayoutParams) footerView.getLayoutParams();
