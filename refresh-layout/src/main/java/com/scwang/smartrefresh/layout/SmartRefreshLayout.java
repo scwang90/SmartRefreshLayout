@@ -103,7 +103,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     protected boolean mIsBeingDragged;
     protected boolean mVerticalDragged;
     protected boolean mHorizontalDragged;
-    protected boolean mIsSkipContentLayout;
+//    protected boolean mIsSkipContentLayout;
     protected boolean mSuperDispatchTouchEvent;         //父类是否处理触摸事件
     protected Interpolator mReboundInterpolator;
     protected int mFixedHeaderViewId;//固定在头部的视图Id
@@ -684,8 +684,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     bottom = bottom + mHeaderHeight;
                 }
 
-                mRefreshContent.layout(left, top, right, bottom, mIsSkipContentLayout);
-                mIsSkipContentLayout = false;
+                mRefreshContent.layout(left, top, right, bottom, false);
+//                mRefreshContent.layout(left, top, right, bottom, mIsSkipContentLayout);
+//                mIsSkipContentLayout = false;
             }
             if (mRefreshHeader != null && mRefreshHeader.getView() == child) {
                 boolean isInEditMode = isInEditMode() && mEnablePreviewInEditMode;
@@ -1474,7 +1475,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 if (oldSpinner != mSpinner
                         && (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale
                         || mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Translate)) {
-                    mIsSkipContentLayout = true;
+//                    mIsSkipContentLayout = true;
                     mRefreshHeader.getView().requestLayout();
                 }
             }
