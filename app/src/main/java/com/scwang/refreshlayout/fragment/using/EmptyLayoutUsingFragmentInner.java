@@ -4,6 +4,7 @@ package com.scwang.refreshlayout.fragment.using;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -47,12 +48,12 @@ public class EmptyLayoutUsingFragmentInner extends Fragment implements AdapterVi
     private static boolean mIsNeedDemo = true;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_using_emptylayout_inner, container, false);
     }
 
     @Override
-    public void onViewCreated(View root, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View root, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(root, savedInstanceState);
 
         final Toolbar toolbar = (Toolbar)root.findViewById(R.id.toolbar);

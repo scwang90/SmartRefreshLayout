@@ -381,6 +381,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     mRefreshFooter = new RefreshFooterWrapper(view);
                 } else if (mRefreshContent == null) {
                     mRefreshContent = new RefreshContentWrapper(view);
+                } else if (i == 1 && count == 2 && mRefreshFooter == null) {
+                    mEnableLoadmore = mEnableLoadmore || !mManualLoadmore;
+                    mRefreshFooter = new RefreshFooterWrapper(view);
                 }
             }
         }
@@ -1293,6 +1296,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     /**
      * 越界回弹动画
      */
+    @SuppressWarnings("UnusedReturnValue")
     protected ValueAnimator animSpinnerBounce(int bounceSpinner) {
         if (reboundAnimator == null) {
             int duration = mReboundDuration * 2 / 3;
@@ -1433,7 +1437,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      * 移动滚动 Scroll
      * moveSpinner 的取名来自 谷歌官方的 @{@link android.support.v4.widget.SwipeRefreshLayout#moveSpinner(float)}
      */
-    protected void moveSpinner(int spinner, boolean isAnimator) {
+    protected void moveSpinner(final int spinner, boolean isAnimator) {
         if (mSpinner == spinner
                 && (mRefreshHeader == null || !mRefreshHeader.isSupportHorizontalDrag())
                 && (mRefreshFooter == null || !mRefreshFooter.isSupportHorizontalDrag())) {
@@ -1453,24 +1457,45 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             }
         }
         if (mRefreshContent != null) {
-            if (spinner > 0) {
+            Integer tspinner = null;
+            if (spinner >= 0) {
                 if (mEnableHeaderTranslationContent || mRefreshHeader == null || mRefreshHeader.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
-                    mRefreshContent.moveSpinner(spinner);
-                    if (mHeaderBackgroundColor != 0) {
-                        invalidate();
-                    }
-                }
-            } else {
-                if (mEnableFooterTranslationContent || mRefreshFooter == null || mRefreshFooter.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
-                    mRefreshContent.moveSpinner(spinner);
-                    if (mHeaderBackgroundColor != 0) {
-                        invalidate();
-                    }
+                    tspinner = spinner;
+                } else if (oldSpinner < 0) {
+                    tspinner = 0;
                 }
             }
+            if (spinner <= 0) {
+                if (mEnableFooterTranslationContent || mRefreshFooter == null || mRefreshFooter.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
+                    tspinner = spinner;
+                } else if (oldSpinner > 0) {
+                    tspinner = 0;
+                }
+            }
+            if (tspinner != null) {
+                mRefreshContent.moveSpinner(tspinner);
+                if ((mHeaderBackgroundColor != 0 && (tspinner >= 0 || oldSpinner > 0)) ||
+                    (mFooterBackgroundColor != 0 && (tspinner <= 0 || oldSpinner < 0))) {
+                    invalidate();
+                }
+            }
+//            if (spinner > 0) {
+//                if (mEnableHeaderTranslationContent || mRefreshHeader == null || mRefreshHeader.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
+//                    mRefreshContent.moveSpinner(spinner);
+//                    if (mHeaderBackgroundColor != 0) {
+//                        invalidate();
+//                    }
+//                }
+//            } else {
+//                if (mEnableFooterTranslationContent || mRefreshFooter == null || mRefreshFooter.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
+//                    mRefreshContent.moveSpinner(spinner);
+//                    if (mFooterBackgroundColor != 0) {
+//                        invalidate();
+//                    }
+//                }
+//            }
         }
-        if ((spinner > 0 || oldSpinner > 0) && mRefreshHeader != null) {
-            spinner = Math.max(spinner, 0);
+        if ((spinner >= 0 || oldSpinner > 0) && mRefreshHeader != null) {
             if (mEnableRefresh || (mState == RefreshState.RefreshFinish && isAnimator)) {
                 if (oldSpinner != mSpinner
                         && (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale
@@ -1480,10 +1505,10 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 }
             }
 
-            final int offset = spinner;
+            final int offset = Math.max(spinner, 0);
             final int headerHeight = mHeaderHeight;
             final int extendHeight = mHeaderExtendHeight;
-            final float percent = 1f * spinner / mHeaderHeight;
+            final float percent = 1f * offset / mHeaderHeight;
             if (isAnimator) {
                 mRefreshHeader.onReleasing(percent, offset, headerHeight, extendHeight);
                 if (mOnMultiPurposeListener != null) {
@@ -1502,8 +1527,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 }
             }
         }
-        if ((spinner < 0 || oldSpinner < 0) && mRefreshFooter != null) {
-            spinner = Math.min(spinner, 0);
+        if ((spinner <= 0 || oldSpinner < 0) && mRefreshFooter != null) {
             if (mEnableLoadmore || (mState == RefreshState.LoadFinish && isAnimator)) {
                 if (oldSpinner != mSpinner
                         && (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Scale
@@ -1513,10 +1537,10 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 }
             }
 
-            final int offset = -spinner;
+            final int offset = -Math.min(spinner, 0);
             final int footerHeight = mFooterHeight;
             final int extendHeight = mFooterExtendHeight;
-            final float percent = -spinner * 1f / mFooterHeight;
+            final float percent = offset * 1f / mFooterHeight;
             if (isAnimator) {
                 mRefreshFooter.onPullReleasing(percent, offset, footerHeight, extendHeight);
                 if (mOnMultiPurposeListener != null) {

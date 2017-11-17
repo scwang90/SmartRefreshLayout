@@ -3,6 +3,7 @@ package com.scwang.refreshlayout.fragment.using;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -44,12 +45,12 @@ public class NestedScrollUsingFragmentIntegral extends Fragment implements Adapt
     private BaseRecyclerAdapter<Item> mAdapter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_using_nestedscroll_integral, container, false);
     }
 
     @Override
-    public void onViewCreated(final View root, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull final View root, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(root, savedInstanceState);
 
         Toolbar toolbar = (Toolbar) root.findViewById(R.id.toolbar);

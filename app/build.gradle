@@ -49,31 +49,31 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 
     compile project(':refresh-footer')
     compile project(':refresh-header')
     compile project(':refresh-layout')
 
-    compile 'com.android.support:design:27.0.0'
-    compile 'com.android.support:cardview-v7:27.0.0'
+    compile 'com.android.support:design:27.0.1'
+    compile 'com.android.support:cardview-v7:27.0.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.flyco.roundview:FlycoRoundView_Lib:1.1.4@aar'
-    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.22'
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.31'
     compile 'com.github.czy1121:loadinglayout:1.0.1'
     compile 'com.github.mmin18:realtimeblurview:1.0.6'
-    compile 'com.google.code.gson:gson:2.7'
+    compile 'com.google.code.gson:gson:2.8.0'
     compile 'com.wang.avi:library:2.1.3'
     compile 'com.youth.banner:banner:1.4.9'  //最新版本
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'jp.wasabeef:recyclerview-animators:2.2.6'
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
-//    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-alpha-9'
-//    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4-alpha-9'
+//    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-alpha-12'
+//    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4-alpha-12'
     testCompile 'junit:junit:4.12'
 
-    compile 'com.github.bumptech.glide:glide:4.0.0-RC1'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0-RC1'
+    compile 'com.github.bumptech.glide:glide:4.2.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.2.0'
 }
