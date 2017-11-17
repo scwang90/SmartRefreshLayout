@@ -45,7 +45,7 @@ SmartRefreshLayout 的Header和Footer都有多种变换方式，适应不同风�
 
 **FixedBehind 固定在后面** 和 **Scale 拉伸形变**
 
-![](gif_practive_feedlist.gif) ![](gif_Circle.gif)
+![](gif_practive_feedlist.gif) ![](gif_BezierCircle.gif)
 
 **Screen 全屏幕** 和 **Translate 平行移动**
 
