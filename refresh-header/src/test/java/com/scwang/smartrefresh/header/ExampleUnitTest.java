@@ -2,6 +2,10 @@ package com.scwang.smartrefresh.header;
 
 import org.junit.Test;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import static org.junit.Assert.*;
 
 /**
@@ -12,6 +16,7 @@ import static org.junit.Assert.*;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
+        System.out.println(new SimpleDateFormat("'Last update' M-d HH:mm", Locale.CHINA).format(new Date()));
         assertEquals(4, 2 + 2);
     }
 }

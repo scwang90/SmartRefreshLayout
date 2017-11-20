@@ -62,6 +62,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     public static String REFRESH_HEADER_FINISH = "刷新完成";
     public static String REFRESH_HEADER_FAILED = "刷新失败";
     public static String REFRESH_HEADER_LASTTIME = "上次更新 M-d HH:mm";
+//    public static String REFRESH_HEADER_LASTTIME = "'Last update' M-d HH:mm";
 
     protected String KEY_LAST_UPDATE_TIME = "LAST_UPDATE_TIME";
 
