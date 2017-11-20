@@ -33,7 +33,7 @@ public class RefreshActivity extends Activity {
         refreshLayout.setEnableOverScrollDrag(true);//是否启用越界拖动（仿苹果效果）1.0.4-6
         refreshLayout.setDisableContentWhenRefresh(false);//是否在刷新的时候禁止列表的操作
         refreshLayout.setDisableContentWhenLoading(false);//是否在加载的时候禁止列表的操作
-        refreshLayout.setOnMultiPurposeListener(new OnMultiPurposeListener());//设置多功能监听器
+        refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener());//设置多功能监听器
         refreshLayout.setScrollBoundaryDecider(new ScrollBoundaryDecider());//设置滚动边界判断
         refreshLayout.setRefreshHeader(new ClassicsHeader(this));//设置Header
         refreshLayout.setRefreshFooter(new ClassicsFooter(this));//设置Footer
