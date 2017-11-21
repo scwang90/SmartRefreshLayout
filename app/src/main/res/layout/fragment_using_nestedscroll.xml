@@ -38,8 +38,7 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:srlPrimaryColor="@color/colorPrimary"
-        app:srlAccentColor="@android:color/white"
-        app:srlEnableLoadmore="false">
+        app:srlAccentColor="@android:color/white">
         <com.scwang.smartrefresh.header.PhoenixHeader
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

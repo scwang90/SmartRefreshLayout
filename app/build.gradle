@@ -70,8 +70,8 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'jp.wasabeef:recyclerview-animators:2.2.6'
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
-//    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-alpha-12'
-//    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4-alpha-12'
+//    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-alpha-6'
+//    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4-alpha-6'
     testCompile 'junit:junit:4.12'
 
     compile 'com.github.bumptech.glide:glide:4.2.0'

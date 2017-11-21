@@ -22,6 +22,8 @@ import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.activity.FragmentActivity;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 
 import java.util.Arrays;
 
@@ -46,9 +48,17 @@ public class NestedScrollUsingFragment extends Fragment implements AdapterView.O
         }
     }
 
+    private static boolean mNestedPager = false;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_using_nestedscroll, container, false);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mNestedPager = false;
     }
 
     @Override
@@ -63,11 +73,12 @@ public class NestedScrollUsingFragment extends Fragment implements AdapterView.O
             }
         });
 
+        final BaseRecyclerAdapter<Item> adapter;
         RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recyclerView);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), VERTICAL));
-        recyclerView.setAdapter(new BaseRecyclerAdapter<Item>(Arrays.asList(Item.values()), simple_list_item_2,NestedScrollUsingFragment.this) {
+        recyclerView.setAdapter(adapter = new BaseRecyclerAdapter<Item>(Arrays.asList(Item.values()), simple_list_item_2, NestedScrollUsingFragment.this) {
             @Override
             protected void onBindViewHolder(SmartViewHolder holder, Item model, int position) {
                 holder.text(android.R.id.text1, model.name());
@@ -75,6 +86,33 @@ public class NestedScrollUsingFragment extends Fragment implements AdapterView.O
                 holder.textColorId(android.R.id.text2, R.color.colorTextAssistant);
             }
         });
+        if (mNestedPager) {
+            final Runnable loadmore = new Runnable() {
+                @Override
+                public void run() {
+                    adapter.loadmore(Arrays.asList(Item.values()));
+                    adapter.loadmore(Arrays.asList(Item.values()));
+                    adapter.loadmore(Arrays.asList(Item.values()));
+                    adapter.loadmore(Arrays.asList(Item.values()));
+                    adapter.loadmore(Arrays.asList(Item.values()));
+                    adapter.loadmore(Arrays.asList(Item.values()));
+                    adapter.loadmore(Arrays.asList(Item.values()));
+                }
+            };
+            RefreshLayout refreshLayout = root.findViewById(R.id.refreshLayout);
+            refreshLayout.setEnableAutoLoadmore(true);
+            refreshLayout.setEnableNestedScroll(true);
+            refreshLayout.setEnableLoadmore(true);
+            refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+                @Override
+                public void onLoadmore(RefreshLayout refreshlayout) {
+                    refreshlayout.getLayout().postDelayed(loadmore, 2000);
+                    refreshlayout.finishLoadmore(2000);
+                }
+            });
+            loadmore.run();
+        }
+
         /**
          * 监听 AppBarLayout 的关闭和开启 ActionButton 设置关闭隐藏动画
          */
@@ -101,6 +139,7 @@ public class NestedScrollUsingFragment extends Fragment implements AdapterView.O
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        mNestedPager = true;
         Item item = Item.values()[position];
         if (Activity.class.isAssignableFrom(item.clazz)) {
             startActivity(new Intent(getContext(), item.clazz));

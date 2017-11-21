@@ -843,9 +843,15 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             //为 RefreshContent 传递当前触摸事件的坐标，用于智能判断对应坐标位置View的滚动边界和相关信息
             switch (action) {
                 case MotionEvent.ACTION_DOWN:
+                    mVelocityTracker.clear();
+                    mVelocityTracker.addMovement(e);
                     mRefreshContent.onActionDown(e);
                     break;
+                case MotionEvent.ACTION_MOVE:
+                    mVelocityTracker.addMovement(e);
+                    break;
                 case MotionEvent.ACTION_UP:
+                    mVelocityTracker.computeCurrentVelocity(1000, mMaximumVelocity);
                 case MotionEvent.ACTION_CANCEL:
                     mRefreshContent.onActionUpOrCancel();
             }
@@ -859,14 +865,16 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             int totalUnconsumed = this.mTotalUnconsumed;
             boolean ret = superDispatchTouchEvent(e);
             //noinspection ConstantConditions
-            if (action == MotionEvent.ACTION_MOVE && totalUnconsumed == mTotalUnconsumed) {
-                final int offsetX = (int) mLastTouchX;
-                final int offsetMax = getWidth();
-                final float percentX = mLastTouchX / offsetMax;
-                if (mSpinner > 0 && mRefreshHeader != null && mRefreshHeader.isSupportHorizontalDrag()) {
-                    mRefreshHeader.onHorizontalDrag(percentX, offsetX, offsetMax);
-                } else if (mSpinner < 0 && mRefreshFooter != null && mRefreshFooter.isSupportHorizontalDrag()) {
-                    mRefreshFooter.onHorizontalDrag(percentX, offsetX, offsetMax);
+            if (action == MotionEvent.ACTION_MOVE) {
+                if (totalUnconsumed == mTotalUnconsumed) {
+                    final int offsetX = (int) mLastTouchX;
+                    final int offsetMax = getWidth();
+                    final float percentX = mLastTouchX / offsetMax;
+                    if (mSpinner > 0 && mRefreshHeader != null && mRefreshHeader.isSupportHorizontalDrag()) {
+                        mRefreshHeader.onHorizontalDrag(percentX, offsetX, offsetMax);
+                    } else if (mSpinner < 0 && mRefreshFooter != null && mRefreshFooter.isSupportHorizontalDrag()) {
+                        mRefreshFooter.onHorizontalDrag(percentX, offsetX, offsetMax);
+                    }
                 }
             }
             return ret;
@@ -885,11 +893,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 mLastSpinner = 0;
                 mTouchSpinner = mSpinner;
                 mIsBeingDragged = false;
-
-                mVelocityTracker.clear();
-                mVelocityTracker.addMovement(e);
                 mScroller.forceFinished(true);
-
                 mSuperDispatchTouchEvent = superDispatchTouchEvent(e);
                 return true;
             case MotionEvent.ACTION_MOVE:
@@ -959,19 +963,10 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                         }
                     }
                     moveSpinnerInfinitely(spinner);
-                    if (mEnableAutoLoadmore && mEnableLoadmore
-                            && spinner < 0
-                            && mState != RefreshState.Refreshing
-                            && mState != RefreshState.Loading
-                            && mState != RefreshState.LoadFinish
-                            && !mLoadmoreFinished) {
-                        setStateDirectLoding();
-                    }
                     return true;
                 }
                 break;
             case MotionEvent.ACTION_UP:
-                mVelocityTracker.computeCurrentVelocity(1000, mMaximumVelocity);
             case MotionEvent.ACTION_CANCEL:
                 mIsBeingDragged = false;//关闭拖动状态
                 mVerticalDragged = false;//关闭竖直拖动
@@ -1000,15 +995,15 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
     protected boolean superDispatchTouchEvent(MotionEvent ev) {
         if (ev.getActionMasked() == MotionEvent.ACTION_UP) {
-                float velocity = -mVelocityTracker.getYVelocity();
-                if (Math.abs(velocity) > mMinimumVelocity) {
-                    if (mSpinner == 0 && mTouchSpinner == 0) {
-                        mVerticalPermit = false;//关闭竖直通行证
-                        mScroller.fling(0, getScrollY(), 0, (int) velocity, 0, 0, -Integer.MAX_VALUE, Integer.MAX_VALUE);
-                        mScroller.computeScrollOffset();
-                        invalidate();
-                    }
+            float velocity = -mVelocityTracker.getYVelocity();
+            if (Math.abs(velocity) > mMinimumVelocity) {
+                if (mSpinner == 0 && mTouchSpinner == 0) {
+                    mVerticalPermit = false;//关闭竖直通行证
+                    mScroller.fling(0, getScrollY(), 0, (int) velocity, 0, 0, -Integer.MAX_VALUE, Integer.MAX_VALUE);
+                    mScroller.computeScrollOffset();
+                    invalidate();
                 }
+            }
         }
         return super.dispatchTouchEvent(ev);
     }
@@ -1395,41 +1390,49 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         return true;
     }
 
-    protected void moveSpinnerInfinitely(float dy) {
-        if (mState == RefreshState.Refreshing && dy >= 0) {
-            if (dy < mHeaderHeight) {
-                moveSpinner((int) dy, false);
+    protected void moveSpinnerInfinitely(float spinner) {
+        if (mState == RefreshState.Refreshing && spinner >= 0) {
+            if (spinner < mHeaderHeight) {
+                moveSpinner((int) spinner, false);
             } else {
                 final double M = mHeaderExtendHeight;
                 final double H = Math.max(mScreenHeightPixels * 4 / 3, getHeight()) - mHeaderHeight;
-                final double x = Math.max(0, (dy - mHeaderHeight) * mDragRate);
+                final double x = Math.max(0, (spinner - mHeaderHeight) * mDragRate);
                 final double y = Math.min(M * (1 - Math.pow(100, -x / H)), x);// 公式 y = M(1-40^(-x/H))
                 moveSpinner((int) y + mHeaderHeight, false);
             }
-        } else if (dy < 0 && (mState == RefreshState.Loading
+        } else if (spinner < 0 && (mState == RefreshState.Loading
                 || (mEnableFooterFollowWhenLoadFinished && mLoadmoreFinished)
                 || (mEnableAutoLoadmore && mEnableLoadmore && !mLoadmoreFinished))) {
-            if (dy > -mFooterHeight) {
-                moveSpinner((int) dy, false);
+            if (spinner > -mFooterHeight) {
+                moveSpinner((int) spinner, false);
             } else {
                 final double M = mFooterExtendHeight;
                 final double H = Math.max(mScreenHeightPixels * 4 / 3, getHeight()) - mFooterHeight;
-                final double x = -Math.min(0, (dy + mHeaderHeight) * mDragRate);
+                final double x = -Math.min(0, (spinner + mHeaderHeight) * mDragRate);
                 final double y = -Math.min(M * (1 - Math.pow(100, -x / H)), x);// 公式 y = M(1-40^(-x/H))
                 moveSpinner((int) y - mFooterHeight, false);
             }
-        } else if (dy >= 0) {
+        } else if (spinner >= 0) {
             final double M = mHeaderExtendHeight + mHeaderHeight;
             final double H = Math.max(mScreenHeightPixels / 2, getHeight());
-            final double x = Math.max(0, dy * mDragRate);
+            final double x = Math.max(0, spinner * mDragRate);
             final double y = Math.min(M * (1 - Math.pow(100, -x / H)), x);// 公式 y = M(1-40^(-x/H))
             moveSpinner((int) y, false);
         } else {
             final double M = mFooterExtendHeight + mFooterHeight;
             final double H = Math.max(mScreenHeightPixels / 2, getHeight());
-            final double x = -Math.min(0, dy * mDragRate);
+            final double x = -Math.min(0, spinner * mDragRate);
             final double y = -Math.min(M * (1 - Math.pow(100, -x / H)), x);// 公式 y = M(1-40^(-x/H))
             moveSpinner((int) y, false);
+        }
+        if (mEnableAutoLoadmore && mEnableLoadmore
+                && spinner < 0
+                && mState != RefreshState.Refreshing
+                && mState != RefreshState.Loading
+                && mState != RefreshState.LoadFinish
+                && !mLoadmoreFinished) {
+            setStateDirectLoding();
         }
     }
 
