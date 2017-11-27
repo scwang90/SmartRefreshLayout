@@ -1,6 +1,6 @@
 # 更新日志
 
-## V 1.0.4 (开发中)  
+## V 1.0.4
 <!-- >添加：类似淘宝二楼的二级下拉刷新 -->
 >添加：finishLoadmoreWithNoMoreData 方法 完成加载并标记没有更多数据  
 >添加：resetNoMoreData 方法 恢复没有更多数据的原始状态  

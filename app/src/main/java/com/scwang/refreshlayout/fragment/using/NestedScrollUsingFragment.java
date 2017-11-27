@@ -100,8 +100,11 @@ public class NestedScrollUsingFragment extends Fragment implements AdapterView.O
                 }
             };
             RefreshLayout refreshLayout = root.findViewById(R.id.refreshLayout);
-            refreshLayout.setEnableAutoLoadmore(true);
-            refreshLayout.setEnableNestedScroll(true);
+            refreshLayout.setDisableContentWhenLoading(true);
+            refreshLayout.setEnableLoadmoreWhenContentNotFull(true);
+            refreshLayout.setEnableScrollContentWhenLoaded(true);
+//            refreshLayout.setEnableAutoLoadmore(true);
+//            refreshLayout.setEnableNestedScroll(true);
             refreshLayout.setEnableLoadmore(true);
             refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
                 @Override
@@ -140,7 +143,7 @@ public class NestedScrollUsingFragment extends Fragment implements AdapterView.O
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         mNestedPager = true;
-        Item item = Item.values()[position];
+        Item item = Item.values()[position%Item.values().length];
         if (Activity.class.isAssignableFrom(item.clazz)) {
             startActivity(new Intent(getContext(), item.clazz));
         } else if (Fragment.class.isAssignableFrom(item.clazz)) {

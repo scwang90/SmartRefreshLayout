@@ -91,6 +91,12 @@ public interface RefreshKernel {
      * 请求事件
      */
     RefreshKernel requestFooterNeedTouchEventWhenLoading(boolean request);
+
+    /**
+     * 请求设置默认内容滚动设置
+     */
+    RefreshKernel requestDefaultHeaderTranslationContent(boolean translation);
+
     /**
      * 请求重新测量
      */

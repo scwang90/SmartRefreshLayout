@@ -136,6 +136,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
     protected boolean mManualLoadmore = false;//是否手动设置过Loadmore，用于智能开启
     protected boolean mManualNestedScrolling = false;//是否手动设置过 NestedScrolling，用于智能开启
+    protected boolean mManualHeaderTranslationContent = false;//是否手动设置过内容视图拖动效果
     //</editor-fold>
 
     //<editor-fold desc="监听属性">
@@ -311,6 +312,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
         mManualLoadmore = ta.hasValue(R.styleable.SmartRefreshLayout_srlEnableLoadmore);
         mManualNestedScrolling = ta.hasValue(R.styleable.SmartRefreshLayout_srlEnableNestedScrolling);
+        mManualHeaderTranslationContent = ta.hasValue(R.styleable.SmartRefreshLayout_srlEnableHeaderTranslationContent);
         mHeaderHeightStatus = ta.hasValue(R.styleable.SmartRefreshLayout_srlHeaderHeight) ? DimensionStatus.XmlLayoutUnNotify : mHeaderHeightStatus;
         mFooterHeightStatus = ta.hasValue(R.styleable.SmartRefreshLayout_srlFooterHeight) ? DimensionStatus.XmlLayoutUnNotify : mFooterHeightStatus;
 
@@ -1169,10 +1171,10 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             }
         };
         notifyStateChanged(RefreshState.LoadReleased);
-        ValueAnimator animator = animSpinner(-mFooterHeight);
         if (mRefreshFooter != null) {
             mRefreshFooter.onLoadmoreReleased(this, mFooterHeight, mFooterExtendHeight);
         }
+        ValueAnimator animator = animSpinner(-mFooterHeight);
         if (animator != null && animator == reboundAnimator) {
             animator.addListener(listener);
         } else {
@@ -2003,6 +2005,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     @Override
     public SmartRefreshLayout setEnableHeaderTranslationContent(boolean enable) {
         this.mEnableHeaderTranslationContent = enable;
+        this.mManualHeaderTranslationContent = true;
         return this;
     }
 
@@ -2832,6 +2835,14 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         @Override
         public RefreshKernel requestFooterNeedTouchEventWhenLoading(boolean request) {
             mFooterNeedTouchEventWhenLoading = request;
+            return this;
+        }
+        @Override
+        public RefreshKernel requestDefaultHeaderTranslationContent(boolean translation) {
+            if (!mManualHeaderTranslationContent) {
+                mManualHeaderTranslationContent = true;
+                mEnableHeaderTranslationContent = translation;
+            }
             return this;
         }
         @Override
