@@ -57,8 +57,8 @@ dependencies {
     compile project(':refresh-header')
     compile project(':refresh-layout')
 
-    compile 'com.android.support:design:27.0.1'
-    compile 'com.android.support:cardview-v7:27.0.1'
+    compile 'com.android.support:design:27.0.2'
+    compile 'com.android.support:cardview-v7:27.0.2'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.flyco.roundview:FlycoRoundView_Lib:1.1.4@aar'
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.31'

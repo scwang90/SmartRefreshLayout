@@ -31,7 +31,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testCompile 'junit:junit:4.12'
-    provided 'com.android.support:support-compat:27.0.1'
+    provided 'com.android.support:support-compat:27.0.2'
     provided project(':refresh-layout')
 }
 

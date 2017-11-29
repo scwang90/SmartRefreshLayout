@@ -247,6 +247,11 @@ public interface RefreshLayout {
     RefreshLayout finishLoadmore(int delayed, boolean success);
 
     /**
+     * 完成加载
+     */
+    RefreshLayout finishLoadmore(int delayed, boolean success, boolean noMoreData);
+
+    /**
      * 完成加载并标记没有更多数据
      */
     RefreshLayout finishLoadmoreWithNoMoreData();
