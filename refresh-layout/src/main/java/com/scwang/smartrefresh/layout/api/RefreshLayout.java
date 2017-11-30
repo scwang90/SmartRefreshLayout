@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
 
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnMultiPurposeListener;
@@ -149,6 +148,11 @@ public interface RefreshLayout {
      * 设置是否在加载更多完成之后滚动内容显示新数据
      */
     RefreshLayout setEnableScrollContentWhenLoaded(boolean enable);
+
+    /**
+     * 是否在刷新完成之后滚动内容显示新数据
+     */
+    RefreshLayout setEnableScrollContentWhenRefreshed(boolean enable);
 
     /**
      * 设置在内容不满一页的时候，是否可以上拉加载更多

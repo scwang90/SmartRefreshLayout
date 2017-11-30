@@ -26,12 +26,14 @@ public interface RefreshContent {
     void onActionDown(MotionEvent e);
     void onActionUpOrCancel();
 
-    boolean fling(int velocity);
+    void fling(int velocity);
     void setupComponent(RefreshKernel kernel, View fixedHeader, View fixedFooter);
     void onInitialHeaderAndFooter(int headerHeight, int footerHeight);
     void setScrollBoundaryDecider(ScrollBoundaryDecider boundary);
 
     void setEnableLoadmoreWhenContentNotFull(boolean enable);
 
-    AnimatorUpdateListener onLoadingFinish(RefreshKernel kernel, int footerHeight, int startDelay, int reboundDuration);
+    AnimatorUpdateListener scrollContentWhenLoaded(RefreshKernel kernel, int startDelay, int reboundDuration);
+
+    AnimatorUpdateListener scrollContentWhenRefreshed(RefreshKernel kernel, int startDelay, int duration);
 }

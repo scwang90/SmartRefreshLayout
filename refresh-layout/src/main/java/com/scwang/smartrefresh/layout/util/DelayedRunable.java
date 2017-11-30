@@ -12,9 +12,12 @@ public class DelayedRunable implements Runnable {
     }
     @Override
     public void run() {
-        if (runnable != null) {
-            runnable.run();
-            runnable = null;
+        try {
+            if (runnable != null) {
+                runnable.run();
+                runnable = null;
+            }
+        } catch (Throwable ignored) {
         }
     }
 }

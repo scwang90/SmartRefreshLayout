@@ -79,7 +79,7 @@ public class RepastPracticeActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             refreshlayout.finishRefresh();
-                            refreshlayout.setLoadmoreFinished(false);//恢复上拉状态
+                            refreshlayout.resetNoMoreData();//恢复上拉状态
                         }
                     }, 2000);
                 }
@@ -89,10 +89,11 @@ public class RepastPracticeActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             mAdapter.loadmore(loadModels());
-                            refreshlayout.finishLoadmore();
                             if (mAdapter.getCount() > 12) {
                                 Toast.makeText(getBaseContext(), "数据全部加载完毕", Toast.LENGTH_SHORT).show();
-                                refreshlayout.setLoadmoreFinished(true);//设置之后，将不会再触发加载事件
+                                refreshlayout.finishLoadmoreWithNoMoreData();//设置之后，将不会再触发加载事件
+                            } else {
+                                refreshlayout.finishLoadmore();
                             }
                         }
                     }, 1000);

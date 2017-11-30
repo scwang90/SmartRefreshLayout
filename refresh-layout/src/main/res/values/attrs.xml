@@ -48,6 +48,7 @@
         <attr name="srlEnablePureScrollMode" format="boolean"/>
         <attr name="srlEnableNestedScrolling" format="boolean"/>
         <attr name="srlEnableScrollContentWhenLoaded" format="boolean"/>
+        <attr name="srlEnableScrollContentWhenRefreshed" format="boolean"/>
         <attr name="srlEnableLoadmoreWhenContentNotFull" format="boolean"/>
         <attr name="srlEnableFooterFollowWhenLoadFinished" format="boolean"/>
         <attr name="srlEnableOverScrollDrag" format="boolean"/>

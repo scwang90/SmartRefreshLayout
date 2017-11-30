@@ -60,7 +60,7 @@ public class BasicUsingActivity extends AppCompatActivity {
                     public void run() {
                         mAdapter.refresh(initData());
                         refreshlayout.finishRefresh();
-                        refreshlayout.setLoadmoreFinished(false);
+                        refreshlayout.resetNoMoreData();
                     }
                 }, 2000);
             }
@@ -72,10 +72,11 @@ public class BasicUsingActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         mAdapter.loadmore(initData());
-                        refreshlayout.finishLoadmore();
                         if (mAdapter.getItemCount() > 60) {
                             Toast.makeText(getApplication(), "数据全部加载完毕", Toast.LENGTH_SHORT).show();
-                            refreshlayout.setLoadmoreFinished(true);//将不会再次触发加载更多事件
+                            refreshlayout.finishLoadmoreWithNoMoreData();//将不会再次触发加载更多事件
+                        } else {
+                            refreshlayout.finishLoadmore();
                         }
                     }
                 }, 2000);
