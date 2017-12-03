@@ -14,14 +14,31 @@
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
-        app:srlEnableRefresh="false"
-        app:srlEnableLoadmore="false">
+        app:srlPrimaryColor="@color/colorPrimary"
+        app:srlEnableRefresh="true"
+        app:srlEnableLoadmore="true">
+        <com.scwang.refreshlayout.widget.TwoLevelHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/twoLevel">
+            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srlClassicsSpinnerStyle="Translate"/>
+             <ImageView
+                 android:id="@+id/image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/app_name"
+                android:src="@mipmap/image_secondfloor"
+                android:scaleType="centerCrop"/>
+        </com.scwang.refreshlayout.widget.TwoLevelHeader>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:overScrollMode="never"
+            android:background="@android:color/white"
             tools:listitem="@android:layout/simple_list_item_2"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 

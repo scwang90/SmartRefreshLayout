@@ -121,7 +121,7 @@ public class FalsifyHeader extends View implements RefreshHeader {
     @Override
     public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
         if (mRefreshKernel != null) {
-            mRefreshKernel.resetStatus();
+            mRefreshKernel.setState(RefreshState.None);
         }
     }
 

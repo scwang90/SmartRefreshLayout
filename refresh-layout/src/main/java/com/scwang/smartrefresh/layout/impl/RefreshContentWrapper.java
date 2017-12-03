@@ -202,14 +202,8 @@ public class RefreshContentWrapper implements RefreshContent {
     }
 
     @Override
-    public void layout(int left, int top, int right, int bottom, boolean skip) {
-        if (!skip
-                || mContentView.getLeft() != left
-                || mContentView.getTop() != top
-                || mContentView.getRight() != right
-                || mContentView.getBottom() != bottom) {
-            mContentView.layout(left, top, right, bottom);
-        }
+    public void layout(int left, int top, int right, int bottom) {
+        mContentView.layout(left, top, right, bottom);
     }
 
     @Override
@@ -306,71 +300,29 @@ public class RefreshContentWrapper implements RefreshContent {
     }
 
     @Override
-    public AnimatorUpdateListener scrollContentWhenLoaded(final RefreshKernel kernel, int startDelay, final int duration) {
-        if (mScrollableView == null || !canScrollDown(mScrollableView)) {
-            return null;
-        }
-        final int spinner = kernel.getSpinner();
-        if (mScrollableView instanceof AbsListView && !(mScrollableView instanceof ListView) && Build.VERSION.SDK_INT < 19) {
-            kernel.getRefreshLayout().getLayout().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    ((AbsListView) mScrollableView).smoothScrollBy(-spinner, duration);
-                }
-            }, duration > 0 ? startDelay : Math.max(startDelay - 1000, 0));
-            return null;
-        }
-        return new AnimatorUpdateListener() {
-            int lastValue = spinner;
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                int value = (int) animation.getAnimatedValue();
-                try {
-                    if (mScrollableView instanceof AbsListView) {
-                        scrollListBy((AbsListView) mScrollableView, value - lastValue);
-                    } else {
-                        mScrollableView.scrollBy(0, value - lastValue);
+    public AnimatorUpdateListener scrollContentWhenFinished(final int spinner) {
+        if (mScrollableView != null && spinner != 0) {
+            if ((spinner < 0 && canScrollDown(mScrollableView)) || (spinner > 0 && canScrollUp(mScrollableView))) {
+                return new AnimatorUpdateListener() {
+                    int lastValue = spinner;
+                    @Override
+                    public void onAnimationUpdate(ValueAnimator animation) {
+                        int value = (int) animation.getAnimatedValue();
+                        try {
+                            if (mScrollableView instanceof AbsListView) {
+                                scrollListBy((AbsListView) mScrollableView, value - lastValue);
+                            } else {
+                                mScrollableView.scrollBy(0, value - lastValue);
+                            }
+                        } catch (Throwable ignored) {
+                            //根据用户反馈，此处可能会有BUG
+                        }
+                        lastValue = value;
                     }
-                } catch (Throwable ignored) {
-                    //根据用户反馈，此处可能会有BUG
-                }
-                lastValue = value;
+                };
             }
-        };
-    }
-
-    @Override
-    public AnimatorUpdateListener scrollContentWhenRefreshed(final RefreshKernel kernel, int startDelay, final int duration) {
-        if (mScrollableView == null || !canScrollUp(mScrollableView)) {
-            return null;
         }
-        final int spinner = kernel.getSpinner();
-        if (mScrollableView instanceof AbsListView && !(mScrollableView instanceof ListView) && Build.VERSION.SDK_INT < 19) {
-            kernel.getRefreshLayout().getLayout().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    ((AbsListView) mScrollableView).smoothScrollBy(-spinner, duration);
-                }
-            }, duration > 0 ? startDelay : Math.max(startDelay - 1000, 0));
-            return null;
-        }
-        return new AnimatorUpdateListener() {
-            int lastValue = spinner;
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                int value = (int) animation.getAnimatedValue();
-                try {
-                    if (mScrollableView instanceof AbsListView) {
-                        scrollListBy((AbsListView) mScrollableView, value - lastValue);
-                    } else {
-                        mScrollableView.scrollBy(0, value - lastValue);
-                    }
-                } catch (Throwable ignored) {
-                    //根据用户反馈，此处可能会有BUG
-                }
-                lastValue = value;
-            }
-        };
+        return null;
     }
     //</editor-fold>
 
@@ -410,7 +362,7 @@ public class RefreshContentWrapper implements RefreshContent {
             final int newTop = firstView.getTop() - y;
             ((ListView) listView).setSelectionFromTop(firstPosition, newTop);
         } else {
-            listView.scrollBy(0, y);
+            listView.smoothScrollBy(y, 0);
         }
     }
     //</editor-fold>

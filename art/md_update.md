@@ -1,12 +1,12 @@
 # 更新日志
 
-## V 1.0.5 (开发中)
+## V 1.1.0 (开发中)
+>添加：类似淘宝二楼的二级下拉刷新 TwoLevelHeader
 >添加：srlEnableScrollContentWhenRefreshed 属性和对应方法
 >修复：仿苹果越界拖动在特定条件下不连续问题
 >修复：finishLoadmoreWithNoMoreData 显示顺序错乱问题
 
 ## V 1.0.4
-<!-- >添加：类似淘宝二楼的二级下拉刷新 -->
 >添加：finishLoadmoreWithNoMoreData 方法 完成加载并标记没有更多数据  
 >添加：resetNoMoreData 方法 恢复没有更多数据的原始状态  
 >添加：setRefreshContent 方法 设置刷新Content（用于动态替换空布局）  

@@ -7,7 +7,9 @@ package com.scwang.smartrefresh.layout.constant;
 public enum DimensionStatus {
     DefaultUnNotify(false),//默认值，但是还没通知确认
     Default(true),//默认值
+    XmlWrapUnNotify(false),//Xml计算，但是还没通知确认
     XmlWrap(true),//Xml计算
+    XmlExactUnNotify(false),//Xml 的view 指定，但是还没通知确认
     XmlExact(true),//Xml 的view 指定
     XmlLayoutUnNotify(false),//Xml 的layout 中指定，但是还没通知确认
     XmlLayout(true),//Xml 的layout 中指定

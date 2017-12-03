@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 import com.scwang.refreshlayout.R;
-import com.scwang.refreshlayout.activity.ExperimentActivity;
 import com.scwang.refreshlayout.activity.style.BezierStyleActivity;
 import com.scwang.refreshlayout.activity.style.CircleStyleActivity;
 import com.scwang.refreshlayout.activity.style.ClassicsStyleActivity;
@@ -98,14 +97,6 @@ public class RefreshStylesFragment extends Fragment implements AdapterView.OnIte
                 }
             });
         }
-
-        root.findViewById(R.id.toolbar).setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                startActivity(new Intent(getContext(), ExperimentActivity.class));
-                return false;
-            }
-        });
 
     }
 

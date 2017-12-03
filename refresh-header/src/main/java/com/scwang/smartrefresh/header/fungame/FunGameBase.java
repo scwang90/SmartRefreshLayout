@@ -153,7 +153,8 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
             mRefreshKernel.getRefreshLayout().setEnableLoadmore(enableLoadmore);
             if (mTouchY != -1) {//还没松手
                 onFinish(mRefreshKernel.getRefreshLayout(), mLastFinish);
-                mRefreshKernel.setStateRefresingFinish();
+//                mRefreshKernel.setStateRefresingFinish();
+                mRefreshKernel.setState(RefreshState.RefreshFinish);
                 mRefreshKernel.animSpinner(0);
 //                mRefreshKernel.getRefreshLayout().finishRefresh(0);
             } else {

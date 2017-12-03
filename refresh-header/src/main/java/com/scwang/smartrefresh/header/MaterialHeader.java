@@ -200,7 +200,9 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
     //<editor-fold desc="RefreshHeader">
     @Override
     public void onInitialized(RefreshKernel kernel, int height, int extendHeight) {
-        kernel.requestDefaultHeaderTranslationContent(false);
+        if (!mShowBezierWave) {
+            kernel.requestDefaultHeaderTranslationContent(false);
+        }
         if (isInEditMode()) {
             mWaveHeight = mHeadHeight = height / 2;
         }

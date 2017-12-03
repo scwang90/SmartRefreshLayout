@@ -66,4 +66,5 @@ public class SimpleMultiPurposeListener implements OnMultiPurposeListener {
     public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
 
     }
+
 }

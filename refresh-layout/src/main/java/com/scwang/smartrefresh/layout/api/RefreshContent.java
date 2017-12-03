@@ -17,7 +17,7 @@ public interface RefreshContent {
     int getMeasuredWidth();
     int getMeasuredHeight();
     void measure(int widthSpec, int heightSpec);
-    void layout(int left, int top, int right, int bottom, boolean skip);
+    void layout(int left, int top, int right, int bottom);
 
     View getView();
     View getScrollableView();
@@ -33,7 +33,5 @@ public interface RefreshContent {
 
     void setEnableLoadmoreWhenContentNotFull(boolean enable);
 
-    AnimatorUpdateListener scrollContentWhenLoaded(RefreshKernel kernel, int startDelay, int reboundDuration);
-
-    AnimatorUpdateListener scrollContentWhenRefreshed(RefreshKernel kernel, int startDelay, int duration);
+    AnimatorUpdateListener scrollContentWhenFinished(int spinner);
 }

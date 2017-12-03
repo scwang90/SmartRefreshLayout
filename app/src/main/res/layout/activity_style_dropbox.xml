@@ -16,6 +16,7 @@
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@android:color/white"
         app:srlDragRate="0.7"
         app:srlHeaderMaxDragRate="1.3"
         app:srlPrimaryColor="@color/colorPrimary"

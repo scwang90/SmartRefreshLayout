@@ -36,7 +36,7 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
  * Created by SCWANG on 2017/5/28.
  */
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "UnusedReturnValue"})
 public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
 
     public static String REFRESH_FOOTER_PULLUP = "上拉加载更多";

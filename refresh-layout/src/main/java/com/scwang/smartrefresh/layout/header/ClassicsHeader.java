@@ -62,6 +62,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     public static String REFRESH_HEADER_FINISH = "刷新完成";
     public static String REFRESH_HEADER_FAILED = "刷新失败";
     public static String REFRESH_HEADER_LASTTIME = "上次更新 M-d HH:mm";
+    public static String REFRESH_HEADER_SECOND_FLOOR = "释放进入二楼";
 //    public static String REFRESH_HEADER_LASTTIME = "'Last update' M-d HH:mm";
 
     protected String KEY_LAST_UPDATE_TIME = "LAST_UPDATE_TIME";
@@ -352,7 +353,6 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
         switch (newState) {
             case None:
-//                restoreRefreshLayoutBackground();
                 mLastUpdateText.setVisibility(mEnableLastTime ? VISIBLE : GONE);
             case PullDownToRefresh:
                 mTitleText.setText(REFRESH_HEADER_PULLDOWN);
@@ -369,7 +369,9 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
             case ReleaseToRefresh:
                 mTitleText.setText(REFRESH_HEADER_RELEASE);
                 mArrowView.animate().rotation(180);
-//                replaceRefreshLayoutBackground(refreshLayout);
+                break;
+            case ReleaseToTwoLevel:
+                mTitleText.setText(REFRESH_HEADER_SECOND_FLOOR);
                 break;
             case Loading:
                 mArrowView.setVisibility(GONE);

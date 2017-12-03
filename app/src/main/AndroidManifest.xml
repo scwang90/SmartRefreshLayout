@@ -35,8 +35,6 @@
         </activity>
         <activity android:name=".activity.FragmentActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".activity.ExperimentActivity"
-            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.style.FlyRefreshStyleActivity"
             android:label="@string/title_activity_fly_refresh"

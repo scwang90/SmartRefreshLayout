@@ -63,8 +63,6 @@ public class TaurusHeader extends View implements RefreshHeader/*, SizeDefinitio
 
     private PathsDrawable mAirplane;
     private PathsDrawable mCloudCenter;
-    private PathsDrawable mCloudLeft;
-    private PathsDrawable mCloudRight;
     private Matrix mMatrix;
     private float mPercent;
     private int mHeaderHeight;
@@ -166,14 +164,14 @@ public class TaurusHeader extends View implements RefreshHeader/*, SizeDefinitio
 
     @Override
     public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
+        mPercent = percent;
         mEndOfRefreshing = false;
-        mPercent = 1f * offset / headHeight;
         mHeaderHeight = headHeight;
     }
 
     @Override
     public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
-        mPercent = 1f * offset / headHeight;
+        mPercent = percent;
         mHeaderHeight = headHeight;
     }
 
@@ -309,8 +307,8 @@ public class TaurusHeader extends View implements RefreshHeader/*, SizeDefinitio
         Matrix matrix = mMatrix;
         matrix.reset();
 
-        mCloudLeft = mCloudCenter;
-        mCloudRight = mCloudCenter;
+        PathsDrawable mCloudLeft = mCloudCenter;
+        PathsDrawable mCloudRight = mCloudCenter;
 
         // Drag percent will newer get more then 1 here
         float dragPercent = Math.min(1f, Math.abs(mPercent));
@@ -482,7 +480,7 @@ public class TaurusHeader extends View implements RefreshHeader/*, SizeDefinitio
 
         // Check overdrag
         if (dragPercent > 1.0f /*&& !mEndOfRefreshing*/) {
-            rotateAngle = (dragPercent % 1) * 20;
+            rotateAngle = 20 * (float) (1 - Math.pow(100, -(dragPercent - 1) / 2));
             dragPercent = 1.0f;
         }
 
