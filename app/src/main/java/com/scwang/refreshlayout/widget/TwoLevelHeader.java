@@ -78,6 +78,9 @@ public class TwoLevelHeader extends FrameLayout implements RefreshHeader {
                 break;
             }
         }
+        if (mRefreshHeader == null) {
+            mRefreshHeader = new RefreshHeaderWrapper(this);
+        }
     }
 
     @Override
