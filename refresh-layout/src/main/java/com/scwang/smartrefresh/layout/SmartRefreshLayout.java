@@ -328,6 +328,8 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             } else {
                 mPrimaryColors = new int[]{primaryColor};
             }
+        } else if (accentColor != 0) {
+            mPrimaryColors = new int[]{0, accentColor};
         }
 
         ta.recycle();
@@ -1512,8 +1514,8 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 }
             }
         }
-        if ((spinner >= 0 || oldSpinner > 0) && mRefreshHeader != null) {
-            if (mEnableRefresh || (mState == RefreshState.RefreshFinish && isAnimator)) {
+        if ((spinner >= 0 || oldSpinner > 0) && mEnableRefresh && mRefreshHeader != null) {
+            if (mState == RefreshState.RefreshFinish && isAnimator) {
                 if (oldSpinner != mSpinner) {
                     switch (mRefreshHeader.getSpinnerStyle()) {
                         case Translate:
@@ -1548,8 +1550,8 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 }
             }
         }
-        if ((spinner <= 0 || oldSpinner < 0) && mRefreshFooter != null) {
-            if (mEnableLoadmore || (mState == RefreshState.LoadFinish && isAnimator)) {
+        if ((spinner <= 0 || oldSpinner < 0) && mEnableLoadmore && mRefreshFooter != null) {
+            if (mState == RefreshState.LoadFinish && isAnimator) {
                 if (oldSpinner != mSpinner) {
                     switch (mRefreshFooter.getSpinnerStyle()) {
                         case Translate:

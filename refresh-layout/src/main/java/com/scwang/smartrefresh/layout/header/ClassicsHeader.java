@@ -372,6 +372,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
                 break;
             case ReleaseToTwoLevel:
                 mTitleText.setText(REFRESH_HEADER_SECOND_FLOOR);
+                mArrowView.animate().rotation(0);
                 break;
             case Loading:
                 mArrowView.setVisibility(GONE);

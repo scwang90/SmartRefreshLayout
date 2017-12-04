@@ -289,5 +289,9 @@ public class TwoLevelHeader extends FrameLayout implements RefreshHeader {
     public void setOnTwoLevelListener(OnTwoLevelListener listener) {
         this.mTwoLevelListener = listener;
     }
+
+    public void finishTwoLevel() {
+        this.mRefreshKernel.finishTwoLevel();
+    }
     //</editor-fold>
 }

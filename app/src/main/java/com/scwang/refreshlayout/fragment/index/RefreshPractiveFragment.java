@@ -1,6 +1,7 @@
 package com.scwang.refreshlayout.fragment.index;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,9 +15,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Toast;
 
 import com.scwang.refreshlayout.R;
+import com.scwang.refreshlayout.activity.FragmentActivity;
 import com.scwang.refreshlayout.activity.practice.BannerPracticeActivity;
 import com.scwang.refreshlayout.activity.practice.FeedlistPracticeActivity;
 import com.scwang.refreshlayout.activity.practice.ProfilePracticeActivity;
@@ -26,10 +27,8 @@ import com.scwang.refreshlayout.activity.practice.WebviewPracticeActivity;
 import com.scwang.refreshlayout.activity.practice.WeiboPracticeActivity;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
+import com.scwang.refreshlayout.fragment.practice.SecondFloorPracticeFragment;
 import com.scwang.refreshlayout.util.StatusBarUtil;
-import com.scwang.refreshlayout.widget.TwoLevelHeader;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnTwoLevelListener;
 
 import java.util.Arrays;
 
@@ -50,6 +49,7 @@ public class RefreshPractiveFragment extends Fragment implements AdapterView.OnI
         Weibo("微博主页-CoordinatorLayout", WeiboPracticeActivity.class),
         Banner("滚动广告-Banner", BannerPracticeActivity.class),
         QQBrowser("QQ浏览器-模拟QQ浏览器内核提示", QQBrowserPracticeActivity.class),
+        TwoLevel("二级刷新-仿淘宝二楼", SecondFloorPracticeFragment.class),
         ;
         public String name;
         public Class<?> clazz;
@@ -85,25 +85,15 @@ public class RefreshPractiveFragment extends Fragment implements AdapterView.OnI
                 }
             });
         }
-        root.findViewById(R.id.image).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getContext(), "image", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        TwoLevelHeader twoLevelHeader = root.findViewById(R.id.twoLevel);
-        twoLevelHeader.setOnTwoLevelListener(new OnTwoLevelListener() {
-            @Override
-            public boolean onTwoLevel(RefreshLayout refreshLayout) {
-                Toast.makeText(getContext(), "触发二级刷新", Toast.LENGTH_SHORT).show();
-                return true;
-            }
-        });
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        startActivity(new Intent(getContext(), Item.values()[position].clazz));
+        Item item = Item.values()[position];
+        if (Activity.class.isAssignableFrom(item.clazz)) {
+            startActivity(new Intent(getContext(), item.clazz));
+        } else if (Fragment.class.isAssignableFrom(item.clazz)) {
+            FragmentActivity.start(this, item.clazz);
+        }
     }
 }

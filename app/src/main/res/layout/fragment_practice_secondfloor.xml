@@ -1,0 +1,69 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.scwang.refreshlayout.fragment.using.EmptyLayoutUsingFragment">
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        app:srlAccentColor="@android:color/white">
+        <com.scwang.refreshlayout.widget.TwoLevelHeader
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="?attr/actionBarSize">
+            <ImageView
+                android:id="@+id/secondfloor"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/app_name"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/image_secondfloor"/>
+            <ImageView
+                android:id="@+id/secondfloor_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/app_name"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/image_secondfloor_content"
+                android:alpha="0"/>
+            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.scwang.refreshlayout.widget.TwoLevelHeader>
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never">
+            <FrameLayout
+                android:id="@+id/contentPanel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="?attr/actionBarSize">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/app_name"
+                    android:src="@mipmap/image_taobao"/>
+            </FrameLayout>
+        </ScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#fe1200"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:title="淘宝二楼">
+
+    </android.support.v7.widget.Toolbar>
+
+</FrameLayout>
