@@ -16,7 +16,6 @@ import com.scwang.refreshlayout.widget.TwoLevelHeader;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.scwang.smartrefresh.layout.listener.OnTwoLevelListener;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 
 /**
@@ -65,7 +64,7 @@ public class SecondFloorPracticeFragment extends Fragment {
             }
         });
 
-        header.setOnTwoLevelListener(new OnTwoLevelListener() {
+        header.setOnTwoLevelListener(new TwoLevelHeader.OnTwoLevelListener() {
             @Override
             public boolean onTwoLevel(RefreshLayout refreshLayout) {
                 Toast.makeText(getContext(),"触发二楼事件",Toast.LENGTH_SHORT).show();

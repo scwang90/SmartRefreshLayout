@@ -80,7 +80,7 @@ public class RefreshContentWrapper implements RefreshContent {
             try {//try 不能删除，不然会出现兼容性问题
                 if (content instanceof CoordinatorLayout) {
                     kernel.getRefreshLayout().setEnableNestedScroll(false);
-                    wrapperCoordinatorLayout(((CoordinatorLayout) content), kernel.getRefreshLayout());
+                    wrapperCoordinatorLayout(((ViewGroup) content), kernel.getRefreshLayout());
                 }
             } catch (Throwable ignored) {
             }
@@ -88,7 +88,7 @@ public class RefreshContentWrapper implements RefreshContent {
         }
     }
 
-    protected void wrapperCoordinatorLayout(CoordinatorLayout layout, final RefreshLayout refreshLayout) {
+    protected void wrapperCoordinatorLayout(ViewGroup layout, final RefreshLayout refreshLayout) {
         for (int i = layout.getChildCount() - 1; i >= 0; i--) {
             View view = layout.getChildAt(i);
             if (view instanceof AppBarLayout) {

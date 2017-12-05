@@ -17,6 +17,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
  * Created by SCWANG on 2017/5/26.
  */
 
+@SuppressWarnings({"UnusedReturnValue", "SameParameterValue"})
 public interface RefreshLayout {
 
     RefreshLayout setFooterHeight(float dp);

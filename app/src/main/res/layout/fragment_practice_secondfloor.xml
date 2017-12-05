@@ -30,7 +30,7 @@
                 android:layout_height="match_parent"
                 android:contentDescription="@string/app_name"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/image_secondfloor_content"
+                android:src="@mipmap/image_secondfloor"
                 android:alpha="0"/>
             <com.scwang.smartrefresh.layout.header.ClassicsHeader
                 android:layout_width="match_parent"
@@ -51,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
                     android:contentDescription="@string/app_name"
-                    android:src="@mipmap/image_taobao"/>
+                    android:src="@mipmap/image_secondfloor"/>
             </FrameLayout>
         </ScrollView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>

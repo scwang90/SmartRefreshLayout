@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion 26
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         applicationId "com.app_design"
         minSdkVersion 21
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
 
@@ -31,14 +31,14 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-//    compile project(':refresh-header')
-//    compile project(':refresh-layout')
+    compile project(':refresh-header')
+    compile project(':refresh-layout')
 
-    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-alpha-14'
-    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4-alpha-14'
+//    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4'
+//    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4'
 
-    compile 'com.android.support:design:25.3.1'
-    compile 'com.android.support:appcompat-v7:25.3.1'
+//    compile 'com.android.support:design:25.3.1'
+    compile 'com.android.support:appcompat-v7:26.1.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
 }
