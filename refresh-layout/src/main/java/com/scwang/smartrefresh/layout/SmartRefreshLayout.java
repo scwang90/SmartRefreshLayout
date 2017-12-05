@@ -15,12 +15,10 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.NestedScrollingChild;
 import android.support.v4.view.NestedScrollingChildHelper;
 import android.support.v4.view.NestedScrollingParent;
-import android.support.v4.view.NestedScrollingParent2;
 import android.support.v4.view.NestedScrollingParentHelper;
 import android.support.v4.view.ScrollingView;
 import android.support.v4.view.ViewCompat;
@@ -53,7 +51,6 @@ import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
 import com.scwang.smartrefresh.layout.header.BezierRadarHeader;
-import com.scwang.smartrefresh.layout.header.FalsifyHeader;
 import com.scwang.smartrefresh.layout.impl.RefreshContentWrapper;
 import com.scwang.smartrefresh.layout.impl.RefreshFooterWrapper;
 import com.scwang.smartrefresh.layout.impl.RefreshHeaderWrapper;
@@ -470,7 +467,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
         mRefreshContent.setScrollBoundaryDecider(mScrollBoundaryDecider);
         mRefreshContent.setEnableLoadmoreWhenContentNotFull(mEnableLoadmoreWhenContentNotFull);
-        mRefreshContent.setupComponent(mKernel, fixedHeaderView, fixedFooterView);
+        mRefreshContent.setUpComponent(mKernel, fixedHeaderView, fixedFooterView);
 
         if (mSpinner != 0) {
             notifyStateChanged(RefreshState.None);
@@ -905,7 +902,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                         if (dy > 0 && (mSpinner < 0 || ((isEnableRefresh() || mEnableOverScrollDrag) && mRefreshContent.canRefresh()))) {
                             mIsBeingDragged = true;
                             mTouchY = touchY - mTouchSlop;
-                        } else if (dy < 0 && (mSpinner > 0 || ((isEnableLoadmore()||mEnableOverScrollDrag) && mRefreshContent.canLoadmore()))) {
+                        } else if (dy < 0 && (mSpinner > 0 || ((isEnableLoadmore() || mEnableOverScrollDrag) && mRefreshContent.canLoadmore()))) {
                             mIsBeingDragged = true;
                             mTouchY = touchY + mTouchSlop;
                         }
@@ -2216,7 +2213,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
                 mRefreshContent.setScrollBoundaryDecider(mScrollBoundaryDecider);
                 mRefreshContent.setEnableLoadmoreWhenContentNotFull(mEnableLoadmoreWhenContentNotFull);
-                mRefreshContent.setupComponent(mKernel, fixedHeaderView, fixedFooterView);
+                mRefreshContent.setUpComponent(mKernel, fixedHeaderView, fixedFooterView);
             }
         }
         return this;
@@ -2697,7 +2694,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
     @Override
     public boolean isEnableLoadmore() {
-        return mEnableLoadmore && !mEnablePureScrollMode && mRefreshFooter != null;
+        return mEnableLoadmore && !mEnablePureScrollMode;
     }
 
     @Override
@@ -2712,7 +2709,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
     @Override
     public boolean isEnableRefresh() {
-        return mEnableRefresh && !mEnablePureScrollMode && mRefreshHeader != null;
+        return mEnableRefresh && !mEnablePureScrollMode;
     }
 
     @Override

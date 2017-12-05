@@ -27,7 +27,7 @@ public interface RefreshContent {
     void onActionUpOrCancel();
 
     void fling(int velocity);
-    void setupComponent(RefreshKernel kernel, View fixedHeader, View fixedFooter);
+    void setUpComponent(RefreshKernel kernel, View fixedHeader, View fixedFooter);
     void onInitialHeaderAndFooter(int headerHeight, int footerHeight);
     void setScrollBoundaryDecider(ScrollBoundaryDecider boundary);
 

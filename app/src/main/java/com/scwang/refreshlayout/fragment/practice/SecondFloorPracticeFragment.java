@@ -35,8 +35,8 @@ public class SecondFloorPracticeFragment extends Fragment {
         super.onViewCreated(root, savedInstanceState);
 
         final View floor = root.findViewById(R.id.secondfloor);
-        final Toolbar toolbar = root.findViewById(R.id.toolbar);
-        final TwoLevelHeader header = root.findViewById(R.id.header);
+        final Toolbar toolbar = (Toolbar)root.findViewById(R.id.toolbar);
+        final TwoLevelHeader header = (TwoLevelHeader)root.findViewById(R.id.header);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,7 +44,7 @@ public class SecondFloorPracticeFragment extends Fragment {
             }
         });
 
-        final RefreshLayout refreshLayout = root.findViewById(R.id.refreshLayout);
+        final RefreshLayout refreshLayout = (RefreshLayout)root.findViewById(R.id.refreshLayout);
         refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
             @Override
             public void onHeaderPulling(RefreshHeader header, float percent, int offset, int bottomHeight, int extendHeight) {

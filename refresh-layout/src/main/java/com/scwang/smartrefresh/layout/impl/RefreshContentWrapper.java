@@ -242,7 +242,7 @@ public class RefreshContentWrapper implements RefreshContent {
     }
 
     @Override
-    public void setupComponent(RefreshKernel kernel, View fixedHeader, View fixedFooter) {
+    public void setUpComponent(RefreshKernel kernel, View fixedHeader, View fixedFooter) {
         findScrollableView(mContentView, kernel);
 
         if (fixedHeader != null || fixedFooter != null) {
