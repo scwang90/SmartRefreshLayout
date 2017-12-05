@@ -49,18 +49,12 @@ public class SecondFloorPracticeFragment extends Fragment {
             @Override
             public void onHeaderPulling(RefreshHeader header, float percent, int offset, int bottomHeight, int extendHeight) {
                 toolbar.setAlpha(1 - Math.min(percent, 1));
-                floor.setTranslationY(offset - floor.getHeight());
-                final int toolbarHeight = toolbar.getHeight();
-                final int layoutHeight = refreshLayout.getLayout().getHeight();
-                header.getView().setTranslationY(-toolbarHeight * Math.max(0,offset - 3*toolbarHeight) / (layoutHeight - 3*toolbarHeight));
+                floor.setTranslationY(Math.min(offset - floor.getHeight() + toolbar.getHeight(), refreshLayout.getLayout().getHeight() - floor.getHeight()));
             }
             @Override
             public void onHeaderReleasing(RefreshHeader header, float percent, int offset, int bottomHeight, int extendHeight) {
                 toolbar.setAlpha(1 - Math.min(percent, 1));
-                floor.setTranslationY(offset - floor.getHeight());
-                final int toolbarHeight = toolbar.getHeight();
-                final int layoutHeight = refreshLayout.getLayout().getHeight();
-                header.getView().setTranslationY(-toolbarHeight * Math.max(0,offset - 3*toolbarHeight) / (layoutHeight - 3*toolbarHeight));
+                floor.setTranslationY(Math.min(offset - floor.getHeight() + toolbar.getHeight(), refreshLayout.getLayout().getHeight() - floor.getHeight()));
             }
         });
 
@@ -90,8 +84,8 @@ public class SecondFloorPracticeFragment extends Fragment {
 
         //状态栏透明和间距处理
         StatusBarUtil.immersive(getActivity());
-        StatusBarUtil.setMargin(getActivity(),  header);
-        StatusBarUtil.setPaddingSmart(getActivity(), toolbar);
+        StatusBarUtil.setMargin(getActivity(),  root.findViewById(R.id.classics));
+        StatusBarUtil.setPaddingSmart(getActivity(), root.findViewById(R.id.toolbar));
         StatusBarUtil.setPaddingSmart(getActivity(), root.findViewById(R.id.contentPanel));
     }
 }

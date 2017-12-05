@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.scwang.refreshlayout.fragment.using.EmptyLayoutUsingFragment">
+    tools:context="com.scwang.refreshlayout.fragment.practice.SecondFloorPracticeFragment">
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
@@ -15,8 +15,7 @@
         <com.scwang.refreshlayout.widget.TwoLevelHeader
             android:id="@+id/header"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="?attr/actionBarSize">
+            android:layout_height="wrap_content">
             <ImageView
                 android:id="@+id/secondfloor"
                 android:layout_width="match_parent"
@@ -30,11 +29,13 @@
                 android:layout_height="match_parent"
                 android:contentDescription="@string/app_name"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/image_secondfloor"
+                android:src="@mipmap/image_secondfloor_content"
                 android:alpha="0"/>
             <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                android:id="@+id/classics"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="?attr/actionBarSize"/>
         </com.scwang.refreshlayout.widget.TwoLevelHeader>
         <ScrollView
             android:id="@+id/scrollView"
@@ -51,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
                     android:contentDescription="@string/app_name"
-                    android:src="@mipmap/image_secondfloor"/>
+                    android:src="@mipmap/image_taobao"/>
             </FrameLayout>
         </ScrollView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
