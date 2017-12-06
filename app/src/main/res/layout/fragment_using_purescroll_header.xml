@@ -15,7 +15,8 @@
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srlEnablePureScrollMode="false">
+        app:srlEnablePureScrollMode="false"
+        app:srlEnableOverScrollDrag="false">
         <com.scwang.smartrefresh.layout.header.FalsifyHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

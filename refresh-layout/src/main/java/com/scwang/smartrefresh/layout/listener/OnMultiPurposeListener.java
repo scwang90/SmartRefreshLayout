@@ -10,11 +10,13 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 
 public interface OnMultiPurposeListener extends OnRefreshLoadmoreListener, OnStateChangedListener {
     void onHeaderPulling(RefreshHeader header, float percent, int offset, int headerHeight, int extendHeight);
+    void onHeaderReleased(RefreshHeader header, int headerHeight, int extendHeight);
     void onHeaderReleasing(RefreshHeader header, float percent, int offset, int headerHeight, int extendHeight);
     void onHeaderStartAnimator(RefreshHeader header, int headerHeight, int extendHeight);
     void onHeaderFinish(RefreshHeader header, boolean success);
 
     void onFooterPulling(RefreshFooter footer, float percent, int offset, int footerHeight, int extendHeight);
+    void onFooterReleased(RefreshFooter footer, int footerHeight, int extendHeight);
     void onFooterReleasing(RefreshFooter footer, float percent, int offset, int footerHeight, int extendHeight);
     void onFooterStartAnimator(RefreshFooter footer, int footerHeight, int extendHeight);
     void onFooterFinish(RefreshFooter footer, boolean success);

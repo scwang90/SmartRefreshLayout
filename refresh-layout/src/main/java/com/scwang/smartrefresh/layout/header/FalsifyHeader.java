@@ -36,7 +36,6 @@ import static android.view.View.MeasureSpec.makeMeasureSpec;
 public class FalsifyHeader extends View implements RefreshHeader {
 
     protected RefreshKernel mRefreshKernel;
-    protected Boolean mPureScrollMode;
 
     //<editor-fold desc="FalsifyHeader">
     public FalsifyHeader(Context context) {
@@ -62,7 +61,8 @@ public class FalsifyHeader extends View implements RefreshHeader {
                 resolveSize(getSuggestedMinimumHeight(), heightMeasureSpec));
     }
 
-    @Override@SuppressLint("DrawAllocation")
+    @Override
+    @SuppressLint({"DrawAllocation", "SetTextI18n"})
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (isInEditMode()) {//这段代码在运行时不会执行，只会在Studio编辑预览时运行，不用在意性能问题
@@ -115,41 +115,21 @@ public class FalsifyHeader extends View implements RefreshHeader {
 
     @Override
     public void onRefreshReleased(RefreshLayout layout, int headerHeight, int extendHeight) {
-
+        if (mRefreshKernel != null) {
+            mRefreshKernel.setState(RefreshState.None);
+            //onRefreshReleased 的时候 调用 setState(RefreshState.None); 并不会立刻改变成 None
+            //而是先执行一个回弹动画，RefreshFinish 是介于 Refreshing 和 None 之间的状态
+            //RefreshFinish 用于在回弹动画结束时候能顺利改变为 None
+            mRefreshKernel.setState(RefreshState.RefreshFinish);
+        }
     }
 
     @Override
     public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
-        if (mRefreshKernel != null) {
-            mRefreshKernel.setState(RefreshState.None);
-        }
     }
 
     @Override
     public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
-        switch (newState) {
-            case None:
-            case PullDownToRefresh:
-                if (mPureScrollMode != null
-                        && mPureScrollMode != refreshLayout.isEnablePureScrollMode()) {
-                    refreshLayout.setEnablePureScrollMode(mPureScrollMode);
-                }
-                break;
-            case PullDownCanceled:
-                break;
-            case ReleaseToRefresh:
-                mPureScrollMode = refreshLayout.isEnablePureScrollMode();
-                if (!mPureScrollMode) {
-                    refreshLayout.setEnablePureScrollMode(true);
-                }
-                break;
-            case RefreshReleased:
-                break;
-            case Refreshing:
-                break;
-            case RefreshFinish:
-                break;
-        }
     }
 
     @Override
@@ -170,7 +150,7 @@ public class FalsifyHeader extends View implements RefreshHeader {
 
     @Override
     public SpinnerStyle getSpinnerStyle() {
-        return SpinnerStyle.Scale;
+        return SpinnerStyle.Translate;
     }
     //</editor-fold>
 

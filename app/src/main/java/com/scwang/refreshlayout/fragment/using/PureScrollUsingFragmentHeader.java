@@ -54,7 +54,7 @@ public class PureScrollUsingFragmentHeader extends Fragment implements AdapterVi
         });
 
         RefreshLayout refreshLayout = (RefreshLayout) root.findViewById(R.id.refreshLayout);
-        refreshLayout.setRefreshHeader(new FalsifyHeader(getContext()));
+        refreshLayout.setRefreshHeader(new FalsifyHeader(getContext()));//也可以在 XML 中添加 FalsifyHeader
 
         View view = root.findViewById(R.id.recyclerView);
         if (view instanceof RecyclerView) {
