@@ -19,6 +19,7 @@ import java.util.List;
  * Created by SCWANG on 2017/6/11.
  */
 
+@SuppressWarnings({"UnusedReturnValue", "unused"})
 public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<SmartViewHolder> implements ListAdapter {
 
 
@@ -26,6 +27,8 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<SmartV
 
     private final int mLayoutId;
     private final List<T> mList;
+    private int mLastPosition = -1;
+    private boolean mOpenAnimationEnable = true;
     private AdapterView.OnItemClickListener mListener;
 
     public BaseRecyclerAdapter(@LayoutRes int layoutId) {
@@ -48,6 +51,15 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<SmartV
     }
     //</editor-fold>
 
+
+    private void addAnimate(SmartViewHolder holder, int postion) {
+        if (mOpenAnimationEnable && mLastPosition < postion) {
+            holder.itemView.setAlpha(0);
+            holder.itemView.animate().alpha(1).start();
+            mLastPosition = postion;
+        }
+    }
+
     //<editor-fold desc="RecyclerAdapter">
     @Override
     public SmartViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -65,6 +77,17 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<SmartV
     public int getItemCount() {
         return mList.size();
     }
+
+    @Override
+    public void onViewAttachedToWindow(SmartViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+        addAnimate(holder, holder.getLayoutPosition());
+    }
+
+    public void setOpenAnimationEnable(boolean enable) {
+        this.mOpenAnimationEnable = enable;
+    }
+
     //</editor-fold>
 
     //<editor-fold desc="API">
@@ -79,6 +102,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<SmartV
         mList.addAll(collection);
         notifyDataSetChanged();
         notifyListDataSetChanged();
+        mLastPosition = -1;
         return this;
     }
 
@@ -89,7 +113,6 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<SmartV
         return this;
     }
     //</editor-fold>
-
 
     //<editor-fold desc="ListAdapter">
     private final DataSetObservable mDataSetObservable = new DataSetObservable();
@@ -142,6 +165,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<SmartV
             convertView.setTag(holder);
         }
         onBindViewHolder(holder, position);
+        addAnimate(holder, position);
         return convertView;
     }
 

@@ -36,6 +36,7 @@
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@android:color/white"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:srlPrimaryColor="@color/colorPrimary"
         app:srlAccentColor="@android:color/white">

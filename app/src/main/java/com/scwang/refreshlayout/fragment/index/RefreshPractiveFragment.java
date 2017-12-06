@@ -46,7 +46,7 @@ public class RefreshPractiveFragment extends Fragment implements AdapterView.OnI
         Profile("个人中心-PureScrollMode-纯滚动模式", ProfilePracticeActivity.class),
         Webview("网页引用-WebView", WebviewPracticeActivity.class),
         FeedList("微博列表-智能识别", FeedlistPracticeActivity.class),
-        Weibo("微博主页-CoordinatorLayout", WeiboPracticeActivity.class),
+        Weibo("微博主页-MultiPurposeListener", WeiboPracticeActivity.class),
         Banner("滚动广告-Banner", BannerPracticeActivity.class),
         QQBrowser("QQ浏览器-模拟QQ浏览器内核提示", QQBrowserPracticeActivity.class),
         TwoLevel("二级刷新-仿淘宝二楼", SecondFloorPracticeFragment.class),

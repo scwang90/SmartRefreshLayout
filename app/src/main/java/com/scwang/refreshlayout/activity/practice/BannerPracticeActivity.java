@@ -59,7 +59,6 @@ public class BannerPracticeActivity extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
         final List<Movie> movies = new Gson().fromJson(JSON_MOVIES, new TypeToken<ArrayList<Movie>>() {}.getType());
         mAdapter.replaceData(movies);
-        refreshLayout.autoRefresh();
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(final RefreshLayout refreshlayout) {
