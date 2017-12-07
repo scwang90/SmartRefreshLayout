@@ -13,7 +13,7 @@
         android:visibility="gone"
         tools:visibility="visible"/>
 
-    <FrameLayout
+    <android.support.v4.view.ViewPager
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
