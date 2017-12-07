@@ -26,6 +26,8 @@ import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.refreshlayout.fragment.using.EmptyLayoutUsingFragment.Item;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
+import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 
@@ -65,6 +67,7 @@ public class EmptyLayoutUsingFragmentInner extends Fragment implements AdapterVi
         });
 
         mRefreshLayout = (RefreshLayout) root.findViewById(refreshLayout);
+        mRefreshLayout.setRefreshHeader(new ClassicsHeader(getContext()).setSpinnerStyle(SpinnerStyle.FixedBehind).setPrimaryColorId(R.color.colorPrimary).setAccentColorId(android.R.color.white));
         mRefreshLayout.setOnRefreshListener(this);
 
         mRecyclerView = (RecyclerView) root.findViewById(recyclerView);
