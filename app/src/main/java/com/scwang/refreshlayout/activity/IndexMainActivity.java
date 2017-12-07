@@ -70,7 +70,7 @@ public class IndexMainActivity extends AppCompatActivity implements OnNavigation
 
         final BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this);
-        navigation.setSelectedItemId(R.id.navigation_style);
+//        navigation.setSelectedItemId(R.id.navigation_style);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.content);
         viewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
