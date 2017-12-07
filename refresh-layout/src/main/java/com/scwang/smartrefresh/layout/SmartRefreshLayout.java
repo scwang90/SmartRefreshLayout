@@ -893,7 +893,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 }
                 return true;
             case MotionEvent.ACTION_MOVE:
-                mVelocityTracker.addMovement(e);
                 float dx = touchX - mTouchX;
                 float dy = touchY - mTouchY;
                 if (!mIsBeingDragged && !mHorizontalDragged) {
