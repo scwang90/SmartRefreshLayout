@@ -773,7 +773,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                             if (mEnableAutoLoadmore && isEnableLoadmore() && !mLoadmoreFinished) {
                                 animSpinnerBounce(-(int) (mFooterHeight * Math.pow(1.0 * velocity / mMaximumVelocity, 0.5)));
                                 if (!mState.opening && mState != RefreshState.Loading && mState != RefreshState.LoadFinish) {
-                                    setStateDirectLoding();
+                                    setStateDirectLoading();
                                 }
                             } else if (mEnableOverScrollBounce) {
                                 animSpinnerBounce(-(int) (mFooterHeight * Math.pow(1.0 * velocity / mMaximumVelocity, 0.5)));
@@ -1064,7 +1064,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     }
 
     protected void setStatePullUpToLoad() {
-        if (isEnableLoadmore() && !mLoadmoreFinished && !mState.opening) {
+        if (isEnableLoadmore() && !mLoadmoreFinished && !mState.opening && !mState.finishing) {
             notifyStateChanged(RefreshState.PullToUpLoad);
         } else {
             setViceState(RefreshState.PullToUpLoad);
@@ -1072,7 +1072,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     }
 
     protected void setStateReleaseToLoad() {
-        if (isEnableLoadmore() && !mLoadmoreFinished && !mState.opening) {
+        if (isEnableLoadmore() && !mLoadmoreFinished && !mState.opening && !mState.finishing) {
             notifyStateChanged(RefreshState.ReleaseToLoad);
         } else {
             setViceState(RefreshState.ReleaseToLoad);
@@ -1113,7 +1113,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         }
     }
 
-    protected void setStateDirectLoding() {
+    protected void setStateDirectLoading() {
         if (mState != RefreshState.Loading) {
             mLastLoadingTime = currentTimeMillis();
             if (mState != RefreshState.LoadReleased) {
@@ -1146,7 +1146,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         AnimatorListenerAdapter listener = new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                setStateDirectLoding();
+                setStateDirectLoading();
             }
         };
         notifyStateChanged(RefreshState.LoadReleased);
@@ -1447,7 +1447,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 && mState != RefreshState.Loading
                 && mState != RefreshState.LoadFinish
                 && !mLoadmoreFinished) {
-            setStateDirectLoding();
+            setStateDirectLoading();
         }
     }
 
