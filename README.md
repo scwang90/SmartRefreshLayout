@@ -18,7 +18,7 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
 ## 特点功能:
 
  - 支持多点触摸
- - 支持嵌套多层的视图结构
+ - 支持嵌套多层的视图结构 Layout (LinearLayout,FrameLayout...)
  - 支持所有的 View（AbsListView、RecyclerView、WebView....View）  
  - 支持自定义并且已经集成了很多炫酷的 Header 和 Footer.
  - 支持和ListView的无缝同步滚动 和 CoordinatorLayout 的嵌套滚动 .
