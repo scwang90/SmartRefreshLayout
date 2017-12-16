@@ -842,7 +842,10 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     mScroller.forceFinished(true);
                     break;
                 case MotionEvent.ACTION_MOVE:
-                    mVelocityTracker.addMovement(e);
+                    if ((mEnableAutoLoadmore&&mEnableLoadmore)
+                            || (mEnableOverScrollBounce&&(mEnableLoadmore||mEnableRefresh))) {
+                        mVelocityTracker.addMovement(e);
+                    }
                     break;
                 case MotionEvent.ACTION_UP:
                     mVelocityTracker.computeCurrentVelocity(1000, mMaximumVelocity);
@@ -850,7 +853,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     mRefreshContent.onActionUpOrCancel();
             }
         }
-        if ((reboundAnimator != null && !interceptAnimator(action))
+        if ((reboundAnimator != null && !interceptAnimator(action)) || mState.finishing
                 || (mState == RefreshState.Loading && mDisableContentWhenLoading)
                 || (mState == RefreshState.Refreshing && mDisableContentWhenRefresh)) {
             return false;
@@ -901,7 +904,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                         if (dy > 0 && (mSpinner < 0 || ((isEnableRefresh() || mEnableOverScrollDrag) && mRefreshContent.canRefresh()))) {
                             mIsBeingDragged = true;
                             mTouchY = touchY - mTouchSlop;
-                        } else if (dy < 0 && (mSpinner > 0 || ((isEnableLoadmore() || mEnableOverScrollDrag) && mRefreshContent.canLoadmore()))) {
+                        } else if (dy < 0 && (mSpinner > 0 || ((isEnableLoadmore() || mEnableOverScrollDrag) && (mState==RefreshState.Loading||mRefreshContent.canLoadmore())))) {
                             mIsBeingDragged = true;
                             mTouchY = touchY + mTouchSlop;
                         }
