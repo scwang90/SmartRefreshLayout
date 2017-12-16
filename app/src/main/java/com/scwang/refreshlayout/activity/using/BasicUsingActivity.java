@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.Toast;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
@@ -71,22 +72,14 @@ public class BasicUsingActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         mAdapter.loadmore(initData());
-//                        if (mAdapter.getItemCount() > 60) {
-//                            Toast.makeText(getApplication(), "数据全部加载完毕", Toast.LENGTH_SHORT).show();
-//                            refreshlayout.finishLoadmoreWithNoMoreData();//将不会再次触发加载更多事件
-//                        } else {
-//                        }
-                        refreshlayout.finishLoadmore();
+                        if (mAdapter.getItemCount() > 60) {
+                            Toast.makeText(getApplication(), "数据全部加载完毕", Toast.LENGTH_SHORT).show();
+                            refreshlayout.finishLoadmoreWithNoMoreData();//将不会再次触发加载更多事件
+                        } else {
+                            refreshlayout.finishLoadmore();
+                        }
                     }
-                }, 10);
-            }
-        });
-
-        toolbar.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                refreshLayout.finishLoadmore();
-                return false;
+                }, 2000);
             }
         });
 
