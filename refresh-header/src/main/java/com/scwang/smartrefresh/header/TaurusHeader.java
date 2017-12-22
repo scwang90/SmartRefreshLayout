@@ -149,7 +149,7 @@ public class TaurusHeader extends View implements RefreshHeader/*, SizeDefinitio
 
     //<editor-fold desc="RefreshHeader">
     @Override
-    public void onInitialized(RefreshKernel kernel, int height, int extendHeight) {
+    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
 
     }
 
@@ -176,7 +176,7 @@ public class TaurusHeader extends View implements RefreshHeader/*, SizeDefinitio
     }
 
     @Override
-    public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
+    public void onStartAnimator(@NonNull RefreshLayout layout, int headHeight, int extendHeight) {
         isRefreshing = true;
         startAnimation(mAnimation);
     }
@@ -191,7 +191,7 @@ public class TaurusHeader extends View implements RefreshHeader/*, SizeDefinitio
     }
 
     @Override
-    public int onFinish(RefreshLayout layout, boolean success) {
+    public int onFinish(@NonNull RefreshLayout layout, boolean success) {
         isRefreshing = false;
         mEndOfRefreshing = true;
         clearAnimation();
@@ -209,6 +209,7 @@ public class TaurusHeader extends View implements RefreshHeader/*, SizeDefinitio
         return this;
     }
 
+    @NonNull
     @Override
     public SpinnerStyle getSpinnerStyle() {
         return SpinnerStyle.Scale;

@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Build;
 import android.support.annotation.ColorInt;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.text.TextPaint;
@@ -277,14 +278,14 @@ public abstract class FunGameView extends FunGameHeader {
 
     //<editor-fold desc="RefreshHeader">
     @Override
-    public void onInitialized(RefreshKernel kernel, int height, int extendHeight) {
+    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
         super.onInitialized(kernel, height, extendHeight);
         initConcreteView();
         postStatus(STATUS_GAME_PREPAR);
     }
 
     @Override
-    public int onFinish(RefreshLayout layout, boolean success) {
+    public int onFinish(@NonNull RefreshLayout layout, boolean success) {
         if (mManualOperation) {
             postStatus(success ? FunGameView.STATUS_GAME_FINISHED : FunGameView.STATUS_GAME_FAIL);
         } else {

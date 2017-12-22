@@ -250,7 +250,7 @@ public class BezierCircleHeader extends View implements RefreshHeader {
     //<editor-fold desc="RefreshHeader">
 
     @Override
-    public void onInitialized(RefreshKernel kernel, int height, int extendHeight) {
+    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
     }
 
     @Override
@@ -343,11 +343,11 @@ public class BezierCircleHeader extends View implements RefreshHeader {
     }
 
     @Override
-    public void onStartAnimator(RefreshLayout layout, int headerHeight, int extendHeight) {
+    public void onStartAnimator(@NonNull RefreshLayout layout, int headerHeight, int extendHeight) {
     }
 
     @Override
-    public int onFinish(RefreshLayout layout, boolean success) {
+    public int onFinish(@NonNull RefreshLayout layout, boolean success) {
         mShowOuter = false;
         mShowBoll = false;
         ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
@@ -381,6 +381,7 @@ public class BezierCircleHeader extends View implements RefreshHeader {
         return this;
     }
 
+    @NonNull
     @Override
     public SpinnerStyle getSpinnerStyle() {
         return SpinnerStyle.Scale;

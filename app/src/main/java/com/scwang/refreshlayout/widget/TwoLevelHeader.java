@@ -144,7 +144,7 @@ public class TwoLevelHeader extends FrameLayout implements RefreshHeader {
 
     //<editor-fold desc="Header实现">
     @Override
-    public void onInitialized(RefreshKernel kernel, int height, int extendHeight) {
+    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
         if (1f * (extendHeight + height) / height < mMaxRage) {
             kernel.getRefreshLayout().setHeaderMaxDragRate(mMaxRage);
             return;
@@ -247,6 +247,7 @@ public class TwoLevelHeader extends FrameLayout implements RefreshHeader {
         return this;
     }
 
+    @NonNull
     @Override
     public SpinnerStyle getSpinnerStyle() {
         return mSpinnerStle;
@@ -263,12 +264,12 @@ public class TwoLevelHeader extends FrameLayout implements RefreshHeader {
     }
 
     @Override
-    public void onStartAnimator(RefreshLayout layout, int height, int extendHeight) {
+    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
         mRefreshHeader.onStartAnimator(layout, height, extendHeight);
     }
 
     @Override
-    public int onFinish(RefreshLayout layout, boolean success) {
+    public int onFinish(@NonNull RefreshLayout layout, boolean success) {
         return mRefreshHeader.onFinish(layout, success);
     }
 

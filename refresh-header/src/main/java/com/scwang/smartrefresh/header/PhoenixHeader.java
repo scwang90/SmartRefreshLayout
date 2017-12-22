@@ -199,7 +199,7 @@ public class PhoenixHeader extends View implements RefreshHeader/*, SizeDefiniti
 
     //<editor-fold desc="RefreshHeader">
     @Override
-    public void onInitialized(RefreshKernel kernel, int height, int extendHeight) {
+    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
 
     }
 
@@ -231,7 +231,7 @@ public class PhoenixHeader extends View implements RefreshHeader/*, SizeDefiniti
     }
 
     @Override
-    public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
+    public void onStartAnimator(@NonNull RefreshLayout layout, int headHeight, int extendHeight) {
 
     }
 
@@ -241,7 +241,7 @@ public class PhoenixHeader extends View implements RefreshHeader/*, SizeDefiniti
     }
 
     @Override
-    public int onFinish(RefreshLayout layout, boolean success) {
+    public int onFinish(@NonNull RefreshLayout layout, boolean success) {
         isRefreshing = false;
         clearAnimation();
         return 0;
@@ -266,6 +266,7 @@ public class PhoenixHeader extends View implements RefreshHeader/*, SizeDefiniti
         return this;
     }
 
+    @NonNull
     @Override
     public SpinnerStyle getSpinnerStyle() {
         return SpinnerStyle.Scale;

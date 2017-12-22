@@ -199,7 +199,7 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
 
     //<editor-fold desc="RefreshHeader">
     @Override
-    public void onInitialized(RefreshKernel kernel, int height, int extendHeight) {
+    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
         if (!mShowBezierWave) {
             kernel.requestDefaultHeaderTranslationContent(false);
         }
@@ -271,7 +271,7 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override
-    public void onStartAnimator(RefreshLayout layout, int headerHeight, int extendHeight) {
+    public void onStartAnimator(@NonNull RefreshLayout layout, int headerHeight, int extendHeight) {
 
     }
 
@@ -295,7 +295,7 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override
-    public int onFinish(RefreshLayout layout, boolean success) {
+    public int onFinish(@NonNull RefreshLayout layout, boolean success) {
         mProgress.stop();
         mCircleView.animate().scaleX(0).scaleY(0);
         mFinished = true;
@@ -315,6 +315,7 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
         return this;
     }
 
+    @NonNull
     @Override
     public SpinnerStyle getSpinnerStyle() {
         return SpinnerStyle.MatchLayout;

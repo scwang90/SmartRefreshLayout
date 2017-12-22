@@ -21,8 +21,9 @@ public interface RefreshInternal extends OnStateChangedListener {
     View getView();
 
     /**
-     * 获取变换方式 {@link SpinnerStyle}
+     * 获取变换方式 {@link SpinnerStyle} 必须返回 非空
      */
+    @NonNull
     SpinnerStyle getSpinnerStyle();
 
     /**
@@ -37,7 +38,7 @@ public interface RefreshInternal extends OnStateChangedListener {
      * @param height HeaderHeight or FooterHeight
      * @param extendHeight extendHeaderHeight or extendFooterHeight
      */
-    void onInitialized(RefreshKernel kernel, int height, int extendHeight);
+    void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight);
 
     /**
      * 水平方向的拖动
@@ -52,7 +53,7 @@ public interface RefreshInternal extends OnStateChangedListener {
      * @param height HeaderHeight or FooterHeight
      * @param extendHeight extendHeaderHeight or extendFooterHeight
      */
-    void onStartAnimator(RefreshLayout layout, int height, int extendHeight);
+    void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight);
 
     /**
      * 动画结束
@@ -60,7 +61,7 @@ public interface RefreshInternal extends OnStateChangedListener {
      * @param success 数据是否成功刷新或加载
      * @return 完成动画所需时间 如果返回 Integer.MAX_VALUE 将取消本次完成事件，继续保持原有状态
      */
-    int onFinish(RefreshLayout layout, boolean success);
+    int onFinish(@NonNull RefreshLayout layout, boolean success);
 
     /**
      * 是否支持水平方向的拖动（将会影响到onHorizontalDrag的调用）
