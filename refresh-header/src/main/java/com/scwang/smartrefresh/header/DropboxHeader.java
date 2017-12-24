@@ -397,6 +397,7 @@ public class DropboxHeader extends View implements RefreshHeader {
         return this;
     }
 
+    @NonNull
     @Override
     public SpinnerStyle getSpinnerStyle() {
         return SpinnerStyle.Scale;
@@ -413,7 +414,7 @@ public class DropboxHeader extends View implements RefreshHeader {
     }
 
     @Override
-    public void onInitialized(RefreshKernel kernel, int height, int extendHeight) {
+    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
         mHeaderHeight = height;
         final int sideLength = generateSideLength();
         mDrawable1.setBounds(0, 0, sideLength, sideLength);
@@ -422,14 +423,14 @@ public class DropboxHeader extends View implements RefreshHeader {
     }
 
     @Override
-    public void onStartAnimator(RefreshLayout layout, int height, int extendHeight) {
+    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
         if (mDropOutAnimator != null) {
             mDropOutAnimator.start();
         }
     }
 
     @Override
-    public int onFinish(RefreshLayout layout, boolean success) {
+    public int onFinish(@NonNull RefreshLayout layout, boolean success) {
         mDropOutPercent = 0;
         return 0;
     }

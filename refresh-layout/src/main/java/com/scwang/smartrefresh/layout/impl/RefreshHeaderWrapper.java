@@ -32,7 +32,7 @@ public class RefreshHeaderWrapper implements RefreshHeader {
     }
 
     @Override
-    public int onFinish(RefreshLayout layout, boolean success) {
+    public int onFinish(@NonNull RefreshLayout layout, boolean success) {
         return 0;
     }
 
@@ -63,7 +63,7 @@ public class RefreshHeaderWrapper implements RefreshHeader {
     }
 
     @Override
-    public void onInitialized(RefreshKernel kernel, int height, int extendHeight) {
+    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
         ViewGroup.LayoutParams params = mWrapperView.getLayoutParams();
         if (params instanceof SmartRefreshLayout.LayoutParams) {
             kernel.requestDrawBackgoundForHeader(((SmartRefreshLayout.LayoutParams) params).backgroundColor);
@@ -95,7 +95,7 @@ public class RefreshHeaderWrapper implements RefreshHeader {
     }
 
     @Override
-    public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
+    public void onStartAnimator(@NonNull RefreshLayout layout, int headHeight, int extendHeight) {
 
     }
 

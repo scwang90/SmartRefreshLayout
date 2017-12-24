@@ -32,7 +32,7 @@ public class RefreshFooterWrapper implements RefreshFooter {
     }
 
     @Override
-    public int onFinish(RefreshLayout layout, boolean success) {
+    public int onFinish(@NonNull RefreshLayout layout, boolean success) {
 		return 0;
 	}
 
@@ -41,6 +41,7 @@ public class RefreshFooterWrapper implements RefreshFooter {
 
     }
 
+    @NonNull
     @Override
     public SpinnerStyle getSpinnerStyle() {
         if (mSpinnerStyle != null) {
@@ -62,7 +63,7 @@ public class RefreshFooterWrapper implements RefreshFooter {
     }
 
     @Override
-    public void onInitialized(RefreshKernel kernel, int height, int extendHeight) {
+    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
         ViewGroup.LayoutParams params = mWrapperView.getLayoutParams();
         if (params instanceof SmartRefreshLayout.LayoutParams) {
             kernel.requestDrawBackgoundForFooter(((SmartRefreshLayout.LayoutParams) params).backgroundColor);
@@ -94,7 +95,7 @@ public class RefreshFooterWrapper implements RefreshFooter {
     }
 
     @Override
-    public void onStartAnimator(RefreshLayout layout, int footerHeight, int extendHeight) {
+    public void onStartAnimator(@NonNull RefreshLayout layout, int footerHeight, int extendHeight) {
 
     }
 

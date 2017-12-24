@@ -1,10 +1,10 @@
 # Android Smart Refresh Layout Framework
 
 [![License](https://img.shields.io/badge/License%20-Apache%202-337ab7.svg)](https://www.apache.org/licenses/LICENSE-2.0)
-[![Arsenal](https://img.shields.io/badge/%20Arsenal%20-%20SmartRefresh%20-4cae4c.svg?style=flat)](https://android-arsenal.com/details/1/6001)
-[![Jcenter](https://img.shields.io/badge/%20Jcenter%20-1.0.4-5bc0de.svg) ](https://bintray.com/scwang90/maven/SmartRefreshLayout/_latestVersion)
-[![MinSdk](https://img.shields.io/badge/%20MinSdk%20-%2012%2B%20-f0ad4e.svg?style=flat)](https://android-arsenal.com/api?level=12)
-[![Methods](https://img.shields.io/badge/%20Methods%20%7C%20Size%20-%201362%20%7C%20138%20KB-d9534f.svg)](http://www.methodscount.com/?lib=com.scwang.smartrefresh%3ASmartRefreshLayout%3A1.0.4)
+[![Arsenal](https://img.shields.io/badge/Arsenal%20-%20SmartRefresh-4cae4c.svg)](https://android-arsenal.com/details/1/6001)
+[![Jcenter](https://img.shields.io/badge/%20Jcenter%20-1.0.4-5bc0de.svg)](https://bintray.com/scwang90/maven/SmartRefreshLayout/_latestVersion)
+[![MinSdk](https://img.shields.io/badge/%20MinSdk%20-%2012%2B%20-f0ad4e.svg)](https://android-arsenal.com/api?level=12)
+[![Methods](https://img.shields.io/badge/Methods%20%7C%20Size%20-%201362%20%7C%20138%20KB-d9534f.svg)](http://www.methodscount.com/?lib=com.scwang.smartrefresh%3ASmartRefreshLayout%3A1.0.4)
 
 <!-- [![Platform](https://img.shields.io/badge/Platform-Android-f0ad4e.svg)](https://www.android.com) -->
 <!-- [![Author](https://img.shields.io/badge/Author-scwang90-11bbff.svg)](https://github.com/scwang90) -->
@@ -102,8 +102,8 @@ Please rest assured that I have divided it into three packages, when used to ref
 ## Usage
 #### 1.Add a gradle dependency.
 ```
-compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-4'
-compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4-4'//If you use the special Header
+compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-5'
+compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4-5'//If you use the special Header
 
 compile 'com.android.support:appcompat-v7:25.3.1'
 compile 'com.android.support:design:25.3.1'//（Not necessary，Can solve problems that cannot be previewed）

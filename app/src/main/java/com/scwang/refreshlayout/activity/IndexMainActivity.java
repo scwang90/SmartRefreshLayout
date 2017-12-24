@@ -83,6 +83,12 @@ public class IndexMainActivity extends AppCompatActivity implements OnNavigation
                 return TabFragment.values()[position].fragment();
             }
         });
+        viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
+            @Override
+            public void onPageSelected(int position) {
+                navigation.setSelectedItemId(TabFragment.values()[position].menuId);
+            }
+        });
 
         //状态栏透明和间距处理
         StatusBarUtil.immersive(this, 0xff000000, 0.1f);

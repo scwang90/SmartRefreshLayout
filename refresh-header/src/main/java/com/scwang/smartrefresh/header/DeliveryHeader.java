@@ -237,6 +237,7 @@ public class DeliveryHeader extends View implements RefreshHeader {
         return this;
     }
 
+    @NonNull
     @Override
     public SpinnerStyle getSpinnerStyle() {
         return SpinnerStyle.Scale;
@@ -253,19 +254,19 @@ public class DeliveryHeader extends View implements RefreshHeader {
     }
 
     @Override
-    public void onInitialized(RefreshKernel kernel, int height, int extendHeight) {
+    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
         mHeaderHeight = height;
     }
 
     @Override
-    public void onStartAnimator(RefreshLayout layout, int height, int extendHeight) {
+    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
         mState = RefreshState.Refreshing;
         mBoxDrawable.getPaint().setAlpha(255);
         invalidate();
     }
 
     @Override
-    public int onFinish(RefreshLayout layout, boolean success) {
+    public int onFinish(@NonNull RefreshLayout layout, boolean success) {
         return 0;
     }
     //</editor-fold>

@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
@@ -80,7 +81,7 @@ public class FalsifyFooter extends FalsifyHeader implements RefreshFooter {
 
 
     @Override
-    public void onInitialized(RefreshKernel kernel, int height, int extendHeight) {
+    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
         super.onInitialized(kernel, height, extendHeight);
         kernel.getRefreshLayout().setEnableAutoLoadmore(false);
     }

@@ -146,13 +146,14 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
         return this;
     }
 
+    @NonNull
     @Override
     public SpinnerStyle getSpinnerStyle() {
         return SpinnerStyle.Scale;
     }
 
     @Override
-    public void onInitialized(RefreshKernel kernel, int height, int extendHeight) {
+    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
     }
 
     @Override
@@ -229,13 +230,12 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
     }
 
     @Override
-    public void onStartAnimator(RefreshLayout layout, int headerHeight, int extendHeight) {
+    public void onStartAnimator(@NonNull RefreshLayout layout, int headerHeight, int extendHeight) {
 
     }
 
     @Override
     public int onFinish(RefreshLayout layout, boolean success) {
-        mIsRunning = false;
         mProgressView.stopAnim();
         mProgressView.animate().scaleX(0f);
         mProgressView.animate().scaleY(0f);

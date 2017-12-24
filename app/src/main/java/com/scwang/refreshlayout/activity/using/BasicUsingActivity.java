@@ -51,7 +51,7 @@ public class BasicUsingActivity extends AppCompatActivity {
         });
 
         final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
-        refreshLayout.setEnableAutoLoadmore(true);//开启自动加载功能（非必须）
+        refreshLayout.setEnableAutoLoadmore(false);//开启自动加载功能（非必须）
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(final RefreshLayout refreshlayout) {

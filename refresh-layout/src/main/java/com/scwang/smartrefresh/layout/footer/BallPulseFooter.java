@@ -97,7 +97,7 @@ public class BallPulseFooter extends ViewGroup implements RefreshFooter {
 
     //<editor-fold desc="RefreshFooter">
     @Override
-    public void onInitialized(RefreshKernel kernel, int height, int extendHeight) {
+    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
 
     }
 
@@ -124,7 +124,7 @@ public class BallPulseFooter extends ViewGroup implements RefreshFooter {
     }
 
     @Override
-    public void onStartAnimator(RefreshLayout layout, int footerHeight, int extendHeight) {
+    public void onStartAnimator(@NonNull RefreshLayout layout, int footerHeight, int extendHeight) {
         mBallPulseView.startAnim();
     }
 
@@ -133,7 +133,7 @@ public class BallPulseFooter extends ViewGroup implements RefreshFooter {
     }
 
     @Override
-    public int onFinish(RefreshLayout layout, boolean success) {
+    public int onFinish(@NonNull RefreshLayout layout, boolean success) {
         mBallPulseView.stopAnim();
         return 0;
     }
@@ -159,6 +159,7 @@ public class BallPulseFooter extends ViewGroup implements RefreshFooter {
         return this;
     }
 
+    @NonNull
     @Override
     public SpinnerStyle getSpinnerStyle() {
         return mSpinnerStyle;

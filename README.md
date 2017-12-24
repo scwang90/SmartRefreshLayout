@@ -1,10 +1,10 @@
 # Android智能下拉刷新框架-SmartRefreshLayout
 
 [![License](https://img.shields.io/badge/License%20-Apache%202-337ab7.svg)](https://www.apache.org/licenses/LICENSE-2.0)
-[![Arsenal](https://img.shields.io/badge/%20Arsenal%20-%20SmartRefresh%20-4cae4c.svg?style=flat)](https://android-arsenal.com/details/1/6001)
-[![Jcenter](https://img.shields.io/badge/%20Jcenter%20-1.0.4-5bc0de.svg) ](https://bintray.com/scwang90/maven/SmartRefreshLayout/_latestVersion)
-[![MinSdk](https://img.shields.io/badge/%20MinSdk%20-%2012%2B%20-f0ad4e.svg?style=flat)](https://android-arsenal.com/api?level=12)
-[![Methods](https://img.shields.io/badge/%20Methods%20%7C%20Size%20-%201362%20%7C%20138%20KB-d9534f.svg)](http://www.methodscount.com/?lib=com.scwang.smartrefresh%3ASmartRefreshLayout%3A1.0.4)
+[![Arsenal](https://img.shields.io/badge/Arsenal%20-%20SmartRefresh-4cae4c.svg)](https://android-arsenal.com/details/1/6001)
+[![Jcenter](https://img.shields.io/badge/%20Jcenter%20-1.0.4-5bc0de.svg)](https://bintray.com/scwang90/maven/SmartRefreshLayout/_latestVersion)
+[![MinSdk](https://img.shields.io/badge/%20MinSdk%20-%2012%2B%20-f0ad4e.svg)](https://android-arsenal.com/api?level=12)
+[![Methods](https://img.shields.io/badge/Methods%20%7C%20Size%20-%201362%20%7C%20138%20KB-d9534f.svg)](http://www.methodscount.com/?lib=com.scwang.smartrefresh%3ASmartRefreshLayout%3A1.0.4)
 
 <!-- [![Platform](https://img.shields.io/badge/Platform-Android-f0ad4e.svg)](https://www.android.com) -->
 <!-- [![Author](https://img.shields.io/badge/Author-scwang90-11bbff.svg)](https://github.com/scwang90) -->
@@ -102,14 +102,14 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
 ## 简单用例
 #### 1.在 buld.gradle 中添加依赖
 ```
-//发现bug请加群提出，并切换 1.0.3 版本
-compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-4'
-compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4-4'//没有使用特殊Header，可以不加这行
+//
+compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-5'
+compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4-5'//没有使用特殊Header，可以不加这行
 
 compile 'com.android.support:appcompat-v7:25.3.1'//版本随意（必须）
 compile 'com.android.support:design:25.3.1'//版本随意（非必须，引用可以解决无法预览问题）
 
-//稳定版
+//1.0.4 出现问题可以回退到 1.0.3
 compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
 compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'//没有使用特殊Header，可以不加这行
 

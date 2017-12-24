@@ -90,7 +90,7 @@ public class FalsifyHeader extends View implements RefreshHeader {
     //<editor-fold desc="RefreshHeader">
 
     @Override
-    public void onInitialized(RefreshKernel kernel, int height, int extendHeight) {
+    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
         mRefreshKernel = kernel;
     }
 
@@ -125,7 +125,7 @@ public class FalsifyHeader extends View implements RefreshHeader {
     }
 
     @Override
-    public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
+    public void onStartAnimator(@NonNull RefreshLayout layout, int headHeight, int extendHeight) {
     }
 
     @Override
@@ -133,7 +133,7 @@ public class FalsifyHeader extends View implements RefreshHeader {
     }
 
     @Override
-    public int onFinish(RefreshLayout layout, boolean success) {
+    public int onFinish(@NonNull RefreshLayout layout, boolean success) {
         return 0;
     }
 
@@ -148,6 +148,7 @@ public class FalsifyHeader extends View implements RefreshHeader {
         return this;
     }
 
+    @NonNull
     @Override
     public SpinnerStyle getSpinnerStyle() {
         return SpinnerStyle.Translate;
