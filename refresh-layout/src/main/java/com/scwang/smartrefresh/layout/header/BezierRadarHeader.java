@@ -40,6 +40,7 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
     private RoundDotView mDotView;
     private RoundProgressView mProgressView;
     private boolean mEnableHorizontalDrag = false;
+    private boolean mIsRunning;
 
     //<editor-fold desc="FrameLayout">
     public BezierRadarHeader(Context context) {
@@ -170,6 +171,9 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
         mWaveView.setHeadHeight(Math.min(headerHeight, offset));
         mWaveView.setWaveHeight((int)(1.9f*Math.max(0, offset - headerHeight)));
         mDotView.setFraction(percent);
+        if (mIsRunning) {
+            mWaveView.invalidate();
+        }
     }
 
     @Override
@@ -179,6 +183,7 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
 
     @Override
     public void onRefreshReleased(final RefreshLayout layout, int headerHeight, int extendHeight) {
+        mIsRunning = true;
         mWaveView.setHeadHeight(headerHeight);
         ValueAnimator animator = ValueAnimator.ofInt(
                 mWaveView.getWaveHeight(), 0,
@@ -230,6 +235,7 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
 
     @Override
     public int onFinish(RefreshLayout layout, boolean success) {
+        mIsRunning = false;
         mProgressView.stopAnim();
         mProgressView.animate().scaleX(0f);
         mProgressView.animate().scaleY(0f);
