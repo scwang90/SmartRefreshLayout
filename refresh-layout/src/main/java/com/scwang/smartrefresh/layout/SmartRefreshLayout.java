@@ -2368,8 +2368,8 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     @Override
     public SmartRefreshLayout setLoadmoreFinished(boolean finished) {
         mLoadmoreFinished = finished;
-        if (mRefreshFooter != null) {
-            mRefreshFooter.setLoadmoreFinished(finished);
+        if (mRefreshFooter != null && !mRefreshFooter.setLoadmoreFinished(finished)) {
+            System.out.println("Footer:" + mRefreshFooter + "不支持提示完成");
         }
         return this;
     }
