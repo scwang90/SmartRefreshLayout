@@ -25,8 +25,6 @@ import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 
 public class MaterialStyleActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
-
-
     private enum Item {
         内容不偏移("下拉的时候列表内容停留在原位不动"),
         内容跟随偏移("下拉的时候列表内容跟随向下偏移"),
