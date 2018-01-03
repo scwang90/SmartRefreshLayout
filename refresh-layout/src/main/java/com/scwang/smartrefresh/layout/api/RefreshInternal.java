@@ -8,6 +8,7 @@ import android.view.View;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.listener.OnStateChangedListener;
 
+import static android.support.annotation.RestrictTo.Scope.LIBRARY;
 import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
 import static android.support.annotation.RestrictTo.Scope.SUBCLASSES;
 
@@ -16,7 +17,7 @@ import static android.support.annotation.RestrictTo.Scope.SUBCLASSES;
  * 刷新内部组件
  * Created by SCWANG on 2017/5/26.
  */
-@RestrictTo({LIBRARY_GROUP,SUBCLASSES})
+@RestrictTo({LIBRARY,LIBRARY_GROUP,SUBCLASSES})
 public interface RefreshInternal extends OnStateChangedListener {
     /**
      * 获取实体视图
