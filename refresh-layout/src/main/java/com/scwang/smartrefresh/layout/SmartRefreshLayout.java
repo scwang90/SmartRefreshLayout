@@ -2430,7 +2430,8 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                                 mTouchY = mLastTouchY;
                                 mIsBeingDragged = false;
                                 long time = System.currentTimeMillis();
-                                superDispatchTouchEvent(obtain(time, time, MotionEvent.ACTION_DOWN, mLastTouchX, mTouchY + mSpinner, 0));
+                                superDispatchTouchEvent(obtain(time, time, MotionEvent.ACTION_DOWN, mLastTouchX, mTouchY + mSpinner - mTouchSlop*2, 0));
+                                superDispatchTouchEvent(obtain(time, time, MotionEvent.ACTION_MOVE, mLastTouchX, mTouchY + mSpinner, 0));
                             }
                             notifyStateChanged(RefreshState.RefreshFinish);
                         }
@@ -2502,8 +2503,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                                 mTouchSpinner = 0;
                                 mTouchY = mLastTouchY;
                                 mIsBeingDragged = false;
-                                long time = System.currentTimeMillis();
-                                superDispatchTouchEvent(obtain(time, time, MotionEvent.ACTION_DOWN, mLastTouchX, mTouchY + mSpinner, 0));
+                                final long time = System.currentTimeMillis();
+                                superDispatchTouchEvent(obtain(time, time, MotionEvent.ACTION_DOWN, mLastTouchX, mTouchY + mSpinner + mTouchSlop*2, 0));
+                                superDispatchTouchEvent(obtain(time, time, MotionEvent.ACTION_MOVE, mLastTouchX, mTouchY + mSpinner, 0));
                             }
                             notifyStateChanged(RefreshState.LoadFinish);
                         }

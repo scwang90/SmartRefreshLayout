@@ -16,7 +16,7 @@ import android.view.View;
 import android.view.animation.Interpolator;
 
 import com.scwang.smartrefresh.header.R;
-import com.scwang.smartrefresh.layout.util.ColorUtils;
+import com.scwang.smartrefresh.header.util.ColorUtils;
 
 /**
  * 山丘树木场景视图

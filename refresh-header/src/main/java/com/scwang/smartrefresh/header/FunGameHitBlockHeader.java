@@ -12,7 +12,7 @@ import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 
 import com.scwang.smartrefresh.header.fungame.FunGameView;
-import com.scwang.smartrefresh.layout.util.ColorUtils;
+import com.scwang.smartrefresh.header.util.ColorUtils;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import java.util.ArrayList;
