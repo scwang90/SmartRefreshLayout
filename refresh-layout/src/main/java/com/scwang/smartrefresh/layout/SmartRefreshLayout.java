@@ -2522,6 +2522,10 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                                         updateListener.onAnimationUpdate(ValueAnimator.ofInt(0, 0));
                                     }
                                     if (updateListener != null || mSpinner >= 0) {
+                                        if (reboundAnimator != null) {
+                                            reboundAnimator.cancel();
+                                            reboundAnimator = null;
+                                        }
                                         moveSpinner(0, true);
                                         resetStatus();
                                         if (noMoreData) {

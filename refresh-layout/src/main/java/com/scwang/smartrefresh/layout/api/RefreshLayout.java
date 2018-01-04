@@ -100,7 +100,7 @@ public interface RefreshLayout {
 
     /**
      * 标记数据全部加载完成，将不能再次触发加载功能（true）
-     * @deprecated 请使用 finishLoadmoreWithNoMoreData 和 resetNoMoreData 代替
+     * 在适当时候请使用 finishLoadmoreWithNoMoreData 和 resetNoMoreData 代替
      */
     @Deprecated
     RefreshLayout setLoadmoreFinished(boolean finished);
