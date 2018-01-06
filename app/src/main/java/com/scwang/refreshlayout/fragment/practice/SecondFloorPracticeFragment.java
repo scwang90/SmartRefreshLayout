@@ -70,7 +70,7 @@ public class SecondFloorPracticeFragment extends Fragment {
                         root.findViewById(R.id.secondfloor_content).animate().alpha(0).setDuration(1000);
                     }
                 },5000);
-                return true;
+                return true;//true 将会展开二楼状态 false 关闭刷新
             }
         });
 
