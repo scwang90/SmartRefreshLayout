@@ -23,6 +23,7 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
 /**
  * Created by Hitomis on 2016/3/9.
  * email:196425254@qq.com
+ * https://github.com/Hitomis/FunGameRefresh
  */
 public abstract class FunGameView extends FunGameHeader {
 

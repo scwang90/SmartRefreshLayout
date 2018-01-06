@@ -18,6 +18,7 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
 /**
  * 下拉头中间的“水滴”
  * Created by xiayong on 2015/6/23.
+ * from https://github.com/THEONE10211024/WaterDropListView
  */
 public class WaterDropView extends View {
 

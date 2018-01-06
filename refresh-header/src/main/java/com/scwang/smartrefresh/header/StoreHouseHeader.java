@@ -27,6 +27,11 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import java.util.ArrayList;
 
+/**
+ * StoreHouseHeader
+ * Created by SCWANG on 2017/5/31.
+ * from https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh
+ */
 public class  StoreHouseHeader extends View implements RefreshHeader {
 
     //<editor-fold desc="Field">

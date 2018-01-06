@@ -22,12 +22,10 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 /**
  * Refresh your delivery!
- * https://dribbble.com/shots/2753803-Refresh-your-delivery
  * Created by SCWANG on 2017/6/25.
+ * design https://dribbble.com/shots/2753803-Refresh-your-delivery
  */
-
 public class DeliveryHeader extends View implements RefreshHeader {
-
 
     //<editor-fold desc="Field">
     private Paint mPaint;

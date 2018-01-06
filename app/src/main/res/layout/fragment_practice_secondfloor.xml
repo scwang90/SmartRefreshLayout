@@ -23,18 +23,14 @@
                 android:contentDescription="@string/app_name"
                 android:scaleType="centerCrop"
                 android:src="@mipmap/image_secondfloor"/>
-            <ScrollView
+            <ImageView
                 android:id="@+id/secondfloor_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:alpha="0">
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:contentDescription="@string/app_name"
-                    android:src="@mipmap/image_taobao"/>
-            </ScrollView>
+                android:contentDescription="@string/app_name"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/image_secondfloor_content"
+                android:alpha="0"/>
             <com.scwang.smartrefresh.layout.header.ClassicsHeader
                 android:id="@+id/classics"
                 android:layout_width="match_parent"

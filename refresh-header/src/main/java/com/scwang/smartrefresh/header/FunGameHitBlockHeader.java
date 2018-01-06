@@ -21,6 +21,7 @@ import java.util.List;
 /**
  * Created by Hitomis on 2016/2/29.
  * email:196425254@qq.com
+ * from https://github.com/Hitomis/FunGameRefresh
  */
 public class FunGameHitBlockHeader extends FunGameView {
 

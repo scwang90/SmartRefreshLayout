@@ -30,8 +30,8 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 /**
  * DropboxRefresh
- * https://dribbble.com/shots/3470499-Dropbox-Refresh
  * Created by SCWANG on 2017/6/24.
+ * design https://dribbble.com/shots/3470499-Dropbox-Refresh
  */
 
 public class DropboxHeader extends View implements RefreshHeader {
