@@ -271,7 +271,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         ViewConfiguration configuration = ViewConfiguration.get(context);
 
         mScroller = new Scroller(context);
-        mKernel = new RefreshKernelImpl(this);
+        mKernel = new RefreshKernelImpl();
         mVelocityTracker = VelocityTracker.obtain();
         mScreenHeightPixels = context.getResources().getDisplayMetrics().heightPixels;
         mReboundInterpolator = new ViscousFluidInterpolator();
@@ -883,7 +883,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             return ret;
         } else if (!isEnabled()
                 || (!isEnableRefresh() && !isEnableLoadmore() && !mEnableOverScrollDrag)
-                || (mHeaderNeedTouchEventWhenRefreshing && (mState == RefreshState.Refreshing || mState == RefreshState.RefreshFinish))
+                || (mHeaderNeedTouchEventWhenRefreshing && (mState == RefreshState.Refreshing || mState == RefreshState.TwoLevel))
                 || (mFooterNeedTouchEventWhenLoading && (mState == RefreshState.Loading || mState == RefreshState.LoadFinish))) {
             return superDispatchTouchEvent(e);
         }
@@ -1025,7 +1025,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      */
     protected boolean interceptAnimator(int action) {
         if (reboundAnimator != null && action == MotionEvent.ACTION_DOWN) {
-            if (mState == RefreshState.LoadFinish || mState == RefreshState.RefreshFinish) {
+            if (mState.finishing) {
                 return false;
             }
             if (mState == RefreshState.PullDownCanceled) {
@@ -2534,7 +2534,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                                             setLoadmoreFinished(true);
                                         }
                                     } else {
-                                        ValueAnimator valueAnimator = animSpinner(0, startDelay);
+                                        ValueAnimator valueAnimator = animSpinner(0);
                                         if (valueAnimator != null && noMoreData) {
                                             valueAnimator.addListener(new AnimatorListenerAdapter() {
                                                 @Override
@@ -2786,89 +2786,83 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     //</editor-fold>
 
     //<editor-fold desc="核心接口 RefreshKernel">
-    public static class RefreshKernelImpl implements RefreshKernel {
-
-        SmartRefreshLayout layout;
-
-        public RefreshKernelImpl(SmartRefreshLayout layout) {
-            this.layout = layout;
-        }
+    public class RefreshKernelImpl implements RefreshKernel {
 
         @NonNull
         @Override
         public RefreshLayout getRefreshLayout() {
-            return layout;
+            return SmartRefreshLayout.this;
         }
 
         @NonNull
         @Override
         public RefreshContent getRefreshContent() {
-            return layout.mRefreshContent;
+            return mRefreshContent;
         }
 
         @Override
         public RefreshKernel setState(@NonNull RefreshState state) {
             switch (state) {
                 case None:
-                    layout.resetStatus();
+                    SmartRefreshLayout.this.resetStatus();
                     break;
                 case PullDownToRefresh:
-                    layout.setStatePullDownToRefresh();
+                    SmartRefreshLayout.this.setStatePullDownToRefresh();
                     break;
                 case PullToUpLoad:
-                    layout.setStatePullUpToLoad();
+                    SmartRefreshLayout.this.setStatePullUpToLoad();
                     break;
                 case PullDownCanceled:
-                    layout.setStatePullDownCanceled();
+                    SmartRefreshLayout.this.setStatePullDownCanceled();
                     break;
                 case PullUpCanceled:
-                    layout.setStatePullUpCanceled();
+                    SmartRefreshLayout.this.setStatePullUpCanceled();
                     break;
                 case ReleaseToRefresh:
-                    layout.setStateReleaseToRefresh();
+                    SmartRefreshLayout.this.setStateReleaseToRefresh();
                     break;
                 case ReleaseToLoad:
-                    layout.setStateReleaseToLoad();
+                    SmartRefreshLayout.this.setStateReleaseToLoad();
                     break;
                 case ReleaseToTwoLevel: {
-                    if (!layout.mState.opening && layout.isEnableRefresh()) {
-                        layout.notifyStateChanged(RefreshState.ReleaseToTwoLevel);
+                    if (!SmartRefreshLayout.this.mState.opening && SmartRefreshLayout.this.isEnableRefresh()) {
+                        SmartRefreshLayout.this.notifyStateChanged(RefreshState.ReleaseToTwoLevel);
                     } else {
-                        layout.setViceState(RefreshState.ReleaseToTwoLevel);
+                        SmartRefreshLayout.this.setViceState(RefreshState.ReleaseToTwoLevel);
                     }
                     break;
                 }
                 case RefreshReleased: {
-                    if (!layout.mState.opening && layout.isEnableRefresh()) {
-                        layout.notifyStateChanged(RefreshState.RefreshReleased);
+                    if (!SmartRefreshLayout.this.mState.opening && SmartRefreshLayout.this.isEnableRefresh()) {
+                        SmartRefreshLayout.this.notifyStateChanged(RefreshState.RefreshReleased);
                     } else {
-                        layout.setViceState(RefreshState.RefreshReleased);
+                        SmartRefreshLayout.this.setViceState(RefreshState.RefreshReleased);
                     }
                     break;
                 }
                 case LoadReleased: {
-                    if (!layout.mState.opening && layout.isEnableLoadmore()) {
-                        layout.notifyStateChanged(RefreshState.LoadReleased);
+                    if (!SmartRefreshLayout.this.mState.opening && SmartRefreshLayout.this.isEnableLoadmore()) {
+                        SmartRefreshLayout.this.notifyStateChanged(RefreshState.LoadReleased);
                     } else {
-                        layout.setViceState(RefreshState.LoadReleased);
+                        SmartRefreshLayout.this.setViceState(RefreshState.LoadReleased);
                     }
                     break;
                 }
                 case Refreshing:
-                    layout.setStateRefreshing();
+                    SmartRefreshLayout.this.setStateRefreshing();
                     break;
                 case Loading:
-                    layout.setStateLoding();
+                    SmartRefreshLayout.this.setStateLoding();
                     break;
                 case RefreshFinish: {
-                    if (layout.mState == RefreshState.Refreshing) {
-                        layout.notifyStateChanged(RefreshState.RefreshFinish);
+                    if (SmartRefreshLayout.this.mState == RefreshState.Refreshing) {
+                        SmartRefreshLayout.this.notifyStateChanged(RefreshState.RefreshFinish);
                     }
                     break;
                 }
                 case LoadFinish:{
-                    if (layout.mState == RefreshState.Loading) {
-                        layout.notifyStateChanged(RefreshState.LoadFinish);
+                    if (SmartRefreshLayout.this.mState == RefreshState.Loading) {
+                        SmartRefreshLayout.this.notifyStateChanged(RefreshState.LoadFinish);
                     }
                     break;
                 }
@@ -2877,39 +2871,41 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         }
 
         @Override
-        public void startTwoLevel(boolean open) {
+        public RefreshKernel startTwoLevel(boolean open) {
             if (open) {
                 AnimatorListenerAdapter listener = new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
-                        layout.notifyStateChanged(RefreshState.TwoLevel);
+                        SmartRefreshLayout.this.notifyStateChanged(RefreshState.TwoLevel);
                     }
                 };
-                ValueAnimator animator = layout.animSpinner(layout.getMeasuredHeight());
-                if (animator != null && animator == layout.reboundAnimator) {
-                    animator.setDuration(layout.mFloorDuration);
+                ValueAnimator animator = SmartRefreshLayout.this.animSpinner(SmartRefreshLayout.this.getMeasuredHeight());
+                if (animator != null && animator == SmartRefreshLayout.this.reboundAnimator) {
+                    animator.setDuration(SmartRefreshLayout.this.mFloorDuration);
                     animator.addListener(listener);
                 } else {
                     listener.onAnimationEnd(null);
                 }
             } else {
                 if (animSpinner(0) == null) {
-                    layout.notifyStateChanged(RefreshState.None);
+                    SmartRefreshLayout.this.notifyStateChanged(RefreshState.None);
                 }
             }
+            return this;
         }
 
         @Override
-        public void finishTwoLevel() {
-            if (layout.mState == RefreshState.TwoLevel) {
-                layout.notifyStateChanged(RefreshState.TwoLevelFinish);
-                if (layout.mSpinner == 0) {
+        public RefreshKernel finishTwoLevel() {
+            if (SmartRefreshLayout.this.mState == RefreshState.TwoLevel) {
+                SmartRefreshLayout.this.notifyStateChanged(RefreshState.TwoLevelFinish);
+                if (SmartRefreshLayout.this.mSpinner == 0) {
                     moveSpinner(0, true);
-                    layout.notifyStateChanged(RefreshState.None);
+                    SmartRefreshLayout.this.notifyStateChanged(RefreshState.None);
                 } else {
-                    layout.animSpinner(0).setDuration(layout.mFloorDuration);
+                    SmartRefreshLayout.this.animSpinner(0).setDuration(SmartRefreshLayout.this.mFloorDuration);
                 }
             }
+            return this;
         }
         //<editor-fold desc="状态更改 state changes">
 
@@ -2918,12 +2914,12 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         //<editor-fold desc="视图位移 Spinner">
 
         public RefreshKernel moveSpinner(int spinner, boolean isAnimator) {
-            layout.moveSpinner(spinner, isAnimator);
+            SmartRefreshLayout.this.moveSpinner(spinner, isAnimator);
             return this;
         }
 
         public RefreshKernel animSpinner(int endSpinner) {
-            layout.animSpinner(endSpinner);
+            SmartRefreshLayout.this.animSpinner(endSpinner);
             return this;
         }
 
@@ -2932,56 +2928,56 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         //<editor-fold desc="请求事件">
         @Override
         public RefreshKernel requestDrawBackgoundForHeader(int backgroundColor) {
-            if (layout.mPaint == null && backgroundColor != 0) {
-                layout.mPaint = new Paint();
+            if (SmartRefreshLayout.this.mPaint == null && backgroundColor != 0) {
+                SmartRefreshLayout.this.mPaint = new Paint();
             }
-            layout.mHeaderBackgroundColor = backgroundColor;
+            SmartRefreshLayout.this.mHeaderBackgroundColor = backgroundColor;
             return this;
         }
 
         @Override
         public RefreshKernel requestDrawBackgoundForFooter(int backgroundColor) {
-            if (layout.mPaint == null && backgroundColor != 0) {
-                layout.mPaint = new Paint();
+            if (SmartRefreshLayout.this.mPaint == null && backgroundColor != 0) {
+                SmartRefreshLayout.this.mPaint = new Paint();
             }
-            layout.mFooterBackgroundColor = backgroundColor;
+            SmartRefreshLayout.this.mFooterBackgroundColor = backgroundColor;
             return this;
         }
         @Override
         public RefreshKernel requestHeaderNeedTouchEventWhenRefreshing(boolean request) {
-            layout.mHeaderNeedTouchEventWhenRefreshing = request;
+            SmartRefreshLayout.this.mHeaderNeedTouchEventWhenRefreshing = request;
             return this;
         }
         @Override
         public RefreshKernel requestFooterNeedTouchEventWhenLoading(boolean request) {
-            layout.mFooterNeedTouchEventWhenLoading = request;
+            SmartRefreshLayout.this.mFooterNeedTouchEventWhenLoading = request;
             return this;
         }
         @Override
         public RefreshKernel requestDefaultHeaderTranslationContent(boolean translation) {
-            if (!layout.mManualHeaderTranslationContent) {
-                layout.mManualHeaderTranslationContent = true;
-                layout.mEnableHeaderTranslationContent = translation;
+            if (!SmartRefreshLayout.this.mManualHeaderTranslationContent) {
+                SmartRefreshLayout.this.mManualHeaderTranslationContent = true;
+                SmartRefreshLayout.this.mEnableHeaderTranslationContent = translation;
             }
             return this;
         }
         @Override
         public RefreshKernel requestRemeasureHeightForHeader() {
-            if (layout.mHeaderHeightStatus.notifyed) {
-                layout.mHeaderHeightStatus = layout.mHeaderHeightStatus.unNotify();
+            if (SmartRefreshLayout.this.mHeaderHeightStatus.notifyed) {
+                SmartRefreshLayout.this.mHeaderHeightStatus = SmartRefreshLayout.this.mHeaderHeightStatus.unNotify();
             }
             return this;
         }
         @Override
         public RefreshKernel requestRemeasureHeightForFooter() {
-            if (layout.mFooterHeightStatus.notifyed) {
-                layout.mFooterHeightStatus = layout.mFooterHeightStatus.unNotify();
+            if (SmartRefreshLayout.this.mFooterHeightStatus.notifyed) {
+                SmartRefreshLayout.this.mFooterHeightStatus = SmartRefreshLayout.this.mFooterHeightStatus.unNotify();
             }
             return this;
         }
         @Override
         public RefreshKernel requestFloorDuration(int duration) {
-            layout.mFloorDuration = duration;
+            SmartRefreshLayout.this.mFloorDuration = duration;
             return this;
         }
         //</editor-fold>

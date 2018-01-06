@@ -1,5 +1,6 @@
 package com.scwang.refreshlayout.widget;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -11,8 +12,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout.RefreshKernelImpl;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -20,14 +19,23 @@ import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.impl.RefreshHeaderWrapper;
 
-@SuppressWarnings("unused")
-public class TwoLevelHeader extends FrameLayout implements RefreshHeader {
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+
+/**
+ * 二级刷新监
+ * Created by SCWANG on 2017/5/26.
+ */
+@SuppressWarnings({"unused", "UnusedReturnValue"})
+public class TwoLevelHeader extends FrameLayout implements RefreshHeader, InvocationHandler {
 
     /**
      * 二级刷新监听器
-     * Created by SCWANG on 2017/5/26.
      */
-
     public interface OnTwoLevelListener {
         /**
          * 二级刷新触发
@@ -40,17 +48,20 @@ public class TwoLevelHeader extends FrameLayout implements RefreshHeader {
     //<editor-fold desc="属性字段">
     protected int mSpinner;
     protected float mPercent = 0;
-    protected float mMaxRage = 2.0f;
+    protected float mMaxRage = 2.5f;
     protected float mFloorRage = 1.9f;
     protected float mRefreshRage = 1f;
     protected boolean mEnableTwoLevel = true;
+    protected boolean mEnablePullToCloseTwoLevel = true;
     protected int mFloorDuration = 1000;
     protected int mHeaderHeight;
+    protected int mPaintAlpha;
     protected Paint mPaint;
     protected RefreshHeader mRefreshHeader;
     protected RefreshKernel mRefreshKernel;
-    protected SpinnerStyle mSpinnerStle = SpinnerStyle.FixedBehind;
     protected OnTwoLevelListener mTwoLevelListener;
+    protected SpinnerStyle mSpinnerStle = SpinnerStyle.FixedBehind;
+    protected Method mRrequestDrawBackgoundForHeaderMethod;
     //</editor-fold>
 
     //<editor-fold desc="构造方法">
@@ -128,33 +139,23 @@ public class TwoLevelHeader extends FrameLayout implements RefreshHeader {
     }
 
     @Override
-    protected void dispatchDraw(Canvas canvas) {
-        super.dispatchDraw(canvas);
+    protected boolean drawChild(Canvas canvas, View child, long drawingTime) {
         boolean isInEditMode = isInEditMode();
-        if (mPaint != null && (mSpinner > 0 || isInEditMode)) {
-            RefreshState state = mRefreshKernel.getRefreshLayout().getState();
-            if (state != RefreshState.TwoLevelReleased && state != RefreshState.TwoLevel) {
-                canvas.drawRect(0, 0, getWidth(), (isInEditMode) ? mHeaderHeight : mSpinner, mPaint);
-                drawChild(canvas, mRefreshHeader.getView(), getDrawingTime());
-            }
+        if (child == mRefreshHeader.getView() && mPaint != null) {
+            canvas.drawRect(0, 0, getWidth(), ((isInEditMode) ? mHeaderHeight : mSpinner) + child.getTop(), mPaint);
         }
+        return super.drawChild(canvas, child, drawingTime);
     }
-    //</editor-fold>
 
+    //</editor-fold>
 
     //<editor-fold desc="Header实现">
     @Override
-    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
-        if (1f * (extendHeight + height) / height < mMaxRage) {
-            kernel.getRefreshLayout().setHeaderMaxDragRate(mMaxRage);
-            return;
-        }
-        mHeaderHeight = height;
-        mRefreshKernel = kernel;
-        mRefreshKernel.requestFloorDuration(mFloorDuration);
-        mRefreshHeader.onInitialized(new RefreshKernelImpl((SmartRefreshLayout)kernel.getRefreshLayout()) {
-            @Override
-            public RefreshKernel requestDrawBackgoundForHeader(int backgroundColor) {
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        Object returnValue = null;
+        if (mRefreshKernel != null) {
+            if (method.equals(mRrequestDrawBackgoundForHeaderMethod)) {
+                int backgroundColor = (int) args[0];
                 if (backgroundColor == 0) {
                     mPaint = null;
                 } else {
@@ -162,14 +163,55 @@ public class TwoLevelHeader extends FrameLayout implements RefreshHeader {
                         mPaint = new Paint();
                     }
                     mPaint.setColor(backgroundColor);
+                    mPaintAlpha = ((backgroundColor & 0xFF000000) >> 24);
                 }
-                return this;
+                returnValue = proxy;
+            } else {
+                returnValue = method.invoke(mRefreshKernel, args);
             }
-        }, height, extendHeight);
+        }
+        if (method.getReturnType().equals(RefreshKernel.class)) {
+            if (mRefreshKernel == null && mRrequestDrawBackgoundForHeaderMethod == null) {
+                Class<?>[] parameterTypes = method.getParameterTypes();
+                if (parameterTypes.length == 1 && parameterTypes[0].equals(int.class)) {
+                    mRrequestDrawBackgoundForHeaderMethod = method;
+                }
+            }
+            return proxy;
+        }
+        return returnValue;
+    }
+
+    @Override
+    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
+        if (1f * (extendHeight + height) / height != mMaxRage) {
+            kernel.getRefreshLayout().setHeaderMaxDragRate(mMaxRage);
+            return;
+        }
         if (!isInEditMode() && mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Translate) {
             MarginLayoutParams params = (MarginLayoutParams) mRefreshHeader.getView().getLayoutParams();
             params.topMargin -= height;
             mRefreshHeader.getView().setLayoutParams(params);
+        }
+
+        RefreshKernel proxy = (RefreshKernel) Proxy.newProxyInstance(RefreshKernel.class.getClassLoader(), new Class[]{RefreshKernel.class}, this);
+        proxy.requestDrawBackgoundForHeader(0);
+
+        mHeaderHeight = height;
+        mRefreshKernel = kernel;
+        mRefreshKernel.requestFloorDuration(mFloorDuration);
+        mRefreshHeader.onInitialized(proxy, height, extendHeight);
+        mRefreshKernel.requestHeaderNeedTouchEventWhenRefreshing(!mEnablePullToCloseTwoLevel);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && mPaint != null) {
+            mRefreshHeader.getView().animate().setUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    if (animation.getAnimatedValue() instanceof Float) {
+                        mPaint.setAlpha(((int)((mRefreshHeader.getView().getAlpha())*mPaintAlpha)));
+                    }
+                }
+            });
         }
     }
 
@@ -280,32 +322,83 @@ public class TwoLevelHeader extends FrameLayout implements RefreshHeader {
     //</editor-fold>
 
     //<editor-fold desc="开放API">
-    public void setRefreshHeader(RefreshHeader header) {
-        this.mRefreshHeader = header;
+
+    /**
+     * 设置指定的Header
+     */
+    public TwoLevelHeader setRefreshHeader(RefreshHeader header) {
+        return setRefreshHeader(header, MATCH_PARENT, WRAP_CONTENT);
     }
 
-    public void setmMaxRage(float rate) {
-        this.mMaxRage = rate;
+    /**
+     * 设置指定的Header
+     */
+    public TwoLevelHeader setRefreshHeader(RefreshHeader header, int width, int height) {
+        if (header != null) {
+            if (mRefreshHeader != null) {
+                removeView(mRefreshHeader.getView());
+            }
+            this.mRefreshHeader = header;
+            if (header.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
+                this.addView(mRefreshHeader.getView(), 0, new LayoutParams(width, height));
+            } else {
+                this.addView(mRefreshHeader.getView(), width, height);
+            }
+        }
+        return this;
     }
 
-    public void setmFloorRage(float rate) {
+    /**
+     * 设置下拉Header的最大高度比值
+     *
+     * @param rate MaxDragHeight/HeaderHeight
+     */
+    public TwoLevelHeader setMaxRage(float rate) {
+        if (this.mMaxRage != rate) {
+            this.mMaxRage = rate;
+            if (this.mRefreshKernel != null) {
+                this.mRefreshKernel.getRefreshLayout().setHeaderMaxDragRate(mMaxRage);
+            }
+        }
+        return this;
+    }
+
+    /**
+     * 是否禁止在二极状态是上滑关闭状态回到初态
+     * @param disable 是否禁止
+     */
+    public TwoLevelHeader setDisablePullToCloseTwoLevel(boolean disable) {
+        this.mEnablePullToCloseTwoLevel = !disable;
+        if (this.mRefreshKernel != null) {
+            this.mRefreshKernel.requestHeaderNeedTouchEventWhenRefreshing(disable);
+        }
+        return this;
+    }
+
+    public TwoLevelHeader setFloorRage(float rate) {
         this.mFloorRage = rate;
+        return this;
     }
 
-    public void setmRefreshRage(float rate) {
+    public TwoLevelHeader setRefreshRage(float rate) {
         this.mRefreshRage = rate;
+        return this;
     }
 
-    public void setEnableTwoLevel(boolean enable) {
+    public TwoLevelHeader setEnableTwoLevel(boolean enable) {
         this.mEnableTwoLevel = enable;
+        return this;
     }
 
-    public void setOnTwoLevelListener(OnTwoLevelListener listener) {
+    public TwoLevelHeader setOnTwoLevelListener(OnTwoLevelListener listener) {
         this.mTwoLevelListener = listener;
+        return this;
     }
 
-    public void finishTwoLevel() {
+    public TwoLevelHeader finishTwoLevel() {
         this.mRefreshKernel.finishTwoLevel();
+        return this;
     }
+
     //</editor-fold>
 }

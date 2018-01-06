@@ -12,9 +12,9 @@ public enum RefreshState {
     RefreshFinish(1,false,false,true), LoadFinish(2,false,false,true), TwoLevelFinish(1,false,false,true),;
 
     private final int role;
-    public final boolean draging;
-    public final boolean opening;
-    public final boolean finishing;
+    public final boolean draging;// 正在拖动状态：PullDownToRefresh PullToUpLoad ReleaseToRefresh ReleaseToLoad ReleaseToTwoLevel
+    public final boolean opening;// 正在刷新状态：Refreshing Loading TwoLevel
+    public final boolean finishing;//正在完成状态：RefreshFinish LoadFinish TwoLevelFinish
 
     RefreshState(int role, boolean draging) {
         this.role = role;
