@@ -24,6 +24,7 @@ public class ScrollBoundaryDeciderAdapter implements ScrollBoundaryDecider {
     }
 
     void setActionEvent(MotionEvent event) {
+        //event 在没有必要时候会被设置为 null
         mActionEvent = event;
     }
     //</editor-fold>
@@ -34,6 +35,7 @@ public class ScrollBoundaryDeciderAdapter implements ScrollBoundaryDecider {
         if (boundary != null) {
             return boundary.canRefresh(content);
         }
+        //mActionEvent == null 时 canRefresh 不会动态递归搜索
         return ScrollBoundaryUtil.canRefresh(content, mActionEvent);
     }
 
@@ -43,8 +45,10 @@ public class ScrollBoundaryDeciderAdapter implements ScrollBoundaryDecider {
             return boundary.canLoadmore(content);
         }
         if (mEnableLoadmoreWhenContentNotFull) {
+            //mActionEvent == null 时 canScrollDown 不会动态递归搜索
             return !ScrollBoundaryUtil.canScrollDown(content, mActionEvent);
         }
+        //mActionEvent == null 时 canLoadmore 不会动态递归搜索
         return ScrollBoundaryUtil.canLoadmore(content, mActionEvent);
     }
 

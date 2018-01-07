@@ -15,10 +15,12 @@ import android.widget.AbsListView;
 public class ScrollBoundaryUtil {
 
     //<editor-fold desc="滚动判断">
+
     public static boolean canRefresh(View targetView, MotionEvent event) {
         if (canScrollUp(targetView) && targetView.getVisibility() == View.VISIBLE) {
             return false;
         }
+        //event == null 时 canRefresh 不会动态递归搜索
         if (targetView instanceof ViewGroup && event != null) {
             ViewGroup viewGroup = (ViewGroup) targetView;
             final int childCount = viewGroup.getChildCount();
@@ -39,6 +41,7 @@ public class ScrollBoundaryUtil {
         if (!canScrollDown(targetView) && canScrollUp(targetView) && targetView.getVisibility() == View.VISIBLE) {
             return true;
         }
+        //event == null 时 canLoadmore 不会动态递归搜索
         if (targetView instanceof ViewGroup && event != null) {
             ViewGroup viewGroup = (ViewGroup) targetView;
             final int childCount = viewGroup.getChildCount();
@@ -59,6 +62,7 @@ public class ScrollBoundaryUtil {
         if (canScrollDown(targetView) && targetView.getVisibility() == View.VISIBLE) {
             return true;
         }
+        //event == null 时 canScrollDown 不会动态递归搜索
         if (targetView instanceof ViewGroup && event != null) {
             ViewGroup viewGroup = (ViewGroup) targetView;
             final int childCount = viewGroup.getChildCount();
