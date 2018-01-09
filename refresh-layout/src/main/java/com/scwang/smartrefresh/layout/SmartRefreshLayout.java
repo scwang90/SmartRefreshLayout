@@ -740,6 +740,8 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         mManualLoadmore = true;
         mManualNestedScrolling = true;
         if (reboundAnimator != null) {
+            reboundAnimator.removeAllListeners();
+            reboundAnimator.removeAllUpdateListeners();
             reboundAnimator.cancel();
             reboundAnimator = null;
         }
