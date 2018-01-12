@@ -12,7 +12,7 @@ import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 
 import com.scwang.smartrefresh.header.fungame.FunGameView;
-import com.scwang.smartrefresh.layout.util.ColorUtils;
+import com.scwang.smartrefresh.header.util.ColorUtils;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import java.util.ArrayList;
@@ -21,6 +21,7 @@ import java.util.List;
 /**
  * Created by Hitomis on 2016/2/29.
  * email:196425254@qq.com
+ * from https://github.com/Hitomis/FunGameRefresh
  */
 public class FunGameHitBlockHeader extends FunGameView {
 

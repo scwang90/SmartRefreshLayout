@@ -26,8 +26,8 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 /**
  * CircleRefresh
- * https://github.com/tuesda/CircleRefreshLayout
  * Created by zhanglei on 15/7/18.
+ * from https://github.com/tuesda/CircleRefreshLayout
  */
 public class BezierCircleHeader extends View implements RefreshHeader {
 

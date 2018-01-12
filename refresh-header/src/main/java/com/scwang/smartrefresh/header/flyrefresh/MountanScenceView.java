@@ -16,11 +16,12 @@ import android.view.View;
 import android.view.animation.Interpolator;
 
 import com.scwang.smartrefresh.header.R;
-import com.scwang.smartrefresh.layout.util.ColorUtils;
+import com.scwang.smartrefresh.header.util.ColorUtils;
 
 /**
  * 山丘树木场景视图
  * Created by jing on 15-5-28.
+ * from https://github.com/race604/FlyRefresh
  */
 public class MountanScenceView extends View {
 

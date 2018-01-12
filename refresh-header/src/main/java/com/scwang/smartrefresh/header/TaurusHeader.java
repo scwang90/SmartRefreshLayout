@@ -32,8 +32,8 @@ import java.util.Random;
 /**
  * Taurus
  * Created by SCWANG on 2017/5/31.
+ * from https://github.com/Yalantis/Taurus
  */
-
 public class TaurusHeader extends View implements RefreshHeader/*, SizeDefinition*/ {
 
     //<editor-fold desc="Field">

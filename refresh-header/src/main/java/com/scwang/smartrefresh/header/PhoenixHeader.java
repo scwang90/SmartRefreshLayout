@@ -29,8 +29,8 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
 /**
  * Phoenix
  * Created by SCWANG on 2017/5/31.
+ * from https://github.com/Yalantis/Phoenix
  */
-
 public class PhoenixHeader extends View implements RefreshHeader/*, SizeDefinition*/ {
 
     //<editor-fold desc="static">

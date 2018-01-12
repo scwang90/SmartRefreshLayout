@@ -20,10 +20,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.scwang.smartrefresh.header.R;
+import com.scwang.smartrefresh.header.util.ColorUtils;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.util.ColorUtils;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
@@ -31,8 +31,8 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 /**
  * 游戏 header
  * Created by SCWANG on 2017/6/17.
+ * from https://github.com/Hitomis/FunGameRefresh
  */
-
 public class FunGameHeader extends FunGameBase implements RefreshHeader {
 
     //<editor-fold desc="Field">

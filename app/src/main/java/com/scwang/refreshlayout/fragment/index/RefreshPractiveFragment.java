@@ -49,7 +49,8 @@ public class RefreshPractiveFragment extends Fragment implements AdapterView.OnI
         Weibo("微博主页-MultiPurposeListener", WeiboPracticeActivity.class),
         Banner("滚动广告-Banner", BannerPracticeActivity.class),
         QQBrowser("QQ浏览器-模拟QQ浏览器内核提示", QQBrowserPracticeActivity.class),
-        TwoLevel("二级刷新-仿淘宝二楼", SecondFloorPracticeFragment.class),
+        TwoLevel("二级刷新", SecondFloorPracticeFragment.class),
+        SecondFloor("二级刷新-仿淘宝二楼", SecondFloorPracticeFragment.class),
         ;
         public String name;
         public Class<?> clazz;

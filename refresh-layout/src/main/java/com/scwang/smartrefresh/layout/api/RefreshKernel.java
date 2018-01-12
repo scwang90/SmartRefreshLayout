@@ -26,12 +26,12 @@ public interface RefreshKernel {
      * 开始执行二极刷新
      * @param open 是否展开
      */
-    void startTwoLevel(boolean open);
+    RefreshKernel startTwoLevel(boolean open);
 
     /**
      * 结束关闭二极刷新
      */
-    void finishTwoLevel();
+    RefreshKernel finishTwoLevel();
 
     /**
      * 移动视图到指定位置

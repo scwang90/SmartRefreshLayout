@@ -12,19 +12,18 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.text.TextPaint;
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
-import android.view.WindowManager;
 
 import com.scwang.smartrefresh.header.R;
+import com.scwang.smartrefresh.header.util.ColorUtils;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.util.ColorUtils;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 
 /**
  * Created by Hitomis on 2016/3/9.
  * email:196425254@qq.com
+ * https://github.com/Hitomis/FunGameRefresh
  */
 public abstract class FunGameView extends FunGameHeader {
 
@@ -219,20 +218,6 @@ public abstract class FunGameView extends FunGameHeader {
     public void setTextLoadingFinished(String textLoadingFinished) {
         this.textLoadingFinished = textLoadingFinished;
     }
-
-    /**
-     * 获取屏幕尺寸
-     *
-     * @param context context
-     * @return 手机屏幕尺寸
-     */
-    private DisplayMetrics getScreenMetrics(Context context) {
-        WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        DisplayMetrics dm = new DisplayMetrics();
-        manager.getDefaultDisplay().getMetrics(dm);
-        return dm;
-    }
-
 
     //<editor-fold desc="控制方法">
 

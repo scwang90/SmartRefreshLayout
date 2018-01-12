@@ -215,8 +215,16 @@ public class RefreshContentWrapper implements RefreshContent {
     public void onActionDown(MotionEvent e) {
         mMotionEvent = MotionEvent.obtain(e);
         mMotionEvent.offsetLocation(-mContentView.getLeft(), -mContentView.getTop());
-        mBoundaryAdapter.setActionEvent(mMotionEvent);
-        mScrollableView = findScrollableViewByEvent(mContentView, mMotionEvent, mScrollableView);
+        if (mScrollableView != mContentView) {
+            //如果内容视图不是 ScrollableView 说明使用了Layout嵌套内容，需要动态搜索 ScrollableView
+            mScrollableView = findScrollableViewByEvent(mContentView, mMotionEvent, mScrollableView);
+        }
+        if (mScrollableView == mContentView) {
+            //如果内容视图就是 ScrollableView 就不需要使用事件来动态搜索 而浪费CPU时间和性能了
+            mBoundaryAdapter.setActionEvent(null);
+        } else {
+            mBoundaryAdapter.setActionEvent(mMotionEvent);
+        }
     }
 
     @Override

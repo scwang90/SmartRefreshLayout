@@ -19,19 +19,19 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 
+import com.scwang.smartrefresh.header.util.ColorUtils;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.internal.pathview.PathsDrawable;
-import com.scwang.smartrefresh.layout.util.ColorUtils;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 /**
  * DropboxRefresh
- * https://dribbble.com/shots/3470499-Dropbox-Refresh
  * Created by SCWANG on 2017/6/24.
+ * design https://dribbble.com/shots/3470499-Dropbox-Refresh
  */
 
 public class DropboxHeader extends View implements RefreshHeader {
