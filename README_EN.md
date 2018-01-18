@@ -236,7 +236,7 @@ Contact me: scwang90@hotmail.com
 ## Other Works
 [MultiWaveHeader](https://github.com/scwang90/MultiWaveHeader)
 
-[诗和远方][http://android.myapp.com/myapp/detail.htm?apkName=com.poetry.kernel]
+[诗和远方](http://android.myapp.com/myapp/detail.htm?apkName=com.poetry.kernel)
 
 License
 -------
