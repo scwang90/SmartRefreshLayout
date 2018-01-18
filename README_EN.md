@@ -229,9 +229,13 @@ If in the donation message note name, will be record to the list
 Contact me: scwang90@hotmail.com 
 
 ## Thanks
-[SwipeRefreshLayout](https://developer.android.com/reference/android/support/v4/widget/SwipeRefreshLayout.html)  
-[TwinklingRefreshLayout](https://github.com/lcodecorex/TwinklingRefreshLayout)  
-[android-Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)  
+[SwipeRefreshLayout](https://developer.android.com/reference/android/support/v4/widget/SwipeRefreshLayout.html)
+[TwinklingRefreshLayout](https://github.com/lcodecorex/TwinklingRefreshLayout)
+[android-Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)
+
+## Other Works
+[MultiWaveHeader](https://github.com/scwang90/MultiWaveHeader)
+[诗和远方][http://android.myapp.com/myapp/detail.htm?apkName=com.poetry.kernel]
 
 License
 -------

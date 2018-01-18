@@ -256,6 +256,10 @@ SmartRefreshLayout 没有使用到：序列化、反序列化、JNI、反射，�
 #### 温馨提示
 加入群的答案在本文档中可以找到~
 
+## 其他作品
+[MultiWaveHeader](https://github.com/scwang90/MultiWaveHeader)
+[诗和远方][http://android.myapp.com/myapp/detail.htm?apkName=com.poetry.kernel]
+
 ## 感谢
 [SwipeRefreshLayout](https://developer.android.com/reference/android/support/v4/widget/SwipeRefreshLayout.html)  
 [Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)  
