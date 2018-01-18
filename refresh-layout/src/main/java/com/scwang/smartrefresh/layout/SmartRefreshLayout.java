@@ -874,7 +874,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 if (totalUnconsumed == mTotalUnconsumed) {
                     final int offsetX = (int) mLastTouchX;
                     final int offsetMax = getWidth();
-                    final float percentX = mLastTouchX / offsetMax;
+                    final float percentX = mLastTouchX / (offsetMax==0?1:offsetMax);
                     if (isEnableRefresh() && mSpinner > 0 && mRefreshHeader != null && mRefreshHeader.isSupportHorizontalDrag()) {
                         mRefreshHeader.onHorizontalDrag(percentX, offsetX, offsetMax);
                     } else if (isEnableLoadmore() && mSpinner < 0 && mRefreshFooter != null && mRefreshFooter.isSupportHorizontalDrag()) {
@@ -1332,13 +1332,13 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     if (mState != RefreshState.Loading) {
                         setStatePullDownToRefresh();
                     }
-                    duration = Math.max(150, bounceSpinner * 250 / mHeaderHeight);
+                    duration = Math.max(150, bounceSpinner * 250 / (mHeaderHeight==0?1:mHeaderHeight));
                     reboundAnimator = ValueAnimator.ofInt(0, Math.min(bounceSpinner, mHeaderHeight));
                 } else {
                     if (mState != RefreshState.Refreshing) {
                         setStatePullUpToLoad();
                     }
-                    duration = Math.max(150, -bounceSpinner * 250 / mFooterHeight);
+                    duration = Math.max(150, -bounceSpinner * 250 / (mFooterHeight==0?1:mFooterHeight));
                     reboundAnimator = ValueAnimator.ofInt(0, Math.max(bounceSpinner, -mFooterHeight));
                 }
                 final int finalDuration = duration;
@@ -1433,7 +1433,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 final double M = mHeaderExtendHeight;
                 final double H = Math.max(mScreenHeightPixels * 4 / 3, getHeight()) - mHeaderHeight;
                 final double x = Math.max(0, (spinner - mHeaderHeight) * mDragRate);
-                final double y = Math.min(M * (1 - Math.pow(100, -x / H)), x);// 公式 y = M(1-100^(-x/H))
+                final double y = Math.min(M * (1 - Math.pow(100, -x / (H==0?1:H))), x);// 公式 y = M(1-100^(-x/H))
                 moveSpinner((int) y + mHeaderHeight, false);
             }
         } else if (spinner < 0 && (mState == RefreshState.Loading
@@ -1445,20 +1445,20 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 final double M = mFooterExtendHeight;
                 final double H = Math.max(mScreenHeightPixels * 4 / 3, getHeight()) - mFooterHeight;
                 final double x = -Math.min(0, (spinner + mFooterHeight) * mDragRate);
-                final double y = -Math.min(M * (1 - Math.pow(100, -x / H)), x);// 公式 y = M(1-100^(-x/H))
+                final double y = -Math.min(M * (1 - Math.pow(100, -x / (H==0?1:H))), x);// 公式 y = M(1-100^(-x/H))
                 moveSpinner((int) y - mFooterHeight, false);
             }
         } else if (spinner >= 0) {
             final double M = mHeaderExtendHeight + mHeaderHeight;
             final double H = Math.max(mScreenHeightPixels / 2, getHeight());
             final double x = Math.max(0, spinner * mDragRate);
-            final double y = Math.min(M * (1 - Math.pow(100, -x / H)), x);// 公式 y = M(1-100^(-x/H))
+            final double y = Math.min(M * (1 - Math.pow(100, -x / (H==0?1:H))), x);// 公式 y = M(1-100^(-x/H))
             moveSpinner((int) y, false);
         } else {
             final double M = mFooterExtendHeight + mFooterHeight;
             final double H = Math.max(mScreenHeightPixels / 2, getHeight());
             final double x = -Math.min(0, spinner * mDragRate);
-            final double y = -Math.min(M * (1 - Math.pow(100, -x / H)), x);// 公式 y = M(1-100^(-x/H))
+            final double y = -Math.min(M * (1 - Math.pow(100, -x / (H==0?1:H))), x);// 公式 y = M(1-100^(-x/H))
             moveSpinner((int) y, false);
         }
         if (mEnableAutoLoadmore && isEnableLoadmore()
@@ -1525,7 +1525,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             final int offset = Math.max(spinner, 0);
             final int headerHeight = mHeaderHeight;
             final int extendHeight = mHeaderExtendHeight;
-            final float percent = 1f * offset / mHeaderHeight;
+            final float percent = 1f * offset / (mHeaderHeight==0?1:mHeaderHeight);
 
             if (isEnableRefresh() || (mState == RefreshState.RefreshFinish && isAnimator)) {
                 if (oldSpinner != mSpinner) {
@@ -1542,7 +1542,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     if (mRefreshHeader.isSupportHorizontalDrag()) {
                         final int offsetX = (int) mLastTouchX;
                         final int offsetMax = getWidth();
-                        final float percentX = mLastTouchX / offsetMax;
+                        final float percentX = mLastTouchX / (offsetMax==0?1:offsetMax);
                         mRefreshHeader.onHorizontalDrag(percentX, offsetX, offsetMax);
                         mRefreshHeader.onPullingDown(percent, offset, headerHeight, extendHeight);
                     } else if (oldSpinner != mSpinner) {
@@ -1565,7 +1565,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             final int offset = -Math.min(spinner, 0);
             final int footerHeight = mFooterHeight;
             final int extendHeight = mFooterExtendHeight;
-            final float percent = offset * 1f / mFooterHeight;
+            final float percent = offset * 1f / (mFooterHeight==0?1:mFooterHeight);
 
             if (isEnableLoadmore() || (mState == RefreshState.LoadFinish && isAnimator)) {
                 if (oldSpinner != mSpinner) {
@@ -1583,7 +1583,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     if (mRefreshFooter.isSupportHorizontalDrag()) {
                         final int offsetX = (int) mLastTouchX;
                         final int offsetMax = getWidth();
-                        final float percentX = mLastTouchX / offsetMax;
+                        final float percentX = mLastTouchX / (offsetMax==0?1:offsetMax);
                         mRefreshFooter.onHorizontalDrag(percentX, offsetX, offsetMax);
                         mRefreshFooter.onPullingUp(percent, offset, footerHeight, extendHeight);
                     } else if (oldSpinner != mSpinner) {
@@ -2607,7 +2607,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      */
     @Override
     public boolean autoRefresh(int delayed) {
-        return autoRefresh(delayed, mReboundDuration, 1f * (mHeaderHeight + mHeaderExtendHeight / 2) / mHeaderHeight);
+        return autoRefresh(delayed, mReboundDuration, 1f * (mHeaderHeight + mHeaderExtendHeight / 2) / (mHeaderHeight==0?1:mHeaderHeight));
     }
 
     /**
@@ -2674,7 +2674,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      */
     @Override
     public boolean autoLoadmore(int delayed) {
-        return autoLoadmore(delayed, mReboundDuration, 1f * (mFooterHeight + mFooterExtendHeight / 2) / mFooterHeight);
+        return autoLoadmore(delayed, mReboundDuration, 1f * (mFooterHeight + mFooterExtendHeight / 2) / (mFooterHeight==0?1:mFooterHeight));
     }
 
     /**
