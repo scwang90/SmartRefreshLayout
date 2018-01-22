@@ -203,6 +203,7 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
     @Override
     public void onStartAnimator(@NonNull RefreshLayout layout, int headHeight, int extendHeight) {
         mIsFinish = false;
+        setTranslationY(0);
     }
 
     @Override

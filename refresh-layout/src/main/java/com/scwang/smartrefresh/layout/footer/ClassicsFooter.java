@@ -45,7 +45,7 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
     public static String REFRESH_FOOTER_REFRESHING = "正在刷新...";
     public static String REFRESH_FOOTER_FINISH = "加载完成";
     public static String REFRESH_FOOTER_FAILED = "加载失败";
-    public static String REFRESH_FOOTER_ALLLOADED = "全部加载完成";
+    public static String REFRESH_FOOTER_ALLLOADED = "没有更多数据了";
 
     protected TextView mTitleText;
     protected ImageView mArrowView;
