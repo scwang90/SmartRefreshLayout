@@ -5,6 +5,7 @@ import android.animation.Animator.AnimatorListener;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -80,6 +81,7 @@ import static java.lang.System.currentTimeMillis;
  * Intelligent Refreshlayout
  * Created by SCWANG on 2017/5/26.
  */
+@SuppressLint("RestrictedApi")
 @SuppressWarnings({"unused", "WeakerAccess"})
 public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, NestedScrollingParent, NestedScrollingChild {
 
@@ -516,6 +518,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         }
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     protected void onMeasure(final int widthMeasureSpec,final int heightMeasureSpec) {
         int minimumHeight = 0;

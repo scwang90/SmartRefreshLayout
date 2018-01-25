@@ -26,6 +26,7 @@ public class RefreshActivity extends Activity {
         refreshLayout.setEnableNestedScroll(false);//是否启用嵌套滚动
         refreshLayout.setEnableOverScrollBounce(true);//是否启用越界回弹
         refreshLayout.setEnableScrollContentWhenLoaded(true);//是否在加载完成时滚动列表显示新的内容
+        refreshLayout.setEnableScrollContentWhenRefreshed(true);//是否在刷新完成时滚动列表显示新的内容
         refreshLayout.setEnableHeaderTranslationContent(true);//是否下拉Header的时候向下平移列表或者内容
         refreshLayout.setEnableFooterTranslationContent(true);//是否上啦Footer的时候向上平移列表或者内容
         refreshLayout.setEnableLoadmoreWhenContentNotFull(true);//是否在列表不满一页时候开启上拉加载功能
@@ -79,6 +80,7 @@ xml代码设置
     app:srlEnableOverScrollBounce="true"
     app:srlEnablePreviewInEditMode="true"
     app:srlEnableScrollContentWhenLoaded="true"
+    app:srlEnableScrollContentWhenRefreshed="true"
     app:srlEnableHeaderTranslationContent="true"
     app:srlEnableFooterTranslationContent="true"
     app:srlEnableLoadmoreWhenContentNotFull="false"

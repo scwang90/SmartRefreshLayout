@@ -184,11 +184,13 @@ public class TwoLevelHeader extends FrameLayout implements RefreshHeader, Invoca
 
     @Override
     public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
-        if (1f * (extendHeight + height) / height != mMaxRage) {
+        if (1f * (extendHeight + height) / height != mMaxRage && mHeaderHeight == 0) {
+            mHeaderHeight = height;
             kernel.getRefreshLayout().setHeaderMaxDragRate(mMaxRage);
             return;
         }
-        if (!isInEditMode() && mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Translate) {
+        if (!isInEditMode() && mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Translate
+                && mRefreshKernel == null) {
             MarginLayoutParams params = (MarginLayoutParams) mRefreshHeader.getView().getLayoutParams();
             params.topMargin -= height;
             mRefreshHeader.getView().setLayoutParams(params);
@@ -357,6 +359,7 @@ public class TwoLevelHeader extends FrameLayout implements RefreshHeader, Invoca
         if (this.mMaxRage != rate) {
             this.mMaxRage = rate;
             if (this.mRefreshKernel != null) {
+                this.mHeaderHeight = 0;
                 this.mRefreshKernel.getRefreshLayout().setHeaderMaxDragRate(mMaxRage);
             }
         }
