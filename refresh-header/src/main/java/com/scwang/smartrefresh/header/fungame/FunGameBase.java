@@ -1,5 +1,6 @@
 package com.scwang.smartrefresh.header.fungame;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
 import android.support.annotation.ColorInt;
@@ -24,7 +25,7 @@ import static android.view.MotionEvent.ACTION_MASK;
  * 游戏 header
  * Created by SCWANG on 2017/6/17.
  */
-
+@SuppressLint("RestrictedApi")
 public class FunGameBase extends FrameLayout implements RefreshHeader {
 
     //<editor-fold desc="Field">

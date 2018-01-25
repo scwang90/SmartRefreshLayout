@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 
@@ -32,6 +33,9 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
  */
 @SuppressWarnings({"unused", "UnusedReturnValue"})
 public class TwoLevelHeader extends FrameLayout implements RefreshHeader, InvocationHandler {
+
+
+    private RefreshState mState;
 
     /**
      * 二级刷新监听器
@@ -171,9 +175,8 @@ public class TwoLevelHeader extends FrameLayout implements RefreshHeader, Invoca
             }
         }
         if (method.getReturnType().equals(RefreshKernel.class)) {
-            if (mRefreshKernel == null && mRrequestDrawBackgoundForHeaderMethod == null) {
-                Class<?>[] parameterTypes = method.getParameterTypes();
-                if (parameterTypes.length == 1 && parameterTypes[0].equals(int.class)) {
+            if (mRefreshKernel == null && RefreshKernel.class.equals(method.getDeclaringClass())) {
+                if (mRrequestDrawBackgoundForHeaderMethod == null) {
                     mRrequestDrawBackgoundForHeaderMethod = method;
                 }
             }
@@ -198,6 +201,7 @@ public class TwoLevelHeader extends FrameLayout implements RefreshHeader, Invoca
 
         RefreshKernel proxy = (RefreshKernel) Proxy.newProxyInstance(RefreshKernel.class.getClassLoader(), new Class[]{RefreshKernel.class}, this);
         proxy.requestDrawBackgoundForHeader(0);
+        proxy.requestHeaderNeedTouchEventWhenRefreshing(false);
 
         mHeaderHeight = height;
         mRefreshKernel = kernel;
@@ -220,9 +224,11 @@ public class TwoLevelHeader extends FrameLayout implements RefreshHeader, Invoca
     @Override
     public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
         mRefreshHeader.onStateChanged(refreshLayout, oldState, newState);
-        switch (newState) {
+        switch (mState = newState) {
             case TwoLevelReleased:
-                mRefreshHeader.getView().animate().alpha(0).setDuration(mFloorDuration / 2);
+                if (mRefreshHeader.getView() != this) {
+                    mRefreshHeader.getView().animate().alpha(0).setDuration(mFloorDuration / 2);
+                }
                 if (mPaint != null) {
                     invalidate();
                 }
@@ -231,10 +237,12 @@ public class TwoLevelHeader extends FrameLayout implements RefreshHeader, Invoca
             case TwoLevel:
                 break;
             case TwoLevelFinish:
-                mRefreshHeader.getView().animate().alpha(1).setDuration(mFloorDuration / 2);
+                if (mRefreshHeader.getView() != this) {
+                    mRefreshHeader.getView().animate().alpha(1).setDuration(mFloorDuration / 2);
+                }
                 break;
             case PullDownToRefresh:
-                if (mRefreshHeader.getView().getAlpha() == 0) {
+                if (mRefreshHeader.getView().getAlpha() == 0 && mRefreshHeader.getView() != this) {
                     mRefreshHeader.getView().setAlpha(1);
                 }
                 break;
@@ -262,7 +270,7 @@ public class TwoLevelHeader extends FrameLayout implements RefreshHeader, Invoca
     }
 
     protected void moveSpinner(int spinner) {
-        if (mSpinner != spinner) {
+        if (mSpinner != spinner && mRefreshHeader.getView() != this) {
             mSpinner = spinner;
             switch (mRefreshHeader.getSpinnerStyle()) {
                 case Translate:

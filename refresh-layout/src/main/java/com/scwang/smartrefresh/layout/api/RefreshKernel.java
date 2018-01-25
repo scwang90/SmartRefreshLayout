@@ -70,12 +70,10 @@ public interface RefreshKernel {
      * 请求事件
      */
     RefreshKernel requestFooterNeedTouchEventWhenLoading(boolean request);
-
     /**
      * 请求设置默认内容滚动设置
      */
     RefreshKernel requestDefaultHeaderTranslationContent(boolean translation);
-
     /**
      * 请求重新测量
      */
@@ -84,7 +82,6 @@ public interface RefreshKernel {
      * 请求重新测量
      */
     RefreshKernel requestRemeasureHeightForFooter();
-
     /**
      * 设置二楼回弹时长
      */
