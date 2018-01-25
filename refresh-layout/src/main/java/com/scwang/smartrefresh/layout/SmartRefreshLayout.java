@@ -12,6 +12,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Build;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -518,7 +519,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         }
     }
 
-    @SuppressLint("RestrictedApi")
     @Override
     protected void onMeasure(final int widthMeasureSpec,final int heightMeasureSpec) {
         int minimumHeight = 0;
@@ -782,18 +782,18 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     if (finay > 0) {// 手势向上划 Footer
                         if (isEnableLoadmore() || mEnableOverScrollDrag) {
                             if (mEnableAutoLoadmore && isEnableLoadmore() && !mLoadmoreFinished) {
-                                animSpinnerBounce(-(int) (mFooterHeight * Math.pow(1.0 * velocity / mMaximumVelocity, 0.5)));
+                                animSpinnerBounce(-velocity,-(int) (mFooterHeight * Math.pow(1.0 * velocity / mMaximumVelocity, 0.5)));
                                 if (!mState.opening && mState != RefreshState.Loading && mState != RefreshState.LoadFinish) {
                                     setStateDirectLoading();
                                 }
                             } else if (mEnableOverScrollBounce) {
-                                animSpinnerBounce(-(int) (mFooterHeight * Math.pow(1.0 * velocity / mMaximumVelocity, 0.5)));
+                                animSpinnerBounce(-velocity,-(int) (mFooterHeight * Math.pow(1.0 * velocity / mMaximumVelocity, 0.5)));
                             }
                         }
                     } else {// 手势向下划 Header
                         if (isEnableRefresh() || mEnableOverScrollDrag) {
                             if (mEnableOverScrollBounce) {
-                                animSpinnerBounce((int) (mHeaderHeight * Math.pow(1.0 * velocity / mMaximumVelocity, 0.5)));
+                                animSpinnerBounce(velocity,(int) (mHeaderHeight * Math.pow(1.0 * velocity / mMaximumVelocity, 0.5)));
                             }
                         }
                     }
@@ -1279,11 +1279,18 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     };
 
     protected AnimatorUpdateListener reboundUpdateListener = new AnimatorUpdateListener() {
+        public long listTime = 0;
         @Override
         public void onAnimationUpdate(ValueAnimator animation) {
             moveSpinner((int) animation.getAnimatedValue(), true);
+            long now = System.currentTimeMillis();
+            if (listTime > 0) {
+                System.out.println("onAnimationUpdate - " + (now - listTime));
+            }
+            listTime = now;
         }
     };
+
     //</editor-fold>
 
     protected ValueAnimator animSpinner(int endSpinner) {
@@ -1318,7 +1325,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      * 越界回弹动画
      */
     @SuppressWarnings("UnusedReturnValue")
-    protected ValueAnimator animSpinnerBounce(int bounceSpinner) {
+    protected ValueAnimator animSpinnerBounce(final int velocity, int bounceSpinner) {
         if (reboundAnimator == null) {
             int duration = mReboundDuration * 2 / 3;
             mLastTouchX = getMeasuredWidth() / 2;
@@ -1331,35 +1338,63 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 reboundAnimator = ValueAnimator.ofInt(mSpinner, Math.max(7 * bounceSpinner / 2, -mFooterHeight));
                 reboundAnimator.addListener(reboundAnimatorEndListener);
             } else if (mSpinner == 0 && mEnableOverScrollBounce) {
-                if (bounceSpinner > 0) {
-                    if (mState != RefreshState.Loading) {
-                        setStatePullDownToRefresh();
-                    }
-                    duration = Math.max(150, bounceSpinner * 250 / (mHeaderHeight==0?1:mHeaderHeight));
-                    reboundAnimator = ValueAnimator.ofInt(0, Math.min(bounceSpinner, mHeaderHeight));
-                } else {
-                    if (mState != RefreshState.Refreshing) {
-                        setStatePullUpToLoad();
-                    }
-                    duration = Math.max(150, -bounceSpinner * 250 / (mFooterHeight==0?1:mFooterHeight));
-                    reboundAnimator = ValueAnimator.ofInt(0, Math.max(bounceSpinner, -mFooterHeight));
-                }
-                final int finalDuration = duration;
-                reboundAnimator.addListener(new AnimatorListenerAdapter() {
+                postDelayed(new Runnable() {
+                    int mSpinner = 0;
+                    int mVelocity = velocity;
+                    long startTime = SystemClock.uptimeMillis();
+                    long lastTime = startTime;
                     @Override
-                    public void onAnimationStart(Animator animation) {
+                    public void run() {
+                        mVelocity *= 0.6f;//0.85 * Math.max((1 - 1f * mSpinner / mHeaderHeight), 0);
+                        long now = SystemClock.uptimeMillis();
+                        long span = now - lastTime;
+                        int velocity = ((int) (mVelocity * (1f * span / 1000)));
+                        if (velocity != 0) {
+                            lastTime = now;
+                            mSpinner += velocity;
+                            moveSpinnerInfinitely(mSpinner/mDragRate);
+                            postDelayed(this, 17);
+                        } else {
+                            int old = mReboundDuration;
+                            mSpinner = (int) DensityUtil.px2dp(Math.abs(mSpinner));
+                            mSpinner = Math.max(mSpinner, 30);
+                            mSpinner = Math.min(mSpinner, 150);
+                            mReboundDuration = 6 * mSpinner;
+                            animSpinner(0);
+                            mReboundDuration = old;
+                        }
                     }
-
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        reboundAnimator = ValueAnimator.ofInt(mSpinner, 0);
-                        reboundAnimator.setDuration(finalDuration);
-                        reboundAnimator.setInterpolator(new DecelerateInterpolator());
-                        reboundAnimator.addUpdateListener(reboundUpdateListener);
-                        reboundAnimator.addListener(reboundAnimatorEndListener);
-                        reboundAnimator.start();
-                    }
-                });
+                },17);
+                return null;
+//                if (bounceSpinner > 0) {
+//                    if (mState != RefreshState.Loading) {
+//                        setStatePullDownToRefresh();
+//                    }
+//                    duration = Math.max(150, bounceSpinner * 250 / (mHeaderHeight==0?1:mHeaderHeight));
+//                    reboundAnimator = ValueAnimator.ofInt(0, Math.min(bounceSpinner, mHeaderHeight));
+//                } else {
+//                    if (mState != RefreshState.Refreshing) {
+//                        setStatePullUpToLoad();
+//                    }
+//                    duration = Math.max(150, -bounceSpinner * 250 / (mFooterHeight==0?1:mFooterHeight));
+//                    reboundAnimator = ValueAnimator.ofInt(0, Math.max(bounceSpinner, -mFooterHeight));
+//                }
+//                final int finalDuration = duration;
+//                reboundAnimator.addListener(new AnimatorListenerAdapter() {
+//                    @Override
+//                    public void onAnimationStart(Animator animation) {
+//                    }
+//
+//                    @Override
+//                    public void onAnimationEnd(Animator animation) {
+//                        reboundAnimator = ValueAnimator.ofInt(mSpinner, 0);
+//                        reboundAnimator.setDuration(finalDuration);
+//                        reboundAnimator.setInterpolator(new DecelerateInterpolator());
+//                        reboundAnimator.addUpdateListener(reboundUpdateListener);
+//                        reboundAnimator.addListener(reboundAnimatorEndListener);
+//                        reboundAnimator.start();
+//                    }
+//                });
             }
             if (reboundAnimator != null) {
                 reboundAnimator.setDuration(duration);
