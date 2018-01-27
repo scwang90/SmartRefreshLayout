@@ -256,7 +256,7 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
                 mProgressView.setScaleX(0);
                 mProgressView.setScaleY(0);
                 break;
-            case PullToUpLoad:
+            case PullUpToLoad:
                 break;
             case Refreshing:
                 break;

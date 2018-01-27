@@ -8,5 +8,5 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
  */
 
 public interface OnRefreshListener {
-    void onRefresh(RefreshLayout refreshlayout);
+    void onRefresh(RefreshLayout refreshLayout);
 }

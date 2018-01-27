@@ -310,7 +310,7 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
                 case None:
 //                    restoreRefreshLayoutBackground();
                     mArrowView.setVisibility(VISIBLE);
-                case PullToUpLoad:
+                case PullUpToLoad:
                     mTitleText.setText(REFRESH_FOOTER_PULLUP);
                     mArrowView.animate().rotation(180);
                     break;
