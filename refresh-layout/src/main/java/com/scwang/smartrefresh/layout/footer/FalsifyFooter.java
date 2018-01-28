@@ -87,20 +87,20 @@ public class FalsifyFooter extends FalsifyHeader implements RefreshFooter {
     }
 
     @Override
-    public void onPullingUp(float percent, int offset, int footerHeight, int extendHeight) {
+    public void onPulling(float percent, int offset, int footerHeight, int extendHeight) {
 
     }
 
     @Override
-    public void onPullReleasing(float percent, int offset, int footerHeight, int extendHeight) {
+    public void onReleasing(float percent, int offset, int footerHeight, int extendHeight) {
 
     }
 
     @Override
-    public void onLoadMoreReleased(RefreshLayout layout, int footerHeight, int extendHeight) {
+    public void onReleased(RefreshLayout layout, int footerHeight, int extendHeight) {
         if (mRefreshKernel != null) {
             mRefreshKernel.setState(RefreshState.None);
-            //onLoadMoreReleased 的时候 调用 setState(RefreshState.None); 并不会立刻改变成 None
+            //onReleased 的时候 调用 setState(RefreshState.None); 并不会立刻改变成 None
             //而是先执行一个回弹动画，LoadFinish 是介于 Loading 和 None 之间的状态
             //LoadFinish 用于在回弹动画结束时候能顺利改变为 None
             mRefreshKernel.setState(RefreshState.LoadFinish);

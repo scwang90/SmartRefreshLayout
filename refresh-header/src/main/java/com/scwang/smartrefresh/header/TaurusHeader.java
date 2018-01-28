@@ -163,7 +163,7 @@ public class TaurusHeader extends View implements RefreshHeader/*, SizeDefinitio
     }
 
     @Override
-    public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
+    public void onPulling(float percent, int offset, int headHeight, int extendHeight) {
         mPercent = percent;
         mEndOfRefreshing = false;
         mHeaderHeight = headHeight;
@@ -182,7 +182,7 @@ public class TaurusHeader extends View implements RefreshHeader/*, SizeDefinitio
     }
 
     @Override
-    public void onRefreshReleased(RefreshLayout layout, int headerHeight, int extendHeight) {
+    public void onReleased(RefreshLayout layout, int headerHeight, int extendHeight) {
 
     }
 

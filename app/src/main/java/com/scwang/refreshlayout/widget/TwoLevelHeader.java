@@ -249,9 +249,9 @@ public class TwoLevelHeader extends FrameLayout implements RefreshHeader, Invoca
     }
 
     @Override
-    public void onPullingDown(float percent, int offset, int headerHeight, int extendHeight) {
+    public void onPulling(float percent, int offset, int headerHeight, int extendHeight) {
         moveSpinner(offset);
-        mRefreshHeader.onPullingDown(percent, offset, headerHeight, extendHeight);
+        mRefreshHeader.onPulling(percent, offset, headerHeight, extendHeight);
         if (mPercent < mFloorRage && percent >= mFloorRage && mEnableTwoLevel) {
             mRefreshKernel.setState(RefreshState.ReleaseToTwoLevel);
         } else if (mPercent >= mFloorRage && percent < mRefreshRage) {
@@ -288,8 +288,8 @@ public class TwoLevelHeader extends FrameLayout implements RefreshHeader, Invoca
     }
 
     @Override
-    public void onRefreshReleased(RefreshLayout layout, int headerHeight, int extendHeight) {
-        mRefreshHeader.onRefreshReleased(layout, headerHeight, extendHeight);
+    public void onReleased(RefreshLayout layout, int headerHeight, int extendHeight) {
+        mRefreshHeader.onReleased(layout, headerHeight, extendHeight);
     }
 
     @NonNull

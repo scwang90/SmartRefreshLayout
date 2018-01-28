@@ -166,7 +166,7 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override
-    public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
+    public void onPulling(float percent, int offset, int headHeight, int extendHeight) {
         mWaterDropView.updateComleteState((offset), headHeight + extendHeight);
         mWaterDropView.postInvalidate();
 
@@ -219,7 +219,7 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override
-    public void onRefreshReleased(final RefreshLayout layout, int headerHeight, int extendHeight) {
+    public void onReleased(final RefreshLayout layout, int headerHeight, int extendHeight) {
         Animator animator = mWaterDropView.createAnimator();
         animator.addListener(new AnimatorListenerAdapter() {
             @Override

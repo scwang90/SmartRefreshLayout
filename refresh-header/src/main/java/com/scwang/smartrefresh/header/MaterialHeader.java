@@ -217,7 +217,7 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override
-    public void onPullingDown(float percent, int offset, int headerHeight, int extendHeight) {
+    public void onPulling(float percent, int offset, int headerHeight, int extendHeight) {
         if (mShowBezierWave) {
             mHeadHeight = Math.min(offset, headerHeight);
             mWaveHeight = Math.max(0, offset - headerHeight);
@@ -251,7 +251,7 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
     @Override
     public void onReleasing(float percent, int offset, int headerHeight, int extendHeight) {
         if (!mProgress.isRunning() && !mFinished) {
-            onPullingDown(percent, offset, headerHeight, extendHeight);
+            onPulling(percent, offset, headerHeight, extendHeight);
         } else {
             if (mShowBezierWave) {
                 mHeadHeight = Math.min(offset, headerHeight);
@@ -262,7 +262,7 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override
-    public void onRefreshReleased(RefreshLayout layout, int headerHeight, int extendHeight) {
+    public void onReleased(RefreshLayout layout, int headerHeight, int extendHeight) {
         mProgress.start();
         if ((int) mCircleView.getTranslationY() != headerHeight / 2 + mCircleDiameter / 2) {
             mCircleView.animate().translationY(headerHeight / 2 + mCircleDiameter / 2);

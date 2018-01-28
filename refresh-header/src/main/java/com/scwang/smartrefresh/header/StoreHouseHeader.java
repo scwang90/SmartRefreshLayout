@@ -356,7 +356,7 @@ public class  StoreHouseHeader extends View implements RefreshHeader {
     }
 
     @Override
-    public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
+    public void onPulling(float percent, int offset, int headHeight, int extendHeight) {
         setProgress(percent * .8f);
         invalidate();
     }
@@ -368,7 +368,7 @@ public class  StoreHouseHeader extends View implements RefreshHeader {
     }
 
     @Override
-    public void onRefreshReleased(RefreshLayout layout, int headerHeight, int extendHeight) {
+    public void onReleased(RefreshLayout layout, int headerHeight, int extendHeight) {
         beginLoading();
     }
 

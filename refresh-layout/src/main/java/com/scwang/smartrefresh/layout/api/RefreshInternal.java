@@ -44,13 +44,30 @@ public interface RefreshInternal extends OnStateChangedListener {
      * @param extendHeight extendHeaderHeight or extendFooterHeight
      */
     void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight);
+    /**
+     * 手指拖动下拉（会连续多次调用）
+     * @param percent 下拉的百分比 值 = offset/footerHeight (0 - percent - (footerHeight+extendHeight) / footerHeight )
+     * @param offset 下拉的像素偏移量  0 - offset - (footerHeight+extendHeight)
+     * @param height 高度 HeaderHeight or FooterHeight
+     * @param extendHeight 扩展高度  extendHeaderHeight or extendFooterHeight
+     */
+    void onPulling(float percent, int offset, int height, int extendHeight);
+    /**
+     * 手指释放之后的持续动画（会连续多次调用）
+     * @param percent 下拉的百分比 值 = offset/footerHeight (0 - percent - (footerHeight+extendHeight) / footerHeight )
+     * @param offset 下拉的像素偏移量  0 - offset - (footerHeight+extendHeight)
+     * @param height 高度 HeaderHeight or FooterHeight
+     * @param extendHeight 扩展高度  extendHeaderHeight or extendFooterHeight
+     */
+    void onReleasing(float percent, int offset, int height, int extendHeight);
 
     /**
-     * 水平方向的拖动
-     * @param percentX 下拉时，手指水平坐标对屏幕的占比（0 - percentX - 1）
-     * @param offsetX 下拉时，手指水平坐标对屏幕的偏移（0 - offsetX - LayoutWidth）
+     * 释放时刻（调用一次，将会触发加载）
+     * @param refreshLayout RefreshLayout
+     * @param height 高度 HeaderHeight or FooterHeight
+     * @param extendHeight 扩展高度  extendHeaderHeight or extendFooterHeight
      */
-    void onHorizontalDrag(float percentX, int offsetX, int offsetMax);
+    void onReleased(RefreshLayout refreshLayout, int height, int extendHeight);
 
     /**
      * 开始动画
@@ -67,6 +84,13 @@ public interface RefreshInternal extends OnStateChangedListener {
      * @return 完成动画所需时间 如果返回 Integer.MAX_VALUE 将取消本次完成事件，继续保持原有状态
      */
     int onFinish(@NonNull RefreshLayout refreshLayout, boolean success);
+
+    /**
+     * 水平方向的拖动
+     * @param percentX 下拉时，手指水平坐标对屏幕的占比（0 - percentX - 1）
+     * @param offsetX 下拉时，手指水平坐标对屏幕的偏移（0 - offsetX - LayoutWidth）
+     */
+    void onHorizontalDrag(float percentX, int offsetX, int offsetMax);
 
     /**
      * 是否支持水平方向的拖动（将会影响到onHorizontalDrag的调用）

@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
 
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnMultiPurposeListener;
@@ -257,12 +256,6 @@ public interface RefreshLayout {
 
     /**
      * 恢复没有更多数据的原始状态
-     * @deprecated 使用 @{@link RefreshLayout#setNoMoreData(boolean false)} 代替
-     */
-    RefreshLayout resetNoMoreData();
-
-    /**
-     * 恢复没有更多数据的原始状态
      * @param noMoreData 是否有更多数据
      */
     RefreshLayout setNoMoreData(boolean noMoreData);
@@ -288,22 +281,6 @@ public interface RefreshLayout {
      * 获取实体布局视图
      */
     ViewGroup getLayout();
-
-    /**
-     * 是否正在刷新
-     * @deprecated 后续版本将会移除
-     *      使用 {@link #getState()} == {@link RefreshState#Refreshing} 代替
-     */
-    @Deprecated
-    boolean isRefreshing();
-
-    /**
-     * 是否正在加载
-     * @deprecated 后续版本将会移除
-     *      使用 {@link #getState()} == {@link RefreshState#Loading} 代替
-     */
-    @Deprecated
-    boolean isLoading();
 
     /**
      * 自动刷新
@@ -343,11 +320,36 @@ public interface RefreshLayout {
      */
     boolean autoLoadMore(int delayed, int duration, float dragrate);
 
+    /**
+     * 是否启用下拉刷新
+     */
     boolean isEnableRefresh();
 
+    /**
+     * 是否启用加载更多
+     */
     boolean isEnableLoadMore();
 
-    boolean isNoMoreData();
+    /**
+     * 是否正在刷新
+     * @deprecated 后续版本将会移除
+     *      使用 {@link #getState()} == {@link RefreshState#Refreshing} 代替
+     */
+    @Deprecated
+    boolean isRefreshing();
+
+    /**
+     * 是否正在加载
+     * @deprecated 后续版本将会移除
+     *      使用 {@link #getState()} == {@link RefreshState#Loading} 代替
+     */
+    @Deprecated
+    boolean isLoading();
+
+    /**
+     * @deprecated 后续版本将会移除
+     */
+    boolean isLoadmoreFinished();
 
     /**
      * @deprecated 后续版本将会移除
@@ -372,4 +374,62 @@ public interface RefreshLayout {
      */
     @Deprecated
     boolean isEnableScrollContentWhenLoaded();
+
+    /**
+     * 恢复没有更多数据的原始状态
+     * @deprecated 使用 @{@link RefreshLayout#setNoMoreData(boolean false)} 代替
+     */
+    @Deprecated
+    RefreshLayout resetNoMoreData();
+
+    /**
+     * 恢复没有更多数据的原始状态
+     * @param finished 是否有更多数据
+     * @deprecated 后续版本将会移除 使用 {@link RefreshLayout#setNoMoreData(boolean)} 代替
+     */
+    @Deprecated
+    RefreshLayout setLoadmoreFinished(boolean finished);
+
+
+    /**
+     * 完成加载
+     * @deprecated 使用 @{@link #finishLoadMore()} 代替
+     */
+    @Deprecated
+    RefreshLayout finishLoadmore();
+
+    /**
+     * 完成加载
+     * @deprecated 使用 @{@link #finishLoadMore(int)} 代替
+     */
+    @Deprecated
+    RefreshLayout finishLoadmore(int delayed);
+
+    /**
+     * 完成加载
+     * @deprecated 使用 @{@link #finishLoadMore(boolean)} 代替
+     */
+    @Deprecated
+    RefreshLayout finishLoadmore(boolean success);
+
+    /**
+     * 单独设置加载监听器
+     * @deprecated 使用 @{@link #setOnLoadMoreListener(OnLoadMoreListener)} 代替
+     */
+    @Deprecated
+    RefreshLayout setOnLoadmoreListener(OnLoadmoreListener listener);
+
+    /**
+     * 同时设置刷新和加载监听器
+     * @deprecated 使用 @{@link #setOnRefreshLoadMoreListener(OnRefreshLoadMoreListener)} 代替
+     */
+    @Deprecated
+    RefreshLayout setOnRefreshLoadmoreListener(OnRefreshLoadmoreListener listener);
+
+    /**
+     * 完成加载并标记没有更多数据
+     * @deprecated 使用 @{@link #finishLoadMoreWithNoMoreData()} 代替
+     */
+    @Deprecated
+    RefreshLayout finishLoadmoreWithNoMoreData();
 }

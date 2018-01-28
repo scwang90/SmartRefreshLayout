@@ -104,7 +104,7 @@ public class FalsifyHeader extends View implements RefreshHeader {
     }
 
     @Override
-    public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
+    public void onPulling(float percent, int offset, int headHeight, int extendHeight) {
 
     }
 
@@ -114,10 +114,10 @@ public class FalsifyHeader extends View implements RefreshHeader {
     }
 
     @Override
-    public void onRefreshReleased(RefreshLayout layout, int headerHeight, int extendHeight) {
+    public void onReleased(RefreshLayout layout, int headerHeight, int extendHeight) {
         if (mRefreshKernel != null) {
             mRefreshKernel.setState(RefreshState.None);
-            //onRefreshReleased 的时候 调用 setState(RefreshState.None); 并不会立刻改变成 None
+            //onReleased 的时候 调用 setState(RefreshState.None); 并不会立刻改变成 None
             //而是先执行一个回弹动画，RefreshFinish 是介于 Refreshing 和 None 之间的状态
             //RefreshFinish 用于在回弹动画结束时候能顺利改变为 None
             mRefreshKernel.setState(RefreshState.RefreshFinish);

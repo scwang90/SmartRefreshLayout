@@ -82,7 +82,7 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
     }
 
     @Override
-    public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
+    public void onPulling(float percent, int offset, int headHeight, int extendHeight) {
         if (offset < 0) {
             if (mOffset > 0) {
                 offset = 0;
@@ -107,7 +107,7 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
     }
 
     @Override
-    public void onRefreshReleased(RefreshLayout layout, int headerHeight, int extendHeight) {
+    public void onReleased(RefreshLayout layout, int headerHeight, int extendHeight) {
         /**
          * 提前关闭 下拉视图偏移
          */
@@ -119,7 +119,7 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
             valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
-                    FlyRefreshHeader.this.onPullingDown((float) animation.getAnimatedValue(), 0, 0, 0);
+                    FlyRefreshHeader.this.onPulling((float) animation.getAnimatedValue(), 0, 0, 0);
                 }
             });
             valueAnimator.start();
@@ -162,7 +162,7 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
     @Override
     public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
         if (!mIsRefreshing) {
-            onPullingDown(percent, offset, headHeight, extendHeight);
+            onPulling(percent, offset, headHeight, extendHeight);
         }
     }
 

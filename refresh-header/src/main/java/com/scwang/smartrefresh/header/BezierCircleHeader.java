@@ -263,13 +263,13 @@ public class BezierCircleHeader extends View implements RefreshHeader {
     }
 
     @Override
-    public void onPullingDown(float percent, int offset, int headerHeight, int extendHeight) {
+    public void onPulling(float percent, int offset, int headerHeight, int extendHeight) {
         mHeadHeight = headerHeight;
         mWaveHeight = Math.max(offset - headerHeight, 0) * .8f;
     }
 
     @Override
-    public void onRefreshReleased(RefreshLayout layout, int headerHeight, int extendHeight) {
+    public void onReleased(RefreshLayout layout, int headerHeight, int extendHeight) {
         mHeadHeight = headerHeight;
         mBollRadius = headerHeight / 6;
         DecelerateInterpolator interpolator = new DecelerateInterpolator();
@@ -333,7 +333,7 @@ public class BezierCircleHeader extends View implements RefreshHeader {
     @Override
     public void onReleasing(float percent, int offset, int headerHeight, int extendHeight) {
         if (mState != RefreshState.Refreshing && mState != RefreshState.RefreshReleased) {
-            onPullingDown(percent, offset, headerHeight, extendHeight);
+            onPulling(percent, offset, headerHeight, extendHeight);
         }
     }
 

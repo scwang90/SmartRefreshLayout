@@ -112,15 +112,15 @@ public class BallPulseFooter extends ViewGroup implements RefreshFooter {
     }
 
     @Override
-    public void onPullingUp(float percent, int offset, int footerHeight, int extendHeight) {
+    public void onPulling(float percent, int offset, int footerHeight, int extendHeight) {
     }
 
     @Override
-    public void onPullReleasing(float percent, int offset, int footerHeight, int extendHeight) {
+    public void onReleasing(float percent, int offset, int footerHeight, int extendHeight) {
     }
 
     @Override
-    public void onLoadMoreReleased(RefreshLayout layout, int footerHeight, int extendHeight) {
+    public void onReleased(RefreshLayout layout, int footerHeight, int extendHeight) {
 
     }
 
