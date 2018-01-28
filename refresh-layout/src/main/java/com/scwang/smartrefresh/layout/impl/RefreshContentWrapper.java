@@ -6,8 +6,6 @@ import android.content.Context;
 import android.graphics.PointF;
 import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.NestedScrollingChild;
 import android.support.v4.view.NestedScrollingParent;
 import android.support.v4.view.ScrollingView;
@@ -28,8 +26,9 @@ import android.widget.ScrollView;
 
 import com.scwang.smartrefresh.layout.api.RefreshContent;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.api.ScrollBoundaryDecider;
+import com.scwang.smartrefresh.layout.util.DesignUtil;
+import com.scwang.smartrefresh.layout.util.CoordinatorLayoutListener;
 
 import java.util.Collections;
 import java.util.Queue;
@@ -71,35 +70,27 @@ public class RefreshContentWrapper implements RefreshContent {
     //<editor-fold desc="findScrollableView">
     protected void findScrollableView(View content, RefreshKernel kernel) {
         mScrollableView = null;
+        CoordinatorLayoutListener listener = null;
+        boolean isInEditMode = mContentView.isInEditMode();
         while (mScrollableView == null || (mScrollableView instanceof NestedScrollingParent
                 && !(mScrollableView instanceof NestedScrollingChild))) {
             content = findScrollableViewInternal(content, mScrollableView == null);
             if (content == mScrollableView) {
                 break;
             }
-            try {//try 不能删除，不然会出现兼容性问题
-                if (content instanceof CoordinatorLayout) {
-                    kernel.getRefreshLayout().setEnableNestedScroll(false);
-                    wrapperCoordinatorLayout(((ViewGroup) content), kernel.getRefreshLayout());
+            if (!isInEditMode) {
+                if (listener == null) {
+                    listener = new CoordinatorLayoutListener() {
+                        @Override
+                        public void update(boolean enableRefresh, boolean enableLoadMore) {
+                            mEnableRefresh = enableRefresh;
+                            mEnableLoadMore = enableLoadMore;
+                        }
+                    };
                 }
-            } catch (Throwable ignored) {
+                DesignUtil.cheackCoordinatorLayout(content, kernel, listener);
             }
             mScrollableView = content;
-        }
-    }
-
-    protected void wrapperCoordinatorLayout(ViewGroup layout, final RefreshLayout refreshLayout) {
-        for (int i = layout.getChildCount() - 1; i >= 0; i--) {
-            View view = layout.getChildAt(i);
-            if (view instanceof AppBarLayout) {
-                ((AppBarLayout) view).addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-                    @Override
-                    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                        mEnableRefresh = verticalOffset >= 0;
-                        mEnableLoadMore = refreshLayout.isEnableLoadMore() && (appBarLayout.getTotalScrollRange() + verticalOffset) <= 0;
-                    }
-                });
-            }
         }
     }
 
