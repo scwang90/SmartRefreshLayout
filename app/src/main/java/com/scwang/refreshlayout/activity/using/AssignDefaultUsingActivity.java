@@ -13,7 +13,9 @@ import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.util.DynamicTimeFormat;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreater;
+import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreater;
+import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
 import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -30,38 +32,11 @@ public class AssignDefaultUsingActivity extends AppCompatActivity {
 
    private static boolean isFirstEnter = true;
 
-    /*
-     * 关键代码，需要在布局生成之前设置，建议代码放在 Application 中
-     */
-    static {
-        //设置全局的Header构建器
-        SmartRefreshLayout.setDefaultRefreshHeaderCreater(new DefaultRefreshHeaderCreater() {
-            @NonNull
-            @Override
-            public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
-                ClassicsHeader header = new ClassicsHeader(context).setSpinnerStyle(SpinnerStyle.FixedBehind);
-                header.setPrimaryColorId(R.color.colorPrimary);
-                header.setAccentColorId(android.R.color.white);
-                return header;//指定为经典Header，默认是 贝塞尔雷达Header
-            }
-        });
-        //设置全局的Footer构建器
-        SmartRefreshLayout.setDefaultRefreshFooterCreater(new DefaultRefreshFooterCreater() {
-            @NonNull
-            @Override
-            public RefreshFooter createRefreshFooter(Context context, RefreshLayout layout) {
-                layout.setEnableLoadmoreWhenContentNotFull(true);//内容不满一页时候启用加载更多
-                ClassicsFooter footer = new ClassicsFooter(context);
-                footer.setBackgroundResource(android.R.color.white);
-                footer.setSpinnerStyle(SpinnerStyle.Scale);//设置为拉伸模式
-                return footer;//指定为经典Footer，默认是 BallPulseFooter
-            }
-        });
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        install();
+
         setContentView(R.layout.activity_using_assign_default);
 
         final Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
@@ -79,8 +54,8 @@ public class AssignDefaultUsingActivity extends AppCompatActivity {
         final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
         if (isFirstEnter) {
             isFirstEnter = false;
-            //触发上啦加载
-            refreshLayout.autoLoadmore();
+            //触发上拉加载
+            refreshLayout.autoLoadMore();
             //通过多功能监听接口实现 在第一次加载完成之后 自动刷新
             refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener(){
                 @Override
@@ -101,12 +76,41 @@ public class AssignDefaultUsingActivity extends AppCompatActivity {
         restore();
     }
 
-    //还原默认 Header
-    private static void restore() {
-        SmartRefreshLayout.setDefaultRefreshHeaderCreater(new DefaultRefreshHeaderCreater() {
+    /*
+     * 关键代码，需要在布局生成之前设置，建议代码放在 Application 中
+     */
+    private static void install() {
+        //设置全局的Header构建器
+        SmartRefreshLayout.setDefaultRefreshHeaderCreator(new DefaultRefreshHeaderCreator() {
             @NonNull
             @Override
-            public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
+            public RefreshHeader createRefreshHeader(@NonNull Context context, @NonNull RefreshLayout layout) {
+                ClassicsHeader header = new ClassicsHeader(context).setSpinnerStyle(SpinnerStyle.FixedBehind);
+                header.setPrimaryColorId(R.color.colorPrimary);
+                header.setAccentColorId(android.R.color.white);
+                return header;//指定为经典Header，默认是 贝塞尔雷达Header
+            }
+        });
+        //设置全局的Footer构建器
+        SmartRefreshLayout.setDefaultRefreshFooterCreator(new DefaultRefreshFooterCreator() {
+            @NonNull
+            @Override
+            public RefreshFooter createRefreshFooter(@NonNull Context context, @NonNull RefreshLayout layout) {
+                layout.setEnableLoadMoreWhenContentNotFull(true);//内容不满一页时候启用加载更多
+                ClassicsFooter footer = new ClassicsFooter(context);
+                footer.setBackgroundResource(android.R.color.white);
+                footer.setSpinnerStyle(SpinnerStyle.Scale);//设置为拉伸模式
+                return footer;//指定为经典Footer，默认是 BallPulseFooter
+            }
+        });
+    }
+
+    //还原默认 Header
+    private static void restore() {
+        SmartRefreshLayout.setDefaultRefreshHeaderCreator(new DefaultRefreshHeaderCreator() {
+            @NonNull
+            @Override
+            public RefreshHeader createRefreshHeader(@NonNull Context context, @NonNull RefreshLayout layout) {
                 layout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);//全局设置主题颜色
                 return new ClassicsHeader(context).setTimeFormat(new DynamicTimeFormat("更新于 %s"));
             }

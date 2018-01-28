@@ -341,7 +341,7 @@ public class  StoreHouseHeader extends View implements RefreshHeader {
     @Override
     public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
         if (mBackgroundColor != 0) {
-            kernel.requestDrawBackgoundForHeader(mBackgroundColor);
+            kernel.requestDrawBackgroundForHeader(mBackgroundColor);
         }
         mRefreshKernel = kernel;
     }
@@ -400,7 +400,7 @@ public class  StoreHouseHeader extends View implements RefreshHeader {
         if (colors.length > 0) {
             mBackgroundColor = colors[0];
             if (mRefreshKernel != null) {
-                mRefreshKernel.requestDrawBackgoundForHeader(colors[0]);
+                mRefreshKernel.requestDrawBackgroundForHeader(colors[0]);
             }
             if (colors.length > 1) {
                 setTextColor(colors[1]);

@@ -1,16 +1,20 @@
 package com.scwang.smartrefresh.layout.api;
 
+import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
+import android.support.annotation.FloatRange;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
 
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnMultiPurposeListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 /**
  * 刷新布局
@@ -31,32 +35,32 @@ public interface RefreshLayout {
     /**
      * 显示拖动高度/真实拖动高度（默认0.5，阻尼效果）
      */
-    RefreshLayout setDragRate(float rate);
+    RefreshLayout setDragRate(@FloatRange(from = 0,to = 1) float rate);
 
     /**
      * 设置下拉最大高度和Header高度的比率（将会影响可以下拉的最大高度）
      */
-    RefreshLayout setHeaderMaxDragRate(float rate);
+    RefreshLayout setHeaderMaxDragRate(@FloatRange(from = 1,to = 100) float rate);
 
     /**
-     * 设置上啦最大高度和Footer高度的比率（将会影响可以上啦的最大高度）
+     * 设置上拉最大高度和Footer高度的比率（将会影响可以上拉的最大高度）
      */
-    RefreshLayout setFooterMaxDragRate(float rate);
+    RefreshLayout setFooterMaxDragRate(@FloatRange(from = 1,to = 100) float rate);
 
     /**
-     * 设置 触发刷新距离 与 HeaderHieght 的比率
+     * 设置 触发刷新距离 与 HeaderHeight 的比率
      */
-    RefreshLayout setHeaderTriggerRate(float rate);
+    RefreshLayout setHeaderTriggerRate(@FloatRange(from = 0,to = 1.0) float rate);
 
     /**
-     * 设置 触发加载距离 与 FooterHieght 的比率
+     * 设置 触发加载距离 与 FooterHeight 的比率
      */
-    RefreshLayout setFooterTriggerRate(float rate);
+    RefreshLayout setFooterTriggerRate(@FloatRange(from = 0,to = 1.0) float rate);
 
     /**
      * 设置回弹显示插值器
      */
-    RefreshLayout setReboundInterpolator(Interpolator interpolator);
+    RefreshLayout setReboundInterpolator(@NonNull Interpolator interpolator);
 
     /**
      * 设置回弹动画时长
@@ -64,9 +68,9 @@ public interface RefreshLayout {
     RefreshLayout setReboundDuration(int duration);
 
     /**
-     * 设置是否启用上啦加载更多（默认启用）
+     * 设置是否启用上拉加载更多（默认启用）
      */
-    RefreshLayout setEnableLoadmore(boolean enable);
+    RefreshLayout setEnableLoadMore(boolean enable);
 
     /**
      * 是否启用下拉刷新（默认启用）
@@ -96,44 +100,37 @@ public interface RefreshLayout {
     /**
      * 设置是否监听列表在滚动到底部时触发加载事件（默认true）
      */
-    RefreshLayout setEnableAutoLoadmore(boolean enable);
-
-    /**
-     * 标记数据全部加载完成，将不能再次触发加载功能（true）
-     * 在适当时候请使用 finishLoadmoreWithNoMoreData 和 resetNoMoreData 代替
-     */
-    @Deprecated
-    RefreshLayout setLoadmoreFinished(boolean finished);
+    RefreshLayout setEnableAutoLoadMore(boolean enable);
 
     /**
      * 设置指定的Footer
      */
-    RefreshLayout setRefreshFooter(RefreshFooter footer);
+    RefreshLayout setRefreshFooter(@NonNull RefreshFooter footer);
 
     /**
      * 设置指定的Footer
      */
-    RefreshLayout setRefreshFooter(RefreshFooter footer, int width, int height);
+    RefreshLayout setRefreshFooter(@NonNull RefreshFooter footer, int width, int height);
 
     /**
      * 设置指定的Header
      */
-    RefreshLayout setRefreshHeader(RefreshHeader header);
+    RefreshLayout setRefreshHeader(@NonNull RefreshHeader header);
 
     /**
      * 设置指定的Header
      */
-    RefreshLayout setRefreshHeader(RefreshHeader header, int width, int height);
+    RefreshLayout setRefreshHeader(@NonNull RefreshHeader header, int width, int height);
 
     /**
      * 设置指定的Content
      */
-    RefreshLayout setRefreshContent(View content);
+    RefreshLayout setRefreshContent(@NonNull View content);
 
     /**
      * 设置指定的Content
      */
-    RefreshLayout setRefreshContent(View content, int width, int height);
+    RefreshLayout setRefreshContent(@NonNull View content, int width, int height);
 
     /**
      * 设置是否启用越界回弹
@@ -158,7 +155,7 @@ public interface RefreshLayout {
     /**
      * 设置在内容不满一页的时候，是否可以上拉加载更多
      */
-    RefreshLayout setEnableLoadmoreWhenContentNotFull(boolean enable);
+    RefreshLayout setEnableLoadMoreWhenContentNotFull(boolean enable);
 
     /**
      * 设置是否启用越界拖动（仿苹果效果）
@@ -183,17 +180,29 @@ public interface RefreshLayout {
     /**
      * 单独设置加载监听器
      */
-    RefreshLayout setOnLoadmoreListener(OnLoadmoreListener listener);
+    RefreshLayout setOnLoadMoreListener(OnLoadMoreListener listener);
 
     /**
      * 同时设置刷新和加载监听器
      */
-    RefreshLayout setOnRefreshLoadmoreListener(OnRefreshLoadmoreListener listener);
+    RefreshLayout setOnRefreshLoadMoreListener(OnRefreshLoadMoreListener listener);
 
     /**
      * 设置多功能监听器
+     * @param listener 建议使用 @{@link com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener}
      */
     RefreshLayout setOnMultiPurposeListener(OnMultiPurposeListener listener);
+
+    /**
+     * 设置滚动边界判断器
+     * @param boundary 建议使用 @{@link com.scwang.smartrefresh.layout.impl.ScrollBoundaryDeciderAdapter}
+     */
+    RefreshLayout setScrollBoundaryDecider(ScrollBoundaryDecider boundary);
+
+    /**
+     * 设置主题颜色
+     */
+    RefreshLayout setPrimaryColors(@ColorInt int... colors);
 
     /**
      * 设置主题颜色
@@ -201,24 +210,9 @@ public interface RefreshLayout {
     RefreshLayout setPrimaryColorsId(@ColorRes int... primaryColorId);
 
     /**
-     * 设置主题颜色
-     */
-    RefreshLayout setPrimaryColors(int... colors);
-
-    /**
-     * 设置滚动边界判断器
-     */
-    RefreshLayout setScrollBoundaryDecider(ScrollBoundaryDecider boundary);
-
-    /**
      * 完成刷新
      */
     RefreshLayout finishRefresh();
-
-    /**
-     * 完成加载
-     */
-    RefreshLayout finishLoadmore();
 
     /**
      * 完成刷新
@@ -239,32 +233,39 @@ public interface RefreshLayout {
     /**
      * 完成加载
      */
-    RefreshLayout finishLoadmore(int delayed);
+    RefreshLayout finishLoadMore();
 
     /**
      * 完成加载
      */
-    RefreshLayout finishLoadmore(boolean success);
+    RefreshLayout finishLoadMore(int delayed);
 
     /**
      * 完成加载
      */
-    RefreshLayout finishLoadmore(int delayed, boolean success);
+    RefreshLayout finishLoadMore(boolean success);
 
     /**
      * 完成加载
      */
-    RefreshLayout finishLoadmore(int delayed, boolean success, boolean noMoreData);
+    RefreshLayout finishLoadMore(int delayed, boolean success, boolean noMoreData);
 
     /**
      * 完成加载并标记没有更多数据
      */
-    RefreshLayout finishLoadmoreWithNoMoreData();
+    RefreshLayout finishLoadMoreWithNoMoreData();
 
     /**
      * 恢复没有更多数据的原始状态
+     * @deprecated 使用 @{@link RefreshLayout#setNoMoreData(boolean false)} 代替
      */
     RefreshLayout resetNoMoreData();
+
+    /**
+     * 恢复没有更多数据的原始状态
+     * @param noMoreData 是否有更多数据
+     */
+    RefreshLayout setNoMoreData(boolean noMoreData);
 
     /**
      * 获取当前 Header
@@ -290,12 +291,18 @@ public interface RefreshLayout {
 
     /**
      * 是否正在刷新
+     * @deprecated 后续版本将会移除
+     *      使用 {@link #getState()} == {@link RefreshState#Refreshing} 代替
      */
+    @Deprecated
     boolean isRefreshing();
 
     /**
      * 是否正在加载
+     * @deprecated 后续版本将会移除
+     *      使用 {@link #getState()} == {@link RefreshState#Loading} 代替
      */
+    @Deprecated
     boolean isLoading();
 
     /**
@@ -320,13 +327,13 @@ public interface RefreshLayout {
     /**
      * 自动加载
      */
-    boolean autoLoadmore();
+    boolean autoLoadMore();
 
     /**
      * 自动加载
      * @param delayed 开始延时
      */
-    boolean autoLoadmore(int delayed);
+    boolean autoLoadMore(int delayed);
 
     /**
      * 自动加载
@@ -334,19 +341,35 @@ public interface RefreshLayout {
      * @param duration 拖拽动画持续时间
      * @param dragrate 拉拽的高度比率（要求 ≥ 1 ）
      */
-    boolean autoLoadmore(int delayed, int duration, float dragrate);
+    boolean autoLoadMore(int delayed, int duration, float dragrate);
 
     boolean isEnableRefresh();
 
-    boolean isEnableLoadmore();
+    boolean isEnableLoadMore();
 
-    boolean isLoadmoreFinished();
+    boolean isNoMoreData();
 
-    boolean isEnableAutoLoadmore();
+    /**
+     * @deprecated 后续版本将会移除
+     */
+    @Deprecated
+    boolean isEnableAutoLoadMore();
 
+    /**
+     * @deprecated 后续版本将会移除
+     */
+    @Deprecated
     boolean isEnableOverScrollBounce();
 
+    /**
+     * @deprecated 后续版本将会移除
+     */
+    @Deprecated
     boolean isEnablePureScrollMode();
 
+    /**
+     * @deprecated 后续版本将会移除
+     */
+    @Deprecated
     boolean isEnableScrollContentWhenLoaded();
 }

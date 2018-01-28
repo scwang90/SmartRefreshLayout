@@ -23,7 +23,7 @@ import com.scwang.refreshlayout.activity.FragmentActivity;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 
 import java.util.Arrays;
 
@@ -87,27 +87,28 @@ public class NestedScrollUsingFragment extends Fragment implements AdapterView.O
             }
         });
         if (mNestedPager) {
-            final Runnable loadmore = new Runnable() {
+            final Runnable loadMore = new Runnable() {
                 @Override
                 public void run() {
-                    adapter.loadmore(Arrays.asList(Item.values()));
-                    adapter.loadmore(Arrays.asList(Item.values()));
-                    adapter.loadmore(Arrays.asList(Item.values()));
-                    adapter.loadmore(Arrays.asList(Item.values()));
-                    adapter.loadmore(Arrays.asList(Item.values()));
-                    adapter.loadmore(Arrays.asList(Item.values()));
-                    adapter.loadmore(Arrays.asList(Item.values()));
+                    adapter.loadMore(Arrays.asList(Item.values()));
+                    adapter.loadMore(Arrays.asList(Item.values()));
+                    adapter.loadMore(Arrays.asList(Item.values()));
+                    adapter.loadMore(Arrays.asList(Item.values()));
+                    adapter.loadMore(Arrays.asList(Item.values()));
+                    adapter.loadMore(Arrays.asList(Item.values()));
+                    adapter.loadMore(Arrays.asList(Item.values()));
                 }
             };
             final RefreshLayout refreshLayout = (RefreshLayout)root.findViewById(R.id.refreshLayout);
-            refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
                 @Override
-                public void onLoadmore(RefreshLayout refreshlayout) {
-                    loadmore.run();
-                    refreshlayout.finishLoadmore(2000);
+                public void onLoadMore(RefreshLayout refreshlayout) {
+                    loadMore.run();
+                    refreshlayout.getLayout().postDelayed(loadMore, 2000);
+                    refreshlayout.finishLoadMore(2000);
                 }
             });
-            loadmore.run();
+            loadMore.run();
         }
 
         /*

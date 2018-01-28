@@ -47,7 +47,7 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
         红色主题("更改为红色主题颜色"),
         绿色主题("更改为绿色主题颜色"),
         蓝色主题("更改为蓝色主题颜色"),
-        加载更多("上啦加载更多"),
+        加载更多("上拉加载更多"),
         ;
         public String name;
         Item(String name) {
@@ -165,7 +165,7 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
                 setThemeColor(android.R.color.holo_orange_light, android.R.color.holo_orange_dark);
                 break;
             case 加载更多:
-                mRefreshLayout.autoLoadmore();
+                mRefreshLayout.autoLoadMore();
                 return;
         }
         mRefreshLayout.autoRefresh();

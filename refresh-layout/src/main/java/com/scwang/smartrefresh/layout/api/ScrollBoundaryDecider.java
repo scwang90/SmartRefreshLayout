@@ -19,5 +19,5 @@ public interface ScrollBoundaryDecider {
      * @param content 内容视图
      * @return true 将会触发加载更多
      */
-    boolean canLoadmore(View content);
+    boolean canLoadMore(View content);
 }

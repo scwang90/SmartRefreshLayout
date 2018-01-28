@@ -19,7 +19,7 @@
         android:background="@android:color/white"
         app:srlPrimaryColor="#333"
         app:srlAccentColor="#fff"
-        app:srlEnableLoadmore="false"
+        app:srlEnableLoadMore="false"
         app:srlEnableHeaderTranslationContent="true">
         <com.scwang.smartrefresh.header.StoreHouseHeader
             android:layout_width="match_parent"

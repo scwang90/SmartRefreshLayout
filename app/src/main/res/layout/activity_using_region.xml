@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:srlFixedHeaderViewId="@+id/fsr_region_lyt"
-        app:srlEnableLoadmore="false">
+        app:srlEnableLoadMore="false">
 
         <LinearLayout
             android:layout_width="match_parent"

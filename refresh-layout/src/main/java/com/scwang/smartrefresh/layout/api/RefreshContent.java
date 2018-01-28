@@ -18,7 +18,7 @@ import static android.support.annotation.RestrictTo.Scope.SUBCLASSES;
 public interface RefreshContent {
     void moveSpinner(int spinner);
     boolean canRefresh();
-    boolean canLoadmore();
+    boolean canLoadMore();
     int getMeasuredWidth();
     int getMeasuredHeight();
     void measure(int widthSpec, int heightSpec);
@@ -36,7 +36,7 @@ public interface RefreshContent {
     void onInitialHeaderAndFooter(int headerHeight, int footerHeight);
     void setScrollBoundaryDecider(ScrollBoundaryDecider boundary);
 
-    void setEnableLoadmoreWhenContentNotFull(boolean enable);
+    void setEnableLoadMoreWhenContentNotFull(boolean enable);
 
     AnimatorUpdateListener scrollContentWhenFinished(int spinner);
 }

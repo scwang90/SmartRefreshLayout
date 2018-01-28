@@ -19,7 +19,7 @@
         android:background="@android:color/white"
         app:srlPrimaryColor="@color/colorPrimary"
         app:srlAccentColor="@android:color/white"
-        app:srlEnableLoadmore="false">
+        app:srlEnableLoadMore="false">
         <com.scwang.smartrefresh.header.FunGameHitBlockHeader
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

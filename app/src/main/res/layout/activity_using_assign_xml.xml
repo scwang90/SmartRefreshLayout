@@ -19,7 +19,7 @@
         app:srlPrimaryColor="#444444"
         app:srlAccentColor="@android:color/white"
         app:srlEnablePreviewInEditMode="true"
-        app:srlEnableLoadmoreWhenContentNotFull="true">
+        app:srlEnableLoadMoreWhenContentNotFull="true">
         <!--srlAccentColor srlPrimaryColor 将会改变 Header 和 Footer 的主题颜色-->
         <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"

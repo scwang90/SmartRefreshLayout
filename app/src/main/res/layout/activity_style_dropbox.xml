@@ -22,7 +22,7 @@
         app:srlPrimaryColor="@color/colorPrimary"
         app:srlAccentColor="@android:color/white"
         app:srlEnableHeaderTranslationContent="true"
-        app:srlEnableLoadmore="false">
+        app:srlEnableLoadMore="false">
         <com.scwang.smartrefresh.header.DropboxHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

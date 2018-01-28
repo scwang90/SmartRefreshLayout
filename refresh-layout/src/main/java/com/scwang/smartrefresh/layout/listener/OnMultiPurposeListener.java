@@ -8,7 +8,7 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
  * Created by SCWANG on 2017/5/26.
  */
 
-public interface OnMultiPurposeListener extends OnRefreshLoadmoreListener, OnStateChangedListener {
+public interface OnMultiPurposeListener extends OnRefreshLoadMoreListener, OnStateChangedListener {
     void onHeaderPulling(RefreshHeader header, float percent, int offset, int headerHeight, int extendHeight);
     void onHeaderReleased(RefreshHeader header, int headerHeight, int extendHeight);
     void onHeaderReleasing(RefreshHeader header, float percent, int offset, int headerHeight, int extendHeight);

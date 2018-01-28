@@ -56,7 +56,7 @@ public class RefreshContentWrapper implements RefreshContent {
     protected View mFixedHeader;
     protected View mFixedFooter;
     protected boolean mEnableRefresh = true;
-    protected boolean mEnableLoadmore = true;
+    protected boolean mEnableLoadMore = true;
     protected MotionEvent mMotionEvent;
     protected ScrollBoundaryDeciderAdapter mBoundaryAdapter = new ScrollBoundaryDeciderAdapter();
 
@@ -96,7 +96,7 @@ public class RefreshContentWrapper implements RefreshContent {
                     @Override
                     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                         mEnableRefresh = verticalOffset >= 0;
-                        mEnableLoadmore = refreshLayout.isEnableLoadmore() && (appBarLayout.getTotalScrollRange() + verticalOffset) <= 0;
+                        mEnableLoadMore = refreshLayout.isEnableLoadMore() && (appBarLayout.getTotalScrollRange() + verticalOffset) <= 0;
                     }
                 });
             }
@@ -177,8 +177,8 @@ public class RefreshContentWrapper implements RefreshContent {
     }
 
     @Override
-    public boolean canLoadmore() {
-        return mEnableLoadmore && mBoundaryAdapter.canLoadmore(mContentView);
+    public boolean canLoadMore() {
+        return mEnableLoadMore && mBoundaryAdapter.canLoadMore(mContentView);
     }
 
     @Override
@@ -303,8 +303,8 @@ public class RefreshContentWrapper implements RefreshContent {
     }
 
     @Override
-    public void setEnableLoadmoreWhenContentNotFull(boolean enable) {
-        mBoundaryAdapter.setEnableLoadmoreWhenContentNotFull(enable);
+    public void setEnableLoadMoreWhenContentNotFull(boolean enable) {
+        mBoundaryAdapter.setEnableLoadMoreWhenContentNotFull(enable);
     }
 
     @Override

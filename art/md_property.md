@@ -13,23 +13,23 @@ public class RefreshActivity extends Activity {
         refreshLayout.setReboundDuration(300);//回弹动画时长（毫秒）
         refreshLayout.setHeaderMaxDragRate(2);//最大显示下拉高度/Header标准高度
         refreshLayout.setFooterMaxDragRate(2);//最大显示下拉高度/Footer标准高度
-        refreshLayout.setHeaderTriggerRate(1);//触发刷新距离 与 HeaderHieght 的比率1.0.4
-        refreshLayout.setFooterTriggerRate(1);//触发加载距离 与 FooterHieght 的比率1.0.4
+        refreshLayout.setHeaderTriggerRate(1);//触发刷新距离 与 HeaderHeight 的比率1.0.4
+        refreshLayout.setFooterTriggerRate(1);//触发加载距离 与 FooterHeight 的比率1.0.4
         refreshLayout.setHeaderHeight(100);//Header标准高度（显示下拉高度>=标准高度 触发刷新）
         refreshLayout.setHeaderHeightPx(100);//同上-像素为单位
         refreshLayout.setFooterHeight(100);//Footer标准高度（显示上拉高度>=标准高度 触发加载）
         refreshLayout.setFooterHeightPx(100);//同上-像素为单位
         refreshLayout.setEnableRefresh(true);//是否启用下拉刷新功能
-        refreshLayout.setEnableLoadmore(true);//是否启用上拉加载功能
-        refreshLayout.setEnableAutoLoadmore(true);//是否启用列表惯性滑动到底部时自动加载更多
+        refreshLayout.setEnableLoadMore(true);//是否启用上拉加载功能
+        refreshLayout.setEnableAutoLoadMore(true);//是否启用列表惯性滑动到底部时自动加载更多
         refreshLayout.setEnablePureScrollMode(false);//是否启用纯滚动模式
         refreshLayout.setEnableNestedScroll(false);//是否启用嵌套滚动
         refreshLayout.setEnableOverScrollBounce(true);//是否启用越界回弹
         refreshLayout.setEnableScrollContentWhenLoaded(true);//是否在加载完成时滚动列表显示新的内容
         refreshLayout.setEnableScrollContentWhenRefreshed(true);//是否在刷新完成时滚动列表显示新的内容
         refreshLayout.setEnableHeaderTranslationContent(true);//是否下拉Header的时候向下平移列表或者内容
-        refreshLayout.setEnableFooterTranslationContent(true);//是否上啦Footer的时候向上平移列表或者内容
-        refreshLayout.setEnableLoadmoreWhenContentNotFull(true);//是否在列表不满一页时候开启上拉加载功能
+        refreshLayout.setEnableFooterTranslationContent(true);//是否上拉Footer的时候向上平移列表或者内容
+        refreshLayout.setEnableLoadMoreWhenContentNotFull(true);//是否在列表不满一页时候开启上拉加载功能
         refreshLayout.setEnableFooterFollowWhenLoadFinished(false);//是否在全部加载结束之后Footer跟随内容1.0.4
         refreshLayout.setEnableOverScrollDrag(true);//是否启用越界拖动（仿苹果效果）1.0.4
         refreshLayout.setDisableContentWhenRefresh(false);//是否在刷新的时候禁止列表的操作
@@ -40,16 +40,16 @@ public class RefreshActivity extends Activity {
         refreshLayout.setRefreshFooter(new ClassicsFooter(this));//设置Footer
         refreshLayout.setRefreshContent(new View(this));//设置刷新Content（用于动态替换空布局）1.0.4
         refreshLayout.autoRefresh();//自动刷新
-        refreshLayout.autoLoadmore();//自动加载
+        refreshLayout.autoLoadMore();//自动加载
         refreshLayout.autoRefresh(400);//延迟400毫秒后自动刷新
-        refreshLayout.autoLoadmore(400);//延迟400毫秒后自动加载
+        refreshLayout.autoLoadMore(400);//延迟400毫秒后自动加载
         refreshlayout.finishRefresh();//结束刷新
-        refreshlayout.finishLoadmore();//结束加载
+        refreshlayout.finishLoadMore();//结束加载
         refreshlayout.finishRefresh(3000);//延迟3000毫秒后结束刷新
-        refreshlayout.finishLoadmore(3000);//延迟3000毫秒后结束加载
+        refreshlayout.finishLoadMore(3000);//延迟3000毫秒后结束加载
         refreshlayout.finishRefresh(false);//结束刷新（刷新失败）
-        refreshlayout.finishLoadmore(false);//结束加载（加载失败）
-        refreshLayout.finishLoadmoreWithNoMoreData();//完成加载并标记没有更多数据 1.0.4
+        refreshlayout.finishLoadMore(false);//结束加载（加载失败）
+        refreshLayout.finishLoadMoreWithNoMoreData();//完成加载并标记没有更多数据 1.0.4
         refreshLayout.resetNoMoreData();//恢复没有更多数据的原始状态 1.0.4
 
     }
@@ -73,8 +73,8 @@ xml代码设置
     app:srlHeaderHeight="100dp"
     app:srlFooterHeight="100dp"
     app:srlEnableRefresh="true"
-    app:srlEnableLoadmore="true"
-    app:srlEnableAutoLoadmore="true"
+    app:srlEnableLoadMore="true"
+    app:srlEnableAutoLoadMore="true"
     app:srlEnablePureScrollMode="false"
     app:srlEnableNestedScrolling="false"
     app:srlEnableOverScrollBounce="true"
@@ -83,7 +83,7 @@ xml代码设置
     app:srlEnableScrollContentWhenRefreshed="true"
     app:srlEnableHeaderTranslationContent="true"
     app:srlEnableFooterTranslationContent="true"
-    app:srlEnableLoadmoreWhenContentNotFull="false"
+    app:srlEnableLoadMoreWhenContentNotFull="false"
     app:srlEnableFooterFollowWhenLoadFinished="false"
     app:srlEnableOverScrollDrag="true"
     app:srlDisableContentWhenRefresh="false"
@@ -262,11 +262,11 @@ xml代码设置
 |srlDragRate|float|显示拖动高度/真实拖动高度（默认0.5，阻尼效果）|
 |srlHeaderMaxDragRate|float|Header最大拖动高度/Header标准高度（默认2，要求>=1）|
 |srlFooterMaxDragRate|float|Footer最大拖动高度/Footer标准高度（默认2，要求>=1）|
-|srlHeaderTriggerRate|float|Header触发刷新距离 与 HeaderHieght 的比率（默认1）|
-|srlFooterTriggerRate|float|Footer触发加载距离 与 FooterHieght 的比率（默认1）|
+|srlHeaderTriggerRate|float|Header触发刷新距离 与 HeaderHeight 的比率（默认1）|
+|srlFooterTriggerRate|float|Footer触发加载距离 与 FooterHeight 的比率（默认1）|
 |srlEnableRefresh|boolean|是否开启下拉刷新功能（默认true）|
-|srlEnableLoadmore|boolean|是否开启加上拉加载功能（默认false-智能开启）|
-|srlEnableAutoLoadmore|boolean|是否监听列表惯性滚动到底部时触发加载事件（默认true）|
+|srlEnableLoadMore|boolean|是否开启加上拉加载功能（默认false-智能开启）|
+|srlEnableAutoLoadMore|boolean|是否监听列表惯性滚动到底部时触发加载事件（默认true）|
 |srlEnableHeaderTranslationContent|boolean|拖动Header的时候是否同时拖动内容（默认true）|
 |srlEnableFooterTranslationContent|boolean|拖动Footer的时候是否同时拖动内容（默认true）|
 |srlEnablePreviewInEditMode|boolean|是否在编辑模式时显示预览效果（默认true）|
@@ -274,7 +274,7 @@ xml代码设置
 |srlEnableOverScrollBounce|boolean|设置是否开启越界回弹功能（默认true）|
 |srlEnableNestedScrolling|boolean|是否开启嵌套滚动NestedScrolling(默认false-智能开启)|
 |srlEnableScrollContentWhenLoaded|boolean|是否在加载完成之后滚动内容显示新数据（默认-true）|
-|srlEnableLoadmoreWhenContentNotFull|boolean|在内容不满一页的时候，是否可以上拉加载更多（默认-false）|
+|srlEnableLoadMoreWhenContentNotFull|boolean|在内容不满一页的时候，是否可以上拉加载更多（默认-false）|
 |srlEnableFooterFollowWhenLoadFinished|boolean|是否在全部加载结束之后Footer跟随内容|
 |srlEnableOverScrollDrag|boolean|是否启用越界拖动（仿苹果效果）|
 |srlDisableContentWhenRefresh|boolean|是否在刷新的时候禁止内容的一切手势操作（默认false）|
@@ -294,18 +294,18 @@ xml代码设置
 |setDragRate|float|显示拖动高度/真实拖动高度（默认0.5，阻尼效果）|
 |setHeaderMaxDragRate|float|Header最大拖动高度/Header标准高度（默认2，要求>=1）|
 |setFooterMaxDragRate|float|Footer最大拖动高度/Footer标准高度（默认2，要求>=1）|
-|setHeaderTriggerRate|float|Header触发刷新距离 与 HeaderHieght 的比率（默认1）|
-|setFooterTriggerRate|float|Footer触发加载距离 与 FooterHieght 的比率（默认1）|
+|setHeaderTriggerRate|float|Header触发刷新距离 与 HeaderHeight 的比率（默认1）|
+|setFooterTriggerRate|float|Footer触发加载距离 与 FooterHeight 的比率（默认1）|
 |setEnableRefresh|boolean|是否开启下拉刷新功能（默认true）|
-|setEnableLoadmore|boolean|是否开启加上拉加载功能（默认false-智能开启）|
+|setEnableLoadMore|boolean|是否开启加上拉加载功能（默认false-智能开启）|
 |setEnableHeaderTranslationContent|boolean|拖动Header的时候是否同时拖动内容（默认true）|
 |setEnableFooterTranslationContent|boolean|拖动Footer的时候是否同时拖动内容（默认true）|
-|setEnableAutoLoadmore|boolean|是否监听列表惯性滚动到底部时触发加载事件（默认true）|
+|setEnableAutoLoadMore|boolean|是否监听列表惯性滚动到底部时触发加载事件（默认true）|
 |setEnablePureScrollMode|boolean|是否开启纯滚动模式（默认false-开启时只支持一个子视图）|
 |setEnableOverScrollBounce|boolean|设置是否开启越界回弹功能（默认true）|
 |setEnableNestedScrolling|boolean|是否开启嵌套滚动NestedScrolling（默认false-智能开启）|
 |setEnableScrollContentWhenLoaded|boolean|是否在加载完成之后滚动内容显示新数据（默认-true）|
-|setEnableLoadmoreWhenContentNotFull|boolean|在内容不满一页的时候，是否可以上拉加载更多（默认-false）|
+|setEnableLoadMoreWhenContentNotFull|boolean|在内容不满一页的时候，是否可以上拉加载更多（默认-false）|
 |setEnableFooterFollowWhenLoadFinished|boolean|是否在全部加载结束之后Footer跟随内容|
 |setEnableOverScrollDrag|boolean|是否启用越界拖动（仿苹果效果）|
 |setDisableContentWhenRefresh|boolean|是否在刷新的时候禁止内容的一切手势操作（默认false）|
@@ -315,16 +315,16 @@ xml代码设置
 |setRefreshFooter|RefreshFooter|设置指定的Footer（默认球脉冲）|
 |setRefreshContent|View|设置刷新Content（用于动态替换空布局）|
 |setOnRefreshListener|OnRefreshListener|设置刷新监听器（默认3秒后关刷新）|
-|setOnLoadmoreListener|OnLoadmoreListener|设置加载监听器（默认3秒后关加载）|
-|setOnRefreshLoadmoreListener|OnRefreshLoadmoreListener|同时设置上面两个监听器|
+|setOnLoadMoreListener|OnLoadMoreListener|设置加载监听器（默认3秒后关加载）|
+|setOnRefreshLoadMoreListener|OnRefreshLoadMoreListener|同时设置上面两个监听器|
 |setOnMultiPurposeListener|OnMultiPurposeListener|设置多功能监听器|
-|setLoadmoreFinished|boolean|设置全部数据加载完成，之后不会触发加载事件|
+|setLoadMoreFinished|boolean|设置全部数据加载完成，之后不会触发加载事件|
 |setScrollBoundaryDecider|boundary|设置滚动边界判断|
 |finishRefresh|(int delayed)|完成刷新，结束刷新动画|
-|finishLoadmore|(int delayed)|完成加载，结束加载动画|
+|finishLoadMore|(int delayed)|完成加载，结束加载动画|
 |finishRefresh|(boolean success)|完成刷新，并设置是否成功|
-|finishLoadmore|(boolean success)|完成加载，并设置是否成功|
-|finishLoadmoreWithNoMoreData||完成加载并标记没有更多数据|
+|finishLoadMore|(boolean success)|完成加载，并设置是否成功|
+|finishLoadMoreWithNoMoreData||完成加载并标记没有更多数据|
 |resetNoMoreData||恢复没有更多数据的原始状态|
 |getRefreshHeader|RefreshHeader|获取Header|
 |getRefreshFooter|RefreshFooter|获取Footer|
@@ -332,7 +332,7 @@ xml代码设置
 |isRefreshing|boolean|是否正在刷新|
 |isLoading|boolean|是否正在加载|
 |autoRefresh|(int delayed)|触发自动刷新|
-|autoLoadmore|(int delayed)|触发自动加载|
+|autoLoadMore|(int delayed)|触发自动加载|
 
 ## Header-Attributes
 

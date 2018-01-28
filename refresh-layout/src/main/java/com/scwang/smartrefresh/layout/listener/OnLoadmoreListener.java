@@ -7,6 +7,6 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
  * Created by SCWANG on 2017/5/26.
  */
 
-public interface OnLoadmoreListener {
-    void onLoadmore(RefreshLayout refreshlayout);
+public interface OnLoadMoreListener {
+    void onLoadMore(RefreshLayout refreshlayout);
 }

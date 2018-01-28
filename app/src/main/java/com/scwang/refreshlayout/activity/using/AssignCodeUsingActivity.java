@@ -48,8 +48,8 @@ public class AssignCodeUsingActivity extends AppCompatActivity {
 
         if (isFirstEnter) {
             isFirstEnter = false;
-            //触发上啦加载
-            refreshLayout.autoLoadmore(250);
+            //触发上拉加载
+            refreshLayout.autoLoadMore(250);
             //通过多功能监听接口实现 在第一次加载完成之后 自动刷新
             refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener(){
                 @Override

@@ -56,7 +56,7 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
     protected RefreshKernel mRefreshKernel;
     protected int mFinishDuration = 500;
     protected int mBackgroundColor = 0;
-    protected boolean mLoadmoreFinished = false;
+    protected boolean mNoMoreData = false;
     protected int mPaddingTop = 20;
     protected int mPaddingBottom = 20;
 
@@ -191,7 +191,7 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
     @Override
     public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
         mRefreshKernel = kernel;
-        mRefreshKernel.requestDrawBackgoundForFooter(mBackgroundColor);
+        mRefreshKernel.requestDrawBackgroundForFooter(mBackgroundColor);
     }
 
     @Override
@@ -214,8 +214,8 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
     }
 
     @Override
-    public void onLoadmoreReleased(RefreshLayout layout, int footerHeight, int extendHeight) {
-        if (!mLoadmoreFinished) {
+    public void onLoadMoreReleased(RefreshLayout layout, int footerHeight, int extendHeight) {
+        if (!mNoMoreData) {
             mProgressView.setVisibility(VISIBLE);
             if (mProgressDrawable != null) {
                 mProgressDrawable.start();
@@ -232,7 +232,7 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
 
     @Override
     public int onFinish(@NonNull RefreshLayout layout, boolean success) {
-        if (!mLoadmoreFinished) {
+        if (!mNoMoreData) {
             if (mProgressDrawable != null) {
                 mProgressDrawable.stop();
             } else {
@@ -272,10 +272,10 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
      * 设置数据全部加载完成，将不能再次触发加载功能
      */
     @Override
-    public boolean setLoadmoreFinished(boolean finished) {
-        if (mLoadmoreFinished != finished) {
-            mLoadmoreFinished = finished;
-            if (finished) {
+    public boolean setNoMoreData(boolean noMoreData) {
+        if (mNoMoreData != noMoreData) {
+            mNoMoreData = noMoreData;
+            if (noMoreData) {
                 mTitleText.setText(REFRESH_FOOTER_ALLLOADED);
                 mArrowView.setVisibility(GONE);
             } else {
@@ -305,7 +305,7 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
 
     @Override
     public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
-        if (!mLoadmoreFinished) {
+        if (!mNoMoreData) {
             switch (newState) {
                 case None:
 //                    restoreRefreshLayoutBackground();
@@ -405,7 +405,7 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
     public ClassicsFooter setPrimaryColor(@ColorInt int primaryColor) {
         setBackgroundColor(mBackgroundColor = primaryColor);
         if (mRefreshKernel != null) {
-            mRefreshKernel.requestDrawBackgoundForFooter(mBackgroundColor);
+            mRefreshKernel.requestDrawBackgroundForFooter(mBackgroundColor);
         }
         return this;
     }

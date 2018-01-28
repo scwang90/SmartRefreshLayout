@@ -30,6 +30,7 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
  * Created by SCWANG on 2017/5/30.
  */
 
+@SuppressWarnings("unused")
 public class BallPulseFooter extends ViewGroup implements RefreshFooter {
 
     private BallPulseView mBallPulseView;
@@ -85,13 +86,13 @@ public class BallPulseFooter extends ViewGroup implements RefreshFooter {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        int pwidth = getMeasuredWidth();
-        int pheight = getMeasuredHeight();
-        int cwidth = mBallPulseView.getMeasuredWidth();
-        int cheight = mBallPulseView.getMeasuredHeight();
-        int left = pwidth / 2 - cwidth / 2;
-        int top = pheight / 2 - cheight / 2;
-        mBallPulseView.layout(left, top, left + cwidth, top + cheight);
+        int p_width = getMeasuredWidth();
+        int p_height = getMeasuredHeight();
+        int c_width = mBallPulseView.getMeasuredWidth();
+        int c_height = mBallPulseView.getMeasuredHeight();
+        int left = p_width / 2 - c_width / 2;
+        int top = p_height / 2 - c_height / 2;
+        mBallPulseView.layout(left, top, left + c_width, top + c_height);
     }
     //</editor-fold>
 
@@ -119,7 +120,7 @@ public class BallPulseFooter extends ViewGroup implements RefreshFooter {
     }
 
     @Override
-    public void onLoadmoreReleased(RefreshLayout layout, int footerHeight, int extendHeight) {
+    public void onLoadMoreReleased(RefreshLayout layout, int footerHeight, int extendHeight) {
 
     }
 
@@ -139,7 +140,7 @@ public class BallPulseFooter extends ViewGroup implements RefreshFooter {
     }
 
     @Override
-    public boolean setLoadmoreFinished(boolean finished) {
+    public boolean setNoMoreData(boolean noMoreData) {
         return false;
     }
 

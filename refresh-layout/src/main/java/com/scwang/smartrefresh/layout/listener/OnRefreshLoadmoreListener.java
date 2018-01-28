@@ -5,5 +5,5 @@ package com.scwang.smartrefresh.layout.listener;
  * Created by SCWANG on 2017/5/26.
  */
 
-public interface OnRefreshLoadmoreListener extends OnRefreshListener, OnLoadmoreListener{
+public interface OnRefreshLoadMoreListener extends OnRefreshListener, OnLoadMoreListener {
 }

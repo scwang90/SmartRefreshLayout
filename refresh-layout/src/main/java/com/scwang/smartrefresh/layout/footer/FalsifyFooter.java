@@ -83,7 +83,7 @@ public class FalsifyFooter extends FalsifyHeader implements RefreshFooter {
     @Override
     public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
         super.onInitialized(kernel, height, extendHeight);
-        kernel.getRefreshLayout().setEnableAutoLoadmore(false);
+        kernel.getRefreshLayout().setEnableAutoLoadMore(false);
     }
 
     @Override
@@ -97,10 +97,10 @@ public class FalsifyFooter extends FalsifyHeader implements RefreshFooter {
     }
 
     @Override
-    public void onLoadmoreReleased(RefreshLayout layout, int footerHeight, int extendHeight) {
+    public void onLoadMoreReleased(RefreshLayout layout, int footerHeight, int extendHeight) {
         if (mRefreshKernel != null) {
             mRefreshKernel.setState(RefreshState.None);
-            //onLoadmoreReleased 的时候 调用 setState(RefreshState.None); 并不会立刻改变成 None
+            //onLoadMoreReleased 的时候 调用 setState(RefreshState.None); 并不会立刻改变成 None
             //而是先执行一个回弹动画，LoadFinish 是介于 Loading 和 None 之间的状态
             //LoadFinish 用于在回弹动画结束时候能顺利改变为 None
             mRefreshKernel.setState(RefreshState.LoadFinish);
@@ -108,7 +108,7 @@ public class FalsifyFooter extends FalsifyHeader implements RefreshFooter {
     }
 
     @Override
-    public boolean setLoadmoreFinished(boolean finished) {
+    public boolean setNoMoreData(boolean noMoreData) {
         return false;
     }
 

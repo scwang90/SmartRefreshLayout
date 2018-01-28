@@ -135,8 +135,8 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
         if (!mManualOperation) {
             mManualOperation = true;
             mRefreshContent = mRefreshKernel.getRefreshContent();
-            enableLoadmore = mRefreshKernel.getRefreshLayout().isEnableLoadmore();
-            mRefreshKernel.getRefreshLayout().setEnableLoadmore(false);
+            enableLoadmore = mRefreshKernel.getRefreshLayout().isEnableLoadMore();
+            mRefreshKernel.getRefreshLayout().setEnableLoadMore(false);
             View contentView = mRefreshContent.getView();
             MarginLayoutParams params = (MarginLayoutParams)contentView.getLayoutParams();
             params.topMargin += mHeaderHeight;
@@ -151,7 +151,7 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
     protected void onManualOperationRelease() {
         if (mIsFinish) {
             mManualOperation = false;
-            mRefreshKernel.getRefreshLayout().setEnableLoadmore(enableLoadmore);
+            mRefreshKernel.getRefreshLayout().setEnableLoadMore(enableLoadmore);
             if (mTouchY != -1) {//还没松手
                 onFinish(mRefreshKernel.getRefreshLayout(), mLastFinish);
 //                mRefreshKernel.setStateRefresingFinish();

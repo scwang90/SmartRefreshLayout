@@ -19,7 +19,7 @@ import com.google.gson.reflect.TypeToken;
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.util.StatusBarUtil;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
@@ -74,11 +74,11 @@ public class BannerPracticeActivity extends AppCompatActivity {
                 },2000);
             }
         });
-        refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
-            public void onLoadmore(RefreshLayout refreshlayout) {
+            public void onLoadMore(RefreshLayout refreshlayout) {
                 mAdapter.addData(movies);
-                refreshlayout.finishLoadmoreWithNoMoreData();
+                refreshlayout.finishLoadMoreWithNoMoreData();
             }
         });
 

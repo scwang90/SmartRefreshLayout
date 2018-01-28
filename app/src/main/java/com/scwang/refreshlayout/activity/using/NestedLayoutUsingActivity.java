@@ -64,7 +64,7 @@ public class NestedLayoutUsingActivity extends AppCompatActivity implements Adap
         final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
         if (isFirstEnter && refreshLayout != null) {
             isFirstEnter = false;
-            //触发上啦加载
+            //触发上拉加载
             refreshLayout.autoRefresh();
         }
     }

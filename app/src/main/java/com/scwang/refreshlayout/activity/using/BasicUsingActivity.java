@@ -11,8 +11,7 @@ import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.Arrays;
@@ -52,7 +51,7 @@ public class BasicUsingActivity extends AppCompatActivity {
         });
 
         final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
-        refreshLayout.setEnableAutoLoadmore(true);//开启自动加载功能（非必须）
+        refreshLayout.setEnableAutoLoadMore(true);//开启自动加载功能（非必须）
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(final RefreshLayout refreshlayout) {
@@ -61,23 +60,23 @@ public class BasicUsingActivity extends AppCompatActivity {
                     public void run() {
                         mAdapter.refresh(initData());
                         refreshlayout.finishRefresh();
-                        refreshlayout.resetNoMoreData();
+                        refreshlayout.setNoMoreData(false);
                     }
                 }, 2000);
             }
         });
-        refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
-            public void onLoadmore(final RefreshLayout refreshlayout) {
+            public void onLoadMore(final RefreshLayout refreshlayout) {
                 refreshlayout.getLayout().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        mAdapter.loadmore(initData());
                         if (mAdapter.getItemCount() > 60) {
                             Toast.makeText(getApplication(), "数据全部加载完毕", Toast.LENGTH_SHORT).show();
-                            refreshlayout.finishLoadmoreWithNoMoreData();//将不会再次触发加载更多事件
+                            refreshlayout.finishLoadMoreWithNoMoreData();//将不会再次触发加载更多事件
                         } else {
-                            refreshlayout.finishLoadmore();
+                            mAdapter.loadMore(initData());
+                            refreshlayout.finishLoadMore();
                         }
                     }
                 }, 2000);

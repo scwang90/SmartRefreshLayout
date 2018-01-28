@@ -37,11 +37,11 @@ public class ScrollBoundaryUtil {
         return true;
     }
 
-    public static boolean canLoadmore(View targetView, MotionEvent event) {
+    public static boolean canLoadMore(View targetView, MotionEvent event) {
         if (!canScrollDown(targetView) && canScrollUp(targetView) && targetView.getVisibility() == View.VISIBLE) {
             return true;
         }
-        //event == null 时 canLoadmore 不会动态递归搜索
+        //event == null 时 canLoadMore 不会动态递归搜索
         if (targetView instanceof ViewGroup && event != null) {
             ViewGroup viewGroup = (ViewGroup) targetView;
             final int childCount = viewGroup.getChildCount();
@@ -51,7 +51,7 @@ public class ScrollBoundaryUtil {
                 if (isTransformedTouchPointInView(viewGroup, child, event.getX(), event.getY(), point)) {
                     event = MotionEvent.obtain(event);
                     event.offsetLocation(point.x, point.y);
-                    return canLoadmore(child, event);
+                    return canLoadMore(child, event);
                 }
             }
         }

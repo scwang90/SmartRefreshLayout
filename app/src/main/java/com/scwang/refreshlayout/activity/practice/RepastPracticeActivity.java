@@ -14,7 +14,7 @@ import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.refreshlayout.util.StatusBarUtil;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -72,7 +72,7 @@ public class RepastPracticeActivity extends AppCompatActivity {
                 }
             });
 
-            refreshLayout.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
+            refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
                 @Override
                 public void onRefresh(final RefreshLayout refreshlayout) {
                     refreshLayout.getLayout().postDelayed(new Runnable() {
@@ -84,16 +84,16 @@ public class RepastPracticeActivity extends AppCompatActivity {
                     }, 2000);
                 }
                 @Override
-                public void onLoadmore(final RefreshLayout refreshlayout) {
+                public void onLoadMore(final RefreshLayout refreshlayout) {
                     refreshLayout.getLayout().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            mAdapter.loadmore(loadModels());
+                            mAdapter.loadMore(loadModels());
                             if (mAdapter.getCount() > 12) {
                                 Toast.makeText(getBaseContext(), "数据全部加载完毕", Toast.LENGTH_SHORT).show();
-                                refreshlayout.finishLoadmoreWithNoMoreData();//设置之后，将不会再触发加载事件
+                                refreshlayout.finishLoadMoreWithNoMoreData();//设置之后，将不会再触发加载事件
                             } else {
-                                refreshlayout.finishLoadmore();
+                                refreshlayout.finishLoadMore();
                             }
                         }
                     }, 1000);

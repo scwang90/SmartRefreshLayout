@@ -66,7 +66,7 @@ public class RefreshHeaderWrapper implements RefreshHeader {
     public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
         ViewGroup.LayoutParams params = mWrapperView.getLayoutParams();
         if (params instanceof SmartRefreshLayout.LayoutParams) {
-            kernel.requestDrawBackgoundForHeader(((SmartRefreshLayout.LayoutParams) params).backgroundColor);
+            kernel.requestDrawBackgroundForHeader(((SmartRefreshLayout.LayoutParams) params).backgroundColor);
         }
     }
 

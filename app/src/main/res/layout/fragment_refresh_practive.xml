@@ -17,7 +17,7 @@
         android:background="@android:color/white"
         app:srlPrimaryColor="@color/colorPrimary"
         app:srlEnableRefresh="false"
-        app:srlEnableLoadmore="false">
+        app:srlEnableLoadMore="false">
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"

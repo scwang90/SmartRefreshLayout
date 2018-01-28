@@ -1,6 +1,5 @@
 package com.scwang.smartrefresh.layout.impl;
 
-import android.annotation.SuppressLint;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.view.View;
@@ -116,7 +115,7 @@ public class RefreshFooterWrapper implements RefreshFooter {
     }
 
     @Override
-    public void onLoadmoreReleased(RefreshLayout refreshLayout, int footerHeight, int extendHeight) {
+    public void onLoadMoreReleased(RefreshLayout refreshLayout, int footerHeight, int extendHeight) {
         if (mWrapperView instanceof RefreshFooter) {
             ((RefreshFooter) mWrapperView).onLoadmoreReleased(refreshLayout, footerHeight, extendHeight);
         } else if (mWrapperView instanceof RefreshHeader) {
@@ -135,12 +134,11 @@ public class RefreshFooterWrapper implements RefreshFooter {
     public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
         if (mWrapperView instanceof RefreshInternal) {
             ((RefreshInternal) mWrapperView).onStateChanged(refreshLayout, oldState, newState);
-
         }
     }
 
     @Override
-    public boolean setLoadmoreFinished(boolean finished) {
+    public boolean setNoMoreData(boolean noMoreData) {
         if (mWrapperView instanceof RefreshFooter) {
             ((RefreshFooter) mWrapperView).setLoadmoreFinished(finished);
         }

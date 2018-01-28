@@ -36,7 +36,7 @@ public class ListenerUsingActivity extends AppCompatActivity {
     private String mFooterFinish;
     private String mHeaderFinish;
     private String mRefresh;
-    private String mLoadmore;
+    private String mLoadMore;
     private String mStateChanged;
 
     private static boolean isFirstEnter = true;
@@ -127,8 +127,8 @@ public class ListenerUsingActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onLoadmore(RefreshLayout refreshlayout) {
-                mLoadmore = String.format(Locale.CHINA, "%s",FORMAT.format(new Date()));
+            public void onLoadMore(RefreshLayout refreshlayout) {
+                mLoadMore = String.format(Locale.CHINA, "%s",FORMAT.format(new Date()));
                 updateContent();
             }
 
@@ -163,7 +163,7 @@ public class ListenerUsingActivity extends AppCompatActivity {
                         "onFooterStartAnimator:%s\n\n" +
                         "onFooterFinish:%s\n\n" +
                         "onRefresh:%s\n\n" +
-                        "onLoadmore:%s\n\n",
+                        "onLoadMore:%s\n\n",
                 mStateChanged,
                 mHeaderPulling,
                 mHeaderReleasing,
@@ -174,7 +174,7 @@ public class ListenerUsingActivity extends AppCompatActivity {
                 mFooterStartAnimator,
                 mFooterFinish,
                 mRefresh,
-                mLoadmore));
+                mLoadMore));
     }
 
 }

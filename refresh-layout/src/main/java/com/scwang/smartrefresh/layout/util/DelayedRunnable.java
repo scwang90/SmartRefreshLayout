@@ -1,12 +1,12 @@
 package com.scwang.smartrefresh.layout.util;
 
-public class DelayedRunable implements Runnable {
+public class DelayedRunnable implements Runnable {
     public long delayMillis;
     public Runnable runnable = null;
-    public DelayedRunable(Runnable runnable) {
+    public DelayedRunnable(Runnable runnable) {
         this.runnable = runnable;
     }
-    public DelayedRunable(Runnable runnable, long delayMillis) {
+    public DelayedRunnable(Runnable runnable, long delayMillis) {
         this.runnable = runnable;
         this.delayMillis = delayMillis;
     }

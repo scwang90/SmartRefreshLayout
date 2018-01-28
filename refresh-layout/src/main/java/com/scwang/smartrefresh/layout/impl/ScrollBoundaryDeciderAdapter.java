@@ -17,7 +17,7 @@ public class ScrollBoundaryDeciderAdapter implements ScrollBoundaryDecider {
     //<editor-fold desc="Internal">
     protected MotionEvent mActionEvent;
     protected ScrollBoundaryDecider boundary;
-    protected boolean mEnableLoadmoreWhenContentNotFull;
+    protected boolean mEnableLoadMoreWhenContentNotFull;
 
     void setScrollBoundaryDecider(ScrollBoundaryDecider boundary){
         this.boundary = boundary;
@@ -40,20 +40,20 @@ public class ScrollBoundaryDeciderAdapter implements ScrollBoundaryDecider {
     }
 
     @Override
-    public boolean canLoadmore(View content) {
+    public boolean canLoadMore(View content) {
         if (boundary != null) {
-            return boundary.canLoadmore(content);
+            return boundary.canLoadMore(content);
         }
-        if (mEnableLoadmoreWhenContentNotFull) {
+        if (mEnableLoadMoreWhenContentNotFull) {
             //mActionEvent == null 时 canScrollDown 不会动态递归搜索
             return !ScrollBoundaryUtil.canScrollDown(content, mActionEvent);
         }
-        //mActionEvent == null 时 canLoadmore 不会动态递归搜索
-        return ScrollBoundaryUtil.canLoadmore(content, mActionEvent);
+        //mActionEvent == null 时 canLoadMore 不会动态递归搜索
+        return ScrollBoundaryUtil.canLoadMore(content, mActionEvent);
     }
 
-    public void setEnableLoadmoreWhenContentNotFull(boolean enable) {
-        mEnableLoadmoreWhenContentNotFull = enable;
+    public void setEnableLoadMoreWhenContentNotFull(boolean enable) {
+        mEnableLoadMoreWhenContentNotFull = enable;
     }
     //</editor-fold>
 }

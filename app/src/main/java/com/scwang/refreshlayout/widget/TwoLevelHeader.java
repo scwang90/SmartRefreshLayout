@@ -9,7 +9,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 
@@ -200,7 +199,7 @@ public class TwoLevelHeader extends FrameLayout implements RefreshHeader, Invoca
         }
 
         RefreshKernel proxy = (RefreshKernel) Proxy.newProxyInstance(RefreshKernel.class.getClassLoader(), new Class[]{RefreshKernel.class}, this);
-        proxy.requestDrawBackgoundForHeader(0);
+        proxy.requestDrawBackgroundForHeader(0);
         proxy.requestHeaderNeedTouchEventWhenRefreshing(false);
 
         mHeaderHeight = height;

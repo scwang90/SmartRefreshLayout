@@ -56,12 +56,12 @@ public interface RefreshKernel {
      * 指定在下拉时候为 Header 绘制背景
      * @param backgroundColor 背景颜色
      */
-    RefreshKernel requestDrawBackgoundForHeader(int backgroundColor);
+    RefreshKernel requestDrawBackgroundForHeader(int backgroundColor);
     /**
      * 指定在下拉时候为 Footer 绘制背景
      * @param backgroundColor 背景颜色
      */
-    RefreshKernel requestDrawBackgoundForFooter(int backgroundColor);
+    RefreshKernel requestDrawBackgroundForFooter(int backgroundColor);
     /**
      * 请求事件
      */

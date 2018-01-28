@@ -22,7 +22,7 @@ import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.refreshlayout.fragment.using.NestedScrollUsingFragment.Item;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 
@@ -80,14 +80,14 @@ public class NestedScrollUsingFragmentIntegral extends Fragment implements Adapt
         });
 
         RefreshLayout refreshLayout = (RefreshLayout) root.findViewById(R.id.refreshLayout);
-        refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
-            public void onLoadmore(final RefreshLayout refreshlayout) {
+            public void onLoadMore(final RefreshLayout refreshlayout) {
                 refreshlayout.getLayout().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        mAdapter.loadmore(buildItems());
-                        refreshlayout.finishLoadmore();
+                        mAdapter.loadMore(buildItems());
+                        refreshlayout.finishLoadMore();
                     }
                 }, 2000);
             }

@@ -68,7 +68,7 @@ public class SimpleMultiPurposeListener implements OnMultiPurposeListener {
     }
 
     @Override
-    public void onLoadmore(RefreshLayout refreshlayout) {
+    public void onLoadMore(RefreshLayout refreshlayout) {
 
     }
 

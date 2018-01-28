@@ -261,7 +261,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     @Override
     public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
         mRefreshKernel = kernel;
-        mRefreshKernel.requestDrawBackgoundForHeader(mBackgroundColor);
+        mRefreshKernel.requestDrawBackgroundForHeader(mBackgroundColor);
     }
 
     @Override
@@ -448,7 +448,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     public ClassicsHeader setPrimaryColor(@ColorInt int primaryColor) {
         setBackgroundColor(mBackgroundColor = primaryColor);
         if (mRefreshKernel != null) {
-            mRefreshKernel.requestDrawBackgoundForHeader(mBackgroundColor);
+            mRefreshKernel.requestDrawBackgroundForHeader(mBackgroundColor);
         }
         return this;
     }

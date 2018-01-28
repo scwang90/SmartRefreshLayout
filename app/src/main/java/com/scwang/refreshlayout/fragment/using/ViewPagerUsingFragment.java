@@ -25,7 +25,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -38,7 +38,7 @@ import static com.scwang.refreshlayout.R.id.refreshLayout;
  * 使用示例-ViewPager页面
  * A simple {@link Fragment} subclass.
  */
-public class ViewPagerUsingFragment extends Fragment implements OnRefreshListener, OnRefreshLoadmoreListener {
+public class ViewPagerUsingFragment extends Fragment implements OnRefreshListener, OnRefreshLoadMoreListener {
 
 
     public enum Item {
@@ -76,7 +76,7 @@ public class ViewPagerUsingFragment extends Fragment implements OnRefreshListene
         });
 
         mRefreshLayout = (RefreshLayout) root.findViewById(refreshLayout);
-        mRefreshLayout.setOnRefreshLoadmoreListener(this);
+        mRefreshLayout.setOnRefreshLoadMoreListener(this);
         mRefreshLayout.setRefreshHeader(new ClassicsHeader(getContext()));
         mRefreshLayout.setRefreshFooter(new ClassicsFooter(getContext()));
 
@@ -93,8 +93,8 @@ public class ViewPagerUsingFragment extends Fragment implements OnRefreshListene
     }
 
     @Override
-    public void onLoadmore(RefreshLayout refreshlayout) {
-        mAdapter.fragments[mViewPager.getCurrentItem()].onLoadmore(refreshlayout);
+    public void onLoadMore(RefreshLayout refreshlayout) {
+        mAdapter.fragments[mViewPager.getCurrentItem()].onLoadMore(refreshlayout);
     }
 
 
@@ -166,21 +166,21 @@ public class ViewPagerUsingFragment extends Fragment implements OnRefreshListene
                 public void run() {
                     mAdapter.refresh(initData());
                     refreshlayout.finishRefresh();
-                    refreshlayout.resetNoMoreData();
+                    refreshlayout.setNoMoreData(false);
                 }
             }, 2000);
         }
 
-        public void onLoadmore(final RefreshLayout refreshlayout) {
+        public void onLoadMore(final RefreshLayout refreshlayout) {
             refreshlayout.getLayout().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    mAdapter.loadmore(initData());
+                    mAdapter.loadMore(initData());
                     if (mAdapter.getItemCount() > 60) {
                         Toast.makeText(getContext(), "数据全部加载完毕", Toast.LENGTH_SHORT).show();
-                        refreshlayout.finishLoadmoreWithNoMoreData();//将不会再次触发加载更多事件
+                        refreshlayout.finishLoadMoreWithNoMoreData();//将不会再次触发加载更多事件
                     } else {
-                        refreshlayout.finishLoadmore();
+                        refreshlayout.finishLoadMore();
                     }
                 }
             }, 2000);
