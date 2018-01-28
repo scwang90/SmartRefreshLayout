@@ -37,7 +37,7 @@ import static com.scwang.refreshlayout.R.mipmap.gif_header_repast;
 import static com.scwang.refreshlayout.R.mipmap.image_weibo_home_2;
 
 /**
- * 使用示例-嵌套滚动
+ * 使用示例-嵌套滚动-整体
  * A simple {@link Fragment} subclass.
  */
 public class NestedScrollUsingFragmentIntegral extends Fragment implements AdapterView.OnItemClickListener {

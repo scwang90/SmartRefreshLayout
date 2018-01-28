@@ -99,24 +99,18 @@ public class NestedScrollUsingFragment extends Fragment implements AdapterView.O
                     adapter.loadmore(Arrays.asList(Item.values()));
                 }
             };
-            RefreshLayout refreshLayout = (RefreshLayout)root.findViewById(R.id.refreshLayout);
-            refreshLayout.setDisableContentWhenLoading(true);
-            refreshLayout.setEnableLoadmoreWhenContentNotFull(true);
-            refreshLayout.setEnableScrollContentWhenLoaded(true);
-//            refreshLayout.setEnableAutoLoadmore(true);
-//            refreshLayout.setEnableNestedScroll(true);
-            refreshLayout.setEnableLoadmore(true);
+            final RefreshLayout refreshLayout = (RefreshLayout)root.findViewById(R.id.refreshLayout);
             refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
                 @Override
                 public void onLoadmore(RefreshLayout refreshlayout) {
-                    refreshlayout.getLayout().postDelayed(loadmore, 2000);
+                    loadmore.run();
                     refreshlayout.finishLoadmore(2000);
                 }
             });
             loadmore.run();
         }
 
-        /**
+        /*
          * 监听 AppBarLayout 的关闭和开启 ActionButton 设置关闭隐藏动画
          */
         AppBarLayout appBarLayout = (AppBarLayout) root.findViewById(R.id.app_bar);

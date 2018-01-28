@@ -31,11 +31,11 @@ public interface RefreshFooter extends RefreshInternal {
 
     /**
      * 释放时刻（调用一次，将会触发加载）
-     * @param layout RefreshLayout
+     * @param refreshLayout RefreshLayout
      * @param footerHeight FooterHeight
      * @param extendHeight extendHeaderHeight or extendFooterHeight
      */
-    void onLoadmoreReleased(RefreshLayout layout, int footerHeight, int extendHeight);
+    void onLoadmoreReleased(RefreshLayout refreshLayout, int footerHeight, int extendHeight);
 
     /**
      * 设置数据全部加载完成，将不能再次触发加载功能

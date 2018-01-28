@@ -378,7 +378,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
             case Loading:
                 mArrowView.setVisibility(GONE);
                 mProgressView.setVisibility(GONE);
-                mLastUpdateText.setVisibility(GONE);
+                mLastUpdateText.setVisibility(mEnableLastTime ? INVISIBLE : GONE);
                 mTitleText.setText(REFRESH_HEADER_LOADING);
                 break;
         }

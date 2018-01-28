@@ -3,8 +3,12 @@
 ## V 1.1.0 (开发中)
 >添加：类似淘宝二楼的二级下拉刷新 TwoLevelHeader
 >添加：srlEnableScrollContentWhenRefreshed 属性和对应方法
+>优化：优化越界回弹的效果
+>优化：优化Header和Footer与列表的惯性连续
 >修复：仿苹果越界拖动在特定条件下不连续问题
 >修复：finishLoadmoreWithNoMoreData 显示顺序错乱问题
+>修复：Xml预览模式在没有Header和Footer时的显示问题
+>修复：AppbarLayout 嵌套滚动时的bug
 
 ## V 1.0.4
 >添加：finishLoadmoreWithNoMoreData 方法 完成加载并标记没有更多数据  

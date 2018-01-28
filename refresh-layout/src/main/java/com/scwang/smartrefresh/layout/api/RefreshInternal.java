@@ -54,19 +54,19 @@ public interface RefreshInternal extends OnStateChangedListener {
 
     /**
      * 开始动画
-     * @param layout RefreshLayout
+     * @param refreshLayout RefreshLayout
      * @param height HeaderHeight or FooterHeight
      * @param extendHeight extendHeaderHeight or extendFooterHeight
      */
-    void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight);
+    void onStartAnimator(@NonNull RefreshLayout refreshLayout, int height, int extendHeight);
 
     /**
      * 动画结束
-     * @param layout RefreshLayout
+     * @param refreshLayout RefreshLayout
      * @param success 数据是否成功刷新或加载
      * @return 完成动画所需时间 如果返回 Integer.MAX_VALUE 将取消本次完成事件，继续保持原有状态
      */
-    int onFinish(@NonNull RefreshLayout layout, boolean success);
+    int onFinish(@NonNull RefreshLayout refreshLayout, boolean success);
 
     /**
      * 是否支持水平方向的拖动（将会影响到onHorizontalDrag的调用）

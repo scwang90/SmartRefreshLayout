@@ -2,9 +2,13 @@ package com.scwang.smartrefresh.layout.util;
 
 import android.content.res.Resources;
 
+/**
+ * 像素密度计算工具
+ */
+@SuppressWarnings("unused")
 public class DensityUtil {
 
-    float density;
+    public float density;
 
     public DensityUtil() {
         density = Resources.getSystem().getDisplayMetrics().density;
