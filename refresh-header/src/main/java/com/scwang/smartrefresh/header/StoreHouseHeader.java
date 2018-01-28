@@ -32,10 +32,10 @@ import java.util.ArrayList;
  * Created by SCWANG on 2017/5/31.
  * from https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh
  */
-public class  StoreHouseHeader extends View implements RefreshHeader {
+public class StoreHouseHeader extends View implements RefreshHeader {
 
     //<editor-fold desc="Field">
-    public ArrayList<StoreHouseBarItem> mItemList = new ArrayList<StoreHouseBarItem>();
+    public ArrayList<StoreHouseBarItem> mItemList = new ArrayList<>();
 
     private int mLineWidth = -1;
     private float mScale = 1;
