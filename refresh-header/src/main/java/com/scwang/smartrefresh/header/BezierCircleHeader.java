@@ -264,15 +264,15 @@ public class BezierCircleHeader extends View implements RefreshHeader {
     }
 
     @Override
-    public void onPulling(float percent, int offset, int headerHeight, int extendHeight) {
-        mHeadHeight = headerHeight;
-        mWaveHeight = Math.max(offset - headerHeight, 0) * .8f;
+    public void onPulling(float percent, int offset, int height, int extendHeight) {
+        mHeadHeight = height;
+        mWaveHeight = Math.max(offset - height, 0) * .8f;
     }
 
     @Override
-    public void onReleased(RefreshLayout layout, int headerHeight, int extendHeight) {
-        mHeadHeight = headerHeight;
-        mBollRadius = headerHeight / 6;
+    public void onReleased(RefreshLayout layout, int height, int extendHeight) {
+        mHeadHeight = height;
+        mBollRadius = height / 6;
         DecelerateInterpolator interpolator = new DecelerateInterpolator();
         final float reboundHeight = Math.min(mWaveHeight * 0.8f, mHeadHeight / 2);
         ValueAnimator waveAnimator = ValueAnimator.ofFloat(
@@ -332,9 +332,9 @@ public class BezierCircleHeader extends View implements RefreshHeader {
     }
 
     @Override
-    public void onReleasing(float percent, int offset, int headerHeight, int extendHeight) {
+    public void onReleasing(float percent, int offset, int height, int extendHeight) {
         if (mState != RefreshState.Refreshing && mState != RefreshState.RefreshReleased) {
-            onPulling(percent, offset, headerHeight, extendHeight);
+            onPulling(percent, offset, height, extendHeight);
         }
     }
 
@@ -344,7 +344,7 @@ public class BezierCircleHeader extends View implements RefreshHeader {
     }
 
     @Override
-    public void onStartAnimator(@NonNull RefreshLayout layout, int headerHeight, int extendHeight) {
+    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
     }
 
     @Override

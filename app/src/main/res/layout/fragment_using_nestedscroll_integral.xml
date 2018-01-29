@@ -30,7 +30,7 @@
                 android:id="@+id/app_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorBackgroudDark"
+                android:background="@color/colorBackgroundDark"
                 app:elevation="0dp">
 
                 <android.support.design.widget.CollapsingToolbarLayout
@@ -44,7 +44,7 @@
                         android:id="@+id/banner"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
-                        android:background="@color/colorDivison"
+                        android:background="@color/colorDivision"
                         app:layout_collapseMode="parallax"
                         app:is_auto_play="true"/>
                 </android.support.design.widget.CollapsingToolbarLayout>
@@ -164,7 +164,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorBackgroud"
+                    android:background="@color/colorBackground"
                     android:orientation="vertical"
                     app:layout_collapseMode="pin"
                     app:layout_scrollFlags="exitUntilCollapsed|enterAlways|enterAlwaysCollapsed">
@@ -194,7 +194,7 @@
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/colorBackgroudDark"
+                android:background="@color/colorBackgroundDark"
                 android:overScrollMode="never"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 tools:listitem="@android:layout/simple_list_item_2"/>

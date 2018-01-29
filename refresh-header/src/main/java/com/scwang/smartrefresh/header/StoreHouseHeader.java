@@ -94,7 +94,6 @@ public class StoreHouseHeader extends View implements RefreshHeader {
         mLineWidth = density.dip2px(1);
         mDropHeight = density.dip2px(40);
         mHorizontalRandomness = Resources.getSystem().getDisplayMetrics().widthPixels / 2;
-//        setBackgroundColor(0xff333333);
         mBackgroundColor = 0xff333333;
         setTextColor(0xffcccccc);
 
@@ -345,7 +344,7 @@ public class StoreHouseHeader extends View implements RefreshHeader {
     }
 
     @Override
-    public void onReleased(RefreshLayout layout, int headerHeight, int extendHeight) {
+    public void onReleased(RefreshLayout layout, int height, int extendHeight) {
         beginLoading();
     }
 

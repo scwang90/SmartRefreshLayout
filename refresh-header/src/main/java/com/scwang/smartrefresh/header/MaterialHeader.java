@@ -217,21 +217,21 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override
-    public void onPulling(float percent, int offset, int headerHeight, int extendHeight) {
+    public void onPulling(float percent, int offset, int height, int extendHeight) {
         if (mShowBezierWave) {
-            mHeadHeight = Math.min(offset, headerHeight);
-            mWaveHeight = Math.max(0, offset - headerHeight);
+            mHeadHeight = Math.min(offset, height);
+            mWaveHeight = Math.max(0, offset - height);
             postInvalidate();
         }
 
         if (mState != RefreshState.Refreshing) {
-            float originalDragPercent = 1f * offset / headerHeight;
+            float originalDragPercent = 1f * offset / height;
 
             float dragPercent = Math.min(1f, Math.abs(originalDragPercent));
             float adjustedPercent = (float) Math.max(dragPercent - .4, 0) * 5 / 3;
-            float extraOS = Math.abs(offset) - headerHeight;
-            float tensionSlingshotPercent = Math.max(0, Math.min(extraOS, (float) headerHeight * 2)
-                    / (float) headerHeight);
+            float extraOS = Math.abs(offset) - height;
+            float tensionSlingshotPercent = Math.max(0, Math.min(extraOS, (float) height * 2)
+                    / (float) height);
             float tensionPercent = (float) ((tensionSlingshotPercent / 4) - Math.pow(
                     (tensionSlingshotPercent / 4), 2)) * 2f;
             float strokeStart = adjustedPercent * .8f;
@@ -249,28 +249,28 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override
-    public void onReleasing(float percent, int offset, int headerHeight, int extendHeight) {
+    public void onReleasing(float percent, int offset, int height, int extendHeight) {
         if (!mProgress.isRunning() && !mFinished) {
-            onPulling(percent, offset, headerHeight, extendHeight);
+            onPulling(percent, offset, height, extendHeight);
         } else {
             if (mShowBezierWave) {
-                mHeadHeight = Math.min(offset, headerHeight);
-                mWaveHeight = Math.max(0, offset - headerHeight);
+                mHeadHeight = Math.min(offset, height);
+                mWaveHeight = Math.max(0, offset - height);
                 postInvalidate();
             }
         }
     }
 
     @Override
-    public void onReleased(RefreshLayout layout, int headerHeight, int extendHeight) {
+    public void onReleased(RefreshLayout layout, int height, int extendHeight) {
         mProgress.start();
-        if ((int) mCircleView.getTranslationY() != headerHeight / 2 + mCircleDiameter / 2) {
-            mCircleView.animate().translationY(headerHeight / 2 + mCircleDiameter / 2);
+        if ((int) mCircleView.getTranslationY() != height / 2 + mCircleDiameter / 2) {
+            mCircleView.animate().translationY(height / 2 + mCircleDiameter / 2);
         }
     }
 
     @Override
-    public void onStartAnimator(@NonNull RefreshLayout layout, int headerHeight, int extendHeight) {
+    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
 
     }
 

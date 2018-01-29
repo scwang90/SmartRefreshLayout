@@ -197,7 +197,7 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
     }
 
     @Override
-    public void onReleased(RefreshLayout layout, int headerHeight, int extendHeight) {
+    public void onReleased(RefreshLayout layout, int height, int extendHeight) {
 
     }
 

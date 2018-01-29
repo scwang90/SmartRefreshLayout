@@ -106,7 +106,7 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
     }
 
     @Override
-    public void onReleased(RefreshLayout layout, int headerHeight, int extendHeight) {
+    public void onReleased(RefreshLayout layout, int height, int extendHeight) {
         /*
          * 提前关闭 下拉视图偏移
          */

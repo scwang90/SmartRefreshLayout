@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackgroudDark"
+    android:background="@color/colorBackgroundDark"
     tools:context="com.scwang.refreshlayout.activity.practice.WebviewPracticeActivity">
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
@@ -15,11 +15,6 @@
         app:srlAccentColor="@android:color/white"
         app:srlEnableHeaderTranslationContent="false"
         app:srlEnablePreviewInEditMode="false">
-        <!--<com.scwang.smartrefresh.header.PhoenixHeader-->
-            <!--android:id="@+id/header"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginTop="?attr/actionBarSize"/>-->
         <com.scwang.smartrefresh.header.MaterialHeader
             android:id="@+id/header"
             android:layout_width="match_parent"

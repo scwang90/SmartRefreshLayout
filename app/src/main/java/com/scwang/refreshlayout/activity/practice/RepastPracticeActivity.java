@@ -79,7 +79,7 @@ public class RepastPracticeActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             refreshlayout.finishRefresh();
-                            refreshlayout.resetNoMoreData();//恢复上拉状态
+                            refreshlayout.setNoMoreData(false);//恢复上拉状态
                         }
                     }, 2000);
                 }
@@ -99,6 +99,13 @@ public class RepastPracticeActivity extends AppCompatActivity {
                     }, 1000);
                 }
             });
+
+            refreshLayout.getLayout().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    refreshLayout.setHeaderInsetStartPx(toolbar.getHeight());
+                }
+            }, 500);
         }
 
         //状态栏透明和间距处理
@@ -106,7 +113,7 @@ public class RepastPracticeActivity extends AppCompatActivity {
         StatusBarUtil.setPaddingSmart(this, view);
         StatusBarUtil.setPaddingSmart(this, toolbar);
         StatusBarUtil.setPaddingSmart(this, findViewById(R.id.blurview));
-        StatusBarUtil.setMargin(this, findViewById(R.id.gifview));
+
     }
 
     /**

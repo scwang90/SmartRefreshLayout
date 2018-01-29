@@ -285,7 +285,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     }
 
     @Override
-    public void onReleased(RefreshLayout layout, int headerHeight, int extendHeight) {
+    public void onReleased(RefreshLayout layout, int height, int extendHeight) {
         if (mProgressDrawable != null) {
             mProgressDrawable.start();
         } else {
@@ -452,7 +452,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     }
 
     public ClassicsHeader setPrimaryColor(@ColorInt int primaryColor) {
-        setBackgroundColor(mBackgroundColor = mPrimaryColor = primaryColor);
+        mBackgroundColor = mPrimaryColor = primaryColor;
         if (mRefreshKernel != null) {
             mRefreshKernel.requestDrawBackgroundForHeader(mPrimaryColor);
         }

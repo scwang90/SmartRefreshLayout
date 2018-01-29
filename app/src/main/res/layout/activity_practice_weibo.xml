@@ -33,6 +33,7 @@
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:overScrollMode="never"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -168,11 +169,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:background="@color/colorBackgroudDark"
+                        android:background="@color/colorBackgroundDark"
                         android:paddingBottom="0dp"
                         app:layout_scrollFlags="scroll">
                         <LinearLayout style="@style/AppTheme.CommonBar.Panel"
-                            android:background="@color/colorDivison"
+                            android:background="@color/colorDivision"
                             android:paddingTop="@dimen/division_line"
                             android:paddingBottom="@dimen/division_line">
                             <LinearLayout style="@style/AppTheme.CommonBar.Bar"

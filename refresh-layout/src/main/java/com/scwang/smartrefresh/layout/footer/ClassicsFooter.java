@@ -360,40 +360,48 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
     //</editor-fold>
 
     //<editor-fold desc="API">
+
     public ClassicsFooter setProgressBitmap(Bitmap bitmap) {
         mProgressDrawable = null;
         mProgressView.setImageBitmap(bitmap);
         return this;
     }
+
     public ClassicsFooter setProgressDrawable(Drawable drawable) {
         mProgressDrawable = null;
         mProgressView.setImageDrawable(drawable);
         return this;
     }
+
     public ClassicsFooter setProgressResource(@DrawableRes int resId) {
         mProgressDrawable = null;
         mProgressView.setImageResource(resId);
         return this;
     }
+
     public ClassicsFooter setArrowBitmap(Bitmap bitmap) {
         mArrowDrawable = null;
         mArrowView.setImageBitmap(bitmap);
         return this;
     }
+
     public ClassicsFooter setArrowDrawable(Drawable drawable) {
         mArrowDrawable = null;
         mArrowView.setImageDrawable(drawable);
         return this;
     }
+
     public ClassicsFooter setArrowResource(@DrawableRes int resId) {
         mArrowDrawable = null;
         mArrowView.setImageResource(resId);
         return this;
     }
+
     public ClassicsFooter setSpinnerStyle(SpinnerStyle style) {
         this.mSpinnerStyle = style;
         return this;
     }
+
     public ClassicsFooter setAccentColor(@ColorInt int accentColor) {
         mAccentColor = accentColor;
         mTitleText.setTextColor(accentColor);
@@ -405,8 +413,9 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
         }
         return this;
     }
+
     public ClassicsFooter setPrimaryColor(@ColorInt int primaryColor) {
-        setBackgroundColor(mBackgroundColor = mPrimaryColor = primaryColor);
+        mBackgroundColor = mPrimaryColor = primaryColor;
         if (mRefreshKernel != null) {
             mRefreshKernel.requestDrawBackgroundForFooter(mPrimaryColor);
         }

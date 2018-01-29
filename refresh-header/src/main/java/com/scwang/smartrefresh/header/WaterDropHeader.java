@@ -219,7 +219,7 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override
-    public void onReleased(final RefreshLayout layout, int headerHeight, int extendHeight) {
+    public void onReleased(final RefreshLayout layout, int height, int extendHeight) {
         Animator animator = mWaterDropView.createAnimator();
         animator.addListener(new AnimatorListenerAdapter() {
             @Override

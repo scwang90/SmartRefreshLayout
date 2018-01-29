@@ -203,19 +203,19 @@ public class DeliveryHeader extends View implements RefreshHeader {
     }
 
     @Override
-    public void onPulling(float percent, int offset, int headerHeight, int extendHeight) {
+    public void onPulling(float percent, int offset, int height, int extendHeight) {
         if (mState != RefreshState.Refreshing) {
             mBoxDrawable.getPaint().setAlpha((int) (255 * (1f - Math.max(0, percent - 1))));
         }
     }
 
     @Override
-    public void onReleased(RefreshLayout layout, int headerHeight, int extendHeight) {
-        onStartAnimator(layout, headerHeight, extendHeight);
+    public void onReleased(RefreshLayout layout, int height, int extendHeight) {
+        onStartAnimator(layout, height, extendHeight);
     }
 
     @Override
-    public void onReleasing(float percent, int offset, int headerHeight, int extendHeight) {
+    public void onReleasing(float percent, int offset, int height, int extendHeight) {
         if (mState != RefreshState.Refreshing) {
             mBoxDrawable.getPaint().setAlpha((int) (255 * (1f - Math.max(0, percent - 1))));
         }

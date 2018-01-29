@@ -31,6 +31,14 @@ public interface RefreshLayout {
 
     RefreshLayout setHeaderHeightPx(int px);
 
+    RefreshLayout setHeaderInsetStart(float insetDp);
+
+    RefreshLayout setHeaderInsetStartPx(int insetPx);
+
+    RefreshLayout setFooterInsetStart(float insetDp);
+
+    RefreshLayout setFooterInsetStartPx(int insetPx);
+
     /**
      * 显示拖动高度/真实拖动高度（默认0.5，阻尼效果）
      */
@@ -165,6 +173,16 @@ public interface RefreshLayout {
      * 设置是否在全部加载结束之后Footer跟随内容
      */
     RefreshLayout setEnableFooterFollowWhenLoadFinished(boolean enable);
+
+    /**
+     * 设置是否 当 Header FixedBehind 时候是否剪裁遮挡 Header
+     */
+    RefreshLayout setEnableClipHeaderWhenFixedBehind(boolean enable);
+
+    /**
+     * 设置是否 当 Footer FixedBehind 时候是否剪裁遮挡 Footer
+     */
+    RefreshLayout setEnableClipFooterWhenFixedBehind(boolean enable);
 
     /**
      * 设置是会否启用嵌套滚动功能（默认关闭+智能开启）

@@ -3,6 +3,11 @@
 ## V 1.1.0 (开发中)
 >添加：类似淘宝二楼的二级下拉刷新 TwoLevelHeader
 >添加：srlEnableScrollContentWhenRefreshed 属性和对应方法
+>添加：srlEnableClipHeaderWhenFixedBehind  属性和对应方法
+>添加：srlEnableClipFooterWhenFixedBehind  属性和对应方法
+>添加：srlHeaderInsetStart 属性和对应方法
+>添加：srlFooterInsetStart 属性和对应方法
+>添加：setNoMoreData(boolean) 方法
 >优化：优化越界回弹的效果
 >优化：优化Header和Footer与列表的惯性连续
 >修复：仿苹果越界拖动在特定条件下不连续问题

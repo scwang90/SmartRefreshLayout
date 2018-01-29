@@ -33,6 +33,8 @@
         <attr name="srlReboundDuration" format="integer"/>
         <attr name="srlHeaderHeight" format="dimension"/>
         <attr name="srlFooterHeight" format="dimension"/>
+        <attr name="srlHeaderInsetStart" format="dimension"/>
+        <attr name="srlFooterInsetStart" format="dimension"/>
         <attr name="srlDragRate" format="float"/>
         <attr name="srlHeaderMaxDragRate" format="float"/>
         <attr name="srlFooterMaxDragRate" format="float"/>
@@ -51,6 +53,8 @@
         <attr name="srlEnableScrollContentWhenRefreshed" format="boolean"/>
         <attr name="srlEnableLoadMoreWhenContentNotFull" format="boolean"/>
         <attr name="srlEnableFooterFollowWhenLoadFinished" format="boolean"/>
+        <attr name="srlEnableClipHeaderWhenFixedBehind" format="boolean"/>
+        <attr name="srlEnableClipFooterWhenFixedBehind" format="boolean"/>
         <attr name="srlEnableOverScrollDrag" format="boolean"/>
         <attr name="srlDisableContentWhenRefresh" format="boolean"/>
         <attr name="srlDisableContentWhenLoading" format="boolean"/>

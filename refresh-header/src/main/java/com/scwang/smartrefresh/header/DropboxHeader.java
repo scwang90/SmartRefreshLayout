@@ -367,20 +367,20 @@ public class DropboxHeader extends View implements RefreshHeader {
     }
 
     @Override
-    public void onPulling(float percent, int offset, int headerHeight, int extendHeight) {
+    public void onPulling(float percent, int offset, int height, int extendHeight) {
         if (mState != RefreshState.Refreshing) {
-            mReboundPercent = 1f * Math.max(0, offset - headerHeight) / extendHeight;
+            mReboundPercent = 1f * Math.max(0, offset - height) / extendHeight;
         }
     }
 
     @Override
-    public void onReleased(RefreshLayout layout, int headerHeight, int extendHeight) {
+    public void onReleased(RefreshLayout layout, int height, int extendHeight) {
 
     }
 
     @Override
-    public void onReleasing(float percent, int offset, int headerHeight, int extendHeight) {
-        mReboundPercent = 1f * Math.max(0, offset - headerHeight) / extendHeight;
+    public void onReleasing(float percent, int offset, int height, int extendHeight) {
+        mReboundPercent = 1f * Math.max(0, offset - height) / extendHeight;
     }
 
     @Override

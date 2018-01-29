@@ -48,8 +48,8 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/division_line</item>
         <item name="android:dividerHeight">@dimen/division_line</item>
-        <item name="android:divider">@color/colorDivison</item>
-        <item name="android:background">@color/colorDivison</item>
+        <item name="android:divider">@color/colorDivision</item>
+        <item name="android:background">@color/colorDivision</item>
     </style>
 
     <style name="AppTheme.Divison.Middle">
@@ -135,7 +135,7 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:orientation">vertical</item>
         <item name="android:paddingBottom">@dimen/padding_common</item>
-        <item name="android:background">@color/colorBackgroudDark</item>
+        <item name="android:background">@color/colorBackgroundDark</item>
     </style>
 
     <style name="AppTheme.CommonBar.Bar">

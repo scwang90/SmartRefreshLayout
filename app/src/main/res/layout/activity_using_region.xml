@@ -23,14 +23,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:background="@color/colorBackgroud">
+            android:background="@color/colorBackground">
             <LinearLayout
                 android:id="@+id/fsr_region_lyt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="10dp"
                 android:orientation="vertical"
-                android:background="@color/colorBackgroudDark"
+                android:background="@color/colorBackgroundDark"
                 android:divider="@color/colorAccent">
                 <LinearLayout
                     android:layout_width="match_parent"

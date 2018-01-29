@@ -9,8 +9,8 @@
     <color name="colorTextContent">#444444</color>
     <color name="colorTextAssistant">#888888</color>
 
-    <color name="colorBackgroud">#FFFFFF</color>
-    <color name="colorBackgroudDark">#f2f2f2</color>
-    <color name="colorDivison">#33aaaaaa</color>
+    <color name="colorBackground">#FFFFFF</color>
+    <color name="colorBackgroundDark">#f2f2f2</color>
+    <color name="colorDivision">#33aaaaaa</color>
 
 </resources>
