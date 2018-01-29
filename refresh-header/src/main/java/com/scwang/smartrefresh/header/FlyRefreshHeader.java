@@ -17,7 +17,7 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
 import com.scwang.smartrefresh.header.flyrefresh.FlyView;
-import com.scwang.smartrefresh.header.flyrefresh.MountanScenceView;
+import com.scwang.smartrefresh.header.flyrefresh.MountainSceneView;
 import com.scwang.smartrefresh.header.flyrefresh.PathInterpolatorCompat;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
@@ -36,12 +36,12 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
 
     private FlyView mFlyView;
     private AnimatorSet mFlyAnimator;
-    private MountanScenceView mScenceView;
+    private MountainSceneView mSceneView;
     private RefreshLayout mRefreshLayout;
     private RefreshKernel mRefreshKernel;
+    private int mOffset = 0;
     private float mCurrentPercent;
     private boolean mIsRefreshing = false;
-    private int mOffset = 0;
 
     //<editor-fold desc="View">
     public FlyRefreshHeader(Context context) {
@@ -64,7 +64,6 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        mFlyView = null;
         mRefreshLayout = null;
         mRefreshKernel = null;
     }
@@ -82,7 +81,7 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
     }
 
     @Override
-    public void onPulling(float percent, int offset, int headHeight, int extendHeight) {
+    public void onPulling(float percent, int offset, int height, int extendHeight) {
         if (offset < 0) {
             if (mOffset > 0) {
                 offset = 0;
@@ -93,13 +92,13 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
         }
         mOffset = offset;
         mCurrentPercent = percent;
-        if (mScenceView != null) {
-            mScenceView.updatePercent(percent);
-            mScenceView.postInvalidate();
+        if (mSceneView != null) {
+            mSceneView.updatePercent(percent);
+            mSceneView.postInvalidate();
         }
         if (mFlyView != null) {
-            if (headHeight + extendHeight > 0) {
-                mFlyView.setRotation((-45f) * offset / (headHeight + extendHeight));
+            if (height + extendHeight > 0) {
+                mFlyView.setRotation((-45f) * offset / (height + extendHeight));
             } else {
                 mFlyView.setRotation((-45f) * percent);
             }
@@ -108,7 +107,7 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
 
     @Override
     public void onReleased(RefreshLayout layout, int headerHeight, int extendHeight) {
-        /**
+        /*
          * 提前关闭 下拉视图偏移
          */
         mRefreshKernel.animSpinner(0);
@@ -119,7 +118,7 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
             valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
-                    FlyRefreshHeader.this.onPulling((float) animation.getAnimatedValue(), 0, 0, 0);
+                    onPulling((float) animation.getAnimatedValue(), 0, 0, 0);
                 }
             });
             valueAnimator.start();
@@ -160,22 +159,26 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
     }
 
     @Override
-    public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
+    public void onReleasing(float percent, int offset, int height, int extendHeight) {
         if (!mIsRefreshing) {
-            onPulling(percent, offset, headHeight, extendHeight);
+            onPulling(percent, offset, height, extendHeight);
         }
     }
 
     @Override
-    public void onStartAnimator(@NonNull RefreshLayout layout, int headHeight, int extendHeight) {
+    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
 
     }
 
+    /**
+     * @param colors 对应Xml中配置的 srlPrimaryColor srlAccentColor
+     * @deprecated 请使用 {@link RefreshLayout#setPrimaryColorsId(int...)}
+     */
     @Override@Deprecated
     public void setPrimaryColors(@ColorInt int ... colors) {
         if (colors.length > 0) {
-            if (mScenceView != null) {
-                mScenceView.setPrimaryColor(colors[0]);
+            if (mSceneView != null) {
+                mSceneView.setPrimaryColor(colors[0]);
             }
         }
     }
@@ -184,6 +187,7 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
     public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
         mRefreshKernel = kernel;
         mRefreshLayout = kernel.getRefreshLayout();
+        mRefreshLayout.setEnableOverScrollDrag(false);
     }
 
     @Override
@@ -201,17 +205,18 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
     //</editor-fold>
 
     //<editor-fold desc="API">
-    public void setUpMountanScenceView(MountanScenceView scenceView){
-        mScenceView = scenceView;
+
+    public void setUp(MountainSceneView sceneView, FlyView flyView) {
+        setUpFlyView(flyView);
+        setUpMountainSceneView(sceneView);
     }
 
     public void setUpFlyView(FlyView flyView) {
         mFlyView = flyView;
     }
 
-    public void setUp(MountanScenceView scenceView, FlyView flyView) {
-        setUpFlyView(flyView);
-        setUpMountanScenceView(scenceView);
+    public void setUpMountainSceneView(MountainSceneView scenceView){
+        mSceneView = scenceView;
     }
 
     public void finishRefresh() {

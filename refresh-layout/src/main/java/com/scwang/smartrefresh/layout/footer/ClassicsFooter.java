@@ -54,11 +54,13 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
     protected ProgressDrawable mProgressDrawable;
     protected SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
     protected RefreshKernel mRefreshKernel;
+    protected Integer mAccentColor;
+    protected Integer mPrimaryColor;
+    protected int mBackgroundColor;
     protected int mFinishDuration = 500;
-    protected int mBackgroundColor = 0;
-    protected boolean mNoMoreData = false;
     protected int mPaddingTop = 20;
     protected int mPaddingBottom = 20;
+    protected boolean mNoMoreData = false;
 
     //<editor-fold desc="LinearLayout">
     public ClassicsFooter(Context context) {
@@ -209,7 +211,7 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
     }
 
     @Override
-    public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
+    public void onReleasing(float percent, int offset, int height, int extendHeight) {
 
     }
 
@@ -226,7 +228,7 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
     }
 
     @Override
-    public void onStartAnimator(@NonNull RefreshLayout layout, int headHeight, int extendHeight) {
+    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
 
     }
 
@@ -393,6 +395,7 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
         return this;
     }
     public ClassicsFooter setAccentColor(@ColorInt int accentColor) {
+        mAccentColor = accentColor;
         mTitleText.setTextColor(accentColor);
         if (mProgressDrawable != null) {
             mProgressDrawable.setColor(accentColor);
@@ -403,9 +406,9 @@ public class ClassicsFooter extends RelativeLayout implements RefreshFooter {
         return this;
     }
     public ClassicsFooter setPrimaryColor(@ColorInt int primaryColor) {
-        setBackgroundColor(mBackgroundColor = primaryColor);
+        setBackgroundColor(mBackgroundColor = mPrimaryColor = primaryColor);
         if (mRefreshKernel != null) {
-            mRefreshKernel.requestDrawBackgroundForFooter(mBackgroundColor);
+            mRefreshKernel.requestDrawBackgroundForFooter(mPrimaryColor);
         }
         return this;
     }

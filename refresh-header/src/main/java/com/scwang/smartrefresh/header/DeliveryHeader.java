@@ -69,6 +69,7 @@ public class DeliveryHeader extends View implements RefreshHeader {
                 resolveSize(getSuggestedMinimumHeight(), heightMeasureSpec));
     }
 
+    @SuppressWarnings("unused")
     private void initView(Context context, AttributeSet attrs) {
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
@@ -241,6 +242,10 @@ public class DeliveryHeader extends View implements RefreshHeader {
         return SpinnerStyle.Scale;
     }
 
+    /**
+     * @param colors 对应Xml中配置的 srlPrimaryColor srlAccentColor
+     * @deprecated 请使用 {@link RefreshLayout#setPrimaryColorsId(int...)}
+     */
     @Override@Deprecated
     public void setPrimaryColors(@ColorInt int ... colors) {
         if (colors.length > 0) {

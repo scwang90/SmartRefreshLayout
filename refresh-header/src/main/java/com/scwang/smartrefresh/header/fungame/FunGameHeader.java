@@ -217,8 +217,8 @@ public class FunGameHeader extends FunGameBase implements RefreshHeader {
     }
 
     @Override
-    public void onStartAnimator(@NonNull RefreshLayout layout, int headHeight, int extendHeight) {
-        super.onStartAnimator(layout, headHeight, extendHeight);
+    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
+        super.onStartAnimator(layout, height, extendHeight);
         postStart();
     }
 

@@ -15,7 +15,7 @@ import android.view.View;
 public class WaveView extends View {
 
     private int waveHeight;
-    private int headHeight;
+    private int height;
     private Path path;
     private Paint paint;
     private int mOffsetX = -1;
@@ -51,11 +51,11 @@ public class WaveView extends View {
     }
 
     public int getHeadHeight() {
-        return headHeight;
+        return height;
     }
 
-    public void setHeadHeight(int headHeight) {
-        this.headHeight = headHeight;
+    public void setHeadHeight(int height) {
+        this.height = height;
     }
 
     public int getWaveHeight() {
@@ -73,8 +73,8 @@ public class WaveView extends View {
         //重置画笔
         path.reset();
         //绘制贝塞尔曲线
-        path.lineTo(0, headHeight);
-        path.quadTo(mOffsetX >= 0 ? (mOffsetX) : width / 2, headHeight + waveHeight, width, headHeight);
+        path.lineTo(0, height);
+        path.quadTo(mOffsetX >= 0 ? (mOffsetX) : width / 2, height + waveHeight, width, height);
         path.lineTo(width, 0);
         canvas.drawPath(path, paint);
     }

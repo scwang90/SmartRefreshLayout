@@ -29,7 +29,7 @@ import static android.view.View.MeasureSpec.makeMeasureSpec;
  * 虚假的 Header
  * 用于 正真的 Header 在 RefreshLayout 外部时，
  * 使用本虚假的 FalsifyHeader 填充在 RefreshLayout 内部
- * 具体使用方法 参考 QQ空间风格（QzoneHeader） 和 纸飞机（FlyRefreshHeader）
+ * 具体使用方法 参考 纸飞机（FlyRefreshHeader）
  * Created by SCWANG on 2017/6/14.
  */
 
@@ -104,12 +104,12 @@ public class FalsifyHeader extends View implements RefreshHeader {
     }
 
     @Override
-    public void onPulling(float percent, int offset, int headHeight, int extendHeight) {
+    public void onPulling(float percent, int offset, int height, int extendHeight) {
 
     }
 
     @Override
-    public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
+    public void onReleasing(float percent, int offset, int height, int extendHeight) {
 
     }
 
@@ -125,7 +125,7 @@ public class FalsifyHeader extends View implements RefreshHeader {
     }
 
     @Override
-    public void onStartAnimator(@NonNull RefreshLayout layout, int headHeight, int extendHeight) {
+    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
     }
 
     @Override

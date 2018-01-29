@@ -48,6 +48,7 @@ import com.scwang.smartrefresh.layout.api.OnRefreshLoadmoreListener;
 import com.scwang.smartrefresh.layout.api.RefreshContent;
 import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smartrefresh.layout.api.RefreshInternal;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.api.ScrollBoundaryDecider;
@@ -351,51 +352,86 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             throw new RuntimeException("最多只支持3个子View，Most only support three sub view");
         }
 
-        //定义为确认的子View索引
-        boolean[] unCertainArray = new boolean[count];
-        //第一次查找确认的 子View
-        for (int i = 0; i < count; i++) {
-            View view = getChildAt(i);
-            if (view instanceof RefreshHeader && mRefreshHeader == null) {
-                mRefreshHeader = ((RefreshHeader) view);
-            } else if (view instanceof RefreshFooter && mRefreshFooter == null) {
-                mEnableLoadMore = mEnableLoadMore || !mManualLoadMore;
-                mRefreshFooter = ((RefreshFooter) view);
-            } else if (mRefreshContent == null && (view instanceof AbsListView
-                    || view instanceof WebView
-                    || view instanceof ScrollView
-                    || view instanceof ScrollingView
-                    || view instanceof NestedScrollingChild
-                    || view instanceof NestedScrollingParent
-                    || view instanceof ViewPager)) {
-                mRefreshContent = new RefreshContentWrapper(view);
-            } else {
-                unCertainArray[i] = true;//标记未确认
-            }
-        }
-        //如果有 未确认（unCertainArray）的子View 通过智能算法计算
-        for (int i = 0; i < count; i++) {
-            if (unCertainArray[i]) {
-                View view = getChildAt(i);
-                if (count == 1 && mRefreshContent == null) {
-                    mRefreshContent = new RefreshContentWrapper(view);
-                } else if (i == 0 && mRefreshHeader == null) {
-                    mRefreshHeader = new RefreshHeaderWrapper(view);
-                } else if (count == 2 && mRefreshContent == null) {
-                    mRefreshContent = new RefreshContentWrapper(view);
-                } else if (i == 2 && mRefreshFooter == null) {
-                    mEnableLoadMore = mEnableLoadMore || !mManualLoadMore;
-                    mRefreshFooter = new RefreshFooterWrapper(view);
-                } else if (mRefreshContent == null) {
-                    mRefreshContent = new RefreshContentWrapper(view);
-                } else if (i == 1 && count == 2 && mRefreshFooter == null) {
-                    mEnableLoadMore = mEnableLoadMore || !mManualLoadMore;
-                    mRefreshFooter = new RefreshFooterWrapper(view);
-                } else if (mRefreshHeader == null) {
-                    mRefreshHeader = new RefreshHeaderWrapper(view);
+        int indexContent = -1;
+        int[] indexArray = {1,0,2};
+
+        for (int index : indexArray) {
+            if (index < count) {
+                View view = getChildAt(index);
+                if (!(view instanceof RefreshInternal)) {
+                    indexContent = index;
+                }
+                if (RefreshContentWrapper.isScrollableView(view)) {
+                    indexContent = index;
+                    break;
                 }
             }
         }
+
+        int indexHeader = -1;
+        int indexFooter = -1;
+        if (indexContent >= 0) {
+            mRefreshContent = new RefreshContentWrapper(getChildAt(indexContent));
+            if (indexContent == 1) {
+                indexHeader = 0;
+                if (count == 3) {
+                    indexFooter = 2;
+                }
+            } else if (count == 2) {
+                indexFooter = 1;
+            }
+        }
+
+        for (int i = 0; i < count; i++) {
+            View view = getChildAt(i);
+            if (i == indexHeader || (i != indexFooter && indexHeader == -1 && mRefreshHeader == null && view instanceof RefreshHeader)) {
+                mRefreshHeader = (view instanceof RefreshHeader)? (RefreshHeader) view : new RefreshHeaderWrapper(view);
+            } else if (i == indexFooter || (indexFooter == -1 && view instanceof RefreshFooter)) {
+                mEnableLoadMore = mEnableLoadMore || !mManualLoadMore;
+                mRefreshFooter = (view instanceof RefreshFooter)? (RefreshFooter) view : new RefreshFooterWrapper(view);
+            }
+        }
+
+
+//        //定义为确认的子View索引
+//        boolean[] unCertainArray = new boolean[count];
+//        //第一次查找确认的 子View
+//        for (int i = 0; i < count; i++) {
+//            View view = getChildAt(i);
+//            if (view instanceof RefreshHeader && mRefreshHeader == null) {
+//                mRefreshHeader = ((RefreshHeader) view);
+//            } else if (view instanceof RefreshFooter && mRefreshFooter == null) {
+//                mEnableLoadMore = mEnableLoadMore || !mManualLoadMore;
+//                mRefreshFooter = ((RefreshFooter) view);
+//            } else if (mRefreshContent == null && RefreshContentWrapper.isScrollableView(view)) {
+//                mRefreshContent = new RefreshContentWrapper(view);
+//            } else {
+//                unCertainArray[i] = true;//标记未确认
+//            }
+//        }
+//        //如果有 未确认（unCertainArray）的子View 通过智能算法计算
+//        for (int i = 0; i < count; i++) {
+//            if (unCertainArray[i]) {
+//                View view = getChildAt(i);
+//                if (count == 1 && mRefreshContent == null) {
+//                    mRefreshContent = new RefreshContentWrapper(view);
+//                } else if (i == 0 && mRefreshHeader == null) {
+//                    mRefreshHeader = new RefreshHeaderWrapper(view);
+//                } else if (count == 2 && mRefreshContent == null) {
+//                    mRefreshContent = new RefreshContentWrapper(view);
+//                } else if (i == 2 && mRefreshFooter == null) {
+//                    mEnableLoadMore = mEnableLoadMore || !mManualLoadMore;
+//                    mRefreshFooter = new RefreshFooterWrapper(view);
+//                } else if (mRefreshContent == null) {
+//                    mRefreshContent = new RefreshContentWrapper(view);
+//                } else if (i == 1 && count == 2 && mRefreshFooter == null) {
+//                    mEnableLoadMore = mEnableLoadMore || !mManualLoadMore;
+//                    mRefreshFooter = new RefreshFooterWrapper(view);
+//                } else if (mRefreshHeader == null) {
+//                    mRefreshHeader = new RefreshHeaderWrapper(view);
+//                }
+//            }
+//        }
 
         if (isInEditMode()) {
             if (mPrimaryColors != null) {
@@ -757,15 +793,76 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     @Override
     protected void dispatchDraw(Canvas canvas) {
         boolean isInEditMode = mEnablePreviewInEditMode && isInEditMode();
-        if (isEnableRefresh() && mHeaderBackgroundColor != 0 && (mSpinner > 0 || isInEditMode)) {
-            mPaint.setColor(mHeaderBackgroundColor);
-            canvas.drawRect(0, 0, getWidth(), (isInEditMode) ? mHeaderHeight : mSpinner, mPaint);
-        } else if (isEnableLoadMore() && mFooterBackgroundColor != 0 && (mSpinner < 0 || isInEditMode)) {
-            final int height = getHeight();
-            mPaint.setColor(mFooterBackgroundColor);
-            canvas.drawRect(0, height - (isInEditMode ? (mFooterHeight) : -mSpinner), getWidth(), height, mPaint);
-        }
+//        if (isEnableRefresh() && mHeaderBackgroundColor != 0 && (mSpinner > 0 || isInEditMode)) {
+//            mPaint.setColor(mHeaderBackgroundColor);
+//            canvas.drawRect(0, 0, getWidth(), (isInEditMode) ? mHeaderHeight : mSpinner, mPaint);
+//        } else if (isEnableLoadMore() && mFooterBackgroundColor != 0 && (mSpinner < 0 || isInEditMode)) {
+//            final int height = getHeight();
+//            mPaint.setColor(mFooterBackgroundColor);
+//            canvas.drawRect(0, height - (isInEditMode ? (mFooterHeight) : -mSpinner), getWidth(), height, mPaint);
+//        }
         super.dispatchDraw(canvas);
+    }
+
+    @Override
+    protected boolean drawChild(Canvas canvas, View child, long drawingTime) {
+
+        View contentView = mRefreshContent != null ? mRefreshContent.getView() : null;
+        boolean isInEditMode = mEnablePreviewInEditMode && isInEditMode();
+        if (mRefreshHeader != null && mRefreshHeader.getView() == child) {
+            if (!isEnableRefresh()) {
+                return true;
+            }
+            if (contentView != null) {
+                int bottom = Math.max(contentView.getTop() + contentView.getPaddingTop() + mSpinner, child.getTop());
+                if (mHeaderBackgroundColor != 0 && mPaint != null && (mSpinner > 0 || isInEditMode)) {
+                    mPaint.setColor(mHeaderBackgroundColor);
+                    canvas.drawRect(child.getLeft(), child.getTop(), child.getRight(), bottom, mPaint);
+                }
+                if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
+                    canvas.save();
+                    canvas.clipRect(child.getLeft(), child.getTop(), child.getRight(), bottom);
+                    boolean ret = super.drawChild(canvas, child, drawingTime);
+                    Paint paint = new Paint();
+                    paint.setColor(0x88ff11bb);
+                    canvas.drawRect(child.getLeft(), child.getTop(), child.getRight(), bottom, paint);
+                    canvas.restore();
+                    return ret;
+                }
+            }
+        }
+        if (mRefreshFooter != null && mRefreshFooter.getView() == child) {
+            if (!isEnableLoadMore()) {
+                return true;
+            }
+            if (mFooterBackgroundColor != 0 && mPaint != null && (mSpinner < 0 || isInEditMode)) {
+                mPaint.setColor(mFooterBackgroundColor);
+                int top = Math.min(mRefreshContent.getView().getBottom() + mSpinner, child.getBottom());
+                canvas.drawRect(child.getLeft(), top, child.getRight(), child.getBottom(), mPaint);
+            }
+
+        }
+//        if (mRefreshHeader != null && mRefreshHeader.getView() == child && mRefreshHeader.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
+//            canvas.save();
+//            canvas.clipRect(child.getLeft(), 0, child.getRight(), mSpinner);
+//            boolean ret = super.drawChild(canvas, child, drawingTime);
+//            Paint paint = new Paint();
+//            paint.setColor(0x88ff11bb);
+//            canvas.drawRect(child.getLeft(), 0, child.getRight(), mSpinner,paint);
+//            canvas.restore();
+//            return ret;
+//        }
+//        if (mRefreshFooter != null && mRefreshFooter.getView() == child && mRefreshFooter.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
+//            canvas.save();
+//            canvas.clipRect(child.getLeft(), getHeight() + mSpinner, child.getRight(), getHeight());
+//            boolean ret = super.drawChild(canvas, child, drawingTime);
+//            Paint paint = new Paint();
+//            paint.setColor(0x88ff11bb);
+//            canvas.drawRect(child.getLeft(), getHeight() + mSpinner, child.getRight(), getHeight(),paint);
+//            canvas.restore();
+//            return ret;
+//        }
+        return super.drawChild(canvas, child, drawingTime);
     }
 
     @Override

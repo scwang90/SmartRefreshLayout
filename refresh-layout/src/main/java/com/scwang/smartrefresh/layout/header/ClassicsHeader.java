@@ -78,8 +78,10 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     protected ProgressDrawable mProgressDrawable;
     protected SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
     protected DateFormat mFormat = new SimpleDateFormat(REFRESH_HEADER_LASTTIME, Locale.CHINA);
-    protected int mFinishDuration = 500;
+    protected Integer mAccentColor;
+    protected Integer mPrimaryColor;
     protected int mBackgroundColor;
+    protected int mFinishDuration = 500;
     protected int mPaddingTop = 20;
     protected int mPaddingBottom = 20;
     protected boolean mEnableLastTime = true;
@@ -274,11 +276,11 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     }
 
     @Override
-    public void onPulling(float percent, int offset, int headHeight, int extendHeight) {
+    public void onPulling(float percent, int offset, int height, int extendHeight) {
     }
 
     @Override
-    public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
+    public void onReleasing(float percent, int offset, int height, int extendHeight) {
 
     }
 
@@ -297,7 +299,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     }
 
     @Override
-    public void onStartAnimator(@NonNull RefreshLayout layout, int headHeight, int extendHeight) {
+    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
 
     }
 
@@ -328,13 +330,17 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     @Override@Deprecated
     public void setPrimaryColors(@ColorInt int ... colors) {
         if (colors.length > 0) {
-            if (!(getBackground() instanceof BitmapDrawable)) {
+            if (!(getBackground() instanceof BitmapDrawable) && mPrimaryColor == null) {
                 setPrimaryColor(colors[0]);
+                mPrimaryColor = null;
             }
-            if (colors.length > 1) {
-                setAccentColor(colors[1]);
-            } else {
-                setAccentColor(colors[0] == 0xffffffff ? 0xff666666 : 0xffffffff);
+            if (mAccentColor == null) {
+                if (colors.length > 1) {
+                    setAccentColor(colors[1]);
+                } else {
+                    setAccentColor(colors[0] == 0xffffffff ? 0xff666666 : 0xffffffff);
+                }
+                mAccentColor = null;
             }
         }
     }
@@ -446,14 +452,15 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     }
 
     public ClassicsHeader setPrimaryColor(@ColorInt int primaryColor) {
-        setBackgroundColor(mBackgroundColor = primaryColor);
+        setBackgroundColor(mBackgroundColor = mPrimaryColor = primaryColor);
         if (mRefreshKernel != null) {
-            mRefreshKernel.requestDrawBackgroundForHeader(mBackgroundColor);
+            mRefreshKernel.requestDrawBackgroundForHeader(mPrimaryColor);
         }
         return this;
     }
 
     public ClassicsHeader setAccentColor(@ColorInt int accentColor) {
+        mAccentColor = accentColor;
         if (mArrowDrawable != null) {
             mArrowDrawable.parserColors(accentColor);
         }

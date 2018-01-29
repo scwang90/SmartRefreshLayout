@@ -213,15 +213,15 @@ public class PhoenixHeader extends View implements RefreshHeader/*, SizeDefiniti
     }
 
     @Override
-    public void onPulling(float percent, int offset, int headHeight, int extendHeight) {
-        mRotate = mPercent = 1f * offset / headHeight;
-        mHeaderHeight = headHeight;
+    public void onPulling(float percent, int offset, int height, int extendHeight) {
+        mRotate = mPercent = 1f * offset / height;
+        mHeaderHeight = height;
     }
 
     @Override
-    public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
-        mRotate = mPercent = 1f * offset / headHeight;
-        mHeaderHeight = headHeight;
+    public void onReleasing(float percent, int offset, int height, int extendHeight) {
+        mRotate = mPercent = 1f * offset / height;
+        mHeaderHeight = height;
     }
 
     @Override
@@ -231,7 +231,7 @@ public class PhoenixHeader extends View implements RefreshHeader/*, SizeDefiniti
     }
 
     @Override
-    public void onStartAnimator(@NonNull RefreshLayout layout, int headHeight, int extendHeight) {
+    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
 
     }
 
@@ -247,6 +247,10 @@ public class PhoenixHeader extends View implements RefreshHeader/*, SizeDefiniti
         return 0;
     }
 
+    /**
+     * @param colors 对应Xml中配置的 srlPrimaryColor srlAccentColor
+     * @deprecated 请使用 {@link RefreshLayout#setPrimaryColorsId(int...)}
+     */
     @Override@Deprecated
     public void setPrimaryColors(@ColorInt int ... colors) {
         if (mDrawableSky != null) {

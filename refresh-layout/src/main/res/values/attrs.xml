@@ -71,8 +71,9 @@
 
     <declare-styleable name="BallPulseFooter">
         <attr name="srlClassicsSpinnerStyle"/>
-        <attr name="srlPrimaryColor"/>
-        <attr name="srlAccentColor"/>
+        <attr name="srlIndicatorColor" format="color"/>
+        <attr name="srlAnimatingColor" format="color"/>
+        <attr name="srlNormalColor" format="color"/>
     </declare-styleable>
 
     <declare-styleable name="ClassicsHeader">

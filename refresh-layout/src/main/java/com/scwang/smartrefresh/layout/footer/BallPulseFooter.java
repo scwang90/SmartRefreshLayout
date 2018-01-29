@@ -29,12 +29,13 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
  * 球脉冲底部加载组件
  * Created by SCWANG on 2017/5/30.
  */
-
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "UnusedReturnValue"})
 public class BallPulseFooter extends ViewGroup implements RefreshFooter {
 
     private BallPulseView mBallPulseView;
     private SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
+    private Integer mNormalColor;
+    private Integer mAnimationColor;
 
     //<editor-fold desc="ViewGroup">
     public BallPulseFooter(@NonNull Context context) {
@@ -59,13 +60,14 @@ public class BallPulseFooter extends ViewGroup implements RefreshFooter {
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.BallPulseFooter);
 
-        int primaryColor = ta.getColor(R.styleable.BallPulseFooter_srlPrimaryColor, 0);
-        int accentColor = ta.getColor(R.styleable.BallPulseFooter_srlAccentColor, 0);
-        if (primaryColor != 0) {
-            mBallPulseView.setNormalColor(primaryColor);
+        if (ta.hasValue(R.styleable.BallPulseFooter_srlAnimatingColor)) {
+            setAnimatingColor(ta.getColor(R.styleable.BallPulseFooter_srlAnimatingColor, 0));
         }
-        if (accentColor != 0) {
-            mBallPulseView.setAnimatingColor(accentColor);
+        if (ta.hasValue(R.styleable.BallPulseFooter_srlNormalColor)) {
+            setNormalColor(ta.getColor(R.styleable.BallPulseFooter_srlNormalColor, 0));
+        }
+        if (ta.hasValue(R.styleable.BallPulseFooter_srlIndicatorColor)) {
+            setIndicatorColor(ta.getColor(R.styleable.BallPulseFooter_srlIndicatorColor, 0));
         }
 
         mSpinnerStyle = SpinnerStyle.values()[ta.getInt(R.styleable.BallPulseFooter_srlClassicsSpinnerStyle, mSpinnerStyle.ordinal())];
@@ -146,12 +148,15 @@ public class BallPulseFooter extends ViewGroup implements RefreshFooter {
 
     @Override@Deprecated
     public void setPrimaryColors(@ColorInt int... colors) {
-        if (colors.length > 1) {
-            mBallPulseView.setNormalColor(colors[1]);
+        if (mAnimationColor == null && colors.length > 1) {
             mBallPulseView.setAnimatingColor(colors[0]);
-        } else if (colors.length > 0) {
-            mBallPulseView.setNormalColor(ColorUtils.compositeColors(0x99ffffff,colors[0]));
-            mBallPulseView.setAnimatingColor(colors[0]);
+        }
+        if (mNormalColor == null) {
+            if (colors.length > 1) {
+                mBallPulseView.setNormalColor(colors[1]);
+            } else if (colors.length > 0) {
+                mBallPulseView.setNormalColor(ColorUtils.compositeColors(0x99ffffff,colors[0]));
+            }
         }
     }
     @NonNull
@@ -179,11 +184,13 @@ public class BallPulseFooter extends ViewGroup implements RefreshFooter {
     }
 
     public BallPulseFooter setNormalColor(@ColorInt int color) {
+        mNormalColor = color;
         mBallPulseView.setNormalColor(color);
         return this;
     }
 
     public BallPulseFooter setAnimatingColor(@ColorInt int color) {
+        mAnimationColor = color;
         mBallPulseView.setAnimatingColor(color);
         return this;
     }

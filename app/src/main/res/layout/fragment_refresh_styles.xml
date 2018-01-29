@@ -16,19 +16,29 @@
         android:layout_height="match_parent"
         android:background="@android:color/white"
         app:srlPrimaryColor="@color/colorPrimary"
-        app:srlAccentColor="@color/colorBackgroudDark">
-        <com.scwang.smartrefresh.layout.footer.BallPulseFooter
+        app:srlAccentColor="@color/colorBackgroudDark"
+        app:srlEnableLoadMore="true"
+        app:srlEnableAutoLoadMore="false">
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/padding_common_h"
+            app:srlClassicsSpinnerStyle="FixedBehind"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="@dimen/padding_common"
             android:overScrollMode="never"
+            android:background="#88ffbb11"
             tools:listitem="@android:layout/simple_list_item_2"/>
-        <com.scwang.smartrefresh.layout.footer.BallPulseFooter
+        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/padding_common_h"
+            app:srlPrimaryColor="@color/colorPrimary"
+            app:srlAccentColor="@android:color/white"
+            app:srlClassicsSpinnerStyle="FixedBehind"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

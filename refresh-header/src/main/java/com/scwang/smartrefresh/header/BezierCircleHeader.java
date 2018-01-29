@@ -82,6 +82,7 @@ public class BezierCircleHeader extends View implements RefreshHeader {
         initView(context, attrs);
     }
 
+    @SuppressWarnings("unused")
     private void initView(Context context, AttributeSet attrs) {
         setMinimumHeight(DensityUtil.dp2px(100));
         mBackPaint = new Paint();
@@ -364,6 +365,10 @@ public class BezierCircleHeader extends View implements RefreshHeader {
         return DURATION_FINISH;
     }
 
+    /**
+     * @param colors 对应Xml中配置的 srlPrimaryColor srlAccentColor
+     * @deprecated 请使用 {@link RefreshLayout#setPrimaryColorsId(int...)}
+     */
     @Override@Deprecated
     public void setPrimaryColors(@ColorInt int ... colors) {
         if (colors.length > 0) {

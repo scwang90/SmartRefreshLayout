@@ -53,7 +53,7 @@ public class SimpleMultiPurposeListener implements OnMultiPurposeListener {
     }
 
     @Override
-    public void onFooterStartAnimator(RefreshFooter footer, int headHeight, int extendHeight) {
+    public void onFooterStartAnimator(RefreshFooter footer, int headerHeight, int extendHeight) {
 
     }
 

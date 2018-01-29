@@ -20,10 +20,10 @@ import com.scwang.smartrefresh.header.util.ColorUtils;
 
 /**
  * 山丘树木场景视图
- * Created by jing on 15-5-28.
+ * Created by jing on 2015-5-28.
  * from https://github.com/race604/FlyRefresh
  */
-public class MountanScenceView extends View {
+public class MountainSceneView extends View {
 
     private int COLOR_BACKGROUND = Color.parseColor("#7ECEC9");
     private int COLOR_MOUNTAIN_1 = Color.parseColor("#86DAD7");
@@ -61,29 +61,29 @@ public class MountanScenceView extends View {
     private float mTreeBendFactor = Float.MAX_VALUE;
     private int mViewportHeight = 0;
 
-    //<editor-fold desc="MountanScenceView">
-    public MountanScenceView(Context context) {
+    //<editor-fold desc="MountainSceneView">
+    public MountainSceneView(Context context) {
         super(context);
-        initView(context, null, 0);
+        initView(context, null);
     }
 
-    public MountanScenceView(Context context, AttributeSet attrs) {
+    public MountainSceneView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initView(context, attrs, 0);
+        initView(context, attrs);
     }
 
-    public MountanScenceView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public MountainSceneView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initView(context, attrs, defStyleAttr);
+        initView(context, attrs);
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    public MountanScenceView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public MountainSceneView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        initView(context, attrs, defStyleAttr);
+        initView(context, attrs);
     }
 
-    private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
+    private void initView(Context context, AttributeSet attrs) {
         mMountPaint.setAntiAlias(true);
         mMountPaint.setStyle(Paint.Style.FILL);
 
@@ -94,11 +94,11 @@ public class MountanScenceView extends View {
         mBoarderPaint.setStrokeWidth(2);
         mBoarderPaint.setStrokeJoin(Paint.Join.ROUND);
 
-        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.MountanScenceView);
-        if (ta.hasValue(R.styleable.MountanScenceView_msvPrimaryColor)) {
-            setPrimaryColor(ta.getColor(R.styleable.MountanScenceView_msvPrimaryColor, 0xff000000));
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.MountainSceneView);
+        if (ta.hasValue(R.styleable.MountainSceneView_msvPrimaryColor)) {
+            setPrimaryColor(ta.getColor(R.styleable.MountainSceneView_msvPrimaryColor, 0xff000000));
         }
-        mViewportHeight = ta.getDimensionPixelOffset(R.styleable.MountanScenceView_msvViewportHeight, 0);
+        mViewportHeight = ta.getDimensionPixelOffset(R.styleable.MountainSceneView_msvViewportHeight, 0);
         ta.recycle();
 
         updateMountainPath(mMoveFactor, HEIGHT);
@@ -122,7 +122,7 @@ public class MountanScenceView extends View {
         mTransMatrix.reset();
         mTransMatrix.setScale(mScaleX, mScaleY);
 
-        int offset1 = (int) (10 * factor);
+        float offset1 = (10 * factor);
         mMount1.reset();
         mMount1.moveTo(0, 95 + offset1);
         mMount1.lineTo(55, 74 + offset1);
@@ -134,7 +134,7 @@ public class MountanScenceView extends View {
         mMount1.close();
         mMount1.transform(mTransMatrix);
 
-        int offset2 = (int) (20 * factor);
+        float offset2 = (20 * factor);
         mMount2.reset();
         mMount2.moveTo(0, 103 + offset2);
         mMount2.lineTo(67, 90 + offset2);
@@ -146,7 +146,7 @@ public class MountanScenceView extends View {
         mMount2.close();
         mMount2.transform(mTransMatrix);
 
-        int offset3 = (int) (30 * factor);
+        float offset3 = (30 * factor);
         mMount3.reset();
         mMount3.moveTo(0, 114 + offset3);
         mMount3.cubicTo(30, 106 + offset3, 196, 97 + offset3, WIDTH, 104 + offset3);

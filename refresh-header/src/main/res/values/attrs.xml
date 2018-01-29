@@ -29,7 +29,7 @@
         <attr name="mhShowBezierWave" format="boolean"/>
     </declare-styleable>
 
-    <declare-styleable name="MountanScenceView">
+    <declare-styleable name="MountainSceneView">
         <attr name="msvPrimaryColor" format="color" />
         <attr name="msvViewportHeight" format="dimension"/>
     </declare-styleable>

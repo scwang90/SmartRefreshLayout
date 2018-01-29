@@ -139,7 +139,7 @@ public class CustomUsingActivity extends AppCompatActivity {
             return SpinnerStyle.Translate;//指定为平移，不能null
         }
         @Override
-        public void onStartAnimator(@NonNull RefreshLayout layout, int headHeight, int extendHeight) {
+        public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
             mProgressDrawable.start();//开始动画
         }
         @Override
@@ -184,10 +184,10 @@ public class CustomUsingActivity extends AppCompatActivity {
         public void onHorizontalDrag(float percentX, int offsetX, int offsetMax) {
         }
         @Override
-        public void onPulling(float percent, int offset, int headHeight, int extendHeight) {
+        public void onPulling(float percent, int offset, int height, int extendHeight) {
         }
         @Override
-        public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
+        public void onReleasing(float percent, int offset, int height, int extendHeight) {
         }
         @Override
         public void onReleased(RefreshLayout layout, int headerHeight, int extendHeight) {

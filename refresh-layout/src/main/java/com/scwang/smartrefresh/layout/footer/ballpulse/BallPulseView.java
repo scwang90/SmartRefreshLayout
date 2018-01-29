@@ -15,6 +15,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 脉冲球动画
+ * from https://github.com/lcodecorex/TwinklingRefreshLayout
+ */
 public class BallPulseView extends View {
 
     public static final int DEFAULT_SIZE = 50; //dp
@@ -122,10 +126,16 @@ public class BallPulseView extends View {
 
     public void setNormalColor(@ColorInt int color) {
         normalColor = color;
+        if (!isStarted()) {
+            setIndicatorColor(normalColor);
+        }
     }
 
     public void setAnimatingColor(@ColorInt int color) {
         animatingColor = color;
+        if (isStarted()) {
+            setIndicatorColor(animatingColor);
+        }
     }
 
     public void startAnim() {

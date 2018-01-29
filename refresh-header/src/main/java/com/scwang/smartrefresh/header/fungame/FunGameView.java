@@ -228,7 +228,7 @@ public abstract class FunGameView extends FunGameHeader {
     }
 
     @Override
-    protected void onManualOperationMove(float percent, int offset, int headHeight, int extendHeight) {
+    protected void onManualOperationMove(float percent, int offset, int height, int extendHeight) {
         moveController(Math.max(offset, 0));
     }
     /**

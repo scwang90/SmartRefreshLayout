@@ -15,7 +15,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 
 public class DesignUtil {
 
-    public static void cheackCoordinatorLayout(View content, RefreshKernel kernel, CoordinatorLayoutListener listener) {
+    public static void checkCoordinatorLayout(View content, RefreshKernel kernel, CoordinatorLayoutListener listener) {
         try {//try 不能删除，不然会出现兼容性问题
             if (content instanceof CoordinatorLayout) {
                 kernel.getRefreshLayout().setEnableNestedScroll(false);

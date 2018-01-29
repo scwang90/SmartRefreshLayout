@@ -7,7 +7,7 @@
     android:clipChildren="false"
     tools:context="com.scwang.refreshlayout.activity.style.FlyRefreshStyleActivity">
 
-    <com.scwang.smartrefresh.header.flyrefresh.MountanScenceView
+    <com.scwang.smartrefresh.header.flyrefresh.MountainSceneView
         android:id="@+id/mountan"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -54,6 +54,7 @@
         app:srlReboundDuration="200"
         app:srlEnableLoadMore="false"
         app:srlEnablePreviewInEditMode="true"
+        app:srlEnableOverScrollBounce="false"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
         <com.scwang.smartrefresh.header.FlyRefreshHeader
             android:id="@+id/flyrefresh"

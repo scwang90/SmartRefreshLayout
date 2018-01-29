@@ -33,7 +33,7 @@ import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.util.StatusBarUtil;
 import com.scwang.smartrefresh.header.FlyRefreshHeader;
 import com.scwang.smartrefresh.header.flyrefresh.FlyView;
-import com.scwang.smartrefresh.header.flyrefresh.MountanScenceView;
+import com.scwang.smartrefresh.header.flyrefresh.MountainSceneView;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -51,14 +51,13 @@ import jp.wasabeef.recyclerview.animators.BaseItemAnimator;
 public class FlyRefreshStyleActivity extends AppCompatActivity {
 
     private RecyclerView mListView;
-    private RefreshLayout mRefreshlayout;
+    private RefreshLayout mRefreshLayout;
 
     private ItemAdapter mAdapter;
 
     private FlyView mFlyView;
     private ArrayList<ItemData> mDataSet = new ArrayList<>();
-        private LinearLayoutManager mLayoutManager;
-    private MountanScenceView mScenceView;
+    private LinearLayoutManager mLayoutManager;
     private FlyRefreshHeader mFlyRefreshHeader;
     private CollapsingToolbarLayout mToolbarLayout;
     private FloatingActionButton mActionButton;
@@ -78,18 +77,18 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
             }
         });
 
-        /************************************************************
+        /*-----------------------------------------------------------
          * 关键代码-开始
-         ************************************************************/
+         *----------------------------------------------------------*/
 
+        MountainSceneView mSceneView = (MountainSceneView) findViewById(R.id.mountan);
         mFlyView = (FlyView) findViewById(R.id.flyview);
-        mScenceView = (MountanScenceView) findViewById(R.id.mountan);
         mFlyRefreshHeader = (FlyRefreshHeader)findViewById(R.id.flyrefresh);
-        mFlyRefreshHeader.setUp(mScenceView, mFlyView);//绑定场景和纸飞机
-        mRefreshlayout = (RefreshLayout) findViewById(R.id.refreshLayout);
-        mRefreshlayout.setReboundInterpolator(new ElasticOutInterpolator());//设置回弹插值器，会带有弹簧震动效果
-        mRefreshlayout.setReboundDuration(800);//设置回弹动画时长
-        mRefreshlayout.setOnRefreshListener(new OnRefreshListener() {
+        mFlyRefreshHeader.setUp(mSceneView, mFlyView);//绑定场景和纸飞机
+        mRefreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
+        mRefreshLayout.setReboundInterpolator(new ElasticOutInterpolator());//设置回弹插值器，会带有弹簧震动效果
+        mRefreshLayout.setReboundDuration(800);//设置回弹动画时长
+        mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 View child = mListView.getChildAt(0);
@@ -98,7 +97,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
                     bounceAnimateView(child.findViewById(R.id.icon));
                 }
                 updateTheme();//改变主题颜色
-                mRefreshlayout.getLayout().postDelayed(new Runnable() {
+                mRefreshLayout.getLayout().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         //通知刷新完成，这里改为通知Header，让纸飞机飞回来
@@ -113,7 +112,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
         });
         //设置 让 AppBarLayout 和 RefreshLayout 的滚动同步 并不保持 toolbar 位置不变
         final AppBarLayout appBar = (AppBarLayout) findViewById(R.id.app_bar);
-        mRefreshlayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
+        mRefreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
             @Override
             public void onHeaderPulling(RefreshHeader header, float percent, int offset, int footerHeight, int extendHeight) {
                 appBar.setTranslationY(offset);
@@ -125,16 +124,16 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
                 toolbar.setTranslationY(-offset);
             }
         });
-        /************************************************************
+        /*-----------------------------------------------------------
          * 关键代码-结束
-         ************************************************************/
+         *----------------------------------------------------------*/
 
         if (isFirstEnter) {
             isFirstEnter = false;
-            mRefreshlayout.autoRefresh();//第一次进入触发自动刷新，演示效果
+            mRefreshLayout.autoRefresh();//第一次进入触发自动刷新，演示效果
         }
 
-        /**
+        /*
          * 初始化列表数据
          */
         initDataSet();
@@ -146,17 +145,17 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
         mListView.setItemAnimator(new SampleItemAnimator());
         mToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         mActionButton = (FloatingActionButton) findViewById(R.id.fab);
-        /**
+        /*
          * 设置点击 ActionButton 时候触发自动刷新 并改变主题颜色
          */
         mActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 updateTheme();
-                mRefreshlayout.autoRefresh();
+                mRefreshLayout.autoRefresh();
             }
         });
-        /**
+        /*
          * 监听 AppBarLayout 的关闭和开启 给 FlyView（纸飞机） 和 ActionButton 设置关闭隐藏动画
          */
         appBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
@@ -200,8 +199,6 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
         //状态栏透明和间距处理
         StatusBarUtil.immersive(this);
         StatusBarUtil.setPaddingSmart(this, toolbar);
-//        StatusBarUtil.setPaddingSmart(this, findViewById(R.id.profile));
-//        StatusBarUtil.setPaddingSmart(this, findViewById(R.id.blurview));
     }
 
     private void updateTheme() {
@@ -218,7 +215,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     int color = ContextCompat.getColor(getApplication(), ids[index % ids.length]);
-                    mRefreshlayout.setPrimaryColors(color);
+                    mRefreshLayout.setPrimaryColors(color);
                     mActionButton.setBackgroundColor(color);
                     mActionButton.setBackgroundTintList(ColorStateList.valueOf(color));
                     mToolbarLayout.setContentScrimColor(color);
@@ -264,7 +261,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
         private LayoutInflater mInflater;
         private DateFormat dateFormat;
 
-        public ItemAdapter(Context context) {
+        ItemAdapter(Context context) {
             mInflater = LayoutInflater.from(context);
             dateFormat = SimpleDateFormat.getDateInstance(DateFormat.DEFAULT, Locale.ENGLISH);
         }
@@ -298,7 +295,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
         TextView title;
         TextView subTitle;
 
-        public ItemViewHolder(View itemView) {
+        ItemViewHolder(View itemView) {
             super(itemView);
             icon = (ImageView) itemView.findViewById(R.id.icon);
             title = (TextView) itemView.findViewById(R.id.title);
@@ -309,19 +306,15 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
 
     public class ItemData {
         int color;
-        public int icon;
+        int icon;
+        Date time;
         public String title;
-        public Date time;
 
-        public ItemData(int color, int icon, String title, Date time) {
+        ItemData(int color, int icon, String title, Date time) {
             this.color = color;
             this.icon = icon;
             this.title = title;
             this.time = time;
-        }
-
-        public ItemData(int icon, String title) {
-            this(Color.DKGRAY, icon, title, new Date());
         }
     }
 

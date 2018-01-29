@@ -32,6 +32,7 @@ import java.util.ArrayList;
  * Created by SCWANG on 2017/5/31.
  * from https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh
  */
+@SuppressWarnings({"unused", "UnusedReturnValue", "SameParameterValue"})
 public class StoreHouseHeader extends View implements RefreshHeader {
 
     //<editor-fold desc="Field">
@@ -57,13 +58,13 @@ public class StoreHouseHeader extends View implements RefreshHeader {
     private int mLoadingAniSegDuration = 1000;
     private static final int mLoadingAniItemDuration = 400;
 
-    private Transformation mTransformation = new Transformation();
-    private boolean mIsInLoading = false;
-    private AniController mAniController = new AniController();
     private int mTextColor = Color.WHITE;
     private int mBackgroundColor = 0;
+    private boolean mIsInLoading = false;
     private Matrix mMatrix = new Matrix();
     private RefreshKernel mRefreshKernel;
+    private AniController mAniController = new AniController();
+    private Transformation mTransformation = new Transformation();
     //</editor-fold>
 
     //<editor-fold desc="View">
@@ -289,28 +290,6 @@ public class StoreHouseHeader extends View implements RefreshHeader {
     }
     //</editor-fold>
 
-    //<editor-fold desc="background">
-    private Runnable restoreRunable;
-    private void restoreRefreshLayoutBackground() {
-        if (restoreRunable != null) {
-            restoreRunable.run();
-            restoreRunable = null;
-        }
-    }
-    private void replaceRefreshLayoutBackground(RefreshLayout refreshLayout) {
-//        if (restoreRunable == null) {
-//            restoreRunable = new Runnable() {
-//                Drawable drawable = refreshLayout.getLayout().getBackground();
-//                @Override
-//                public void run() {
-//                    refreshLayout.getLayout().setBackgroundDrawable(drawable);
-//                }
-//            };
-//            refreshLayout.getLayout().setBackgroundDrawable(getBackground());
-//        }
-    }
-    //</editor-fold>
-
     //<editor-fold desc="private">
     private void setProgress(float progress) {
         mProgress = progress;
@@ -340,9 +319,7 @@ public class StoreHouseHeader extends View implements RefreshHeader {
 
     @Override
     public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
-        if (mBackgroundColor != 0) {
-            kernel.requestDrawBackgroundForHeader(mBackgroundColor);
-        }
+        kernel.requestDrawBackgroundForHeader(mBackgroundColor);
         mRefreshKernel = kernel;
     }
 
@@ -356,13 +333,13 @@ public class StoreHouseHeader extends View implements RefreshHeader {
     }
 
     @Override
-    public void onPulling(float percent, int offset, int headHeight, int extendHeight) {
+    public void onPulling(float percent, int offset, int height, int extendHeight) {
         setProgress(percent * .8f);
         invalidate();
     }
 
     @Override
-    public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
+    public void onReleasing(float percent, int offset, int height, int extendHeight) {
         setProgress(percent * .8f);
         invalidate();
     }
@@ -373,17 +350,12 @@ public class StoreHouseHeader extends View implements RefreshHeader {
     }
 
     @Override
-    public void onStartAnimator(@NonNull RefreshLayout layout, int headHeight, int extendHeight) {
+    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
 
     }
 
     @Override
     public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
-        if (newState == RefreshState.ReleaseToRefresh) {
-            replaceRefreshLayoutBackground(refreshLayout);
-        } else if (newState == RefreshState.None) {
-            restoreRefreshLayoutBackground();
-        }
     }
 
     @Override
@@ -395,6 +367,10 @@ public class StoreHouseHeader extends View implements RefreshHeader {
         return 0;
     }
 
+    /**
+     * @param colors 对应Xml中配置的 srlPrimaryColor srlAccentColor
+     * @deprecated 请使用 {@link RefreshLayout#setPrimaryColorsId(int...)}
+     */
     @Override@Deprecated
     public void setPrimaryColors(@ColorInt int ... colors) {
         if (colors.length > 0) {
@@ -419,6 +395,7 @@ public class StoreHouseHeader extends View implements RefreshHeader {
     public SpinnerStyle getSpinnerStyle() {
         return SpinnerStyle.Translate;
     }
+
     //</editor-fold>
 
     private class AniController implements Runnable {

@@ -25,6 +25,7 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 
 import com.scwang.smartrefresh.layout.api.RefreshContent;
+import com.scwang.smartrefresh.layout.api.RefreshInternal;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.ScrollBoundaryDecider;
 import com.scwang.smartrefresh.layout.util.DesignUtil;
@@ -88,7 +89,7 @@ public class RefreshContentWrapper implements RefreshContent {
                         }
                     };
                 }
-                DesignUtil.cheackCoordinatorLayout(content, kernel, listener);
+                DesignUtil.checkCoordinatorLayout(content, kernel, listener);
             }
             mScrollableView = content;
         }
@@ -111,16 +112,6 @@ public class RefreshContentWrapper implements RefreshContent {
             }
         }
         return scrollableView == null ? content : scrollableView;
-    }
-
-    protected boolean isScrollableView(View view) {
-        return view instanceof AbsListView
-                || view instanceof ScrollView
-                || view instanceof ScrollingView
-                || view instanceof NestedScrollingChild
-                || view instanceof NestedScrollingParent
-                || view instanceof WebView
-                || view instanceof ViewPager;
     }
 
     protected View findScrollableViewByEvent(View content, MotionEvent event, View orgScrollableView) {
@@ -325,7 +316,8 @@ public class RefreshContentWrapper implements RefreshContent {
     }
     //</editor-fold>
 
-    //<editor-fold desc="protected">
+    //<editor-fold desc="static">
+
     protected static int measureViewHeight(View view) {
         ViewGroup.LayoutParams p = view.getLayoutParams();
         if (p == null) {
@@ -364,6 +356,17 @@ public class RefreshContentWrapper implements RefreshContent {
             listView.smoothScrollBy(y, 0);
         }
     }
+
+    public static boolean isScrollableView(View view) {
+        return view instanceof AbsListView
+                || view instanceof ScrollView
+                || view instanceof ScrollingView
+                || view instanceof NestedScrollingChild
+                || view instanceof NestedScrollingParent
+                || view instanceof WebView
+                || view instanceof ViewPager;
+    }
+
     //</editor-fold>
 
 }

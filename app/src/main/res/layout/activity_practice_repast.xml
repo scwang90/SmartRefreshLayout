@@ -13,19 +13,27 @@
         android:layout_height="match_parent"
         app:srlDragRate="0.7"
         app:srlHeaderMaxDragRate="1.3"
-        app:srlHeaderHeight="150dp"
+        app:srlHeaderHeight="100dp"
         app:srlEnableAutoLoadMore="true"
         app:srlEnablePreviewInEditMode="true"
         app:srlHeaderTriggerRate="0.5">
-        <pl.droidsonroids.gif.GifImageView
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:id="@+id/gifview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="?attr/actionBarSize"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/gif_header_repast"
-            app:layout_srlSpinnerStyle="Scale"
-            app:layout_srlBackgroundColor="@android:color/transparent"/>
+            app:srlClassicsSpinnerStyle="FixedBehind"
+            app:srlPrimaryColor="@color/colorTextContent"
+            app:srlAccentColor="@android:color/white"/>
+        <!--<pl.droidsonroids.gif.GifImageView-->
+            <!--android:id="@+id/gifview"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_marginTop="?attr/actionBarSize"-->
+            <!--android:scaleType="centerCrop"-->
+            <!--android:src="@mipmap/gif_header_repast"-->
+            <!--app:layout_srlSpinnerStyle="Scale"-->
+            <!--app:layout_srlBackgroundColor="@android:color/transparent"/>-->
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"

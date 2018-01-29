@@ -156,7 +156,7 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override
-    public void onPulling(float percent, int offset, int headHeight, int extendHeight) {
+    public void onPulling(float percent, int offset, int height, int extendHeight) {
 
         if (mState == RefreshState.Refreshing) {
             return;
@@ -202,7 +202,7 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override
-    public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
+    public void onReleasing(float percent, int offset, int height, int extendHeight) {
     }
 
     @Override
@@ -225,7 +225,7 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override
-    public void onStartAnimator(@NonNull RefreshLayout layout, int headHeight, int extendHeight) {
+    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
 
     }
 
@@ -277,6 +277,10 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
         return 0;
     }
 
+    /**
+     * @param colors 对应Xml中配置的 srlPrimaryColor srlAccentColor
+     * @deprecated 请使用 {@link RefreshLayout#setPrimaryColorsId(int...)}
+     */
     @Override@Deprecated
     public void setPrimaryColors(@ColorInt int ... colors) {
         if (colors.length > 0) {

@@ -33,6 +33,7 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
  * Created by lcodecore on 2016/10/2.
  */
 
+@SuppressWarnings({"UnusedReturnValue", "unused"})
 public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
 
     private WaveView mWaveView;
@@ -41,6 +42,8 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
     private RoundProgressView mProgressView;
     private boolean mEnableHorizontalDrag = false;
     private boolean mIsRunning;
+    private Integer mAccentColor;
+    private Integer mPrimaryColor;
 
     //<editor-fold desc="FrameLayout">
     public BezierRadarHeader(Context context) {
@@ -58,9 +61,7 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
 
     private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
         setMinimumHeight(DensityUtil.dp2px(100));
-        /**
-         * 初始化headView
-         */
+
         mWaveView = new WaveView(getContext());
         mRippleView = new RippleView(getContext());
         mDotView = new RoundDotView(getContext());
@@ -82,13 +83,11 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.BezierRadarHeader);
 
         mEnableHorizontalDrag = ta.getBoolean(R.styleable.BezierRadarHeader_srlEnableHorizontalDrag, mEnableHorizontalDrag);
-        int primaryColor = ta.getColor(R.styleable.BezierRadarHeader_srlPrimaryColor, 0);
-        int accentColor = ta.getColor(R.styleable.BezierRadarHeader_srlAccentColor, 0);
-        if (primaryColor != 0) {
-            setPrimaryColor(primaryColor);
+        if (ta.hasValue(R.styleable.BezierRadarHeader_srlPrimaryColor)) {
+            setPrimaryColor(ta.getColor(R.styleable.BezierRadarHeader_srlPrimaryColor, 0));
         }
-        if (accentColor != 0) {
-            setAccentColor(accentColor);
+        if (ta.hasValue(R.styleable.BezierRadarHeader_srlAccentColor)) {
+            setAccentColor(ta.getColor(R.styleable.BezierRadarHeader_srlAccentColor, 0));
         }
 
         ta.recycle();
@@ -98,12 +97,14 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
 
     //<editor-fold desc="API">
     public BezierRadarHeader setPrimaryColor(@ColorInt int color) {
+        mPrimaryColor = color;
         mWaveView.setWaveColor(color);
         mProgressView.setBackColor(color);
         return this;
     }
 
     public BezierRadarHeader setAccentColor(@ColorInt int color) {
+        mAccentColor = color;
         mDotView.setDotColor(color);
         mRippleView.setFrontColor(color);
         mProgressView.setFrontColor(color);
@@ -133,11 +134,13 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
     //<editor-fold desc="RefreshHeader">
     @Override@Deprecated
     public void setPrimaryColors(@ColorInt int ... colors) {
-        if (colors.length > 0) {
+        if (colors.length > 0 && mPrimaryColor == null) {
             setPrimaryColor(colors[0]);
+            mPrimaryColor = null;
         }
-        if (colors.length > 1) {
+        if (colors.length > 1 && mAccentColor == null) {
             setAccentColor(colors[1]);
+            mAccentColor = null;
         }
     }
 
