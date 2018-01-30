@@ -16,10 +16,11 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 
 /**
- * 下拉头中间的“水滴”
+ * 下拉头中间的 “水滴”
  * Created by xiayong on 2015/6/23.
  * from https://github.com/THEONE10211024/WaterDropListView
  */
+@SuppressWarnings("unused")
 public class WaterDropView extends View {
 
     private Circle topCircle;
@@ -94,7 +95,7 @@ public class WaterDropView extends View {
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
-        updateComleteState(getHeight());
+        updateCompleteState(getHeight());
     }
 
     @Override
@@ -160,6 +161,7 @@ public class WaterDropView extends View {
 
     /**
      * 获得两个圆切线与圆心连线的夹角
+     * @return 夹角
      */
     private double getAngle() {
         if (bottomCircle.radius > topCircle.radius) {
@@ -173,6 +175,7 @@ public class WaterDropView extends View {
      * 上圆半径减速恢复至最大半径
      * 下圆半径减速恢复至最大半径
      * 圆心距减速从最大值减到0(下圆Y从当前位置移动到上圆Y)。
+     * @return Animator
      */
     public Animator createAnimator() {
         ValueAnimator valueAnimator = ValueAnimator.ofFloat(1, 0.001f).setDuration(BACK_ANIM_DURATION);
@@ -180,7 +183,7 @@ public class WaterDropView extends View {
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator1) {
-                WaterDropView.this.updateComleteState((float) valueAnimator1.getAnimatedValue());
+                WaterDropView.this.updateCompleteState((float) valueAnimator1.getAnimatedValue());
                 WaterDropView.this.postInvalidate();
             }
         });
@@ -189,16 +192,19 @@ public class WaterDropView extends View {
 
     /**
      * 完成的百分比
+     * @param offset 偏移量
+     * @param maxHeight 最大高度
      */
-    public void updateComleteState(int offset, int maxHeight) {
+    public void updateCompleteState(int offset, int maxHeight) {
 //        float space = mMaxCircleRadius * 2 + getPaddingTop() + getPaddingBottom();
-//        updateComleteState(Math.max(0, 1f * (offset - space) / (maxHeight - space)));
+//        updateCompleteState(Math.max(0, 1f * (offset - space) / (maxHeight - space)));
     }
 
     /**
      * 完成的百分比
+     * @param percent 百分比
      */
-    public void updateComleteState(float percent) {
+    public void updateCompleteState(float percent) {
         float top_r = (float) (mMaxCircleRadius - 0.25 * percent * mMaxCircleRadius);
         float bottom_r = (mMinCircleRaidus - mMaxCircleRadius) * percent + mMaxCircleRadius;
         float bottomCricleOffset = 4 * percent * mMaxCircleRadius;
@@ -210,8 +216,9 @@ public class WaterDropView extends View {
 
     /**
      * 完成的百分比
+     * @param height 高度
      */
-    public void updateComleteState(int height) {
+    public void updateCompleteState(int height) {
         final int paddingTop = getPaddingTop();
         final int paddingBottom = getPaddingBottom();
         float space = mMaxCircleRadius * 2 + paddingTop + paddingBottom;

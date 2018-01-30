@@ -88,13 +88,13 @@ public class ViewPagerUsingFragment extends Fragment implements OnRefreshListene
     }
 
     @Override
-    public void onRefresh(RefreshLayout refreshlayout) {
-        mAdapter.fragments[mViewPager.getCurrentItem()].onRefresh(refreshlayout);
+    public void onRefresh(RefreshLayout refreshLayout) {
+        mAdapter.fragments[mViewPager.getCurrentItem()].onRefresh(refreshLayout);
     }
 
     @Override
-    public void onLoadMore(RefreshLayout refreshlayout) {
-        mAdapter.fragments[mViewPager.getCurrentItem()].onLoadMore(refreshlayout);
+    public void onLoadMore(RefreshLayout refreshLayout) {
+        mAdapter.fragments[mViewPager.getCurrentItem()].onLoadMore(refreshLayout);
     }
 
 
@@ -160,27 +160,27 @@ public class ViewPagerUsingFragment extends Fragment implements OnRefreshListene
             return Arrays.asList(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
         }
 
-        public void onRefresh(final RefreshLayout refreshlayout) {
-            refreshlayout.getLayout().postDelayed(new Runnable() {
+        public void onRefresh(final RefreshLayout refreshLayout) {
+            refreshLayout.getLayout().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     mAdapter.refresh(initData());
-                    refreshlayout.finishRefresh();
-                    refreshlayout.setNoMoreData(false);
+                    refreshLayout.finishRefresh();
+                    refreshLayout.setNoMoreData(false);
                 }
             }, 2000);
         }
 
-        public void onLoadMore(final RefreshLayout refreshlayout) {
-            refreshlayout.getLayout().postDelayed(new Runnable() {
+        public void onLoadMore(final RefreshLayout refreshLayout) {
+            refreshLayout.getLayout().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     mAdapter.loadMore(initData());
                     if (mAdapter.getItemCount() > 60) {
                         Toast.makeText(getContext(), "数据全部加载完毕", Toast.LENGTH_SHORT).show();
-                        refreshlayout.finishLoadMoreWithNoMoreData();//将不会再次触发加载更多事件
+                        refreshLayout.finishLoadMoreWithNoMoreData();//将不会再次触发加载更多事件
                     } else {
-                        refreshlayout.finishLoadMore();
+                        refreshLayout.finishLoadMore();
                     }
                 }
             }, 2000);

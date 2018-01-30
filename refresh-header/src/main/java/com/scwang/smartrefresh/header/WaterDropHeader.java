@@ -79,7 +79,7 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
         DensityUtil density = new DensityUtil();
         mWaterDropView = new WaterDropView(context);
         addView(mWaterDropView, MATCH_PARENT, MATCH_PARENT);
-        mWaterDropView.updateComleteState(0);
+        mWaterDropView.updateCompleteState(0);
 
         mProgressDrawable = new ProgressDrawable();
         mProgressDrawable.setBounds(0,0, density.dip2px(20), density.dip2px(20));
@@ -167,7 +167,7 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
 
     @Override
     public void onPulling(float percent, int offset, int height, int extendHeight) {
-        mWaterDropView.updateComleteState((offset), height + extendHeight);
+        mWaterDropView.updateCompleteState((offset), height + extendHeight);
         mWaterDropView.postInvalidate();
 
         float originalDragPercent = 1f * offset / height;
@@ -190,7 +190,7 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
     @Override
     public void onReleasing(float percent, int offset, int height, int extendHeight) {
         if (mState != RefreshState.Refreshing && mState != RefreshState.RefreshReleased) {
-            mWaterDropView.updateComleteState(Math.max(offset, 0), height + extendHeight);
+            mWaterDropView.updateCompleteState(Math.max(offset, 0), height + extendHeight);
             mWaterDropView.postInvalidate();
         }
     }

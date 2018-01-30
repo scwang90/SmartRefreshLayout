@@ -27,7 +27,7 @@ public final class ColorUtils {
 
     private ColorUtils() {}
 
-    /**
+    /*
      * Composite two potentially translucent colors over each other and returns the result.
      */
     public static int compositeColors(@ColorInt int foreground, @ColorInt int background) {
@@ -54,7 +54,7 @@ public final class ColorUtils {
         return ((0xFF * fgC * fgA) + (bgC * bgA * (0xFF - fgA))) / (a * 0xFF);
     }
 
-    /**
+    /*
      * Set the alpha component of {@code color} to be {@code alpha}.
      */
     @ColorInt

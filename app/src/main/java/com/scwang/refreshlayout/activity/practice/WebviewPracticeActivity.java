@@ -39,7 +39,7 @@ public class WebviewPracticeActivity extends AppCompatActivity {
         final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh(RefreshLayout refreshlayout) {
+            public void onRefresh(RefreshLayout refreshLayout) {
                 webView.loadUrl("https://github.com/scwang90/SmartRefreshLayout");
             }
         });

@@ -5,7 +5,7 @@ import android.util.SparseArray;
 import java.util.ArrayList;
 
 /**
- *
+ * StoreHouse 路径
  * Created by srain on 11/7/14.
  */
 public class StoreHousePath {
@@ -331,13 +331,14 @@ public class StoreHousePath {
     }
 
     /**
-     * @param str
-     * @param scale
-     * @param gapBetweenLetter
+     * 根据符号和自提获取路径
+     * @param str 字符串
+     * @param scale 缩放
+     * @param gapBetweenLetter 字符
      * @return ArrayList of float[] {x1, y1, x2, y2}
      */
     public static ArrayList<float[]> getPath(String str, float scale, int gapBetweenLetter) {
-        ArrayList<float[]> list = new ArrayList<float[]>();
+        ArrayList<float[]> list = new ArrayList<>();
         float offsetForWidth = 0;
         for (int i = 0; i < str.length(); i++) {
             int pos = str.charAt(i);

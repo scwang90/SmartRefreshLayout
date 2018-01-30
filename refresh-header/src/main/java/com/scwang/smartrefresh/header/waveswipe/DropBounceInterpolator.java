@@ -36,9 +36,8 @@ public class DropBounceInterpolator implements Interpolator {
 
     /**
      * {@inheritDoc}
-     *
-     * @param v
-     * @return
+     * @param v 动画帧
+     * @return 加速值
      */
     @Override
     public float getInterpolation(float v) {

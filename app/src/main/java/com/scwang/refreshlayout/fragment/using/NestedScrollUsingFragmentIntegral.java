@@ -82,12 +82,12 @@ public class NestedScrollUsingFragmentIntegral extends Fragment implements Adapt
         RefreshLayout refreshLayout = (RefreshLayout) root.findViewById(R.id.refreshLayout);
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
-            public void onLoadMore(final RefreshLayout refreshlayout) {
-                refreshlayout.getLayout().postDelayed(new Runnable() {
+            public void onLoadMore(final RefreshLayout refreshLayout) {
+                refreshLayout.getLayout().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         mAdapter.loadMore(buildItems());
-                        refreshlayout.finishLoadMore();
+                        refreshLayout.finishLoadMore();
                     }
                 }, 2000);
             }

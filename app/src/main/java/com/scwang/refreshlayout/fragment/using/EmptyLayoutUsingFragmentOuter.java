@@ -90,7 +90,7 @@ public class EmptyLayoutUsingFragmentOuter extends Fragment implements AdapterVi
     }
 
     @Override
-    public void onRefresh(RefreshLayout refreshlayout) {
+    public void onRefresh(RefreshLayout refreshLayout) {
         mRefreshLayout.getLayout().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -105,7 +105,7 @@ public class EmptyLayoutUsingFragmentOuter extends Fragment implements AdapterVi
                 mRefreshLayout.finishRefresh();
                 mEmptyLayout.setVisibility(View.GONE);
             }
-        }, refreshlayout != null ? 2000 : 0);
+        }, refreshLayout != null ? 2000 : 0);
     }
 
     @Override

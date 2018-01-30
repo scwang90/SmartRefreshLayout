@@ -25,6 +25,7 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
  * email:196425254@qq.com
  * https://github.com/Hitomis/FunGameRefresh
  */
+@SuppressWarnings("unused")
 public abstract class FunGameView extends FunGameHeader {
 
     //<editor-fold desc="Field">
@@ -188,9 +189,6 @@ public abstract class FunGameView extends FunGameHeader {
     }
 
 
-    /**
-     * 获取当前控件状态
-     */
     public int getCurrStatus() {
         return status;
     }

@@ -25,6 +25,7 @@ public enum DimensionStatus {
 
     /**
      * 转换为未通知状态
+     * @return 未通知状态
      */
     public DimensionStatus unNotify() {
         if (notified) {
@@ -39,8 +40,9 @@ public enum DimensionStatus {
 
     /**
      * 转换为通知状态
+     * @return 通知状态
      */
-    public DimensionStatus notifyed() {
+    public DimensionStatus notified() {
         if (!notified) {
             return values()[ordinal() + 1];
         }
@@ -48,14 +50,18 @@ public enum DimensionStatus {
     }
 
     /**
-     * 小于等于
+     * 是否可以被新的状态替换
+     * @param status 新转台
+     * @return 小于等于
      */
     public boolean canReplaceWith(DimensionStatus status) {
         return ordinal() < status.ordinal() || ((!notified || CodeExact == this) && ordinal() == status.ordinal());
     }
 
     /**
-     * 大于等于
+     * 是否没有达到新的状态
+     * @param status 新转台
+     * @return 大于等于
      */
     public boolean gteReplaceWith(DimensionStatus status) {
         return ordinal() >= status.ordinal();

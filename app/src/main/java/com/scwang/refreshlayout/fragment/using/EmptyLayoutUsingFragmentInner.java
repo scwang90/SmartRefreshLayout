@@ -103,7 +103,7 @@ public class EmptyLayoutUsingFragmentInner extends Fragment implements AdapterVi
     }
 
     @Override
-    public void onRefresh(RefreshLayout refreshlayout) {
+    public void onRefresh(RefreshLayout refreshLayout) {
         mRefreshLayout.getLayout().postDelayed(new Runnable() {
             @Override
             public void run() {

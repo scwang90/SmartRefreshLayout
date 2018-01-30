@@ -21,12 +21,14 @@ import static android.support.annotation.RestrictTo.Scope.SUBCLASSES;
 public interface RefreshInternal extends OnStateChangedListener {
     /**
      * 获取实体视图
+     * @return 实体视图
      */
     @NonNull
     View getView();
 
     /**
      * 获取变换方式 {@link SpinnerStyle} 必须返回 非空
+     * @return 变换方式
      */
     @NonNull
     SpinnerStyle getSpinnerStyle();
@@ -89,6 +91,7 @@ public interface RefreshInternal extends OnStateChangedListener {
      * 水平方向的拖动
      * @param percentX 下拉时，手指水平坐标对屏幕的占比（0 - percentX - 1）
      * @param offsetX 下拉时，手指水平坐标对屏幕的偏移（0 - offsetX - LayoutWidth）
+     * @param offsetMax 最大的偏移量
      */
     void onHorizontalDrag(float percentX, int offsetX, int offsetMax);
 

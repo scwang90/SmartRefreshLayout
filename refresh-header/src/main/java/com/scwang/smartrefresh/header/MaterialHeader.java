@@ -165,37 +165,6 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
 
     //</editor-fold>
 
-    //<editor-fold desc="API">
-    /**
-     * One of DEFAULT, or LARGE.
-     */
-    public MaterialHeader setSize(int size) {
-        if (size != SIZE_LARGE && size != SIZE_DEFAULT) {
-            return this;
-        }
-        DisplayMetrics metrics = getResources().getDisplayMetrics();
-        if (size == SIZE_LARGE) {
-            mCircleDiameter = (int) (CIRCLE_DIAMETER_LARGE * metrics.density);
-        } else {
-            mCircleDiameter = (int) (CIRCLE_DIAMETER * metrics.density);
-        }
-        // force the bounds of the progress circle inside the circle view to
-        // update by setting it to null before updating its size and then
-        // re-setting it
-        mCircleView.setImageDrawable(null);
-        mProgress.updateSizes(size);
-        mCircleView.setImageDrawable(mProgress);
-        return this;
-    }
-
-    public MaterialHeader setShowBezierWave(boolean show) {
-        this.mShowBezierWave = show;
-        return this;
-    }
-
-    //</editor-fold>
-
-
     //<editor-fold desc="RefreshHeader">
     @Override
     public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
@@ -327,9 +296,50 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
 
 
     //<editor-fold desc="API">
+
+    /**
+     * 设置 ColorScheme
+     * @param colors ColorScheme
+     * @return MaterialHeader
+     */
     public MaterialHeader setColorSchemeColors(int... colors) {
         mProgress.setColorSchemeColors(colors);
         return this;
     }
+
+    /**
+     * 设置大小尺寸
+     * @param size One of DEFAULT, or LARGE.
+     * @return MaterialHeader
+     */
+    public MaterialHeader setSize(int size) {
+        if (size != SIZE_LARGE && size != SIZE_DEFAULT) {
+            return this;
+        }
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        if (size == SIZE_LARGE) {
+            mCircleDiameter = (int) (CIRCLE_DIAMETER_LARGE * metrics.density);
+        } else {
+            mCircleDiameter = (int) (CIRCLE_DIAMETER * metrics.density);
+        }
+        // force the bounds of the progress circle inside the circle view to
+        // update by setting it to null before updating its size and then
+        // re-setting it
+        mCircleView.setImageDrawable(null);
+        mProgress.updateSizes(size);
+        mCircleView.setImageDrawable(mProgress);
+        return this;
+    }
+
+    /**
+     * 是否显示贝塞尔图形
+     * @param show 是否显示
+     * @return MaterialHeader
+     */
+    public MaterialHeader setShowBezierWave(boolean show) {
+        this.mShowBezierWave = show;
+        return this;
+    }
+
     //</editor-fold>
 }

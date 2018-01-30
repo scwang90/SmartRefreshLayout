@@ -7,5 +7,5 @@ package com.scwang.smartrefresh.layout.api;
  */
 @Deprecated
 public interface OnLoadmoreListener {
-    void onLoadmore(RefreshLayout refreshlayout);
+    void onLoadmore(RefreshLayout refreshLayout);
 }

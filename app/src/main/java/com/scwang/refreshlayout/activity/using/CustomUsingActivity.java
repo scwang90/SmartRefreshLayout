@@ -68,12 +68,12 @@ public class CustomUsingActivity extends AppCompatActivity {
         final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh(final RefreshLayout refreshlayout) {
-                refreshlayout.getLayout().postDelayed(new Runnable() {
+            public void onRefresh(final RefreshLayout refreshLayout) {
+                refreshLayout.getLayout().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         mAdapter.refresh(initData());
-                        refreshlayout.finishRefresh();
+                        refreshLayout.finishRefresh();
                     }
                 }, 2000);
             }

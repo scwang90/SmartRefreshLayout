@@ -74,26 +74,26 @@ public class RepastPracticeActivity extends AppCompatActivity {
 
             refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
                 @Override
-                public void onRefresh(final RefreshLayout refreshlayout) {
+                public void onRefresh(final RefreshLayout refreshLayout) {
                     refreshLayout.getLayout().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            refreshlayout.finishRefresh();
-                            refreshlayout.setNoMoreData(false);//恢复上拉状态
+                            refreshLayout.finishRefresh();
+                            refreshLayout.setNoMoreData(false);//恢复上拉状态
                         }
                     }, 2000);
                 }
                 @Override
-                public void onLoadMore(final RefreshLayout refreshlayout) {
+                public void onLoadMore(final RefreshLayout refreshLayout) {
                     refreshLayout.getLayout().postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             mAdapter.loadMore(loadModels());
                             if (mAdapter.getCount() > 12) {
                                 Toast.makeText(getBaseContext(), "数据全部加载完毕", Toast.LENGTH_SHORT).show();
-                                refreshlayout.finishLoadMoreWithNoMoreData();//设置之后，将不会再触发加载事件
+                                refreshLayout.finishLoadMoreWithNoMoreData();//设置之后，将不会再触发加载事件
                             } else {
-                                refreshlayout.finishLoadMore();
+                                refreshLayout.finishLoadMore();
                             }
                         }
                     }, 1000);

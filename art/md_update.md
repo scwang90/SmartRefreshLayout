@@ -10,9 +10,10 @@
 >添加：setNoMoreData(boolean) 方法
 >优化：优化越界回弹的效果
 >优化：优化Header和Footer与列表的惯性连续
+>解决：去掉XML预览功能对 Design 兼容包的依赖
 >修复：仿苹果越界拖动在特定条件下不连续问题
 >修复：finishLoadMoreWithNoMoreData 显示顺序错乱问题
->修复：老版本种使用错误的单词 creater->creator loadmore->loadMore
+>修复：老版本种使用错误的单词 creator loadMore
 >修复：Xml预览模式在没有Header和Footer时的显示问题
 >修复：AppbarLayout 嵌套滚动时的bug
 

@@ -33,7 +33,7 @@ public class OverScrollUsingActivity extends AppCompatActivity {
         final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh(RefreshLayout refreshlayout) {
+            public void onRefresh(RefreshLayout refreshLayout) {
                 webView.loadUrl("http://github.com");
             }
         });

@@ -17,7 +17,8 @@ public class DelayedRunnable implements Runnable {
                 runnable.run();
                 runnable = null;
             }
-        } catch (Throwable ignored) {
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
     }
 }

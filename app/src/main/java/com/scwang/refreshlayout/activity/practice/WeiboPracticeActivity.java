@@ -61,8 +61,8 @@ public class WeiboPracticeActivity extends AppCompatActivity {
 
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
-            public void onLoadMore(RefreshLayout refreshlayout) {
-                refreshlayout.finishLoadMore(2000);
+            public void onLoadMore(RefreshLayout refreshLayout) {
+                refreshLayout.finishLoadMore(2000);
             }
         });
         refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {

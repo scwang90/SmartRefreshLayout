@@ -54,29 +54,29 @@ public class BasicUsingActivity extends AppCompatActivity {
         refreshLayout.setEnableAutoLoadMore(true);//开启自动加载功能（非必须）
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh(final RefreshLayout refreshlayout) {
-                refreshlayout.getLayout().postDelayed(new Runnable() {
+            public void onRefresh(final RefreshLayout refreshLayout) {
+                refreshLayout.getLayout().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         mAdapter.refresh(initData());
-                        refreshlayout.finishRefresh();
-                        refreshlayout.setNoMoreData(false);
+                        refreshLayout.finishRefresh();
+                        refreshLayout.setNoMoreData(false);
                     }
                 }, 2000);
             }
         });
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
-            public void onLoadMore(final RefreshLayout refreshlayout) {
-                refreshlayout.getLayout().postDelayed(new Runnable() {
+            public void onLoadMore(final RefreshLayout refreshLayout) {
+                refreshLayout.getLayout().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         if (mAdapter.getItemCount() > 60) {
                             Toast.makeText(getApplication(), "数据全部加载完毕", Toast.LENGTH_SHORT).show();
-                            refreshlayout.finishLoadMoreWithNoMoreData();//将不会再次触发加载更多事件
+                            refreshLayout.finishLoadMoreWithNoMoreData();//将不会再次触发加载更多事件
                         } else {
                             mAdapter.loadMore(initData());
-                            refreshlayout.finishLoadMore();
+                            refreshLayout.finishLoadMore();
                         }
                     }
                 }, 2000);

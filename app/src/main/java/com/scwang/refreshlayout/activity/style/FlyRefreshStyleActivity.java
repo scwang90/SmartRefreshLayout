@@ -90,7 +90,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
         mRefreshLayout.setReboundDuration(800);//设置回弹动画时长
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh(RefreshLayout refreshlayout) {
+            public void onRefresh(RefreshLayout refreshLayout) {
                 View child = mListView.getChildAt(0);
                 if (child != null) {
                     //开始刷新的时候个第一个item设置动画效果

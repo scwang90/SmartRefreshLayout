@@ -1,24 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.scwang.smartrefresh.layout.SmartRefreshLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     app:srlPrimaryColor="@color/colorPrimary"
     tools:context="com.app_design.MainActivity">
 
-    <com.scwang.smartrefresh.header.PhoenixHeader
-        android:layout_width="match_parent"
-        android:layout_height="100dp" />
-    <!--<TextView-->
-        <!--android:layout_width="wrap_content"-->
+    <!--<android.support.design.widget.TabLayout-->
+        <!--android:id="@+id/tableLayout"-->
+        <!--android:layout_width="match_parent"-->
         <!--android:layout_height="wrap_content"-->
-        <!--android:layout_margin="10dp"-->
-        <!--android:text="Hello World!" />-->
+        <!--app:tabMode="scrollable"-->
+        <!--app:tabSelectedTextColor="@android:color/white"-->
+        <!--app:tabTextColor="@android:color/darker_gray"-->
+        <!--android:background="@color/colorPrimary"/>-->
 
-    <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent">
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorAccent"/>
+        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
-</com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+</LinearLayout>

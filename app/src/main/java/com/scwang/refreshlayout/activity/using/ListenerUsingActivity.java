@@ -121,13 +121,13 @@ public class ListenerUsingActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onRefresh(RefreshLayout refreshlayout) {
+            public void onRefresh(RefreshLayout refreshLayout) {
                 mRefresh = String.format(Locale.CHINA, "%s",FORMAT.format(new Date()));
                 updateContent();
             }
 
             @Override
-            public void onLoadMore(RefreshLayout refreshlayout) {
+            public void onLoadMore(RefreshLayout refreshLayout) {
                 mLoadMore = String.format(Locale.CHINA, "%s",FORMAT.format(new Date()));
                 updateContent();
             }

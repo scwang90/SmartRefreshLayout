@@ -34,7 +34,7 @@ import java.util.Random;
  * Created by SCWANG on 2017/5/31.
  * from https://github.com/Yalantis/Taurus
  */
-public class TaurusHeader extends View implements RefreshHeader/*, SizeDefinition*/ {
+public class TaurusHeader extends View implements RefreshHeader {
 
     //<editor-fold desc="Field">
     private static final float SCALE_START_PERCENT = 0.5f;

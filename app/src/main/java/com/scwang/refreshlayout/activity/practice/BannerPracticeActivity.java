@@ -61,24 +61,24 @@ public class BannerPracticeActivity extends AppCompatActivity {
         mAdapter.replaceData(movies);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh(final RefreshLayout refreshlayout) {
-                refreshlayout.getLayout().postDelayed(new Runnable() {
+            public void onRefresh(final RefreshLayout refreshLayout) {
+                refreshLayout.getLayout().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         if (mAdapter.getItemCount() < 2) {
                             List<Movie> movies = new Gson().fromJson(JSON_MOVIES, new TypeToken<ArrayList<Movie>>() {}.getType());
                             mAdapter.replaceData(movies);
                         }
-                        refreshlayout.finishRefresh();
+                        refreshLayout.finishRefresh();
                     }
                 },2000);
             }
         });
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
-            public void onLoadMore(RefreshLayout refreshlayout) {
+            public void onLoadMore(RefreshLayout refreshLayout) {
                 mAdapter.addData(movies);
-                refreshlayout.finishLoadMoreWithNoMoreData();
+                refreshLayout.finishLoadMoreWithNoMoreData();
             }
         });
 
