@@ -103,8 +103,8 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
 #### 1.在 buld.gradle 中添加依赖
 ```
 //1.0.5 为 1.0.4 与 1.1.0 的过度版，其中API改动过大，老用户升级需谨慎
-compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.5-alpha-0'
-compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.5-alpha-0'//没有使用特殊Header，可以不加这行
+compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.5-alpha-1'
+compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.5-alpha-1'//没有使用特殊Header，可以不加这行
 compile 'com.android.support:appcompat-v7:25.3.1'//版本随意（必须）
 
 //1.0.4 当1.0.5出现问题可以回退到1.0.4-7

@@ -23,6 +23,7 @@ import com.scwang.refreshlayout.activity.FragmentActivity;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 
 import java.util.Arrays;
@@ -99,13 +100,18 @@ public class NestedScrollUsingFragment extends Fragment implements AdapterView.O
                     adapter.loadMore(Arrays.asList(Item.values()));
                 }
             };
-            final RefreshLayout refreshLayout = (RefreshLayout)root.findViewById(R.id.refreshLayout);
+            final RefreshLayout refreshLayout = (RefreshLayout) root.findViewById(R.id.refreshLayout);
+            refreshLayout.setEnableFooterFollowWhenLoadFinished(true);
+            refreshLayout.setRefreshFooter(new ClassicsFooter(getContext()));
             refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
                 @Override
                 public void onLoadMore(RefreshLayout refreshLayout) {
-                    loadMore.run();
-                    refreshLayout.getLayout().postDelayed(loadMore, 2000);
-                    refreshLayout.finishLoadMore(2000);
+                    if (adapter.getItemCount() < 20) {
+                        loadMore.run();
+                        refreshLayout.finishLoadMore(2000);
+                    } else {
+                        refreshLayout.finishLoadMoreWithNoMoreData();
+                    }
                 }
             });
             loadMore.run();
