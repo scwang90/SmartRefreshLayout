@@ -87,12 +87,12 @@ public interface RefreshKernel {
      */
     RefreshKernel requestDefaultHeaderTranslationContent(boolean translation);
     /**
-     * 请求重新测量
+     * 请求重新测量 headerHeight , 要求 header 高度为 WRAP_CONTENT
      * @return RefreshKernel
      */
     RefreshKernel requestRemeasureHeightForHeader();
     /**
-     * 请求重新测量
+     * 请求重新测量 footerHeight , 要求 footer 高度为 WRAP_CONTENT
      * @return RefreshKernel
      */
     RefreshKernel requestRemeasureHeightForFooter();

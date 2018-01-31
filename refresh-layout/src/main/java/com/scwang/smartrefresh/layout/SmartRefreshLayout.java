@@ -936,7 +936,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     }
                 }
 //            } else if (action == MotionEvent.ACTION_UP) {
-//                startFlingIfNeed();
+//                startFlingIfNeed(null);
             }
 
             return ret;
@@ -1023,6 +1023,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                             em.setAction(MotionEvent.ACTION_CANCEL);
                             super.dispatchTouchEvent(em);
                         }
+                        em.recycle();
                     }
                     moveSpinnerInfinitely(spinner);
                     return true;
@@ -1035,10 +1036,12 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             case MotionEvent.ACTION_CANCEL:
                 mDragDirection = 'n';//关闭拖动方向
                 if (mFalsifyEvent != null) {
+                    mFalsifyEvent.recycle();
                     mFalsifyEvent = null;
                     long time = e.getEventTime();
                     MotionEvent ec = obtain(time, time, action, mTouchX, touchY, 0);
                     super.dispatchTouchEvent(ec);
+                    ec.recycle();
                 }
                 if (overSpinner()) {
                     mIsBeingDragged = false;//关闭拖动状态
@@ -1264,7 +1267,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         int mFrame = 0;
         int mFrameDelay = 10;
         float mVelocity;
-        float mDamping = 0.85f;
+        float mDamping = 0.95f;
         long mLastTime = AnimationUtils.currentAnimationTimeMillis();
 
         FlingRunnable(float velocity) {
@@ -1287,7 +1290,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     velocity *= Math.pow(mDamping, ++frame);
                     float velocityFrame = (velocity * (1f * mFrameDelay / 1000));
                     if (Math.abs(velocityFrame) < 1) {
-                        if (!mState.opening || (mState == RefreshState.Refreshing&&offset > mHeaderHeight) || offset < -mFooterHeight) {
+                        if (!mState.opening
+                                || (mState == RefreshState.Refreshing&&offset > mHeaderHeight)
+                                || (mState != RefreshState.Refreshing&&offset < -mFooterHeight)) {
                             return null;
                         }
                         break;
@@ -1486,7 +1491,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         } else {
             return false;
         }
-        return true;
+        return mIsBeingDragged;
     }
 
     protected void moveSpinnerInfinitely(float spinner) {
@@ -1738,8 +1743,8 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         mNestedScrollingParentHelper.onNestedScrollAccepted(child, target, axes);
         // Dispatch up to the nested parent
         startNestedScroll(axes & ViewCompat.SCROLL_AXIS_VERTICAL);
-        mTotalUnconsumed = 0;
-        mTouchSpinner = mSpinner;
+        mTotalUnconsumed = mSpinner;//0;
+//        mTouchSpinner = mSpinner;
         mNestedScrollInProgress = true;
     }
 
@@ -1747,102 +1752,130 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     public void onNestedPreScroll(@NonNull View target, int dx, int dy, @NonNull int[] consumed) {
         // If we are in the middle of consuming, a scroll, then we want to move the spinner back up
         // before allowing the list to scroll
-        if (mState.opening || (mEnableFooterFollowWhenLoadFinished && mFooterNoMoreData && isEnableLoadMore())) {
-            consumed[1] = 0;
-            if (dispatchNestedPreScroll(dx, dy, consumed, null)) {
-                dy -= consumed[1];
-            }
-            //判断 mTotalUnconsumed和dy 同为负数或者正数
-            if ((mState == RefreshState.Refreshing || mState == RefreshState.TwoLevel) && (dy * mTotalUnconsumed > 0 || mTouchSpinner > 0)) {
-                if (mViceState == RefreshState.None || mViceState == RefreshState.Refreshing) {
-                    mKernel.setState(RefreshState.PullDownToRefresh);
-                }
-                if (Math.abs(dy) > Math.abs(mTotalUnconsumed)) {
-                    consumed[1] += mTotalUnconsumed;
-                    mTotalUnconsumed = 0;
-                    dy -= mTotalUnconsumed;
-                    if (mTouchSpinner <= 0) {
-                        moveSpinnerInfinitely(0);
-                    }
-                } else {
-                    mTotalUnconsumed -= dy;
-                    consumed[1] += dy;
-                    dy = 0;
-                    moveSpinnerInfinitely(mTotalUnconsumed + mTouchSpinner);
-                }
+        int consumedY = 0;
 
-                if (dy > 0 && mTouchSpinner > 0) {
-                    if (dy > mTouchSpinner) {
-                        consumed[1] += mTouchSpinner;
-                        mTouchSpinner = 0;
-                    } else {
-                        mTouchSpinner -= dy;
-                        consumed[1] += dy;
-                    }
-                    moveSpinnerInfinitely(mTouchSpinner);
-                }
-            } else if ((mState == RefreshState.Loading || (mEnableFooterFollowWhenLoadFinished && mFooterNoMoreData && isEnableLoadMore()))
-                    && (dy * mTotalUnconsumed > 0 || mTouchSpinner < 0)) {
-                if (mViceState == RefreshState.None || mViceState == RefreshState.Loading) {
+        if (dy * mTotalUnconsumed > 0) {
+            if (Math.abs(dy) > Math.abs(mTotalUnconsumed)) {
+                consumedY = mTotalUnconsumed;
+                mTotalUnconsumed = 0;
+            } else {
+                consumedY = dy;
+                mTotalUnconsumed -= dy;
+            }
+            moveSpinnerInfinitely(mTotalUnconsumed);
+            if (mViceState.opening || mViceState == RefreshState.None) {
+                if (mSpinner > 0) {
+                    mKernel.setState(RefreshState.PullDownToRefresh);
+                } else {
                     mKernel.setState(RefreshState.PullUpToLoad);
                 }
-                if (Math.abs(dy) > Math.abs(mTotalUnconsumed)) {
-                    consumed[1] += mTotalUnconsumed;
-                    mTotalUnconsumed = 0;
-                    dy -= mTotalUnconsumed;
-                    if (mTouchSpinner >= 0) {
-                        moveSpinnerInfinitely(0);
-                    }
-                } else {
-                    mTotalUnconsumed -= dy;
-                    consumed[1] += dy;
-                    dy = 0;
-                    moveSpinnerInfinitely(mTotalUnconsumed + mTouchSpinner);
-                }
-
-                if (dy < 0 && mTouchSpinner < 0) {
-                    if (dy < mTouchSpinner) {
-                        consumed[1] += mTouchSpinner;
-                        mTouchSpinner = 0;
-                    } else {
-                        mTouchSpinner -= dy;
-                        consumed[1] += dy;
-                    }
-                    moveSpinnerInfinitely(mTouchSpinner);
-                }
-
-                if (mFooterLocked && dy > 0) {
-                    mTotalUnconsumed -= dy;
-                    consumed[1] += dy;
-                    moveSpinnerInfinitely(mTotalUnconsumed + mTouchSpinner);
-                }
             }
-        } else {
-            int consumedY = 0;
-            if (isEnableRefresh() && dy > 0 && mTotalUnconsumed > 0) {
-                if (dy > mTotalUnconsumed) {
-                    consumedY = dy - mTotalUnconsumed;
-                    mTotalUnconsumed = 0;
-                } else {
-                    mTotalUnconsumed -= dy;
-                    consumedY = dy;
-                }
-                moveSpinnerInfinitely(mTotalUnconsumed);
-            } else if (isEnableLoadMore() && dy < 0 && mTotalUnconsumed < 0) {
-                if (dy < mTotalUnconsumed) {
-                    consumedY = dy - mTotalUnconsumed;
-                    mTotalUnconsumed = 0;
-                } else {
-                    mTotalUnconsumed -= dy;
-                    consumedY = dy;
-                }
-                moveSpinnerInfinitely(mTotalUnconsumed);
-            }
-
-            // Now let our nested parent consume the leftovers
-            dispatchNestedPreScroll(dx, dy - consumedY, consumed, null);
-            consumed[1] += consumedY;
+        } else if (dy > 0 && mFooterLocked) {
+            consumedY = dy;
+            mTotalUnconsumed -= dy;
+            moveSpinnerInfinitely(mTotalUnconsumed);
         }
+
+        // Now let our nested parent consume the leftovers
+        dispatchNestedPreScroll(dx, dy - consumedY, consumed, null);
+        consumed[1] += consumedY;
+
+//        if (mState.opening || (mEnableFooterFollowWhenLoadFinished && mFooterNoMoreData && isEnableLoadMore())) {
+//            consumed[1] = 0;
+//            if (dispatchNestedPreScroll(dx, dy, consumed, null)) {
+//                dy -= consumed[1];
+//            }
+//            //判断 mTotalUnconsumed和dy 同为负数或者正数
+//            if ((mState == RefreshState.Refreshing || mState == RefreshState.TwoLevel) && (dy * mTotalUnconsumed > 0 /*|| mTouchSpinner > 0*/)) {
+//                if (mViceState == RefreshState.None || mViceState == RefreshState.Refreshing) {
+//                    mKernel.setState(RefreshState.PullDownToRefresh);
+//                }
+//                if (Math.abs(dy) > Math.abs(mTotalUnconsumed)) {
+//                    consumed[1] += mTotalUnconsumed;
+//                    mTotalUnconsumed = 0;
+//                    dy -= mTotalUnconsumed;
+////                    if (mTouchSpinner <= 0) {
+////                        moveSpinnerInfinitely(0);
+////                    }
+//                } else {
+//                    mTotalUnconsumed -= dy;
+//                    consumed[1] += dy;
+//                    dy = 0;
+//                    moveSpinnerInfinitely(mTotalUnconsumed/* + mTouchSpinner*/);
+//                }
+////
+////                if (dy > 0 && mTouchSpinner > 0) {
+////                    if (dy > mTouchSpinner) {
+////                        consumed[1] += mTouchSpinner;
+////                        mTouchSpinner = 0;
+////                    } else {
+////                        mTouchSpinner -= dy;
+////                        consumed[1] += dy;
+////                    }
+////                    moveSpinnerInfinitely(mTouchSpinner);
+////                }
+//            } else if ((mState == RefreshState.Loading || (mEnableFooterFollowWhenLoadFinished && mFooterNoMoreData && isEnableLoadMore()))
+//                    && (dy * mTotalUnconsumed > 0 /*|| mTouchSpinner < 0*/)) {
+//                if (mViceState == RefreshState.None || mViceState == RefreshState.Loading) {
+//                    mKernel.setState(RefreshState.PullUpToLoad);
+//                }
+//                if (Math.abs(dy) > Math.abs(mTotalUnconsumed)) {
+//                    consumed[1] += mTotalUnconsumed;
+//                    mTotalUnconsumed = 0;
+//                    dy -= mTotalUnconsumed;
+////                    if (mTouchSpinner >= 0) {
+////                        moveSpinnerInfinitely(0);
+////                    }
+//                } else {
+//                    mTotalUnconsumed -= dy;
+//                    consumed[1] += dy;
+//                    dy = 0;
+//                    moveSpinnerInfinitely(mTotalUnconsumed /*+ mTouchSpinner*/);
+//                }
+//
+////                if (dy < 0 && mTouchSpinner < 0) {
+////                    if (dy < mTouchSpinner) {
+////                        consumed[1] += mTouchSpinner;
+////                        mTouchSpinner = 0;
+////                    } else {
+////                        mTouchSpinner -= dy;
+////                        consumed[1] += dy;
+////                    }
+////                    moveSpinnerInfinitely(mTouchSpinner);
+////                }
+//
+//                if (mFooterLocked && dy > 0) {
+//                    mTotalUnconsumed -= dy;
+//                    consumed[1] += dy;
+//                    moveSpinnerInfinitely(mTotalUnconsumed/* + mTouchSpinner*/);
+//                }
+//            }
+//        } else {
+//            int consumedY = 0;
+//            if (isEnableRefresh() && dy > 0 && mTotalUnconsumed > 0) {
+//                if (dy > mTotalUnconsumed) {
+//                    consumedY = dy - mTotalUnconsumed;
+//                    mTotalUnconsumed = 0;
+//                } else {
+//                    mTotalUnconsumed -= dy;
+//                    consumedY = dy;
+//                }
+//                moveSpinnerInfinitely(mTotalUnconsumed);
+//            } else if (isEnableLoadMore() && dy < 0 && mTotalUnconsumed < 0) {
+//                if (dy < mTotalUnconsumed) {
+//                    consumedY = dy - mTotalUnconsumed;
+//                    mTotalUnconsumed = 0;
+//                } else {
+//                    mTotalUnconsumed -= dy;
+//                    consumedY = dy;
+//                }
+//                moveSpinnerInfinitely(mTotalUnconsumed);
+//            }
+//
+//            // Now let our nested parent consume the leftovers
+//            dispatchNestedPreScroll(dx, dy - consumedY, consumed, null);
+//            consumed[1] += consumedY;
+//        }
 
     }
 
@@ -1879,18 +1912,21 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 mKernel.setState(RefreshState.PullDownToRefresh);
             }
             mTotalUnconsumed += Math.abs(dy);
-            moveSpinnerInfinitely(mTotalUnconsumed + mTouchSpinner);
+            moveSpinnerInfinitely(mTotalUnconsumed/* + mTouchSpinner*/);
         } else if (dy > 0 && isEnableLoadMore() /* && (mRefreshContent == null || mRefreshContent.canLoadMore())*/) {
             if (mViceState == RefreshState.None) {
                 mKernel.setState(RefreshState.PullUpToLoad);
             }
             mTotalUnconsumed -= Math.abs(dy);
-            moveSpinnerInfinitely(mTotalUnconsumed + mTouchSpinner);
+            moveSpinnerInfinitely(mTotalUnconsumed/* + mTouchSpinner*/);
         }
     }
 
     @Override
     public boolean onNestedPreFling(@NonNull View target, float velocityX, float velocityY) {
+        if (mFooterLocked && velocityY > 0) {
+            return true;
+        }
         return startFlingIfNeed(-velocityY) || dispatchNestedPreFling(velocityX, velocityY);
     }
 
@@ -2701,41 +2737,45 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                                     if (updateListener != null) {
                                         updateListener.onAnimationUpdate(ValueAnimator.ofInt(0, 0));
                                     }
+                                    ValueAnimator animator = null;
+                                    AnimatorListenerAdapter listenerAdapter = new AnimatorListenerAdapter() {
+                                        @Override
+                                        public void onAnimationCancel(Animator animation) {
+                                            super.onAnimationEnd(animation);
+                                        }
+                                        @Override
+                                        public void onAnimationEnd(Animator animation) {
+                                            mFooterLocked = false;
+                                            if (noMoreData) {
+                                                setNoMoreData(true);
+                                            }
+                                            if (mState == RefreshState.LoadFinish) {
+                                                notifyStateChanged(RefreshState.None);
+                                            }
+                                        }
+                                    };
                                     if (updateListener != null || mSpinner >= 0) {
                                         if (reboundAnimator != null) {
                                             reboundAnimator.cancel();
                                             reboundAnimator = null;
                                         }
-                                        mFooterLocked = false;
                                         moveSpinner(0, true);
                                         resetStatus();
                                     } else {
                                         if (noMoreData && mEnableFooterFollowWhenLoadFinished) {
-                                            mFooterLocked = false;
-                                            notifyStateChanged(RefreshState.None);
-                                        } else {
-                                            ValueAnimator animator = animSpinner(0);
-                                            if (animator != null) {
-                                                animator.addListener(new AnimatorListenerAdapter() {
-                                                    @Override
-                                                    public void onAnimationCancel(Animator animation) {
-                                                        super.onAnimationEnd(animation);
-                                                    }
-                                                    @Override
-                                                    public void onAnimationEnd(Animator animation) {
-                                                        mFooterLocked = false;
-                                                        if (noMoreData) {
-                                                            setNoMoreData(true);
-                                                        }
-                                                    }
-                                                });
+                                            if (mSpinner >= -mFooterHeight) {
+                                                notifyStateChanged(RefreshState.None);
                                             } else {
-                                                mFooterLocked = false;
+                                                animator = animSpinner(-mFooterHeight);
                                             }
+                                        } else {
+                                            animator = animSpinner(0);
                                         }
                                     }
-                                    if (noMoreData && mEnableFooterFollowWhenLoadFinished) {
-                                        setNoMoreData(true);
+                                    if (animator != null) {
+                                        animator.addListener(listenerAdapter);
+                                    } else {
+                                        listenerAdapter.onAnimationEnd(null);
                                     }
                                 }
                             }, mSpinner < 0 ? startDelay : 0);
