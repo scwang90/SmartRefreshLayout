@@ -48,6 +48,7 @@ import static com.scwang.refreshlayout.R.id.recyclerView;
 public class RefreshStylesFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private enum Item {
+        Hidden(R.string.title_activity_style_delivery,DeliveryStyleActivity.class),
         Delivery(R.string.title_activity_style_delivery,DeliveryStyleActivity.class),
         Dropbox(R.string.title_activity_style_dropbox, DropboxStyleActivity.class),
         FlyRefresh(R.string.title_activity_style_flyrefresh, FlyRefreshStyleActivity.class),
@@ -89,6 +90,26 @@ public class RefreshStylesFragment extends Fragment implements AdapterView.OnIte
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), VERTICAL));
             recyclerView.setAdapter(new BaseRecyclerAdapter<Item>(Arrays.asList(Item.values()), simple_list_item_2,this) {
+                @Override
+                public SmartViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                    SmartViewHolder holder = super.onCreateViewHolder(parent, viewType);
+                    if (viewType == 0) {
+                        holder.itemView.setVisibility(View.GONE);
+                        holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0,0));
+                    }
+                    return holder;
+                }
+
+                @Override
+                public int getViewTypeCount() {
+                    return 2;
+                }
+
+                @Override
+                public int getItemViewType(int position) {
+                    return position == 0 ? 0 : 1;
+                }
+
                 @Override
                 protected void onBindViewHolder(SmartViewHolder holder, Item model, int position) {
                     holder.text(android.R.id.text1, model.name());

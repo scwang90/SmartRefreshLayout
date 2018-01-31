@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -42,19 +43,20 @@ import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 public class RefreshPractiveFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private enum Item {
-        Repast("餐饮美食-简单自定义Header-外边距magin", RepastPracticeActivity.class),
-        Profile("个人中心-PureScrollMode-纯滚动模式", ProfilePracticeActivity.class),
-        Webview("网页引用-WebView", WebviewPracticeActivity.class),
-        FeedList("微博列表-智能识别", FeedlistPracticeActivity.class),
-        Weibo("微博主页-MultiPurposeListener", WeiboPracticeActivity.class),
-        Banner("滚动广告-Banner", BannerPracticeActivity.class),
-        QQBrowser("QQ浏览器-模拟QQ浏览器内核提示", QQBrowserPracticeActivity.class),
+        Repast(R.string.index_item_repast, RepastPracticeActivity.class),
+        Profile(R.string.index_item_profile, ProfilePracticeActivity.class),
+        WebView(R.string.index_item_webview, WebviewPracticeActivity.class),
+        FeedList(R.string.index_item_feedlist, FeedlistPracticeActivity.class),
+        Weibo(R.string.index_item_weibo, WeiboPracticeActivity.class),
+        Banner(R.string.index_item_banner, BannerPracticeActivity.class),
+        QQBrowser(R.string.index_item_qqbrowser, QQBrowserPracticeActivity.class),
 //        TwoLevel("二级刷新", SecondFloorPracticeFragment.class),
-        SecondFloor("二级刷新-仿淘宝二楼", SecondFloorPracticeFragment.class),
+        SecondFloor(R.string.index_item_secondfloor, SecondFloorPracticeFragment.class),
         ;
-        public String name;
+        @StringRes
+        public int name;
         public Class<?> clazz;
-        Item(String name, Class<?> clazz) {
+        Item(@StringRes int name, Class<?> clazz) {
             this.name = name;
             this.clazz = clazz;
         }

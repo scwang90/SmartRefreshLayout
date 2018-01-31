@@ -112,7 +112,7 @@ public interface RefreshHeader {
      * @param headerHeight Header的高度
      * @param extendHeight Header的扩展高度
      */
-    void onPullingDown(float percent, int offset, int headerHeight, int extendHeight);
+    void onPulling(float percent, int offset, int headerHeight, int extendHeight);
 
     /**
      * 手指释放之后的持续动画（会连续多次调用，用于实时控制动画关键帧）
@@ -313,7 +313,7 @@ public class ClassicsHeader extends LinearLayout implements RefreshHeader {
     public void onHorizontalDrag(float percentX, int offsetX, int offsetMax) {
     }
     @Override
-    public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
+    public void onPulling(float percent, int offset, int headHeight, int extendHeight) {
     }
     @Override
     public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
@@ -334,6 +334,7 @@ public class ClassicsHeader extends LinearLayout implements RefreshHeader {
 
 ### 成功案例
 
-[YanXuanRefresh](https://github.com/ChaserSheng/YanXuanRefresh)  
-[838514984](https://github.com/838514984/smartrefreshlayout-statusUtils)  
-[一个Android下拉刷新样式](http://www.jianshu.com/p/8f29c97eefd8)  
+[YanXuanRefresh](https://github.com/ChaserSheng/YanXuanRefresh)
+[SmartRefreshLottie](https://github.com/wapchief/SmartRefreshLottie)
+[一个Android下拉刷新样式](http://www.jianshu.com/p/8f29c97eefd8)
+[838514984](https://github.com/838514984/smartrefreshlayout-statusUtils)

@@ -88,15 +88,15 @@ compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'//一个开源gif控件
 但是在运行下拉刷新的时候，我们发现 Header是在广告条之下的，看着会别扭~，其实我们可以试试另一种方式，把广告条写到 RefreshLayout内部，看看会发生什么？
 ```xml
 <SmartRefreshLayout>
-	<LinearLayout
-	    android:orientation="vertical">
-	    <TextView
-	        android:layout_width="match_parent"
-	        android:layout_height="100dp"
-	        android:gravity="center"
-	        android:text="我就是boos要求加上的广告条啦"/>
-	    <ListView/>
-	</LinearLayout>
+    <LinearLayout
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:gravity="center"
+            android:text="我就是boos要求加上的广告条啦"/>
+        <ListView/>
+    </LinearLayout>
 </SmartRefreshLayout>
 ```
 由于伪代码过于简单，而且运行效果过于丑陋，这里还是贴出在实际项目中的实际情况吧~

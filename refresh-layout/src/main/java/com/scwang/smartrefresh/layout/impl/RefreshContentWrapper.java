@@ -2,7 +2,6 @@ package com.scwang.smartrefresh.layout.impl;
 
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
-import android.content.Context;
 import android.graphics.PointF;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -25,11 +24,10 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 
 import com.scwang.smartrefresh.layout.api.RefreshContent;
-import com.scwang.smartrefresh.layout.api.RefreshInternal;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.ScrollBoundaryDecider;
-import com.scwang.smartrefresh.layout.util.DesignUtil;
 import com.scwang.smartrefresh.layout.util.CoordinatorLayoutListener;
+import com.scwang.smartrefresh.layout.util.DesignUtil;
 
 import java.util.Collections;
 import java.util.Queue;
@@ -62,10 +60,6 @@ public class RefreshContentWrapper implements RefreshContent {
 
     public RefreshContentWrapper(View view) {
         this.mContentView = mRealContentView = view;
-    }
-
-    public RefreshContentWrapper(Context context) {
-        this.mContentView = mRealContentView = new View(context);
     }
 
     //<editor-fold desc="findScrollableView">

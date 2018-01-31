@@ -81,7 +81,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
          * 关键代码-开始
          *----------------------------------------------------------*/
 
-        MountainSceneView mSceneView = (MountainSceneView) findViewById(R.id.mountan);
+        MountainSceneView mSceneView = (MountainSceneView) findViewById(R.id.mountain);
         mFlyView = (FlyView) findViewById(R.id.flyview);
         mFlyRefreshHeader = (FlyRefreshHeader)findViewById(R.id.flyrefresh);
         mFlyRefreshHeader.setUp(mSceneView, mFlyView);//绑定场景和纸飞机

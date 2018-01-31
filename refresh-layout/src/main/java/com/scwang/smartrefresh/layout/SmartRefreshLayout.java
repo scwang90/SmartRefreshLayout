@@ -23,6 +23,7 @@ import android.support.v4.view.NestedScrollingParent;
 import android.support.v4.view.NestedScrollingParentHelper;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
@@ -34,6 +35,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.AbsListView;
 import android.widget.Scroller;
+import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreater;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;
@@ -481,8 +483,17 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 mRefreshContent = new RefreshContentWrapper(view);
             }
         }
+
         if (mRefreshContent == null) {
-            mRefreshContent = new RefreshContentWrapper(getContext());
+            int padding = DensityUtil.dp2px(20);
+            TextView errorView = new TextView(getContext());
+            errorView.setTextColor(0xffff6600);
+            errorView.setGravity(Gravity.CENTER);
+            errorView.setTextSize(20);
+            errorView.setPadding(padding, padding, padding, padding);
+            errorView.setText(R.string.srl_content_empty);
+            addView(errorView, MATCH_PARENT, MATCH_PARENT);
+            mRefreshContent = new RefreshContentWrapper(errorView);
         }
 
         View fixedHeaderView = mFixedHeaderViewId > 0 ? findViewById(mFixedHeaderViewId) : null;

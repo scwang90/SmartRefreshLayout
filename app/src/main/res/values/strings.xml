@@ -16,7 +16,7 @@
     <string name="fragment_refresh_styles">风格展示</string>
     <string name="fragment_refresh_using">使用示例</string>
     <string name="fragment_refresh_practive">实战</string>
-    <string name="title_activity_style_wave_swip">全屏水波</string>
+    <string name="title_activity_style_wave_swip">全屏水滴</string>
     <string name="title_activity_style_material">官方主题</string>
     <string name="title_activity_style_water_drop">苹果水滴</string>
     <string name="title_activity_style_phoenix">金色校园</string>
@@ -87,6 +87,7 @@
     <string name="title_activity_using_overscroll">越界回弹</string>
     <string name="title_activity_using_listener">多功能监听器</string>
     <string name="title_activity_using_custom">自定义Header</string>
+    <string name="title_activity_using_snaphelper">SnapHelper</string>
     <string name="title_activity_practice_repast">餐饮美食</string>
     <string name="title_activity_practice_profile">个人中心</string>
     <string name="title_activity_practice_webview">Github</string>
@@ -94,8 +95,9 @@
     <string name="title_activity_practice_banner">滚动广告</string>
     <string name="title_activity_practice_weibo">微博主页</string>
     <string name="title_activity_practice_qqbrowser">QQ浏览器</string>
+
     <string name="github_qqbrowser_kernel">网页由 github.com 提供\n已启用QQ浏览器X5内核</string>
-    <string name="title_activity_using_snaphelper">SnapHelper</string>
+
     <string name="fragment_using_purescroll">纯滚动模式</string>
     <string name="fragment_using_purescroll_header">纯滚动模式-单独指定Header</string>
     <string name="fragment_using_emptylayout">空页面</string>
@@ -104,4 +106,13 @@
     <string name="fragment_using_nestscroll">嵌套滚动</string>
     <string name="fragment_using_nestedscroll_integral">嵌套滚动-整体嵌套</string>
     <string name="fragment_using_viewpager">ViewPager</string>
+
+    <string name="index_item_repast">Simple customization header, HeaderInsetStart</string>
+    <string name="index_item_profile">Pure scroll mode</string>
+    <string name="index_item_webview">Use WebView</string>
+    <string name="index_item_feedlist">Intelligent identification</string>
+    <string name="index_item_weibo">MultiPurposeListener</string>
+    <string name="index_item_banner">Use banner</string>
+    <string name="index_item_qqbrowser">Imitate QQ browser</string>
+    <string name="index_item_secondfloor">Imitate the second floor of taobao</string>
 </resources>

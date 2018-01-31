@@ -36,10 +36,10 @@
 ## V 1.0.3
 >添加：下拉和上拉时，支持多点触摸，手势不冲突  
 >添加：当 内容视图不满一页时，默认不能上拉加载更多，不过必要时，通过设置还是可以上拉的  
->添加：为 Heaer和Footer添加拖动时水平方向坐标 x，实现左右拖动Header的效果  
->添加：为 Refreshlayout 添加多点触摸支持，在多个手指触摸式不会发生冲突，并且随意拖动  
->添加：为 Refreshlayout 添加 EnableLoadMoreWhenContentNotFull 功能
->添加：为 Refreshlayout 添加 srlEnabledNestedScroll 属性 和 srlEnabledNestedScroll 方法  
+>添加：为 Header和Footer添加拖动时水平方向坐标 x，实现左右拖动Header的效果
+>添加：为 RefreshLayout 添加多点触摸支持，在多个手指触摸式不会发生冲突，并且随意拖动
+>添加：为 RefreshLayout 添加 EnableLoadMoreWhenContentNotFull 功能
+>添加：为 RefreshLayout 添加 srlEnabledNestedScroll 属性 和 srlEnabledNestedScroll 方法
 >添加：为 RefreshHeader 添加 srlEnableHorizontalDrag 属性 和 setEnableHorizontalDrag 方法  
 >添加：为 ClassicsHeader 添加 srlEnableLastTime 属性 和 setEnableLastTime 方法 控制时间显示  
 >添加：为 ClassicsHeader 添加 srlDrawableArrow 属性 和 setArrowResource 方法 改变箭头图片  

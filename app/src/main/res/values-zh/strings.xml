@@ -1,0 +1,118 @@
+<resources>
+    <string name="app_name">SmartRefreshLayout</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+
+    <string name="title_activity_fly_refresh">FlyRefresh</string>
+    <string name="title_activity_index_main">Refresh</string>
+    <string name="title_style">样式</string>
+    <string name="title_using">使用</string>
+    <string name="title_practice">实战</string>
+    <string name="region_hint">未选择</string>
+    <string name="region_name">已选地区</string>
+
+    <string name="fragment_refresh_styles">风格展示</string>
+    <string name="fragment_refresh_using">使用示例</string>
+    <string name="fragment_refresh_practive">实战</string>
+    <string name="title_activity_style_wave_swip">全屏水滴</string>
+    <string name="title_activity_style_material">官方主题</string>
+    <string name="title_activity_style_water_drop">苹果水滴</string>
+    <string name="title_activity_style_phoenix">金色校园</string>
+    <string name="title_activity_style_taurus">冲上云霄</string>
+    <string name="title_activity_style_bezier">贝塞尔雷达</string>
+    <string name="title_activity_style_classics">经典风格</string>
+    <string name="title_activity_style_circle">弹出圆圈</string>
+    <string name="title_activity_style_fungame_battlecity">战争城市</string>
+    <string name="title_activity_style_fungame_hitblock">打砖块</string>
+    <string name="title_activity_style_storehouse">StoreHouse</string>
+    <string name="title_activity_using_basic">基本使用</string>
+    <string name="title_activity_using_assign_default">全局默认</string>
+    <string name="title_activity_using_assign_xml">XML配置</string>
+    <string name="title_activity_using_assign_code">java代码设置</string>
+    <string name="description_set_default_creater">这是使用定制Header和Footer的第一种方法-全局默认\n\n
+        本方法是实际项目中最常用的方法，其特点有：\n\n
+        1.设置一次全部生效，不用多次写重复的代码\n
+        2.优先级最低，在特别页面可以轻松的覆盖替换\n\n
+        使用方法： \n
+        //设置全局的Header构建器 \n
+        SmartRefreshLayout.setDefaultRefreshHeaderCreater(new DefaultRefreshHeaderCreater() {\n
+        public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {\n
+        return new ClassicsHeader(context);//指定为经典Header，默认是 贝塞尔雷达Header\n
+        }\n
+        });\n
+        //设置全局的Footer构建器\n
+        SmartRefreshLayout.setDefaultRefreshFooterCreater(new DefaultRefreshFooterCreater() {\n
+        public RefreshFooter createRefreshFooter(Context context, RefreshLayout layout) {\n
+        return new ClassicsFooter(context);//指定为经典Footer，默认是 BallPulseFooter\n
+        }\n
+        });\n\n
+        关键代码，需要在布局生成之前设置，建议代码放在 Application.onCreate 中
+    </string>
+    <string name="description_define_in_xml"><![CDATA[这是使用定制Header和Footer的第二种方法-Xml中配置\n\n
+        在需要使用特别的Header或者特别配置的页面时候可以使用本方法\n\n
+        本方法的特点：\n
+        1.可以在Androd Studio中的预览窗口预览效果\n
+        2.优先级高于 【全局默认】但是低于 【JavaCode】\n\n
+        代码示例：\n
+        <com.scwang.smartrefresh.SmartRefreshLayout\n
+            \t\tandroid:layout_width="match_parent"\n
+            \t\tandroid:layout_height="match_parent">\n
+            \t<com.scwang.smartrefresh.header.ClassicsHeader\n
+                \t\tandroid:layout_width="match_parent"\n
+                \t\tandroid:layout_height="wrap_content"/>\n
+            \t<TextView\n
+                \t\tandroid:layout_width="match_parent"\n
+                \t\tandroid:layout_height="match_parent"/>\n
+            \t<com.scwang.smartrefresh.footer.ClassicsFooter\n
+                \t\tandroid:layout_width="match_parent"\n
+                \t\tandroid:layout_height="wrap_content"/>\n
+        </com.scwang.smartrefresh.SmartRefreshLayout>\n
+    ]]></string>
+    <string name="description_define_in_code">这是使用定制Header和Footer的第三种方法-代码设置\n\n
+        本方法是实际项目中比较少用的方法，其特点有：\n\n
+        1.设置一次生效一次，需要多处设置，建议特别的页面使用\n
+        2.优先级最高，即使使用了会覆盖方法一和方法二的设置\n\n
+        使用方法： \n
+        final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);\n
+        //设置 Header 为 Material风格\n
+        refreshLayout.setRefreshHeader(new MaterialHeader(this));\n
+        //设置 Footer 为 三球动画\n
+        refreshLayout.setRefreshFooter(new BallPulseFooter(this));\n\n
+    </string>
+    <string name="title_activity_style_dropbox">掉落盒子</string>
+    <string name="title_activity_style_delivery">气球快递</string>
+    <string name="title_activity_style_flyrefresh">纸飞机</string>
+    <string name="title_activity_using_overscroll">越界回弹</string>
+    <string name="title_activity_using_listener">多功能监听器</string>
+    <string name="title_activity_using_custom">自定义Header</string>
+    <string name="title_activity_using_snaphelper">SnapHelper</string>
+    <string name="title_activity_practice_repast">餐饮美食</string>
+    <string name="title_activity_practice_profile">个人中心</string>
+    <string name="title_activity_practice_webview">Github</string>
+    <string name="title_activity_practice_feedlist">微博列表</string>
+    <string name="title_activity_practice_banner">滚动广告</string>
+    <string name="title_activity_practice_weibo">微博主页</string>
+    <string name="title_activity_practice_qqbrowser">QQ浏览器</string>
+
+    <string name="github_qqbrowser_kernel">网页由 github.com 提供\n已启用QQ浏览器X5内核</string>
+
+    <string name="fragment_using_purescroll">纯滚动模式</string>
+    <string name="fragment_using_purescroll_header">纯滚动模式-单独指定Header</string>
+    <string name="fragment_using_emptylayout">空页面</string>
+    <string name="fragment_using_emptylayout_inner">空页面-内部嵌套</string>
+    <string name="fragment_using_emptylayout_outer">空页面-外部嵌套</string>
+    <string name="fragment_using_nestscroll">嵌套滚动</string>
+    <string name="fragment_using_nestedscroll_integral">嵌套滚动-整体嵌套</string>
+    <string name="fragment_using_viewpager">ViewPager</string>
+
+    <string name="index_item_repast">餐饮美食-简单自定义Header-外边距magin</string>
+    <string name="index_item_profile">个人中心-PureScrollMode-纯滚动模式</string>
+    <string name="index_item_webview">网页引用-WebView</string>
+    <string name="index_item_feedlist">微博列表-智能识别</string>
+    <string name="index_item_weibo">微博主页-MultiPurposeListener</string>
+    <string name="index_item_banner">滚动广告-Banner</string>
+    <string name="index_item_qqbrowser">QQ浏览器-模拟QQ浏览器内核提示</string>
+    <string name="index_item_secondfloor">二级刷新-仿淘宝二楼</string>
+</resources>

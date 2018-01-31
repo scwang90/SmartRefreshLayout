@@ -15,6 +15,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.scwang.smartrefresh.layout.R;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -62,7 +63,7 @@ public class FalsifyHeader extends View implements RefreshHeader {
     }
 
     @Override
-    @SuppressLint({"DrawAllocation", "SetTextI18n"})
+    @SuppressLint("DrawAllocation")
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (isInEditMode()) {//这段代码在运行时不会执行，只会在Studio编辑预览时运行，不用在意性能问题
@@ -76,7 +77,8 @@ public class FalsifyHeader extends View implements RefreshHeader {
             canvas.drawRect(d, d, getWidth() - d, getBottom() - d, paint);
 
             TextView textView = new TextView(getContext());
-            textView.setText(getClass().getSimpleName()+" 虚假区域\n运行时代表下拉Header的高度【" + DensityUtil.px2dp(getHeight()) + "dp】\n而不会显示任何东西");
+            textView.setText(R.string.srl_component_falsify);
+            textView.setText(String.format(textView.getText().toString(), getClass().getSimpleName(), DensityUtil.px2dp(getHeight())));
             textView.setTextColor(0x44ffffff);
             textView.setGravity(Gravity.CENTER);
             textView.measure(makeMeasureSpec(getWidth(), EXACTLY), makeMeasureSpec(getHeight(), EXACTLY));

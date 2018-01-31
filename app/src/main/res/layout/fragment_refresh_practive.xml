@@ -21,7 +21,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srlPrimaryColor="@color/colorPrimary"
-            app:srlAccentColor="@android:color/white"/>
+            app:srlAccentColor="@android:color/white"
+            app:srlDrawableProgress="@drawable/animation_loading_frame"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"

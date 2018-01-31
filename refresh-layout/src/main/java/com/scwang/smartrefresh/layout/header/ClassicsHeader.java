@@ -77,7 +77,7 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     protected PathsDrawable mArrowDrawable;
     protected ProgressDrawable mProgressDrawable;
     protected SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
-    protected DateFormat mFormat = new SimpleDateFormat(REFRESH_HEADER_LASTTIME, Locale.CHINA);
+    protected DateFormat mFormat = new SimpleDateFormat(REFRESH_HEADER_LASTTIME, Locale.getDefault());
     protected Integer mAccentColor;
     protected Integer mPrimaryColor;
     protected int mBackgroundColor;

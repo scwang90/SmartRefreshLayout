@@ -8,7 +8,7 @@
     tools:context="com.scwang.refreshlayout.activity.style.FlyRefreshStyleActivity">
 
     <com.scwang.smartrefresh.header.flyrefresh.MountainSceneView
-        android:id="@+id/mountan"
+        android:id="@+id/mountain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:msvViewportHeight="340dp"
