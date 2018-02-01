@@ -73,13 +73,13 @@ public interface RefreshKernel {
      * @param request 请求
      * @return RefreshKernel
      */
-    RefreshKernel requestHeaderNeedTouchEventWhenRefreshing(boolean request);
+    RefreshKernel requestNeedTouchEventWhenRefreshing(boolean request);
     /**
      * 请求事件
      * @param request 请求
      * @return RefreshKernel
      */
-    RefreshKernel requestFooterNeedTouchEventWhenLoading(boolean request);
+    RefreshKernel requestNeedTouchEventWhenLoading(boolean request);
     /**
      * 请求设置默认内容滚动设置
      * @param translation 移动

@@ -200,13 +200,13 @@ public class TwoLevelHeader extends FrameLayout implements RefreshHeader, Invoca
 
         RefreshKernel proxy = (RefreshKernel) Proxy.newProxyInstance(RefreshKernel.class.getClassLoader(), new Class[]{RefreshKernel.class}, this);
         proxy.requestDrawBackgroundForHeader(0);
-        proxy.requestHeaderNeedTouchEventWhenRefreshing(false);
+        proxy.requestNeedTouchEventWhenRefreshing(false);
 
         mHeaderHeight = height;
         mRefreshKernel = kernel;
         mRefreshKernel.requestFloorDuration(mFloorDuration);
         mRefreshHeader.onInitialized(proxy, height, extendHeight);
-        mRefreshKernel.requestHeaderNeedTouchEventWhenRefreshing(!mEnablePullToCloseTwoLevel);
+        mRefreshKernel.requestNeedTouchEventWhenRefreshing(!mEnablePullToCloseTwoLevel);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && mPaint != null) {
             mRefreshHeader.getView().animate().setUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -380,7 +380,7 @@ public class TwoLevelHeader extends FrameLayout implements RefreshHeader, Invoca
     public TwoLevelHeader setDisablePullToCloseTwoLevel(boolean disable) {
         this.mEnablePullToCloseTwoLevel = !disable;
         if (this.mRefreshKernel != null) {
-            this.mRefreshKernel.requestHeaderNeedTouchEventWhenRefreshing(disable);
+            this.mRefreshKernel.requestNeedTouchEventWhenRefreshing(disable);
         }
         return this;
     }

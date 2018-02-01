@@ -2351,6 +2351,8 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             removeView(mRefreshHeader.getView());
         }
         this.mRefreshHeader = header;
+        this.mHeaderBackgroundColor = 0;
+        this.mHeaderNeedTouchEventWhenRefreshing = false;
         this.mHeaderHeightStatus = mHeaderHeightStatus.unNotify();
         if (header.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
             this.addView(mRefreshHeader.getView(), 0, new LayoutParams(width, height));
@@ -2383,6 +2385,8 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             removeView(mRefreshFooter.getView());
         }
         this.mRefreshFooter = footer;
+        this.mFooterBackgroundColor = 0;
+        this.mFooterNeedTouchEventWhenLoading = false;
         this.mFooterHeightStatus = mFooterHeightStatus.unNotify();
         this.mEnableLoadMore = !mManualLoadMore || mEnableLoadMore;
         if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
@@ -3378,12 +3382,12 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             return this;
         }
         @Override
-        public RefreshKernel requestHeaderNeedTouchEventWhenRefreshing(boolean request) {
+        public RefreshKernel requestNeedTouchEventWhenRefreshing(boolean request) {
             mHeaderNeedTouchEventWhenRefreshing = request;
             return this;
         }
         @Override
-        public RefreshKernel requestFooterNeedTouchEventWhenLoading(boolean request) {
+        public RefreshKernel requestNeedTouchEventWhenLoading(boolean request) {
             mFooterNeedTouchEventWhenLoading = request;
             return this;
         }

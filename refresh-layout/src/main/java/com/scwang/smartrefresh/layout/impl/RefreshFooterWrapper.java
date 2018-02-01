@@ -21,6 +21,8 @@ public class RefreshFooterWrapper extends RefreshInternalWrapper implements Refr
 
     private RefreshKernel mRefreshKernel;
     private Method mRequestDrawBackgroundForHeaderMethod;
+    private Method mRequestRemeasureHeightForHeaderMethod;
+    private Method mRequestNeedTouchEventWhenRefreshingMethod;
 
     public RefreshFooterWrapper(View wrapper) {
         super(wrapper);
@@ -31,6 +33,8 @@ public class RefreshFooterWrapper extends RefreshInternalWrapper implements Refr
         if (mWrapperView instanceof RefreshInternal) {
             RefreshKernel proxy = (RefreshKernel) Proxy.newProxyInstance(RefreshKernel.class.getClassLoader(), new Class[]{RefreshKernel.class}, this);
             proxy.requestDrawBackgroundForHeader(0);
+            proxy.requestRemeasureHeightForHeader();
+            proxy.requestNeedTouchEventWhenRefreshing(false);
             mRefreshKernel = kernel;
             ((RefreshInternal) mWrapperView).onInitialized(proxy, height, extendHeight);
         } else {
@@ -55,7 +59,10 @@ public class RefreshFooterWrapper extends RefreshInternalWrapper implements Refr
         if (mRefreshKernel != null) {
             if (method.equals(mRequestDrawBackgroundForHeaderMethod)) {
                 mRefreshKernel.requestDrawBackgroundForFooter((int) args[0]);
-                returnValue = proxy;
+            } else if (method.equals(mRequestRemeasureHeightForHeaderMethod)) {
+                mRefreshKernel.requestRemeasureHeightForFooter();
+            } else if (method.equals(mRequestNeedTouchEventWhenRefreshingMethod)) {
+                mRefreshKernel.requestNeedTouchEventWhenLoading((boolean) args[0]);
             } else {
                 returnValue = method.invoke(mRefreshKernel, args);
             }
@@ -64,6 +71,10 @@ public class RefreshFooterWrapper extends RefreshInternalWrapper implements Refr
             if (mRefreshKernel == null && RefreshKernel.class.equals(method.getDeclaringClass())) {
                 if (mRequestDrawBackgroundForHeaderMethod == null) {
                     mRequestDrawBackgroundForHeaderMethod = method;
+                } else if (mRequestRemeasureHeightForHeaderMethod == null) {
+                    mRequestRemeasureHeightForHeaderMethod = method;
+                } else if (mRequestNeedTouchEventWhenRefreshingMethod == null) {
+                    mRequestNeedTouchEventWhenRefreshingMethod = method;
                 }
             }
             return proxy;

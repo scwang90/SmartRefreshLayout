@@ -18,6 +18,7 @@ import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import static android.view.MotionEvent.ACTION_MASK;
 
@@ -64,6 +65,7 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
     }
 
     private void initView(Context context) {
+        setMinimumHeight(DensityUtil.dp2px(100));
         mScreenHeightPixels = context.getResources().getDisplayMetrics().heightPixels;
     }
 
@@ -217,7 +219,7 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
         mRefreshKernel = kernel;
         mHeaderHeight = height;
         setTranslationY(mOffset - mHeaderHeight);
-        kernel.requestHeaderNeedTouchEventWhenRefreshing(true);
+        kernel.requestNeedTouchEventWhenRefreshing(true);
     }
 
     @Override
