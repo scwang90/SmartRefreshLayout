@@ -89,7 +89,7 @@ public class PhoenixStyleActivity extends AppCompatActivity implements AdapterVi
             mRecyclerView = recyclerView;
         }
 
-        /**
+        /*
          * 监听 AppBarLayout 的关闭和开启 ActionButton 设置关闭隐藏动画
          */
         mActionButton = (FloatingActionButton) findViewById(R.id.fab);

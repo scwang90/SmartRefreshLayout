@@ -24,7 +24,6 @@ import java.util.Collection;
  */
 public class RepastPracticeActivity extends AppCompatActivity {
 
-
     private class Model {
         int imageId;
         int avatarId;
@@ -49,6 +48,7 @@ public class RepastPracticeActivity extends AppCompatActivity {
         });
 
         final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
+        refreshLayout.setEnableFooterFollowWhenLoadFinished(true);
 
         //第一次进入演示刷新
         if (isFirstEnter) {
@@ -88,11 +88,11 @@ public class RepastPracticeActivity extends AppCompatActivity {
                     refreshLayout.getLayout().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            mAdapter.loadMore(loadModels());
                             if (mAdapter.getCount() > 12) {
                                 Toast.makeText(getBaseContext(), "数据全部加载完毕", Toast.LENGTH_SHORT).show();
                                 refreshLayout.finishLoadMoreWithNoMoreData();//设置之后，将不会再触发加载事件
                             } else {
+                                mAdapter.loadMore(loadModels());
                                 refreshLayout.finishLoadMore();
                             }
                         }

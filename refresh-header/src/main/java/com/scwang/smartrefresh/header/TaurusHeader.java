@@ -13,6 +13,7 @@ import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.Interpolator;
 import android.view.animation.Transformation;
@@ -73,7 +74,7 @@ public class TaurusHeader extends View implements RefreshHeader {
     private float mLastAnimationTime;
 
     private Random mRandom;
-    private boolean mEndOfRefreshing;
+//    private boolean mEndOfRefreshing;
 
     //KEY: Y position, Value: X offset of wind
     private Map<Float, Float> mWinds;
@@ -81,6 +82,7 @@ public class TaurusHeader extends View implements RefreshHeader {
     private float mWindLineWidth;
     private boolean mNewWindSet;
     private boolean mInverseDirection;
+    private float mFinishTransformation;
 
     private enum AnimationPart {
         FIRST,
@@ -165,8 +167,9 @@ public class TaurusHeader extends View implements RefreshHeader {
     @Override
     public void onPulling(float percent, int offset, int height, int extendHeight) {
         mPercent = percent;
-        mEndOfRefreshing = false;
+//        mEndOfRefreshing = false;
         mHeaderHeight = height;
+        mFinishTransformation = 0;
     }
 
     @Override
@@ -178,6 +181,7 @@ public class TaurusHeader extends View implements RefreshHeader {
     @Override
     public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
         isRefreshing = true;
+        mFinishTransformation = 0;
         startAnimation(mAnimation);
     }
 
@@ -192,10 +196,28 @@ public class TaurusHeader extends View implements RefreshHeader {
 
     @Override
     public int onFinish(@NonNull RefreshLayout layout, boolean success) {
-        isRefreshing = false;
-        mEndOfRefreshing = true;
         clearAnimation();
-        return 0;
+        if (success) {
+            startAnimation(new Animation() {{
+                setDuration(100);
+                setInterpolator(new AccelerateInterpolator());
+            }
+                @Override
+                protected void applyTransformation(float interpolatedTime, Transformation t) {
+                    if (interpolatedTime == 1) {
+                        isRefreshing = false;
+//                        mEndOfRefreshing = true;
+                    }
+                    mFinishTransformation = interpolatedTime;
+                    invalidate();
+                }
+            });
+            return 200;
+        } else {
+            isRefreshing = false;
+//            mEndOfRefreshing = true;
+            return 0;
+        }
     }
 
     /**
@@ -407,13 +429,13 @@ public class TaurusHeader extends View implements RefreshHeader {
         }
 
         float scale;
-        float overdragPercent = 0;
-        boolean overdrag = false;
+        float overDragPercent = 0;
+        boolean overDrag = false;
 
         if (mPercent > 1.0f) {
-            overdrag = true;
+            overDrag = true;
             // Here we want know about how mach percent of over drag we done
-            overdragPercent = Math.abs(1.0f - mPercent);
+            overDragPercent = Math.abs(1.0f - mPercent);
         }
 
         float scalePercentDelta = dragPercent - SCALE_START_PERCENT;
@@ -440,10 +462,10 @@ public class TaurusHeader extends View implements RefreshHeader {
         float offsetY = dragYOffset
                 - (parallax ? mCloudCenter.height()/2 + parallaxPercent : mCloudCenter.height()/2);
 
-        float sx = overdrag ? scale + overdragPercent / 4 : scale;
-        float sy = overdrag ? scale + overdragPercent / 2 : scale;
+        float sx = overDrag ? scale + overDragPercent / 4 : scale;
+        float sy = overDrag ? scale + overDragPercent / 2 : scale;
 
-        if (isRefreshing && !overdrag) {
+        if (isRefreshing && !overDrag) {
             if (checkCurrentAnimationPart(AnimationPart.FIRST)) {
                 sx = scale - (getAnimationPartValue(AnimationPart.FIRST) / LOADING_ANIMATION_COEFFICIENT) / 8;
             } else if (checkCurrentAnimationPart(AnimationPart.SECOND)) {
@@ -483,8 +505,8 @@ public class TaurusHeader extends View implements RefreshHeader {
             mHeaderHeight = height;
         }
 
-        // Check overdrag
-        if (dragPercent > 1.0f /*&& !mEndOfRefreshing*/) {
+        // Check overDrag
+        if (dragPercent > 1.0f) {
             rotateAngle = 20 * (float) (1 - Math.pow(100, -(dragPercent - 1) / 2));
             dragPercent = 1.0f;
         }
@@ -492,9 +514,14 @@ public class TaurusHeader extends View implements RefreshHeader {
         float offsetX = ((width * dragPercent) / 2) - mAirplane.width() / 2;
         float offsetY = mHeaderHeight * (1 - dragPercent/2) - mAirplane.height() / 2;
 
-        if (mEndOfRefreshing) {
-            offsetX = width/2 + width * (1-dragPercent) / 2 - mAirplane.width() / 2;
-            offsetY = (dragPercent) * (mHeaderHeight / 2 + mAirplane.height() * 3 / 2) - 2 * mAirplane.height();
+//        if (mEndOfRefreshing) {
+//            offsetX = width/2 + width * (1-dragPercent) / 2 - mAirplane.width() / 2;
+//            offsetY = (dragPercent) * (mHeaderHeight / 2 + mAirplane.height() * 3 / 2) - 2 * mAirplane.height();
+//        }
+
+        if (mFinishTransformation > 0) {
+            offsetY += (0 - offsetY) * mFinishTransformation;
+            offsetX += (width + mAirplane.width() - offsetX) * mFinishTransformation;
         }
 
         if (isRefreshing) {
@@ -648,7 +675,7 @@ public class TaurusHeader extends View implements RefreshHeader {
     }
 
     private void setLoadingAnimationTime(float loadingAnimationTime) {
-        /**SLOW DOWN ANIMATION IN {@link #SLOW_DOWN_ANIMATION_COEFFICIENT} time */
+        /*SLOW DOWN ANIMATION IN {@link #SLOW_DOWN_ANIMATION_COEFFICIENT} time */
         mLoadingAnimationTime = LOADING_ANIMATION_COEFFICIENT * (loadingAnimationTime / SLOW_DOWN_ANIMATION_COEFFICIENT);
         invalidate();
     }

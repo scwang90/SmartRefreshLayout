@@ -2640,40 +2640,36 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (mState == RefreshState.Refreshing) {
-                    if (mRefreshHeader != null && mRefreshContent != null) {
-                        int startDelay = mRefreshHeader.onFinish(SmartRefreshLayout.this, success);
-                        if (startDelay < Integer.MAX_VALUE) {
-                            if (mIsBeingDragged) {
-                                mTouchSpinner = 0;
-                                mTouchY = mLastTouchY;
-                                mIsBeingDragged = false;
-                                long time = System.currentTimeMillis();
-                                SmartRefreshLayout.super.dispatchTouchEvent(obtain(time, time, MotionEvent.ACTION_DOWN, mLastTouchX, mTouchY + mSpinner - mTouchSlop*2, 0));
-                                SmartRefreshLayout.super.dispatchTouchEvent(obtain(time, time, MotionEvent.ACTION_MOVE, mLastTouchX, mTouchY + mSpinner, 0));
+                if (mState == RefreshState.Refreshing && mRefreshHeader != null && mRefreshContent != null) {
+                    notifyStateChanged(RefreshState.RefreshFinish);
+                    int startDelay = mRefreshHeader.onFinish(SmartRefreshLayout.this, success);
+                    if (mOnMultiPurposeListener != null) {
+                        mOnMultiPurposeListener.onHeaderFinish(mRefreshHeader, success);
+                    }
+                    if (startDelay < Integer.MAX_VALUE) {
+                        if (mIsBeingDragged) {
+                            mTouchSpinner = 0;
+                            mTouchY = mLastTouchY;
+                            mIsBeingDragged = false;
+                            long time = System.currentTimeMillis();
+                            SmartRefreshLayout.super.dispatchTouchEvent(obtain(time, time, MotionEvent.ACTION_DOWN, mLastTouchX, mTouchY + mSpinner - mTouchSlop*2, 0));
+                            SmartRefreshLayout.super.dispatchTouchEvent(obtain(time, time, MotionEvent.ACTION_MOVE, mLastTouchX, mTouchY + mSpinner, 0));
+                        }
+                        if (mSpinner > 0) {
+                            AnimatorUpdateListener updateListener = null;
+                            ValueAnimator valueAnimator = animSpinner(0, startDelay, mReboundInterpolator, mReboundDuration);
+                            if (mEnableScrollContentWhenRefreshed) {
+                                updateListener = mRefreshContent.scrollContentWhenFinished(mSpinner);
                             }
-                            notifyStateChanged(RefreshState.RefreshFinish);
-                        }
-                        if (mOnMultiPurposeListener != null) {
-                            mOnMultiPurposeListener.onHeaderFinish(mRefreshHeader, success);
-                        }
-                        if (startDelay < Integer.MAX_VALUE) {
-                            if (mSpinner > 0) {
-                                AnimatorUpdateListener updateListener = null;
-                                ValueAnimator valueAnimator = animSpinner(0, startDelay, mReboundInterpolator, mReboundDuration);
-                                if (mEnableScrollContentWhenRefreshed) {
-                                    updateListener = mRefreshContent.scrollContentWhenFinished(mSpinner);
-                                }
-                                if (valueAnimator != null && updateListener != null) {
-                                    valueAnimator.addUpdateListener(updateListener);
-                                }
-                            } else {
-                                moveSpinner(0, true);
-                                resetStatus();
+                            if (valueAnimator != null && updateListener != null) {
+                                valueAnimator.addUpdateListener(updateListener);
                             }
+                        } else if (mSpinner < 0) {
+                            animSpinner(0, startDelay, mReboundInterpolator, mReboundDuration);
+                        } else {
+                            moveSpinner(0, true);
+                            resetStatus();
                         }
-                    } else {
-                        resetStatus();
                     }
                 }
             }
@@ -2714,82 +2710,86 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (mState == RefreshState.Loading) {
-                    if (mRefreshFooter != null && mRefreshContent != null) {
-                        final int startDelay = mRefreshFooter.onFinish(SmartRefreshLayout.this, success);
-                        if (startDelay < Integer.MAX_VALUE) {
-                            if (mIsBeingDragged) {
-                                mTouchSpinner = 0;
-                                mTouchY = mLastTouchY;
-                                mIsBeingDragged = false;
-                                final long time = System.currentTimeMillis();
-                                SmartRefreshLayout.super.dispatchTouchEvent(obtain(time, time, MotionEvent.ACTION_DOWN, mLastTouchX, mTouchY + mSpinner + mTouchSlop*2, 0));
-                                SmartRefreshLayout.super.dispatchTouchEvent(obtain(time, time, MotionEvent.ACTION_MOVE, mLastTouchX, mTouchY + mSpinner, 0));
-                            }
-                            notifyStateChanged(RefreshState.LoadFinish);
+                if (mState == RefreshState.Loading && mRefreshFooter != null && mRefreshContent != null) {
+                    notifyStateChanged(RefreshState.LoadFinish);
+                    final int startDelay = mRefreshFooter.onFinish(SmartRefreshLayout.this, success);
+                    if (mOnMultiPurposeListener != null) {
+                        mOnMultiPurposeListener.onFooterFinish(mRefreshFooter, success);
+                    }
+                    if (startDelay < Integer.MAX_VALUE) {
+                        //计算布局将要移动的偏移量
+                        final boolean needHoldFooter = noMoreData && mEnableFooterFollowWhenLoadFinished && mSpinner < 0 && mRefreshContent.canLoadMore();
+                        final int offset = mSpinner - (needHoldFooter ? Math.max(mSpinner,-mFooterHeight) : 0);
+                        //如果正在拖动的话，偏移初始点击事件
+                        if (mIsBeingDragged) {
+                            mTouchSpinner = mSpinner - offset;
+                            mTouchY = mLastTouchY;
+                            mIsBeingDragged = false;
+                            final long time = System.currentTimeMillis();
+                            SmartRefreshLayout.super.dispatchTouchEvent(obtain(time, time, MotionEvent.ACTION_DOWN, mLastTouchX, mTouchY + offset + mTouchSlop * 2, 0));
+                            SmartRefreshLayout.super.dispatchTouchEvent(obtain(time, time, MotionEvent.ACTION_MOVE, mLastTouchX, mTouchY + offset, 0));
                         }
-                        if (mOnMultiPurposeListener != null) {
-                            mOnMultiPurposeListener.onFooterFinish(mRefreshFooter, success);
-                        }
-                        if (startDelay < Integer.MAX_VALUE) {
-                            postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    AnimatorUpdateListener updateListener = null;
-                                    if (mEnableScrollContentWhenLoaded && mSpinner < 0) {
-                                        updateListener = mRefreshContent.scrollContentWhenFinished(mSpinner);
+                        //准备：偏移并结束状态
+                        postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                AnimatorUpdateListener updateListener = null;
+                                if (mEnableScrollContentWhenLoaded && offset < 0) {
+                                    updateListener = mRefreshContent.scrollContentWhenFinished(mSpinner);
+                                }
+                                if (updateListener != null) {
+                                    updateListener.onAnimationUpdate(ValueAnimator.ofInt(0, 0));
+                                }
+                                ValueAnimator animator = null;
+                                AnimatorListenerAdapter listenerAdapter = new AnimatorListenerAdapter() {
+                                    @Override
+                                    public void onAnimationCancel(Animator animation) {
+                                        super.onAnimationEnd(animation);
                                     }
-                                    if (updateListener != null) {
-                                        updateListener.onAnimationUpdate(ValueAnimator.ofInt(0, 0));
+
+                                    @Override
+                                    public void onAnimationEnd(Animator animation) {
+                                        mFooterLocked = false;
+                                        if (noMoreData) {
+                                            setNoMoreData(true);
+                                        }
+                                        if (mState == RefreshState.LoadFinish) {
+                                            notifyStateChanged(RefreshState.None);
+                                        }
                                     }
-                                    ValueAnimator animator = null;
-                                    AnimatorListenerAdapter listenerAdapter = new AnimatorListenerAdapter() {
-                                        @Override
-                                        public void onAnimationCancel(Animator animation) {
-                                            super.onAnimationEnd(animation);
-                                        }
-                                        @Override
-                                        public void onAnimationEnd(Animator animation) {
-                                            mFooterLocked = false;
-                                            if (noMoreData) {
-                                                setNoMoreData(true);
-                                            }
-                                            if (mState == RefreshState.LoadFinish) {
-                                                notifyStateChanged(RefreshState.None);
-                                            }
-                                        }
-                                    };
-                                    if (updateListener != null || mSpinner >= 0) {
-                                        if (reboundAnimator != null) {
-                                            reboundAnimator.cancel();
-                                            reboundAnimator = null;
-                                        }
-                                        moveSpinner(0, true);
-                                        resetStatus();
-                                    } else {
-                                        if (noMoreData && mEnableFooterFollowWhenLoadFinished) {
-                                            if (mSpinner >= -mFooterHeight) {
-                                                notifyStateChanged(RefreshState.None);
-                                            } else {
-                                                animator = animSpinner(-mFooterHeight);
-                                            }
+                                };
+                                if (mSpinner > 0) {
+                                    animator = animSpinner(0);
+                                } else if (updateListener != null || mSpinner == 0) {
+                                    if (reboundAnimator != null) {
+                                        reboundAnimator.cancel();
+                                        reboundAnimator = null;
+                                    }
+                                    moveSpinner(0, true);
+                                    resetStatus();
+                                } else {
+                                    if (noMoreData && mEnableFooterFollowWhenLoadFinished) {
+                                        if (mSpinner >= -mFooterHeight) {
+                                            notifyStateChanged(RefreshState.None);
                                         } else {
-                                            animator = animSpinner(0);
+                                            animator = animSpinner(-mFooterHeight);
                                         }
-                                    }
-                                    if (animator != null) {
-                                        animator.addListener(listenerAdapter);
                                     } else {
-                                        listenerAdapter.onAnimationEnd(null);
+                                        animator = animSpinner(0);
                                     }
                                 }
-                            }, mSpinner < 0 ? startDelay : 0);
-                        }
-                    } else {
-                        resetStatus();
+                                if (animator != null) {
+                                    animator.addListener(listenerAdapter);
+                                } else {
+                                    listenerAdapter.onAnimationEnd(null);
+                                }
+                            }
+                        }, mSpinner < 0 ? startDelay : 0);
                     }
-                } else if (noMoreData) {
-                    setNoMoreData(true);
+                } else {
+                    if (noMoreData) {
+                        setNoMoreData(true);
+                    }
                 }
             }
         }, delayed <= 0 ? 1 : delayed);

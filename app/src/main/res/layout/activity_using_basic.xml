@@ -19,7 +19,7 @@
         app:srlEnableScrollContentWhenLoaded="true"
         app:srlEnableFooterFollowWhenLoadFinished="true">
         <ListView
-            android:id="@+id/listview"
+            android:id="@+id/listView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/white"
@@ -28,6 +28,7 @@
         <com.scwang.smartrefresh.layout.footer.ClassicsFooter
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:srlFinishDuration="10000"
             app:srlClassicsSpinnerStyle="Translate"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 

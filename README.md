@@ -215,7 +215,7 @@ public class App extends Application {
 ```java
 final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
 //设置 Header 为 Material样式
-refreshLayout.setRefreshHeader(new MaterialHeader(this).setShowBezierWave(true));
+refreshLayout.setRefreshHeader(new BezierRadarHeader(this).setEnableHorizontalDrag(true));
 //设置 Footer 为 球脉冲
 refreshLayout.setRefreshFooter(new BallPulseFooter(this).setSpinnerStyle(SpinnerStyle.Scale));
 ```

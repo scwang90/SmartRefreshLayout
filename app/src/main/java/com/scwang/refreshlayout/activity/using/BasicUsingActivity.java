@@ -40,7 +40,7 @@ public class BasicUsingActivity extends AppCompatActivity {
             }
         });
 
-        AbsListView listView = (AbsListView) findViewById(R.id.listview);
+        AbsListView listView = (AbsListView) findViewById(R.id.listView);
         listView.setAdapter(mAdapter = new BaseRecyclerAdapter<Void>(simple_list_item_2) {
             @Override
             protected void onBindViewHolder(SmartViewHolder holder, Void model, int position) {
