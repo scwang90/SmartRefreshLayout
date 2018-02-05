@@ -232,7 +232,7 @@ SmartRefreshLayout 没有使用到：序列化、反序列化、JNI、反射，�
 ![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/pay_alipay.jpg) ![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/pay_wxpay.jpg) ![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/pay_tencent.jpg)
 
 如果在捐赠留言中备注名称，将会被记录到列表中~ 如果你也是github开源作者，捐赠时可以留下github项目地址或者个人主页地址，链接将会被添加到列表中起到互相推广的作用  
-[捐赠列表](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/md_donationlist.md)
+[捐赠列表](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_donationlist.md)
 
 ## 讨论
 
