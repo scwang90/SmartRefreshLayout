@@ -848,15 +848,11 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 if(mVerticalPermit) {
                     float velocity;
                     if (Build.VERSION.SDK_INT >= 14) {
-                        velocity = mScroller.getCurrVelocity();
+                        velocity = finalY > 0 ? -mScroller.getCurrVelocity() : mScroller.getCurrVelocity();
                     } else {
-                        velocity = 1f * (finalY - mScroller.getCurrY()) / Math.max((mScroller.getDuration() - mScroller.timePassed()), 1);
+                        velocity = 1f * (mScroller.getCurrY() - finalY) / Math.max((mScroller.getDuration() - mScroller.timePassed()), 1);
                     }
-                    if (finalY > 0) {// 手势向上划 Footer
-                        animSpinnerBounce(-velocity);
-                    } else if (finalY < 0){// 手势向下划 Header
-                        animSpinnerBounce(velocity);
-                    }
+                    animSpinnerBounce(velocity);
                 }
                 mScroller.forceFinished(true);
             } else {
@@ -1734,10 +1730,16 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     //<editor-fold desc="嵌套滚动 NestedScrolling">
 
     //<editor-fold desc="NestedScrollingParent">
+
+    @Override
+    public int getNestedScrollAxes() {
+        return mNestedScrollingParentHelper.getNestedScrollAxes();
+    }
+
     @Override
     public boolean onStartNestedScroll(@NonNull View child, @NonNull View target, int nestedScrollAxes) {
         boolean accepted = isEnabled() && isNestedScrollingEnabled() && (nestedScrollAxes & ViewCompat.SCROLL_AXIS_VERTICAL) != 0;
-        accepted = accepted && (isEnableRefresh() || isEnableLoadMore());
+        accepted = accepted && (mEnableOverScrollDrag || isEnableRefresh() || isEnableLoadMore());
         return accepted;
     }
 
@@ -1884,8 +1886,45 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     }
 
     @Override
-    public int getNestedScrollAxes() {
-        return mNestedScrollingParentHelper.getNestedScrollAxes();
+    public void onNestedScroll(@NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
+        // Dispatch up to the nested parent first
+        dispatchNestedScroll(dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, mParentOffsetInWindow);
+
+        // This is a bit of a hack. Nested scrolling works from the bottom up, and as we are
+        // sometimes between two nested scrolling views, we need a way to be able to know when any
+        // nested scrolling parent has stopped handling events. We do that by using the
+        // 'offset in window 'functionality to see if we have been moved from the event.
+        // This is a decent indication of whether we should take over the event stream or not.
+        final int dy = dyUnconsumed + mParentOffsetInWindow[1];
+        if (dy != 0 && (mEnableOverScrollDrag || (dy < 0 && isEnableRefresh()) || (dy > 0 && isEnableLoadMore()))) {
+            if (mViceState == RefreshState.None) {
+                mKernel.setState(dy > 0 ? RefreshState.PullUpToLoad : RefreshState.PullDownToRefresh);
+            }
+            moveSpinnerInfinitely(mTotalUnconsumed -= dy);
+        }
+//        if (dy < 0 && isEnableRefresh() /* && (mRefreshContent == null || mRefreshContent.canRefresh())*/) {
+//            if (mViceState == RefreshState.None) {
+//                mKernel.setState(RefreshState.PullDownToRefresh);
+//            }
+//            mTotalUnconsumed += Math.abs(dy);
+//            moveSpinnerInfinitely(mTotalUnconsumed/* + mTouchSpinner*/);
+//        } else if (dy > 0 && isEnableLoadMore() /* && (mRefreshContent == null || mRefreshContent.canLoadMore())*/) {
+//            if (mViceState == RefreshState.None) {
+//                mKernel.setState(RefreshState.PullUpToLoad);
+//            }
+//            mTotalUnconsumed -= Math.abs(dy);
+//            moveSpinnerInfinitely(mTotalUnconsumed/* + mTouchSpinner*/);
+//        }
+    }
+
+    @Override
+    public boolean onNestedPreFling(@NonNull View target, float velocityX, float velocityY) {
+        return mFooterLocked && velocityY > 0 || startFlingIfNeed(-velocityY) || dispatchNestedPreFling(velocityX, velocityY);
+    }
+
+    @Override
+    public boolean onNestedFling(@NonNull View target, float velocityX, float velocityY, boolean consumed) {
+        return dispatchNestedFling(velocityX, velocityY, consumed);
     }
 
     @Override
@@ -1898,42 +1937,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         overSpinner();
         // Dispatch up our nested parent
         stopNestedScroll();
-    }
-
-    @Override
-    public void onNestedScroll(@NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
-        // Dispatch up to the nested parent first
-        dispatchNestedScroll(dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, mParentOffsetInWindow);
-
-        // This is a bit of a hack. Nested scrolling works from the bottom up, and as we are
-        // sometimes between two nested scrolling views, we need a way to be able to know when any
-        // nested scrolling parent has stopped handling events. We do that by using the
-        // 'offset in window 'functionality to see if we have been moved from the event.
-        // This is a decent indication of whether we should take over the event stream or not.
-        final int dy = dyUnconsumed + mParentOffsetInWindow[1];
-        if (dy < 0 && isEnableRefresh() /* && (mRefreshContent == null || mRefreshContent.canRefresh())*/) {
-            if (mViceState == RefreshState.None) {
-                mKernel.setState(RefreshState.PullDownToRefresh);
-            }
-            mTotalUnconsumed += Math.abs(dy);
-            moveSpinnerInfinitely(mTotalUnconsumed/* + mTouchSpinner*/);
-        } else if (dy > 0 && isEnableLoadMore() /* && (mRefreshContent == null || mRefreshContent.canLoadMore())*/) {
-            if (mViceState == RefreshState.None) {
-                mKernel.setState(RefreshState.PullUpToLoad);
-            }
-            mTotalUnconsumed -= Math.abs(dy);
-            moveSpinnerInfinitely(mTotalUnconsumed/* + mTouchSpinner*/);
-        }
-    }
-
-    @Override
-    public boolean onNestedPreFling(@NonNull View target, float velocityX, float velocityY) {
-        return mFooterLocked && velocityY > 0 || startFlingIfNeed(-velocityY) || dispatchNestedPreFling(velocityX, velocityY);
-    }
-
-    @Override
-    public boolean onNestedFling(@NonNull View target, float velocityX, float velocityY, boolean consumed) {
-        return dispatchNestedFling(velocityX, velocityY, consumed);
     }
     //</editor-fold>
 

@@ -64,6 +64,7 @@
         <attr name="shhText" format="string" />
         <attr name="shhLineWidth" format="dimension" />
         <attr name="shhDropHeight" format="dimension" />
+        <attr name="shhEnableFadeAnimation" format="boolean" />
     </declare-styleable>
 
 

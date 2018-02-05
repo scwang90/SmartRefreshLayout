@@ -14,6 +14,8 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
 import android.view.animation.Transformation;
 
 import com.scwang.smartrefresh.header.storehouse.StoreHouseBarItem;
@@ -61,6 +63,7 @@ public class StoreHouseHeader extends View implements RefreshHeader {
     private int mTextColor = Color.WHITE;
     private int mBackgroundColor = 0;
     private boolean mIsInLoading = false;
+    private boolean mEnableFadeAnimation = false;
     private Matrix mMatrix = new Matrix();
     private RefreshKernel mRefreshKernel;
     private AniController mAniController = new AniController();
@@ -100,6 +103,7 @@ public class StoreHouseHeader extends View implements RefreshHeader {
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.StoreHouseHeader);
         mLineWidth = ta.getDimensionPixelOffset(R.styleable.StoreHouseHeader_shhLineWidth, mLineWidth);
         mDropHeight = ta.getDimensionPixelOffset(R.styleable.StoreHouseHeader_shhDropHeight, mDropHeight);
+        mEnableFadeAnimation = ta.getBoolean(R.styleable.StoreHouseHeader_shhEnableFadeAnimation, mEnableFadeAnimation);
         if (ta.hasValue(R.styleable.StoreHouseHeader_shhText)) {
             initWithString(ta.getString(R.styleable.StoreHouseHeader_shhText));
         } else {
@@ -125,13 +129,9 @@ public class StoreHouseHeader extends View implements RefreshHeader {
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        float progress = mProgress;
-        int c1 = canvas.save();
-        int len = mItemList.size();
-
-        if (isInEditMode()) {
-            progress = 1;
-        }
+        final int c1 = canvas.save();
+        final int len = mItemList.size();
+        final float progress = isInEditMode() ? 1 : mProgress;
 
         for (int i = 0; i < len; i++) {
 
@@ -360,8 +360,27 @@ public class StoreHouseHeader extends View implements RefreshHeader {
     @Override
     public int onFinish(@NonNull RefreshLayout layout, boolean success) {
         loadFinish();
-        for (int i = 0; i < mItemList.size(); i++) {
-            mItemList.get(i).resetPosition(mHorizontalRandomness);
+        if (success && mEnableFadeAnimation) {
+            startAnimation(new Animation() {{
+                setDuration(250);
+                setInterpolator(new AccelerateInterpolator());
+            }
+                @Override
+                protected void applyTransformation(float interpolatedTime, Transformation t) {
+                    setProgress(1 - interpolatedTime);
+                    invalidate();
+                    if (interpolatedTime == 1) {
+                        for (int i = 0; i < mItemList.size(); i++) {
+                            mItemList.get(i).resetPosition(mHorizontalRandomness);
+                        }
+                    }
+                }
+            });
+            return 250;
+        } else {
+            for (int i = 0; i < mItemList.size(); i++) {
+                mItemList.get(i).resetPosition(mHorizontalRandomness);
+            }
         }
         return 0;
     }

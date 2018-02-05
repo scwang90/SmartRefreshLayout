@@ -31,7 +31,8 @@
             tools:listitem="@android:layout/simple_list_item_2"/>
         <com.scwang.smartrefresh.header.StoreHouseHeader
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            app:shhEnableFadeAnimation="true"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>
