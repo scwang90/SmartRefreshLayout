@@ -325,6 +325,11 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
     }
 
     @Override
+    public void onReleased(RefreshLayout layout, int height, int extendHeight) {
+        beginLoading();
+    }
+
+    @Override
     public int onFinish(@NonNull RefreshLayout layout, boolean success) {
         loadFinish();
         if (success && mEnableFadeAnimation) {

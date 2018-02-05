@@ -887,6 +887,30 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         //---------------------------------------------------------------------------
         //</editor-fold>
 
+        if (mNestedScrollInProgress) {//嵌套滚动时，补充竖直方向不滚动，但是水平方向滚动，需要通知 onHorizontalDrag
+            int totalUnconsumed = this.mTotalUnconsumed;
+            boolean ret = super.dispatchTouchEvent(e);
+            //noinspection ConstantConditions
+            if (action == MotionEvent.ACTION_MOVE) {
+                if (totalUnconsumed == mTotalUnconsumed) {
+                    final int offsetX = (int) mLastTouchX;
+                    final int offsetMax = getWidth();
+                    final float percentX = mLastTouchX / (offsetMax == 0 ? 1 : offsetMax);
+                    if (isEnableRefresh() && mSpinner > 0 && mRefreshHeader != null && mRefreshHeader.isSupportHorizontalDrag()) {
+                        mRefreshHeader.onHorizontalDrag(percentX, offsetX, offsetMax);
+                    } else if (isEnableLoadMore() && mSpinner < 0 && mRefreshFooter != null && mRefreshFooter.isSupportHorizontalDrag()) {
+                        mRefreshFooter.onHorizontalDrag(percentX, offsetX, offsetMax);
+                    }
+                }
+            }
+            return ret;
+        } else if (!isEnabled()
+                || (!isEnableRefresh() && !isEnableLoadMore() && !mEnableOverScrollDrag)
+                || (mHeaderNeedTouchEventWhenRefreshing && ((mState.opening || mState.finishing) && mState.isHeader()))
+                || (mFooterNeedTouchEventWhenLoading && ((mState.opening || mState.finishing) && mState.isFooter()))) {
+            return super.dispatchTouchEvent(e);
+        }
+
         if (interceptByAnimator(action) || mState.finishing
                 || (mState == RefreshState.Loading && mDisableContentWhenLoading)
                 || (mState == RefreshState.Refreshing && mDisableContentWhenRefresh)) {
@@ -915,32 +939,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 case MotionEvent.ACTION_CANCEL:
                     mRefreshContent.onActionUpOrCancel();
             }
-        }
-        if (mNestedScrollInProgress) {//嵌套滚动时，补充竖直方向不滚动，但是水平方向滚动，需要通知 onHorizontalDrag
-            int totalUnconsumed = this.mTotalUnconsumed;
-            boolean ret = super.dispatchTouchEvent(e);
-            //noinspection ConstantConditions
-            if (action == MotionEvent.ACTION_MOVE) {
-                if (totalUnconsumed == mTotalUnconsumed) {
-                    final int offsetX = (int) mLastTouchX;
-                    final int offsetMax = getWidth();
-                    final float percentX = mLastTouchX / (offsetMax == 0 ? 1 : offsetMax);
-                    if (isEnableRefresh() && mSpinner > 0 && mRefreshHeader != null && mRefreshHeader.isSupportHorizontalDrag()) {
-                        mRefreshHeader.onHorizontalDrag(percentX, offsetX, offsetMax);
-                    } else if (isEnableLoadMore() && mSpinner < 0 && mRefreshFooter != null && mRefreshFooter.isSupportHorizontalDrag()) {
-                        mRefreshFooter.onHorizontalDrag(percentX, offsetX, offsetMax);
-                    }
-                }
-//            } else if (action == MotionEvent.ACTION_UP) {
-//                startFlingIfNeed(null);
-            }
-
-            return ret;
-        } else if (!isEnabled()
-                || (!isEnableRefresh() && !isEnableLoadMore() && !mEnableOverScrollDrag)
-                || (mHeaderNeedTouchEventWhenRefreshing && (mState == RefreshState.Refreshing || mState == RefreshState.TwoLevel))
-                || (mFooterNeedTouchEventWhenLoading && (mState == RefreshState.Loading || mState == RefreshState.LoadFinish))) {
-            return super.dispatchTouchEvent(e);
         }
 
         switch (action) {

@@ -196,6 +196,7 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
                 case Loading:
                 case LoadReleased:
                     mArrowView.setVisibility(GONE);
+                    mProgressView.setVisibility(VISIBLE);
                     mTitleText.setText(REFRESH_FOOTER_LOADING);
                     break;
                 case ReleaseToLoad:
