@@ -5,14 +5,10 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
@@ -22,10 +18,10 @@ import com.scwang.smartrefresh.header.waveswipe.AnimationImageView;
 import com.scwang.smartrefresh.header.waveswipe.DisplayUtil;
 import com.scwang.smartrefresh.header.waveswipe.WaveView;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
-import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import static android.view.View.MeasureSpec.EXACTLY;
@@ -37,7 +33,8 @@ import static android.view.View.MeasureSpec.makeMeasureSpec;
  * Created by SCWANG on 2017/6/4.
  * from https://github.com/recruit-lifestyle/WaveSwipeRefreshLayout
  */
-public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
+@SuppressWarnings("ALL")
+public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
 
     /**
      * 落ちる前の回転の最大のAngle値
@@ -71,12 +68,6 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
 
     public WaveSwipeHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.initView(context, attrs);
-    }
-
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    public WaveSwipeHeader(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
         this.initView(context, attrs);
     }
 
@@ -142,20 +133,6 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
     //<editor-fold desc="RefreshHeader">
 
     @Override
-    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
-
-    }
-
-    @Override
-    public boolean isSupportHorizontalDrag() {
-        return false;
-    }
-
-    @Override
-    public void onHorizontalDrag(float percentX, int offsetX, int offsetMax) {
-    }
-
-    @Override
     public void onPulling(float percent, int offset, int height, int extendHeight) {
 
         if (mState == RefreshState.Refreshing) {
@@ -202,10 +179,6 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override
-    public void onReleasing(float percent, int offset, int height, int extendHeight) {
-    }
-
-    @Override
     public void onReleased(RefreshLayout layout, int height, int extendHeight) {
         mLastFirstBounds = 0;
         mWaveView.animationDropCircle();
@@ -222,11 +195,6 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
             }
         });
         animator.start();
-    }
-
-    @Override
-    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
-
     }
 
     @Override
@@ -293,12 +261,6 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
 
     @NonNull
     @Override
-    public View getView() {
-        return this;
-    }
-
-    @NonNull
-    @Override
     public SpinnerStyle getSpinnerStyle() {
         return SpinnerStyle.MatchLayout;
     }
@@ -349,9 +311,9 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
             mProgress.setArrowScale(scale);
         }
 
-        public void setProgressAlpha(int alpha) {
-            mProgress.setAlpha(alpha);
-        }
+//        public void setProgressAlpha(int alpha) {
+//            mProgress.setAlpha(alpha);
+//        }
 
         public void setProgressStartEndTrim(float startAngle, float endAngle) {
             mProgress.setStartEndTrim(startAngle, endAngle);

@@ -7,10 +7,8 @@ import android.graphics.Paint;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.FrameLayout;
 
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
@@ -18,6 +16,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.impl.RefreshHeaderWrapper;
+import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -31,10 +30,7 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
  * Created by SCWANG on 2017/5/26.
  */
 @SuppressWarnings({"unused", "UnusedReturnValue"})
-public class TwoLevelHeader extends FrameLayout implements RefreshHeader, InvocationHandler {
-
-
-    private RefreshState mState;
+public class TwoLevelHeader extends InternalAbstract implements RefreshHeader, InvocationHandler {
 
     /**
      * 二级刷新监听器
@@ -63,34 +59,28 @@ public class TwoLevelHeader extends FrameLayout implements RefreshHeader, Invoca
     protected RefreshHeader mRefreshHeader;
     protected RefreshKernel mRefreshKernel;
     protected OnTwoLevelListener mTwoLevelListener;
-    protected SpinnerStyle mSpinnerStle = SpinnerStyle.FixedBehind;
-    protected Method mRrequestDrawBackgoundForHeaderMethod;
+    protected SpinnerStyle mSpinnerStyle = SpinnerStyle.FixedBehind;
+    protected Method mRequestDrawBackgroundForHeaderMethod;
     //</editor-fold>
 
     //<editor-fold desc="构造方法">
     public TwoLevelHeader(@NonNull Context context) {
         super(context);
-        this.initView(context, null);
+//        this.initView(context, null);
     }
 
     public TwoLevelHeader(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        this.initView(context, attrs);
+//        this.initView(context, attrs);
     }
 
     public TwoLevelHeader(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.initView(context, attrs);
+//        this.initView(context, attrs);
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    public TwoLevelHeader(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        this.initView(context, attrs);
-    }
-
-    public void initView(Context context, AttributeSet attrs) {
-    }
+//    public void initView(Context context, AttributeSet attrs) {
+//    }
     //</editor-fold>
 
     //<editor-fold desc="生命周期">
@@ -113,7 +103,7 @@ public class TwoLevelHeader extends FrameLayout implements RefreshHeader, Invoca
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        mSpinnerStle = SpinnerStyle.MatchLayout;
+        mSpinnerStyle = SpinnerStyle.MatchLayout;
         if (mRefreshHeader == null) {
             mRefreshHeader = new RefreshHeaderWrapper(this);
         }
@@ -122,7 +112,7 @@ public class TwoLevelHeader extends FrameLayout implements RefreshHeader, Invoca
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        mSpinnerStle = SpinnerStyle.FixedBehind;
+        mSpinnerStyle = SpinnerStyle.FixedBehind;
     }
 
     @Override
@@ -157,7 +147,7 @@ public class TwoLevelHeader extends FrameLayout implements RefreshHeader, Invoca
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         Object returnValue = null;
         if (mRefreshKernel != null) {
-            if (method.equals(mRrequestDrawBackgoundForHeaderMethod)) {
+            if (method.equals(mRequestDrawBackgroundForHeaderMethod)) {
                 int backgroundColor = (int) args[0];
                 if (backgroundColor == 0) {
                     mPaint = null;
@@ -175,8 +165,8 @@ public class TwoLevelHeader extends FrameLayout implements RefreshHeader, Invoca
         }
         if (method.getReturnType().equals(RefreshKernel.class)) {
             if (mRefreshKernel == null && RefreshKernel.class.equals(method.getDeclaringClass())) {
-                if (mRrequestDrawBackgoundForHeaderMethod == null) {
-                    mRrequestDrawBackgoundForHeaderMethod = method;
+                if (mRequestDrawBackgroundForHeaderMethod == null) {
+                    mRequestDrawBackgroundForHeaderMethod = method;
                 }
             }
             return proxy;
@@ -223,7 +213,7 @@ public class TwoLevelHeader extends FrameLayout implements RefreshHeader, Invoca
     @Override
     public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
         mRefreshHeader.onStateChanged(refreshLayout, oldState, newState);
-        switch (mState = newState) {
+        switch (newState) {
             case TwoLevelReleased:
                 if (mRefreshHeader.getView() != this) {
                     mRefreshHeader.getView().animate().alpha(0).setDuration(mFloorDuration / 2);
@@ -294,14 +284,8 @@ public class TwoLevelHeader extends FrameLayout implements RefreshHeader, Invoca
 
     @NonNull
     @Override
-    public View getView() {
-        return this;
-    }
-
-    @NonNull
-    @Override
     public SpinnerStyle getSpinnerStyle() {
-        return mSpinnerStle;
+        return mSpinnerStyle;
     }
 
     @Override

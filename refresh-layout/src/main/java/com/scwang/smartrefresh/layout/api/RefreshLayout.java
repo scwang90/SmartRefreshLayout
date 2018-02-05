@@ -515,40 +515,6 @@ public interface RefreshLayout {
     boolean isLoading();
 
     /**
-     * @deprecated 后续版本将会移除
-     * @return RefreshLayout
-     */
-    boolean isLoadmoreFinished();
-
-    /**
-     * @deprecated 后续版本将会移除
-     * @return RefreshLayout
-     */
-    @Deprecated
-    boolean isEnableAutoLoadMore();
-
-    /**
-     * @deprecated 后续版本将会移除
-     * @return RefreshLayout
-     */
-    @Deprecated
-    boolean isEnableOverScrollBounce();
-
-    /**
-     * @deprecated 后续版本将会移除
-     * @return RefreshLayout
-     */
-    @Deprecated
-    boolean isEnablePureScrollMode();
-
-    /**
-     * @deprecated 后续版本将会移除
-     * @return RefreshLayout
-     */
-    @Deprecated
-    boolean isEnableScrollContentWhenLoaded();
-
-    /**
      * 恢复没有更多数据的原始状态
      * @deprecated 请使用{@link RefreshLayout#setNoMoreData(boolean)}
      * @return RefreshLayout
@@ -556,65 +522,4 @@ public interface RefreshLayout {
     @Deprecated
     RefreshLayout resetNoMoreData();
 
-    /**
-     * 恢复没有更多数据的原始状态
-     * @param finished 是否有更多数据
-     * @deprecated 后续版本将会移除 使用 {@link RefreshLayout#setNoMoreData(boolean)} 代替
-     * @return RefreshLayout
-     */
-    @Deprecated
-    RefreshLayout setLoadmoreFinished(boolean finished);
-
-
-    /**
-     * 完成加载
-     * @deprecated 使用 {@link #finishLoadMore()} 代替
-     * @return RefreshLayout
-     */
-    @Deprecated
-    RefreshLayout finishLoadmore();
-
-    /**
-     * 完成加载
-     * @param delayed 延时
-     * @deprecated 使用 {@link #finishLoadMore(int)} 代替
-     * @return RefreshLayout
-     */
-    @Deprecated
-    RefreshLayout finishLoadmore(int delayed);
-
-    /**
-     * 完成加载
-     * @param success 数据是否成功
-     * @deprecated 使用 {@link #finishLoadMore(boolean)} 代替
-     * @return RefreshLayout
-     */
-    @Deprecated
-    RefreshLayout finishLoadmore(boolean success);
-
-    /**
-     * 单独设置加载监听器
-     * @param listener 过期的监听器
-     * @deprecated 使用 {@link #setOnLoadMoreListener(OnLoadMoreListener)} 代替
-     * @return RefreshLayout
-     */
-    @Deprecated
-    RefreshLayout setOnLoadmoreListener(OnLoadmoreListener listener);
-
-    /**
-     * 同时设置刷新和加载监听器
-     * @param listener 过期的监听器
-     * @deprecated 使用 {@link #setOnRefreshLoadMoreListener(OnRefreshLoadMoreListener)} 代替
-     * @return RefreshLayout
-     */
-    @Deprecated
-    RefreshLayout setOnRefreshLoadmoreListener(OnRefreshLoadmoreListener listener);
-
-    /**
-     * 完成加载并标记没有更多数据
-     * @deprecated 使用 {@link #finishLoadMoreWithNoMoreData()} 代替
-     * @return RefreshLayout
-     */
-    @Deprecated
-    RefreshLayout finishLoadmoreWithNoMoreData();
 }

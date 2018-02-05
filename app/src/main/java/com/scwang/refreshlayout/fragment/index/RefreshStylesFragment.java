@@ -34,7 +34,7 @@ import com.scwang.refreshlayout.activity.style.WaveSwipStyleActivity;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.refreshlayout.util.StatusBarUtil;
-import com.scwang.smartrefresh.header.DropboxHeader;
+import com.scwang.smartrefresh.header.DropBoxHeader;
 import com.scwang.smartrefresh.header.FunGameHitBlockHeader;
 import com.scwang.smartrefresh.header.PhoenixHeader;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
@@ -59,7 +59,7 @@ public class RefreshStylesFragment extends Fragment implements AdapterView.OnIte
     private enum Item {
         Hidden(R.string.title_activity_style_delivery,DeliveryStyleActivity.class),
         Delivery(R.string.title_activity_style_delivery,DeliveryStyleActivity.class),
-        Dropbox(R.string.title_activity_style_dropbox, DropboxStyleActivity.class),
+        DropBox(R.string.title_activity_style_dropbox, DropboxStyleActivity.class),
         FlyRefresh(R.string.title_activity_style_flyrefresh, FlyRefreshStyleActivity.class),
         WaveSwipe(R.string.title_activity_style_wave_swipe, WaveSwipStyleActivity.class),
         WaterDrop(R.string.title_activity_style_water_drop, WaterDropStyleActivity.class),
@@ -142,8 +142,8 @@ public class RefreshStylesFragment extends Fragment implements AdapterView.OnIte
                             if (refreshHeader instanceof RefreshHeaderWrapper) {
                                 refreshLayout.setRefreshHeader(new PhoenixHeader(getContext()));
                             } else if (refreshHeader instanceof PhoenixHeader) {
-                                refreshLayout.setRefreshHeader(new DropboxHeader(getContext()));
-                            } else if (refreshHeader instanceof DropboxHeader) {
+                                refreshLayout.setRefreshHeader(new DropBoxHeader(getContext()));
+                            } else if (refreshHeader instanceof DropBoxHeader) {
                                 refreshLayout.setRefreshHeader(new FunGameHitBlockHeader(getContext()));
                             } else if (refreshHeader instanceof FunGameHitBlockHeader) {
                                 refreshLayout.setRefreshHeader(new ClassicsHeader(getContext()));

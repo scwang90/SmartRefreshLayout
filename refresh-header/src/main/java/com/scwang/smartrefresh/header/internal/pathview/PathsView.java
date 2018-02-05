@@ -1,4 +1,4 @@
-package com.scwang.smartrefresh.layout.internal.pathview;
+package com.scwang.smartrefresh.header.internal.pathview;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -56,7 +56,6 @@ public class PathsView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
         mPathsDrawable.draw(canvas);
     }
 

@@ -5,11 +5,9 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 
@@ -29,7 +27,7 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
 public abstract class FunGameView extends FunGameHeader {
 
     //<editor-fold desc="Field">
-    protected static final int STATUS_GAME_PREPAR = 0;
+    protected static final int STATUS_GAME_PREPARE = 0;
 
     protected static final int STATUS_GAME_PLAY = 1;
 
@@ -60,7 +58,7 @@ public abstract class FunGameView extends FunGameHeader {
 
     protected int controllerSize;
 
-    protected int status = STATUS_GAME_PREPAR;
+    protected int status = STATUS_GAME_PREPARE;
 
     protected int lModelColor, rModelColor, mModelColor;
     protected int mBackColor, mBoundaryColor = 0xff606060;
@@ -78,12 +76,6 @@ public abstract class FunGameView extends FunGameHeader {
 
     public FunGameView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.initView(context, attrs);
-    }
-
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    public FunGameView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
         this.initView(context, attrs);
     }
 
@@ -157,7 +149,7 @@ public abstract class FunGameView extends FunGameHeader {
      */
     private void drawText(Canvas canvas, int width, int height) {
         switch (status) {
-            case STATUS_GAME_PREPAR:
+            case STATUS_GAME_PREPARE:
             case STATUS_GAME_PLAY:
                 textPaint.setTextSize(DensityUtil.dp2px(25));
                 promptText(canvas, textLoading, width, height);
@@ -193,29 +185,29 @@ public abstract class FunGameView extends FunGameHeader {
         return status;
     }
 
-    public String getTextGameOver() {
-        return textGameOver;
-    }
+//    public String getTextGameOver() {
+//        return textGameOver;
+//    }
 
-    public void setTextGameOver(String textGameOver) {
-        this.textGameOver = textGameOver;
-    }
+//    public void setTextGameOver(String textGameOver) {
+//        this.textGameOver = textGameOver;
+//    }
 
-    public String getTextLoading() {
-        return textLoading;
-    }
+//    public String getTextLoading() {
+//        return textLoading;
+//    }
 
-    public void setTextLoading(String textLoading) {
-        this.textLoading = textLoading;
-    }
+//    public void setTextLoading(String textLoading) {
+//        this.textLoading = textLoading;
+//    }
 
-    public String getTextLoadingFinished() {
-        return textLoadingFinished;
-    }
+//    public String getTextLoadingFinished() {
+//        return textLoadingFinished;
+//    }
 
-    public void setTextLoadingFinished(String textLoadingFinished) {
-        this.textLoadingFinished = textLoadingFinished;
-    }
+//    public void setTextLoadingFinished(String textLoadingFinished) {
+//        this.textLoadingFinished = textLoadingFinished;
+//    }
 
     //<editor-fold desc="控制方法">
 
@@ -251,7 +243,7 @@ public abstract class FunGameView extends FunGameHeader {
     public void postStatus(int status) {
         this.status = status;
 
-        if (status == STATUS_GAME_PREPAR) {
+        if (status == STATUS_GAME_PREPARE) {
             resetConfigParams();
         }
 
@@ -264,7 +256,7 @@ public abstract class FunGameView extends FunGameHeader {
     public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
         super.onInitialized(kernel, height, extendHeight);
         initConcreteView();
-        postStatus(STATUS_GAME_PREPAR);
+        postStatus(STATUS_GAME_PREPARE);
     }
 
     @Override
@@ -272,7 +264,7 @@ public abstract class FunGameView extends FunGameHeader {
         if (mManualOperation) {
             postStatus(success ? FunGameView.STATUS_GAME_FINISHED : FunGameView.STATUS_GAME_FAIL);
         } else {
-            postStatus(FunGameView.STATUS_GAME_PREPAR);
+            postStatus(FunGameView.STATUS_GAME_PREPARE);
         }
         return super.onFinish(layout, success);
     }

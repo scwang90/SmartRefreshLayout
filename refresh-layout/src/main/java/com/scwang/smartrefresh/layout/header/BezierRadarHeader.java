@@ -10,13 +10,10 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
-import android.view.View;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.FrameLayout;
 
 import com.scwang.smartrefresh.layout.R;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
-import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
@@ -24,6 +21,7 @@ import com.scwang.smartrefresh.layout.header.bezierradar.RippleView;
 import com.scwang.smartrefresh.layout.header.bezierradar.RoundDotView;
 import com.scwang.smartrefresh.layout.header.bezierradar.RoundProgressView;
 import com.scwang.smartrefresh.layout.header.bezierradar.WaveView;
+import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
@@ -34,7 +32,7 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
  */
 
 @SuppressWarnings({"UnusedReturnValue", "unused"})
-public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
+public class BezierRadarHeader extends InternalAbstract implements RefreshHeader {
 
     private WaveView mWaveView;
     private RippleView mRippleView;
@@ -78,7 +76,6 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
             mProgressView.setScaleX(0);
             mProgressView.setScaleY(0);
         }
-
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.BezierRadarHeader);
 
@@ -145,18 +142,9 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
     }
 
     @NonNull
-    public View getView() {
-        return this;
-    }
-
-    @NonNull
     @Override
     public SpinnerStyle getSpinnerStyle() {
         return SpinnerStyle.Scale;
-    }
-
-    @Override
-    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
     }
 
     @Override
@@ -230,11 +218,6 @@ public class BezierRadarHeader extends FrameLayout implements RefreshHeader {
             }
         });
         valueAnimator.start();
-    }
-
-    @Override
-    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
-
     }
 
     @Override

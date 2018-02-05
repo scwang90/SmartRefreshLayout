@@ -4,40 +4,24 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Animatable;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.support.annotation.ColorInt;
-import android.support.annotation.ColorRes;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.TypedValue;
-import android.view.Gravity;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.LinearInterpolator;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.R;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
-import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.internal.ArrowDrawable;
+import com.scwang.smartrefresh.layout.internal.InternalClassics;
 import com.scwang.smartrefresh.layout.internal.ProgressDrawable;
-import com.scwang.smartrefresh.layout.internal.pathview.PathsDrawable;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import java.text.DateFormat;
@@ -53,7 +37,7 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
  * Created by SCWANG on 2017/5/28.
  */
 @SuppressWarnings({"unused", "UnusedReturnValue"})
-public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
+public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements RefreshHeader {
 
     public static String REFRESH_HEADER_PULLDOWN = "下拉可以刷新";
     public static String REFRESH_HEADER_REFRESHING = "正在刷新...";
@@ -68,22 +52,9 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     protected String KEY_LAST_UPDATE_TIME = "LAST_UPDATE_TIME";
 
     protected Date mLastTime;
-    protected TextView mTitleText;
     protected TextView mLastUpdateText;
-    protected ImageView mArrowView;
-    protected ImageView mProgressView;
     protected SharedPreferences mShared;
-    protected RefreshKernel mRefreshKernel;
-    protected PathsDrawable mArrowDrawable;
-    protected ProgressDrawable mProgressDrawable;
-    protected SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
     protected DateFormat mFormat = new SimpleDateFormat(REFRESH_HEADER_LASTTIME, Locale.getDefault());
-    protected Integer mAccentColor;
-    protected Integer mPrimaryColor;
-    protected int mBackgroundColor;
-    protected int mFinishDuration = 500;
-    protected int mPaddingTop = 20;
-    protected int mPaddingBottom = 20;
     protected boolean mEnableLastTime = true;
 
     //<editor-fold desc="RelativeLayout">
@@ -102,46 +73,16 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
         this.initView(context, attrs);
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    public ClassicsHeader(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        this.initView(context, attrs);
-    }
-
     private void initView(Context context, AttributeSet attrs) {
         DensityUtil density = new DensityUtil();
 
-        LinearLayout layout = new LinearLayout(context);
-        layout.setId(android.R.id.widget_frame);
-        layout.setGravity(Gravity.CENTER_HORIZONTAL);
-        layout.setOrientation(LinearLayout.VERTICAL);
-        mTitleText = new TextView(context);
         mTitleText.setText(REFRESH_HEADER_PULLDOWN);
         mTitleText.setTextColor(0xff666666);
 
         mLastUpdateText = new TextView(context);
         mLastUpdateText.setTextColor(0xff7c7c7c);
-        LinearLayout.LayoutParams lpHeaderText = new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
-        layout.addView(mTitleText, lpHeaderText);
         LinearLayout.LayoutParams lpUpdateText = new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
-        layout.addView(mLastUpdateText, lpUpdateText);
-
-        LayoutParams lpHeaderLayout = new LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
-        lpHeaderLayout.addRule(CENTER_IN_PARENT);
-        addView(layout,lpHeaderLayout);
-
-        LayoutParams lpArrow = new LayoutParams(density.dip2px(20), density.dip2px(20));
-        lpArrow.addRule(CENTER_VERTICAL);
-        lpArrow.addRule(LEFT_OF, android.R.id.widget_frame);
-        mArrowView = new ImageView(context);
-        addView(mArrowView, lpArrow);
-
-        LayoutParams lpProgress = new LayoutParams((ViewGroup.LayoutParams)lpArrow);
-        lpProgress.addRule(CENTER_VERTICAL);
-        lpProgress.addRule(LEFT_OF, android.R.id.widget_frame);
-        mProgressView = new ImageView(context);
-        mProgressView.animate().setInterpolator(new LinearInterpolator());
-        addView(mProgressView, lpProgress);
+        mCenterLayout.addView(mLastUpdateText, lpUpdateText);
 
         if (isInEditMode()) {
             mArrowView.setVisibility(GONE);
@@ -152,6 +93,8 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ClassicsHeader);
 
+        LayoutParams lpArrow = (LayoutParams) mArrowView.getLayoutParams();
+        LayoutParams lpProgress = (LayoutParams) mProgressView.getLayoutParams();
         lpUpdateText.topMargin = ta.getDimensionPixelSize(R.styleable.ClassicsHeader_srlTextTimeMarginTop, density.dip2px(0));
         lpProgress.rightMargin = ta.getDimensionPixelSize(R.styleable.ClassicsFooter_srlDrawableMarginRight, density.dip2px(20));
         lpArrow.rightMargin = lpProgress.rightMargin;
@@ -175,9 +118,11 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
         if (ta.hasValue(R.styleable.ClassicsHeader_srlDrawableArrow)) {
             mArrowView.setImageDrawable(ta.getDrawable(R.styleable.ClassicsHeader_srlDrawableArrow));
         } else {
-            mArrowDrawable = new PathsDrawable();
-            mArrowDrawable.parserColors(0xff666666);
-            mArrowDrawable.parserPaths("M20,12l-1.41,-1.41L13,16.17V4h-2v12.17l-5.58,-5.59L4,12l8,8 8,-8z");
+//            mArrowDrawable = new PathsDrawable();
+//            mArrowDrawable.parserColors(0xff666666);
+//            mArrowDrawable.parserPaths("M20,12l-1.41,-1.41L13,16.17V4h-2v12.17l-5.58,-5.59L4,12l8,8 8,-8z");
+            mArrowDrawable = new ArrowDrawable();
+            mArrowDrawable.setColor(0xff666666);
             mArrowView.setImageDrawable(mArrowDrawable);
         }
 
@@ -210,21 +155,6 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
 
         ta.recycle();
 
-        if (getPaddingTop() == 0) {
-            if (getPaddingBottom() == 0) {
-                setPadding(getPaddingLeft(), mPaddingTop = density.dip2px(20), getPaddingRight(), mPaddingBottom = density.dip2px(20));
-            } else {
-                setPadding(getPaddingLeft(), mPaddingTop = density.dip2px(20), getPaddingRight(), mPaddingBottom = getPaddingBottom());
-            }
-        } else {
-            if (getPaddingBottom() == 0) {
-                setPadding(getPaddingLeft(), mPaddingTop = getPaddingTop(), getPaddingRight(), mPaddingBottom = density.dip2px(20));
-            } else {
-                mPaddingTop = getPaddingTop();
-                mPaddingBottom = getPaddingBottom();
-            }
-        }
-
         try {//try 不能删除-否则会出现兼容性问题
             if (context instanceof FragmentActivity) {
                 FragmentManager manager = ((FragmentActivity) context).getSupportFragmentManager();
@@ -248,74 +178,17 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     }
 
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        if (MeasureSpec.getMode(heightMeasureSpec) == MeasureSpec.EXACTLY) {
-            setPadding(getPaddingLeft(), 0, getPaddingRight(), 0);
-        } else {
-            setPadding(getPaddingLeft(), mPaddingTop, getPaddingRight(), mPaddingBottom);
-        }
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    protected ClassicsHeader self() {
+        return this;
     }
 
     //</editor-fold>
 
     //<editor-fold desc="RefreshHeader">
-    @Override
-    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
-        mRefreshKernel = kernel;
-        mRefreshKernel.requestDrawBackgroundForHeader(mBackgroundColor);
-    }
-
-    @Override
-    public boolean isSupportHorizontalDrag() {
-        return false;
-    }
-
-    @Override
-    public void onHorizontalDrag(float percentX, int offsetX, int offsetMax) {
-    }
-
-    @Override
-    public void onPulling(float percent, int offset, int height, int extendHeight) {
-    }
-
-    @Override
-    public void onReleasing(float percent, int offset, int height, int extendHeight) {
-
-    }
-
-    @Override
-    public void onReleased(RefreshLayout layout, int height, int extendHeight) {
-        if (mProgressDrawable != null) {
-            mProgressDrawable.start();
-        } else {
-            Drawable drawable = mProgressView.getDrawable();
-            if (drawable instanceof Animatable) {
-                ((Animatable) drawable).start();
-            } else {
-                mProgressView.animate().rotation(36000).setDuration(100000);
-            }
-        }
-    }
-
-    @Override
-    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
-
-    }
 
     @Override
     public int onFinish(@NonNull RefreshLayout layout, boolean success) {
-        if (mProgressDrawable != null) {
-            mProgressDrawable.stop();
-        } else {
-            Drawable drawable = mProgressView.getDrawable();
-            if (drawable instanceof Animatable) {
-                ((Animatable) drawable).stop();
-            } else {
-                mProgressView.animate().rotation(0).setDuration(300);
-            }
-        }
-        mProgressView.setVisibility(GONE);
+        super.onFinish(layout, success);
         if (success) {
             mTitleText.setText(REFRESH_HEADER_FINISH);
             if (mLastTime != null) {
@@ -325,35 +198,6 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
             mTitleText.setText(REFRESH_HEADER_FAILED);
         }
         return mFinishDuration;//延迟500毫秒之后再弹回
-    }
-
-    @Override@Deprecated
-    public void setPrimaryColors(@ColorInt int ... colors) {
-        if (colors.length > 0) {
-            if (!(getBackground() instanceof BitmapDrawable) && mPrimaryColor == null) {
-                setPrimaryColor(colors[0]);
-                mPrimaryColor = null;
-            }
-            if (mAccentColor == null) {
-                if (colors.length > 1) {
-                    setAccentColor(colors[1]);
-                } else {
-                    setAccentColor(colors[0] == 0xffffffff ? 0xff666666 : 0xffffffff);
-                }
-                mAccentColor = null;
-            }
-        }
-    }
-
-    @NonNull
-    public View getView() {
-        return this;
-    }
-
-    @NonNull
-    @Override
-    public SpinnerStyle getSpinnerStyle() {
-        return mSpinnerStyle;
     }
 
     @Override
@@ -392,36 +236,6 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
     //</editor-fold>
 
     //<editor-fold desc="API">
-    public ClassicsHeader setProgressBitmap(Bitmap bitmap) {
-        mProgressDrawable = null;
-        mProgressView.setImageBitmap(bitmap);
-        return this;
-    }
-    public ClassicsHeader setProgressDrawable(Drawable drawable) {
-        mProgressDrawable = null;
-        mProgressView.setImageDrawable(drawable);
-        return this;
-    }
-    public ClassicsHeader setProgressResource(@DrawableRes int resId) {
-        mProgressDrawable = null;
-        mProgressView.setImageResource(resId);
-        return this;
-    }
-    public ClassicsHeader setArrowBitmap(Bitmap bitmap) {
-        mArrowDrawable = null;
-        mArrowView.setImageBitmap(bitmap);
-        return this;
-    }
-    public ClassicsHeader setArrowDrawable(Drawable drawable) {
-        mArrowDrawable = null;
-        mArrowView.setImageDrawable(drawable);
-        return this;
-    }
-    public ClassicsHeader setArrowResource(@DrawableRes int resId) {
-        mArrowDrawable = null;
-        mArrowView.setImageResource(resId);
-        return this;
-    }
 
     public ClassicsHeader setLastUpdateTime(Date time) {
         mLastTime = time;
@@ -446,66 +260,14 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
         return this;
     }
 
-    public ClassicsHeader setSpinnerStyle(SpinnerStyle style) {
-        this.mSpinnerStyle = style;
-        return this;
-    }
-
-    public ClassicsHeader setPrimaryColor(@ColorInt int primaryColor) {
-        mBackgroundColor = mPrimaryColor = primaryColor;
-        if (mRefreshKernel != null) {
-            mRefreshKernel.requestDrawBackgroundForHeader(mPrimaryColor);
-        }
-        return this;
-    }
-
     public ClassicsHeader setAccentColor(@ColorInt int accentColor) {
-        mAccentColor = accentColor;
-        if (mArrowDrawable != null) {
-            mArrowDrawable.parserColors(accentColor);
-        }
-        if (mProgressDrawable != null) {
-            mProgressDrawable.setColor(accentColor);
-        }
-        mTitleText.setTextColor(accentColor);
         mLastUpdateText.setTextColor(accentColor&0x00ffffff|0xcc000000);
-        return this;
-    }
-
-    public ClassicsHeader setPrimaryColorId(@ColorRes int colorId) {
-        setPrimaryColor(ContextCompat.getColor(getContext(), colorId));
-        return this;
-    }
-
-    public ClassicsHeader setAccentColorId(@ColorRes int colorId) {
-        setAccentColor(ContextCompat.getColor(getContext(), colorId));
-        return this;
-    }
-
-    public ClassicsHeader setFinishDuration(int delay) {
-        mFinishDuration = delay;
-        return this;
+        return super.setAccentColor(accentColor);
     }
 
     public ClassicsHeader setEnableLastTime(boolean enable) {
         mEnableLastTime = enable;
         mLastUpdateText.setVisibility(enable ? VISIBLE : GONE);
-        if (mRefreshKernel != null) {
-            mRefreshKernel.requestRemeasureHeightForHeader();
-        }
-        return this;
-    }
-
-    public ClassicsHeader setTextSizeTitle(float size) {
-        mTitleText.setTextSize(size);
-        if (mRefreshKernel != null) {
-            mRefreshKernel.requestRemeasureHeightForHeader();
-        }
-        return this;
-    }
-
-    public ClassicsHeader setTextSizeTitle(int unit, float size) {
-        mTitleText.setTextSize(unit, size);
         if (mRefreshKernel != null) {
             mRefreshKernel.requestRemeasureHeightForHeader();
         }
@@ -537,69 +299,6 @@ public class ClassicsHeader extends RelativeLayout implements RefreshHeader {
         lp.topMargin = px;
         mLastUpdateText.setLayoutParams(lp);
         return this;
-    }
-
-    public ClassicsHeader setDrawableMarginRight(float dp) {
-        return setDrawableMarginRightPx(DensityUtil.dp2px(dp));
-    }
-
-    public ClassicsHeader setDrawableMarginRightPx(int px) {
-        MarginLayoutParams lpArrow = (MarginLayoutParams)mArrowView.getLayoutParams();
-        MarginLayoutParams lpProgress = (MarginLayoutParams)mProgressView.getLayoutParams();
-        lpArrow.rightMargin = lpProgress.rightMargin = px;
-        mArrowView.setLayoutParams(lpArrow);
-        mProgressView.setLayoutParams(lpProgress);
-        return this;
-    }
-
-    public ClassicsHeader setDrawableSize(float dp) {
-        return setDrawableSizePx(DensityUtil.dp2px(dp));
-    }
-
-    public ClassicsHeader setDrawableSizePx(int px) {
-        ViewGroup.LayoutParams lpArrow = mArrowView.getLayoutParams();
-        ViewGroup.LayoutParams lpProgress = mProgressView.getLayoutParams();
-        lpArrow.width = lpProgress.width = px;
-        lpArrow.height = lpProgress.height = px;
-        mArrowView.setLayoutParams(lpArrow);
-        mProgressView.setLayoutParams(lpProgress);
-        return this;
-    }
-
-    public ClassicsHeader setDrawableArrowSize(float dp) {
-        return setDrawableArrowSizePx(DensityUtil.dp2px(dp));
-    }
-
-    public ClassicsHeader setDrawableArrowSizePx(int px) {
-        ViewGroup.LayoutParams lpArrow = mArrowView.getLayoutParams();
-        lpArrow.width = px;
-        lpArrow.height = px;
-        mArrowView.setLayoutParams(lpArrow);
-        return this;
-    }
-
-    public ClassicsHeader setDrawableProgressSize(float dp) {
-        return setDrawableProgressSizePx(DensityUtil.dp2px(dp));
-    }
-
-    public ClassicsHeader setDrawableProgressSizePx(int px) {
-        ViewGroup.LayoutParams lpProgress = mProgressView.getLayoutParams();
-        lpProgress.width = px;
-        lpProgress.height = px;
-        mProgressView.setLayoutParams(lpProgress);
-        return this;
-    }
-
-    public ImageView getArrowView() {
-        return mArrowView;
-    }
-
-    public ImageView getProgressView() {
-        return mProgressView;
-    }
-
-    public TextView getTitleText() {
-        return mTitleText;
     }
 
     public TextView getLastUpdateText() {

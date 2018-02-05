@@ -1,10 +1,7 @@
 package com.scwang.smartrefresh.layout.footer;
 
 import android.content.Context;
-import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 
 import com.scwang.smartrefresh.layout.api.RefreshFooter;
@@ -30,11 +27,6 @@ public class FalsifyFooter extends FalsifyHeader implements RefreshFooter {
 
     public FalsifyFooter(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-    }
-
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    public FalsifyFooter(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     //</editor-fold>

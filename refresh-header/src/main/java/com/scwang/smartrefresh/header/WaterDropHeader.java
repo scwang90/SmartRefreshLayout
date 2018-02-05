@@ -11,22 +11,19 @@ import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.scwang.smartrefresh.header.internal.MaterialProgressDrawable;
 import com.scwang.smartrefresh.header.waterdrop.WaterDropView;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
-import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 import com.scwang.smartrefresh.layout.internal.ProgressDrawable;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
@@ -41,7 +38,7 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
  * Created by SCWANG on 2017/5/31.
  * from https://github.com/THEONE10211024/WaterDropListView
  */
-public class WaterDropHeader extends ViewGroup implements RefreshHeader {
+public class WaterDropHeader extends InternalAbstract implements RefreshHeader {
 
     //<editor-fold desc="Field">
     private static final float MAX_PROGRESS_ANGLE = 0.8f;
@@ -70,12 +67,6 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
         this.initView(context);
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    public WaterDropHeader(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        this.initView(context);
-    }
-
     private void initView(Context context) {
         DensityUtil density = new DensityUtil();
         mWaterDropView = new WaterDropView(context);
@@ -98,7 +89,7 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        LayoutParams lpImage = mImageView.getLayoutParams();
+        LayoutParams lpImage = (LayoutParams) mImageView.getLayoutParams();
         mImageView.measure(
                 makeMeasureSpec(lpImage.width, EXACTLY),
                 makeMeasureSpec(lpImage.height, EXACTLY)
@@ -162,19 +153,6 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
     //</editor-fold>
 
     //<editor-fold desc="RefreshHeader">
-    @Override
-    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
-
-    }
-
-    @Override
-    public boolean isSupportHorizontalDrag() {
-        return false;
-    }
-
-    @Override
-    public void onHorizontalDrag(float percentX, int offsetX, int offsetMax) {
-    }
 
     @Override
     public void onPulling(float percent, int offset, int height, int extendHeight) {
@@ -242,11 +220,6 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override
-    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
-
-    }
-
-    @Override
     public int onFinish(@NonNull RefreshLayout layout, boolean success) {
         mProgressDrawable.stop();
         return 0;
@@ -261,12 +234,6 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
         if (colors.length > 0) {
             mWaterDropView.setIndicatorColor(colors[0]);
         }
-    }
-
-    @NonNull
-    @Override
-    public View getView() {
-        return this;
     }
 
     @NonNull

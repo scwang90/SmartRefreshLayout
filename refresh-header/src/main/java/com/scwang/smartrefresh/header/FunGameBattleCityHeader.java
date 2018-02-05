@@ -1,12 +1,9 @@
 package com.scwang.smartrefresh.header;
 
-import android.support.annotation.RequiresApi;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.RectF;
-import android.os.Build;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.SparseArray;
 
@@ -133,11 +130,6 @@ public class FunGameBattleCityHeader extends FunGameView {
         super(context, attrs, defStyle);
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    public FunGameBattleCityHeader(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-    }
-
     @Override
     protected void initConcreteView() {
         random = new Random();
@@ -165,7 +157,7 @@ public class FunGameBattleCityHeader extends FunGameView {
 
     @Override
     protected void resetConfigParams() {
-        status = FunGameView.STATUS_GAME_PREPAR;
+        status = FunGameView.STATUS_GAME_PREPARE;
         controllerPosition = DIVIDING_LINE_SIZE;
 
         enemySpeed = DensityUtil.dp2px(1);
@@ -217,19 +209,19 @@ public class FunGameBattleCityHeader extends FunGameView {
             mBulletList.offer(bulletPoint);
         }
 
-        boolean isOversetp = false;
+        boolean isOverStep = false;
         for (Point point : mBulletList) {
             if (checkWipeOutETank(point)) {
                 usedBullet = point;
                 continue;
             }
             if (point.x + bulletRadius <= 0) {
-                isOversetp = true;
+                isOverStep = true;
             }
             drawBullet(canvas, point);
         }
 
-        if (isOversetp) {
+        if (isOverStep) {
             mBulletList.poll();
         }
 
@@ -350,7 +342,7 @@ public class FunGameBattleCityHeader extends FunGameView {
         }
 
         boolean isOverstep = false;
-        int option = apperanceOption();
+        int option = appearanceOption();
         for (int i = 0; i < TANK_ROW_NUM; i++) {
             Queue<RectF> rectFQueue = eTankSparseArray.get(i);
 
@@ -396,7 +388,7 @@ public class FunGameBattleCityHeader extends FunGameView {
      * 随机定位一个轨道下标值
      * @return 轨道下标
      */
-    private int apperanceOption() {
+    private int appearanceOption() {
         return random.nextInt(TANK_ROW_NUM);
     }
 

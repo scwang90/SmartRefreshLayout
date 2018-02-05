@@ -62,7 +62,7 @@ public class RepastPracticeActivity extends AppCompatActivity {
             RecyclerView recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setItemAnimator(new DefaultItemAnimator());
-            recyclerView.setAdapter(mAdapter = new BaseRecyclerAdapter<Model>(loadModels(), R.layout.listitem_practive_repast) {
+            recyclerView.setAdapter(mAdapter = new BaseRecyclerAdapter<Model>(loadModels(), R.layout.listitem_practice_repast) {
                 @Override
                 protected void onBindViewHolder(SmartViewHolder holder, Model model, int position) {
                     holder.text(R.id.name, model.name);
@@ -112,7 +112,7 @@ public class RepastPracticeActivity extends AppCompatActivity {
         StatusBarUtil.darkMode(this);
         StatusBarUtil.setPaddingSmart(this, view);
         StatusBarUtil.setPaddingSmart(this, toolbar);
-        StatusBarUtil.setPaddingSmart(this, findViewById(R.id.blurview));
+        StatusBarUtil.setPaddingSmart(this, findViewById(R.id.blurView));
 
     }
 

@@ -24,7 +24,7 @@ import com.scwang.refreshlayout.activity.practice.FeedlistPracticeActivity;
 import com.scwang.refreshlayout.activity.practice.ProfilePracticeActivity;
 import com.scwang.refreshlayout.activity.practice.QQBrowserPracticeActivity;
 import com.scwang.refreshlayout.activity.practice.RepastPracticeActivity;
-import com.scwang.refreshlayout.activity.practice.WebviewPracticeActivity;
+import com.scwang.refreshlayout.activity.practice.WebViewPracticeActivity;
 import com.scwang.refreshlayout.activity.practice.WeiboPracticeActivity;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
@@ -45,7 +45,7 @@ public class RefreshPractiveFragment extends Fragment implements AdapterView.OnI
     private enum Item {
         Repast(R.string.index_item_repast, RepastPracticeActivity.class),
         Profile(R.string.index_item_profile, ProfilePracticeActivity.class),
-        WebView(R.string.index_item_webview, WebviewPracticeActivity.class),
+        WebView(R.string.index_item_webview, WebViewPracticeActivity.class),
         FeedList(R.string.index_item_feedlist, FeedlistPracticeActivity.class),
         Weibo(R.string.index_item_weibo, WeiboPracticeActivity.class),
         Banner(R.string.index_item_banner, BannerPracticeActivity.class),

@@ -3,7 +3,7 @@ package com.scwang.smartrefresh.header.flyrefresh;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import com.scwang.smartrefresh.layout.internal.pathview.PathsView;
+import com.scwang.smartrefresh.header.internal.pathview.PathsView;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 /**

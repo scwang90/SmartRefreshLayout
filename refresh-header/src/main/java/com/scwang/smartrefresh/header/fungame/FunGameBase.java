@@ -2,15 +2,11 @@ package com.scwang.smartrefresh.header.fungame;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.Build;
-import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.FrameLayout;
 
 import com.scwang.smartrefresh.layout.api.RefreshContent;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
@@ -18,6 +14,7 @@ import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import static android.view.MotionEvent.ACTION_MASK;
@@ -27,7 +24,7 @@ import static android.view.MotionEvent.ACTION_MASK;
  * Created by SCWANG on 2017/6/17.
  */
 @SuppressLint("RestrictedApi")
-public class FunGameBase extends FrameLayout implements RefreshHeader {
+public abstract class FunGameBase extends InternalAbstract implements RefreshHeader {
 
     //<editor-fold desc="Field">
     protected int mOffset;
@@ -55,12 +52,6 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
 
     public FunGameBase(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initView(context);
-    }
-
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    public FunGameBase(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
         initView(context);
     }
 
@@ -132,12 +123,12 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
     //</editor-fold>
 
     //<editor-fold desc="abstract">
-    boolean enableLoadmore;
+    boolean enableLoadMore;
     protected void onManualOperationStart() {
         if (!mManualOperation) {
             mManualOperation = true;
             mRefreshContent = mRefreshKernel.getRefreshContent();
-            enableLoadmore = mRefreshKernel.getRefreshLayout().isEnableLoadMore();
+            enableLoadMore = mRefreshKernel.getRefreshLayout().isEnableLoadMore();
             mRefreshKernel.getRefreshLayout().setEnableLoadMore(false);
             View contentView = mRefreshContent.getView();
             MarginLayoutParams params = (MarginLayoutParams)contentView.getLayoutParams();
@@ -146,14 +137,12 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
         }
     }
 
-    protected void onManualOperationMove(float percent, int offset, int height, int extendHeight) {
-
-    }
+    protected abstract void onManualOperationMove(float percent, int offset, int height, int extendHeight);
 
     protected void onManualOperationRelease() {
         if (mIsFinish) {
             mManualOperation = false;
-            mRefreshKernel.getRefreshLayout().setEnableLoadMore(enableLoadmore);
+            mRefreshKernel.getRefreshLayout().setEnableLoadMore(enableLoadMore);
             if (mTouchY != -1) {//还没松手
                 onFinish(mRefreshKernel.getRefreshLayout(), mLastFinish);
 //                mRefreshKernel.setStateRefresingFinish();
@@ -176,15 +165,6 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
     //<editor-fold desc="RefreshHeader">
 
     @Override
-    public boolean isSupportHorizontalDrag() {
-        return false;
-    }
-
-    @Override
-    public void onHorizontalDrag(float percentX, int offsetX, int offsetMax) {
-    }
-
-    @Override
     public void onPulling(float percent, int offset, int height, int extendHeight) {
         if (mManualOperation) onManualOperationMove(percent, offset, height, extendHeight);
         else {
@@ -196,11 +176,6 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
     @Override
     public void onReleasing(float percent, int offset, int height, int extendHeight) {
         onPulling(percent, offset, height, extendHeight);
-    }
-
-    @Override
-    public void onReleased(RefreshLayout layout, int height, int extendHeight) {
-
     }
 
     @Override
@@ -237,20 +212,6 @@ public class FunGameBase extends FrameLayout implements RefreshHeader {
             }
         }
         return 0;
-    }
-
-    /**
-     * @param colors 对应Xml中配置的 srlPrimaryColor srlAccentColor
-     * @deprecated 请使用 {@link RefreshLayout#setPrimaryColorsId(int...)}
-     */
-    @Override@Deprecated
-    public void setPrimaryColors(@ColorInt int ... colors) {
-    }
-
-    @NonNull
-    @Override
-    public View getView() {
-        return this;
     }
 
     @NonNull

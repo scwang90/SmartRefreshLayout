@@ -7,11 +7,9 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -33,7 +31,8 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
  * Created by SCWANG on 2017/6/17.
  * from https://github.com/Hitomis/FunGameRefresh
  */
-public class FunGameHeader extends FunGameBase implements RefreshHeader {
+@SuppressWarnings({"unused", "SameParameterValue"})
+public abstract class FunGameHeader extends FunGameBase implements RefreshHeader {
 
     //<editor-fold desc="Field">
     /**
@@ -71,12 +70,6 @@ public class FunGameHeader extends FunGameBase implements RefreshHeader {
 
     public FunGameHeader(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.initView(context, attrs);
-    }
-
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    public FunGameHeader(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
         this.initView(context, attrs);
     }
 

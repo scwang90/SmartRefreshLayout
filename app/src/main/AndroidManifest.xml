@@ -127,7 +127,7 @@
             android:label="@string/title_activity_practice_profile"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.practice.WebviewPracticeActivity"
+            android:name=".activity.practice.WebViewPracticeActivity"
             android:label="@string/title_activity_practice_profile"
             android:screenOrientation="portrait" />
         <activity

@@ -1,4 +1,4 @@
-package com.scwang.smartrefresh.layout.internal.pathview;
+package com.scwang.smartrefresh.header.internal.pathview;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -20,6 +20,7 @@ import java.util.List;
  * Created by SCWANG on 2017/6/1.
  */
 
+@SuppressWarnings("WeakerAccess")
 public class PathsDrawable extends Drawable {
 
     protected Paint mPaint;
@@ -27,13 +28,13 @@ public class PathsDrawable extends Drawable {
     protected List<Integer> mColors;
     protected int mWidth = 1,mHeight = 1;
     protected int mStartX = 0,mStartY = 0;
-    protected int mOrginWidth;
-    protected int mOrginHeight;
+    protected int mOriginWidth;
+    protected int mOriginHeight;
     protected static final Region REGION = new Region();
     protected static final Region MAX_CLIP = new Region(Integer.MIN_VALUE,
             Integer.MIN_VALUE,Integer.MAX_VALUE, Integer.MAX_VALUE);
-    protected List<Path> mOrginPaths;
-    protected List<String> mOrginSvgs;
+    protected List<Path> mOriginPaths;
+    protected List<String> mOriginSvgs;
 
     public PathsDrawable() {
         mPaint = new Paint();
@@ -58,11 +59,11 @@ public class PathsDrawable extends Drawable {
         mStartY = top == null ? 0 : top;
         mWidth = right == null ? 0 : right - mStartX;
         mHeight = bottom == null ? 0 : bottom - mStartY;
-        if (mOrginWidth == 0) {
-            mOrginWidth = mWidth;
+        if (mOriginWidth == 0) {
+            mOriginWidth = mWidth;
         }
-        if (mOrginHeight == 0) {
-            mOrginHeight = mHeight;
+        if (mOriginHeight == 0) {
+            mOriginHeight = mHeight;
         }
         Rect bounds = getBounds();
         super.setBounds(bounds.left, bounds.top, bounds.left + mWidth, bounds.top + mHeight);
@@ -72,11 +73,11 @@ public class PathsDrawable extends Drawable {
     public void setBounds(int left, int top, int right, int bottom) {
         final int width = right - left;
         final int height = bottom - top;
-        if (mOrginPaths != null && mOrginPaths.size() > 0 &&
+        if (mOriginPaths != null && mOriginPaths.size() > 0 &&
                 (width != mWidth || height != mHeight)) {
-            float ratioWidth = 1f * width / mOrginWidth;
-            float ratioHeight = 1f * height / mOrginHeight;
-            mPaths = PathParser.transformScale(ratioWidth, ratioHeight, mOrginPaths, mOrginSvgs);
+            float ratioWidth = 1f * width / mOriginWidth;
+            float ratioHeight = 1f * height / mOriginHeight;
+            mPaths = PathParser.transformScale(ratioWidth, ratioHeight, mOriginPaths, mOriginSvgs);
             onMeasure();
         } else {
             super.setBounds(left, top, right, bottom);
@@ -88,12 +89,12 @@ public class PathsDrawable extends Drawable {
     }
 
     public void parserPaths(String... paths) {
-        mOrginWidth = mOrginHeight = 0;
-        mOrginSvgs = new ArrayList<>();
-        mPaths = mOrginPaths = new ArrayList<>();
+        mOriginWidth = mOriginHeight = 0;
+        mOriginSvgs = new ArrayList<>();
+        mPaths = mOriginPaths = new ArrayList<>();
         for (String path : paths) {
-            mOrginSvgs.add(path);
-            mOrginPaths.add(PathParser.createPathFromPathData(path));
+            mOriginSvgs.add(path);
+            mOriginPaths.add(PathParser.createPathFromPathData(path));
         }
         onMeasure();
     }
@@ -127,7 +128,7 @@ public class PathsDrawable extends Drawable {
         } else {
             createCachedBitmapIfNeeded(width, height);
             if (!canReuseCache()) {
-                updateCachedBitmap(width, height);
+                updateCachedBitmap();
                 updateCacheStates();
             }
             canvas.drawBitmap(mCachedBitmap, bounds.left, bounds.top, mPaint);
@@ -193,7 +194,7 @@ public class PathsDrawable extends Drawable {
     private Bitmap mCachedBitmap;
     private boolean mCacheDirty;
 
-    public void updateCachedBitmap(int width, int height) {
+    public void updateCachedBitmap() {
         mCachedBitmap.eraseColor(Color.TRANSPARENT);
         Canvas tmpCanvas = new Canvas(mCachedBitmap);
         drawCachedBitmap(tmpCanvas);
@@ -221,17 +222,11 @@ public class PathsDrawable extends Drawable {
     }
 
     public boolean canReuseBitmap(int width, int height) {
-        if (width == mCachedBitmap.getWidth()
-                && height == mCachedBitmap.getHeight()) {
-            return true;
-        }
-        return false;
+        return width == mCachedBitmap.getWidth()
+                && height == mCachedBitmap.getHeight();
     }
     public boolean canReuseCache() {
-        if (!mCacheDirty) {
-            return true;
-        }
-        return false;
+        return !mCacheDirty;
     }
 
     public void updateCacheStates() {

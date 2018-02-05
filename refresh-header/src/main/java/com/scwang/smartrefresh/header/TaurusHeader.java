@@ -5,25 +5,20 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
-import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.Interpolator;
 import android.view.animation.Transformation;
 
+import com.scwang.smartrefresh.header.internal.pathview.PathsDrawable;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
-import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
-import com.scwang.smartrefresh.layout.internal.pathview.PathsDrawable;
+import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import java.util.HashMap;
@@ -35,7 +30,7 @@ import java.util.Random;
  * Created by SCWANG on 2017/5/31.
  * from https://github.com/Yalantis/Taurus
  */
-public class TaurusHeader extends View implements RefreshHeader {
+public class TaurusHeader extends InternalAbstract implements RefreshHeader {
 
     //<editor-fold desc="Field">
     private static final float SCALE_START_PERCENT = 0.5f;
@@ -108,12 +103,6 @@ public class TaurusHeader extends View implements RefreshHeader {
         initView(context, attrs);
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    public TaurusHeader(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        initView(context, attrs);
-    }
-
     private void initView(Context context, AttributeSet attrs) {
         setMinimumHeight(DensityUtil.dp2px(100));
 
@@ -150,19 +139,6 @@ public class TaurusHeader extends View implements RefreshHeader {
     //</editor-fold>
 
     //<editor-fold desc="RefreshHeader">
-    @Override
-    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
-
-    }
-
-    @Override
-    public boolean isSupportHorizontalDrag() {
-        return false;
-    }
-
-    @Override
-    public void onHorizontalDrag(float percentX, int offsetX, int offsetMax) {
-    }
 
     @Override
     public void onPulling(float percent, int offset, int height, int extendHeight) {
@@ -183,15 +159,6 @@ public class TaurusHeader extends View implements RefreshHeader {
         isRefreshing = true;
         mFinishTransformation = 0;
         startAnimation(mAnimation);
-    }
-
-    @Override
-    public void onReleased(RefreshLayout layout, int height, int extendHeight) {
-
-    }
-
-    @Override
-    public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
     }
 
     @Override
@@ -231,20 +198,17 @@ public class TaurusHeader extends View implements RefreshHeader {
 
     @NonNull
     @Override
-    public View getView() {
-        return this;
-    }
-
-    @NonNull
-    @Override
     public SpinnerStyle getSpinnerStyle() {
         return SpinnerStyle.Scale;
     }
     //</editor-fold>
 
     //<editor-fold desc="draw">
+
     @Override
-    public void onDraw(Canvas canvas) {
+    protected void dispatchDraw(Canvas canvas) {
+        super.dispatchDraw(canvas);
+
         int width = getWidth();
         int height = getHeight();
         if (isRefreshing) {

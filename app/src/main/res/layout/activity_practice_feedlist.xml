@@ -39,7 +39,7 @@
                 android:layout_height="130dp">
 
                 <com.github.mmin18.widget.RealtimeBlurView
-                    android:id="@+id/blurview"
+                    android:id="@+id/blurView"
                     android:layout_width="match_parent"
                     android:layout_height="130dp"
                     app:realtimeBlurRadius="10dp"

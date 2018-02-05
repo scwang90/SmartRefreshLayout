@@ -30,6 +30,9 @@
     <string name="title_activity_style_fungame_battlecity">FunGameBattleCityHeader</string>
     <string name="title_activity_style_fungame_hitblock">FunGameHitBlockHeader</string>
     <string name="title_activity_style_storehouse">StoreHouseHeader</string>
+    <string name="title_activity_style_dropbox">DropBoxHeader</string>
+    <string name="title_activity_style_delivery">气球快递</string>
+    <string name="title_activity_style_flyrefresh">纸飞机</string>
     <string name="title_activity_using_basic">基本使用</string>
     <string name="title_activity_using_assign_default">全局默认</string>
     <string name="title_activity_using_assign_xml">XML配置</string>
@@ -84,9 +87,6 @@
         //设置 Footer 为 三球动画\n
         refreshLayout.setRefreshFooter(new BallPulseFooter(this));\n\n
     </string>
-    <string name="title_activity_style_dropbox">掉落盒子</string>
-    <string name="title_activity_style_delivery">气球快递</string>
-    <string name="title_activity_style_flyrefresh">纸飞机</string>
     <string name="title_activity_using_overscroll">越界回弹</string>
     <string name="title_activity_using_listener">多功能监听器</string>
     <string name="title_activity_using_custom">自定义Header</string>

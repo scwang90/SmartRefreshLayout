@@ -8,9 +8,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
-import android.os.Build;
 import android.support.annotation.ColorInt;
-import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.Interpolator;
@@ -23,6 +21,7 @@ import com.scwang.smartrefresh.header.util.ColorUtils;
  * Created by jing on 2015-5-28.
  * from https://github.com/race604/FlyRefresh
  */
+@SuppressWarnings("UnnecessaryLocalVariable")
 public class MountainSceneView extends View {
 
     private int COLOR_BACKGROUND = Color.parseColor("#7ECEC9");
@@ -74,12 +73,6 @@ public class MountainSceneView extends View {
 
     public MountainSceneView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initView(context, attrs);
-    }
-
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    public MountainSceneView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
         initView(context, attrs);
     }
 

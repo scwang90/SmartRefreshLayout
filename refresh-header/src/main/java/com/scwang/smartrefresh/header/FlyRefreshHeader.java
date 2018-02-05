@@ -6,11 +6,8 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
@@ -22,7 +19,6 @@ import com.scwang.smartrefresh.header.flyrefresh.PathInterpolatorCompat;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.header.FalsifyHeader;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
@@ -56,11 +52,6 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
         super(context, attrs, defStyleAttr);
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    public FlyRefreshHeader(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-    }
-
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
@@ -70,15 +61,6 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
     //</editor-fold>
 
     //<editor-fold desc="RefreshHeader">
-
-    @Override
-    public boolean isSupportHorizontalDrag() {
-        return false;
-    }
-
-    @Override
-    public void onHorizontalDrag(float percentX, int offsetX, int offsetMax) {
-    }
 
     @Override
     public void onPulling(float percent, int offset, int height, int extendHeight) {
@@ -165,11 +147,6 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
         }
     }
 
-    @Override
-    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
-
-    }
-
     /**
      * @param colors 对应Xml中配置的 srlPrimaryColor srlAccentColor
      * @deprecated 请使用 {@link RefreshLayout#setPrimaryColorsId(int...)}
@@ -196,10 +173,6 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
             finishRefresh();
         }
         return super.onFinish(layout, success);
-    }
-
-    @Override
-    public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
     }
 
     //</editor-fold>

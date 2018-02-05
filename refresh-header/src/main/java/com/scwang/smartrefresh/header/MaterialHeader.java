@@ -5,15 +5,11 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.annotation.VisibleForTesting;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.scwang.smartrefresh.header.internal.MaterialProgressDrawable;
 import com.scwang.smartrefresh.header.material.CircleImageView;
@@ -22,6 +18,7 @@ import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import static android.view.View.MeasureSpec.getSize;
@@ -31,7 +28,7 @@ import static android.view.View.MeasureSpec.getSize;
  * Created by SCWANG on 2017/6/2.
  */
 @SuppressWarnings("unused")
-public class MaterialHeader extends ViewGroup implements RefreshHeader {
+public class MaterialHeader extends InternalAbstract implements RefreshHeader {
 
     // Maps to ProgressBar.Large style
     public static final int SIZE_LARGE = 0;
@@ -73,12 +70,6 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
 
     public MaterialHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initView(context, attrs);
-    }
-
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    public MaterialHeader(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
         initView(context, attrs);
     }
 
@@ -176,15 +167,6 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override
-    public boolean isSupportHorizontalDrag() {
-        return false;
-    }
-
-    @Override
-    public void onHorizontalDrag(float percentX, int offsetX, int offsetMax) {
-    }
-
-    @Override
     public void onPulling(float percent, int offset, int height, int extendHeight) {
         if (mShowBezierWave) {
             mHeadHeight = Math.min(offset, height);
@@ -238,11 +220,6 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override
-    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
-
-    }
-
-    @Override
     public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
         mState = newState;
         switch (newState) {
@@ -278,12 +255,6 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
         if (colors.length > 0) {
             mBezierPaint.setColor(colors[0]);
         }
-    }
-
-    @NonNull
-    @Override
-    public View getView() {
-        return this;
     }
 
     @NonNull

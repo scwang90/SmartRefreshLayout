@@ -2,22 +2,19 @@ package com.scwang.smartrefresh.header;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.Rect;
-import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
-import android.view.View;
 
+import com.scwang.smartrefresh.header.internal.pathview.PathsDrawable;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
-import com.scwang.smartrefresh.layout.internal.pathview.PathsDrawable;
+import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 /**
@@ -25,10 +22,9 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
  * Created by SCWANG on 2017/6/25.
  * design https://dribbble.com/shots/2753803-Refresh-your-delivery
  */
-public class DeliveryHeader extends View implements RefreshHeader {
+public class DeliveryHeader extends InternalAbstract implements RefreshHeader {
 
     //<editor-fold desc="Field">
-    private Paint mPaint;
     private int mCloudX1;
     private int mCloudX2;
     private int mCloudX3;
@@ -56,13 +52,6 @@ public class DeliveryHeader extends View implements RefreshHeader {
         this.initView(context, attrs);
     }
 
-    @SuppressWarnings("unused")
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    public DeliveryHeader(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        this.initView(context, attrs);
-    }
-
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         setMeasuredDimension(resolveSize(getSuggestedMinimumWidth(), widthMeasureSpec),
@@ -71,9 +60,7 @@ public class DeliveryHeader extends View implements RefreshHeader {
 
     @SuppressWarnings("unused")
     private void initView(Context context, AttributeSet attrs) {
-        mPaint = new Paint();
-        mPaint.setAntiAlias(true);
-//        setBackgroundColor(0xff283645);
+
         setMinimumHeight(DensityUtil.dp2px(150));
 
         mCloudDrawable = new PathsDrawable();
@@ -131,7 +118,9 @@ public class DeliveryHeader extends View implements RefreshHeader {
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected void dispatchDraw(Canvas canvas) {
+        super.dispatchDraw(canvas);
+
         final int width = getWidth();
         final int height = getHeight();
 
@@ -194,15 +183,6 @@ public class DeliveryHeader extends View implements RefreshHeader {
     //<editor-fold desc="RefreshHeader">
 
     @Override
-    public boolean isSupportHorizontalDrag() {
-        return false;
-    }
-
-    @Override
-    public void onHorizontalDrag(float percentX, int offsetX, int offsetMax) {
-    }
-
-    @Override
     public void onPulling(float percent, int offset, int height, int extendHeight) {
         if (mState != RefreshState.Refreshing) {
             mBoxDrawable.getPaint().setAlpha((int) (255 * (1f - Math.max(0, percent - 1))));
@@ -228,12 +208,6 @@ public class DeliveryHeader extends View implements RefreshHeader {
             mAppreciation = 0;
             mCloudX1 = mCloudX2 = mCloudX3 = -mCloudDrawable.getBounds().width();
         }
-    }
-
-    @NonNull
-    @Override
-    public View getView() {
-        return this;
     }
 
     @NonNull
@@ -268,9 +242,5 @@ public class DeliveryHeader extends View implements RefreshHeader {
         invalidate();
     }
 
-    @Override
-    public int onFinish(@NonNull RefreshLayout layout, boolean success) {
-        return 0;
-    }
     //</editor-fold>
 }

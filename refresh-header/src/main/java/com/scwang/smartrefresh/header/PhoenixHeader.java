@@ -6,24 +6,19 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Rect;
-import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.Transformation;
 
+import com.scwang.smartrefresh.header.internal.pathview.PathsDrawable;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
-import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
-import com.scwang.smartrefresh.layout.internal.pathview.PathsDrawable;
+import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 /**
@@ -31,7 +26,7 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
  * Created by SCWANG on 2017/5/31.
  * from https://github.com/Yalantis/Phoenix
  */
-public class PhoenixHeader extends View implements RefreshHeader/*, SizeDefinition*/ {
+public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, SizeDefinition*/ {
 
     //<editor-fold desc="static">
     private static final int ANIMATION_DURATION = 1000;
@@ -126,12 +121,6 @@ public class PhoenixHeader extends View implements RefreshHeader/*, SizeDefiniti
         initView(context, attrs);
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    public PhoenixHeader(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        initView(context, attrs);
-    }
-
     private void initView(Context context, AttributeSet attrs) {
         mMatrix = new Matrix();
         DensityUtil density = new DensityUtil();
@@ -198,19 +187,6 @@ public class PhoenixHeader extends View implements RefreshHeader/*, SizeDefiniti
     //</editor-fold>
 
     //<editor-fold desc="RefreshHeader">
-    @Override
-    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
-
-    }
-
-    @Override
-    public boolean isSupportHorizontalDrag() {
-        return false;
-    }
-
-    @Override
-    public void onHorizontalDrag(float percentX, int offsetX, int offsetMax) {
-    }
 
     @Override
     public void onPulling(float percent, int offset, int height, int extendHeight) {
@@ -228,16 +204,6 @@ public class PhoenixHeader extends View implements RefreshHeader/*, SizeDefiniti
     public void onReleased(RefreshLayout layout, int height, int extendHeight) {
         isRefreshing = true;
         startAnimation(mAnimation);
-    }
-
-    @Override
-    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
-
-    }
-
-    @Override
-    public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
-
     }
 
     @Override
@@ -266,12 +232,6 @@ public class PhoenixHeader extends View implements RefreshHeader/*, SizeDefiniti
 
     @NonNull
     @Override
-    public View getView() {
-        return this;
-    }
-
-    @NonNull
-    @Override
     public SpinnerStyle getSpinnerStyle() {
         return SpinnerStyle.Scale;
     }
@@ -288,8 +248,12 @@ public class PhoenixHeader extends View implements RefreshHeader/*, SizeDefiniti
 //    }
 
     //<editor-fold desc="draw">
+
+
     @Override
-    public void onDraw(Canvas canvas) {
+    protected void dispatchDraw(Canvas canvas) {
+        super.dispatchDraw(canvas);
+
         int width = getWidth();
         int height = getHeight();
         drawSky(canvas, width, height);

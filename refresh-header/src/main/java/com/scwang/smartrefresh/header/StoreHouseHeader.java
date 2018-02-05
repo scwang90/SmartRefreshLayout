@@ -7,13 +7,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.PointF;
-import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
-import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
@@ -23,8 +19,7 @@ import com.scwang.smartrefresh.header.storehouse.StoreHousePath;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.constant.RefreshState;
-import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import java.util.ArrayList;
@@ -35,7 +30,7 @@ import java.util.ArrayList;
  * from https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh
  */
 @SuppressWarnings({"unused", "UnusedReturnValue", "SameParameterValue"})
-public class StoreHouseHeader extends View implements RefreshHeader {
+public class StoreHouseHeader extends InternalAbstract implements RefreshHeader {
 
     //<editor-fold desc="Field">
     public ArrayList<StoreHouseBarItem> mItemList = new ArrayList<>();
@@ -86,12 +81,6 @@ public class StoreHouseHeader extends View implements RefreshHeader {
         this.initView(context, attrs);
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    public StoreHouseHeader(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        this.initView(context, attrs);
-    }
-
     private void initView(Context context, AttributeSet attrs) {
         DensityUtil density = new DensityUtil();
         mLineWidth = density.dip2px(1);
@@ -127,8 +116,9 @@ public class StoreHouseHeader extends View implements RefreshHeader {
     }
 
     @Override
-    public void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
+    protected void dispatchDraw(Canvas canvas) {
+        super.dispatchDraw(canvas);
+
         final int c1 = canvas.save();
         final int len = mItemList.size();
         final float progress = isInEditMode() ? 1 : mProgress;
@@ -236,7 +226,7 @@ public class StoreHouseHeader extends View implements RefreshHeader {
 
     public StoreHouseHeader initWithStringArray(int id) {
         String[] points = getResources().getStringArray(id);
-        ArrayList<float[]> pointList = new ArrayList<float[]>();
+        ArrayList<float[]> pointList = new ArrayList<>();
         for (String point : points) {
             String[] x = point.split(",");
             float[] f = new float[4];
@@ -323,15 +313,6 @@ public class StoreHouseHeader extends View implements RefreshHeader {
     }
 
     @Override
-    public boolean isSupportHorizontalDrag() {
-        return false;
-    }
-
-    @Override
-    public void onHorizontalDrag(float percentX, int offsetX, int offsetMax) {
-    }
-
-    @Override
     public void onPulling(float percent, int offset, int height, int extendHeight) {
         setProgress(percent * .8f);
         invalidate();
@@ -341,20 +322,6 @@ public class StoreHouseHeader extends View implements RefreshHeader {
     public void onReleasing(float percent, int offset, int height, int extendHeight) {
         setProgress(percent * .8f);
         invalidate();
-    }
-
-    @Override
-    public void onReleased(RefreshLayout layout, int height, int extendHeight) {
-        beginLoading();
-    }
-
-    @Override
-    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
-
-    }
-
-    @Override
-    public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
     }
 
     @Override
@@ -400,18 +367,6 @@ public class StoreHouseHeader extends View implements RefreshHeader {
                 setTextColor(colors[1]);
             }
         }
-    }
-
-    @NonNull
-    @Override
-    public View getView() {
-        return this;
-    }
-
-    @NonNull
-    @Override
-    public SpinnerStyle getSpinnerStyle() {
-        return SpinnerStyle.Translate;
     }
 
     //</editor-fold>

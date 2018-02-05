@@ -54,10 +54,10 @@ SmartRefreshLayout's goal is to build a strong, stable and mature pull-down refr
 
 #### Style
 
-|Style|Delivery|Dropbox|
+|Style|Delivery|DropBox|
 |:---:|:---:|:---:|
-|Demo|![](art/gif_Delivery.gif)|![](art/gif_Dropbox.gif)|
-|Design|[Refresh-your-delivery](https://dribbble.com/shots/2753803-Refresh-your-delivery)|[Dropbox-Refresh](https://dribbble.com/shots/3470499-Dropbox-Refresh)|
+|Demo|![](art/gif_Delivery.gif)|![](art/gif_DropBox.gif)|
+|Design|[Refresh-your-delivery](https://dribbble.com/shots/2753803-Refresh-your-delivery)|[DropBox-Refresh](https://dribbble.com/shots/3470499-DropBox-Refresh)|
 
 The two above headers are implemented by myself, The following headers are collected and optimized from excellent Headers on github
 
@@ -102,8 +102,8 @@ Please rest assured that I have divided it into three packages, when used to ref
 ## Usage
 #### 1.Add a gradle dependency.
 ```
-compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-7'
-compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4-7'//If you use the special Header
+compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.5'
+compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.5'//If you use the special Header
 
 compile 'com.android.support:appcompat-v7:25.3.1'
 compile 'com.android.support:design:25.3.1'//（Not necessary，Can solve problems that cannot be previewed）

@@ -97,7 +97,7 @@ public class BannerPracticeActivity extends AppCompatActivity {
         StatusBarUtil.setPaddingSmart(this, toolbar);
         StatusBarUtil.setPaddingSmart(this, recyclerView);
         StatusBarUtil.setMargin(this, findViewById(R.id.header));
-        StatusBarUtil.setPaddingSmart(this, findViewById(R.id.blurview));
+        StatusBarUtil.setPaddingSmart(this, findViewById(R.id.blurView));
     }
 
     public class QuickAdapter extends BaseQuickAdapter<Movie, BaseViewHolder> {

@@ -19,7 +19,7 @@ import java.util.Locale;
 /**
  * 网页-Github
  */
-public class WebviewPracticeActivity extends AppCompatActivity {
+public class WebViewPracticeActivity extends AppCompatActivity {
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -67,7 +67,7 @@ public class WebviewPracticeActivity extends AppCompatActivity {
         StatusBarUtil.setPaddingSmart(this, webView);
         StatusBarUtil.setPaddingSmart(this, toolbar);
         StatusBarUtil.setMargin(this, findViewById(R.id.header));
-        StatusBarUtil.setPaddingSmart(this, findViewById(R.id.blurview));
+        StatusBarUtil.setPaddingSmart(this, findViewById(R.id.blurView));
     }
 
 }

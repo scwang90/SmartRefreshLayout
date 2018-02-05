@@ -5,14 +5,9 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
-import android.os.Build;
-import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.R;
@@ -20,7 +15,7 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
-import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import static android.view.View.MeasureSpec.EXACTLY;
@@ -34,7 +29,7 @@ import static android.view.View.MeasureSpec.makeMeasureSpec;
  * Created by SCWANG on 2017/6/14.
  */
 
-public class FalsifyHeader extends View implements RefreshHeader {
+public class FalsifyHeader extends InternalAbstract implements RefreshHeader {
 
     protected RefreshKernel mRefreshKernel;
 
@@ -49,11 +44,6 @@ public class FalsifyHeader extends View implements RefreshHeader {
 
     public FalsifyHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-    }
-
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    public FalsifyHeader(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     @Override
@@ -97,25 +87,6 @@ public class FalsifyHeader extends View implements RefreshHeader {
     }
 
     @Override
-    public boolean isSupportHorizontalDrag() {
-        return false;
-    }
-
-    @Override
-    public void onHorizontalDrag(float percentX, int offsetX, int offsetMax) {
-    }
-
-    @Override
-    public void onPulling(float percent, int offset, int height, int extendHeight) {
-
-    }
-
-    @Override
-    public void onReleasing(float percent, int offset, int height, int extendHeight) {
-
-    }
-
-    @Override
     public void onReleased(RefreshLayout layout, int height, int extendHeight) {
         if (mRefreshKernel != null) {
             mRefreshKernel.setState(RefreshState.None);
@@ -126,35 +97,6 @@ public class FalsifyHeader extends View implements RefreshHeader {
         }
     }
 
-    @Override
-    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
-    }
-
-    @Override
-    public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
-    }
-
-    @Override
-    public int onFinish(@NonNull RefreshLayout layout, boolean success) {
-        return 0;
-    }
-
-    @Override@Deprecated
-    public void setPrimaryColors(@ColorInt int ... colors) {
-
-    }
-
-    @NonNull
-    @Override
-    public View getView() {
-        return this;
-    }
-
-    @NonNull
-    @Override
-    public SpinnerStyle getSpinnerStyle() {
-        return SpinnerStyle.Translate;
-    }
     //</editor-fold>
 
 }

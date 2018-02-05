@@ -8,16 +8,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.graphics.ColorUtils;
 import android.util.AttributeSet;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.scwang.smartrefresh.layout.R;
 import com.scwang.smartrefresh.layout.api.RefreshFooter;
-import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.footer.ballpulse.BallPulseView;
+import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import static android.view.View.MeasureSpec.AT_MOST;
@@ -30,7 +27,7 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
  * Created by SCWANG on 2017/5/30.
  */
 @SuppressWarnings({"unused", "UnusedReturnValue"})
-public class BallPulseFooter extends ViewGroup implements RefreshFooter {
+public class BallPulseFooter extends InternalAbstract implements RefreshFooter {
 
     private BallPulseView mBallPulseView;
     private SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
@@ -99,40 +96,10 @@ public class BallPulseFooter extends ViewGroup implements RefreshFooter {
     //</editor-fold>
 
     //<editor-fold desc="RefreshFooter">
-    @Override
-    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
-
-    }
 
     @Override
-    public boolean isSupportHorizontalDrag() {
-        return false;
-    }
-
-    @Override
-    public void onHorizontalDrag(float percentX, int offsetX, int offsetMax) {
-    }
-
-    @Override
-    public void onPulling(float percent, int offset, int footerHeight, int extendHeight) {
-    }
-
-    @Override
-    public void onReleasing(float percent, int offset, int footerHeight, int extendHeight) {
-    }
-
-    @Override
-    public void onReleased(RefreshLayout layout, int footerHeight, int extendHeight) {
-
-    }
-
-    @Override
-    public void onStartAnimator(@NonNull RefreshLayout layout, int footerHeight, int extendHeight) {
+    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
         mBallPulseView.startAnim();
-    }
-
-    @Override
-    public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
     }
 
     @Override
@@ -159,17 +126,13 @@ public class BallPulseFooter extends ViewGroup implements RefreshFooter {
             }
         }
     }
-    @NonNull
-    @Override
-    public View getView() {
-        return this;
-    }
 
     @NonNull
     @Override
     public SpinnerStyle getSpinnerStyle() {
         return mSpinnerStyle;
     }
+
     //</editor-fold>
 
     //<editor-fold desc="API">

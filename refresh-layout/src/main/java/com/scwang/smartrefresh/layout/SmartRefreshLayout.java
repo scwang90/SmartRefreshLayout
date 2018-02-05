@@ -15,7 +15,6 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.NestedScrollingChild;
 import android.support.v4.view.NestedScrollingChildHelper;
@@ -37,12 +36,8 @@ import android.widget.AbsListView;
 import android.widget.Scroller;
 import android.widget.TextView;
 
-import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreater;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;
-import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreater;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
-import com.scwang.smartrefresh.layout.api.OnLoadmoreListener;
-import com.scwang.smartrefresh.layout.api.OnRefreshLoadmoreListener;
 import com.scwang.smartrefresh.layout.api.RefreshContent;
 import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
@@ -237,12 +232,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
     public SmartRefreshLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.initView(context, attrs);
-    }
-
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    public SmartRefreshLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
         this.initView(context, attrs);
     }
 
@@ -1571,15 +1560,15 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         }
         if (mRefreshContent != null) {
             Integer tSpinner = null;
-            if (spinner >= 0) {
-                if (mEnableHeaderTranslationContent || mRefreshHeader == null || mRefreshHeader.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
+            if (spinner >= 0 && mRefreshHeader != null) {
+                if (mEnableHeaderTranslationContent || mRefreshHeader.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
                     tSpinner = spinner;
                 } else if (oldSpinner < 0) {
                     tSpinner = 0;
                 }
             }
-            if (spinner <= 0) {
-                if (mEnableFooterTranslationContent || mRefreshFooter == null || mRefreshFooter.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
+            if (spinner <= 0 && mRefreshFooter != null) {
+                if (mEnableFooterTranslationContent || mRefreshFooter.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
                     tSpinner = spinner;
                 } else if (oldSpinner > 0) {
                     tSpinner = 0;
@@ -1587,8 +1576,11 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             }
             if (tSpinner != null) {
                 mRefreshContent.moveSpinner(tSpinner);
-                if ((mHeaderBackgroundColor != 0 && (tSpinner >= 0 || oldSpinner > 0)) ||
-                        (mFooterBackgroundColor != 0 && (tSpinner <= 0 || oldSpinner < 0))) {
+                boolean header = mEnableClipHeaderWhenFixedBehind && mRefreshHeader.getSpinnerStyle() == SpinnerStyle.FixedBehind;
+                header = header || mHeaderBackgroundColor != 0;
+                boolean footer = mEnableClipFooterWhenFixedBehind && mRefreshFooter.getSpinnerStyle() == SpinnerStyle.FixedBehind;
+                footer = footer || mFooterBackgroundColor != 0;
+                if ((header && (tSpinner >= 0 || oldSpinner > 0)) || (footer && (tSpinner <= 0 || oldSpinner < 0))) {
                     invalidate();
                 }
             }
@@ -3020,171 +3012,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     @Deprecated
     public SmartRefreshLayout resetNoMoreData() {
         return setNoMoreData(false);
-    }
-
-    /**
-     * 恢复没有更多数据的原始状态
-     * @param finished 是否有更多数据
-     * @deprecated 后续版本将会移除 使用 {@link RefreshLayout#setNoMoreData(boolean)} 代替
-     * @return SmartRefreshLayout
-     */
-    @Override
-    @Deprecated
-    public SmartRefreshLayout setLoadmoreFinished(boolean finished) {
-        return setNoMoreData(finished);
-    }
-
-    /**
-     * 完成加载
-     * @deprecated 使用 {@link #finishLoadMore()} 代替
-     * @return SmartRefreshLayout
-     */
-    @Override
-    @Deprecated
-    public SmartRefreshLayout finishLoadmore() {
-        return finishLoadMore();
-    }
-
-    /**
-     * 完成加载
-     * @deprecated 使用 {@link #finishLoadMore(int)} 代替
-     * @return SmartRefreshLayout
-     */
-    @Override
-    @Deprecated
-    public SmartRefreshLayout finishLoadmore(int delayed) {
-        return finishLoadMore(delayed);
-    }
-
-    /**
-     * 完成加载
-     * @deprecated 使用 {@link #finishLoadMore(boolean)} 代替
-     * @return SmartRefreshLayout
-     */
-    @Override
-    @Deprecated
-    public SmartRefreshLayout finishLoadmore(boolean success) {
-        return finishLoadMore(success);
-    }
-
-    /**
-     * 完成加载并标记没有更多数据
-     * @deprecated 使用 {@link #finishLoadMoreWithNoMoreData()} 代替
-     * @return SmartRefreshLayout
-     */
-    @Override
-    @Deprecated
-    public SmartRefreshLayout finishLoadmoreWithNoMoreData() {
-        return finishLoadMoreWithNoMoreData();
-    }
-
-    /**
-     * @deprecated 后续版本将会移除
-     * @return boolean
-     */
-    @Override
-    @Deprecated
-    public boolean isLoadmoreFinished() {
-        return mFooterNoMoreData;
-    }
-
-    /**
-     * @deprecated 后续版本将会移除
-     * @return boolean
-     */
-    @Override
-    @Deprecated
-    public boolean isEnableAutoLoadMore() {
-        return mEnableAutoLoadMore;
-    }
-
-    /**
-     * @deprecated 后续版本将会移除
-     * @return boolean
-     */
-    @Override
-    @Deprecated
-    public boolean isEnableOverScrollBounce() {
-        return mEnableOverScrollBounce;
-    }
-
-    /**
-     * @deprecated 后续版本将会移除
-     * @return boolean
-     */
-    @Override
-    @Deprecated
-    public boolean isEnablePureScrollMode() {
-        return mEnablePureScrollMode;
-    }
-
-    /**
-     * @deprecated 后续版本将会移除
-     * @return boolean
-     */
-    @Override
-    @Deprecated
-    public boolean isEnableScrollContentWhenLoaded() {
-        return mEnableScrollContentWhenLoaded;
-    }
-
-
-    /**
-     * 单独设置加载监听器
-     * @deprecated 使用 {@link #setOnLoadMoreListener(OnLoadMoreListener)} 代替
-     * @return SmartRefreshLayout
-     */
-    @Override
-    @Deprecated
-    public SmartRefreshLayout setOnLoadmoreListener(final OnLoadmoreListener listener) {
-        return setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(RefreshLayout refreshLayout) {
-                listener.onLoadmore(refreshLayout);
-            }
-        });
-    }
-
-    /**
-     * 同时设置刷新和加载监听器
-     * @deprecated 使用 {@link #setOnRefreshLoadMoreListener(OnRefreshLoadMoreListener)} 代替
-     * @return SmartRefreshLayout
-     */
-    @Override
-    @Deprecated
-    public SmartRefreshLayout setOnRefreshLoadmoreListener(final OnRefreshLoadmoreListener listener) {
-        return setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
-            @Override
-            public void onLoadMore(RefreshLayout refreshLayout) {
-                listener.onLoadmore(refreshLayout);
-            }
-
-            @Override
-            public void onRefresh(RefreshLayout refreshLayout) {
-                listener.onRefresh(refreshLayout);
-            }
-        });
-    }
-
-    /**
-     * 设置默认Header构建器
-     * @param creator 过期的构建器
-     * @deprecated 使用 {@link #setDefaultRefreshHeaderCreator(DefaultRefreshHeaderCreator)} 代替
-     */
-    @Deprecated
-    public static void setDefaultRefreshHeaderCreater(@NonNull DefaultRefreshHeaderCreater creator) {
-        sHeaderCreator = creator;
-    }
-
-    /**
-     * 设置默认Footer构建器
-     * @param creator 过期的构建器
-     * @deprecated 使用 {@link #setDefaultRefreshFooterCreator(DefaultRefreshFooterCreator)} 代替
-     */
-    @Deprecated
-    public static void setDefaultRefreshFooterCreater(@NonNull DefaultRefreshFooterCreater creator) {
-        sFooterCreator = creator;
-        sManualFooterCreator = true;
     }
 
     //</editor-fold>

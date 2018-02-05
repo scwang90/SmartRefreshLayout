@@ -7,21 +7,17 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
-import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
-import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
-import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 /**
@@ -29,7 +25,7 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
  * Created by zhanglei on 15/7/18.
  * from https://github.com/tuesda/CircleRefreshLayout
  */
-public class BezierCircleHeader extends View implements RefreshHeader {
+public class BezierCircleHeader extends InternalAbstract implements RefreshHeader {
 
     //<editor-fold desc="Field">
 
@@ -76,12 +72,6 @@ public class BezierCircleHeader extends View implements RefreshHeader {
         initView(context, attrs);
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    public BezierCircleHeader(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        initView(context, attrs);
-    }
-
     @SuppressWarnings("unused")
     private void initView(Context context, AttributeSet attrs) {
         setMinimumHeight(DensityUtil.dp2px(100));
@@ -108,9 +98,11 @@ public class BezierCircleHeader extends View implements RefreshHeader {
     //</editor-fold>
 
     //<editor-fold desc="Draw">
+
+
     @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
+    protected void dispatchDraw(Canvas canvas) {
+        super.dispatchDraw(canvas);
 
         if (isInEditMode()) {
             mShowBoll = true;
@@ -170,16 +162,16 @@ public class BezierCircleHeader extends View implements RefreshHeader {
     private void drawBollTail(Canvas canvas, int viewWidth, float fraction) {
         if (mShowBollTail) {
             final float bottom = mHeadHeight + mWaveHeight;
-            final float starty = mBollY + mBollRadius * fraction / 2;
-            final float startx = viewWidth / 2 + (float) Math.sqrt(mBollRadius * mBollRadius * (1 - fraction * fraction / 4));
+            final float startY = mBollY + mBollRadius * fraction / 2;
+            final float startX = viewWidth / 2 + (float) Math.sqrt(mBollRadius * mBollRadius * (1 - fraction * fraction / 4));
             final float bezier1x = (viewWidth / 2 + (mBollRadius * 3 / 4) * (1 - fraction));
             final float bezier2x = bezier1x + mBollRadius;
 
             mPath.reset();
-            mPath.moveTo(startx, starty);
+            mPath.moveTo(startX, startY);
             mPath.quadTo(bezier1x, bottom, bezier2x, bottom);
             mPath.lineTo(viewWidth - bezier2x, bottom);
-            mPath.quadTo(viewWidth - bezier1x, bottom, viewWidth - startx, starty);
+            mPath.quadTo(viewWidth - bezier1x, bottom, viewWidth - startX, startY);
             canvas.drawPath(mPath, mFrontPaint);
         }
     }
@@ -251,19 +243,6 @@ public class BezierCircleHeader extends View implements RefreshHeader {
     //<editor-fold desc="RefreshHeader">
 
     @Override
-    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
-    }
-
-    @Override
-    public boolean isSupportHorizontalDrag() {
-        return false;
-    }
-
-    @Override
-    public void onHorizontalDrag(float percentX, int offsetX, int offsetMax) {
-    }
-
-    @Override
     public void onPulling(float percent, int offset, int height, int extendHeight) {
         mHeadHeight = height;
         mWaveHeight = Math.max(offset - height, 0) * .8f;
@@ -284,34 +263,34 @@ public class BezierCircleHeader extends View implements RefreshHeader {
             float speed = 0;
             float springBollY;
             float springRatio = 0;
-            int springstatus = 0;//0 还没开始弹起 1 向上弹起 2 在弹起的最高点停住
+            int status = 0;//0 还没开始弹起 1 向上弹起 2 在弹起的最高点停住
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 float curValue = (float) animation.getAnimatedValue();
-                if (springstatus == 0 && curValue <= 0) {
-                    springstatus = 1;
+                if (status == 0 && curValue <= 0) {
+                    status = 1;
                     speed = Math.abs(curValue - mWaveHeight);
                 }
-                if (springstatus == 1) {
+                if (status == 1) {
                     springRatio = -curValue / reboundHeight;
                     if (springRatio >= mSpringRatio) {
                         mSpringRatio = springRatio;
                         mBollY = mHeadHeight + curValue;
                         speed = Math.abs(curValue - mWaveHeight);
                     } else {
-                        springstatus = 2;
+                        status = 2;
                         mSpringRatio = 0;
                         mShowBoll = true;
                         mShowBollTail = true;
                         springBollY = mBollY;
                     }
                 }
-                if (springstatus == 2) {
+                if (status == 2) {
                     if (mBollY > mHeadHeight / 2) {
                         mBollY = Math.max(mHeadHeight / 2, mBollY - speed);
-                        float bolly = animation.getAnimatedFraction() * (mHeadHeight / 2 - springBollY) + springBollY;
-                        if (mBollY > bolly) {
-                            mBollY = bolly;
+                        float bally = animation.getAnimatedFraction() * (mHeadHeight / 2 - springBollY) + springBollY;
+                        if (mBollY > bally) {
+                            mBollY = bally;
                         }
                     }
                 }
@@ -341,10 +320,6 @@ public class BezierCircleHeader extends View implements RefreshHeader {
     @Override
     public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
         mState = newState;
-    }
-
-    @Override
-    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
     }
 
     @Override
@@ -378,12 +353,6 @@ public class BezierCircleHeader extends View implements RefreshHeader {
                 mOuterPaint.setColor(colors[1]);
             }
         }
-    }
-
-    @NonNull
-    @Override
-    public View getView() {
-        return this;
     }
 
     @NonNull
