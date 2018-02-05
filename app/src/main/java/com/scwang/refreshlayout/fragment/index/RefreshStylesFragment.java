@@ -61,7 +61,7 @@ public class RefreshStylesFragment extends Fragment implements AdapterView.OnIte
         Delivery(R.string.title_activity_style_delivery,DeliveryStyleActivity.class),
         Dropbox(R.string.title_activity_style_dropbox, DropboxStyleActivity.class),
         FlyRefresh(R.string.title_activity_style_flyrefresh, FlyRefreshStyleActivity.class),
-        WaveSwipe(R.string.title_activity_style_wave_swip, WaveSwipStyleActivity.class),
+        WaveSwipe(R.string.title_activity_style_wave_swipe, WaveSwipStyleActivity.class),
         WaterDrop(R.string.title_activity_style_water_drop, WaterDropStyleActivity.class),
         Material(R.string.title_activity_style_material, MaterialStyleActivity.class),
         Phoenix(R.string.title_activity_style_phoenix, PhoenixStyleActivity.class),

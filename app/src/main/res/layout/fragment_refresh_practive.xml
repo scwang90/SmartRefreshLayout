@@ -8,7 +8,7 @@
 
     <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
         android:id="@id/toolbar"
-        app:title="@string/fragment_refresh_practive"/>
+        app:title="@string/fragment_refresh_practice"/>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"

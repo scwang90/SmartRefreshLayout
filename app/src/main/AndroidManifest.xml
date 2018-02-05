@@ -44,7 +44,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.style.WaveSwipStyleActivity"
-            android:label="@string/title_activity_style_wave_swip"
+            android:label="@string/title_activity_style_wave_swipe"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.style.MaterialStyleActivity"

@@ -15,8 +15,8 @@
 
     <string name="fragment_refresh_styles">风格展示</string>
     <string name="fragment_refresh_using">使用示例</string>
-    <string name="fragment_refresh_practive">实战</string>
-    <string name="title_activity_style_wave_swip">全屏水滴</string>
+    <string name="fragment_refresh_practice">实战</string>
+    <string name="title_activity_style_wave_swipe">全屏水滴</string>
     <string name="title_activity_style_material">官方主题</string>
     <string name="title_activity_style_water_drop">苹果水滴</string>
     <string name="title_activity_style_phoenix">金色校园</string>

@@ -10,7 +10,7 @@
     <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"
         app:navigationIcon="?attr/homeAsUpIndicator"
-        app:title="@string/title_activity_style_wave_swip"/>
+        app:title="@string/title_activity_style_wave_swipe"/>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"

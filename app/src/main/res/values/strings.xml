@@ -7,26 +7,29 @@
 
     <string name="title_activity_fly_refresh">FlyRefresh</string>
     <string name="title_activity_index_main">Refresh</string>
-    <string name="title_style">样式</string>
-    <string name="title_using">使用</string>
-    <string name="title_practice">实战</string>
+
+    <string name="title_style">Style</string>
+    <string name="title_using">Using</string>
+    <string name="title_practice">Practice</string>
+
     <string name="region_hint">未选择</string>
     <string name="region_name">已选地区</string>
 
-    <string name="fragment_refresh_styles">风格展示</string>
+    <string name="fragment_refresh_styles">Styles</string>
     <string name="fragment_refresh_using">使用示例</string>
-    <string name="fragment_refresh_practive">实战</string>
-    <string name="title_activity_style_wave_swip">全屏水滴</string>
-    <string name="title_activity_style_material">官方主题</string>
-    <string name="title_activity_style_water_drop">苹果水滴</string>
-    <string name="title_activity_style_phoenix">金色校园</string>
-    <string name="title_activity_style_taurus">冲上云霄</string>
-    <string name="title_activity_style_bezier">贝塞尔雷达</string>
-    <string name="title_activity_style_classics">经典风格</string>
-    <string name="title_activity_style_circle">弹出圆圈</string>
-    <string name="title_activity_style_fungame_battlecity">战争城市</string>
-    <string name="title_activity_style_fungame_hitblock">打砖块</string>
-    <string name="title_activity_style_storehouse">StoreHouse</string>
+    <string name="fragment_refresh_practice">Practice</string>
+
+    <string name="title_activity_style_wave_swipe">WaveSwipeHeader</string>
+    <string name="title_activity_style_material">MaterialHeader</string>
+    <string name="title_activity_style_water_drop">WaterDropHeader</string>
+    <string name="title_activity_style_phoenix">PhoenixHeader</string>
+    <string name="title_activity_style_taurus">TaurusHeader</string>
+    <string name="title_activity_style_bezier">BezierRadarHeader</string>
+    <string name="title_activity_style_classics">ClassicsHeader</string>
+    <string name="title_activity_style_circle">BezierCircleHeader</string>
+    <string name="title_activity_style_fungame_battlecity">FunGameBattleCityHeader</string>
+    <string name="title_activity_style_fungame_hitblock">FunGameHitBlockHeader</string>
+    <string name="title_activity_style_storehouse">StoreHouseHeader</string>
     <string name="title_activity_using_basic">基本使用</string>
     <string name="title_activity_using_assign_default">全局默认</string>
     <string name="title_activity_using_assign_xml">XML配置</string>
