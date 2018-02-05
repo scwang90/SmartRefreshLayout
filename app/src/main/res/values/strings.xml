@@ -7,9 +7,10 @@
 
     <string name="title_activity_fly_refresh">FlyRefresh</string>
     <string name="title_activity_index_main">Refresh</string>
-    <string name="title_style">样式</string>
-    <string name="title_using">使用</string>
-    <string name="title_practice">实战</string>
+
+    <string name="title_style">Style</string>
+    <string name="title_using">Using</string>
+    <string name="title_practice">Practice</string>
     <string name="region_hint">未选择</string>
     <string name="region_name">已选地区</string>
 

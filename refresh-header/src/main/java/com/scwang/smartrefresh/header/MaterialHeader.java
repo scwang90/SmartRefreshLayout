@@ -91,7 +91,6 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
         mProgress.setColorSchemeColors(0xff0099cc,0xffff4444,0xff669900,0xffaa66cc,0xffff8800);
         mCircleView = new CircleImageView(context,CIRCLE_BG_LIGHT);
         mCircleView.setImageDrawable(mProgress);
-        mCircleView.setVisibility(View.GONE);
         addView(mCircleView);
 
         final DisplayMetrics metrics = getResources().getDisplayMetrics();

@@ -10,6 +10,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
@@ -82,7 +83,8 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
         mWaterDropView.updateCompleteState(0);
 
         mProgressDrawable = new ProgressDrawable();
-        mProgressDrawable.setBounds(0,0, density.dip2px(20), density.dip2px(20));
+        mProgressDrawable.setBounds(0, 0, density.dip2px(20), density.dip2px(20));
+        mProgressDrawable.setCallback(this);
 
         mImageView = new ImageView(context);
         mProgress = new MaterialProgressDrawable(context, mImageView);
@@ -143,9 +145,17 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
                             +mWaterDropView.getPaddingTop()
                             -mProgressDrawable.height()/2
             );
-            canvas.rotate(mProgressDegree, mProgressDrawable.width() / 2, mProgressDrawable.height() / 2);
             mProgressDrawable.draw(canvas);
             canvas.restore();
+        }
+    }
+
+    @Override
+    public void invalidateDrawable(@NonNull Drawable drawable) {
+        if (drawable == mProgressDrawable) {
+            invalidate();
+        } else {
+            super.invalidateDrawable(drawable);
         }
     }
     //</editor-fold>
@@ -196,53 +206,15 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
     }
 
     @Override
-    public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
-        mState = newState;
-        switch (newState) {
-            case None:
-                mWaterDropView.setVisibility(View.VISIBLE);
-                break;
-            case PullDownToRefresh:
-                mWaterDropView.setVisibility(View.VISIBLE);
-                break;
-            case PullDownCanceled:
-                break;
-            case ReleaseToRefresh:
-                mWaterDropView.setVisibility(View.VISIBLE);
-                break;
-            case Refreshing:
-                break;
-            case RefreshFinish:
-                mWaterDropView.setVisibility(View.GONE);
-                break;
-        }
-    }
-
-    @Override
     public void onReleased(final RefreshLayout layout, int height, int extendHeight) {
-        Animator animator = mWaterDropView.createAnimator();
-        animator.addListener(new AnimatorListenerAdapter() {
-            @Override
+        mProgressDrawable.start();
+        mWaterDropView.createAnimator().start();//开始回弹
+        mWaterDropView.animate().alpha(0).setListener(new AnimatorListenerAdapter() {
             public void onAnimationEnd(Animator animation) {
-                mWaterDropView.animate().alpha(0).setListener(new AnimatorListenerAdapter() {
-                    public void onAnimationEnd(Animator animation) {
-                        mWaterDropView.setVisibility(GONE);
-                        mWaterDropView.setAlpha(1);
-                    }
-                });
+                mWaterDropView.setVisibility(GONE);
+                mWaterDropView.setAlpha(1);
             }
         });
-        animator.start();//开始回弹
-        layout.getLayout().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mProgressDegree = (mProgressDegree + 30) % 360;
-                invalidate();
-                if (mState == RefreshState.Refreshing || mState == RefreshState.RefreshReleased) {
-                    layout.getLayout().postDelayed(this, 100);
-                }
-            }
-        },100);
     }
 
     @Override
@@ -252,6 +224,7 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
 
     @Override
     public int onFinish(@NonNull RefreshLayout layout, boolean success) {
+        mProgressDrawable.stop();
         return 0;
     }
 
@@ -277,5 +250,28 @@ public class WaterDropHeader extends ViewGroup implements RefreshHeader {
     public SpinnerStyle getSpinnerStyle() {
         return SpinnerStyle.Scale;
     }
+
     //</editor-fold>
+    @Override
+    public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
+        mState = newState;
+        switch (newState) {
+            case None:
+                mWaterDropView.setVisibility(View.VISIBLE);
+                break;
+            case PullDownToRefresh:
+                mWaterDropView.setVisibility(View.VISIBLE);
+                break;
+            case PullDownCanceled:
+                break;
+            case ReleaseToRefresh:
+                mWaterDropView.setVisibility(View.VISIBLE);
+                break;
+            case Refreshing:
+                break;
+            case RefreshFinish:
+                mWaterDropView.setVisibility(View.GONE);
+                break;
+        }
+    }
 }

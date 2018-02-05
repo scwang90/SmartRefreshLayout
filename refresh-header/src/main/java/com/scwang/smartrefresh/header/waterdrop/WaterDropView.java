@@ -29,7 +29,7 @@ public class WaterDropView extends View {
     private Path mPath;
     private Paint mPaint;
     private int mMaxCircleRadius;//圆半径最大值
-    private int mMinCircleRaidus;//圆半径最小值
+    private int mMinCircleRadius;//圆半径最小值
     private static int STROKE_WIDTH = 2;//边线宽度
     private final static int BACK_ANIM_DURATION = 180;
 
@@ -49,7 +49,7 @@ public class WaterDropView extends View {
     }
 
     private void initView(Context context, AttributeSet attrs) {
-//        setBackgroundColor(0xffbbff11);
+
         topCircle = new Circle();
         bottomCircle = new Circle();
         mPath = new Path();
@@ -57,16 +57,15 @@ public class WaterDropView extends View {
         mPaint.setColor(Color.GRAY);
         mPaint.setAntiAlias(true);
         mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-        mPaint.setStrokeWidth(STROKE_WIDTH = DensityUtil.dp2px(0.5f));
-        mPaint.setShadowLayer(STROKE_WIDTH, 0, 0, 0xCC000000);
+        mPaint.setStrokeWidth(STROKE_WIDTH = DensityUtil.dp2px(1f));
+        mPaint.setShadowLayer(STROKE_WIDTH, STROKE_WIDTH/2, STROKE_WIDTH, 0x99000000);
         setLayerType(LAYER_TYPE_SOFTWARE, null);
 
         int padding = 4 * STROKE_WIDTH;
         setPadding(padding, padding, padding, padding);
 
-        mPaint.setColor(Color.GRAY);
         mMaxCircleRadius = DensityUtil.dp2px(20);
-        mMinCircleRaidus = mMaxCircleRadius / 5;
+        mMinCircleRadius = mMaxCircleRadius / 5;
 
         topCircle.radius = (mMaxCircleRadius);
         bottomCircle.radius = (mMaxCircleRadius);
@@ -146,15 +145,12 @@ public class WaterDropView extends View {
 
             mPath.quadTo((bottomCircle.x - bottomCircle.radius),
                     (bottomCircle.y + topCircle.y) / 2,
-
-                    bottom_x1,
-                    bottom_y1);
+                    bottom_x1,bottom_y1);
             mPath.lineTo(bottom_x2, bottom_y2);
 
             mPath.quadTo((bottomCircle.x + bottomCircle.radius),
                     (bottomCircle.y + top_y2) / 2,
-                    top_x2,
-                    top_y2);
+                    top_x2,top_y2);
         }
         mPath.close();
     }
@@ -206,12 +202,12 @@ public class WaterDropView extends View {
      */
     public void updateCompleteState(float percent) {
         float top_r = (float) (mMaxCircleRadius - 0.25 * percent * mMaxCircleRadius);
-        float bottom_r = (mMinCircleRaidus - mMaxCircleRadius) * percent + mMaxCircleRadius;
-        float bottomCricleOffset = 4 * percent * mMaxCircleRadius;
+        float bottom_r = (mMinCircleRadius - mMaxCircleRadius) * percent + mMaxCircleRadius;
+        float bottomCircleOffset = 4 * percent * mMaxCircleRadius;
 
         topCircle.radius = (top_r);
         bottomCircle.radius = (bottom_r);
-        bottomCircle.y = (topCircle.y + bottomCricleOffset);
+        bottomCircle.y = (topCircle.y + bottomCircleOffset);
     }
 
     /**
@@ -227,7 +223,7 @@ public class WaterDropView extends View {
             bottomCircle.radius = mMaxCircleRadius;
             bottomCircle.y = topCircle.y;
         } else {
-            float limit = mMaxCircleRadius - mMinCircleRaidus;
+            float limit = mMaxCircleRadius - mMinCircleRadius;
             float x = Math.max(0, height - space);
             float y = (float) (limit * (1 - Math.pow(100, -x / DensityUtil.dp2px(200))));
             topCircle.radius = mMaxCircleRadius - y / 4;
