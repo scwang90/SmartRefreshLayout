@@ -8,7 +8,6 @@ import android.content.res.TypedArray;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.animation.DecelerateInterpolator;
 
@@ -23,6 +22,7 @@ import com.scwang.smartrefresh.layout.header.bezierradar.RoundProgressView;
 import com.scwang.smartrefresh.layout.header.bezierradar.WaveView;
 import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
+import com.scwang.smartrefresh.layout.util.DesignUtil;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
@@ -109,12 +109,12 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
     }
 
     public BezierRadarHeader setPrimaryColorId(@ColorRes int colorId) {
-        setPrimaryColor(ContextCompat.getColor(getContext(), colorId));
+        setPrimaryColor(DesignUtil.getColor(getContext(), colorId));
         return this;
     }
 
     public BezierRadarHeader setAccentColorId(@ColorRes int colorId) {
-        setAccentColor(ContextCompat.getColor(getContext(), colorId));
+        setAccentColor(DesignUtil.getColor(getContext(), colorId));
         return this;
     }
 

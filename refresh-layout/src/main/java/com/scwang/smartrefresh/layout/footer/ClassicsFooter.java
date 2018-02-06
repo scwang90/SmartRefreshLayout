@@ -132,13 +132,8 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
     @Override
     public int onFinish(@NonNull RefreshLayout layout, boolean success) {
         if (!mNoMoreData) {
-            super.onFinish(layout, success);
-            if (success) {
-                mTitleText.setText(REFRESH_FOOTER_FINISH);
-            } else {
-                mTitleText.setText(REFRESH_FOOTER_FAILED);
-            }
-            return mFinishDuration;
+            mTitleText.setText(success ? REFRESH_FOOTER_FINISH : REFRESH_FOOTER_FAILED);
+            return super.onFinish(layout, success);
         }
         return 0;
     }

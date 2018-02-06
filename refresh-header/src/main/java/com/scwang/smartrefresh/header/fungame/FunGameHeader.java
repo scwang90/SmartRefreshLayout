@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.graphics.ColorUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -18,7 +19,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.scwang.smartrefresh.header.R;
-import com.scwang.smartrefresh.header.util.ColorUtils;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;

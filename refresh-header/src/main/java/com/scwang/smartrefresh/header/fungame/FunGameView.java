@@ -8,11 +8,11 @@ import android.graphics.Paint;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.graphics.ColorUtils;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 
 import com.scwang.smartrefresh.header.R;
-import com.scwang.smartrefresh.header.util.ColorUtils;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.util.DensityUtil;

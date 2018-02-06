@@ -2,13 +2,14 @@ package com.scwang.refreshlayout.adapter;
 
 import android.content.res.Resources;
 import android.support.annotation.StringRes;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.scwang.smartrefresh.layout.util.DesignUtil;
 
 public class SmartViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -69,7 +70,7 @@ public class SmartViewHolder extends RecyclerView.ViewHolder implements View.OnC
     public SmartViewHolder textColorId(int id, int colorId) {
         View view = findViewById(id);
         if (view instanceof TextView) {
-            ((TextView) view).setTextColor(ContextCompat.getColor(view.getContext(), colorId));
+            ((TextView) view).setTextColor(DesignUtil.getColor(view.getContext(), colorId));
         }
         return this;
     }

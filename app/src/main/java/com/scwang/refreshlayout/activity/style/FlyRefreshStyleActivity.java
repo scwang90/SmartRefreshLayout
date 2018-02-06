@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -39,6 +38,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
+import com.scwang.smartrefresh.layout.util.DesignUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -214,7 +214,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
                 };
                 @Override
                 public void onClick(View v) {
-                    int color = ContextCompat.getColor(getApplication(), ids[index % ids.length]);
+                    int color = DesignUtil.getColor(getApplication(), ids[index % ids.length]);
                     mRefreshLayout.setPrimaryColors(color);
                     mActionButton.setBackgroundColor(color);
                     mActionButton.setBackgroundTintList(ColorStateList.valueOf(color));

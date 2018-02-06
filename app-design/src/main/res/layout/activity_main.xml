@@ -9,46 +9,19 @@
     app:srlPrimaryColor="@color/colorPrimary"
     tools:context="com.app_design.MainActivity">
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tableLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tabMode="scrollable"
-        app:tabSelectedTextColor="@android:color/white"
-        app:tabTextColor="#55ffffff"
-        android:background="@color/colorPrimary"/>
+    <!--<android.support.design.widget.TabLayout-->
+        <!--android:id="@+id/tableLayout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--app:tabMode="scrollable"-->
+        <!--app:tabSelectedTextColor="@android:color/white"-->
+        <!--app:tabTextColor="#55ffffff"-->
+        <!--android:background="@color/colorPrimary"/>-->
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/refreshLayout"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srlHeaderMaxDragRate="1.5">
-        <com.scwang.smartrefresh.layout.header.ClassicsHeader
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <com.scwang.smartrefresh.layout.SmartRefreshLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:srlHeaderMaxDragRate="1.35"
-            app:srlDragRate="0.75">
-            <com.scwang.smartrefresh.layout.header.ClassicsHeader
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:srlPrimaryColor="#11bbff"
-                app:srlAccentColor="#fff"/>
-            <android.support.v4.view.ViewPager
-                android:id="@+id/viewPager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/colorAccent"/>
-            <com.scwang.smartrefresh.layout.footer.ClassicsFooter
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-
+        android:background="@color/colorAccent"/>
 
 </LinearLayout>

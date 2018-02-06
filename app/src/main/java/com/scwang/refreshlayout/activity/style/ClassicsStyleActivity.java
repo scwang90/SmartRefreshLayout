@@ -5,7 +5,7 @@ import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.graphics.drawable.VectorDrawableCompat;
-import android.support.v4.content.ContextCompat;
+import com.scwang.smartrefresh.layout.util.DesignUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -175,7 +175,7 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
         mToolbar.setBackgroundResource(colorPrimary);
         mRefreshLayout.setPrimaryColorsId(colorPrimary, android.R.color.white);
         if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().setStatusBarColor(ContextCompat.getColor(this, colorPrimaryDark));
+            getWindow().setStatusBarColor(DesignUtil.getColor(this, colorPrimaryDark));
             mDrawableProgress.setTint(0xffffffff);
         } else if (mDrawableProgress instanceof VectorDrawableCompat) {
             ((VectorDrawableCompat) mDrawableProgress).setTint(0xffffffff);

@@ -1,7 +1,6 @@
 package com.scwang.refreshlayout.activity.practice;
 
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -15,6 +14,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
+import com.scwang.smartrefresh.layout.util.DesignUtil;
 
 /**
  * 微博主页
@@ -82,7 +82,7 @@ public class WeiboPracticeActivity extends AppCompatActivity {
         scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             private int lastScrollY = 0;
             private int h = DensityUtil.dp2px(170);
-            private int color = ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary)&0x00ffffff;
+            private int color = DesignUtil.getColor(getApplicationContext(), R.color.colorPrimary)&0x00ffffff;
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 if (lastScrollY < h) {

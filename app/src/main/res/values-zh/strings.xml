@@ -115,4 +115,5 @@
     <string name="index_item_banner">滚动广告-Banner</string>
     <string name="index_item_qqbrowser">QQ浏览器-模拟QQ浏览器内核提示</string>
     <string name="index_item_secondfloor">二级刷新-仿淘宝二楼</string>
+    <string name="fragment_using_three_level">三级刷新</string>
 </resources>

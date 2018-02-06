@@ -29,6 +29,7 @@ import com.scwang.refreshlayout.fragment.using.EmptyLayoutUsingFragment;
 import com.scwang.refreshlayout.fragment.using.NestedScrollUsingFragment;
 import com.scwang.refreshlayout.fragment.using.PureScrollUsingFragment;
 import com.scwang.refreshlayout.fragment.using.SpecifyStyleUsingFragment;
+import com.scwang.refreshlayout.fragment.using.ThreeLevelUsingFragment;
 import com.scwang.refreshlayout.fragment.using.ViewPagerUsingFragment;
 import com.scwang.refreshlayout.util.StatusBarUtil;
 
@@ -53,7 +54,8 @@ public class RefreshUsingFragment extends Fragment implements AdapterView.OnItem
         Listener("多功能监听器", ListenerUsingActivity.class),
         Custom("自定义Header", CustomUsingActivity.class),
         SnapHelper("结合 SnapHelper 使用", SnapHelperUsingActivity.class),
-        ViewPager("ViewPager 多页面共用一个 RefreshLayout", ViewPagerUsingFragment.class),;
+        ViewPager("ViewPager 多页面共用一个 RefreshLayout", ViewPagerUsingFragment.class),
+        ThreeLevel("三级刷新", ThreeLevelUsingFragment.class),;
         public String name;
         public Class<?> clazz;
 

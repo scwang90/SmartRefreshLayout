@@ -9,13 +9,13 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 
 import com.scwang.smartrefresh.header.internal.MaterialProgressDrawable;
 import com.scwang.smartrefresh.header.waveswipe.AnimationImageView;
-import com.scwang.smartrefresh.header.waveswipe.DisplayUtil;
 import com.scwang.smartrefresh.header.waveswipe.WaveView;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -268,6 +268,17 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
 
     //<editor-fold desc="ProgressAnimationImageView">
     /**
+     * 現在の向きが600dpを超えているかどうか
+     *
+     * @param context {@link Context}
+     * @return 600dpを超えているかどうか
+     */
+    public static boolean isOver600dp(Context context) {
+        Resources resources = context.getResources();
+        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
+        return displayMetrics.widthPixels / displayMetrics.density >= 600;
+    }
+    /**
      * Custom view has progress drawable.
      * Some features of MaterialProgressDrawable are decorated.
      *
@@ -284,7 +295,7 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
             super(context);
             mProgress = new MaterialProgressDrawable(context, WaveSwipeHeader.this);
             mProgress.setBackgroundColor(Color.TRANSPARENT);
-            if (DisplayUtil.isOver600dp(getContext())) { // Make the progress be big
+            if (isOver600dp(getContext())) { // Make the progress be big
                 mProgress.updateSizes(MaterialProgressDrawable.LARGE);
             }
             setImageDrawable(mProgress);

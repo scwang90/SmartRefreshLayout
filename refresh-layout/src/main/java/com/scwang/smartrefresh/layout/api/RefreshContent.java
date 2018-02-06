@@ -4,7 +4,6 @@ import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.support.annotation.RestrictTo;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 
 import static android.support.annotation.RestrictTo.Scope.LIBRARY;
 import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
@@ -19,14 +18,9 @@ public interface RefreshContent {
     void moveSpinner(int spinner);
     boolean canRefresh();
     boolean canLoadMore();
-    int getMeasuredWidth();
-    int getMeasuredHeight();
-    void measure(int widthSpec, int heightSpec);
-    void layout(int left, int top, int right, int bottom);
 
     View getView();
     View getScrollableView();
-    ViewGroup.LayoutParams getLayoutParams();
 
     void onActionDown(MotionEvent e);
     void onActionUpOrCancel();

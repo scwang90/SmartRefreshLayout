@@ -9,7 +9,6 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.ViewGroup;
@@ -25,6 +24,7 @@ import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
+import com.scwang.smartrefresh.layout.util.DesignUtil;
 
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
@@ -270,12 +270,12 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
     }
 
     public T setPrimaryColorId(@ColorRes int colorId) {
-        setPrimaryColor(ContextCompat.getColor(getContext(), colorId));
+        setPrimaryColor(DesignUtil.getColor(getContext(), colorId));
         return self();
     }
 
     public T setAccentColorId(@ColorRes int colorId) {
-        setAccentColor(ContextCompat.getColor(getContext(), colorId));
+        setAccentColor(DesignUtil.getColor(getContext(), colorId));
         return self();
     }
 

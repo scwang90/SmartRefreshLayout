@@ -8,6 +8,7 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
+import android.support.v4.view.animation.PathInterpolatorCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
@@ -15,7 +16,6 @@ import android.view.animation.DecelerateInterpolator;
 
 import com.scwang.smartrefresh.header.flyrefresh.FlyView;
 import com.scwang.smartrefresh.header.flyrefresh.MountainSceneView;
-import com.scwang.smartrefresh.header.flyrefresh.PathInterpolatorCompat;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;

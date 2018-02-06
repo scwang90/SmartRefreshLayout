@@ -1,15 +1,14 @@
 package com.scwang.smartrefresh.header;
 
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.support.v4.graphics.ColorUtils;
 import android.util.AttributeSet;
 
 import com.scwang.smartrefresh.header.fungame.FunGameView;
-import com.scwang.smartrefresh.header.util.ColorUtils;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import java.util.ArrayList;
@@ -141,7 +140,7 @@ public class FunGameHitBlockHeader extends FunGameView {
     }
 
     @Override
-     protected void resetConfigParams() {
+    protected void resetConfigParams() {
         cx = racketLeft - 3 * BALL_RADIUS;
         cy = (int) (mHeaderHeight * .5f);
 
@@ -160,6 +159,7 @@ public class FunGameHitBlockHeader extends FunGameView {
 
     /**
      * 绘制挡板
+     *
      * @param canvas 默认画布
      */
     private void drawRacket(Canvas canvas) {
@@ -169,18 +169,19 @@ public class FunGameHitBlockHeader extends FunGameView {
 
     /**
      * 绘制并处理小球运动的轨迹
+     *
      * @param canvas 默认画布
-     * @param width 视图宽度
+     * @param width  视图宽度
      */
     private void makeBallPath(Canvas canvas, int width) {
         mPaint.setColor(mModelColor);
 
-        if (cx <= blockLeft +  blockHorizontalNum * blockWidth + (blockHorizontalNum - 1) * DIVIDING_LINE_SIZE + BALL_RADIUS) { // 小球进入到色块区域
+        if (cx <= blockLeft + blockHorizontalNum * blockWidth + (blockHorizontalNum - 1) * DIVIDING_LINE_SIZE + BALL_RADIUS) { // 小球进入到色块区域
             if (checkTouchBlock(cx, cy)) { // 反弹回来
                 isleft = false;
             }
         }
-        if (cx <= blockLeft + BALL_RADIUS ) { // 小球穿过色块区域
+        if (cx <= blockLeft + BALL_RADIUS) { // 小球穿过色块区域
             isleft = false;
         }
 
@@ -217,6 +218,7 @@ public class FunGameHitBlockHeader extends FunGameView {
 
     /**
      * 检查小球是否撞击到挡板
+     *
      * @param y 小球当前坐标Y值
      * @return 小球位于挡板Y值区域范围内：true，反之：false
      */
@@ -231,12 +233,13 @@ public class FunGameHitBlockHeader extends FunGameView {
 
     /**
      * 检查小球是否撞击到矩形块
+     *
      * @param x 小球坐标X值
      * @param y 小球坐标Y值
      * @return 撞击到：true，反之：false
      */
     private boolean checkTouchBlock(float x, float y) {
-        int columnX = (int) ((x - blockLeft - BALL_RADIUS - speed ) / blockWidth);
+        int columnX = (int) ((x - blockLeft - BALL_RADIUS - speed) / blockWidth);
         columnX = columnX == blockHorizontalNum ? columnX - 1 : columnX;
         int rowY = (int) (y / blockHeight);
         rowY = rowY == BLOCK_VERTICAL_NUM ? rowY - 1 : rowY;
@@ -259,6 +262,7 @@ public class FunGameHitBlockHeader extends FunGameView {
 
     /**
      * 绘制矩形色块
+     *
      * @param canvas 默认画布
      */
     private void drawColorBlock(Canvas canvas) {

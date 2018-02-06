@@ -13,11 +13,11 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.graphics.ColorUtils;
 import android.util.AttributeSet;
 import android.view.animation.AccelerateInterpolator;
 
 import com.scwang.smartrefresh.header.internal.pathview.PathsDrawable;
-import com.scwang.smartrefresh.header.util.ColorUtils;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;

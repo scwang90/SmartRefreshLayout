@@ -49,7 +49,7 @@
                         android:layout_height="wrap_content"
                         app:titleEnabled="false"
                         app:contentScrim="?attr/colorPrimary"
-                        app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+                        app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                         <RelativeLayout
                             android:id="@+id/panel_lyt"

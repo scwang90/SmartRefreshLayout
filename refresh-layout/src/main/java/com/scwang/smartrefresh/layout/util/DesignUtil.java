@@ -1,5 +1,9 @@
 package com.scwang.smartrefresh.layout.util;
 
+import android.content.Context;
+import android.os.Build;
+import android.support.annotation.ColorRes;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.view.View;
@@ -41,4 +45,11 @@ public class DesignUtil {
         }
     }
 
+    public static int getColor(@NonNull Context context, @ColorRes int colorId) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return context.getColor(colorId);
+        }
+        //noinspection deprecation
+        return context.getResources().getColor(colorId);
+    }
 }

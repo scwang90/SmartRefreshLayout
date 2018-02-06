@@ -118,4 +118,8 @@
     <string name="index_item_banner">Use banner</string>
     <string name="index_item_qqbrowser">Imitate QQ browser</string>
     <string name="index_item_secondfloor">Imitate the second floor of taobao</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fragment_using_three_level">三级刷新</string>
 </resources>

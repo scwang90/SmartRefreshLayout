@@ -158,31 +158,6 @@ public class RefreshContentWrapper implements RefreshContent {
     }
 
     @Override
-    public void measure(int widthSpec, int heightSpec) {
-        mContentView.measure(widthSpec, heightSpec);
-    }
-
-    @Override
-    public ViewGroup.LayoutParams getLayoutParams() {
-        return mContentView.getLayoutParams();
-    }
-
-    @Override
-    public int getMeasuredWidth() {
-        return mContentView.getMeasuredWidth();
-    }
-
-    @Override
-    public int getMeasuredHeight() {
-        return mContentView.getMeasuredHeight();
-    }
-
-    @Override
-    public void layout(int left, int top, int right, int bottom) {
-        mContentView.layout(left, top, right, bottom);
-    }
-
-    @Override
     public View getScrollableView() {
         return mScrollableView;
     }
@@ -355,10 +330,10 @@ public class RefreshContentWrapper implements RefreshContent {
         return view instanceof AbsListView
                 || view instanceof ScrollView
                 || view instanceof ScrollingView
-                || view instanceof NestedScrollingChild
-                || view instanceof NestedScrollingParent
                 || view instanceof WebView
-                || view instanceof ViewPager;
+                || view instanceof ViewPager
+                || view instanceof NestedScrollingChild
+                || view instanceof NestedScrollingParent;
     }
 
     //</editor-fold>
