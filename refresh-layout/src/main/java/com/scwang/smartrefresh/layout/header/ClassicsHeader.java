@@ -76,20 +76,13 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
     private void initView(Context context, AttributeSet attrs) {
         DensityUtil density = new DensityUtil();
 
-        mTitleText.setText(REFRESH_HEADER_PULLDOWN);
         mTitleText.setTextColor(0xff666666);
+        mTitleText.setText(isInEditMode() ? REFRESH_HEADER_REFRESHING : REFRESH_HEADER_PULLDOWN);
 
         mLastUpdateText = new TextView(context);
         mLastUpdateText.setTextColor(0xff7c7c7c);
         LinearLayout.LayoutParams lpUpdateText = new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
         mCenterLayout.addView(mLastUpdateText, lpUpdateText);
-
-        if (isInEditMode()) {
-            mArrowView.setVisibility(GONE);
-            mTitleText.setText(REFRESH_HEADER_REFRESHING);
-        } else {
-            mProgressView.setVisibility(GONE);
-        }
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ClassicsHeader);
 
@@ -188,7 +181,6 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
 
     @Override
     public int onFinish(@NonNull RefreshLayout layout, boolean success) {
-        super.onFinish(layout, success);
         if (success) {
             mTitleText.setText(REFRESH_HEADER_FINISH);
             if (mLastTime != null) {
@@ -197,7 +189,7 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
         } else {
             mTitleText.setText(REFRESH_HEADER_FAILED);
         }
-        return mFinishDuration;//延迟500毫秒之后再弹回
+        return super.onFinish(layout, success);//延迟500毫秒之后再弹回
     }
 
     @Override
@@ -208,13 +200,13 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
             case PullDownToRefresh:
                 mTitleText.setText(REFRESH_HEADER_PULLDOWN);
                 mArrowView.setVisibility(VISIBLE);
-                mProgressView.setVisibility(GONE);
+//                mProgressView.setVisibility(GONE);
                 mArrowView.animate().rotation(0);
                 break;
             case Refreshing:
             case RefreshReleased:
                 mTitleText.setText(REFRESH_HEADER_REFRESHING);
-                mProgressView.setVisibility(VISIBLE);
+//                mProgressView.setVisibility(VISIBLE);
                 mArrowView.setVisibility(GONE);
                 break;
             case ReleaseToRefresh:
@@ -227,7 +219,7 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
                 break;
             case Loading:
                 mArrowView.setVisibility(GONE);
-                mProgressView.setVisibility(GONE);
+//                mProgressView.setVisibility(GONE);
                 mLastUpdateText.setVisibility(mEnableLastTime ? INVISIBLE : GONE);
                 mTitleText.setText(REFRESH_HEADER_LOADING);
                 break;

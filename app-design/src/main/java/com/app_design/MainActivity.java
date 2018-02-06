@@ -1,6 +1,7 @@
 package com.app_design;
 
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -14,10 +15,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
-//        TabLayout tableLayout = (TabLayout) findViewById(R.id.tableLayout);
+        TabLayout tableLayout = (TabLayout) findViewById(R.id.tableLayout);
 
         viewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
 
@@ -60,7 +61,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        tableLayout.setupWithViewPager(viewPager);
+        tableLayout.setupWithViewPager(viewPager);
+
+        RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshLayout) {
+                refreshLayout.finishRefresh(4000);
+            }
+        });
     }
 
     public static class TabFragment extends Fragment {
@@ -77,6 +86,8 @@ public class MainActivity extends AppCompatActivity {
                 refreshLayout.setRefreshFooter(new ClassicsFooter(inflater.getContext()));
                 refreshLayout.setRefreshContent(mRecyclerView = new RecyclerView(inflater.getContext()));
                 refreshLayout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);
+                refreshLayout.setDragRate(1);
+                refreshLayout.setHeaderMaxDragRate(1.2f);
                 mRefreshLayout = refreshLayout;
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(inflater.getContext()));
                 mRecyclerView.setOverScrollMode(OVER_SCROLL_NEVER);

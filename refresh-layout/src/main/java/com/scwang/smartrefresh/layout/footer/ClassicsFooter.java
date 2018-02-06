@@ -55,13 +55,7 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
         DensityUtil density = new DensityUtil();
 
         mTitleText.setTextColor(0xff666666);
-        mTitleText.setText(REFRESH_FOOTER_PULLUP);
-
-        if (!isInEditMode()) {
-            mProgressView.setVisibility(GONE);
-        } else {
-            mArrowView.setVisibility(GONE);
-        }
+        mTitleText.setText(isInEditMode() ? REFRESH_FOOTER_LOADING : REFRESH_FOOTER_PULLUP);
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ClassicsFooter);
 
@@ -129,9 +123,9 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
     //<editor-fold desc="RefreshFooter">
 
     @Override
-    public void onReleased(RefreshLayout layout, int height, int extendHeight) {
+    public void onStartAnimator(@NonNull RefreshLayout refreshLayout, int height, int extendHeight) {
         if (!mNoMoreData) {
-            super.onReleased(layout, height, extendHeight);
+            super.onStartAnimator(refreshLayout, height, extendHeight);
         }
     }
 
@@ -173,12 +167,7 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
                 mTitleText.setText(REFRESH_FOOTER_PULLUP);
                 mArrowView.setVisibility(VISIBLE);
             }
-            if (mProgressDrawable != null) {
-                mProgressDrawable.stop();
-            } else {
-                mProgressView.animate().rotation(0).setDuration(300);
-            }
-            mProgressView.setVisibility(GONE);
+//            super.onFinish(mRefreshKernel.getRefreshLayout(), true);
         }
         return true;
     }
@@ -196,7 +185,7 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
                 case Loading:
                 case LoadReleased:
                     mArrowView.setVisibility(GONE);
-                    mProgressView.setVisibility(VISIBLE);
+//                    mProgressView.setVisibility(VISIBLE);
                     mTitleText.setText(REFRESH_FOOTER_LOADING);
                     break;
                 case ReleaseToLoad:
@@ -205,7 +194,7 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
                     break;
                 case Refreshing:
                     mTitleText.setText(REFRESH_FOOTER_REFRESHING);
-                    mProgressView.setVisibility(GONE);
+//                    mProgressView.setVisibility(GONE);
                     mArrowView.setVisibility(GONE);
                     break;
             }

@@ -110,6 +110,12 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
             }
         }
 
+        if (isInEditMode()) {
+            mArrowView.setVisibility(GONE);
+        } else {
+            mProgressView.setVisibility(GONE);
+        }
+
     }
 
     @Override
@@ -138,17 +144,25 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
     }
 
     @Override
-    public void onReleased(RefreshLayout layout, int height, int extendHeight) {
-        if (mProgressDrawable != null) {
-            mProgressDrawable.start();
-        } else {
-            Drawable drawable = mProgressView.getDrawable();
-            if (drawable instanceof Animatable) {
-                ((Animatable) drawable).start();
+    public void onStartAnimator(@NonNull RefreshLayout refreshLayout, int height, int extendHeight) {
+        if (mProgressView.getVisibility() != VISIBLE) {
+            mProgressView.setVisibility(VISIBLE);
+            if (mProgressDrawable != null) {
+                mProgressDrawable.start();
             } else {
-                mProgressView.animate().rotation(36000).setDuration(100000);
+                Drawable drawable = mProgressView.getDrawable();
+                if (drawable instanceof Animatable) {
+                    ((Animatable) drawable).start();
+                } else {
+                    mProgressView.animate().rotation(36000).setDuration(100000);
+                }
             }
         }
+    }
+
+    @Override
+    public void onReleased(RefreshLayout refreshLayout, int height, int extendHeight) {
+        onStartAnimator(refreshLayout, height, extendHeight);
     }
 
     @Override
