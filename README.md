@@ -9,17 +9,18 @@
 <!-- [![Platform](https://img.shields.io/badge/Platform-Android-f0ad4e.svg)](https://www.android.com) -->
 <!-- [![Author](https://img.shields.io/badge/Author-scwang90-11bbff.svg)](https://github.com/scwang90) -->
 
-## [English](README_EN.md) | 中文
+## [English](https://github.com/scwang90/SmartRefreshLayout/blob/master/README_EN.md) | 中文
 
 正如名字所说，SmartRefreshLayout是一个“聪明”或者“智能”的下拉刷新布局，由于它的“智能”，它不只是支持所有的View，还支持多层嵌套的视图结构。它继承自ViewGroup 而不是FrameLayout或LinearLayout，提高了性能。
-也吸取了现在流行的各种刷新布局的优点，包括谷歌官方的 SwipeRefreshLayout，其他第三方的 [Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)、[TwinklingRefreshLayout](https://github.com/lcodecorex/TwinklingRefreshLayout) 。还集成了各种炫酷的 Header 和 Footer。  
+也吸取了现在流行的各种刷新布局的优点，包括谷歌官方的 SwipeRefreshLayout，其他第三方的 [Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)、[TwinklingRefreshLayout](https://github.com/lcodecorex/TwinklingRefreshLayout) 。还集成了各种炫酷的 Header 和 Footer。
 SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷新框架，并集成各种的炫酷、多样、实用、美观的Header和Footer。
 
 ## 特点功能:
 
  - 支持多点触摸
+ - 支持淘宝二楼和二级刷新
  - 支持嵌套多层的视图结构 Layout (LinearLayout,FrameLayout...)
- - 支持所有的 View（AbsListView、RecyclerView、WebView....View）  
+ - 支持所有的 View（AbsListView、RecyclerView、WebView....View）
  - 支持自定义并且已经集成了很多炫酷的 Header 和 Footer.
  - 支持和ListView的无缝同步滚动 和 CoordinatorLayout 的嵌套滚动 .
  - 支持自动刷新、自动上拉加载（自动检测列表惯性滚动到底部，而不用手动上拉）.
@@ -27,72 +28,72 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
  - 支持设置主题来适配任何场景的App，不会出现炫酷但很尴尬的情况.
  - 支持设多种滑动方式：平移、拉伸、背后固定、顶层固定、全屏
  - 支持所有可滚动视图的越界回弹
- 
+
 ## 传送门
 
- - [属性文档](art/md_property.md)
- - [智能之处](art/md_smart.md)
+ - [属性文档](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_property.md)
+ - [智能之处](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_smart.md)
  - [常见问题](https://github.com/scwang90/SmartRefreshLayout/issues/71)
- - [更新日志](art/md_update.md)
- - [博客文章](https://segmentfault.com/a/1190000010066071) 
- - [源码下载](https://github.com/scwang90/SmartRefreshLayout/releases) 
- - [多点触摸](art/md_multitouch.md) 
- - [自定义Header](art/md_custom.md)
- 
-## Demo
-[下载 APK-Demo](art/app-debug.apk)
+ - [更新日志](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_update.md)
+ - [博客文章](https://segmentfault.com/a/1190000010066071)
+ - [源码下载](https://github.com/scwang90/SmartRefreshLayout/releases)
+ - [多点触摸](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_multitouch.md)
+ - [自定义Header](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_custom.md)
 
-![](art/png_apk_rqcode.png)
+## Demo
+[下载 APK-Demo](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/app-debug.apk)
+
+![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/png_apk_rqcode.png)
 
 #### 项目演示
 |个人首页|微博列表|
 |:---:|:---:|
-|![](art/gif_practive_weibo.gif)|![](art/gif_practive_feedlist.gif)|
+|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_practive_weibo.gif)|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_practive_feedlist.gif)|
 
 |餐饮美食|个人中心|
 |:---:|:---:|
-|![](art/gif_practive_repast.gif)|![](art/gif_practive_profile.gif)|
+|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_practive_repast.gif)|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_practive_profile.gif)|
 
 #### 样式演示 Style
 |Delivery|DropBox|
 |:---:|:---:|
-|![](art/gif_Delivery.gif)|![](art/gif_DropBox.gif)|
-|[Refresh-your-delivery](https://dribbble.com/shots/2753803-Refresh-your-delivery)|[DropBox-Refresh](https://dribbble.com/shots/3470499-DropBox-Refresh)|
+|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_Delivery.gif)|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_DropBox.gif)|
+|[Refresh-your-delivery](https://dribbble.com/shots/2753803-Refresh-your-delivery)|[Dropbox-Refresh](https://dribbble.com/shots/3470499-DropBox-Refresh)|
 
 上面这两个是我自己实现的，下面的是我把github上其它优秀的Header进行的整理和集合还有优化：
 
 |BezierRadar|BezierCircle|
 |:---:|:---:|
-|![](art/gif_BezierRadar.gif)|![](art/gif_BezierCircle.gif)|
+|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_BezierRadar.gif)|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_BezierCircle.gif)|
 |[Pull To Refresh](https://dribbble.com/shots/1936194-Pull-To-Refresh)|[Pull Down To Refresh](https://dribbble.com/shots/1797373-Pull-Down-To-Refresh)|
 
 |FlyRefresh|Classics|
 |:---:|:---:|
-|![](art/gif_FlyRefresh.gif)|![](art/gif_Classics.gif)|
+|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_FlyRefresh.gif)|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_Classics.gif)|
 |[FlyRefresh](https://github.com/race604/FlyRefresh)|[ClassicsHeader](#1)|
 
 |Phoenix|Taurus|
 |:---:|:---:|
-|![](art/gif_Phoenix.gif)|![](art/gif_Taurus.gif)|
+|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_Phoenix.gif)|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_Taurus.gif)|
 |[Yalantis/Phoenix](https://github.com/Yalantis/Phoenix)|[Yalantis/Taurus](https://github.com/Yalantis/Taurus)
 
 |BattleCity|HitBlock|
 |:---:|:---:|
-|![](art/gif_BattleCity.gif)|![](art/gif_HitBlock.gif)|
+|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_BattleCity.gif)|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_HitBlock.gif)|
 |[FunGame/BattleCity](https://github.com/Hitomis/FunGameRefresh)|[FunGame/HitBlock](https://github.com/Hitomis/FunGameRefresh)
 
 |WaveSwipe|Material|
 |:---:|:---:|
-|![](art/gif_WaveSwipe.gif)|![](art/gif_Material.gif)|
+|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_WaveSwipe.gif)|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_Material.gif)|
 |[WaveSwipeRefreshLayout](https://github.com/recruit-lifestyle/WaveSwipeRefreshLayout)|[MaterialHeader](https://developer.android.com/reference/android/support/v4/widget/SwipeRefreshLayout.html)
 
 |StoreHouse|WaterDrop|
 |:---:|:---:|
-|![](art/gif_StoreHouse.gif)|![](art/gif_WaterDrop.gif)|
+|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_StoreHouse.gif)|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_WaterDrop.gif)|
 |[Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)|[WaterDrop](https://github.com/THEONE10211024/WaterDropListView)
 
 
-看到这么多炫酷的Header，是不是觉得很棒？这时你或许会担心这么多的Header集成在一起，但是平时只会用到一个，是不是要引入很多无用的代码和资源？  
+看到这么多炫酷的Header，是不是觉得很棒？这时你或许会担心这么多的Header集成在一起，但是平时只会用到一个，是不是要引入很多无用的代码和资源？
 请放心，我已经把刷新布局分成三个包啦，用到的时候自行引用就可以啦！
 
  - SmartRefreshLayout 刷新布局核心实现，自带ClassicsHeader（经典）、BezierRadarHeader（贝塞尔雷达）两个 Header.
@@ -207,16 +208,16 @@ public class App extends Application {
 
 注意：方法二 XML设置的Header和Footer的优先级是中等的，会被方法三覆盖。而且使用本方法的时候，Android Studio 会有预览效果，如下图：
 
-![](art/jpg_preview_xml_define.jpg)
+![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/jpg_preview_xml_define.jpg)
 
 不过不用担心，只是预览效果，运行的时候只有下拉才会出现~
 
 #### 3.方法三 Java代码设置
 ```java
 final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
-//设置 Header 为 Material样式
+//设置 Header 为 贝塞尔雷达 样式
 refreshLayout.setRefreshHeader(new BezierRadarHeader(this).setEnableHorizontalDrag(true));
-//设置 Footer 为 球脉冲
+//设置 Footer 为 球脉冲 样式
 refreshLayout.setRefreshFooter(new BallPulseFooter(this).setSpinnerStyle(SpinnerStyle.Scale));
 ```
 
@@ -226,13 +227,13 @@ SmartRefreshLayout 没有使用到：序列化、反序列化、JNI、反射，�
 
 ## 赞赏
 
-如果你喜欢 SmartRefreshLayout 的设计，感觉 SmartRefreshLayout 帮助到了你，可以点右上角 "Star" 支持一下 谢谢！ ^_^  
+如果你喜欢 SmartRefreshLayout 的设计，感觉 SmartRefreshLayout 帮助到了你，可以点右上角 "Star" 支持一下 谢谢！ ^_^
 你也还可以扫描下面的二维码~ 请作者喝一杯咖啡。
 
-![](art/pay_alipay.jpg) ![](art/pay_wxpay.jpg) ![](art/pay_tencent.jpg)
+![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/pay_alipay.jpg) ![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/pay_wxpay.jpg) ![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/pay_tencent.jpg)
 
-如果在捐赠留言中备注名称，将会被记录到列表中~ 如果你也是github开源作者，捐赠时可以留下github项目地址或者个人主页地址，链接将会被添加到列表中起到互相推广的作用  
-[捐赠列表](art/md_donationlist.md)
+如果在捐赠留言中备注名称，将会被记录到列表中~ 如果你也是github开源作者，捐赠时可以留下github项目地址或者个人主页地址，链接将会被添加到列表中起到互相推广的作用
+[捐赠列表](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_donationlist.md)
 
 ## 讨论
 
