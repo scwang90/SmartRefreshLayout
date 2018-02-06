@@ -8,6 +8,14 @@ app设计师发挥创意设计的好素材。 也是需要我们巧妙植入到�
 
 ![](png_ptr_meituan.png) ![](png_ptr_elema.png) ![](png_ptr_tianmao.png)
 
+## 成功案例
+
+[仿美团下拉刷新](https://www.jianshu.com/p/95225cbcf86b)  
+[YanXuanRefresh](https://github.com/ChaserSheng/YanXuanRefresh)  
+[SmartRefreshLottie](https://github.com/wapchief/SmartRefreshLottie)  
+[一个Android下拉刷新样式](http://www.jianshu.com/p/8f29c97eefd8)  
+[838514984](https://github.com/838514984/smartrefreshlayout-statusUtils)
+
 
 ## 安卓下拉刷新框架
 SmartRefreshLayout被设计为一个刷新框架，具有非常高的自定性和可扩展性，可以应付
@@ -16,7 +24,7 @@ SmartRefreshLayout被设计为一个刷新框架，具有非常高的自定性�
 通过SmartRefreshLayout框架，你可以在一个稳定强大的下拉布局中实现自己项目需求的
 Header ，不用去关心滑动事件处理，不用关心子控件的回弹和滚动边界，只需关注自己真
 正的项目需求Header的样子和动画。
- 
+
 ### 体系结构
 在学习使用框架的自定义功能之前，我们还是有必要来了解一下框架的体系和结构：
 
@@ -24,7 +32,7 @@ Header ，不用去关心滑动事件处理，不用关心子控件的回弹和�
  - **RefreshHeader** 下拉头部的事件处理和显示接口
  - **RefreshFooter** 上拉底部的事件处理和显示接口
  - **RefreshContent** 对不同内容的统一封装，包括判断是否可滚动、回弹判断、智能识别
- 
+
 下面是UML关系类图
 
 ![](jpg_uml.jpg)
@@ -104,7 +112,7 @@ public interface RefreshHeader {
      * @return 完成动画所需时间 如果返回 Integer.MAX_VALUE 将取消本次完成事件，继续保持原有状态
      */
     int onFinish(RefreshLayout layout, boolean success);
-    
+
     /**
      * 手指拖动下拉（会连续多次调用，用于实时控制动画关键帧）
      * @param percent 下拉的百分比 值 = offset/headerHeight (0 - percent - (headerHeight+extendHeight) / headerHeight )
@@ -331,10 +339,3 @@ public class ClassicsHeader extends LinearLayout implements RefreshHeader {
 ### 实现 RefreshFooter
 
 具体方法和 RefreshHeader 非常相似，这里就不再演示了
-
-### 成功案例
-
-[YanXuanRefresh](https://github.com/ChaserSheng/YanXuanRefresh)
-[SmartRefreshLottie](https://github.com/wapchief/SmartRefreshLottie)
-[一个Android下拉刷新样式](http://www.jianshu.com/p/8f29c97eefd8)
-[838514984](https://github.com/838514984/smartrefreshlayout-statusUtils)
