@@ -1,6 +1,5 @@
 package com.scwang.smartrefresh.layout.header;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.DashPathEffect;
