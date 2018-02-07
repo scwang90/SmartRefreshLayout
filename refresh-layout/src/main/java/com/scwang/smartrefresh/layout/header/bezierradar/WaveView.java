@@ -30,29 +30,19 @@ public class WaveView extends View {
 
     public WaveView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initView();
-    }
-
-    private void initView() {
         path = new Path();
         paint = new Paint();
         paint.setColor(0xff1F2426);
         paint.setAntiAlias(true);
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(resolveSize(getSuggestedMinimumWidth(), widthMeasureSpec),
-                resolveSize(getSuggestedMinimumHeight(), heightMeasureSpec));
-    }
-
     public void setWaveColor(@ColorInt int color) {
         paint.setColor(color);
     }
 
-    public int getHeadHeight() {
-        return height;
-    }
+//    public int getHeadHeight() {
+//        return height;
+//    }
 
     public void setHeadHeight(int height) {
         this.height = height;

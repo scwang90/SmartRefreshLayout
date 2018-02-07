@@ -15,27 +15,18 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
  */
 public class RoundDotView extends View {
 
-    private int num = 7;
-    private Paint mPath;
+    private static final int num = 7;
     private float mRadius;
-    private float fraction;
+
+    public Paint mPaint;
+    public float fraction;
 
     public RoundDotView(Context context) {
         super(context);
-        mPath = new Paint();
-        mPath.setAntiAlias(true);
-        mPath.setColor(Color.WHITE);
+        mPaint = new Paint();
+        mPaint.setAntiAlias(true);
+        mPaint.setColor(Color.WHITE);
         mRadius = DensityUtil.dp2px(7);
-    }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(resolveSize(getSuggestedMinimumWidth(), widthMeasureSpec),
-                resolveSize(getSuggestedMinimumHeight(), heightMeasureSpec));
-    }
-
-    public void setDotColor(@ColorInt int color) {
-        mPath.setColor(color);
     }
 
     @Override
@@ -49,13 +40,10 @@ public class RoundDotView extends View {
             float index = 1f + i - (1f + num) / 2;//y3 = (x + 1) - (n + 1)/2; 居中 index 变量：0 1 2 3 4 结果： -2 -1 0 1 2
             float alpha = 255 * (1 - (2 * (Math.abs(index) / num)));//y4 = m * ( 1 - 2 * abs(y3) / n); 横向 alpha 差
             float x = DensityUtil.px2dp(height);
-            mPath.setAlpha((int) (alpha * (1d - 1d / Math.pow((x / 800d + 1d), 15))));//y5 = y4 * (1-1/((x/800+1)^15));竖直 alpha 差
+            mPaint.setAlpha((int) (alpha * (1d - 1d / Math.pow((x / 800d + 1d), 15))));//y5 = y4 * (1-1/((x/800+1)^15));竖直 alpha 差
             float radius = mRadius * (1-1/((x/10+1)));//y6 = mRadius*(1-1/(x/10+1));半径
-            canvas.drawCircle(width / 2- radius/2 + wide * index , high / 2, radius, mPath);
+            canvas.drawCircle(width / 2- radius/2 + wide * index , high / 2, radius, mPaint);
         }
     }
 
-    public void setFraction(float fraction) {
-        this.fraction = fraction;
-    }
 }

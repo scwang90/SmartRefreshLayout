@@ -34,21 +34,15 @@ public class WaterDropView extends View {
     private final static int BACK_ANIM_DURATION = 180;
 
     public WaterDropView(Context context) {
-        super(context);
-        initView(context, null);
+        this(context, null);
     }
 
     public WaterDropView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        initView(context, attrs);
+        this(context, attrs, 0);
     }
 
     public WaterDropView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initView(context, attrs);
-    }
-
-    private void initView(Context context, AttributeSet attrs) {
 
         topCircle = new Circle();
         bottomCircle = new Circle();

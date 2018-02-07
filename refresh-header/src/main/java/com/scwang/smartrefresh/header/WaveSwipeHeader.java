@@ -57,21 +57,16 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
     private float mLastFirstBounds;
 
     public WaveSwipeHeader(Context context) {
-        super(context);
-        this.initView(context, null);
+        this(context, null);
     }
 
     public WaveSwipeHeader(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        this.initView(context, attrs);
+        this(context, attrs, 0);
     }
 
     public WaveSwipeHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.initView(context, attrs);
-    }
 
-    private void initView(Context context, AttributeSet attrs) {
         addView(mWaveView = new WaveView(context));
         addView(mCircleView = new ProgressAnimationImageView(getContext()));
 

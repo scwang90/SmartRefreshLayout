@@ -212,21 +212,16 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
     //<editor-fold desc="构造方法 construction methods">
     public SmartRefreshLayout(Context context) {
-        super(context);
-        this.initView(context, null);
+        this(context, null);
     }
 
     public SmartRefreshLayout(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        this.initView(context, attrs);
+        this(context, attrs, 0);
     }
 
     public SmartRefreshLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.initView(context, attrs);
-    }
 
-    private void initView(Context context, AttributeSet attrs) {
         setClipToPadding(false);
 
         DensityUtil density = new DensityUtil();
@@ -243,7 +238,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.SmartRefreshLayout);
 
-        ViewCompat.setNestedScrollingEnabled(this, ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnableNestedScrolling, false));
+        setNestedScrollingEnabled(ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnableNestedScrolling, false));
         mDragRate = ta.getFloat(R.styleable.SmartRefreshLayout_srlDragRate, mDragRate);
         mHeaderMaxDragRate = ta.getFloat(R.styleable.SmartRefreshLayout_srlHeaderMaxDragRate, mHeaderMaxDragRate);
         mFooterMaxDragRate = ta.getFloat(R.styleable.SmartRefreshLayout_srlFooterMaxDragRate, mFooterMaxDragRate);
@@ -345,194 +340,122 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             if (i == indexHeader || (i != indexFooter && indexHeader == -1 && mRefreshHeader == null && view instanceof RefreshHeader)) {
                 mRefreshHeader = (view instanceof RefreshHeader)? (RefreshHeader) view : new RefreshHeaderWrapper(view);
             } else if (i == indexFooter || (indexFooter == -1 && view instanceof RefreshFooter)) {
-                mEnableLoadMore = mEnableLoadMore || !mManualLoadMore;
                 mRefreshFooter = (view instanceof RefreshFooter)? (RefreshFooter) view : new RefreshFooterWrapper(view);
+            } else if (mRefreshContent == null) {
+                mRefreshContent = new RefreshContentWrapper(view);
             }
         }
 
-
-//        //定义为确认的子View索引
-//        boolean[] unCertainArray = new boolean[count];
-//        //第一次查找确认的 子View
-//        for (int i = 0; i < count; i++) {
-//            View view = getChildAt(i);
-//            if (view instanceof RefreshHeader && mRefreshHeader == null) {
-//                mRefreshHeader = ((RefreshHeader) view);
-//            } else if (view instanceof RefreshFooter && mRefreshFooter == null) {
-//                mEnableLoadMore = mEnableLoadMore || !mManualLoadMore;
-//                mRefreshFooter = ((RefreshFooter) view);
-//            } else if (mRefreshContent == null && RefreshContentWrapper.isScrollableView(view)) {
-//                mRefreshContent = new RefreshContentWrapper(view);
-//            } else {
-//                unCertainArray[i] = true;//标记未确认
-//            }
-//        }
-//        //如果有 未确认（unCertainArray）的子View 通过智能算法计算
-//        for (int i = 0; i < count; i++) {
-//            if (unCertainArray[i]) {
-//                View view = getChildAt(i);
-//                if (count == 1 && mRefreshContent == null) {
-//                    mRefreshContent = new RefreshContentWrapper(view);
-//                } else if (i == 0 && mRefreshHeader == null) {
-//                    mRefreshHeader = new RefreshHeaderWrapper(view);
-//                } else if (count == 2 && mRefreshContent == null) {
-//                    mRefreshContent = new RefreshContentWrapper(view);
-//                } else if (i == 2 && mRefreshFooter == null) {
-//                    mEnableLoadMore = mEnableLoadMore || !mManualLoadMore;
-//                    mRefreshFooter = new RefreshFooterWrapper(view);
-//                } else if (mRefreshContent == null) {
-//                    mRefreshContent = new RefreshContentWrapper(view);
-//                } else if (i == 1 && count == 2 && mRefreshFooter == null) {
-//                    mEnableLoadMore = mEnableLoadMore || !mManualLoadMore;
-//                    mRefreshFooter = new RefreshFooterWrapper(view);
-//                } else if (mRefreshHeader == null) {
-//                    mRefreshHeader = new RefreshHeaderWrapper(view);
-//                }
-//            }
-//        }
-
-        if (isInEditMode()) {
-            if (mPrimaryColors != null) {
-                if (mRefreshHeader != null) {
-                    mRefreshHeader.setPrimaryColors(mPrimaryColors);
-                }
-                if (mRefreshFooter != null) {
-                    mRefreshFooter.setPrimaryColors(mPrimaryColors);
-                }
-            }
-
-            //重新排序
-            if (mRefreshContent != null) {
-                bringChildToFront(mRefreshContent.getView());
-            }
-            if (mRefreshHeader != null && mRefreshHeader.getSpinnerStyle() != SpinnerStyle.FixedBehind) {
-                bringChildToFront(mRefreshHeader.getView());
-            }
-            if (mRefreshFooter != null && mRefreshFooter.getSpinnerStyle() != SpinnerStyle.FixedBehind) {
-                bringChildToFront(mRefreshFooter.getView());
-            }
-        }
     }
 
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        if (isInEditMode()) return;
 
-        if (mHandler == null) {
-            mHandler = new Handler();
-        }
+        if (!isInEditMode()) {
 
-        if (mListDelayedRunnable != null) {
-            for (DelayedRunnable runnable : mListDelayedRunnable) {
-                mHandler.postDelayed(runnable, runnable.delayMillis);
+            if (mHandler == null) {
+                mHandler = new Handler();
             }
-            mListDelayedRunnable.clear();
-            mListDelayedRunnable = null;
-        }
 
-        if (mRefreshHeader == null) {
-            mRefreshHeader = sHeaderCreator.createRefreshHeader(getContext(), this);
-            if (!(mRefreshHeader.getView().getLayoutParams() instanceof MarginLayoutParams)) {
-                if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale) {
-                    addView(mRefreshHeader.getView(), MATCH_PARENT, MATCH_PARENT);
-                } else {
-                    addView(mRefreshHeader.getView(), MATCH_PARENT, WRAP_CONTENT);
+            if (mListDelayedRunnable != null) {
+                for (DelayedRunnable runnable : mListDelayedRunnable) {
+                    mHandler.postDelayed(runnable, runnable.delayMillis);
                 }
+                mListDelayedRunnable.clear();
+                mListDelayedRunnable = null;
             }
-        }
-        if (mRefreshFooter == null) {
-            mRefreshFooter = sFooterCreator.createRefreshFooter(getContext(), this);
-            mEnableLoadMore = mEnableLoadMore || (!mManualLoadMore && sManualFooterCreator);
-            if (!(mRefreshFooter.getView().getLayoutParams() instanceof MarginLayoutParams)) {
-                if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Scale) {
-                    addView(mRefreshFooter.getView(), MATCH_PARENT, MATCH_PARENT);
-                } else {
-                    addView(mRefreshFooter.getView(), MATCH_PARENT, WRAP_CONTENT);
-                }
+
+            if (mRefreshHeader == null) {
+                setRefreshHeader(sHeaderCreator.createRefreshHeader(getContext(), this));
             }
-        }
-
-        for (int i = 0, len = getChildCount(); mRefreshContent == null && i < len ; i++) {
-            View view = getChildAt(i);
-            if ((mRefreshHeader == null || view != mRefreshHeader.getView()) &&
-                    (mRefreshFooter == null || view != mRefreshFooter.getView())) {
-                mRefreshContent = new RefreshContentWrapper(view);
+            if (mRefreshFooter == null) {
+                setRefreshFooter(sFooterCreator.createRefreshFooter(getContext(), this));
+            } else {
+                mEnableLoadMore = mEnableLoadMore || !mManualLoadMore;
             }
-        }
 
-        if (mRefreshContent == null) {
-            int padding = DensityUtil.dp2px(20);
-            TextView errorView = new TextView(getContext());
-            errorView.setTextColor(0xffff6600);
-            errorView.setGravity(Gravity.CENTER);
-            errorView.setTextSize(20);
-            errorView.setPadding(padding, padding, padding, padding);
-            errorView.setText(R.string.srl_content_empty);
-            addView(errorView, MATCH_PARENT, MATCH_PARENT);
-            mRefreshContent = new RefreshContentWrapper(errorView);
-        }
+            if (mRefreshContent == null) {
+                int padding = DensityUtil.dp2px(20);
+                TextView errorView = new TextView(getContext());
+                errorView.setTextColor(0xffff6600);
+                errorView.setGravity(Gravity.CENTER);
+                errorView.setTextSize(20);
+                errorView.setPadding(padding, padding, padding, padding);
+                errorView.setText(R.string.srl_content_empty);
+                addView(errorView, MATCH_PARENT, MATCH_PARENT);
+                mRefreshContent = new RefreshContentWrapper(errorView);
+            }
 
-        View fixedHeaderView = mFixedHeaderViewId > 0 ? findViewById(mFixedHeaderViewId) : null;
-        View fixedFooterView = mFixedFooterViewId > 0 ? findViewById(mFixedFooterViewId) : null;
+            View fixedHeaderView = mFixedHeaderViewId > 0 ? findViewById(mFixedHeaderViewId) : null;
+            View fixedFooterView = mFixedFooterViewId > 0 ? findViewById(mFixedFooterViewId) : null;
 
-        mRefreshContent.setScrollBoundaryDecider(mScrollBoundaryDecider);
-        mRefreshContent.setEnableLoadMoreWhenContentNotFull(mEnableLoadMoreWhenContentNotFull);
-        mRefreshContent.setUpComponent(mKernel, fixedHeaderView, fixedFooterView);
+            mRefreshContent.setScrollBoundaryDecider(mScrollBoundaryDecider);
+            mRefreshContent.setEnableLoadMoreWhenContentNotFull(mEnableLoadMoreWhenContentNotFull);
+            mRefreshContent.setUpComponent(mKernel, fixedHeaderView, fixedFooterView);
 
-        if (mSpinner != 0) {
-            notifyStateChanged(RefreshState.None);
-            mRefreshContent.moveSpinner(mSpinner = 0);
-        }
+            if (mSpinner != 0) {
+                notifyStateChanged(RefreshState.None);
+                mRefreshContent.moveSpinner(mSpinner = 0);
+            }
 
-        //重新排序
-        bringChildToFront(mRefreshContent.getView());
-        if (mRefreshHeader.getSpinnerStyle() != SpinnerStyle.FixedBehind) {
-            bringChildToFront(mRefreshHeader.getView());
-        }
-        if (mRefreshFooter.getSpinnerStyle() != SpinnerStyle.FixedBehind) {
-            bringChildToFront(mRefreshFooter.getView());
-        }
+            if (mRefreshListener == null) {
+                mRefreshListener = new OnRefreshListener() {
+                    @Override
+                    public void onRefresh(RefreshLayout refreshLayout) {
+                        refreshLayout.finishRefresh(3000);
+                    }
+                };
+            }
+            if (mLoadMoreListener == null) {
+                mLoadMoreListener = new OnLoadMoreListener() {
+                    @Override
+                    public void onLoadMore(RefreshLayout refreshLayout) {
+                        refreshLayout.finishLoadMore(2000);
+                    }
+                };
+            }
 
-        if (mRefreshListener == null) {
-            mRefreshListener = new OnRefreshListener() {
-                @Override
-                public void onRefresh(RefreshLayout refreshLayout) {
-                    refreshLayout.finishRefresh(3000);
-                }
-            };
-        }
-        if (mLoadMoreListener == null) {
-            mLoadMoreListener = new OnLoadMoreListener() {
-                @Override
-                public void onLoadMore(RefreshLayout refreshLayout) {
-                    refreshLayout.finishLoadMore(2000);
-                }
-            };
-        }
-        if (mPrimaryColors != null) {
-            mRefreshHeader.setPrimaryColors(mPrimaryColors);
-            mRefreshFooter.setPrimaryColors(mPrimaryColors);
-        }
-
-        if (!mManualNestedScrolling && !isNestedScrollingEnabled()) {
-            post(new Runnable() {
-                @Override
-                public void run() {
-                    for (ViewParent parent = getParent() ; parent != null ; parent = parent.getParent()) {
-                        if (parent instanceof NestedScrollingParent) {
-                            View target = SmartRefreshLayout.this;
-                            //noinspection RedundantCast
-                            if (((NestedScrollingParent)parent).onStartNestedScroll(target,target,ViewCompat.SCROLL_AXIS_VERTICAL)) {
-                                setNestedScrollingEnabled(true);
-                                mManualNestedScrolling = false;
-                                break;
+            if (!mManualNestedScrolling && !isNestedScrollingEnabled()) {
+                post(new Runnable() {
+                    @Override
+                    public void run() {
+                        for (ViewParent parent = getParent() ; parent != null ; parent = parent.getParent()) {
+                            if (parent instanceof NestedScrollingParent) {
+                                View target = SmartRefreshLayout.this;
+                                //noinspection RedundantCast
+                                if (((NestedScrollingParent)parent).onStartNestedScroll(target,target,ViewCompat.SCROLL_AXIS_VERTICAL)) {
+                                    setNestedScrollingEnabled(true);
+                                    mManualNestedScrolling = false;
+                                    break;
+                                }
                             }
                         }
                     }
-                }
-            });
+                });
+            }
         }
+
+        if (mPrimaryColors != null) {
+            if (mRefreshHeader != null) {
+                mRefreshHeader.setPrimaryColors(mPrimaryColors);
+            }
+            if (mRefreshFooter != null) {
+                mRefreshFooter.setPrimaryColors(mPrimaryColors);
+            }
+        }
+
+        //重新排序
+        if (mRefreshContent != null) {
+            bringChildToFront(mRefreshContent.getView());
+        }
+        if (mRefreshHeader != null && mRefreshHeader.getSpinnerStyle() != SpinnerStyle.FixedBehind) {
+            bringChildToFront(mRefreshHeader.getView());
+        }
+        if (mRefreshFooter != null && mRefreshFooter.getSpinnerStyle() != SpinnerStyle.FixedBehind) {
+            bringChildToFront(mRefreshFooter.getView());
+        }
+
     }
 
     @Override

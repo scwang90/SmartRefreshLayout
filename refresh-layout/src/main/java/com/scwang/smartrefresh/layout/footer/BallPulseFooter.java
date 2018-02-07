@@ -29,30 +29,24 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 @SuppressWarnings({"unused", "UnusedReturnValue"})
 public class BallPulseFooter extends InternalAbstract implements RefreshFooter {
 
-    private BallPulseView mBallPulseView;
-    private SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
     private Integer mNormalColor;
     private Integer mAnimationColor;
+    private BallPulseView mBallPulseView;
+    private SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
 
     //<editor-fold desc="ViewGroup">
     public BallPulseFooter(@NonNull Context context) {
-        super(context);
-        initView(context, null, 0);
+        this(context, null);
     }
 
     public BallPulseFooter(@NonNull Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        initView(context, attrs, 0);
+        this(context, attrs, 0);
     }
 
     public BallPulseFooter(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initView(context, attrs, defStyleAttr);
-    }
 
-    private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
-        mBallPulseView = new BallPulseView(context);
-        addView(mBallPulseView, WRAP_CONTENT, WRAP_CONTENT);
+        addView(mBallPulseView = new BallPulseView(context));
         setMinimumHeight(DensityUtil.dp2px(60));
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.BallPulseFooter);

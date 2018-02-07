@@ -298,9 +298,6 @@ class PathParser {
         // next float starts with a '-' or a '.'.
         int mEndPosition;
         boolean mEndWithNegOrDot;
-
-        ExtractFloatResult() {
-        }
     }
 
     /**

@@ -89,21 +89,16 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
 
     //<editor-fold desc="View">
     public TaurusHeader(Context context) {
-        super(context);
-        initView(context, null);
+        this(context, null);
     }
 
     public TaurusHeader(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        initView(context, attrs);
+        this(context, attrs, 0);
     }
 
     public TaurusHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initView(context, attrs);
-    }
 
-    private void initView(Context context, AttributeSet attrs) {
         setMinimumHeight(DensityUtil.dp2px(100));
 
         mMatrix = new Matrix();
@@ -329,14 +324,14 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
 //            needMoveCloudsWithContent = true;
 //        }
 
-        float offsetLeftX = 0 - mCloudLeft.width() / 2;
+        float offsetLeftX = 0 - mCloudLeft.getBounds().width() / 2;
         float offsetLeftY = (//needMoveCloudsWithContent
-                //? mHeaderHeight * dragPercent - mCloudLeft.height() :
+                //? mHeaderHeight * dragPercent - mCloudLeftgetBounds().height() :
                 dragYOffset);
 
-        float offsetRightX = width - mCloudRight.width() / 2;
+        float offsetRightX = width - mCloudRight.getBounds().width() / 2;
         float offsetRightY = (//needMoveCloudsWithContent
-                //? mHeaderHeight * dragPercent - mCloudRight.height() :
+                //? mHeaderHeight * dragPercent - mCloudRightgetBounds().height() :
                 dragYOffset);
 
         // Magic with animation on loading process
@@ -356,17 +351,17 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
             }
         }
 
-        if (offsetLeftY + scale * mCloudLeft.height() < height + 2) {
-            offsetLeftY = height + 2 - scale * mCloudLeft.height();
+        if (offsetLeftY + scale * mCloudLeft.getBounds().height() < height + 2) {
+            offsetLeftY = height + 2 - scale * mCloudLeft.getBounds().height();
         }
-        if (offsetRightY + scale * mCloudRight.height() < height + 2) {
-            offsetRightY = height + 2 - scale * mCloudRight.height();
+        if (offsetRightY + scale * mCloudRight.getBounds().height() < height + 2) {
+            offsetRightY = height + 2 - scale * mCloudRight.getBounds().height();
         }
 
         final int saveCount = canvas.getSaveCount();
         canvas.save();
         canvas.translate(offsetLeftX, offsetLeftY);
-        matrix.postScale(scale, scale, mCloudLeft.width() * 3 / 4, mCloudLeft.height());
+        matrix.postScale(scale, scale, mCloudLeft.getBounds().width() * 3 / 4, mCloudLeft.getBounds().height());
         canvas.concat(matrix);
         mCloudLeft.setAlpha(100);
         mCloudLeft.draw(canvas);
@@ -374,7 +369,7 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
         canvas.restoreToCount(saveCount);
         canvas.save();
         canvas.translate(offsetRightX, offsetRightY);
-        matrix.postScale(scale, scale, 0, mCloudRight.height());
+        matrix.postScale(scale, scale, 0, mCloudRight.getBounds().height());
         canvas.concat(matrix);
         mCloudRight.setAlpha(100);
         mCloudRight.draw(canvas);
@@ -415,16 +410,16 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
         // Current y position of clouds
         float dragYOffset = mHeaderHeight * dragPercent;
         // Position when should start parallax scrolling
-        int startParallaxHeight = mHeaderHeight - mCloudCenter.height()/2;
+        int startParallaxHeight = mHeaderHeight - mCloudCenter.getBounds().height()/2;
 
         if (dragYOffset > startParallaxHeight) {
             parallax = true;
             parallaxPercent = dragYOffset - startParallaxHeight;
         }
 
-        float offsetX = (width / 2) - mCloudCenter.width() / 2;
+        float offsetX = (width / 2) - mCloudCenter.getBounds().width() / 2;
         float offsetY = dragYOffset
-                - (parallax ? mCloudCenter.height()/2 + parallaxPercent : mCloudCenter.height()/2);
+                - (parallax ? mCloudCenter.getBounds().height()/2 + parallaxPercent : mCloudCenter.getBounds().height()/2);
 
         float sx = overDrag ? scale + overDragPercent / 4 : scale;
         float sy = overDrag ? scale + overDragPercent / 2 : scale;
@@ -443,10 +438,10 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
         }
 
 
-        matrix.postScale(sx, sy, mCloudCenter.width() / 2, 0);
+        matrix.postScale(sx, sy, mCloudCenter.getBounds().width() / 2, 0);
 
-        if (offsetY + sy * mCloudCenter.height() < height + 2) {
-            offsetY = height + 2 - sy * mCloudCenter.height();
+        if (offsetY + sy * mCloudCenter.getBounds().height() < height + 2) {
+            offsetY = height + 2 - sy * mCloudCenter.getBounds().height();
         }
 
         final int saveCount = canvas.getSaveCount();
@@ -475,17 +470,17 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
             dragPercent = 1.0f;
         }
 
-        float offsetX = ((width * dragPercent) / 2) - mAirplane.width() / 2;
-        float offsetY = mHeaderHeight * (1 - dragPercent/2) - mAirplane.height() / 2;
+        float offsetX = ((width * dragPercent) / 2) - mAirplane.getBounds().width() / 2;
+        float offsetY = mHeaderHeight * (1 - dragPercent/2) - mAirplane.getBounds().height() / 2;
 
 //        if (mEndOfRefreshing) {
-//            offsetX = width/2 + width * (1-dragPercent) / 2 - mAirplane.width() / 2;
-//            offsetY = (dragPercent) * (mHeaderHeight / 2 + mAirplane.height() * 3 / 2) - 2 * mAirplane.height();
+//            offsetX = width/2 + width * (1-dragPercent) / 2 - mAirplane.getBounds().width() / 2;
+//            offsetY = (dragPercent) * (mHeaderHeight / 2 + mAirplane.getBounds().height() * 3 / 2) - 2 * mAirplane.getBounds().height();
 //        }
 
         if (mFinishTransformation > 0) {
             offsetY += (0 - offsetY) * mFinishTransformation;
-            offsetX += (width + mAirplane.width() - offsetX) * mFinishTransformation;
+            offsetX += (width + mAirplane.getBounds().width() - offsetX) * mFinishTransformation;
         }
 
         if (isRefreshing) {
@@ -502,8 +497,8 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
 
         if (rotateAngle > 0) {
             matrix.postRotate(rotateAngle,
-                    mAirplane.width() / 2,
-                    mAirplane.height() / 2);
+                    mAirplane.getBounds().width() / 2,
+                    mAirplane.getBounds().height() / 2);
         }
 
         final int saveCount = canvas.getSaveCount();

@@ -65,21 +65,15 @@ public abstract class FunGameView extends FunGameHeader {
     //</editor-fold>
 
     public FunGameView(Context context) {
-        super(context);
-        this.initView(context, null);
+        this(context, null);
     }
 
     public FunGameView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        this.initView(context, attrs);
+        this(context, attrs, 0);
     }
 
     public FunGameView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.initView(context, attrs);
-    }
-
-    private void initView(Context context, AttributeSet attrs) {
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.FunGameView);
         mBackColor = ta.getColor(R.styleable.FunGameView_fgvBackColor, 0);
         lModelColor = ta.getColor(R.styleable.FunGameView_fgvLeftColor, Color.rgb(0, 0, 0));

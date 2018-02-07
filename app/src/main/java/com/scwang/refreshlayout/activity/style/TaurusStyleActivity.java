@@ -69,8 +69,8 @@ public class TaurusStyleActivity extends AppCompatActivity implements AdapterVie
             mRefreshLayout.autoRefresh();//第一次进入触发自动刷新，演示效果
         }
 
-        mAppBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
-        mToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        mAppBarLayout = (AppBarLayout) findViewById(R.id.appbar);
+        mToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbarLayout);
 
         View view = findViewById(R.id.recyclerView);
         if (view instanceof RecyclerView) {

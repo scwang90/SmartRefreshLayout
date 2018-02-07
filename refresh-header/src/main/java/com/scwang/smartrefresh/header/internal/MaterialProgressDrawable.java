@@ -47,6 +47,7 @@ import java.util.ArrayList;
 /**
  * Fancy progress indicator for Material theme.
  */
+@SuppressWarnings({"WeakerAccess"})
 public class MaterialProgressDrawable extends Drawable implements Animatable {
     private static final Interpolator LINEAR_INTERPOLATOR = new LinearInterpolator();
     static final Interpolator MATERIAL_INTERPOLATOR = new FastOutSlowInInterpolator();
@@ -90,7 +91,7 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
     /** The number of points in the progress "star". */
     private static final float NUM_POINTS = 5f;
     /** The list of animators operating on this drawable. */
-    private final ArrayList<Animation> mAnimators = new ArrayList<Animation>();
+    private final ArrayList<Animation> mAnimators = new ArrayList<>();
 
     /** The indicator ring, used to manage animation state. */
     private final Ring mRing;
@@ -220,7 +221,7 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
     }
 
     @Override
-    public void draw(Canvas c) {
+    public void draw(@NonNull Canvas c) {
         final Rect bounds = getBounds();
         final int saveCount = c.save();
         c.rotate(mRotation, bounds.exactCenterX(), bounds.exactCenterY());
@@ -303,6 +304,7 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
     }
 
     // Adapted from ArgbEvaluator.java
+    @SuppressWarnings("RedundantCast")
     private int evaluateColorChange(float fraction, int startValue, int endValue) {
         int startInt = (Integer) startValue;
         int startA = (startInt >> 24) & 0xff;
@@ -444,19 +446,20 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
         mAnimation = animation;
     }
 
+    @SuppressWarnings("FieldCanBeLocal")
     private final Callback mCallback = new Callback() {
         @Override
-        public void invalidateDrawable(Drawable d) {
+        public void invalidateDrawable(@NonNull Drawable d) {
             invalidateSelf();
         }
 
         @Override
-        public void scheduleDrawable(Drawable d, Runnable what, long when) {
+        public void scheduleDrawable(@NonNull Drawable d, @NonNull Runnable what, long when) {
             scheduleSelf(what, when);
         }
 
         @Override
-        public void unscheduleDrawable(Drawable d, Runnable what) {
+        public void unscheduleDrawable(@NonNull Drawable d, @NonNull Runnable what) {
             unscheduleSelf(what);
         }
     };

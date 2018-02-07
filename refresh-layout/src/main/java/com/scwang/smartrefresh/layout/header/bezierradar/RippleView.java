@@ -1,8 +1,6 @@
 package com.scwang.smartrefresh.layout.header.bezierradar;
 
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -27,12 +25,6 @@ public class RippleView extends View {
         mPaint.setStyle(Paint.Style.FILL);
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(resolveSize(getSuggestedMinimumWidth(), widthMeasureSpec),
-                resolveSize(getSuggestedMinimumHeight(), heightMeasureSpec));
-    }
-
     public void setFrontColor(@ColorInt int color) {
         mPaint.setColor(color);
     }
@@ -49,11 +41,11 @@ public class RippleView extends View {
                     invalidate();
                 }
             });
-            mAnimator.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                }
-            });
+//            mAnimator.addListener(new AnimatorListenerAdapter() {
+//                @Override
+//                public void onAnimationEnd(Animator animation) {
+//                }
+//            });
         }
         mAnimator.start();
     }

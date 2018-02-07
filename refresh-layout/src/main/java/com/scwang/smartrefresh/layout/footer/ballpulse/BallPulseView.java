@@ -38,15 +38,7 @@ public class BallPulseView extends View {
 
     //<editor-fold desc="View">
     public BallPulseView(Context context) {
-        this(context, null);
-    }
-
-    public BallPulseView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public BallPulseView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(context);
 
         circleSpacing = DensityUtil.dp2px(4);
 

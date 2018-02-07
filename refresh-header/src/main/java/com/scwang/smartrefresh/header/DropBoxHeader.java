@@ -53,27 +53,16 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
 
     //<editor-fold desc="View">
     public DropBoxHeader(Context context) {
-        super(context);
-        this.initView(context, null);
+        this(context, null);
     }
 
     public DropBoxHeader(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        this.initView(context, attrs);
+        this(context, attrs, 0);
     }
 
     public DropBoxHeader(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.initView(context, attrs);
-    }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(resolveSize(getSuggestedMinimumWidth(), widthMeasureSpec),
-                resolveSize(getSuggestedMinimumHeight(), heightMeasureSpec));
-    }
-
-    private void initView(Context context, AttributeSet attrs) {
         mPath = new Path();
         mPaint = new Paint();
         mBoxBody = new BoxBody();
@@ -81,7 +70,6 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
         mAccentColor = 0xff6ea9ff;
         setBackgroundColor(0xff283645);
         setMinimumHeight(DensityUtil.dp2px(150));
-
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.DropBoxHeader);
         if (ta.hasValue(R.styleable.DropBoxHeader_dhDrawable1)) {
@@ -126,6 +114,12 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
             mDrawable3 = drawable3;
         }
         ta.recycle();
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        setMeasuredDimension(resolveSize(getSuggestedMinimumWidth(), widthMeasureSpec),
+                resolveSize(getSuggestedMinimumHeight(), heightMeasureSpec));
     }
 
     @Override

@@ -14,21 +14,11 @@ public class PathsView extends View {
     protected PathsDrawable mPathsDrawable = new PathsDrawable();
 
     public PathsView(Context context) {
-        super(context);
-        this.initView(context, null, 0);
+        this(context, null);
     }
 
     public PathsView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.initView(context, attrs, 0);
-    }
-
-    public PathsView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        this.initView(context, attrs, defStyleAttr);
-    }
-
-    private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
         mPathsDrawable = new PathsDrawable();
     }
 
@@ -42,8 +32,8 @@ public class PathsView extends View {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(resolveSize(mPathsDrawable.width()+getPaddingLeft()+getPaddingRight(), widthMeasureSpec),
-                resolveSize(mPathsDrawable.height()+getPaddingTop()+getPaddingBottom(), heightMeasureSpec));
+        setMeasuredDimension(resolveSize(mPathsDrawable.getBounds().width()+getPaddingLeft()+getPaddingRight(), widthMeasureSpec),
+                resolveSize(mPathsDrawable.getBounds().height()+getPaddingTop()+getPaddingBottom(), heightMeasureSpec));
     }
 
     @Override

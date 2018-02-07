@@ -107,21 +107,16 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
 
     //<editor-fold desc="View">
     public PhoenixHeader(Context context) {
-        super(context);
-        initView(context, null);
+        this(context, null);
     }
 
     public PhoenixHeader(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        initView(context, attrs);
+        this(context, attrs, 0);
     }
 
     public PhoenixHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initView(context, attrs);
-    }
 
-    private void initView(Context context, AttributeSet attrs) {
         mMatrix = new Matrix();
         DensityUtil density = new DensityUtil();
         mSunSize = density.dip2px(40);
@@ -266,11 +261,11 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
         Matrix matrix = mMatrix;
         matrix.reset();
 
-        int bWidth = mDrawableSky.width();//mSky.getWidth();
-        int bHeight = mDrawableSky.height();//mSky.getHeight();
+        int bWidth = mDrawableSky.getBounds().width();//mSky.getWidth();
+        int bHeight = mDrawableSky.getBounds().height();//mSky.getHeight();
         float townScale = 1f * width / bWidth;
-        float offsetx = 0;
-        float offsety = height / 2 - bHeight / 2;
+        float offsetX = 0;
+        float offsetY = height / 2 - bHeight / 2;
 
 //        matrix.postScale(townScale, townScale);
 //        matrix.postTranslate(offsetx, offsety);
@@ -279,7 +274,7 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
 
         final int saveCount = canvas.getSaveCount();
         canvas.save();
-        canvas.translate(offsetx, offsety);
+        canvas.translate(offsetX, offsetY);
         matrix.postScale(townScale, townScale);
         mDrawableSky.draw(canvas);
         canvas.restoreToCount(saveCount);
@@ -289,8 +284,8 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
         Matrix matrix = mMatrix;
         matrix.reset();
 
-        int bWidth = mDrawableTown.width();//mTown.getWidth();
-        int bHeight = mDrawableTown.height();//mTown.getHeight();
+        int bWidth = mDrawableTown.getBounds().width();//mTown.getWidth();
+        int bHeight = mDrawableTown.getBounds().height();//mTown.getHeight();
         float townScale = 1f * width / bWidth;
         float amplification = (0.3f * Math.max(mPercent - 1, 0) + 1);
         float offsetx = width / 2 - (int) (width * amplification) / 2;
@@ -301,7 +296,7 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
             offsety = height - bHeight * townScale;
         }
 
-//        matrix.postScale(townScale, townScale, mDrawableTown.width() / 2, mDrawableTown.height() / 2);
+//        matrix.postScale(townScale, townScale, mDrawableTown.getBounds().width() / 2, mDrawableTown.getBounds().height() / 2);
 //        matrix.postTranslate(offsetx, offsety);
 //        canvas.drawBitmap(mTown, matrix, null);
 
@@ -325,7 +320,7 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
         float offsetX = mSunLeftOffset + sunRadius;
         float offsetY = mSunTopOffset + (mHeaderHeight / 2) * (1.0f - Math.min(mPercent, 1)); // Move the sun up
 
-        int bWidth = mDrawableSun.width();
+        int bWidth = mDrawableSun.getBounds().width();
         float sunScale = 1f * mSunSize / bWidth;
 
         if (mPercent > 1) {

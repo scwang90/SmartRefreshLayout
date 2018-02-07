@@ -54,10 +54,7 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
 
     public BezierRadarHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initView(context, attrs, defStyleAttr);
-    }
 
-    private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
         setMinimumHeight(DensityUtil.dp2px(100));
 
         mWaveView = new WaveView(getContext());
@@ -102,7 +99,7 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
 
     public BezierRadarHeader setAccentColor(@ColorInt int color) {
         mAccentColor = color;
-        mDotView.setDotColor(color);
+        mDotView.mPaint.setColor(color);
         mRippleView.setFrontColor(color);
         mProgressView.setFrontColor(color);
         return this;
@@ -162,7 +159,7 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
     public void onPulling(float percent, int offset, int height, int extendHeight) {
         mWaveView.setHeadHeight(Math.min(height, offset));
         mWaveView.setWaveHeight((int)(1.9f*Math.max(0, offset - height)));
-        mDotView.setFraction(percent);
+        mDotView.fraction = percent;
         if (mIsRunning) {
             mWaveView.invalidate();
         }
@@ -203,7 +200,7 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
                 layout.getLayout().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        mProgressView.startAnim();
+                        mProgressView.mAnimator.start();
                     }
                 }, 200);
             }
@@ -222,7 +219,7 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
 
     @Override
     public int onFinish(@NonNull RefreshLayout layout, boolean success) {
-        mProgressView.stopAnim();
+        mProgressView.mAnimator.cancel();
         mProgressView.animate().scaleX(0f);
         mProgressView.animate().scaleY(0f);
         mRippleView.setVisibility(VISIBLE);

@@ -48,26 +48,20 @@ public class WaterDropHeader extends InternalAbstract implements RefreshHeader {
     private WaterDropView mWaterDropView;
     private ProgressDrawable mProgressDrawable;
     private MaterialProgressDrawable mProgress;
-    private int mProgressDegree = 0;
     //</editor-fold>
 
     //<editor-fold desc="ViewGroup">
     public WaterDropHeader(Context context) {
-        super(context);
-        this.initView(context);
+        this(context, null);
     }
 
     public WaterDropHeader(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        this.initView(context);
+        this(context, attrs, 0);
     }
 
     public WaterDropHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.initView(context);
-    }
 
-    private void initView(Context context) {
         DensityUtil density = new DensityUtil();
         mWaterDropView = new WaterDropView(context);
         addView(mWaterDropView, MATCH_PARENT, MATCH_PARENT);

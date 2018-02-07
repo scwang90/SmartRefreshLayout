@@ -17,6 +17,7 @@
 package com.scwang.smartrefresh.header.waveswipe;
 
 import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -99,9 +100,9 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
      */
     private Path mDropCirclePath;
 
-    /**
-     * 影のPaint
-     */
+//    /**
+//     * 影のPaint
+//     */
 //  private Paint mShadowPaint;
 
     /**
@@ -228,8 +229,13 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
      */
     public WaveView(Context context) {
         super(context);
+        setUpPaint();
+        setUpPath();
+        resetAnimator();
+
+        mDropRect = new RectF();
+        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         getViewTreeObserver().addOnPreDrawListener(this);
-        initView();
     }
 
     /**
@@ -303,11 +309,11 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
         mShadowPath.set(mDropTangentPath);
         mShadowPath.addOval(mDropRect, Path.Direction.CCW);
         mDropCirclePath.addOval(mDropRect, Path.Direction.CCW);
-        if (mDropVertexAnimator.isRunning()) {
-//      canvas.drawPath(mShadowPath, mShadowPaint);
-        } else {
-//      canvas.drawPath(mDropCirclePath, mShadowPaint);
-        }
+//        if (mDropVertexAnimator.isRunning()) {
+////      canvas.drawPath(mShadowPath, mShadowPaint);
+//        } else {
+////      canvas.drawPath(mDropCirclePath, mShadowPaint);
+//        }
         canvas.drawPath(mDropTangentPath, mPaint);
         canvas.drawPath(mDropCirclePath, mPaint);
     }
@@ -339,15 +345,6 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
             mDropBounceVerticalAnimator.removeAllUpdateListeners();
         }
         super.onDetachedFromWindow();
-    }
-
-    private void initView() {
-        setUpPaint();
-        setUpPath();
-        resetAnimator();
-
-        mDropRect = new RectF();
-        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
     }
 
     private void setUpPaint() {
@@ -579,27 +576,12 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
         mDisappearCircleAnimator = ValueAnimator.ofFloat(1.f, 0.f);
         mDisappearCircleAnimator.addUpdateListener(mAnimatorUpdateListener);
         mDisappearCircleAnimator.setDuration(DROP_REMOVE_ANIMATOR_DURATION);
-        mDisappearCircleAnimator.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animator) {
-
-            }
-
+        mDisappearCircleAnimator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animator) {
                 //アニメーション修旅時にAnimatorをリセットすることにより落ちてくる円の初期位置を-100.fにする
                 resetAnimator();
                 mIsManualRefreshing = false;
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animator) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animator) {
-
             }
         });
         mDisappearCircleAnimator.start();
@@ -639,33 +621,33 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
         return mCurrentCircleCenterY;
     }
 
-    /**
-     * @param maxDropHeight ある程度の高さ
-     */
-    public void setMaxDropHeight(int maxDropHeight) {
-        if (mDropHeightUpdated) {
-            updateMaxDropHeight(maxDropHeight);
-        } else {
-            mUpdateMaxDropHeight = maxDropHeight;
-            mDropHeightUpdated = true;
-            if (getViewTreeObserver().isAlive()) {
-                getViewTreeObserver().removeOnPreDrawListener(this);
-                getViewTreeObserver().addOnPreDrawListener(this);
-            }
-        }
-    }
-
-    public boolean isDisappearCircleAnimatorRunning() {
-        return mDisappearCircleAnimator.isRunning();
-    }
-
-    /**
-     * @param radius 影の深さ
-     */
-    public void setShadowRadius(int radius) {
-//    mShadowPaint.setShadowLayer(radius, 0.0f, 2.0f, SHADOW_COLOR);
-        mPaint.setShadowLayer(radius, 0f, 0f, SHADOW_COLOR);
-    }
+//    /**
+//     * @param maxDropHeight ある程度の高さ
+//     */
+//    public void setMaxDropHeight(int maxDropHeight) {
+//        if (mDropHeightUpdated) {
+//            updateMaxDropHeight(maxDropHeight);
+//        } else {
+//            mUpdateMaxDropHeight = maxDropHeight;
+//            mDropHeightUpdated = true;
+//            if (getViewTreeObserver().isAlive()) {
+//                getViewTreeObserver().removeOnPreDrawListener(this);
+//                getViewTreeObserver().addOnPreDrawListener(this);
+//            }
+//        }
+//    }
+//
+//    public boolean isDisappearCircleAnimatorRunning() {
+//        return mDisappearCircleAnimator.isRunning();
+//    }
+//
+//    /**
+//     * @param radius 影の深さ
+//     */
+//    public void setShadowRadius(int radius) {
+////    mShadowPaint.setShadowLayer(radius, 0.0f, 2.0f, SHADOW_COLOR);
+//        mPaint.setShadowLayer(radius, 0f, 0f, SHADOW_COLOR);
+//    }
 
     /**
      * @param radius 影の深さ
@@ -686,8 +668,8 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
         invalidate();
     }
 
-    public void setWaveARGBColor(int a, int r, int g, int b) {
-        mPaint.setARGB(a, r, g, b);
-        invalidate();
-    }
+//    public void setWaveARGBColor(int a, int r, int g, int b) {
+//        mPaint.setARGB(a, r, g, b);
+//        invalidate();
+//    }
 }

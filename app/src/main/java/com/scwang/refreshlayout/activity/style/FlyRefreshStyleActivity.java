@@ -82,8 +82,8 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
          *----------------------------------------------------------*/
 
         MountainSceneView mSceneView = (MountainSceneView) findViewById(R.id.mountain);
-        mFlyView = (FlyView) findViewById(R.id.flyview);
-        mFlyRefreshHeader = (FlyRefreshHeader)findViewById(R.id.flyrefresh);
+        mFlyView = (FlyView) findViewById(R.id.flyView);
+        mFlyRefreshHeader = (FlyRefreshHeader)findViewById(R.id.flyRefresh);
         mFlyRefreshHeader.setUp(mSceneView, mFlyView);//绑定场景和纸飞机
         mRefreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
         mRefreshLayout.setReboundInterpolator(new ElasticOutInterpolator());//设置回弹插值器，会带有弹簧震动效果
@@ -111,7 +111,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
             }
         });
         //设置 让 AppBarLayout 和 RefreshLayout 的滚动同步 并不保持 toolbar 位置不变
-        final AppBarLayout appBar = (AppBarLayout) findViewById(R.id.app_bar);
+        final AppBarLayout appBar = (AppBarLayout) findViewById(R.id.appbar);
         mRefreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
             @Override
             public void onHeaderPulling(RefreshHeader header, float percent, int offset, int footerHeight, int extendHeight) {
@@ -143,7 +143,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
         mListView.setLayoutManager(mLayoutManager);
         mListView.setAdapter(mAdapter);
         mListView.setItemAnimator(new SampleItemAnimator());
-        mToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        mToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbarLayout);
         mActionButton = (FloatingActionButton) findViewById(R.id.fab);
         /*
          * 设置点击 ActionButton 时候触发自动刷新 并改变主题颜色

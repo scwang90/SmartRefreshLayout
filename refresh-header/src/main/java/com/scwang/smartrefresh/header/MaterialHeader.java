@@ -59,21 +59,16 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
 
     //<editor-fold desc="MaterialHeader">
     public MaterialHeader(Context context) {
-        super(context);
-        initView(context, null);
+        this(context, null);
     }
 
     public MaterialHeader(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        initView(context, attrs);
+        this(context, attrs, 0);
     }
 
     public MaterialHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initView(context, attrs);
-    }
 
-    private void initView(Context context, AttributeSet attrs) {
         setMinimumHeight(DensityUtil.dp2px(100));
 
         mProgress = new MaterialProgressDrawable(context, this);

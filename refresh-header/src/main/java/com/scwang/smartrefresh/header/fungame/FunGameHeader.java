@@ -59,21 +59,15 @@ public abstract class FunGameHeader extends FunGameBase implements RefreshHeader
 
     //<editor-fold desc="View">
     public FunGameHeader(Context context) {
-        super(context);
-        this.initView(context, null);
+        this(context, null);
     }
 
     public FunGameHeader(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        this.initView(context, attrs);
+        this(context, attrs, 0);
     }
 
     public FunGameHeader(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.initView(context, attrs);
-    }
-
-    private void initView(Context context, AttributeSet attrs) {
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.FunGameHeader);
 

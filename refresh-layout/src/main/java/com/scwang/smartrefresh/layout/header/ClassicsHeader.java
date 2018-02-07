@@ -59,21 +59,16 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
 
     //<editor-fold desc="RelativeLayout">
     public ClassicsHeader(Context context) {
-        super(context);
-        this.initView(context, null);
+        this(context, null);
     }
 
     public ClassicsHeader(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        this.initView(context, attrs);
+        this(context, attrs, 0);
     }
 
     public ClassicsHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.initView(context, attrs);
-    }
 
-    private void initView(Context context, AttributeSet attrs) {
         DensityUtil density = new DensityUtil();
 
         mTitleText.setTextColor(0xff666666);

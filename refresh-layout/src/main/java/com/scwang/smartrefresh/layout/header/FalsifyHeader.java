@@ -47,21 +47,14 @@ public class FalsifyHeader extends InternalAbstract implements RefreshHeader {
     }
 
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(resolveSize(getSuggestedMinimumWidth(), widthMeasureSpec),
-                resolveSize(getSuggestedMinimumHeight(), heightMeasureSpec));
-    }
-
-    @Override
-    @SuppressLint("DrawAllocation")
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
+    protected void dispatchDraw(Canvas canvas) {
+        super.dispatchDraw(canvas);
         if (isInEditMode()) {//这段代码在运行时不会执行，只会在Studio编辑预览时运行，不用在意性能问题
             int d = DensityUtil.dp2px(5);
 
             Paint paint = new Paint();
             paint.setStyle(Paint.Style.STROKE);
-            paint.setColor(0x44ffffff);
+            paint.setColor(0xcccccccc);
             paint.setStrokeWidth(DensityUtil.dp2px(1));
             paint.setPathEffect(new DashPathEffect(new float[]{d, d, d, d}, 1));
             canvas.drawRect(d, d, getWidth() - d, getBottom() - d, paint);
@@ -69,7 +62,7 @@ public class FalsifyHeader extends InternalAbstract implements RefreshHeader {
             TextView textView = new TextView(getContext());
             textView.setText(R.string.srl_component_falsify);
             textView.setText(String.format(textView.getText().toString(), getClass().getSimpleName(), DensityUtil.px2dp(getHeight())));
-            textView.setTextColor(0x44ffffff);
+            textView.setTextColor(0xcccccccc);
             textView.setGravity(Gravity.CENTER);
             textView.measure(makeMeasureSpec(getWidth(), EXACTLY), makeMeasureSpec(getHeight(), EXACTLY));
             textView.layout(0, 0, getWidth(), getHeight());

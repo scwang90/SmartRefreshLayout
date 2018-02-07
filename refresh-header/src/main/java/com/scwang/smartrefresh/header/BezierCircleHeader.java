@@ -58,22 +58,16 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
     //<editor-fold desc="View">
 
     public BezierCircleHeader(Context context) {
-        super(context, null, 0);
-        initView(context, null);
+        this(context, null);
     }
 
     public BezierCircleHeader(Context context, AttributeSet attrs) {
-        super(context, attrs, 0);
-        initView(context, attrs);
+        this(context, attrs, 0);
     }
 
     public BezierCircleHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initView(context, attrs);
-    }
 
-    @SuppressWarnings("unused")
-    private void initView(Context context, AttributeSet attrs) {
         setMinimumHeight(DensityUtil.dp2px(100));
         mBackPaint = new Paint();
         mBackPaint.setColor(0xff11bbff);
@@ -98,7 +92,6 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
     //</editor-fold>
 
     //<editor-fold desc="Draw">
-
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
@@ -213,7 +206,6 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
                         0, 360, false, mOuterPaint);
             }
             mOuterPaint.setColor(beforeColor);
-
 
             if (mFinishRatio >= 0.3 && mFinishRatio < 0.7) {
                 float fraction = (mFinishRatio - 0.3f) / 0.4f;

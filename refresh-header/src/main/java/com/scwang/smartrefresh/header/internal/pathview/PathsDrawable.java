@@ -127,9 +127,13 @@ public class PathsDrawable extends Drawable {
             canvas.restore();
         } else {
             createCachedBitmapIfNeeded(width, height);
-            if (!canReuseCache()) {
-                updateCachedBitmap();
-                updateCacheStates();
+            if (mCacheDirty) {
+                mCachedBitmap.eraseColor(Color.TRANSPARENT);
+                Canvas tmpCanvas = new Canvas(mCachedBitmap);
+                drawCachedBitmap(tmpCanvas);
+                // Use shallow copy here and shallow comparison in canReuseCache(),
+                // likely hit cache miss more, but practically not much difference.
+                mCacheDirty = false;
             }
             canvas.drawBitmap(mCachedBitmap, bounds.left, bounds.top, mPaint);
         }
@@ -152,13 +156,6 @@ public class PathsDrawable extends Drawable {
     //</editor-fold>
 
     //<editor-fold desc="API">
-    public int width() {
-        return getBounds().width();
-    }
-
-    public int height() {
-        return getBounds().height();
-    }
 
     public void setGeometricWidth(int width) {
         Rect bounds = getBounds();
@@ -183,22 +180,12 @@ public class PathsDrawable extends Drawable {
         );
     }
 
-    public Paint getPaint() {
-        return mPaint;
-    }
-
     //</editor-fold>
 
     //<editor-fold desc="CachedBitmap">
 
     private Bitmap mCachedBitmap;
     private boolean mCacheDirty;
-
-    public void updateCachedBitmap() {
-        mCachedBitmap.eraseColor(Color.TRANSPARENT);
-        Canvas tmpCanvas = new Canvas(mCachedBitmap);
-        drawCachedBitmap(tmpCanvas);
-    }
 
     private void drawCachedBitmap(Canvas canvas) {
         canvas.translate(-mStartX, -mStartY);
@@ -213,7 +200,7 @@ public class PathsDrawable extends Drawable {
     }
 
     public void createCachedBitmapIfNeeded(int width, int height) {
-        if (mCachedBitmap == null || !canReuseBitmap(width, height)) {
+        if (mCachedBitmap == null || width != mCachedBitmap.getWidth() || height != mCachedBitmap.getHeight()) {
             mCachedBitmap = Bitmap.createBitmap(width, height,
                     Bitmap.Config.ARGB_8888);
             mCacheDirty = true;
@@ -221,18 +208,5 @@ public class PathsDrawable extends Drawable {
 
     }
 
-    public boolean canReuseBitmap(int width, int height) {
-        return width == mCachedBitmap.getWidth()
-                && height == mCachedBitmap.getHeight();
-    }
-    public boolean canReuseCache() {
-        return !mCacheDirty;
-    }
-
-    public void updateCacheStates() {
-        // Use shallow copy here and shallow comparison in canReuseCache(),
-        // likely hit cache miss more, but practically not much difference.
-        mCacheDirty = false;
-    }
     //</editor-fold>
 }

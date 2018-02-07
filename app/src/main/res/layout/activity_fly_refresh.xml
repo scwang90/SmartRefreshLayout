@@ -18,7 +18,7 @@
     <!--效果最佳-->
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar"
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_bar_height"
         android:clipChildren="false"
@@ -26,7 +26,7 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/toolbar_layout"
+            android:id="@+id/toolbarLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:expandedTitleMarginBottom="120dp"
@@ -57,7 +57,7 @@
         app:srlEnableOverScrollBounce="false"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
         <com.scwang.smartrefresh.header.FlyRefreshHeader
-            android:id="@+id/flyrefresh"
+            android:id="@+id/flyRefresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
         <android.support.v7.widget.RecyclerView
@@ -82,7 +82,7 @@
         app:elevation="0dp"  />
 
     <com.scwang.smartrefresh.header.flyrefresh.FlyView
-        android:id="@+id/flyview"
+        android:id="@+id/flyView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_anchor="@id/fab"

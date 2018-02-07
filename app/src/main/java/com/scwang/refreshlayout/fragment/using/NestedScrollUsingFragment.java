@@ -120,7 +120,7 @@ public class NestedScrollUsingFragment extends Fragment implements AdapterView.O
         /*
          * 监听 AppBarLayout 的关闭和开启 ActionButton 设置关闭隐藏动画
          */
-        AppBarLayout appBarLayout = (AppBarLayout) root.findViewById(R.id.app_bar);
+        AppBarLayout appBarLayout = (AppBarLayout) root.findViewById(R.id.appbar);
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean misAppbarExpand = true;
             View fab = root.findViewById(R.id.fab);

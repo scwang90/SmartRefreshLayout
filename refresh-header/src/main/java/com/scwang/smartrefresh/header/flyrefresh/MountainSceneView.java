@@ -63,21 +63,16 @@ public class MountainSceneView extends View {
 
     //<editor-fold desc="MountainSceneView">
     public MountainSceneView(Context context) {
-        super(context);
-        initView(context, null);
+        this(context, null);
     }
 
     public MountainSceneView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        initView(context, attrs);
+        this(context, attrs, 0);
     }
 
     public MountainSceneView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initView(context, attrs);
-    }
 
-    private void initView(Context context, AttributeSet attrs) {
         mMountPaint.setAntiAlias(true);
         mMountPaint.setStyle(Paint.Style.FILL);
 
@@ -98,6 +93,7 @@ public class MountainSceneView extends View {
         updateMountainPath(mMoveFactor, HEIGHT);
         updateTreePath(mMoveFactor, true);
     }
+
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {

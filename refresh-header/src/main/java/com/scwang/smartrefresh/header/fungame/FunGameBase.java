@@ -41,21 +41,15 @@ public abstract class FunGameBase extends InternalAbstract implements RefreshHea
 
     //<editor-fold desc="View">
     public FunGameBase(Context context) {
-        super(context);
-        initView(context);
+        this(context,null);
     }
 
     public FunGameBase(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        initView(context);
+        this(context, attrs, 0);
     }
 
     public FunGameBase(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initView(context);
-    }
-
-    private void initView(Context context) {
         setMinimumHeight(DensityUtil.dp2px(100));
         mScreenHeightPixels = context.getResources().getDisplayMetrics().heightPixels;
     }

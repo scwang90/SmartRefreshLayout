@@ -193,10 +193,10 @@ public class RefreshContentWrapper implements RefreshContent {
             }
         } else if (mScrollableView instanceof WebView) {
             ((WebView) mScrollableView).flingScroll(0, velocity);
-        } else if (mScrollableView instanceof RecyclerView) {
-            ((RecyclerView) mScrollableView).fling(0, velocity);
         } else if (mScrollableView instanceof NestedScrollView) {
             ((NestedScrollView) mScrollableView).fling(velocity);
+        } else if (mScrollableView instanceof RecyclerView) {
+            ((RecyclerView) mScrollableView).fling(0, velocity);
         }
     }
 

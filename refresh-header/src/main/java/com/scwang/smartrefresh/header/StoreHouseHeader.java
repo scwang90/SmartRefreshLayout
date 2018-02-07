@@ -67,21 +67,16 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
 
     //<editor-fold desc="View">
     public StoreHouseHeader(Context context) {
-        super(context);
-        this.initView(context, null);
+        this(context, null);
     }
 
     public StoreHouseHeader(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        this.initView(context, attrs);
+        this(context, attrs, 0);
     }
 
     public StoreHouseHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.initView(context, attrs);
-    }
 
-    private void initView(Context context, AttributeSet attrs) {
         DensityUtil density = new DensityUtil();
         mLineWidth = density.dip2px(1);
         mDropHeight = density.dip2px(40);

@@ -37,21 +37,16 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
 
     //<editor-fold desc="LinearLayout">
     public ClassicsFooter(Context context) {
-        super(context);
-        this.initView(context, null, 0);
+        this(context, null);
     }
 
     public ClassicsFooter(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        this.initView(context, attrs, 0);
+        this(context, attrs, 0);
     }
 
     public ClassicsFooter(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.initView(context, attrs, defStyleAttr);
-    }
 
-    private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
         DensityUtil density = new DensityUtil();
 
         mTitleText.setTextColor(0xff666666);

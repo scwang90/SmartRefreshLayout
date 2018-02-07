@@ -88,21 +88,16 @@ public class FunGameHitBlockHeader extends FunGameView {
     private int speed;
 
     public FunGameHitBlockHeader(Context context) {
-        super(context);
-        initView(context, null);
+        this(context, null);
     }
 
     public FunGameHitBlockHeader(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        initView(context, attrs);
+        this(context, attrs, 0);
     }
 
     public FunGameHitBlockHeader(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        initView(context, attrs);
-    }
 
-    private void initView(Context context, AttributeSet attrs) {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.FunGameHitBlockHeader);
         blockHorizontalNum = typedArray.getInt(R.styleable.FunGameHitBlockHeader_fgvBlockHorizontalNum, BLOCK_HORIZONTAL_NUM);
         speed = typedArray.getInt(R.styleable.FunGameHitBlockHeader_fgvBallSpeed, DensityUtil.dp2px(SPEED));

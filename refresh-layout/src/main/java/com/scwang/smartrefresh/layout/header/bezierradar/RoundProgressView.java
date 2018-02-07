@@ -19,43 +19,35 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
  */
 public class RoundProgressView extends View {
 
-    private Paint mPath;
-    private Paint mPantR;
-    private ValueAnimator mAnimator;
+    private Paint mPaint;
+    private Paint mPaintR;
     private int endAngle = 0;
-    private int stratAngle = 270;
+    private int startAngle = 270;
     private int mRadius = 0;
     private int mOutsideCircle = 0;
     private RectF mRect = new RectF(0,0,0,0);
+    public ValueAnimator mAnimator;
 
     public RoundProgressView(Context context) {
         super(context);
-        initView();
-    }
 
-    private void initView() {
-        mPath = new Paint();
-        mPantR = new Paint();
-        mPath.setAntiAlias(true);
-        mPantR.setAntiAlias(true);
-        mPath.setColor(Color.WHITE);
-        mPantR.setColor(0x55000000);
+        mPaint = new Paint();
+        mPaintR = new Paint();
+        mPaint.setAntiAlias(true);
+        mPaintR.setAntiAlias(true);
+        mPaint.setColor(Color.WHITE);
+        mPaintR.setColor(0x55000000);
 
         DensityUtil density = new DensityUtil();
         mRadius = density.dip2px(20);
         mOutsideCircle = density.dip2px(7);
-        mPath.setStrokeWidth(density.dip2px(3));
-        mPantR.setStrokeWidth(density.dip2px(3));
+        mPaint.setStrokeWidth(density.dip2px(3));
+        mPaintR.setStrokeWidth(density.dip2px(3));
 
         mAnimator = ValueAnimator.ofInt(0,360);
         mAnimator.setDuration(720);
         mAnimator.setRepeatCount(ValueAnimator.INFINITE);
         mAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
-    }
-
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
         mAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -65,24 +57,12 @@ public class RoundProgressView extends View {
         });
     }
 
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        mAnimator.removeAllUpdateListeners();
-    }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(resolveSize(getSuggestedMinimumWidth(), widthMeasureSpec),
-                resolveSize(getSuggestedMinimumHeight(), heightMeasureSpec));
-    }
-
     public void setBackColor(@ColorInt int backColor) {
-        mPantR.setColor(backColor&0x00ffffff|0x55000000);
+        mPaintR.setColor(backColor&0x00ffffff|0x55000000);
     }
 
     public void setFrontColor(@ColorInt int color) {
-        mPath.setColor(color);
+        mPaint.setColor(color);
     }
 
     @Override
@@ -92,32 +72,25 @@ public class RoundProgressView extends View {
         int height = getHeight();
 
         if (isInEditMode()) {
-            stratAngle = 0;
+            startAngle = 0;
             endAngle = 270;
         }
 
-        mPath.setStyle(Paint.Style.FILL);
-        canvas.drawCircle(width / 2, height / 2, mRadius, mPath);
+        mPaint.setStyle(Paint.Style.FILL);
+        canvas.drawCircle(width / 2, height / 2, mRadius, mPaint);
 
-        mPath.setStyle(Paint.Style.STROKE);//设置为空心
-        canvas.drawCircle(width / 2, height / 2, mRadius + mOutsideCircle, mPath);
+        mPaint.setStyle(Paint.Style.STROKE);//设置为空心
+        canvas.drawCircle(width / 2, height / 2, mRadius + mOutsideCircle, mPaint);
 
-        mPantR.setStyle(Paint.Style.FILL);
+        mPaintR.setStyle(Paint.Style.FILL);
         mRect.set(width/2- mRadius, height/2- mRadius, width/2+ mRadius, height/2+ mRadius);
-        canvas.drawArc(mRect, stratAngle, endAngle, true, mPantR);
+        canvas.drawArc(mRect, startAngle, endAngle, true, mPaintR);
 
         mRadius += mOutsideCircle;
-        mPantR.setStyle(Paint.Style.STROKE);
+        mPaintR.setStyle(Paint.Style.STROKE);
         mRect.set(width/2- mRadius, height/2- mRadius, width/2+ mRadius, height/2+ mRadius);
-        canvas.drawArc(mRect, stratAngle, endAngle, false, mPantR);
+        canvas.drawArc(mRect, startAngle, endAngle, false, mPaintR);
         mRadius -= mOutsideCircle;
     }
 
-    public void startAnim(){
-        if (mAnimator !=null) mAnimator.start();
-    }
-
-    public void stopAnim(){
-        if (mAnimator !=null && mAnimator.isRunning()) mAnimator.cancel();
-    }
 }
