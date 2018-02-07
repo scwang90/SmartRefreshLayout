@@ -121,7 +121,7 @@ public class RefreshInternalWrapper implements RefreshInternal {
     }
 
     @Override
-    public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
+    public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
         if (mWrapperView instanceof RefreshInternal) {
             ((RefreshInternal) mWrapperView).onStateChanged(refreshLayout, oldState, newState);
         }

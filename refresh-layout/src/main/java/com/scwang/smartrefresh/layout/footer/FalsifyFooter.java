@@ -14,7 +14,6 @@ import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
-import com.scwang.smartrefresh.layout.header.FalsifyHeader;
 import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
@@ -58,8 +57,7 @@ public class FalsifyFooter extends InternalAbstract implements RefreshFooter {
             canvas.drawRect(d, d, getWidth() - d, getBottom() - d, paint);
 
             TextView textView = new TextView(getContext());
-            textView.setText(R.string.srl_component_falsify);
-            textView.setText(String.format(textView.getText().toString(), getClass().getSimpleName(), DensityUtil.px2dp(getHeight())));
+            textView.setText(getResources().getString(R.string.srl_component_falsify, getClass().getSimpleName(), DensityUtil.px2dp(getHeight())));
             textView.setTextColor(0xcccccccc);
             textView.setGravity(Gravity.CENTER);
             textView.measure(makeMeasureSpec(getWidth(), EXACTLY), makeMeasureSpec(getHeight(), EXACTLY));

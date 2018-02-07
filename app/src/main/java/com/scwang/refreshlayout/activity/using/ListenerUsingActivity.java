@@ -1,6 +1,7 @@
 package com.scwang.refreshlayout.activity.using;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
@@ -133,7 +134,7 @@ public class ListenerUsingActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
+            public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
                 mStateChanged = String.format(Locale.CHINA, "%s\nnew=%s\nold=%s",
                         FORMAT.format(new Date()),
                         newState.name(),

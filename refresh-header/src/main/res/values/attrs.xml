@@ -35,10 +35,12 @@
     </declare-styleable>
 
     <declare-styleable name="FunGameHeader">
-        <attr name="fgvMaskTopText" format="string" />
-        <attr name="fgvMaskBottomText" format="string" />
-        <attr name="fgvTopTextSize" format="dimension" />
-        <attr name="fgvBottomTextSize" format="dimension" />
+        <attr name="fghMaskTextTop" format="string" />
+        <attr name="fghMaskTextTopPull" format="string" />
+        <attr name="fghMaskTextTopRelease" format="string" />
+        <attr name="fghMaskTextBottom" format="string" />
+        <attr name="fghMaskTextSizeTop" format="dimension" />
+        <attr name="fghMaskTextSizeBottom" format="dimension" />
     </declare-styleable>
 
     <declare-styleable name="FunGameView">
@@ -48,6 +50,7 @@
         <attr name="fgvRightColor" format="color" />
         <attr name="fgvTextLoading" format="string" />
         <attr name="fgvTextLoadingFinished" format="string" />
+        <attr name="fgvTextLoadingFailed" format="string" />
         <attr name="fgvTextGameOver" format="string" />
     </declare-styleable>
 

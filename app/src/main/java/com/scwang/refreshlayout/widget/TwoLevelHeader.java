@@ -211,7 +211,7 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader, I
     }
 
     @Override
-    public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
+    public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
         mRefreshHeader.onStateChanged(refreshLayout, oldState, newState);
         switch (newState) {
             case TwoLevelReleased:

@@ -55,13 +55,6 @@ public abstract class FunGameBase extends InternalAbstract implements RefreshHea
     }
 
     @Override
-    public void setTranslationY(float translationY) {
-        if (!isInEditMode()) {
-            super.setTranslationY(translationY);
-        }
-    }
-
-    @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         return mState == RefreshState.Refreshing || super.onInterceptTouchEvent(ev);
     }
@@ -139,7 +132,7 @@ public abstract class FunGameBase extends InternalAbstract implements RefreshHea
             mRefreshKernel.getRefreshLayout().setEnableLoadMore(enableLoadMore);
             if (mTouchY != -1) {//还没松手
                 onFinish(mRefreshKernel.getRefreshLayout(), mLastFinish);
-//                mRefreshKernel.setStateRefresingFinish();
+//                mRefreshKernel.setStateRefreshingFinish();
                 mRefreshKernel.setState(RefreshState.RefreshFinish);
                 mRefreshKernel.animSpinner(0);
 //                mRefreshKernel.getRefreshLayout().finishRefresh(0);
@@ -173,22 +166,25 @@ public abstract class FunGameBase extends InternalAbstract implements RefreshHea
     }
 
     @Override
-    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
+    public void onStartAnimator(@NonNull RefreshLayout refreshLayout, int height, int extendHeight) {
         mIsFinish = false;
         setTranslationY(0);
     }
 
     @Override
-    public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
+    public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
         mState = newState;
+
     }
 
     @Override
     public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
         mRefreshKernel = kernel;
         mHeaderHeight = height;
-        setTranslationY(mOffset - mHeaderHeight);
-        kernel.requestNeedTouchEventWhenRefreshing(true);
+        if (!isInEditMode()) {
+            setTranslationY(mOffset - mHeaderHeight);
+            kernel.requestNeedTouchEventWhenRefreshing(true);
+        }
     }
 
     @Override

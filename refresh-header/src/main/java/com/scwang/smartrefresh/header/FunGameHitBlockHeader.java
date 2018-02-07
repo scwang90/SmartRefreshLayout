@@ -5,10 +5,12 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.support.annotation.NonNull;
 import android.support.v4.graphics.ColorUtils;
 import android.util.AttributeSet;
 
 import com.scwang.smartrefresh.header.fungame.FunGameView;
+import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import java.util.ArrayList;
@@ -98,40 +100,14 @@ public class FunGameHitBlockHeader extends FunGameView {
     public FunGameHitBlockHeader(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.FunGameHitBlockHeader);
-        blockHorizontalNum = typedArray.getInt(R.styleable.FunGameHitBlockHeader_fgvBlockHorizontalNum, BLOCK_HORIZONTAL_NUM);
-        speed = typedArray.getInt(R.styleable.FunGameHitBlockHeader_fgvBallSpeed, DensityUtil.dp2px(SPEED));
-        typedArray.recycle();
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.FunGameHitBlockHeader);
+        speed = ta.getInt(R.styleable.FunGameHitBlockHeader_fgvBallSpeed, DensityUtil.dp2px(SPEED));
+        blockHorizontalNum = ta.getInt(R.styleable.FunGameHitBlockHeader_fgvBlockHorizontalNum, BLOCK_HORIZONTAL_NUM);
+        ta.recycle();
 
         blockPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         blockPaint.setStyle(Paint.Style.FILL);
         BALL_RADIUS = DensityUtil.dp2px(4);
-    }
-
-    @Override
-    protected void initConcreteView() {
-
-        final int measuredWidth = getMeasuredWidth();
-        controllerSize = (int) (blockHeight * 1.6f);
-        blockHeight = mHeaderHeight / BLOCK_VERTICAL_NUM - DIVIDING_LINE_SIZE;
-        blockWidth = measuredWidth * BLOCK_WIDTH_RATIO;
-
-        blockLeft = measuredWidth * BLOCK_POSITION_RATIO;
-        racketLeft = measuredWidth * RACKET_POSITION_RATIO;
-
-        controllerSize = (int) (blockHeight * 1.6f);
-    }
-
-    @Override
-    protected void drawGame(Canvas canvas, int width, int height) {
-        drawColorBlock(canvas);
-        drawRacket(canvas);
-        if (status == STATUS_GAME_PLAY
-                || status == STATUS_GAME_FINISHED
-                || status == STATUS_GAME_FAIL
-                || isInEditMode()) {
-            makeBallPath(canvas, width);
-        }
     }
 
     @Override
@@ -152,6 +128,33 @@ public class FunGameHitBlockHeader extends FunGameView {
         }
     }
 
+    @Override
+    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
+        super.onInitialized(kernel, height, extendHeight);
+
+        final int measuredWidth = getMeasuredWidth();
+        blockHeight = mHeaderHeight / BLOCK_VERTICAL_NUM - DIVIDING_LINE_SIZE;
+        blockWidth = measuredWidth * BLOCK_WIDTH_RATIO;
+
+        blockLeft = measuredWidth * BLOCK_POSITION_RATIO;
+        racketLeft = measuredWidth * RACKET_POSITION_RATIO;
+
+        controllerSize = (int) (blockHeight * 1.6f);
+    }
+
+    //<editor-fold desc="绘制方法">
+    @Override
+    protected void drawGame(Canvas canvas, int width, int height) {
+        drawColorBlock(canvas);
+        drawRacket(canvas);
+        if (status == STATUS_GAME_PLAY
+                || status == STATUS_GAME_FINISHED
+                || status == STATUS_GAME_FAIL
+                || isInEditMode()) {
+            drawBallPath(canvas, width);
+        }
+    }
+
     /**
      * 绘制挡板
      *
@@ -168,7 +171,7 @@ public class FunGameHitBlockHeader extends FunGameView {
      * @param canvas 默认画布
      * @param width  视图宽度
      */
-    private void makeBallPath(Canvas canvas, int width) {
+    private void drawBallPath(Canvas canvas, int width) {
         mPaint.setColor(mModelColor);
 
         if (cx <= blockLeft + blockHorizontalNum * blockWidth + (blockHorizontalNum - 1) * DIVIDING_LINE_SIZE + BALL_RADIUS) { // 小球进入到色块区域
@@ -212,6 +215,39 @@ public class FunGameHitBlockHeader extends FunGameView {
     }
 
     /**
+     * 绘制矩形色块
+     *
+     * @param canvas 默认画布
+     */
+    private void drawColorBlock(Canvas canvas) {
+        float left, top;
+        int column, row;
+        for (int i = 0; i < blockHorizontalNum * BLOCK_VERTICAL_NUM; i++) {
+            row = i / blockHorizontalNum;
+            column = i % blockHorizontalNum;
+
+            boolean flag = false;
+            for (Point point : pointList) {
+                if (point.equals(column, row)) {
+                    flag = true;
+                    break;
+                }
+            }
+            if (flag) {
+                continue;
+            }
+
+            blockPaint.setColor(ColorUtils.setAlphaComponent(lModelColor, 255 / (column + 1)));
+
+            left = blockLeft + column * (blockWidth + DIVIDING_LINE_SIZE);
+            top = DIVIDING_LINE_SIZE + row * (blockHeight + DIVIDING_LINE_SIZE);
+            canvas.drawRect(left, top, left + blockWidth, top + blockHeight, blockPaint);
+        }
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="游戏控制">
+    /**
      * 检查小球是否撞击到挡板
      *
      * @param y 小球当前坐标Y值
@@ -254,35 +290,6 @@ public class FunGameHitBlockHeader extends FunGameView {
         }
         return !flag;
     }
+    //</editor-fold>
 
-    /**
-     * 绘制矩形色块
-     *
-     * @param canvas 默认画布
-     */
-    private void drawColorBlock(Canvas canvas) {
-        float left, top;
-        int column, row;
-        for (int i = 0; i < blockHorizontalNum * BLOCK_VERTICAL_NUM; i++) {
-            row = i / blockHorizontalNum;
-            column = i % blockHorizontalNum;
-
-            boolean flag = false;
-            for (Point point : pointList) {
-                if (point.equals(column, row)) {
-                    flag = true;
-                    break;
-                }
-            }
-            if (flag) {
-                continue;
-            }
-
-            blockPaint.setColor(ColorUtils.setAlphaComponent(lModelColor, 255 / (column + 1)));
-
-            left = blockLeft + column * (blockWidth + DIVIDING_LINE_SIZE);
-            top = DIVIDING_LINE_SIZE + row * (blockHeight + DIVIDING_LINE_SIZE);
-            canvas.drawRect(left, top, left + blockWidth, top + blockHeight, blockPaint);
-        }
-    }
 }

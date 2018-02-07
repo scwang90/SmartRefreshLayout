@@ -69,7 +69,7 @@ public interface RefreshInternal extends OnStateChangedListener {
      * @param height 高度 HeaderHeight or FooterHeight
      * @param extendHeight 扩展高度  extendHeaderHeight or extendFooterHeight
      */
-    void onReleased(RefreshLayout refreshLayout, int height, int extendHeight);
+    void onReleased(@NonNull RefreshLayout refreshLayout, int height, int extendHeight);
 
     /**
      * 开始动画

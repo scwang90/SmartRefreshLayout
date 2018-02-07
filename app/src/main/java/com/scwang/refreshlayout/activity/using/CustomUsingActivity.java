@@ -153,7 +153,7 @@ public class CustomUsingActivity extends AppCompatActivity {
             return 500;//延迟500毫秒之后再弹回
         }
         @Override
-        public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
+        public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
             switch (newState) {
                 case None:
                 case PullDownToRefresh:

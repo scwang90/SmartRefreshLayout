@@ -102,7 +102,7 @@ public class EmptyLayoutUsingFragment extends Fragment implements AdapterView.On
             }, 3000);
             mRefreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
                 @Override
-                public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
+                public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
                     mIsNeedDemo = false;
                 }
             });

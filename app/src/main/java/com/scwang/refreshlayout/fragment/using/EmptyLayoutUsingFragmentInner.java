@@ -95,7 +95,7 @@ public class EmptyLayoutUsingFragmentInner extends Fragment implements AdapterVi
             }, 3000);
             mRefreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
                 @Override
-                public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
+                public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
                     mIsNeedDemo = false;
                 }
             });

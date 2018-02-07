@@ -8,13 +8,12 @@
     android:orientation="vertical"
     app:srlAccentColor="@android:color/white"
     app:srlPrimaryColor="@color/colorPrimary"
-    android:background="@color/colorPrimary"
+    android:background="@color/colorAccent"
     tools:context="com.app_design.MainActivity">
 
     <com.scwang.smartrefresh.layout.header.FalsifyHeader
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorAccent"/>
+        android:layout_height="wrap_content"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -23,7 +22,7 @@
         android:gravity="center"
         android:text="@string/app_name"/>
 
-    <com.scwang.smartrefresh.layout.footer.BallPulseFooter
+    <com.scwang.smartrefresh.layout.footer.ClassicsFooter
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

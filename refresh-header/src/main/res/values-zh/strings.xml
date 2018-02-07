@@ -1,0 +1,11 @@
+<resources>
+    <string name="fgh_mask_top_pull">下拉开始游戏!</string>
+    <string name="fgh_mask_top_release">释放立刻开始!</string>
+    <string name="fgh_mask_bottom">上下滑动控制游戏</string>
+
+    <string name="fgh_text_game_over">游戏结束</string>
+    <string name="fgh_text_loading">玩个游戏解解闷</string>
+    <string name="fgh_text_loading_finish">刷新完成</string>
+    <string name="fgh_text_loading_failed">刷新失败</string>
+
+</resources>

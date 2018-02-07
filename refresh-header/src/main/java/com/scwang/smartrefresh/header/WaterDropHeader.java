@@ -179,7 +179,7 @@ public class WaterDropHeader extends InternalAbstract implements RefreshHeader {
     }
 
     @Override
-    public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
+    public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
         mState = newState;
         switch (newState) {
             case None:

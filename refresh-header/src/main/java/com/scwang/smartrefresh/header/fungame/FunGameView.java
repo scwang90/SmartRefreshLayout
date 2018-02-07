@@ -26,15 +26,11 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
 @SuppressWarnings("unused")
 public abstract class FunGameView extends FunGameHeader {
 
-    //<editor-fold desc="Field">
+    //<editor-fold desc="Field - Arena">
     protected static final int STATUS_GAME_PREPARE = 0;
-
     protected static final int STATUS_GAME_PLAY = 1;
-
     protected static final int STATUS_GAME_OVER = 2;
-
     protected static final int STATUS_GAME_FINISHED = 3;
-
     protected static final int STATUS_GAME_FAIL = 4;
 
     /**
@@ -42,17 +38,17 @@ public abstract class FunGameView extends FunGameHeader {
      */
     protected static final float VIEW_HEIGHT_RATIO = .161f;
 
-    public static String textGameOver = "游戏结束";
-    public static String textLoading = "玩个游戏解解闷";
-    public static String textLoadingFinished = "刷新完成";
-    public static String textLoadingFail = "刷新失败";
+    public String mTextGameOver;
+    public String mTextLoading;
+    public String mTextLoadingFinished;
+    public String mTextLoadingFailed;
 //    private String loadingText = "Loading...";
 //    private String loadingFinishedText = "Loading Finished";
 //    private String gameOverText = "Game Over";
 
     protected Paint mPaint;
 
-    protected TextPaint textPaint;
+    protected TextPaint mPaintText;
 
     protected float controllerPosition;
 
@@ -74,44 +70,60 @@ public abstract class FunGameView extends FunGameHeader {
 
     public FunGameView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.FunGameView);
+
+        //<editor-fold desc="init - Arena">
+        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mPaint.setStrokeWidth(DIVIDING_LINE_SIZE);
+        controllerPosition = DIVIDING_LINE_SIZE;
+
+        mPaintText = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+        mPaintText.setColor(0xFFC1C2C2);
+
+        mTextGameOver = context.getString(R.string.fgh_mask_bottom);
+        mTextLoading = context.getString(R.string.fgh_mask_bottom);
+        mTextLoadingFinished = context.getString(R.string.fgh_mask_bottom);
+        mTextLoadingFailed = context.getString(R.string.fgh_mask_bottom);
+
         mBackColor = ta.getColor(R.styleable.FunGameView_fgvBackColor, 0);
         lModelColor = ta.getColor(R.styleable.FunGameView_fgvLeftColor, Color.rgb(0, 0, 0));
         mModelColor = ta.getColor(R.styleable.FunGameView_fgvMiddleColor, Color.BLACK);
-        rModelColor = ta.getColor(R.styleable.FunGameView_fgvRightColor, Color.parseColor("#A5A5A5"));
+        rModelColor = ta.getColor(R.styleable.FunGameView_fgvRightColor, 0xFFA5A5A5);
+
         if (ta.hasValue(R.styleable.FunGameView_fgvTextGameOver)) {
-            textGameOver = ta.getString(R.styleable.FunGameView_fgvTextGameOver);
+            mTextGameOver = ta.getString(R.styleable.FunGameView_fgvTextGameOver);
         }
-        if (ta.hasValue(R.styleable.FunGameView_fgvTextGameOver)) {
-            textLoading = ta.getString(R.styleable.FunGameView_fgvTextLoading);
+        if (ta.hasValue(R.styleable.FunGameView_fgvTextLoading)) {
+            mTextLoading = ta.getString(R.styleable.FunGameView_fgvTextLoading);
         }
-        if (ta.hasValue(R.styleable.FunGameView_fgvTextGameOver)) {
-            textLoadingFinished = ta.getString(R.styleable.FunGameView_fgvTextLoadingFinished);
+        if (ta.hasValue(R.styleable.FunGameView_fgvTextLoadingFinished)) {
+            mTextLoadingFinished = ta.getString(R.styleable.FunGameView_fgvTextLoadingFinished);
         }
+        if (ta.hasValue(R.styleable.FunGameView_fgvTextLoadingFailed)) {
+            mTextLoadingFailed = ta.getString(R.styleable.FunGameView_fgvTextLoadingFailed);
+        }
+        //</editor-fold>
+
         ta.recycle();
-
-        initBaseTools();
-        initBaseConfigParams();
-        initConcreteView();
     }
 
-    protected void initBaseTools() {
-        textPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
-        textPaint.setColor(Color.parseColor("#C1C2C2"));
-
-        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaint.setStrokeWidth(DIVIDING_LINE_SIZE);
-    }
-
-    protected void initBaseConfigParams() {
-        controllerPosition = DIVIDING_LINE_SIZE;
-    }
-
-    protected abstract void initConcreteView();
+    //<editor-fold desc="子类接口">
+    protected abstract void resetConfigParams();
 
     protected abstract void drawGame(Canvas canvas, int width, int height);
+    //</editor-fold>
 
-    protected abstract void resetConfigParams();
+    //<editor-fold desc="绘制方法">
+    @Override
+    protected void dispatchDraw(Canvas canvas) {
+        final int width = getWidth();
+        final int height = mHeaderHeight;
+        drawBoundary(canvas, width, height);
+        drawText(canvas, width, height);
+        drawGame(canvas, width, height);
+        super.dispatchDraw(canvas);
+    }
 
     /**
      * 绘制分割线
@@ -127,16 +139,6 @@ public abstract class FunGameView extends FunGameHeader {
                 mPaint);
     }
 
-    @Override
-    protected void dispatchDraw(Canvas canvas) {
-        final int width = getWidth();
-        final int height = mHeaderHeight;
-        drawBoundary(canvas, width, height);
-        drawText(canvas, width, height);
-        drawGame(canvas, width, height);
-        super.dispatchDraw(canvas);
-    }
-
     /**
      * 绘制文字内容
      * @param canvas 默认画布
@@ -145,20 +147,20 @@ public abstract class FunGameView extends FunGameHeader {
         switch (status) {
             case STATUS_GAME_PREPARE:
             case STATUS_GAME_PLAY:
-                textPaint.setTextSize(DensityUtil.dp2px(25));
-                promptText(canvas, textLoading, width, height);
+                mPaintText.setTextSize(DensityUtil.dp2px(25));
+                promptText(canvas, mTextLoading, width, height);
                 break;
             case STATUS_GAME_FINISHED:
-                textPaint.setTextSize(DensityUtil.dp2px(20));
-                promptText(canvas, textLoadingFinished, width, height);
+                mPaintText.setTextSize(DensityUtil.dp2px(20));
+                promptText(canvas, mTextLoadingFinished, width, height);
                 break;
             case STATUS_GAME_FAIL:
-                textPaint.setTextSize(DensityUtil.dp2px(20));
-                promptText(canvas, textLoadingFail, width, height);
+                mPaintText.setTextSize(DensityUtil.dp2px(20));
+                promptText(canvas, mTextLoadingFailed, width, height);
                 break;
             case STATUS_GAME_OVER:
-                textPaint.setTextSize(DensityUtil.dp2px(25));
-                promptText(canvas, textGameOver, width, height);
+                mPaintText.setTextSize(DensityUtil.dp2px(25));
+                promptText(canvas, mTextGameOver, width, height);
                 break;
         }
     }
@@ -169,39 +171,11 @@ public abstract class FunGameView extends FunGameHeader {
      * @param text 相关文字字符串
      */
     private void promptText(Canvas canvas, String text, int width, int height) {
-        float textX = (width - textPaint.measureText(text)) * .5f;
-        float textY = height  * .5f - (textPaint.ascent() + textPaint.descent()) * .5f;
-        canvas.drawText(text, textX, textY, textPaint);
+        float textX = (width - mPaintText.measureText(text)) * .5f;
+        float textY = height  * .5f - (mPaintText.ascent() + mPaintText.descent()) * .5f;
+        canvas.drawText(text, textX, textY, mPaintText);
     }
-
-
-    public int getCurrStatus() {
-        return status;
-    }
-
-//    public String getTextGameOver() {
-//        return textGameOver;
-//    }
-
-//    public void setTextGameOver(String textGameOver) {
-//        this.textGameOver = textGameOver;
-//    }
-
-//    public String getTextLoading() {
-//        return textLoading;
-//    }
-
-//    public void setTextLoading(String textLoading) {
-//        this.textLoading = textLoading;
-//    }
-
-//    public String getTextLoadingFinished() {
-//        return textLoadingFinished;
-//    }
-
-//    public void setTextLoadingFinished(String textLoadingFinished) {
-//        this.textLoadingFinished = textLoadingFinished;
-//    }
+    //</editor-fold>
 
     //<editor-fold desc="控制方法">
 
@@ -249,7 +223,6 @@ public abstract class FunGameView extends FunGameHeader {
     @Override
     public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
         super.onInitialized(kernel, height, extendHeight);
-        initConcreteView();
         postStatus(STATUS_GAME_PREPARE);
     }
 
@@ -275,7 +248,7 @@ public abstract class FunGameView extends FunGameHeader {
                 mModelColor = colors[1];
                 lModelColor = ColorUtils.setAlphaComponent(colors[1], 225);
                 rModelColor = ColorUtils.setAlphaComponent(colors[1], 200);
-                textPaint.setColor(ColorUtils.setAlphaComponent(colors[1], 150));
+                mPaintText.setColor(ColorUtils.setAlphaComponent(colors[1], 150));
             }
         }
     }

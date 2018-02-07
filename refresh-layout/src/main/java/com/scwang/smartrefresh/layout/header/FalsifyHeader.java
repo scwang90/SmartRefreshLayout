@@ -59,8 +59,7 @@ public class FalsifyHeader extends InternalAbstract implements RefreshHeader {
             canvas.drawRect(d, d, getWidth() - d, getBottom() - d, paint);
 
             TextView textView = new TextView(getContext());
-            textView.setText(R.string.srl_component_falsify);
-            textView.setText(String.format(textView.getText().toString(), getClass().getSimpleName(), DensityUtil.px2dp(getHeight())));
+            textView.setText(getResources().getString(R.string.srl_component_falsify, getClass().getSimpleName(), DensityUtil.px2dp(getHeight())));
             textView.setTextColor(0xcccccccc);
             textView.setGravity(Gravity.CENTER);
             textView.measure(makeMeasureSpec(getWidth(), EXACTLY), makeMeasureSpec(getHeight(), EXACTLY));

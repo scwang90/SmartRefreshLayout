@@ -163,7 +163,7 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
     }
 
     @Override
-    public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
+    public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
         if (!mNoMoreData) {
             switch (newState) {
                 case None:

@@ -125,25 +125,6 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        initAnimator();
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        if (mReboundAnimator != null) {
-            mReboundAnimator.removeAllUpdateListeners();
-            mReboundAnimator.removeAllListeners();
-            mReboundAnimator = null;
-        }
-        if (mDropOutAnimator != null) {
-            mDropOutAnimator.removeAllUpdateListeners();
-            mDropOutAnimator.removeAllListeners();
-            mDropOutAnimator = null;
-        }
-    }
-
-    private void initAnimator() {
         AccelerateInterpolator interpolator = new AccelerateInterpolator();
         mReboundAnimator = ValueAnimator.ofFloat(0, 1, 0);
         mReboundAnimator.setInterpolator(interpolator);
@@ -162,6 +143,8 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
                     if (mDropOutAnimator != null) {
                         mDropOutAnimator.start();
                     }
+                } else {
+                    mDropOutPercent = 0;
                 }
             }
         });
@@ -193,6 +176,21 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if (mReboundAnimator != null) {
+            mReboundAnimator.removeAllUpdateListeners();
+            mReboundAnimator.removeAllListeners();
+            mReboundAnimator = null;
+        }
+        if (mDropOutAnimator != null) {
+            mDropOutAnimator.removeAllUpdateListeners();
+            mDropOutAnimator.removeAllListeners();
+            mDropOutAnimator = null;
+        }
     }
 
     @Override
@@ -358,7 +356,7 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
     }
 
     @Override
-    public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
+    public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
         mState = newState;
         if (newState == RefreshState.None) {
             mDropOutOverFlow = false;
