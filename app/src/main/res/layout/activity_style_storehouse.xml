@@ -22,6 +22,7 @@
         app:srlEnableLoadMore="false"
         app:srlEnableHeaderTranslationContent="true">
         <com.scwang.smartrefresh.header.StoreHouseHeader
+            android:id="@+id/storeHouseHeader"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             app:shhText="StoreHouse"

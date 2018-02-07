@@ -23,6 +23,7 @@ import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * StoreHouseHeader
@@ -168,12 +169,6 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
         canvas.restoreToCount(c1);
     }
 
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        mRefreshKernel = null;
-    }
-
     //</editor-fold>
 
     //<editor-fold desc="API">
@@ -243,7 +238,7 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
         return this;
     }
 
-    public StoreHouseHeader initWithPointList(ArrayList<float[]> pointList) {
+    public StoreHouseHeader initWithPointList(List<float[]> pointList) {
 
         float drawWidth = 0;
         float drawHeight = 0;

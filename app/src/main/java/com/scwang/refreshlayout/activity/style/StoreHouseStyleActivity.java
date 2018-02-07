@@ -1,5 +1,6 @@
 package com.scwang.refreshlayout.activity.style;
 
+import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,10 +15,14 @@ import android.widget.AdapterView;
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
+import com.scwang.smartrefresh.header.StoreHouseHeader;
+import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.util.DesignUtil;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static android.R.layout.simple_list_item_2;
 import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
@@ -25,6 +30,10 @@ import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 public class StoreHouseStyleActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private enum Item {
+        显示商标("跟换显示符号为商标"),
+        显示图标("跟换显示符号为图标"),
+        显示中文("跟换显示符号为中文"),
+        显示英文("跟换显示符号为英文"),
         橙色主题("更改为橙色主题颜色"),
         红色主题("更改为红色主题颜色"),
         绿色主题("更改为绿色主题颜色"),
@@ -79,6 +88,34 @@ public class StoreHouseStyleActivity extends AppCompatActivity implements Adapte
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         switch (Item.values()[position]) {
+            case 显示中文: {
+                RefreshHeader refreshHeader = mRefreshLayout.getRefreshHeader();
+                if (refreshHeader instanceof StoreHouseHeader) {
+                    ((StoreHouseHeader) refreshHeader).initWithPointList(getPointList());
+                }
+                break;
+            }
+            case 显示英文: {
+                RefreshHeader refreshHeader = mRefreshLayout.getRefreshHeader();
+                if (refreshHeader instanceof StoreHouseHeader) {
+                    ((StoreHouseHeader) refreshHeader).initWithString("SmartRefresh");
+                }
+                break;
+            }
+            case 显示图标: {
+                RefreshHeader refreshHeader = mRefreshLayout.getRefreshHeader();
+                if (refreshHeader instanceof StoreHouseHeader) {
+                    ((StoreHouseHeader) refreshHeader).initWithStringArray(R.array.storehouse);
+                }
+                break;
+            }
+            case 显示商标: {
+                RefreshHeader refreshHeader = mRefreshLayout.getRefreshHeader();
+                if (refreshHeader instanceof StoreHouseHeader) {
+                    ((StoreHouseHeader) refreshHeader).initWithStringArray(R.array.akta);
+                }
+                break;
+            }
             case 蓝色主题:
                 setThemeColor(R.color.colorPrimary, R.color.colorPrimaryDark);
                 break;
@@ -103,4 +140,80 @@ public class StoreHouseStyleActivity extends AppCompatActivity implements Adapte
         }
     }
 
+    private List<float[]> getPointList() {
+        // this point is taken from https://github.com/cloay/CRefreshLayout
+        List<Point> startPoints = new ArrayList<>();
+        startPoints.add(new Point(240, 80));
+        startPoints.add(new Point(270, 80));
+        startPoints.add(new Point(265, 103));
+        startPoints.add(new Point(255, 65));
+        startPoints.add(new Point(275, 80));
+        startPoints.add(new Point(275, 80));
+        startPoints.add(new Point(302, 80));
+        startPoints.add(new Point(275, 107));
+
+        startPoints.add(new Point(320, 70));
+        startPoints.add(new Point(313, 80));
+        startPoints.add(new Point(330, 63));
+        startPoints.add(new Point(315, 87));
+        startPoints.add(new Point(330, 80));
+        startPoints.add(new Point(315, 100));
+        startPoints.add(new Point(330, 90));
+        startPoints.add(new Point(315, 110));
+        startPoints.add(new Point(345, 65));
+        startPoints.add(new Point(357, 67));
+        startPoints.add(new Point(363, 103));
+
+        startPoints.add(new Point(375, 80));
+        startPoints.add(new Point(375, 80));
+        startPoints.add(new Point(425, 80));
+        startPoints.add(new Point(380, 95));
+        startPoints.add(new Point(400, 63));
+
+        List<Point> endPoints = new ArrayList<>();
+        endPoints.add(new Point(270, 80));
+        endPoints.add(new Point(270, 110));
+        endPoints.add(new Point(270, 110));
+        endPoints.add(new Point(250, 110));
+        endPoints.add(new Point(275, 107));
+        endPoints.add(new Point(302, 80));
+        endPoints.add(new Point(302, 107));
+        endPoints.add(new Point(302, 107));
+
+        endPoints.add(new Point(340, 70));
+        endPoints.add(new Point(360, 80));
+        endPoints.add(new Point(330, 80));
+        endPoints.add(new Point(340, 87));
+        endPoints.add(new Point(315, 100));
+        endPoints.add(new Point(345, 98));
+        endPoints.add(new Point(330, 120));
+        endPoints.add(new Point(345, 108));
+        endPoints.add(new Point(360, 120));
+        endPoints.add(new Point(363, 75));
+        endPoints.add(new Point(345, 117));
+
+        endPoints.add(new Point(380, 95));
+        endPoints.add(new Point(425, 80));
+        endPoints.add(new Point(420, 95));
+        endPoints.add(new Point(420, 95));
+        endPoints.add(new Point(400, 120));
+        ArrayList<float[]> list = new ArrayList<>();
+
+        int offsetX = Integer.MAX_VALUE;
+        int offsetY = Integer.MAX_VALUE;
+
+        for (int i = 0; i < startPoints.size(); i++) {
+            offsetX = Math.min(startPoints.get(i).x, offsetX);
+            offsetY = Math.min(startPoints.get(i).y, offsetY);
+        }
+        for (int i = 0; i < endPoints.size(); i++) {
+            float[] point = new float[4];
+            point[0] = startPoints.get(i).x - offsetX;
+            point[1] = startPoints.get(i).y - offsetY;
+            point[2] = endPoints.get(i).x - offsetX;
+            point[3] = endPoints.get(i).y - offsetY;
+            list.add(point);
+        }
+        return list;
+    }
 }

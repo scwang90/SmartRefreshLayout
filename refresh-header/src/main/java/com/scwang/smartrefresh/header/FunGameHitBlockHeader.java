@@ -23,6 +23,7 @@ import java.util.List;
  */
 public class FunGameHitBlockHeader extends FunGameView {
 
+    //<editor-fold desc="属性变量">
     /**
      * 默认矩形块竖向排列的数目
      */
@@ -88,7 +89,9 @@ public class FunGameHitBlockHeader extends FunGameView {
     private int blockHorizontalNum;
 
     private int speed;
+    //</editor-fold>
 
+    //<editor-fold desc="初始方法">
     public FunGameHitBlockHeader(Context context) {
         this(context, null);
     }
@@ -101,8 +104,8 @@ public class FunGameHitBlockHeader extends FunGameView {
         super(context, attrs, defStyle);
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.FunGameHitBlockHeader);
-        speed = ta.getInt(R.styleable.FunGameHitBlockHeader_fgvBallSpeed, DensityUtil.dp2px(SPEED));
-        blockHorizontalNum = ta.getInt(R.styleable.FunGameHitBlockHeader_fgvBlockHorizontalNum, BLOCK_HORIZONTAL_NUM);
+        speed = ta.getInt(R.styleable.FunGameHitBlockHeader_fghBallSpeed, DensityUtil.dp2px(SPEED));
+        blockHorizontalNum = ta.getInt(R.styleable.FunGameHitBlockHeader_fghBlockHorizontalNum, BLOCK_HORIZONTAL_NUM);
         ta.recycle();
 
         blockPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -111,6 +114,20 @@ public class FunGameHitBlockHeader extends FunGameView {
     }
 
     @Override
+    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
+        final int measuredWidth = getMeasuredWidth();
+        blockHeight = height / BLOCK_VERTICAL_NUM - DIVIDING_LINE_SIZE;
+        blockWidth = measuredWidth * BLOCK_WIDTH_RATIO;
+
+        blockLeft = measuredWidth * BLOCK_POSITION_RATIO;
+        racketLeft = measuredWidth * RACKET_POSITION_RATIO;
+
+        controllerSize = (int) (blockHeight * 1.6f);
+        super.onInitialized(kernel, height, extendHeight);
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="游戏控制">
     protected void resetConfigParams() {
         cx = racketLeft - 3 * BALL_RADIUS;
         cy = (int) (mHeaderHeight * .5f);
@@ -127,20 +144,50 @@ public class FunGameHitBlockHeader extends FunGameView {
             pointList.clear();
         }
     }
-
-    @Override
-    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
-        super.onInitialized(kernel, height, extendHeight);
-
-        final int measuredWidth = getMeasuredWidth();
-        blockHeight = mHeaderHeight / BLOCK_VERTICAL_NUM - DIVIDING_LINE_SIZE;
-        blockWidth = measuredWidth * BLOCK_WIDTH_RATIO;
-
-        blockLeft = measuredWidth * BLOCK_POSITION_RATIO;
-        racketLeft = measuredWidth * RACKET_POSITION_RATIO;
-
-        controllerSize = (int) (blockHeight * 1.6f);
+    /**
+     * 检查小球是否撞击到挡板
+     *
+     * @param y 小球当前坐标Y值
+     * @return 小球位于挡板Y值区域范围内：true，反之：false
+     */
+    private boolean checkTouchRacket(float y) {
+        boolean flag = false;
+        float diffVal = y - controllerPosition;
+        if (diffVal >= 0 && diffVal <= controllerSize) { // 小球位于挡板Y值区域范围内
+            flag = true;
+        }
+        return flag;
     }
+
+    /**
+     * 检查小球是否撞击到矩形块
+     *
+     * @param x 小球坐标X值
+     * @param y 小球坐标Y值
+     * @return 撞击到：true，反之：false
+     */
+    private boolean checkTouchBlock(float x, float y) {
+        int columnX = (int) ((x - blockLeft - BALL_RADIUS - speed) / blockWidth);
+        columnX = columnX == blockHorizontalNum ? columnX - 1 : columnX;
+        int rowY = (int) (y / blockHeight);
+        rowY = rowY == BLOCK_VERTICAL_NUM ? rowY - 1 : rowY;
+        Point p = new Point();
+        p.set(columnX, rowY);
+
+        boolean flag = false;
+        for (Point point : pointList) {
+            if (point.equals(p.x, p.y)) {
+                flag = true;
+                break;
+            }
+        }
+
+        if (!flag) {
+            pointList.add(p);
+        }
+        return !flag;
+    }
+    //</editor-fold>
 
     //<editor-fold desc="绘制方法">
     @Override
@@ -243,52 +290,6 @@ public class FunGameHitBlockHeader extends FunGameView {
             top = DIVIDING_LINE_SIZE + row * (blockHeight + DIVIDING_LINE_SIZE);
             canvas.drawRect(left, top, left + blockWidth, top + blockHeight, blockPaint);
         }
-    }
-    //</editor-fold>
-
-    //<editor-fold desc="游戏控制">
-    /**
-     * 检查小球是否撞击到挡板
-     *
-     * @param y 小球当前坐标Y值
-     * @return 小球位于挡板Y值区域范围内：true，反之：false
-     */
-    private boolean checkTouchRacket(float y) {
-        boolean flag = false;
-        float diffVal = y - controllerPosition;
-        if (diffVal >= 0 && diffVal <= controllerSize) { // 小球位于挡板Y值区域范围内
-            flag = true;
-        }
-        return flag;
-    }
-
-    /**
-     * 检查小球是否撞击到矩形块
-     *
-     * @param x 小球坐标X值
-     * @param y 小球坐标Y值
-     * @return 撞击到：true，反之：false
-     */
-    private boolean checkTouchBlock(float x, float y) {
-        int columnX = (int) ((x - blockLeft - BALL_RADIUS - speed) / blockWidth);
-        columnX = columnX == blockHorizontalNum ? columnX - 1 : columnX;
-        int rowY = (int) (y / blockHeight);
-        rowY = rowY == BLOCK_VERTICAL_NUM ? rowY - 1 : rowY;
-        Point p = new Point();
-        p.set(columnX, rowY);
-
-        boolean flag = false;
-        for (Point point : pointList) {
-            if (point.equals(p.x, p.y)) {
-                flag = true;
-                break;
-            }
-        }
-
-        if (!flag) {
-            pointList.add(p);
-        }
-        return !flag;
     }
     //</editor-fold>
 

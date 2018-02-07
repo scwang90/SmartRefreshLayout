@@ -4,10 +4,12 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.RectF;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.SparseArray;
 
 import com.scwang.smartrefresh.header.fungame.FunGameView;
+import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import java.util.LinkedList;
@@ -21,6 +23,7 @@ import java.util.Random;
  */
 public class FunGameBattleCityHeader extends FunGameView {
 
+    //<editor-fold desc="属性变量">
     /**
      * 轨道数量
      */
@@ -117,7 +120,9 @@ public class FunGameBattleCityHeader extends FunGameView {
      * 表示第一次标示值，用于添加第一辆敌方坦克逻辑
      */
     private boolean once = true;
+    //</editor-fold>
 
+    //<editor-fold desc="初始方法">
     public FunGameBattleCityHeader(Context context) {
         this(context, null);
     }
@@ -130,17 +135,20 @@ public class FunGameBattleCityHeader extends FunGameView {
         super(context, attrs, defStyle);
 
         random = new Random();
-
-        controllerSize = mHeaderHeight/TANK_ROW_NUM;
-        barrelSize = (int) Math.floor(controllerSize * TANK_BARREL_RATIO + .5f);
-        bulletRadius = (barrelSize - 2 * DIVIDING_LINE_SIZE) * .5f;
-
-        resetConfigParams();
     }
 
+    @Override
+    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
+        controllerSize = height / TANK_ROW_NUM;
+        barrelSize = (int) Math.floor(controllerSize * TANK_BARREL_RATIO + .5f);
+        bulletRadius = (barrelSize - 2 * DIVIDING_LINE_SIZE) * .5f;
+        super.onInitialized(kernel, height, extendHeight);
+    }
+
+    //</editor-fold>
 
     //<editor-fold desc="游戏控制">
-    @Override
+
     protected void resetConfigParams() {
         status = FunGameView.STATUS_GAME_PREPARE;
         controllerPosition = DIVIDING_LINE_SIZE;
@@ -395,6 +403,5 @@ public class FunGameBattleCityHeader extends FunGameView {
     }
 
     //</editor-fold>
-
 
 }
