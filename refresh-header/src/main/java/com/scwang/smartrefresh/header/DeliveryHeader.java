@@ -112,8 +112,6 @@ public class DeliveryHeader extends InternalAbstract implements RefreshHeader {
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
-        super.dispatchDraw(canvas);
-
         final int width = getWidth();
         final int height = getHeight();
 
@@ -149,6 +147,8 @@ public class DeliveryHeader extends InternalAbstract implements RefreshHeader {
         }
 
         canvas.restoreToCount(saveCount);
+
+        super.dispatchDraw(canvas);
     }
 
     private void calculateFrame(int width) {

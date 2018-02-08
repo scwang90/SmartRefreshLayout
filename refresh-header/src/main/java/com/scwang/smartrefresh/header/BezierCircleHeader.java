@@ -52,6 +52,7 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
     private boolean mOuterIsStart = true;
 
     private static final int TARGET_DEGREE = 270;
+    private boolean mWavePulling = false;
 
     //</editor-fold>
 
@@ -95,8 +96,6 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
-        super.dispatchDraw(canvas);
-
         if (isInEditMode()) {
             mShowBoll = true;
             mShowOuter = true;
@@ -113,6 +112,8 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
         drawBoll(canvas, viewWidth);
         drawOuter(canvas, viewWidth);
         drawFinish(canvas, viewWidth);
+
+        super.dispatchDraw(canvas);
     }
 
     private void drawWave(Canvas canvas, int viewWidth, int viewHeight) {
@@ -236,12 +237,21 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
 
     @Override
     public void onPulling(float percent, int offset, int height, int extendHeight) {
+        mWavePulling = true;
         mHeadHeight = height;
         mWaveHeight = Math.max(offset - height, 0) * .8f;
     }
 
     @Override
-    public void onReleased(RefreshLayout layout, int height, int extendHeight) {
+    public void onReleasing(float percent, int offset, int height, int extendHeight) {
+        if (mWavePulling) {
+            onPulling(percent, offset, height, extendHeight);
+        }
+    }
+
+    @Override
+    public void onReleased(@NonNull RefreshLayout refreshLayout, int height, int extendHeight) {
+        mWavePulling = false;
         mHeadHeight = height;
         mBollRadius = height / 6;
         DecelerateInterpolator interpolator = new DecelerateInterpolator();
@@ -293,20 +303,15 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
                     mRefreshStart = 90;
                     mRefreshStop = 90;
                 }
-                mWaveHeight = curValue;
-                BezierCircleHeader.this.invalidate();
+                if (!mWavePulling) {
+                    mWaveHeight = curValue;
+                    BezierCircleHeader.this.invalidate();
+                }
             }
         });
         waveAnimator.setInterpolator(interpolator);
         waveAnimator.setDuration(1000);
         waveAnimator.start();
-    }
-
-    @Override
-    public void onReleasing(float percent, int offset, int height, int extendHeight) {
-        if (mState != RefreshState.Refreshing && mState != RefreshState.RefreshReleased) {
-            onPulling(percent, offset, height, extendHeight);
-        }
     }
 
     @Override
@@ -316,8 +321,8 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
 
     @Override
     public int onFinish(@NonNull RefreshLayout layout, boolean success) {
-        mShowOuter = false;
         mShowBoll = false;
+        mShowOuter = false;
         ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override

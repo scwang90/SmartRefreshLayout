@@ -39,22 +39,22 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 @SuppressWarnings({"unused", "UnusedReturnValue"})
 public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements RefreshHeader {
 
-    public static String REFRESH_HEADER_PULLDOWN = "下拉可以刷新";
-    public static String REFRESH_HEADER_REFRESHING = "正在刷新...";
-    public static String REFRESH_HEADER_LOADING = "正在加载...";
-    public static String REFRESH_HEADER_RELEASE = "释放立即刷新";
-    public static String REFRESH_HEADER_FINISH = "刷新完成";
-    public static String REFRESH_HEADER_FAILED = "刷新失败";
-    public static String REFRESH_HEADER_LASTTIME = "上次更新 M-d HH:mm";
-    public static String REFRESH_HEADER_SECOND_FLOOR = "释放进入二楼";
-//    public static String REFRESH_HEADER_LASTTIME = "'Last update' M-d HH:mm";
+    public static String REFRESH_HEADER_PULLING = null;//"下拉可以刷新";
+    public static String REFRESH_HEADER_REFRESHING = null;//"正在刷新...";
+    public static String REFRESH_HEADER_LOADING = null;//"正在加载...";
+    public static String REFRESH_HEADER_RELEASE = null;//"释放立即刷新";
+    public static String REFRESH_HEADER_FINISH = null;//"刷新完成";
+    public static String REFRESH_HEADER_FAILED = null;//"刷新失败";
+    public static String REFRESH_HEADER_UPDATE = null;//"上次更新 M-d HH:mm";
+    public static String REFRESH_HEADER_SECONDARY = null;//"释放进入二楼";
+//    public static String REFRESH_HEADER_UPDATE = "'Last update' M-d HH:mm";
 
     protected String KEY_LAST_UPDATE_TIME = "LAST_UPDATE_TIME";
 
     protected Date mLastTime;
     protected TextView mLastUpdateText;
     protected SharedPreferences mShared;
-    protected DateFormat mFormat = new SimpleDateFormat(REFRESH_HEADER_LASTTIME, Locale.getDefault());
+    protected DateFormat mLastUpdateFormat;
     protected boolean mEnableLastTime = true;
 
     //<editor-fold desc="RelativeLayout">
@@ -69,15 +69,27 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
     public ClassicsHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
+        if (REFRESH_HEADER_PULLING == null) {
+            REFRESH_HEADER_PULLING = context.getString(R.string.srl_header_pulling);
+            REFRESH_HEADER_REFRESHING = context.getString(R.string.srl_header_refreshing);
+            REFRESH_HEADER_LOADING = context.getString(R.string.srl_header_loading);
+            REFRESH_HEADER_RELEASE = context.getString(R.string.srl_header_release);
+            REFRESH_HEADER_FINISH = context.getString(R.string.srl_header_finish);
+            REFRESH_HEADER_FAILED = context.getString(R.string.srl_header_failed);
+            REFRESH_HEADER_UPDATE = context.getString(R.string.srl_header_update);
+            REFRESH_HEADER_SECONDARY = context.getString(R.string.srl_header_secondary);
+        }
+
         DensityUtil density = new DensityUtil();
 
         mTitleText.setTextColor(0xff666666);
-        mTitleText.setText(isInEditMode() ? REFRESH_HEADER_REFRESHING : REFRESH_HEADER_PULLDOWN);
+        mTitleText.setText(isInEditMode() ? REFRESH_HEADER_REFRESHING : REFRESH_HEADER_PULLING);
 
         mLastUpdateText = new TextView(context);
         mLastUpdateText.setTextColor(0xff7c7c7c);
         LinearLayout.LayoutParams lpUpdateText = new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
         mCenterLayout.addView(mLastUpdateText, lpUpdateText);
+        mLastUpdateFormat = new SimpleDateFormat(REFRESH_HEADER_UPDATE, Locale.getDefault());
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ClassicsHeader);
 
@@ -106,9 +118,6 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
         if (ta.hasValue(R.styleable.ClassicsHeader_srlDrawableArrow)) {
             mArrowView.setImageDrawable(ta.getDrawable(R.styleable.ClassicsHeader_srlDrawableArrow));
         } else {
-//            mArrowDrawable = new PathsDrawable();
-//            mArrowDrawable.parserColors(0xff666666);
-//            mArrowDrawable.parserPaths("M20,12l-1.41,-1.41L13,16.17V4h-2v12.17l-5.58,-5.59L4,12l8,8 8,-8z");
             mArrowDrawable = new ArrowDrawable();
             mArrowDrawable.setColor(0xff666666);
             mArrowView.setImageDrawable(mArrowDrawable);
@@ -193,15 +202,13 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
             case None:
                 mLastUpdateText.setVisibility(mEnableLastTime ? VISIBLE : GONE);
             case PullDownToRefresh:
-                mTitleText.setText(REFRESH_HEADER_PULLDOWN);
+                mTitleText.setText(REFRESH_HEADER_PULLING);
                 mArrowView.setVisibility(VISIBLE);
-//                mProgressView.setVisibility(GONE);
                 mArrowView.animate().rotation(0);
                 break;
             case Refreshing:
             case RefreshReleased:
                 mTitleText.setText(REFRESH_HEADER_REFRESHING);
-//                mProgressView.setVisibility(VISIBLE);
                 mArrowView.setVisibility(GONE);
                 break;
             case ReleaseToRefresh:
@@ -209,12 +216,11 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
                 mArrowView.animate().rotation(180);
                 break;
             case ReleaseToTwoLevel:
-                mTitleText.setText(REFRESH_HEADER_SECOND_FLOOR);
+                mTitleText.setText(REFRESH_HEADER_SECONDARY);
                 mArrowView.animate().rotation(0);
                 break;
             case Loading:
                 mArrowView.setVisibility(GONE);
-//                mProgressView.setVisibility(GONE);
                 mLastUpdateText.setVisibility(mEnableLastTime ? INVISIBLE : GONE);
                 mTitleText.setText(REFRESH_HEADER_LOADING);
                 break;
@@ -226,7 +232,7 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
 
     public ClassicsHeader setLastUpdateTime(Date time) {
         mLastTime = time;
-        mLastUpdateText.setText(mFormat.format(time));
+        mLastUpdateText.setText(mLastUpdateFormat.format(time));
         if (mShared != null && !isInEditMode()) {
             mShared.edit().putLong(KEY_LAST_UPDATE_TIME, time.getTime()).apply();
         }
@@ -240,9 +246,9 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
     }
 
     public ClassicsHeader setTimeFormat(DateFormat format) {
-        mFormat = format;
+        mLastUpdateFormat = format;
         if (mLastTime != null) {
-            mLastUpdateText.setText(mFormat.format(mLastTime));
+            mLastUpdateText.setText(mLastUpdateFormat.format(mLastTime));
         }
         return this;
     }

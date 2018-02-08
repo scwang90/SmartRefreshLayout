@@ -195,7 +195,6 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
-        super.dispatchDraw(canvas);
 
         final int width = getWidth();
         final int height = getHeight();
@@ -242,6 +241,7 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
             }
         }
 
+        super.dispatchDraw(canvas);
     }
 
     //</editor-fold>

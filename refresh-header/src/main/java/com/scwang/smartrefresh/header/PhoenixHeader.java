@@ -247,13 +247,14 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
-        super.dispatchDraw(canvas);
 
         int width = getWidth();
         int height = getHeight();
         drawSky(canvas, width, height);
         drawSun(canvas, width, height);
         drawTown(canvas, width, height);
+
+        super.dispatchDraw(canvas);
     }
 
 

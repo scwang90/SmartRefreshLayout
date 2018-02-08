@@ -25,13 +25,13 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
 @SuppressWarnings({"unused", "UnusedReturnValue", "deprecation"})
 public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements RefreshFooter {
 
-    public static String REFRESH_FOOTER_PULLUP = "上拉加载更多";
-    public static String REFRESH_FOOTER_RELEASE = "释放立即加载";
-    public static String REFRESH_FOOTER_LOADING = "正在加载...";
-    public static String REFRESH_FOOTER_REFRESHING = "正在刷新...";
-    public static String REFRESH_FOOTER_FINISH = "加载完成";
-    public static String REFRESH_FOOTER_FAILED = "加载失败";
-    public static String REFRESH_FOOTER_ALLLOADED = "没有更多数据了";
+    public static String REFRESH_FOOTER_PULLING = null;//"上拉加载更多";
+    public static String REFRESH_FOOTER_RELEASE = null;//"释放立即加载";
+    public static String REFRESH_FOOTER_LOADING = null;//"正在加载...";
+    public static String REFRESH_FOOTER_REFRESHING = null;//"正在刷新...";
+    public static String REFRESH_FOOTER_FINISH = null;//"加载完成";
+    public static String REFRESH_FOOTER_FAILED = null;//"加载失败";
+    public static String REFRESH_FOOTER_NOTHING = null;//"没有更多数据了";
 
     protected boolean mNoMoreData = false;
 
@@ -47,10 +47,20 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
     public ClassicsFooter(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
+        if (REFRESH_FOOTER_PULLING == null) {
+            REFRESH_FOOTER_PULLING = context.getString(R.string.srl_footer_pulling);
+            REFRESH_FOOTER_RELEASE = context.getString(R.string.srl_footer_release);
+            REFRESH_FOOTER_LOADING = context.getString(R.string.srl_footer_loading);
+            REFRESH_FOOTER_REFRESHING = context.getString(R.string.srl_footer_refreshing);
+            REFRESH_FOOTER_FINISH = context.getString(R.string.srl_footer_finish);
+            REFRESH_FOOTER_FAILED = context.getString(R.string.srl_footer_failed);
+            REFRESH_FOOTER_NOTHING = context.getString(R.string.srl_footer_nothing);
+        }
+
         DensityUtil density = new DensityUtil();
 
         mTitleText.setTextColor(0xff666666);
-        mTitleText.setText(isInEditMode() ? REFRESH_FOOTER_LOADING : REFRESH_FOOTER_PULLUP);
+        mTitleText.setText(isInEditMode() ? REFRESH_FOOTER_LOADING : REFRESH_FOOTER_PULLING);
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ClassicsFooter);
 
@@ -151,10 +161,10 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
         if (mNoMoreData != noMoreData) {
             mNoMoreData = noMoreData;
             if (noMoreData) {
-                mTitleText.setText(REFRESH_FOOTER_ALLLOADED);
+                mTitleText.setText(REFRESH_FOOTER_NOTHING);
                 mArrowView.setVisibility(GONE);
             } else {
-                mTitleText.setText(REFRESH_FOOTER_PULLUP);
+                mTitleText.setText(REFRESH_FOOTER_PULLING);
                 mArrowView.setVisibility(VISIBLE);
             }
 //            super.onFinish(mRefreshKernel.getRefreshLayout(), true);
@@ -169,7 +179,7 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
                 case None:
                     mArrowView.setVisibility(VISIBLE);
                 case PullUpToLoad:
-                    mTitleText.setText(REFRESH_FOOTER_PULLUP);
+                    mTitleText.setText(REFRESH_FOOTER_PULLING);
                     mArrowView.animate().rotation(180);
                     break;
                 case Loading:

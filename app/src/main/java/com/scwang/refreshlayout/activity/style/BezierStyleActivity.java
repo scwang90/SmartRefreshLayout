@@ -26,14 +26,14 @@ import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 public class BezierStyleActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private enum Item {
+        打开左右拖动("打开左右拖动效果"),
+        关闭左右拖动("关闭左右拖动效果"),
         内容不偏移("下拉的时候列表内容停留在原位不动"),
         内容跟随偏移("下拉的时候列表内容跟随向下偏移"),
         橙色主题("更改为橙色主题颜色"),
         红色主题("更改为红色主题颜色"),
         绿色主题("更改为绿色主题颜色"),
         蓝色主题("更改为蓝色主题颜色"),
-        打开左右拖动("打开左右拖动效果"),
-        关闭左右拖动("关闭左右拖动效果"),
         ;
         public String name;
         Item(String name) {

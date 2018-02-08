@@ -202,7 +202,6 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
-        super.dispatchDraw(canvas);
 
         int width = getWidth();
         int height = getHeight();
@@ -254,6 +253,8 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
         drawAirplane(canvas, width, height);
         drawSideClouds(canvas, width, height);
         drawCenterClouds(canvas, width, height);
+
+        super.dispatchDraw(canvas);
     }
 
     /**

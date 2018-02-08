@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.PointF;
+import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
@@ -113,7 +114,6 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
-        super.dispatchDraw(canvas);
 
         final int c1 = canvas.save();
         final int len = mItemList.size();
@@ -167,6 +167,8 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
             invalidate();
         }
         canvas.restoreToCount(c1);
+
+        super.dispatchDraw(canvas);
     }
 
     //</editor-fold>
