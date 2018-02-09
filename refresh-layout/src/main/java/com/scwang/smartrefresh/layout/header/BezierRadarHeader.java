@@ -276,11 +276,11 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
 
     @Override@Deprecated
     public void setPrimaryColors(@ColorInt int ... colors) {
-        if (colors.length > 0 && mManualPrimaryColor) {
+        if (colors.length > 0 && !mManualPrimaryColor) {
             setPrimaryColor(colors[0]);
             mManualPrimaryColor = false;
         }
-        if (colors.length > 1 && mManualAccentColor) {
+        if (colors.length > 1 && !mManualAccentColor) {
             setAccentColor(colors[1]);
             mManualAccentColor = false;
         }
