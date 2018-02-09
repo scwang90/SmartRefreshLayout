@@ -85,9 +85,6 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
         if (ta.hasValue(R.styleable.ClassicsFooter_srlDrawableArrow)) {
             mArrowView.setImageDrawable(ta.getDrawable(R.styleable.ClassicsFooter_srlDrawableArrow));
         } else {
-//            mArrowDrawable = new PathsDrawable();
-//            mArrowDrawable.parserColors(0xff666666);
-//            mArrowDrawable.parserPaths("M20,12l-1.41,-1.41L13,16.17V4h-2v12.17l-5.58,-5.59L4,12l8,8 8,-8z");
             mArrowDrawable = new ArrowDrawable();
             mArrowDrawable.setColor(0xff666666);
             mArrowView.setImageDrawable(mArrowDrawable);
@@ -185,7 +182,6 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
                 case Loading:
                 case LoadReleased:
                     mArrowView.setVisibility(GONE);
-//                    mProgressView.setVisibility(VISIBLE);
                     mTitleText.setText(REFRESH_FOOTER_LOADING);
                     break;
                 case ReleaseToLoad:
@@ -194,7 +190,6 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
                     break;
                 case Refreshing:
                     mTitleText.setText(REFRESH_FOOTER_REFRESHING);
-//                    mProgressView.setVisibility(GONE);
                     mArrowView.setVisibility(GONE);
                     break;
             }

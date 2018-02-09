@@ -104,6 +104,17 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
 
     }
 
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if (mRadarAnimator != null) {
+            mRadarAnimator.removeAllListeners();
+            mRadarAnimator.removeAllUpdateListeners();
+            mRadarAnimator.cancel();
+            mRadarAnimator = null;
+        }
+    }
+
     //</editor-fold>
 
     //<editor-fold desc="绘制方法 - draw">
@@ -238,6 +249,7 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
     public int onFinish(@NonNull RefreshLayout layout, boolean success) {
         if (mRadarAnimator != null) {
             mRadarAnimator.cancel();
+            mRadarAnimator = null;
         }
 
         final int duration = 400;
@@ -258,7 +270,6 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
                 mDotAlpha = 1;
                 mRadarScale = 0;
                 mRippleRadius = 0;
-                mRadarAnimator = null;
                 break;
         }
     }

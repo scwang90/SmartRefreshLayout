@@ -114,6 +114,8 @@ public class BallPulseFooter extends InternalAbstract implements RefreshFooter {
         super.onDetachedFromWindow();
         if (mAnimators != null) for (int i = 0; i < mAnimators.size(); i++) {
             mAnimators.get(i).cancel();
+            mAnimators.get(i).removeAllListeners();
+            mAnimators.get(i).removeAllUpdateListeners();
         }
     }
 
