@@ -40,11 +40,11 @@ public class BallPulseFooter extends InternalAbstract implements RefreshFooter {
 
     private Paint mPaint;
 
-    private int normalColor = 0xffeeeeee;
-    private int animatingColor = 0xffe75946;
+    private int mNormalColor = 0xffeeeeee;
+    private int mAnimatingColor = 0xffe75946;
 
-    private float circleSpacing;
-    private float[] scaleFloats = new float[]{1f, 1f, 1f};
+    private float mCircleSpacing;
+    private float[] mScaleFloats = new float[]{1f, 1f, 1f};
 
 
     private boolean mIsStarted = false;
@@ -68,11 +68,11 @@ public class BallPulseFooter extends InternalAbstract implements RefreshFooter {
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.BallPulseFooter);
 
-        if (ta.hasValue(R.styleable.BallPulseFooter_srlAnimatingColor)) {
-            setAnimatingColor(ta.getColor(R.styleable.BallPulseFooter_srlAnimatingColor, 0));
-        }
         if (ta.hasValue(R.styleable.BallPulseFooter_srlNormalColor)) {
             setNormalColor(ta.getColor(R.styleable.BallPulseFooter_srlNormalColor, 0));
+        }
+        if (ta.hasValue(R.styleable.BallPulseFooter_srlAnimatingColor)) {
+            setAnimatingColor(ta.getColor(R.styleable.BallPulseFooter_srlAnimatingColor, 0));
         }
 
         mSpinnerStyle = SpinnerStyle.values()[ta.getInt(R.styleable.BallPulseFooter_srlClassicsSpinnerStyle, mSpinnerStyle.ordinal())];
@@ -80,7 +80,7 @@ public class BallPulseFooter extends InternalAbstract implements RefreshFooter {
         ta.recycle();
 
 
-        circleSpacing = DensityUtil.dp2px(4);
+        mCircleSpacing = DensityUtil.dp2px(4);
 
         mPaint = new Paint();
         mPaint.setColor(Color.WHITE);
@@ -88,24 +88,24 @@ public class BallPulseFooter extends InternalAbstract implements RefreshFooter {
         mPaint.setAntiAlias(true);
 
         mAnimators = new ArrayList<>();
-        int[] delays = new int[]{120, 240, 360};
+        final int[] delays = new int[]{120, 240, 360};
         for (int i = 0; i < 3; i++) {
             final int index = i;
 
-            ValueAnimator scaleAnim = ValueAnimator.ofFloat(1, 0.3f, 1);
+            ValueAnimator animator = ValueAnimator.ofFloat(1, 0.3f, 1);
 
-            scaleAnim.setDuration(750);
-            scaleAnim.setRepeatCount(ValueAnimator.INFINITE);
-            scaleAnim.setStartDelay(delays[i]);
+            animator.setDuration(750);
+            animator.setRepeatCount(ValueAnimator.INFINITE);
+            animator.setStartDelay(delays[i]);
 
-            mUpdateListeners.put(scaleAnim, new ValueAnimator.AnimatorUpdateListener() {
+            mUpdateListeners.put(animator, new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
-                    scaleFloats[index] = (float) animation.getAnimatedValue();
+                    mScaleFloats[index] = (float) animation.getAnimatedValue();
                     postInvalidate();
                 }
             });
-            mAnimators.add(scaleAnim);
+            mAnimators.add(animator);
         }
     }
 
@@ -124,14 +124,14 @@ public class BallPulseFooter extends InternalAbstract implements RefreshFooter {
     @Override
     protected void dispatchDraw(Canvas canvas) {
         int width = getWidth(), height = getHeight();
-        float radius = (Math.min(width, height) - circleSpacing * 2) / 6;
-        float x = width / 2 - (radius * 2 + circleSpacing);
+        float radius = (Math.min(width, height) - mCircleSpacing * 2) / 6;
+        float x = width / 2 - (radius * 2 + mCircleSpacing);
         float y = height / 2;
         for (int i = 0; i < 3; i++) {
             canvas.save();
-            float translateX = x + (radius * 2) * i + circleSpacing * i;
+            float translateX = x + (radius * 2) * i + mCircleSpacing * i;
             canvas.translate(translateX, y);
-            canvas.scale(scaleFloats[i], scaleFloats[i]);
+            canvas.scale(mScaleFloats[i], mScaleFloats[i]);
             canvas.drawCircle(0, 0, radius, mPaint);
             canvas.restore();
         }
@@ -156,22 +156,22 @@ public class BallPulseFooter extends InternalAbstract implements RefreshFooter {
             animator.start();
         }
         mIsStarted = true;
-        mPaint.setColor(animatingColor);
+        mPaint.setColor(mAnimatingColor);
     }
 
     @Override
     public int onFinish(@NonNull RefreshLayout layout, boolean success) {
         if (mAnimators != null && mIsStarted) {
             mIsStarted = false;
+            mScaleFloats = new float[]{1f, 1f, 1f};
             for (ValueAnimator animator : mAnimators) {
                 if (animator != null) {
                     animator.removeAllUpdateListeners();
                     animator.end();
                 }
             }
-            scaleFloats = new float[]{1f, 1f, 1f};
         }
-        mPaint.setColor(normalColor);
+        mPaint.setColor(mNormalColor);
         return 0;
     }
 
@@ -212,8 +212,8 @@ public class BallPulseFooter extends InternalAbstract implements RefreshFooter {
     }
 
     public BallPulseFooter setNormalColor(@ColorInt int color) {
+        mNormalColor = color;
         mManualNormalColor = true;
-        normalColor = color;
         if (!mIsStarted) {
             mPaint.setColor(color);
         }
@@ -221,8 +221,8 @@ public class BallPulseFooter extends InternalAbstract implements RefreshFooter {
     }
 
     public BallPulseFooter setAnimatingColor(@ColorInt int color) {
+        mAnimatingColor = color;
         mManualAnimationColor = true;
-        animatingColor = color;
         if (mIsStarted) {
             mPaint.setColor(color);
         }

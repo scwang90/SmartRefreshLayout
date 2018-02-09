@@ -207,7 +207,7 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
     }
 
     @Override
-    public void onReleased(RefreshLayout layout, int height, int extendHeight) {
+    public void onReleased(@NonNull RefreshLayout layout, int height, int extendHeight) {
         mProgress.start();
         if ((int) mCircleView.getTranslationY() != height / 2 + mCircleDiameter / 2) {
             mCircleView.animate().translationY(height / 2 + mCircleDiameter / 2);

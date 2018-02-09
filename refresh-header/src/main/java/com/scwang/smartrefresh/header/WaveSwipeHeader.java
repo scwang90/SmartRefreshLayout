@@ -53,6 +53,7 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
     //<editor-fold desc="DropHeader">
     private WaveView mWaveView;
     private RefreshState mState;
+    private MaterialProgressDrawable mProgress;
     private ProgressAnimationImageView mCircleView;
     private float mLastFirstBounds;
 
@@ -78,9 +79,9 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
             mWaveView.setWaveColor(primaryColor);
         }
         if (accentColor != 0) {
-            mCircleView.setProgressColorSchemeColors(accentColor);
+            mProgress.setColorSchemeColors(accentColor);
         } else {
-            mCircleView.setProgressColorSchemeColors(0xffffffff);
+            mProgress.setColorSchemeColors(0xffffffff);
         }
         if (ta.hasValue(R.styleable.WaveSwipeHeader_wshShadowRadius)) {
             int radius = ta.getDimensionPixelOffset(R.styleable.WaveSwipeHeader_wshShadowRadius, 0);
@@ -94,7 +95,9 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         setMeasuredDimension(getSize(widthMeasureSpec), getSize(heightMeasureSpec));
-        mCircleView.measure();
+        final int circleDiameter = mProgress.getIntrinsicWidth();
+        final int spec = MeasureSpec.makeMeasureSpec(circleDiameter, MeasureSpec.EXACTLY);
+        mCircleView.measure(spec, spec);
         mWaveView.measure(makeMeasureSpec(getSize(widthMeasureSpec), EXACTLY),makeMeasureSpec(getSize(heightMeasureSpec), EXACTLY));
     }
 
@@ -120,7 +123,7 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
      * @param colors セットするColor達
      */
     public void setColorSchemeColors(int... colors) {
-        mCircleView.setProgressColorSchemeColors(colors);
+        mProgress.setColorSchemeColors(colors);
     }
 
     //</editor-fold>
@@ -144,12 +147,12 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
 
         if (percent < 1f) {
             float strokeStart = adjustedPercent * .8f;
-            mCircleView.setProgressStartEndTrim(0f, Math.min(MAX_PROGRESS_ROTATION_RATE, strokeStart));
-            mCircleView.setArrowScale(Math.min(1f, adjustedPercent));
+            mProgress.setStartEndTrim(0f, Math.min(MAX_PROGRESS_ROTATION_RATE, strokeStart));
+            mProgress.setArrowScale(Math.min(1f, adjustedPercent));
         }
 
         float rotation = (-0.25f + .4f * adjustedPercent + tensionPercent * 2) * .5f;
-        mCircleView.setProgressRotation(rotation);
+        mProgress.setProgressRotation(rotation);
         mCircleView.setTranslationY(mWaveView.getCurrentCircleCenterY());
 
         float seed = 1f * offset / Math.min(getMeasuredWidth(), getMeasuredHeight());
@@ -174,11 +177,11 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
     }
 
     @Override
-    public void onReleased(RefreshLayout layout, int height, int extendHeight) {
+    public void onReleased(@NonNull RefreshLayout layout, int height, int extendHeight) {
         mLastFirstBounds = 0;
         mWaveView.animationDropCircle();
-        mCircleView.makeProgressTransparent();
-        mCircleView.startProgress();
+        mProgress.setAlpha(0xff);
+        mProgress.start();
         ValueAnimator animator = ValueAnimator.ofFloat(0, 0);
         animator.setDuration(500);
         animator.setInterpolator(new AccelerateDecelerateInterpolator());
@@ -199,14 +202,15 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
             case None:
                 break;
             case PullDownToRefresh:
-                mCircleView.showArrow(true);
-                mCircleView.scaleWithKeepingAspectRatio(1f);
-                mCircleView.makeProgressTransparent();
+                mProgress.showArrow(true);
+                mCircleView.setScaleX(1f);
+                mCircleView.setScaleY(1f);
+                mProgress.setAlpha(0xff);
                 break;
             case PullDownCanceled:
-                mCircleView.showArrow(false);
-                mCircleView.setProgressRotation(0);
-                mCircleView.setProgressStartEndTrim(0f, 0f);
+                mProgress.showArrow(false);
+                mProgress.setProgressRotation(0);
+                mProgress.setStartEndTrim(0f, 0f);
                 mWaveView.startWaveAnimation(mLastFirstBounds);
                 mLastFirstBounds = 0;
                 break;
@@ -222,7 +226,8 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
         Animation scaleDownAnimation = new Animation() {
             @Override
             public void applyTransformation(float interpolatedTime, Transformation t) {
-                mCircleView.scaleWithKeepingAspectRatio(1 - interpolatedTime);
+                mCircleView.setScaleX(1 - interpolatedTime);
+                mCircleView.setScaleY(1 - interpolatedTime);
             }
         };
         scaleDownAnimation.setDuration(200);
@@ -230,8 +235,8 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
             public void onAnimationStart(Animation animation) {}
             public void onAnimationRepeat(Animation animation) {}
             public void onAnimationEnd(Animation animation) {
-                mCircleView.stopProgress();
-                mCircleView.makeProgressTransparent();
+                mProgress.stop();
+                mProgress.setAlpha(0xff);
                 mWaveView.startDisappearCircleAnimation();
             }
         });
@@ -249,7 +254,7 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
         if (colors.length > 0) {
             mWaveView.setWaveColor(colors[0]);
             if (colors.length > 1) {
-                mCircleView.setProgressColorSchemeColors(colors[1]);
+                mProgress.setColorSchemeColors(colors[1]);
             }
         }
     }
@@ -280,8 +285,6 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
      * @author jmatsu
      */
     private class ProgressAnimationImageView extends AnimationImageView {
-        private final MaterialProgressDrawable mProgress;
-
         /**
          * Constructor
          * {@inheritDoc}
@@ -296,51 +299,6 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
             setImageDrawable(mProgress);
         }
 
-        public void measure() {
-            final int circleDiameter = mProgress.getIntrinsicWidth();
-            measure(makeMeasureSpecExactly(circleDiameter), makeMeasureSpecExactly(circleDiameter));
-        }
-
-        private int makeMeasureSpecExactly(int length) {
-            return MeasureSpec.makeMeasureSpec(length, MeasureSpec.EXACTLY);
-        }
-
-        public void makeProgressTransparent() {
-            mProgress.setAlpha(0xff);
-        }
-
-        public void showArrow(boolean show) {
-            mProgress.showArrow(show);
-        }
-
-        public void setArrowScale(float scale) {
-            mProgress.setArrowScale(scale);
-        }
-
-//        public void setProgressAlpha(int alpha) {
-//            mProgress.setAlpha(alpha);
-//        }
-
-        public void setProgressStartEndTrim(float startAngle, float endAngle) {
-            mProgress.setStartEndTrim(startAngle, endAngle);
-        }
-
-        public void setProgressRotation(float rotation) {
-            mProgress.setProgressRotation(rotation);
-        }
-
-        public void startProgress() {
-            mProgress.start();
-        }
-
-        public void stopProgress() {
-            mProgress.stop();
-        }
-
-        public void setProgressColorSchemeColors(@NonNull int... colors) {
-            mProgress.setColorSchemeColors(colors);
-        }
-
         public void setProgressColorSchemeColorsFromResource(@IdRes int... resources) {
             final Resources res = getResources();
             final int[] colorRes = new int[resources.length];
@@ -352,10 +310,6 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
             setColorSchemeColors(colorRes);
         }
 
-        public void scaleWithKeepingAspectRatio(float scale) {
-            this.setScaleX(scale);
-            this.setScaleY(scale);
-        }
     }
     //</editor-fold>
 }

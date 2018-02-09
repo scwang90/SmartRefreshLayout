@@ -38,8 +38,8 @@ dependencies {
 //        exclude group: 'com.andr oid.support'
     }
 
-    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.5.1'
-    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.5.1'
+    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.5'
+    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.5'
 //    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-7'
 //    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4-7'
 //    compile 'com.android.support:design:25.3.1'

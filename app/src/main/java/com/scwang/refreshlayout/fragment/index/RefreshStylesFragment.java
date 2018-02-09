@@ -17,11 +17,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 import com.scwang.refreshlayout.R;
-import com.scwang.refreshlayout.activity.style.BezierStyleActivity;
-import com.scwang.refreshlayout.activity.style.CircleStyleActivity;
+import com.scwang.refreshlayout.activity.style.BezierCircleStyleActivity;
+import com.scwang.refreshlayout.activity.style.BezierRadarStyleActivity;
 import com.scwang.refreshlayout.activity.style.ClassicsStyleActivity;
 import com.scwang.refreshlayout.activity.style.DeliveryStyleActivity;
-import com.scwang.refreshlayout.activity.style.DropboxStyleActivity;
+import com.scwang.refreshlayout.activity.style.DropBoxStyleActivity;
 import com.scwang.refreshlayout.activity.style.FlyRefreshStyleActivity;
 import com.scwang.refreshlayout.activity.style.FunGameBattleCityStyleActivity;
 import com.scwang.refreshlayout.activity.style.FunGameHitBlockStyleActivity;
@@ -30,7 +30,7 @@ import com.scwang.refreshlayout.activity.style.PhoenixStyleActivity;
 import com.scwang.refreshlayout.activity.style.StoreHouseStyleActivity;
 import com.scwang.refreshlayout.activity.style.TaurusStyleActivity;
 import com.scwang.refreshlayout.activity.style.WaterDropStyleActivity;
-import com.scwang.refreshlayout.activity.style.WaveSwipStyleActivity;
+import com.scwang.refreshlayout.activity.style.WaveSwipeStyleActivity;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.refreshlayout.util.StatusBarUtil;
@@ -59,15 +59,15 @@ public class RefreshStylesFragment extends Fragment implements AdapterView.OnIte
     private enum Item {
         Hidden(R.string.title_activity_style_delivery,DeliveryStyleActivity.class),
         Delivery(R.string.title_activity_style_delivery,DeliveryStyleActivity.class),
-        DropBox(R.string.title_activity_style_dropbox, DropboxStyleActivity.class),
+        DropBox(R.string.title_activity_style_dropbox, DropBoxStyleActivity.class),
         FlyRefresh(R.string.title_activity_style_flyrefresh, FlyRefreshStyleActivity.class),
-        WaveSwipe(R.string.title_activity_style_wave_swipe, WaveSwipStyleActivity.class),
+        WaveSwipe(R.string.title_activity_style_wave_swipe, WaveSwipeStyleActivity.class),
         WaterDrop(R.string.title_activity_style_water_drop, WaterDropStyleActivity.class),
         Material(R.string.title_activity_style_material, MaterialStyleActivity.class),
         Phoenix(R.string.title_activity_style_phoenix, PhoenixStyleActivity.class),
         Taurus(R.string.title_activity_style_taurus, TaurusStyleActivity.class),
-        Bezier(R.string.title_activity_style_bezier, BezierStyleActivity.class),
-        Circle(R.string.title_activity_style_circle, CircleStyleActivity.class),
+        Bezier(R.string.title_activity_style_bezier, BezierRadarStyleActivity.class),
+        Circle(R.string.title_activity_style_circle, BezierCircleStyleActivity.class),
         FunGameHitBlock(R.string.title_activity_style_fungame_hitblock, FunGameHitBlockStyleActivity.class),
         FunGameBattleCity(R.string.title_activity_style_fungame_battlecity, FunGameBattleCityStyleActivity.class),
         StoreHouse(R.string.title_activity_style_storehouse, StoreHouseStyleActivity.class),

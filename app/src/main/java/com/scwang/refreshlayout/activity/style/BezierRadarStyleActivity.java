@@ -2,7 +2,7 @@ package com.scwang.refreshlayout.activity.style;
 
 import android.os.Build;
 import android.os.Bundle;
-import com.scwang.smartrefresh.layout.util.DesignUtil;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -16,15 +16,18 @@ import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.header.BezierRadarHeader;
 
 import java.util.Arrays;
 
 import static android.R.layout.simple_list_item_2;
 import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 
-public class CircleStyleActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class BezierRadarStyleActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private enum Item {
+        打开左右拖动("打开左右拖动效果"),
+        关闭左右拖动("关闭左右拖动效果"),
         内容不偏移("下拉的时候列表内容停留在原位不动"),
         内容跟随偏移("下拉的时候列表内容跟随向下偏移"),
         橙色主题("更改为橙色主题颜色"),
@@ -40,12 +43,13 @@ public class CircleStyleActivity extends AppCompatActivity implements AdapterVie
 
     private Toolbar mToolbar;
     private RefreshLayout mRefreshLayout;
+    private BezierRadarHeader mRefreshHeader;
     private static boolean isFirstEnter = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_style_circle);
+        setContentView(R.layout.activity_style_bezier);
 
         mToolbar = (Toolbar)findViewById(R.id.toolbar);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -56,6 +60,7 @@ public class CircleStyleActivity extends AppCompatActivity implements AdapterVie
         });
 
         mRefreshLayout = (RefreshLayout)findViewById(R.id.refreshLayout);
+        mRefreshHeader = (BezierRadarHeader) findViewById(R.id.header);
         if (isFirstEnter) {
             isFirstEnter = false;
             mRefreshLayout.autoRefresh();//第一次进入触发自动刷新，演示效果
@@ -99,6 +104,12 @@ public class CircleStyleActivity extends AppCompatActivity implements AdapterVie
             case 橙色主题:
                 setThemeColor(android.R.color.holo_orange_light, android.R.color.holo_orange_dark);
                 break;
+            case 打开左右拖动:
+                mRefreshHeader.setEnableHorizontalDrag(true);
+                break;
+            case 关闭左右拖动:
+                mRefreshHeader.setEnableHorizontalDrag(false);
+                break;
         }
         mRefreshLayout.autoRefresh();
     }
@@ -107,7 +118,7 @@ public class CircleStyleActivity extends AppCompatActivity implements AdapterVie
         mToolbar.setBackgroundResource(colorPrimary);
         mRefreshLayout.setPrimaryColorsId(colorPrimary, android.R.color.white);
         if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().setStatusBarColor(DesignUtil.getColor(this, colorPrimaryDark));
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, colorPrimaryDark));
         }
     }
 

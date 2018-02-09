@@ -62,16 +62,9 @@ public class MountainSceneView extends View {
     private int mViewportHeight = 0;
 
     //<editor-fold desc="MountainSceneView">
-    public MountainSceneView(Context context) {
-        this(context, null);
-    }
 
     public MountainSceneView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public MountainSceneView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(context, attrs);
 
         mMountPaint.setAntiAlias(true);
         mMountPaint.setStyle(Paint.Style.FILL);

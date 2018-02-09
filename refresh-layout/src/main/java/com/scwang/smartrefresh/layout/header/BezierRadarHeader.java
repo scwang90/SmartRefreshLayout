@@ -97,8 +97,10 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.BezierRadarHeader);
 
         mEnableHorizontalDrag = ta.getBoolean(R.styleable.BezierRadarHeader_srlEnableHorizontalDrag, mEnableHorizontalDrag);
-        setPrimaryColor(ta.getColor(R.styleable.BezierRadarHeader_srlPrimaryColor, 0xFF222222));
         setAccentColor(ta.getColor(R.styleable.BezierRadarHeader_srlAccentColor, 0xFFffffff));
+        setPrimaryColor(ta.getColor(R.styleable.BezierRadarHeader_srlPrimaryColor, 0xFF222222));
+        mManualAccentColor = ta.hasValue(R.styleable.BezierRadarHeader_srlAccentColor);
+        mManualPrimaryColor = ta.hasValue(R.styleable.BezierRadarHeader_srlPrimaryColor);
 
         ta.recycle();
 

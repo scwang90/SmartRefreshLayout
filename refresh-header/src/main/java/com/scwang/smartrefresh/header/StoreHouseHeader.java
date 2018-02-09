@@ -7,7 +7,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.PointF;
-import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
@@ -35,7 +34,7 @@ import java.util.List;
 public class StoreHouseHeader extends InternalAbstract implements RefreshHeader {
 
     //<editor-fold desc="Field">
-    public ArrayList<StoreHouseBarItem> mItemList = new ArrayList<>();
+    public List<StoreHouseBarItem> mItemList = new ArrayList<>();
 
     private int mLineWidth = -1;
     private float mScale = 1;
@@ -174,9 +173,6 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
     //</editor-fold>
 
     //<editor-fold desc="API">
-    public int getLoadingAniDuration() {
-        return mLoadingAniDuration;
-    }
 
     public StoreHouseHeader setLoadingAniDuration(int duration) {
         mLoadingAniDuration = duration;
@@ -231,10 +227,6 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
         return this;
     }
 
-    public float getScale() {
-        return mScale;
-    }
-
     public StoreHouseHeader setScale(float scale) {
         mScale = scale;
         return this;
@@ -271,31 +263,6 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
     }
     //</editor-fold>
 
-    //<editor-fold desc="private">
-    private void setProgress(float progress) {
-        mProgress = progress;
-    }
-
-    private int getTopOffset() {
-        return getPaddingTop() + DensityUtil.dp2px(10);
-    }
-
-    private int getBottomOffset() {
-        return getPaddingBottom() + DensityUtil.dp2px(10);
-    }
-
-    private void beginLoading() {
-        mIsInLoading = true;
-        mAniController.start();
-        invalidate();
-    }
-
-    private void loadFinish() {
-        mIsInLoading = false;
-        mAniController.stop();
-    }
-    //</editor-fold>
-
     //<editor-fold desc="RefreshHeader">
 
     @Override
@@ -306,24 +273,26 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
 
     @Override
     public void onPulling(float percent, int offset, int height, int extendHeight) {
-        setProgress(percent * .8f);
+        mProgress = (percent * .8f);
         invalidate();
     }
 
     @Override
     public void onReleasing(float percent, int offset, int height, int extendHeight) {
-        setProgress(percent * .8f);
+        onPulling(percent, offset, height, extendHeight);
+    }
+
+    @Override
+    public void onReleased(@NonNull RefreshLayout layout, int height, int extendHeight) {
+        mIsInLoading = true;
+        mAniController.start();
         invalidate();
     }
 
     @Override
-    public void onReleased(RefreshLayout layout, int height, int extendHeight) {
-        beginLoading();
-    }
-
-    @Override
     public int onFinish(@NonNull RefreshLayout layout, boolean success) {
-        loadFinish();
+        mIsInLoading = false;
+        mAniController.stop();
         if (success && mEnableFadeAnimation) {
             startAnimation(new Animation() {{
                 setDuration(250);
@@ -331,7 +300,7 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
             }
                 @Override
                 protected void applyTransformation(float interpolatedTime, Transformation t) {
-                    setProgress(1 - interpolatedTime);
+                    mProgress = (1 - interpolatedTime);
                     invalidate();
                     if (interpolatedTime == 1) {
                         for (int i = 0; i < mItemList.size(); i++) {

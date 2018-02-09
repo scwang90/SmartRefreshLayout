@@ -3,6 +3,7 @@ package com.scwang.refreshlayout.activity.style;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -18,7 +19,6 @@ import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.smartrefresh.header.StoreHouseHeader;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.util.DesignUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -136,7 +136,7 @@ public class StoreHouseStyleActivity extends AppCompatActivity implements Adapte
         mToolbar.setBackgroundResource(colorPrimary);
         mRefreshLayout.setPrimaryColorsId(colorPrimary, android.R.color.white);
         if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().setStatusBarColor(DesignUtil.getColor(this, colorPrimaryDark));
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, colorPrimaryDark));
         }
     }
 
@@ -197,7 +197,7 @@ public class StoreHouseStyleActivity extends AppCompatActivity implements Adapte
         endPoints.add(new Point(420, 95));
         endPoints.add(new Point(420, 95));
         endPoints.add(new Point(400, 120));
-        ArrayList<float[]> list = new ArrayList<>();
+        List<float[]> list = new ArrayList<>();
 
         int offsetX = Integer.MAX_VALUE;
         int offsetY = Integer.MAX_VALUE;

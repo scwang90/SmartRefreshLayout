@@ -202,7 +202,7 @@ public class WaterDropHeader extends InternalAbstract implements RefreshHeader {
     }
 
     @Override
-    public void onReleased(final RefreshLayout layout, int height, int extendHeight) {
+    public void onReleased(@NonNull final RefreshLayout layout, int height, int extendHeight) {
         mProgressDrawable.start();
         mWaterDropView.createAnimator().start();//开始回弹
         mWaterDropView.animate().setDuration(150).alpha(0).setListener(new AnimatorListenerAdapter() {

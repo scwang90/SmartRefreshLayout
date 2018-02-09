@@ -3,13 +3,18 @@ package com.scwang.refreshlayout.activity;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.BottomNavigationView.OnNavigationItemSelectedListener;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.fragment.index.RefreshPractiveFragment;
@@ -20,9 +25,9 @@ import com.scwang.refreshlayout.util.StatusBarUtil;
 public class IndexMainActivity extends AppCompatActivity implements OnNavigationItemSelectedListener {
 
     private enum TabFragment {
-        practice(R.id.navigation_practice,RefreshPractiveFragment.class),
-        styles(R.id.navigation_style,RefreshStylesFragment.class),
-        using(R.id.navigation_using,RefreshUsingFragment.class)
+        practice(R.id.navigation_practice, RefreshPractiveFragment.class),
+        styles(R.id.navigation_style, RefreshStylesFragment.class),
+        using(R.id.navigation_using, RefreshUsingFragment.class),
         ;
 
         private Fragment fragment;
@@ -109,5 +114,13 @@ public class IndexMainActivity extends AppCompatActivity implements OnNavigation
 //                .replace(R.id.content,TabFragment.from(item.getItemId()).fragment())
 //                .commit();
         return true;
+    }
+
+    public static class TabFragmentEx extends Fragment {
+        @Nullable
+        @Override
+        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            return new TextView(inflater.getContext());
+        }
     }
 }

@@ -2,6 +2,7 @@ package com.scwang.refreshlayout.activity.style;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -15,14 +16,13 @@ import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.util.DesignUtil;
 
 import java.util.Arrays;
 
 import static android.R.layout.simple_list_item_2;
 import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 
-public class WaveSwipStyleActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class BezierCircleStyleActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private enum Item {
         内容不偏移("下拉的时候列表内容停留在原位不动"),
@@ -45,7 +45,7 @@ public class WaveSwipStyleActivity extends AppCompatActivity implements AdapterV
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_style_wave_swip);
+        setContentView(R.layout.activity_style_circle);
 
         mToolbar = (Toolbar)findViewById(R.id.toolbar);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -107,8 +107,9 @@ public class WaveSwipStyleActivity extends AppCompatActivity implements AdapterV
         mToolbar.setBackgroundResource(colorPrimary);
         mRefreshLayout.setPrimaryColorsId(colorPrimary, android.R.color.white);
         if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().setStatusBarColor(DesignUtil.getColor(this, colorPrimaryDark));
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, colorPrimaryDark));
         }
     }
+
 
 }

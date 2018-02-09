@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
-import com.scwang.smartrefresh.header.flyrefresh.FlyView;
 import com.scwang.smartrefresh.header.flyrefresh.MountainSceneView;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
@@ -33,9 +32,9 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
 
     private View mFlyView;
     private AnimatorSet mFlyAnimator;
-    private MountainSceneView mSceneView;
     private RefreshLayout mRefreshLayout;
     private RefreshKernel mRefreshKernel;
+    private MountainSceneView mSceneView;
     private int mOffset = 0;
     private float mCurrentPercent;
     private boolean mIsRefreshing = false;
@@ -53,12 +52,6 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
         super(context, attrs, defStyleAttr);
     }
 
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        mRefreshLayout = null;
-        mRefreshKernel = null;
-    }
     //</editor-fold>
 
     //<editor-fold desc="RefreshHeader">
@@ -89,7 +82,7 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
     }
 
     @Override
-    public void onReleased(RefreshLayout layout, int height, int extendHeight) {
+    public void onReleased(@NonNull RefreshLayout layout, int height, int extendHeight) {
         /*
          * 提前关闭 下拉视图偏移
          */

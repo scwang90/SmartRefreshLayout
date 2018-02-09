@@ -43,7 +43,7 @@
             android:name=".activity.using.NestedLayoutUsingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.style.WaveSwipStyleActivity"
+            android:name=".activity.style.WaveSwipeStyleActivity"
             android:label="@string/title_activity_style_wave_swipe"
             android:screenOrientation="portrait" />
         <activity
@@ -63,7 +63,7 @@
             android:label="@string/title_activity_style_taurus"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.style.BezierStyleActivity"
+            android:name=".activity.style.BezierRadarStyleActivity"
             android:label="@string/title_activity_style_bezier"
             android:screenOrientation="portrait" />
         <activity
@@ -71,7 +71,7 @@
             android:label="@string/title_activity_style_classics"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.style.CircleStyleActivity"
+            android:name=".activity.style.BezierCircleStyleActivity"
             android:label="@string/title_activity_style_circle"
             android:screenOrientation="portrait" />
         <activity
@@ -87,7 +87,7 @@
             android:label="@string/title_activity_style_storehouse"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.style.DropboxStyleActivity"
+            android:name=".activity.style.DropBoxStyleActivity"
             android:label="@string/title_activity_style_dropbox"
             android:screenOrientation="portrait" />
         <activity

@@ -107,7 +107,7 @@ public class RefreshInternalWrapper implements RefreshInternal {
     }
 
     @Override
-    public void onReleased(RefreshLayout refreshLayout, int height, int extendHeight) {
+    public void onReleased(@NonNull RefreshLayout refreshLayout, int height, int extendHeight) {
         if (mWrapperView instanceof RefreshInternal) {
             ((RefreshInternal) mWrapperView).onReleased(refreshLayout, height, extendHeight);
         }

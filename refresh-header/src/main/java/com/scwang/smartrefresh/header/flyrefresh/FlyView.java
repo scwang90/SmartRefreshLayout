@@ -3,7 +3,6 @@ package com.scwang.smartrefresh.header.flyrefresh;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import com.scwang.smartrefresh.header.internal.pathview.PathsDrawable;
 import com.scwang.smartrefresh.header.internal.pathview.PathsView;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
@@ -12,10 +11,6 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
  * Created by SCWANG on 2017/6/6.
  */
 public class FlyView extends PathsView {
-
-    public FlyView(Context context) {
-        this(context, null);
-    }
 
     public FlyView(Context context, AttributeSet attrs) {
         super(context, attrs);

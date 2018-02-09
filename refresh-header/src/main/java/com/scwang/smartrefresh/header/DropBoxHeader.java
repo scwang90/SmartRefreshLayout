@@ -117,12 +117,6 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
     }
 
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(resolveSize(getSuggestedMinimumWidth(), widthMeasureSpec),
-                resolveSize(getSuggestedMinimumHeight(), heightMeasureSpec));
-    }
-
-    @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         AccelerateInterpolator interpolator = new AccelerateInterpolator();

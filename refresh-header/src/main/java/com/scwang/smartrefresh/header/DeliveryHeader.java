@@ -105,12 +105,6 @@ public class DeliveryHeader extends InternalAbstract implements RefreshHeader {
     }
 
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(resolveSize(getSuggestedMinimumWidth(), widthMeasureSpec),
-                resolveSize(getSuggestedMinimumHeight(), heightMeasureSpec));
-    }
-
-    @Override
     protected void dispatchDraw(Canvas canvas) {
         final int width = getWidth();
         final int height = getHeight();
@@ -183,7 +177,7 @@ public class DeliveryHeader extends InternalAbstract implements RefreshHeader {
     }
 
     @Override
-    public void onReleased(RefreshLayout layout, int height, int extendHeight) {
+    public void onReleased(@NonNull RefreshLayout layout, int height, int extendHeight) {
         onStartAnimator(layout, height, extendHeight);
     }
 

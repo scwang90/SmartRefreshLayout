@@ -66,21 +66,16 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader, I
     //<editor-fold desc="构造方法">
     public TwoLevelHeader(@NonNull Context context) {
         super(context);
-//        this.initView(context, null);
     }
 
     public TwoLevelHeader(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-//        this.initView(context, attrs);
     }
 
     public TwoLevelHeader(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-//        this.initView(context, attrs);
     }
 
-//    public void initView(Context context, AttributeSet attrs) {
-//    }
     //</editor-fold>
 
     //<editor-fold desc="生命周期">
@@ -278,8 +273,8 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader, I
     }
 
     @Override
-    public void onReleased(RefreshLayout layout, int height, int extendHeight) {
-        mRefreshHeader.onReleased(layout, height, extendHeight);
+    public void onReleased(@NonNull RefreshLayout refreshLayout, int height, int extendHeight) {
+        mRefreshHeader.onReleased(refreshLayout, height, extendHeight);
     }
 
     @NonNull
@@ -299,13 +294,13 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader, I
     }
 
     @Override
-    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
-        mRefreshHeader.onStartAnimator(layout, height, extendHeight);
+    public void onStartAnimator(@NonNull RefreshLayout refreshLayout, int height, int extendHeight) {
+        mRefreshHeader.onStartAnimator(refreshLayout, height, extendHeight);
     }
 
     @Override
-    public int onFinish(@NonNull RefreshLayout layout, boolean success) {
-        return mRefreshHeader.onFinish(layout, success);
+    public int onFinish(@NonNull RefreshLayout refreshLayout, boolean success) {
+        return mRefreshHeader.onFinish(refreshLayout, success);
     }
 
     @Override
@@ -314,7 +309,7 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader, I
     }
     //</editor-fold>
 
-    //<editor-fold desc="开放API">
+    //<editor-fold desc="开放接口 - API">
 
     /**
      * 设置指定的Header
@@ -343,7 +338,6 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader, I
 
     /**
      * 设置下拉Header的最大高度比值
-     *
      * @param rate MaxDragHeight/HeaderHeight
      */
     public TwoLevelHeader setMaxRage(float rate) {
@@ -379,8 +373,8 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader, I
         return this;
     }
 
-    public TwoLevelHeader setEnableTwoLevel(boolean enable) {
-        this.mEnableTwoLevel = enable;
+    public TwoLevelHeader setEnableTwoLevel(boolean enabled) {
+        this.mEnableTwoLevel = enabled;
         return this;
     }
 

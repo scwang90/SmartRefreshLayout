@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.support.annotation.ColorInt;
-import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
@@ -34,15 +33,7 @@ public class WaterDropView extends View {
     private final static int BACK_ANIM_DURATION = 180;
 
     public WaterDropView(Context context) {
-        this(context, null);
-    }
-
-    public WaterDropView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public WaterDropView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(context);
 
         topCircle = new Circle();
         bottomCircle = new Circle();

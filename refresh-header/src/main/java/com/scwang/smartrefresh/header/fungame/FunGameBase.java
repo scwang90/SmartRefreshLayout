@@ -100,13 +100,6 @@ public abstract class FunGameBase extends InternalAbstract implements RefreshHea
         return super.onTouchEvent(event);
     }
 
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        mRefreshKernel = null;
-        mRefreshContent = null;
-    }
-
     //</editor-fold>
 
     //<editor-fold desc="abstract">

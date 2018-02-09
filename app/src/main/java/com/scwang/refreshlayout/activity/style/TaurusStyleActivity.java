@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -19,7 +20,6 @@ import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.util.DesignUtil;
 
 import java.util.Arrays;
 
@@ -146,10 +146,10 @@ public class TaurusStyleActivity extends AppCompatActivity implements AdapterVie
         mAppBarLayout.setBackgroundResource(colorPrimary);
         mToolbarLayout.setContentScrimResource(colorPrimary);
         mRefreshLayout.setPrimaryColorsId(colorPrimary, android.R.color.white);
-        mActionButton.setBackgroundColor(DesignUtil.getColor(this, colorPrimaryDark));
-        mActionButton.setBackgroundTintList(ColorStateList.valueOf(DesignUtil.getColor(this, colorPrimaryDark)));
+        mActionButton.setBackgroundColor(ContextCompat.getColor(this, colorPrimaryDark));
+        mActionButton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, colorPrimaryDark)));
         if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().setStatusBarColor(DesignUtil.getColor(this, colorPrimaryDark));
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, colorPrimaryDark));
         }
     }
 

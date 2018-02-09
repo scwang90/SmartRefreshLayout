@@ -84,8 +84,8 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<SmartV
         addAnimate(holder, holder.getLayoutPosition());
     }
 
-    public void setOpenAnimationEnable(boolean enable) {
-        this.mOpenAnimationEnable = enable;
+    public void setOpenAnimationEnable(boolean enabled) {
+        this.mOpenAnimationEnable = enabled;
     }
 
     //</editor-fold>

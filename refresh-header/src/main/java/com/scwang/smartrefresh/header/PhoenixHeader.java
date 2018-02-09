@@ -120,8 +120,6 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
         mMatrix = new Matrix();
         DensityUtil density = new DensityUtil();
         mSunSize = density.dip2px(40);
-        setupAnimation();
-        setupPathsDrawable();
         setMinimumHeight(density.dip2px(100));
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.PhoenixHeader);
@@ -138,15 +136,9 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
         }
 
         ta.recycle();
-    }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(resolveSize(getSuggestedMinimumWidth(), widthMeasureSpec),
-                resolveSize(getSuggestedMinimumHeight(), heightMeasureSpec));
-    }
 
-    private void setupAnimation() {
+        //<editor-fold desc="setupAnimation">
         mAnimation = new Animation() {
             @Override
             public void applyTransformation(float interpolatedTime, Transformation t) {
@@ -158,9 +150,9 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
         mAnimation.setRepeatMode(Animation.RESTART);
         mAnimation.setInterpolator(LINEAR_INTERPOLATOR);
         mAnimation.setDuration(ANIMATION_DURATION);
-    }
+        //</editor-fold>
 
-    private void setupPathsDrawable() {
+        //<editor-fold desc="setupPathsDrawable">
         int widthPixels = Resources.getSystem().getDisplayMetrics().widthPixels;
         mDrawableTown = new PathsDrawable();
         mDrawableTown.parserPaths(townPaths);
@@ -178,7 +170,9 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
         mDrawableSun.parserPaths(sunPaths);
         mDrawableSun.parserColors(sunColors);
         mDrawableSun.setBounds(0, 0, mSunSize, mSunSize);
+        //</editor-fold>
     }
+
     //</editor-fold>
 
     //<editor-fold desc="RefreshHeader">
@@ -196,7 +190,7 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
     }
 
     @Override
-    public void onReleased(RefreshLayout layout, int height, int extendHeight) {
+    public void onReleased(@NonNull RefreshLayout layout, int height, int extendHeight) {
         isRefreshing = true;
         startAnimation(mAnimation);
     }

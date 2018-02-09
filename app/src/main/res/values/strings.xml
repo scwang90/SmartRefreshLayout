@@ -31,8 +31,8 @@
     <string name="title_activity_style_fungame_hitblock">FunGameHitBlockHeader</string>
     <string name="title_activity_style_storehouse">StoreHouseHeader</string>
     <string name="title_activity_style_dropbox">DropBoxHeader</string>
-    <string name="title_activity_style_delivery">气球快递</string>
-    <string name="title_activity_style_flyrefresh">纸飞机</string>
+    <string name="title_activity_style_delivery">DeliveryHeader</string>
+    <string name="title_activity_style_flyrefresh">FlyRefreshHeader</string>
     <string name="title_activity_using_basic">基本使用</string>
     <string name="title_activity_using_assign_default">全局默认</string>
     <string name="title_activity_using_assign_xml">XML配置</string>

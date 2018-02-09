@@ -78,7 +78,7 @@ public class FalsifyHeader extends InternalAbstract implements RefreshHeader {
     }
 
     @Override
-    public void onReleased(RefreshLayout layout, int height, int extendHeight) {
+    public void onReleased(@NonNull RefreshLayout layout, int height, int extendHeight) {
         if (mRefreshKernel != null) {
             mRefreshKernel.setState(RefreshState.None);
             //onReleased 的时候 调用 setState(RefreshState.None); 并不会立刻改变成 None

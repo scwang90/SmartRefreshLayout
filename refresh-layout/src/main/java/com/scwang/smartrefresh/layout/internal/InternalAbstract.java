@@ -70,7 +70,7 @@ public abstract class InternalAbstract extends RelativeLayout implements Refresh
     }
 
     @Override
-    public void onReleased(RefreshLayout refreshLayout, int height, int extendHeight) {
+    public void onReleased(@NonNull RefreshLayout refreshLayout, int height, int extendHeight) {
 
     }
 

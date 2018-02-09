@@ -15,7 +15,6 @@ import android.view.animation.DecelerateInterpolator;
 
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
@@ -29,8 +28,6 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
 
     //<editor-fold desc="Field">
 
-    private static final int DURATION_FINISH = 800; //动画时长
-
     private Path mPath;
     private Paint mBackPaint;
     private Paint mFrontPaint;
@@ -40,7 +37,6 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
     private float mSpringRatio;
     private float mFinishRatio;
 
-    private RefreshState mState;
     private float mBollY;//弹出球体的Y坐标
     private boolean mShowBoll;//是否显示中心球体
     private boolean mShowBollTail;//是否显示球体拖拽的尾巴
@@ -69,7 +65,7 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
     public BezierCircleHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        setMinimumHeight(DensityUtil.dp2px(100));
+        setMinimumHeight(DensityUtil.dp2px(50));
         mBackPaint = new Paint();
         mBackPaint.setColor(0xff11bbff);
         mBackPaint.setAntiAlias(true);
@@ -82,12 +78,6 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
         mOuterPaint.setStyle(Paint.Style.STROKE);
         mOuterPaint.setStrokeWidth(DensityUtil.dp2px(2f));
         mPath = new Path();
-    }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(resolveSize(getSuggestedMinimumWidth(), widthMeasureSpec),
-                resolveSize(getSuggestedMinimumHeight(), heightMeasureSpec));
     }
 
     //</editor-fold>
@@ -315,14 +305,10 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
     }
 
     @Override
-    public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
-        mState = newState;
-    }
-
-    @Override
     public int onFinish(@NonNull RefreshLayout layout, boolean success) {
         mShowBoll = false;
         mShowOuter = false;
+        final int DURATION_FINISH = 800; //动画时长
         ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
