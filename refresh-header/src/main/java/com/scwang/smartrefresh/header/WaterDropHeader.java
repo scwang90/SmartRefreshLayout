@@ -125,10 +125,10 @@ public class WaterDropHeader extends InternalAbstract implements RefreshHeader {
         if (mState == RefreshState.Refreshing) {
             canvas.save();
             canvas.translate(
-                    getWidth()/2-mProgressDrawable.width()/2,
+                    getWidth()/2-mProgressDrawable.getBounds().width()/2,
                     mWaterDropView.getMaxCircleRadius()
                             +mWaterDropView.getPaddingTop()
-                            -mProgressDrawable.height()/2
+                            -mProgressDrawable.getBounds().height()/2
             );
             mProgressDrawable.draw(canvas);
             canvas.restore();

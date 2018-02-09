@@ -360,6 +360,7 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
                 mRadarScale = (float) animation.getAnimatedValue();
             } else if (PROPERTY_WAVE_HEIGHT == propertyName) {
                 if (mWavePulling) {
+                    animation.cancel();
                     return;
                 }
                 mWaveHeight = (int) animation.getAnimatedValue() / 2;

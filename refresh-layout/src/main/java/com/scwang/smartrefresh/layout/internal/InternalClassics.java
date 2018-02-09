@@ -52,21 +52,16 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
 
     //<editor-fold desc="RelativeLayout">
     public InternalClassics(Context context) {
-        super(context);
-        this.initView(context, null);
+        this(context, null);
     }
 
     public InternalClassics(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        this.initView(context, attrs);
+        this(context, attrs, 0);
     }
 
     public InternalClassics(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.initView(context, attrs);
-    }
 
-    private void initView(Context context, AttributeSet attrs) {
         DensityUtil density = new DensityUtil();
 
         mCenterLayout = new LinearLayout(context);
@@ -128,6 +123,17 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        Drawable drawable = mProgressView.getDrawable();
+        if (drawable instanceof Animatable) {
+            if (((Animatable) drawable).isRunning()) {
+                ((Animatable) drawable).stop();
+            }
+        }
+    }
+
     protected abstract T self();
 
     //</editor-fold>
@@ -147,35 +153,29 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
     public void onStartAnimator(@NonNull RefreshLayout refreshLayout, int height, int extendHeight) {
         if (mProgressView.getVisibility() != VISIBLE) {
             mProgressView.setVisibility(VISIBLE);
-            if (mProgressDrawable != null) {
-                mProgressDrawable.start();
+            Drawable drawable = mProgressView.getDrawable();
+            if (drawable instanceof Animatable) {
+                ((Animatable) drawable).start();
             } else {
-                Drawable drawable = mProgressView.getDrawable();
-                if (drawable instanceof Animatable) {
-                    ((Animatable) drawable).start();
-                } else {
-                    mProgressView.animate().rotation(36000).setDuration(100000);
-                }
+                mProgressView.animate().rotation(36000).setDuration(100000);
             }
         }
     }
 
     @Override
-    public void onReleased(RefreshLayout refreshLayout, int height, int extendHeight) {
+    public void onReleased(@NonNull RefreshLayout refreshLayout, int height, int extendHeight) {
         onStartAnimator(refreshLayout, height, extendHeight);
     }
 
     @Override
-    public int onFinish(@NonNull RefreshLayout layout, boolean success) {
-        if (mProgressDrawable != null) {
-            mProgressDrawable.stop();
-        } else {
-            Drawable drawable = mProgressView.getDrawable();
-            if (drawable instanceof Animatable) {
+    public int onFinish(@NonNull RefreshLayout refreshLayout, boolean success) {
+        Drawable drawable = mProgressView.getDrawable();
+        if (drawable instanceof Animatable) {
+            if (((Animatable) drawable).isRunning()) {
                 ((Animatable) drawable).stop();
-            } else {
-                mProgressView.animate().rotation(0).setDuration(300);
             }
+        } else {
+            mProgressView.animate().rotation(0).setDuration(0);
         }
         mProgressView.setVisibility(GONE);
         return mFinishDuration;//延迟500毫秒之后再弹回
@@ -261,7 +261,6 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
         mTitleText.setTextColor(accentColor);
         if (mArrowDrawable != null) {
             mArrowDrawable.setColor(accentColor);
-//            mArrowDrawable.parserColors(accentColor);
         }
         if (mProgressDrawable != null) {
             mProgressDrawable.setColor(accentColor);

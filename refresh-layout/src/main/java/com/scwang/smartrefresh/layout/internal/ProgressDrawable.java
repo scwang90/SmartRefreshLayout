@@ -115,11 +115,4 @@ public class ProgressDrawable extends Drawable implements Animatable {
         return mValueAnimator.isRunning();
     }
 
-    public int width() {
-        return getBounds().width();
-    }
-
-    public int height() {
-        return getBounds().height();
-    }
 }
