@@ -71,7 +71,7 @@ compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'//一个开源gif控件
 
 ## 嵌套Layout作为内容
 
-如果boos要求在列表的前面**固定**一个广告条怎么办？这好办呀，一般我们会开开心心的下下这样的代码：
+如果boss要求在列表的前面**固定**一个广告条怎么办？这好办呀，一般我们会开开心心的下下这样的代码：
 ```xml
 <LinearLayout
     android:orientation="vertical">
@@ -79,7 +79,7 @@ compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'//一个开源gif控件
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:gravity="center"
-        android:text="我就是boos要求加上的广告条啦"/>
+        android:text="我就是boss要求加上的广告条啦"/>
     <SmartRefreshLayout>
         <ListView/>
     </SmartRefreshLayout>
