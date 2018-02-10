@@ -53,8 +53,8 @@ public class ThreeLevelExampleFragment extends Fragment {
             recyclerView.setAdapter(new BaseRecyclerAdapter<Void>(initData(), simple_list_item_2) {
                 @Override
                 protected void onBindViewHolder(SmartViewHolder holder, Void model, int position) {
-                    holder.text(android.R.id.text1, String.format(Locale.CHINA, "第%02d条数据", position));
-                    holder.text(android.R.id.text2, String.format(Locale.CHINA, "这是测试的第%02d条数据", position));
+                    holder.text(android.R.id.text1, getString(R.string.item_example_number_title, position));
+                    holder.text(android.R.id.text2, getString(R.string.item_example_number_abstract, position));
                     holder.textColorId(android.R.id.text1, android.R.color.white);
                     holder.textColorId(android.R.id.text2, android.R.color.white);
                 }

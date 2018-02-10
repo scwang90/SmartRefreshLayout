@@ -77,6 +77,33 @@
     <string name="index_example_pager">The usage of ViewPager</string>
     <string name="index_example_level">The usage of three level refresh</string>
 
+    <string name="item_style_theme_orange_abstract">Change theme to orange color</string>
+    <string name="item_style_theme_red_abstract">Change theme to red color</string>
+    <string name="item_style_theme_green_abstract">Change theme to green color</string>
+    <string name="item_style_theme_blue_abstract">Change theme to blue color</string>
+    <string name="item_style_theme_default_abstract">Change theme to default color</string>
+    <string name="item_style_content_translation_off">The content stays where it is when it is pulled down</string>
+    <string name="item_style_content_translation_on">The content follow the downward migration when pulling down</string>
+    <string name="item_style_horizontal_drag_on">Open left and right drag effect</string>
+    <string name="item_style_horizontal_drag_off">Close the left and right drag effect</string>
+    <string name="item_style_spinner_scale">The height of the Header is larger when you pull down</string>
+    <string name="item_style_spinner_translation">The Header\'s position is shifted down when you pull down</string>
+    <string name="item_style_spinner_behind">The Header is fixed behind the back when you pull down</string>
+    <string name="item_style_spinner_update_on">Open display last update function</string>
+    <string name="item_style_spinner_update_off">The shutdown shows the last update function</string>
+    <string name="item_style_load_more">The top pull loads more</string>
+    <string name="item_style_bezier_on">Draw the background of bezier curve when pulling down</string>
+    <string name="item_style_bezier_off">Don\'t draw the background of bezier curve when pulling down</string>
+    <string name="item_style_app_bar_expand">Expand the AppBarLayout </string>
+    <string name="item_style_app_bar_collapse">Collapse the AppBarLayout</string>
+    <string name="item_style_store_house_english">And change the display symbol in English</string>
+    <string name="item_style_store_house_chinese">The display symbol is Chinese</string>
+    <string name="item_style_store_house_icon">Follow the display symbol for ICONS</string>
+    <string name="item_style_store_house_brand">It is a trademark for the display symbol</string>
+
+    <string name="item_example_number_title">Item %02d</string>
+    <string name="item_example_number_abstract">This is the abstract item %02d</string>
+
     <string name="github_qq_browser_kernel">The web page is provided by github.com.\nThe QQ browser X5 kernel has been enabled.</string>
 
     <string name="description_set_default_creator">\n

@@ -77,6 +77,33 @@
     <string name="index_practice_qq_browser">QQ浏览器-模拟QQ浏览器内核提示</string>
     <string name="index_practice_second_floor">二级刷新-仿淘宝二楼</string>
 
+    <string name="item_style_theme_orange_abstract">更改为橙色主题颜色</string>
+    <string name="item_style_theme_red_abstract">更改为红色主题颜色</string>
+    <string name="item_style_theme_green_abstract">更改为绿色主题颜色</string>
+    <string name="item_style_theme_blue_abstract">更改为蓝色主题颜色</string>
+    <string name="item_style_content_translation_off">下拉的时候列表内容停留在原位不动</string>
+    <string name="item_style_content_translation_on">下拉的时候列表内容跟随向下偏移</string>
+    <string name="item_style_horizontal_drag_on">打开左右拖动效果</string>
+    <string name="item_style_horizontal_drag_off">关闭左右拖动效果</string>
+    <string name="item_style_spinner_scale">下拉的时候Header的高度跟随变大</string>
+    <string name="item_style_spinner_translation">下拉的时候Header的位置向下偏移</string>
+    <string name="item_style_spinner_behind">下拉的时候Header固定在背后</string>
+    <string name="item_style_spinner_update_on">开启显示上次更新功能</string>
+    <string name="item_style_spinner_update_off">关闭显示上次更新功能</string>
+    <string name="item_style_theme_default_abstract">更改为默认主题颜色</string>
+    <string name="item_style_load_more">上拉加载更多</string>
+    <string name="item_style_bezier_on">下拉的时候绘制贝塞尔曲线背景</string>
+    <string name="item_style_bezier_off">下拉的时候不绘制贝塞尔曲线背景</string>
+    <string name="item_style_app_bar_expand">展开AppBarLayout，变成可伸展头部的页面</string>
+    <string name="item_style_app_bar_collapse">折叠AppBarLayout，变成正常的列表页面</string>
+    <string name="item_style_store_house_english">跟换显示符号为英文</string>
+    <string name="item_style_store_house_chinese">跟换显示符号为中文</string>
+    <string name="item_style_store_house_icon">跟换显示符号为图标</string>
+    <string name="item_style_store_house_brand">跟换显示符号为商标</string>
+
+    <string name="item_example_number_title">第%02d条数据</string>
+    <string name="item_example_number_abstract">这是测试的第%02d条数据</string>
+
     <string name="github_qq_browser_kernel">网页由 github.com 提供\n已启用QQ浏览器X5内核</string>
 
     <string name="description_set_default_creator">这是使用定制Header和Footer的第一种方法-全局默认\n\n

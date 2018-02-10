@@ -2,6 +2,7 @@ package com.scwang.refreshlayout.activity.style;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -26,18 +27,18 @@ import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 public class BezierRadarStyleActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private enum Item {
-        打开左右拖动("打开左右拖动效果"),
-        关闭左右拖动("关闭左右拖动效果"),
-        内容不偏移("下拉的时候列表内容停留在原位不动"),
-        内容跟随偏移("下拉的时候列表内容跟随向下偏移"),
-        橙色主题("更改为橙色主题颜色"),
-        红色主题("更改为红色主题颜色"),
-        绿色主题("更改为绿色主题颜色"),
-        蓝色主题("更改为蓝色主题颜色"),
+        打开左右拖动(R.string.item_style_horizontal_drag_on),
+        关闭左右拖动(R.string.item_style_horizontal_drag_off),
+        内容不偏移(R.string.item_style_content_translation_off),
+        内容跟随偏移(R.string.item_style_content_translation_on),
+        橙色主题(R.string.item_style_theme_orange_abstract),
+        红色主题(R.string.item_style_theme_red_abstract),
+        绿色主题(R.string.item_style_theme_green_abstract),
+        蓝色主题(R.string.item_style_theme_blue_abstract),
         ;
-        public String name;
-        Item(String name) {
-            this.name = name;
+        public int nameId;
+        Item(@StringRes int nameId) {
+            this.nameId = nameId;
         }
     }
 
@@ -76,7 +77,7 @@ public class BezierRadarStyleActivity extends AppCompatActivity implements Adapt
                 @Override
                 protected void onBindViewHolder(SmartViewHolder holder, Item model, int position) {
                     holder.text(android.R.id.text1, model.name());
-                    holder.text(android.R.id.text2, model.name);
+                    holder.text(android.R.id.text2, model.nameId);
                     holder.textColorId(android.R.id.text2, R.color.colorTextAssistant);
                 }
             });

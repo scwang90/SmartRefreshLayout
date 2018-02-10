@@ -2,6 +2,7 @@ package com.scwang.refreshlayout.activity.style;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -25,15 +26,15 @@ import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 public class DropBoxStyleActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private enum Item {
-        默认主题("更改为默认主题颜色"),
-        橙色主题("更改为橙色主题颜色"),
-        红色主题("更改为红色主题颜色"),
-        绿色主题("更改为绿色主题颜色"),
-        蓝色主题("更改为蓝色主题颜色"),
+        默认主题(R.string.item_style_theme_default_abstract),
+        橙色主题(R.string.item_style_theme_orange_abstract),
+        红色主题(R.string.item_style_theme_red_abstract),
+        绿色主题(R.string.item_style_theme_green_abstract),
+        蓝色主题(R.string.item_style_theme_blue_abstract),
         ;
-        public String name;
-        Item(String name) {
-            this.name = name;
+        public int nameId;
+        Item(@StringRes int nameId) {
+            this.nameId = nameId;
         }
     }
 
@@ -70,7 +71,7 @@ public class DropBoxStyleActivity extends AppCompatActivity implements AdapterVi
                 @Override
                 protected void onBindViewHolder(SmartViewHolder holder, Item model, int position) {
                     holder.text(android.R.id.text1, model.name());
-                    holder.text(android.R.id.text2, model.name);
+                    holder.text(android.R.id.text2, model.nameId);
                     holder.textColorId(android.R.id.text2, R.color.colorTextAssistant);
                 }
             });
