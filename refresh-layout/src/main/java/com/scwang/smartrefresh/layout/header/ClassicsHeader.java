@@ -71,14 +71,29 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
 
         if (REFRESH_HEADER_PULLING == null) {
             REFRESH_HEADER_PULLING = context.getString(R.string.srl_header_pulling);
+        }
+        if (REFRESH_HEADER_REFRESHING == null) {
             REFRESH_HEADER_REFRESHING = context.getString(R.string.srl_header_refreshing);
+        }
+        if (REFRESH_HEADER_LOADING == null) {
             REFRESH_HEADER_LOADING = context.getString(R.string.srl_header_loading);
+        }
+        if (REFRESH_HEADER_RELEASE == null) {
             REFRESH_HEADER_RELEASE = context.getString(R.string.srl_header_release);
+        }
+        if (REFRESH_HEADER_FINISH == null) {
             REFRESH_HEADER_FINISH = context.getString(R.string.srl_header_finish);
+        }
+        if (REFRESH_HEADER_FAILED == null) {
             REFRESH_HEADER_FAILED = context.getString(R.string.srl_header_failed);
+        }
+        if (REFRESH_HEADER_UPDATE == null) {
             REFRESH_HEADER_UPDATE = context.getString(R.string.srl_header_update);
+        }
+        if (REFRESH_HEADER_SECONDARY == null) {
             REFRESH_HEADER_SECONDARY = context.getString(R.string.srl_header_secondary);
         }
+
 
         DensityUtil density = new DensityUtil();
 

@@ -11,7 +11,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.graphics.ColorUtils;
 import android.text.TextPaint;
 import android.util.AttributeSet;
@@ -86,14 +85,6 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
     protected int lModelColor, rModelColor, mModelColor;
     protected int mBackColor, mBoundaryColor = 0xff606060;
     //</editor-fold>
-
-    public FunGameView(Context context) {
-        this(context, null);
-    }
-
-    public FunGameView(Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
 
     public FunGameView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);

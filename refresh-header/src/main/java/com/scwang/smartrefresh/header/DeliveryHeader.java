@@ -92,8 +92,6 @@ public class DeliveryHeader extends InternalAbstract implements RefreshHeader {
                 0xfff7ad49
         );
         mBoxDrawable.setGeometricWidth(DensityUtil.dp2px(50));
-//        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.DeliveryHeader);
-//        ta.recycle();
 
         if (isInEditMode()) {
             mState = RefreshState.Refreshing;

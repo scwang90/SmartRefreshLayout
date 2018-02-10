@@ -6,10 +6,6 @@
 [![MinSdk](https://img.shields.io/badge/%20MinSdk%20-%2012%2B%20-f0ad4e.svg)](https://android-arsenal.com/api?level=12)
 [![Methods](https://img.shields.io/badge/Methods%20%7C%20Size%20-%201362%20%7C%20138%20KB-d9534f.svg)](http://www.methodscount.com/?lib=com.scwang.smartrefresh%3ASmartRefreshLayout%3A1.0.4)
 
-<!-- [![Platform](https://img.shields.io/badge/Platform-Android-f0ad4e.svg)](https://www.android.com) -->
-<!-- [![Author](https://img.shields.io/badge/Author-scwang90-11bbff.svg)](https://github.com/scwang90) -->
-
-
 ## English | [中文](README.md)
 
 As the name says, SmartRefreshLayout is a "smart" or "intelligent" pull-down refresh layout，because of its "smart", it does not just support all the Views , but also support multi-layered nested view structures.  
@@ -44,7 +40,7 @@ SmartRefreshLayout's goal is to build a strong, stable and mature pull-down refr
 ![](art/png_apk_rqcode.png)
 
 #### Practical
-|Weibo|Feedlist|
+|Weibo|FeedList|
 |:---:|:---:|
 |![](art/gif_practive_weibo.gif)|![](art/gif_practive_feedlist.gif)|
 
@@ -102,8 +98,8 @@ Please rest assured that I have divided it into three packages, when used to ref
 ## Usage
 #### 1.Add a gradle dependency.
 ```
-compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.5'
-compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.5'//If you use the special Header
+compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.5.1'
+compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.5.1'//If you use the special Header
 
 compile 'com.android.support:appcompat-v7:25.3.1'
 compile 'com.android.support:design:25.3.1'//（Not necessary，Can solve problems that cannot be previewed）
@@ -118,7 +114,7 @@ compile 'com.android.support:design:25.3.1'//（Not necessary，Can solve proble
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerview"
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:overScrollMode="never"
@@ -135,10 +131,10 @@ refreshLayout.setOnRefreshListener(new OnRefreshListener() {
         refreshlayout.finishRefresh(2000);
     }
 });
-refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
     @Override
-    public void onLoadmore(RefreshLayout refreshlayout) {
-        refreshlayout.finishLoadmore(2000);
+    public void onLoadMore(RefreshLayout refreshlayout) {
+        refreshlayout.finishLoadMore(2000);
     }
 });
 ```
@@ -150,13 +146,13 @@ refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
 public class App extends Application {
     public void onCreate() {
         super.onCreate();
-        SmartRefreshLayout.setDefaultRefreshHeaderCreater(new DefaultRefreshHeaderCreater() {
+        SmartRefreshLayout.setDefaultRefreshHeaderCreator(new DefaultRefreshHeaderCreator() {
                 @Override
                 public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
                     return new ClassicsHeader(context).setSpinnerStyle(SpinnerStyle.Translate);
                 }
             });
-        SmartRefreshLayout.setDefaultRefreshFooterCreater(new DefaultRefreshFooterCreater() {
+        SmartRefreshLayout.setDefaultRefreshFooterCreator(new DefaultRefreshFooterCreator() {
                 @Override
                 public RefreshFooter createRefreshFooter(Context context, RefreshLayout layout) {
                     return new ClassicsFooter(context).setSpinnerStyle(SpinnerStyle.Translate);
@@ -230,8 +226,9 @@ Contact me: scwang90@hotmail.com
 
 ## Thanks
 [SwipeRefreshLayout](https://developer.android.com/reference/android/support/v4/widget/SwipeRefreshLayout.html)
+[Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)
 [TwinklingRefreshLayout](https://github.com/lcodecorex/TwinklingRefreshLayout)
-[android-Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)
+[BeautifulRefreshLayout](https://github.com/android-cjj/BeautifulRefreshLayout)
 
 ## Other Works
 [MultiWaveHeader](https://github.com/scwang90/MultiWaveHeader)

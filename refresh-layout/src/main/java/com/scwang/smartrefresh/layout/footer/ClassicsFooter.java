@@ -49,11 +49,29 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
 
         if (REFRESH_FOOTER_PULLING == null) {
             REFRESH_FOOTER_PULLING = context.getString(R.string.srl_footer_pulling);
+        }
+
+        if (REFRESH_FOOTER_RELEASE == null) {
             REFRESH_FOOTER_RELEASE = context.getString(R.string.srl_footer_release);
+        }
+
+        if (REFRESH_FOOTER_LOADING == null) {
             REFRESH_FOOTER_LOADING = context.getString(R.string.srl_footer_loading);
+        }
+
+        if (REFRESH_FOOTER_REFRESHING == null) {
             REFRESH_FOOTER_REFRESHING = context.getString(R.string.srl_footer_refreshing);
+        }
+
+        if (REFRESH_FOOTER_FINISH == null) {
             REFRESH_FOOTER_FINISH = context.getString(R.string.srl_footer_finish);
+        }
+
+        if (REFRESH_FOOTER_FAILED == null) {
             REFRESH_FOOTER_FAILED = context.getString(R.string.srl_footer_failed);
+        }
+
+        if (REFRESH_FOOTER_NOTHING == null) {
             REFRESH_FOOTER_NOTHING = context.getString(R.string.srl_footer_nothing);
         }
 

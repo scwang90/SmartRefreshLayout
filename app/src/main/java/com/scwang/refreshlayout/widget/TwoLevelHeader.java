@@ -26,7 +26,7 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 /**
- * 二级刷新监
+ * 二级刷新
  * Created by SCWANG on 2017/5/26.
  */
 @SuppressWarnings({"unused", "UnusedReturnValue"})
@@ -65,11 +65,11 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader, I
 
     //<editor-fold desc="构造方法">
     public TwoLevelHeader(@NonNull Context context) {
-        super(context);
+        this(context, null);
     }
 
     public TwoLevelHeader(@NonNull Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
+        this(context, attrs, 0);
     }
 
     public TwoLevelHeader(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {

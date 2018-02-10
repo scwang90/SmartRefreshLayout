@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -90,7 +91,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
         mRefreshLayout.setReboundDuration(800);//设置回弹动画时长
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh(RefreshLayout refreshLayout) {
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 View child = mListView.getChildAt(0);
                 if (child != null) {
                     //开始刷新的时候个第一个item设置动画效果
@@ -114,12 +115,12 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
         final AppBarLayout appBar = (AppBarLayout) findViewById(R.id.appbar);
         mRefreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
             @Override
-            public void onHeaderPulling(RefreshHeader header, float percent, int offset, int footerHeight, int extendHeight) {
+            public void onHeaderPulling(@NonNull RefreshHeader header, float percent, int offset, int footerHeight, int extendHeight) {
                 appBar.setTranslationY(offset);
                 toolbar.setTranslationY(-offset);
             }
             @Override
-            public void onHeaderReleasing(RefreshHeader header, float percent, int offset, int footerHeight, int extendHeight) {
+            public void onHeaderReleasing(@NonNull RefreshHeader header, float percent, int offset, int footerHeight, int extendHeight) {
                 appBar.setTranslationY(offset);
                 toolbar.setTranslationY(-offset);
             }

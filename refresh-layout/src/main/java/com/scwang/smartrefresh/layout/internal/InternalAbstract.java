@@ -20,14 +20,6 @@ import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 
 public abstract class InternalAbstract extends RelativeLayout implements RefreshInternal {
 
-    public InternalAbstract(Context context) {
-        super(context);
-    }
-
-    public InternalAbstract(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
-
     public InternalAbstract(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }

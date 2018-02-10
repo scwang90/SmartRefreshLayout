@@ -1,6 +1,7 @@
 package com.scwang.refreshlayout.activity.practice;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -74,7 +75,7 @@ public class RepastPracticeActivity extends AppCompatActivity {
 
             refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
                 @Override
-                public void onRefresh(final RefreshLayout refreshLayout) {
+                public void onRefresh(@NonNull final RefreshLayout refreshLayout) {
                     refreshLayout.getLayout().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -84,7 +85,7 @@ public class RepastPracticeActivity extends AppCompatActivity {
                     }, 2000);
                 }
                 @Override
-                public void onLoadMore(final RefreshLayout refreshLayout) {
+                public void onLoadMore(@NonNull final RefreshLayout refreshLayout) {
                     refreshLayout.getLayout().postDelayed(new Runnable() {
                         @Override
                         public void run() {

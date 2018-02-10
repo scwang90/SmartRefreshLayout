@@ -399,23 +399,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 mRefreshContent.moveSpinner(mSpinner = 0);
             }
 
-            if (mRefreshListener == null) {
-                mRefreshListener = new OnRefreshListener() {
-                    @Override
-                    public void onRefresh(RefreshLayout refreshLayout) {
-                        refreshLayout.finishRefresh(3000);
-                    }
-                };
-            }
-            if (mLoadMoreListener == null) {
-                mLoadMoreListener = new OnLoadMoreListener() {
-                    @Override
-                    public void onLoadMore(RefreshLayout refreshLayout) {
-                        refreshLayout.finishLoadMore(2000);
-                    }
-                };
-            }
-
             if (!mManualNestedScrolling && !isNestedScrollingEnabled()) {
                 post(new Runnable() {
                     @Override
@@ -1074,13 +1057,15 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 //                    mRefreshFooter.onReleased(this, mFooterHeight, mFooterExtendHeight);
 //                }
 //            }
-            notifyStateChanged(RefreshState.Loading);
             mFooterLocked = true;
-            if (mRefreshFooter != null) {
-                mRefreshFooter.onStartAnimator(this, mFooterHeight, mFooterExtendHeight);
-            }
+            notifyStateChanged(RefreshState.Loading);
             if (mLoadMoreListener != null) {
                 mLoadMoreListener.onLoadMore(this);
+            } else if (mOnMultiPurposeListener == null) {
+                finishLoadMore(2000);
+            }
+            if (mRefreshFooter != null) {
+                mRefreshFooter.onStartAnimator(this, mFooterHeight, mFooterExtendHeight);
             }
             if (mOnMultiPurposeListener != null) {
                 mOnMultiPurposeListener.onLoadMore(this);
@@ -1124,6 +1109,8 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 notifyStateChanged(RefreshState.Refreshing);
                 if (mRefreshListener != null) {
                     mRefreshListener.onRefresh(SmartRefreshLayout.this);
+                } else if (mOnMultiPurposeListener == null) {
+                    finishRefresh(3000);
                 }
                 if (mRefreshHeader != null) {
                     mRefreshHeader.onStartAnimator(SmartRefreshLayout.this, mHeaderHeight, mHeaderExtendHeight);
@@ -2395,7 +2382,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     public SmartRefreshLayout setNoMoreData(boolean noMoreData) {
         mFooterNoMoreData = noMoreData;
         if (mRefreshFooter != null && !mRefreshFooter.setNoMoreData(noMoreData)) {
-            System.out.println("Footer:" + mRefreshFooter + "不支持提示完成");
+            System.out.println("Footer:" + mRefreshFooter + " Prompt completion is not supported.(不支持提示完成)");
         }
         return this;
     }
@@ -2558,7 +2545,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                                     public void onAnimationCancel(Animator animation) {
                                         super.onAnimationEnd(animation);
                                     }
-
                                     @Override
                                     public void onAnimationEnd(Animator animation) {
                                         mFooterLocked = false;

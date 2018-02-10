@@ -57,7 +57,8 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
     protected float mRadarRadius = 0;
     protected float mRadarCircle = 0;
     protected float mRadarScale = 0;
-    protected ValueAnimator mRadarAnimator;
+    protected AnimatorSet mAnimatorSet;
+//    protected ValueAnimator mRadarAnimator;
     protected RectF mRadarRect = new RectF(0,0,0,0);
     //</editor-fold>
 
@@ -109,11 +110,16 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        if (mRadarAnimator != null) {
-            mRadarAnimator.removeAllListeners();
-            mRadarAnimator.removeAllUpdateListeners();
-            mRadarAnimator.cancel();
-            mRadarAnimator = null;
+//        if (mRadarAnimator != null) {
+//            mRadarAnimator.removeAllListeners();
+//            mRadarAnimator.removeAllUpdateListeners();
+//            mRadarAnimator.end();
+//            mRadarAnimator = null;
+//        }
+        if (mAnimatorSet != null) {
+            mAnimatorSet.removeAllListeners();
+            mAnimatorSet.end();
+            mAnimatorSet = null;
         }
     }
 
@@ -160,7 +166,7 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
     }
 
     protected void drawRadar(Canvas canvas, int width, int height) {
-        if (mRadarAnimator != null || isInEditMode()) {
+        if (/*mRadarAnimator != null*/mAnimatorSet != null || isInEditMode()) {
             float radius = mRadarRadius * mRadarScale;
             float circle = mRadarCircle * mRadarScale;
 
@@ -216,8 +222,7 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
         mWaveTop = height;
         mWavePulling = false;
 
-        mRadarAnimator = new ValueAnimator();
-        mRadarAnimator = ValueAnimator.ofInt(0,360);
+        ValueAnimator mRadarAnimator = ValueAnimator.ofInt(0,360);
         mRadarAnimator.setDuration(720);
         mRadarAnimator.setRepeatCount(ValueAnimator.INFINITE);
         mRadarAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
@@ -245,13 +250,20 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
         animatorWave.setInterpolator(interpolatorDecelerate);
         animatorWave.setDuration(800);
         animatorWave.start();
+
+        mAnimatorSet = animatorSet;
     }
 
     @Override
     public int onFinish(@NonNull RefreshLayout layout, boolean success) {
-        if (mRadarAnimator != null) {
-            mRadarAnimator.cancel();
-            mRadarAnimator = null;
+//        if (mRadarAnimator != null) {
+//            mRadarAnimator.end();
+//            mRadarAnimator = null;
+//        }
+        if (mAnimatorSet != null) {
+            mAnimatorSet.removeAllListeners();
+            mAnimatorSet.end();
+            mAnimatorSet = null;
         }
 
         final int duration = 400;

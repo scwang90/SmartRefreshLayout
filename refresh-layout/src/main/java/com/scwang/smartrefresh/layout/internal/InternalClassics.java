@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
@@ -51,13 +52,6 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
     protected int mPaddingBottom = 20;
 
     //<editor-fold desc="RelativeLayout">
-    public InternalClassics(Context context) {
-        this(context, null);
-    }
-
-    public InternalClassics(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
 
     public InternalClassics(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -126,6 +120,10 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            mArrowView.animate().cancel();
+            mProgressView.animate().cancel();
+        }
         Drawable drawable = mProgressView.getDrawable();
         if (drawable instanceof Animatable) {
             if (((Animatable) drawable).isRunning()) {

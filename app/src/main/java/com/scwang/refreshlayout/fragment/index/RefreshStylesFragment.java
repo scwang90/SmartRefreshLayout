@@ -59,17 +59,17 @@ public class RefreshStylesFragment extends Fragment implements AdapterView.OnIte
     private enum Item {
         Hidden(R.string.title_activity_style_delivery,DeliveryStyleActivity.class),
         Delivery(R.string.title_activity_style_delivery,DeliveryStyleActivity.class),
-        DropBox(R.string.title_activity_style_dropbox, DropBoxStyleActivity.class),
-        FlyRefresh(R.string.title_activity_style_flyrefresh, FlyRefreshStyleActivity.class),
+        DropBox(R.string.title_activity_style_drop_box, DropBoxStyleActivity.class),
         WaveSwipe(R.string.title_activity_style_wave_swipe, WaveSwipeStyleActivity.class),
+        FlyRefresh(R.string.title_activity_style_fly_refresh, FlyRefreshStyleActivity.class),
         WaterDrop(R.string.title_activity_style_water_drop, WaterDropStyleActivity.class),
         Material(R.string.title_activity_style_material, MaterialStyleActivity.class),
         Phoenix(R.string.title_activity_style_phoenix, PhoenixStyleActivity.class),
         Taurus(R.string.title_activity_style_taurus, TaurusStyleActivity.class),
         Bezier(R.string.title_activity_style_bezier, BezierRadarStyleActivity.class),
         Circle(R.string.title_activity_style_circle, BezierCircleStyleActivity.class),
-        FunGameHitBlock(R.string.title_activity_style_fungame_hitblock, FunGameHitBlockStyleActivity.class),
-        FunGameBattleCity(R.string.title_activity_style_fungame_battlecity, FunGameBattleCityStyleActivity.class),
+        FunGameHitBlock(R.string.title_activity_style_hit_block, FunGameHitBlockStyleActivity.class),
+        FunGameBattleCity(R.string.title_activity_style_battle_city, FunGameBattleCityStyleActivity.class),
         StoreHouse(R.string.title_activity_style_storehouse, StoreHouseStyleActivity.class),
         Classics(R.string.title_activity_style_classics, ClassicsStyleActivity.class),
         ;
@@ -133,7 +133,7 @@ public class RefreshStylesFragment extends Fragment implements AdapterView.OnIte
         if (refreshLayout != null) {
             refreshLayout.setOnRefreshListener(new OnRefreshListener() {
                 @Override
-                public void onRefresh(final RefreshLayout refreshLayout) {
+                public void onRefresh(@NonNull final RefreshLayout refreshLayout) {
                     refreshLayout.finishRefresh(3000);
                     refreshLayout.getLayout().postDelayed(new Runnable() {
                         @Override

@@ -44,6 +44,6 @@
         android:id="@+id/toolbar"
         android:background="@android:color/transparent"
         app:navigationIcon="@drawable/ic_arrow_back_white_24dp"
-        app:title="@string/title_activity_practice_webview"/>
+        app:title="@string/title_activity_practice_web_view"/>
 
 </FrameLayout>

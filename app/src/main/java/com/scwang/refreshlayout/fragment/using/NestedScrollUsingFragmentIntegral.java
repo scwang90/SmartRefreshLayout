@@ -20,7 +20,7 @@ import android.widget.ImageView;
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
-import com.scwang.refreshlayout.fragment.using.NestedScrollUsingFragment.Item;
+import com.scwang.refreshlayout.fragment.using.NestedScrollExampleFragment.Item;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.youth.banner.Banner;
@@ -46,7 +46,7 @@ public class NestedScrollUsingFragmentIntegral extends Fragment implements Adapt
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_using_nestedscroll_integral, container, false);
+        return inflater.inflate(R.layout.fragment_example_nestedscroll_integral, container, false);
     }
 
     @Override
@@ -82,7 +82,7 @@ public class NestedScrollUsingFragmentIntegral extends Fragment implements Adapt
         RefreshLayout refreshLayout = (RefreshLayout) root.findViewById(R.id.refreshLayout);
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
-            public void onLoadMore(final RefreshLayout refreshLayout) {
+            public void onLoadMore(@NonNull final RefreshLayout refreshLayout) {
                 refreshLayout.getLayout().postDelayed(new Runnable() {
                     @Override
                     public void run() {

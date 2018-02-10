@@ -63,6 +63,10 @@ public class MountainSceneView extends View {
 
     //<editor-fold desc="MountainSceneView">
 
+    public MountainSceneView(Context context) {
+        this(context, null);
+    }
+
     public MountainSceneView(Context context, AttributeSet attrs) {
         super(context, attrs);
 

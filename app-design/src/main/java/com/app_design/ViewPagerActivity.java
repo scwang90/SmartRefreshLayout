@@ -99,13 +99,6 @@ public class ViewPagerActivity extends AppCompatActivity {
                     refreshLayout.finishRefresh(2000);
                 }
             });
-//            mRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
-//                @Override
-//                public void onLoadmore(RefreshLayout refreshLayout) {
-//                    mAdapter.loadMore(initData());
-//                    refreshLayout.finishLoadmore(2000);
-//                }
-//            });
             mRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
                 @Override
                 public void onLoadMore(RefreshLayout refreshLayout) {

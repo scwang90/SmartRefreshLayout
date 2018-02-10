@@ -59,7 +59,7 @@ public class TwoLevelPracticeFragment extends Fragment {
 
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh(RefreshLayout refreshLayout) {
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 Toast.makeText(getContext(),"触发刷新事件",Toast.LENGTH_SHORT).show();
                 refreshLayout.finishRefresh(2000);
             }

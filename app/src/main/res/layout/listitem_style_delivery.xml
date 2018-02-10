@@ -8,7 +8,7 @@
     app:cardMaxElevation="2dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context="com.scwang.refreshlayout.activity.using.ListenerUsingActivity">
+    tools:context="com.scwang.refreshlayout.activity.using.ListenerExampleActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

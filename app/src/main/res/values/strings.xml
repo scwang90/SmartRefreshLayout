@@ -1,23 +1,26 @@
 <resources>
     <string name="app_name">SmartRefreshLayout</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_settings">Settings</string>
-
-    <!-- Strings related to Settings -->
-
-    <string name="title_activity_fly_refresh">FlyRefresh</string>
-    <string name="title_activity_index_main">Refresh</string>
 
     <string name="title_style">Style</string>
-    <string name="title_using">Using</string>
+    <string name="title_example">Example</string>
     <string name="title_practice">Practice</string>
 
-    <string name="region_hint">未选择</string>
-    <string name="region_name">已选地区</string>
+    <string name="region_hint">unselected</string>
+    <string name="region_name">selected area</string>
 
     <string name="fragment_refresh_styles">Styles</string>
-    <string name="fragment_refresh_using">使用示例</string>
+    <string name="fragment_refresh_example">Examples</string>
     <string name="fragment_refresh_practice">Practice</string>
+
+    <string name="title_activity_index_main">Refresh</string>
+
+    <string name="title_activity_practice_repast">Restaurant</string>
+    <string name="title_activity_practice_profile">Profile</string>
+    <string name="title_activity_practice_web_view">Github</string>
+    <string name="title_activity_practice_feed_list">Geed List</string>
+    <string name="title_activity_practice_banner">Banner</string>
+    <string name="title_activity_practice_weibo">Weibo Home</string>
+    <string name="title_activity_practice_qq_browser">QQ Browser</string>
 
     <string name="title_activity_style_wave_swipe">WaveSwipeHeader</string>
     <string name="title_activity_style_material">MaterialHeader</string>
@@ -27,41 +30,74 @@
     <string name="title_activity_style_bezier">BezierRadarHeader</string>
     <string name="title_activity_style_classics">ClassicsHeader</string>
     <string name="title_activity_style_circle">BezierCircleHeader</string>
-    <string name="title_activity_style_fungame_battlecity">FunGameBattleCityHeader</string>
-    <string name="title_activity_style_fungame_hitblock">FunGameHitBlockHeader</string>
+    <string name="title_activity_style_battle_city">FunGameBattleCityHeader</string>
+    <string name="title_activity_style_hit_block">FunGameHitBlockHeader</string>
     <string name="title_activity_style_storehouse">StoreHouseHeader</string>
-    <string name="title_activity_style_dropbox">DropBoxHeader</string>
+    <string name="title_activity_style_drop_box">DropBoxHeader</string>
     <string name="title_activity_style_delivery">DeliveryHeader</string>
-    <string name="title_activity_style_flyrefresh">FlyRefreshHeader</string>
-    <string name="title_activity_using_basic">基本使用</string>
-    <string name="title_activity_using_assign_default">全局默认</string>
-    <string name="title_activity_using_assign_xml">XML配置</string>
-    <string name="title_activity_using_assign_code">java代码设置</string>
-    <string name="description_set_default_creater">这是使用定制Header和Footer的第一种方法-全局默认\n\n
-        本方法是实际项目中最常用的方法，其特点有：\n\n
-        1.设置一次全部生效，不用多次写重复的代码\n
-        2.优先级最低，在特别页面可以轻松的覆盖替换\n\n
-        使用方法： \n
-        //设置全局的Header构建器 \n
-        SmartRefreshLayout.setDefaultRefreshHeaderCreater(new DefaultRefreshHeaderCreater() {\n
+    <string name="title_activity_style_fly_refresh">FlyRefreshHeader</string>
+
+    <string name="title_activity_example_basic">General Example</string>
+    <string name="title_activity_example_assign_default">Global Default</string>
+    <string name="title_activity_example_assign_xml">Specified In XML</string>
+    <string name="title_activity_example_assign_code">Specified In Java</string>
+    <string name="title_activity_example_over_scroll">Cross-border springBack</string>
+    <string name="title_activity_example_listener">Multifunction monitor</string>
+    <string name="title_activity_example_custom">Custom Header</string>
+    <string name="title_activity_example_snap_helper">SnapHelper</string>
+
+    <string name="fragment_example_pure_scroll">Pure Rolling Mode</string>
+    <string name="fragment_example_pure_scroll_header">Pure Rolling Mode - Header Only</string>
+    <string name="fragment_example_empty_layout">Empty Layout</string>
+    <string name="fragment_example_empty_layout_inner">Empty Layout - Nested Inside</string>
+    <string name="fragment_example_empty_layout_outer">Empty Layout - Nested Outside</string>
+    <string name="fragment_example_nest_scroll">Nested Scrolling</string>
+    <string name="fragment_example_nested_scroll_integral">Nested Scrolling - Whole Nested</string>
+    <string name="fragment_example_viewpager">ViewPager</string>
+    <string name="fragment_example_three_level">Three Level Refresh</string>
+
+    <string name="index_practice_repast">Simple customization header, HeaderInsetStart</string>
+    <string name="index_practice_profile">Pure scroll mode</string>
+    <string name="index_practice_web_view">Use WebView</string>
+    <string name="index_practice_feed_list">Intelligent identification</string>
+    <string name="index_practice_weibo">MultiPurposeListener</string>
+    <string name="index_practice_banner">Use banner</string>
+    <string name="index_practice_qq_browser">Imitate QQ browser</string>
+    <string name="index_practice_second_floor">Imitate the second floor of "Treasure Prospecting"</string>
+
+    <string name="index_example_basic">The basic usage of refresh layout</string>
+    <string name="index_example_style">Specify the style of Header and Footer</string>
+    <string name="index_example_empty">The usage of empty pages</string>
+    <string name="index_example_layout">Use Layout as content</string>
+    <string name="index_example_nested">The usage of nested scroll</string>
+    <string name="index_example_scroll">The usage of pure rolling mode</string>
+    <string name="index_example_listener">The usage of multifunction listener</string>
+    <string name="index_example_custom">The usage of custom Header</string>
+    <string name="index_example_snap_helper">The usage of SnapHelper</string>
+    <string name="index_example_pager">The usage of ViewPager</string>
+    <string name="index_example_level">The usage of three level refresh</string>
+
+    <string name="github_qq_browser_kernel">The web page is provided by github.com.\nThe QQ browser X5 kernel has been enabled.</string>
+
+    <string name="description_set_default_creator">\n
+        Usage： \n
+        SmartRefreshLayout.setDefaultRefreshHeaderCreator(new DefaultRefreshHeaderCreator() {\n
         public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {\n
-        return new ClassicsHeader(context);//指定为经典Header，默认是 贝塞尔雷达Header\n
+        return new ClassicsHeader(context);\n
         }\n
         });\n
-        //设置全局的Footer构建器\n
-        SmartRefreshLayout.setDefaultRefreshFooterCreater(new DefaultRefreshFooterCreater() {\n
+        SmartRefreshLayout.setDefaultRefreshFooterCreator(new DefaultRefreshFooterCreator() {\n
         public RefreshFooter createRefreshFooter(Context context, RefreshLayout layout) {\n
-        return new ClassicsFooter(context);//指定为经典Footer，默认是 BallPulseFooter\n
+        return new ClassicsFooter(context);\n
         }\n
         });\n\n
-        关键代码，需要在布局生成之前设置，建议代码放在 Application.onCreate 中
+        The key code needs to be set before the layout is generated and the recommended code is placed in the "Application.onCreate".
     </string>
-    <string name="description_define_in_xml"><![CDATA[这是使用定制Header和Footer的第二种方法-Xml中配置\n\n
-        在需要使用特别的Header或者特别配置的页面时候可以使用本方法\n\n
-        本方法的特点：\n
-        1.可以在Androd Studio中的预览窗口预览效果\n
-        2.优先级高于 【全局默认】但是低于 【JavaCode】\n\n
-        代码示例：\n
+    <string name="description_define_in_xml"><![CDATA[\n
+        Feature：\n
+        1.Can preview in Android Studio\n
+        2.Priority is higher than [global default] but below [JavaCode]\n\n
+        Usage：\n
         <com.scwang.smartrefresh.SmartRefreshLayout\n
             \t\tandroid:layout_width="match_parent"\n
             \t\tandroid:layout_height="match_parent">\n
@@ -76,50 +112,10 @@
                 \t\tandroid:layout_height="wrap_content"/>\n
         </com.scwang.smartrefresh.SmartRefreshLayout>\n
     ]]></string>
-    <string name="description_define_in_code">这是使用定制Header和Footer的第三种方法-代码设置\n\n
-        本方法是实际项目中比较少用的方法，其特点有：\n\n
-        1.设置一次生效一次，需要多处设置，建议特别的页面使用\n
-        2.优先级最高，即使使用了会覆盖方法一和方法二的设置\n\n
-        使用方法： \n
+    <string name="description_define_in_code">\n
+        Usage： \n
         final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);\n
-        //设置 Header 为 Material风格\n
         refreshLayout.setRefreshHeader(new MaterialHeader(this));\n
-        //设置 Footer 为 三球动画\n
         refreshLayout.setRefreshFooter(new BallPulseFooter(this));\n\n
     </string>
-    <string name="title_activity_using_overscroll">越界回弹</string>
-    <string name="title_activity_using_listener">多功能监听器</string>
-    <string name="title_activity_using_custom">自定义Header</string>
-    <string name="title_activity_using_snaphelper">SnapHelper</string>
-    <string name="title_activity_practice_repast">餐饮美食</string>
-    <string name="title_activity_practice_profile">个人中心</string>
-    <string name="title_activity_practice_webview">Github</string>
-    <string name="title_activity_practice_feedlist">微博列表</string>
-    <string name="title_activity_practice_banner">滚动广告</string>
-    <string name="title_activity_practice_weibo">微博主页</string>
-    <string name="title_activity_practice_qqbrowser">QQ浏览器</string>
-
-    <string name="github_qqbrowser_kernel">网页由 github.com 提供\n已启用QQ浏览器X5内核</string>
-
-    <string name="fragment_using_purescroll">纯滚动模式</string>
-    <string name="fragment_using_purescroll_header">纯滚动模式-单独指定Header</string>
-    <string name="fragment_using_emptylayout">空页面</string>
-    <string name="fragment_using_emptylayout_inner">空页面-内部嵌套</string>
-    <string name="fragment_using_emptylayout_outer">空页面-外部嵌套</string>
-    <string name="fragment_using_nestscroll">嵌套滚动</string>
-    <string name="fragment_using_nestedscroll_integral">嵌套滚动-整体嵌套</string>
-    <string name="fragment_using_viewpager">ViewPager</string>
-
-    <string name="index_item_repast">Simple customization header, HeaderInsetStart</string>
-    <string name="index_item_profile">Pure scroll mode</string>
-    <string name="index_item_webview">Use WebView</string>
-    <string name="index_item_feedlist">Intelligent identification</string>
-    <string name="index_item_weibo">MultiPurposeListener</string>
-    <string name="index_item_banner">Use banner</string>
-    <string name="index_item_qqbrowser">Imitate QQ browser</string>
-    <string name="index_item_secondfloor">Imitate the second floor of taobao</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="fragment_using_three_level">三级刷新</string>
 </resources>

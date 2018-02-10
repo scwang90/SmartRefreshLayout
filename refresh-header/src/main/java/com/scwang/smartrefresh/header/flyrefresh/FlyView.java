@@ -12,6 +12,10 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
  */
 public class FlyView extends PathsView {
 
+    public FlyView(Context context) {
+        this(context, null);
+    }
+    
     public FlyView(Context context, AttributeSet attrs) {
         super(context, attrs);
         parserColors(0xffffffff);

@@ -47,12 +47,12 @@ public class SecondFloorPracticeFragment extends Fragment {
         final RefreshLayout refreshLayout = (RefreshLayout)root.findViewById(R.id.refreshLayout);
         refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
             @Override
-            public void onHeaderPulling(RefreshHeader header, float percent, int offset, int bottomHeight, int extendHeight) {
+            public void onHeaderPulling(@NonNull RefreshHeader header, float percent, int offset, int bottomHeight, int extendHeight) {
                 toolbar.setAlpha(1 - Math.min(percent, 1));
                 floor.setTranslationY(Math.min(offset - floor.getHeight() + toolbar.getHeight(), refreshLayout.getLayout().getHeight() - floor.getHeight()));
             }
             @Override
-            public void onHeaderReleasing(RefreshHeader header, float percent, int offset, int bottomHeight, int extendHeight) {
+            public void onHeaderReleasing(@NonNull RefreshHeader header, float percent, int offset, int bottomHeight, int extendHeight) {
                 toolbar.setAlpha(1 - Math.min(percent, 1));
                 floor.setTranslationY(Math.min(offset - floor.getHeight() + toolbar.getHeight(), refreshLayout.getLayout().getHeight() - floor.getHeight()));
             }
@@ -76,7 +76,7 @@ public class SecondFloorPracticeFragment extends Fragment {
 
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh(RefreshLayout refreshLayout) {
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 Toast.makeText(getContext(),"触发刷新事件",Toast.LENGTH_SHORT).show();
                 refreshLayout.finishRefresh(2000);
             }

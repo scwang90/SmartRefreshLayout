@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.scwang.refreshlayout.fragment.using.NestedScrollUsingFragmentIntegral">
+
+    <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
+        android:id="@+id/toolbar"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:title="@string/fragment_example_nested_scroll_integral"/>
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlClassicsSpinnerStyle="FixedBehind"
+            app:srlPrimaryColor="#444"
+            app:srlAccentColor="@android:color/white"/>
+        <android.support.design.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.design.widget.AppBarLayout
+                android:id="@+id/appbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorBackgroundDark"
+                app:elevation="0dp">
+
+                <android.support.design.widget.CollapsingToolbarLayout
+                    android:id="@+id/toolbarLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/padding_common"
+                    android:fitsSystemWindows="true"
+                    app:layout_scrollFlags="scroll">
+                    <com.youth.banner.Banner
+                        android:id="@+id/banner"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:background="@color/colorDivision"
+                        app:layout_collapseMode="parallax"
+                        app:is_auto_play="true"/>
+                </android.support.design.widget.CollapsingToolbarLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/padding_common"
+                    android:orientation="vertical"
+                    android:divider="@android:drawable/divider_horizontal_dark"
+                    android:showDividers="beginning|end"
+                    app:layout_scrollFlags="scroll">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/padding_common"
+                        android:paddingLeft="@dimen/padding_common"
+                        android:paddingRight="@dimen/padding_common"
+                        android:orientation="horizontal"
+                        android:background="@android:color/white">
+                        <View
+                            android:layout_width="2dp"
+                            android:layout_height="18dp"
+                            android:background="@color/colorPrimary"/>
+                        <Space
+                            android:layout_width="@dimen/padding_common"
+                            android:layout_height="wrap_content" />
+                        <TextView style="@style/AppTheme.Label"
+                            android:layout_gravity="center_vertical"
+                            android:textColor="@color/colorPrimary"
+                            android:text="特色菜肴"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="@dimen/padding_common"
+                        android:orientation="vertical"
+                        android:background="@android:color/white">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:orientation="horizontal">
+                            <FrameLayout
+                                android:id="@+id/cih_maintain"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:background="@mipmap/image_practice_repast_1">
+                                <TextView style="@style/AppTheme.Label.Title"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="但家香酥鸭"
+                                    android:textColor="@android:color/white"
+                                    android:background="#44000000"/>
+                            </FrameLayout>
+                            <Space
+                                android:layout_width="@dimen/padding_common_d"
+                                android:layout_height="wrap_content" />
+                            <FrameLayout
+                                android:id="@+id/cih_homemaking"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:background="@mipmap/image_practice_repast_2">
+                                <TextView style="@style/AppTheme.Label.Title"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="香菇蒸鸟蛋"
+                                    android:textColor="@android:color/white"
+                                    android:background="#44000000"/>
+                            </FrameLayout>
+
+                        </LinearLayout>
+                        <Space
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/padding_common_d"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp">
+                            <FrameLayout
+                                android:id="@+id/cih_document"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:background="@mipmap/image_practice_repast_3">
+                                <TextView style="@style/AppTheme.Label.Title"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="花溪牛肉粉"
+                                    android:textColor="@android:color/white"
+                                    android:background="#44000000"/>
+                            </FrameLayout>
+                            <Space
+                                android:layout_width="@dimen/padding_common_d"
+                                android:layout_height="wrap_content" />
+                            <FrameLayout
+                                android:id="@+id/cih_wiki"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:background="@mipmap/image_practice_repast_4">
+                                <TextView style="@style/AppTheme.Label.Title"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="破酥包"
+                                    android:textColor="@android:color/white"
+                                    android:background="#44000000"/>
+                            </FrameLayout>
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorBackground"
+                    android:orientation="vertical"
+                    app:layout_collapseMode="pin"
+                    app:layout_scrollFlags="exitUntilCollapsed|enterAlways|enterAlwaysCollapsed">
+                    <View style="@style/AppTheme.Divison"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/padding_common"
+                        android:orientation="horizontal">
+                        <View
+                            android:layout_width="2dp"
+                            android:layout_height="18dp"
+                            android:background="@color/colorPrimary"/>
+                        <Space
+                            android:layout_width="@dimen/padding_common"
+                            android:layout_height="wrap_content" />
+                        <TextView style="@style/AppTheme.Label"
+                            android:layout_gravity="center_vertical"
+                            android:textColor="@color/colorPrimary"
+                            android:text="菜单列表"/>
+                    </LinearLayout>
+                    <View style="@style/AppTheme.Divison"/>
+                </LinearLayout>
+            </android.support.design.widget.AppBarLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorBackgroundDark"
+                android:overScrollMode="never"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                tools:listitem="@android:layout/simple_list_item_2"/>
+
+        </android.support.design.widget.CoordinatorLayout>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+</LinearLayout>

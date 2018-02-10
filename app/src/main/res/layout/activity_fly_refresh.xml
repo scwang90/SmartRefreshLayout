@@ -38,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@android:color/transparent"
-                app:title="@string/title_activity_fly_refresh"
+                app:title="@string/title_activity_style_fly_refresh"
                 app:navigationIcon="?attr/homeAsUpIndicator"
                 app:layout_collapseMode="pin" />
 

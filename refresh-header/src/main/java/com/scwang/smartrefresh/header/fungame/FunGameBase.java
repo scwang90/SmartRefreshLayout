@@ -40,13 +40,6 @@ public abstract class FunGameBase extends InternalAbstract implements RefreshHea
     //</editor-fold>
 
     //<editor-fold desc="View">
-    public FunGameBase(Context context) {
-        this(context,null);
-    }
-
-    public FunGameBase(Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
 
     public FunGameBase(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);

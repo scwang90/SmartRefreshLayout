@@ -32,11 +32,11 @@ public class FalsifyFooter extends InternalAbstract implements RefreshFooter {
 
     //<editor-fold desc="FalsifyHeader">
     public FalsifyFooter(Context context) {
-        super(context);
+        this(context, null);
     }
 
     public FalsifyFooter(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        this(context, attrs, 0);
     }
 
     public FalsifyFooter(Context context, AttributeSet attrs, int defStyleAttr) {
