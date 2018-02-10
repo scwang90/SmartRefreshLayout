@@ -103,6 +103,8 @@
 
     <string name="item_example_number_title">Item %02d</string>
     <string name="item_example_number_abstract">This is the abstract item %02d</string>
+    <string name="item_example_pager_left">Left Pager</string>
+    <string name="item_example_pager_right">Right Pager</string>
 
     <string name="github_qq_browser_kernel">The web page is provided by github.com.\nThe QQ browser X5 kernel has been enabled.</string>
 

@@ -103,6 +103,8 @@
 
     <string name="item_example_number_title">第%02d条数据</string>
     <string name="item_example_number_abstract">这是测试的第%02d条数据</string>
+    <string name="item_example_pager_left">左边</string>
+    <string name="item_example_pager_right">右边</string>
 
     <string name="github_qq_browser_kernel">网页由 github.com 提供\n已启用QQ浏览器X5内核</string>
 
