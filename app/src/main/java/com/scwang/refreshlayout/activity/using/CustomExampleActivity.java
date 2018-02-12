@@ -9,6 +9,7 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Space;
 import android.widget.TextView;
@@ -17,18 +18,17 @@ import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.internal.ArrowDrawable;
-import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 import com.scwang.smartrefresh.layout.internal.ProgressDrawable;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Locale;
 
 import static android.R.layout.simple_list_item_2;
 
@@ -95,7 +95,7 @@ public class CustomExampleActivity extends AppCompatActivity {
         return Arrays.asList(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
     }
 
-    public static class ClassicsHeader extends InternalAbstract implements RefreshHeader {
+    public static class ClassicsHeader extends LinearLayout implements RefreshHeader {
 
         private TextView mHeaderText;//标题文本
         private ImageView mArrowView;//下拉箭头
@@ -129,10 +129,12 @@ public class CustomExampleActivity extends AppCompatActivity {
         public SpinnerStyle getSpinnerStyle() {
             return SpinnerStyle.Translate;//指定为平移，不能null
         }
+
         @Override
         public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
             mProgressDrawable.start();//开始动画
         }
+
         @Override
         public int onFinish(@NonNull RefreshLayout layout, boolean success) {
             mProgressDrawable.stop();//停止动画
@@ -143,6 +145,7 @@ public class CustomExampleActivity extends AppCompatActivity {
             }
             return 500;//延迟500毫秒之后再弹回
         }
+
         @Override
         public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
             switch (newState) {
@@ -163,6 +166,40 @@ public class CustomExampleActivity extends AppCompatActivity {
                     mArrowView.animate().rotation(180);//显示箭头改为朝上
                     break;
             }
+        }
+
+        @Override
+        public void setPrimaryColors(int... colors) {
+
+        }
+
+        @Override
+        public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
+
+        }
+
+        @Override
+        public void onPulling(float percent, int offset, int height, int extendHeight) {
+
+        }
+        @Override
+        public void onReleasing(float percent, int offset, int height, int extendHeight) {
+
+        }
+
+        @Override
+        public void onReleased(@NonNull RefreshLayout refreshLayout, int height, int extendHeight) {
+
+        }
+
+        @Override
+        public void onHorizontalDrag(float percentX, int offsetX, int offsetMax) {
+
+        }
+
+        @Override
+        public boolean isSupportHorizontalDrag() {
+            return false;
         }
     }
 }
