@@ -309,12 +309,12 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         int indexContent = -1;
         for (int i = 0; i < count; i++) {
             View view = super.getChildAt(i);
-            if (!(view instanceof RefreshInternal) && contentLevel < 1) {
+             if (isScrollableView(view) && (contentLevel < 2 || i == 1)) {
+                indexContent = i;
+                contentLevel = 2;
+            } else if (!(view instanceof RefreshInternal) && contentLevel < 1) {
                 indexContent = i;
                 contentLevel = i > 0 ? 1 : 0;
-            } else if (isScrollableView(view) && contentLevel < 2) {
-                indexContent = i;
-                contentLevel = i > 0 ? 2 : 1;
             }
         }
 
