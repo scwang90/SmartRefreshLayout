@@ -12,6 +12,8 @@ import android.graphics.Region;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 
+import com.scwang.smartrefresh.layout.internal.PaintDrawable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,9 +23,9 @@ import java.util.List;
  */
 
 @SuppressWarnings("WeakerAccess")
-public class PathsDrawable extends Drawable {
+public class PathsDrawable extends PaintDrawable {
 
-    protected Paint mPaint;
+//    protected Paint mPaint;
     protected List<Path> mPaths;
     protected List<Integer> mColors;
     protected int mWidth = 1,mHeight = 1;
@@ -36,12 +38,12 @@ public class PathsDrawable extends Drawable {
     protected List<Path> mOriginPaths;
     protected List<String> mOriginSvgs;
 
-    public PathsDrawable() {
-        mPaint = new Paint();
-        mPaint.setColor(0xff11bbff);
-        mPaint.setStyle(Paint.Style.FILL);
-        mPaint.setAntiAlias(true);
-    }
+//    public PathsDrawable() {
+//        mPaint = new Paint();
+//        mPaint.setColor(0xff11bbff);
+//        mPaint.setStyle(Paint.Style.FILL);
+//        mPaint.setAntiAlias(true);
+//    }
 
     protected void onMeasure() {
         Integer top = null,left = null,right = null,bottom = null;
@@ -65,7 +67,7 @@ public class PathsDrawable extends Drawable {
         if (mOriginHeight == 0) {
             mOriginHeight = mHeight;
         }
-        Rect bounds = getBounds();
+        Rect bounds = super.getBounds();
         super.setBounds(bounds.left, bounds.top, bounds.left + mWidth, bounds.top + mHeight);
     }
 
@@ -109,7 +111,7 @@ public class PathsDrawable extends Drawable {
     //<editor-fold desc="Drawable">
     @Override
     public void draw(@NonNull Canvas canvas) {
-        Rect bounds = getBounds();
+        Rect bounds = super.getBounds();
         int width = bounds.width();
         int height = bounds.height();
         if (mPaint.getAlpha() == 0xFF) {
@@ -139,26 +141,26 @@ public class PathsDrawable extends Drawable {
         }
     }
 
-    @Override
-    public void setAlpha(int alpha) {
-        mPaint.setAlpha(alpha);
-    }
-
-    @Override
-    public void setColorFilter(ColorFilter cf) {
-        mPaint.setColorFilter(cf);
-    }
-
-    @Override
-    public int getOpacity() {
-        return PixelFormat.TRANSLUCENT;
-    }
+//    @Override
+//    public void setAlpha(int alpha) {
+//        mPaint.setAlpha(alpha);
+//    }
+//
+//    @Override
+//    public void setColorFilter(ColorFilter cf) {
+//        mPaint.setColorFilter(cf);
+//    }
+//
+//    @Override
+//    public int getOpacity() {
+//        return PixelFormat.TRANSLUCENT;
+//    }
     //</editor-fold>
 
     //<editor-fold desc="API">
 
     public void setGeometricWidth(int width) {
-        Rect bounds = getBounds();
+        Rect bounds = super.getBounds();
         float rate = 1f * width / bounds.width();
         setBounds(
                 (int) (bounds.left * rate),
@@ -170,7 +172,7 @@ public class PathsDrawable extends Drawable {
     }
 
     public void setGeometricHeight(int height) {
-        Rect bounds = getBounds();
+        Rect bounds = super.getBounds();
         float rate = 1f * height / bounds.height();
         setBounds(
                 (int) (bounds.left * rate),

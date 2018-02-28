@@ -40,7 +40,7 @@
             android:label="@string/title_activity_style_fly_refresh"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.using.NestedLayoutExampleActivity"
+            android:name=".activity.example.NestedLayoutExampleActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.style.WaveSwipeStyleActivity"
@@ -95,27 +95,27 @@
             android:label="@string/title_activity_style_drop_box"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.using.BasicExampleActivity"
+            android:name=".activity.example.BasicExampleActivity"
             android:label="@string/title_activity_example_basic"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.using.AssignDefaultExampleActivity"
+            android:name=".activity.example.AssignDefaultExampleActivity"
             android:label="@string/title_activity_example_assign_default"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.using.AssignXmlExampleActivity"
+            android:name=".activity.example.AssignXmlExampleActivity"
             android:label="@string/title_activity_example_assign_xml"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.using.AssignCodeExampleActivity"
+            android:name=".activity.example.AssignCodeExampleActivity"
             android:label="@string/title_activity_example_assign_code"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.using.OverScrollExampleActivity"
+            android:name=".activity.example.OverScrollExampleActivity"
             android:label="@string/title_activity_example_over_scroll"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.using.ListenerExampleActivity"
+            android:name=".activity.example.ListenerExampleActivity"
             android:label="@string/title_activity_example_listener"
             android:screenOrientation="portrait" />
         <activity
@@ -144,10 +144,10 @@
         <activity android:name=".activity.practice.QQBrowserPracticeActivity"
             android:label="@string/title_activity_practice_qq_browser"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.using.CustomExampleActivity"
+        <activity android:name=".activity.example.CustomExampleActivity"
             android:label="@string/title_activity_example_custom"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.using.SnapHelperExampleActivity"
+        <activity android:name=".activity.example.SnapHelperExampleActivity"
             android:label="@string/title_activity_example_snap_helper"
             android:screenOrientation="portrait"/>
     </application>

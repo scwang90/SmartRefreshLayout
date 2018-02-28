@@ -74,6 +74,8 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
     public BezierRadarHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
+        mSpinnerStyle = SpinnerStyle.Scale;
+
         DensityUtil density = new DensityUtil();
 
         mPath = new Path();
@@ -85,9 +87,9 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
         mRadarCircle = density.dip2px(7);
         mPaint.setStrokeWidth(density.dip2px(3));
 
-        setMinimumHeight(density.dip2px(100));
+        super.setMinimumHeight(density.dip2px(100));
 
-        if (isInEditMode()) {
+        if (super.isInEditMode()) {
             mWaveTop = 1000;
             mRadarScale = 1;
             mRadarAngle = 270;
@@ -128,7 +130,7 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
     //<editor-fold desc="绘制方法 - draw">
     @Override
     protected void dispatchDraw(Canvas canvas) {
-        final int width = getWidth(), height = getHeight();
+        final int width = super.getWidth(), height = super.getHeight();
         drawWave(canvas, width);
         drawDot(canvas, width, height);
         drawRadar(canvas, width, height);
@@ -166,7 +168,7 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
     }
 
     protected void drawRadar(Canvas canvas, int width, int height) {
-        if (/*mRadarAnimator != null*/mAnimatorSet != null || isInEditMode()) {
+        if (/*mRadarAnimator != null*/mAnimatorSet != null || super.isInEditMode()) {
             float radius = mRadarRadius * mRadarScale;
             float circle = mRadarCircle * mRadarScale;
 
@@ -202,20 +204,31 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
 
     //<editor-fold desc="刷新接口 - RefreshHeader">
 
-    @Override
-    public void onPulling(float percent, int offset, int height, int extendHeight) {
-        mWavePulling = true;
-        mWaveTop = Math.min(height, offset);
-        mWaveHeight = (int) (1.9f * Math.max(0, offset - height));
-        mDotFraction = percent;
-    }
 
     @Override
-    public void onReleasing(float percent, int offset, int height, int extendHeight) {
-        if (mWavePulling) {
-            onPulling(percent, offset, height, extendHeight);
+    public void onMoving(boolean isDragging, float percent, int offset, int height, int extendHeight) {
+        if (isDragging || mWavePulling) {
+            mWavePulling = true;
+            mWaveTop = Math.min(height, offset);
+            mWaveHeight = (int) (1.9f * Math.max(0, offset - height));
+            mDotFraction = percent;
         }
     }
+
+//    @Override
+//    public void onPulling(float percent, int offset, int height, int extendHeight) {
+//        mWavePulling = true;
+//        mWaveTop = Math.min(height, offset);
+//        mWaveHeight = (int) (1.9f * Math.max(0, offset - height));
+//        mDotFraction = percent;
+//    }
+//
+//    @Override
+//    public void onReleasing(float percent, int offset, int height, int extendHeight) {
+//        if (mWavePulling) {
+//            onPulling(percent, offset, height, extendHeight);
+//        }
+//    }
 
     @Override
     public void onReleased(@NonNull final RefreshLayout refreshLayout, int height, int extendHeight) {
@@ -267,7 +280,7 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
         }
 
         final int duration = 400;
-        final int width = getWidth(), height = getHeight();
+        final int width = super.getWidth(), height = super.getHeight();
         final float bigRadius = (float) (Math.sqrt(width * width + height * height));
         ValueAnimator animator = ValueAnimator.ofFloat(0, bigRadius);
         animator.setDuration(duration);
@@ -300,11 +313,11 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
         }
     }
 
-    @NonNull
-    @Override
-    public SpinnerStyle getSpinnerStyle() {
-        return SpinnerStyle.Scale;
-    }
+//    @NonNull
+//    @Override
+//    public SpinnerStyle getSpinnerStyle() {
+//        return SpinnerStyle.Scale;
+//    }
 
     @Override
     public boolean isSupportHorizontalDrag() {
@@ -315,9 +328,9 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
     public void onHorizontalDrag(float percentX, int offsetX, int offsetMax) {
         mWaveOffsetX = offsetX;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            postInvalidateOnAnimation();
+            super.postInvalidateOnAnimation();
         } else {
-            invalidate();
+            super.invalidate();
         }
     }
     //</editor-fold>
@@ -336,12 +349,12 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
     }
 
     public BezierRadarHeader setPrimaryColorId(@ColorRes int colorId) {
-        setPrimaryColor(DesignUtil.getColor(getContext(), colorId));
+        setPrimaryColor(DesignUtil.getColor(super.getContext(), colorId));
         return this;
     }
 
     public BezierRadarHeader setAccentColorId(@ColorRes int colorId) {
-        setAccentColor(DesignUtil.getColor(getContext(), colorId));
+        setAccentColor(DesignUtil.getColor(super.getContext(), colorId));
         return this;
     }
 
@@ -385,7 +398,7 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
             } else if (PROPERTY_RADAR_ANGLE == propertyName) {
                 mRadarAngle = (int) animation.getAnimatedValue();
             }
-            invalidate();
+            BezierRadarHeader.super.invalidate();
         }
     }
     //</editor-fold>

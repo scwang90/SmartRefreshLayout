@@ -15,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
@@ -78,13 +79,14 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
 
         mRefreshLayout = (RefreshLayout)findViewById(R.id.refreshLayout);
 
-        int deta = new Random().nextInt(7 * 24 * 60 * 60 * 1000);
+        int delta = new Random().nextInt(7 * 24 * 60 * 60 * 1000);
         mClassicsHeader = (ClassicsHeader)mRefreshLayout.getRefreshHeader();
-        mClassicsHeader.setLastUpdateTime(new Date(System.currentTimeMillis()-deta));
+        mClassicsHeader.setLastUpdateTime(new Date(System.currentTimeMillis()-delta));
         mClassicsHeader.setTimeFormat(new SimpleDateFormat("更新于 MM-dd HH:mm", Locale.CHINA));
         mClassicsHeader.setTimeFormat(new DynamicTimeFormat("更新于 %s"));
 
-        mDrawableProgress = mClassicsHeader.getProgressView().getDrawable();
+//        mDrawableProgress = mClassicsHeader.getProgressView().getDrawable();
+        mDrawableProgress = ((ImageView)mClassicsHeader.findViewById(ClassicsHeader.ID_IMAGE_PROGRESS)).getDrawable();
         if (mDrawableProgress instanceof LayerDrawable) {
             mDrawableProgress = ((LayerDrawable) mDrawableProgress).getDrawable(0);
         }

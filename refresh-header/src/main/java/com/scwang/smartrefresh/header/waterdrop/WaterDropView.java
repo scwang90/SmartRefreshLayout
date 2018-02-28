@@ -44,10 +44,10 @@ public class WaterDropView extends View {
         mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         mPaint.setStrokeWidth(STROKE_WIDTH = DensityUtil.dp2px(1f));
         mPaint.setShadowLayer(STROKE_WIDTH, STROKE_WIDTH/2, STROKE_WIDTH, 0x99000000);
-        setLayerType(LAYER_TYPE_SOFTWARE, null);
+        super.setLayerType(LAYER_TYPE_SOFTWARE, null);
 
         int padding = 4 * STROKE_WIDTH;
-        setPadding(padding, padding, padding, padding);
+        super.setPadding(padding, padding, padding, padding);
 
         mPaint.setColor(Color.GRAY);
         mMaxCircleRadius = DensityUtil.dp2px(20);
@@ -73,24 +73,24 @@ public class WaterDropView extends View {
         int width = (int) ((mMaxCircleRadius + STROKE_WIDTH) * 2);
         //高度：上圆半径 + 圆心距 + 下圆半径
         int height = (int) Math.ceil(bottomCircle.y+bottomCircle.radius + STROKE_WIDTH * 2);
-        setMeasuredDimension(width + getPaddingLeft() + getPaddingRight(),
-                resolveSize(height + getPaddingTop() + getPaddingBottom(), heightMeasureSpec));
+        super.setMeasuredDimension(width + super.getPaddingLeft() + super.getPaddingRight(),
+                resolveSize(height + super.getPaddingTop() + super.getPaddingBottom(), heightMeasureSpec));
     }
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
-        updateCompleteState(getHeight());
+        updateCompleteState(super.getHeight());
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        final int paddingTop = getPaddingTop();
-        final int paddingLeft = getPaddingLeft();
-        final int paddingBottom = getPaddingBottom();
-        final int height = getHeight();
+        final int paddingTop = super.getPaddingTop();
+        final int paddingLeft = super.getPaddingLeft();
+        final int paddingBottom = super.getPaddingBottom();
+        final int height = super.getHeight();
         canvas.save();
         if (height <= topCircle.radius * 2 + paddingTop + paddingBottom) {
             canvas.translate(paddingLeft, height - topCircle.radius * 2 - paddingBottom);
@@ -166,7 +166,7 @@ public class WaterDropView extends View {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator1) {
                 WaterDropView.this.updateCompleteState((float) valueAnimator1.getAnimatedValue());
-                WaterDropView.this.postInvalidate();
+                WaterDropView.super.postInvalidate();
             }
         });
         return valueAnimator;
@@ -201,8 +201,8 @@ public class WaterDropView extends View {
      * @param height 高度
      */
     public void updateCompleteState(int height) {
-        final int paddingTop = getPaddingTop();
-        final int paddingBottom = getPaddingBottom();
+        final int paddingTop = super.getPaddingTop();
+        final int paddingBottom = super.getPaddingBottom();
         float space = mMaxCircleRadius * 2 + paddingTop + paddingBottom;
         if (height < space) {
             topCircle.radius = mMaxCircleRadius;

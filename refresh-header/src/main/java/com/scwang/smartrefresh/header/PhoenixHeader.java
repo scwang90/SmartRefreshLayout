@@ -120,14 +120,16 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
         mMatrix = new Matrix();
         DensityUtil density = new DensityUtil();
         mSunSize = density.dip2px(40);
-        setMinimumHeight(density.dip2px(100));
+        super.setMinimumHeight(density.dip2px(100));
+
+        mSpinnerStyle = SpinnerStyle.Scale;
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.PhoenixHeader);
 
         int primaryColor = ta.getColor(R.styleable.PhoenixHeader_phPrimaryColor, 0);
         int accentColor = ta.getColor(R.styleable.PhoenixHeader_phAccentColor, 0);
         if (primaryColor != 0) {
-            setBackgroundColor(primaryColor);
+            super.setBackgroundColor(primaryColor);
             if (accentColor != 0) {
                 mDrawableSky.parserColors(primaryColor, accentColor);
             } else {
@@ -143,7 +145,7 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
             @Override
             public void applyTransformation(float interpolatedTime, Transformation t) {
                 mRotate = (interpolatedTime);
-                invalidate();
+                PhoenixHeader.super.invalidate();
             }
         };
         mAnimation.setRepeatCount(Animation.INFINITE);
@@ -178,27 +180,33 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
     //<editor-fold desc="RefreshHeader">
 
     @Override
-    public void onPulling(float percent, int offset, int height, int extendHeight) {
+    public void onMoving(boolean isDragging, float percent, int offset, int height, int extendHeight) {
         mRotate = mPercent = 1f * offset / height;
         mHeaderHeight = height;
     }
 
-    @Override
-    public void onReleasing(float percent, int offset, int height, int extendHeight) {
-        mRotate = mPercent = 1f * offset / height;
-        mHeaderHeight = height;
-    }
+//    @Override
+//    public void onPulling(float percent, int offset, int height, int extendHeight) {
+//        mRotate = mPercent = 1f * offset / height;
+//        mHeaderHeight = height;
+//    }
+//
+//    @Override
+//    public void onReleasing(float percent, int offset, int height, int extendHeight) {
+//        mRotate = mPercent = 1f * offset / height;
+//        mHeaderHeight = height;
+//    }
 
     @Override
     public void onReleased(@NonNull RefreshLayout layout, int height, int extendHeight) {
         isRefreshing = true;
-        startAnimation(mAnimation);
+        super.startAnimation(mAnimation);
     }
 
     @Override
     public int onFinish(@NonNull RefreshLayout layout, boolean success) {
         isRefreshing = false;
-        clearAnimation();
+        super.clearAnimation();
         return 0;
     }
 
@@ -210,20 +218,20 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
     public void setPrimaryColors(@ColorInt int ... colors) {
         if (mDrawableSky != null) {
             if (colors.length > 1) {
-                setBackgroundColor(colors[0]);
+                super.setBackgroundColor(colors[0]);
                 mDrawableSky.parserColors(colors);
             } else if (colors.length > 0) {
-                setBackgroundColor(colors[0]);
+                super.setBackgroundColor(colors[0]);
                 mDrawableSky.parserColors(colors[0], skyColors[1]);
             }
         }
     }
-
-    @NonNull
-    @Override
-    public SpinnerStyle getSpinnerStyle() {
-        return SpinnerStyle.Scale;
-    }
+//
+//    @NonNull
+//    @Override
+//    public SpinnerStyle getSpinnerStyle() {
+//        return SpinnerStyle.Scale;
+//    }
     //</editor-fold>
 
 //    @Override
@@ -242,8 +250,8 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
     @Override
     protected void dispatchDraw(Canvas canvas) {
 
-        int width = getWidth();
-        int height = getHeight();
+        int width = super.getWidth();
+        int height = super.getHeight();
         drawSky(canvas, width, height);
         drawSun(canvas, width, height);
         drawTown(canvas, width, height);

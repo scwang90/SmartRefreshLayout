@@ -78,7 +78,7 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
         DensityUtil density = new DensityUtil();
 
         mTitleText.setTextColor(0xff666666);
-        mTitleText.setText(isInEditMode() ? REFRESH_FOOTER_LOADING : REFRESH_FOOTER_PULLING);
+        mTitleText.setText(super.isInEditMode() ? REFRESH_FOOTER_LOADING : REFRESH_FOOTER_PULLING);
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ClassicsFooter);
 
@@ -133,10 +133,10 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
 
     }
 
-    @Override
-    protected ClassicsFooter self() {
-        return this;
-    }
+//    @Override
+//    protected ClassicsFooter self() {
+//        return this;
+//    }
 
     //</editor-fold>
 

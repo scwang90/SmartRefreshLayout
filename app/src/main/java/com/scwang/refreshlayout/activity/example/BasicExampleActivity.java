@@ -1,4 +1,4 @@
-package com.scwang.refreshlayout.activity.using;
+package com.scwang.refreshlayout.activity.example;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,7 +17,6 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Locale;
 
 import static android.R.layout.simple_list_item_2;
 

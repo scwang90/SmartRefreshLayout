@@ -1,4 +1,4 @@
-package com.scwang.refreshlayout.fragment.using;
+package com.scwang.refreshlayout.fragment.example;
 
 
 import android.app.Activity;
@@ -19,11 +19,11 @@ import android.widget.AdapterView;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.activity.FragmentActivity;
-import com.scwang.refreshlayout.activity.using.AssignCodeExampleActivity;
-import com.scwang.refreshlayout.activity.using.AssignDefaultExampleActivity;
-import com.scwang.refreshlayout.activity.using.AssignXmlExampleActivity;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
+import com.scwang.refreshlayout.fragment.example.PureScrollExampleFragment.Item;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.header.FalsifyHeader;
 
 import java.util.Arrays;
 
@@ -31,27 +31,14 @@ import static android.R.layout.simple_list_item_2;
 import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 
 /**
- * 使用示例-指定样式
+ * 使用示例-纯滚动模式
  * A simple {@link Fragment} subclass.
  */
-public class SpecifyStyleExampleFragment extends Fragment implements AdapterView.OnItemClickListener {
-
-    public enum Item {
-        Global("全局指定", AssignDefaultExampleActivity.class),
-        Code("代码指定", AssignCodeExampleActivity.class),
-        Xml("XML指定", AssignXmlExampleActivity.class),
-        ;
-        public String name;
-        public Class<?> clazz;
-        Item(String name, Class<?> clazz) {
-            this.name = name;
-            this.clazz = clazz;
-        }
-    }
+public class PureScrollExampleFragmentHeader extends Fragment implements AdapterView.OnItemClickListener {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.common_independence_recycler, container, false);
+        return inflater.inflate(R.layout.fragment_example_purescroll_header, container, false);
     }
 
     @Override
@@ -65,7 +52,9 @@ public class SpecifyStyleExampleFragment extends Fragment implements AdapterView
                 getActivity().finish();
             }
         });
-        toolbar.setTitle("指定样式");
+
+        RefreshLayout refreshLayout = (RefreshLayout) root.findViewById(R.id.refreshLayout);
+        refreshLayout.setRefreshHeader(new FalsifyHeader(getContext()));//也可以在 XML 中添加 FalsifyHeader
 
         View view = root.findViewById(R.id.recyclerView);
         if (view instanceof RecyclerView) {

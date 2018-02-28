@@ -43,8 +43,9 @@ public abstract class FunGameBase extends InternalAbstract implements RefreshHea
 
     public FunGameBase(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        setMinimumHeight(DensityUtil.dp2px(100));
+        super.setMinimumHeight(DensityUtil.dp2px(100));
         mScreenHeightPixels = context.getResources().getDisplayMetrics().heightPixels;
+        mSpinnerStyle = SpinnerStyle.MatchLayout;
     }
 
     @Override
@@ -137,8 +138,9 @@ public abstract class FunGameBase extends InternalAbstract implements RefreshHea
 
     //<editor-fold desc="RefreshHeader">
 
+
     @Override
-    public void onPulling(float percent, int offset, int height, int extendHeight) {
+    public void onMoving(boolean isDragging, float percent, int offset, int height, int extendHeight) {
         if (mManualOperation) onManualOperationMove(percent, offset, height, extendHeight);
         else {
             mOffset = offset;
@@ -146,15 +148,24 @@ public abstract class FunGameBase extends InternalAbstract implements RefreshHea
         }
     }
 
-    @Override
-    public void onReleasing(float percent, int offset, int height, int extendHeight) {
-        onPulling(percent, offset, height, extendHeight);
-    }
+//    @Override
+//    public void onPulling(float percent, int offset, int height, int extendHeight) {
+//        if (mManualOperation) onManualOperationMove(percent, offset, height, extendHeight);
+//        else {
+//            mOffset = offset;
+//            setTranslationY(mOffset - mHeaderHeight);
+//        }
+//    }
+//
+//    @Override
+//    public void onReleasing(float percent, int offset, int height, int extendHeight) {
+//        onPulling(percent, offset, height, extendHeight);
+//    }
 
     @Override
     public void onStartAnimator(@NonNull RefreshLayout refreshLayout, int height, int extendHeight) {
         mIsFinish = false;
-        setTranslationY(0);
+        super.setTranslationY(0);
     }
 
     @Override
@@ -167,9 +178,10 @@ public abstract class FunGameBase extends InternalAbstract implements RefreshHea
     public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
         mRefreshKernel = kernel;
         mHeaderHeight = height;
-        if (!isInEditMode()) {
-            setTranslationY(mOffset - mHeaderHeight);
-            kernel.requestNeedTouchEventWhenRefreshing(true);
+        if (!super.isInEditMode()) {
+            super.setTranslationY(mOffset - mHeaderHeight);
+            kernel.requestNeedTouchEventFor(this, true);
+//            kernel.requestNeedTouchEventWhenRefreshing(true);
         }
     }
 
@@ -189,11 +201,11 @@ public abstract class FunGameBase extends InternalAbstract implements RefreshHea
         }
         return 0;
     }
-
-    @NonNull
-    @Override
-    public SpinnerStyle getSpinnerStyle() {
-        return SpinnerStyle.MatchLayout;
-    }
+//
+//    @NonNull
+//    @Override
+//    public SpinnerStyle getSpinnerStyle() {
+//        return SpinnerStyle.MatchLayout;
+//    }
     //</editor-fold>
 }

@@ -386,7 +386,7 @@ public class FunGameBattleCityHeader extends FunGameView {
                 isOverstep = false;
             }
         }
-        invalidate();
+        super.invalidate();
     }
 
     /**

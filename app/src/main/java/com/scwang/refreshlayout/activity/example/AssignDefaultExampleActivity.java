@@ -1,4 +1,4 @@
-package com.scwang.refreshlayout.activity.using;
+package com.scwang.refreshlayout.activity.example;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -43,7 +43,7 @@ public class AssignDefaultExampleActivity extends AppCompatActivity {
             }
         });
 
-        /**
+        /*
          * 以下代码仅仅为了演示效果而已，不是必须的
          * 关键代码在构造函数中
          */
@@ -61,6 +61,14 @@ public class AssignDefaultExampleActivity extends AppCompatActivity {
                         refreshLayout.autoRefresh();
                         refreshLayout.setOnMultiPurposeListener(null);
                     }
+                }
+                @Override
+                public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                    refreshLayout.finishLoadMore(2000);
+                }
+                @Override
+                public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                    refreshLayout.finishRefresh(3000);
                 }
             });
         }

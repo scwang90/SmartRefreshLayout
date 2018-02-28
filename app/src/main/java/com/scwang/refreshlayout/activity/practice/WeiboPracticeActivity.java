@@ -68,17 +68,23 @@ public class WeiboPracticeActivity extends AppCompatActivity {
         });
         refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
             @Override
-            public void onHeaderPulling(@NonNull RefreshHeader header, float percent, int offset, int bottomHeight, int extendHeight) {
+            public void onHeaderMoving(RefreshHeader header, boolean isDragging, float percent, int offset, int headerHeight, int extendHeight) {
                 mOffset = offset / 2;
                 parallax.setTranslationY(mOffset - mScrollY);
                 toolbar.setAlpha(1 - Math.min(percent, 1));
             }
-            @Override
-            public void onHeaderReleasing(@NonNull RefreshHeader header, float percent, int offset, int bottomHeight, int extendHeight) {
-                mOffset = offset / 2;
-                parallax.setTranslationY(mOffset - mScrollY);
-                toolbar.setAlpha(1 - Math.min(percent, 1));
-            }
+//            @Override
+//            public void onHeaderPulling(@NonNull RefreshHeader header, float percent, int offset, int bottomHeight, int extendHeight) {
+//                mOffset = offset / 2;
+//                parallax.setTranslationY(mOffset - mScrollY);
+//                toolbar.setAlpha(1 - Math.min(percent, 1));
+//            }
+//            @Override
+//            public void onHeaderReleasing(@NonNull RefreshHeader header, float percent, int offset, int bottomHeight, int extendHeight) {
+//                mOffset = offset / 2;
+//                parallax.setTranslationY(mOffset - mScrollY);
+//                toolbar.setAlpha(1 - Math.min(percent, 1));
+//            }
         });
         scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             private int lastScrollY = 0;

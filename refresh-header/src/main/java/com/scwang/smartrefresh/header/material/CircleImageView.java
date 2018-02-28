@@ -51,7 +51,7 @@ public class CircleImageView extends ImageView {
 
     public CircleImageView(Context context, int color) {
         super(context);
-        final float density = getContext().getResources().getDisplayMetrics().density;
+        final float density = super.getContext().getResources().getDisplayMetrics().density;
         final int shadowYOffset = (int) (density * Y_OFFSET);
         final int shadowXOffset = (int) (density * X_OFFSET);
 
@@ -60,7 +60,7 @@ public class CircleImageView extends ImageView {
         ShapeDrawable circle;
         if (android.os.Build.VERSION.SDK_INT >= 21) {
             circle = new ShapeDrawable(new OvalShape());
-            setElevation(SHADOW_ELEVATION * density);
+            super.setElevation(SHADOW_ELEVATION * density);
         } else {
             OvalShape oval = new OvalShadow(mShadowRadius);
             circle = new ShapeDrawable(oval);
@@ -69,14 +69,14 @@ public class CircleImageView extends ImageView {
                     KEY_SHADOW_COLOR);
             final int padding = mShadowRadius;
             // set padding so the inner image sits correctly within the shadow.
-            setPadding(padding, padding, padding, padding);
+            super.setPadding(padding, padding, padding, padding);
         }
         circle.getPaint().setColor(color);
         if (Build.VERSION.SDK_INT >= 16) {
-            this.setBackground(circle);
+            super.setBackground(circle);
         } else {
             //noinspection deprecation
-            this.setBackgroundDrawable(circle);
+            super.setBackgroundDrawable(circle);
         }
     }
 
@@ -84,8 +84,9 @@ public class CircleImageView extends ImageView {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         if (Build.VERSION.SDK_INT < 21) {
-            setMeasuredDimension(getMeasuredWidth() + mShadowRadius * 2, getMeasuredHeight()
-                    + mShadowRadius * 2);
+            super.setMeasuredDimension(
+                    super.getMeasuredWidth() + mShadowRadius * 2,
+                    super.getMeasuredHeight() + mShadowRadius * 2);
         }
     }
 
@@ -126,8 +127,8 @@ public class CircleImageView extends ImageView {
 
     @Override
     public void setBackgroundColor(@ColorInt int color) {
-        if (getBackground() instanceof ShapeDrawable) {
-            ((ShapeDrawable) getBackground()).getPaint().setColor(color);
+        if (super.getBackground() instanceof ShapeDrawable) {
+            ((ShapeDrawable) super.getBackground()).getPaint().setColor(color);
         }
     }
 

@@ -15,22 +15,15 @@ import android.support.annotation.NonNull;
  * Created by SCWANG on 2018/2/5.
  */
 
-public class ArrowDrawable extends Drawable {
+public class ArrowDrawable extends PaintDrawable {
 
     private int mWidth = 0;
     private int mHeight = 0;
     private Path mPath = new Path();
-    private Paint mPaint = new Paint();
-
-    public ArrowDrawable() {
-        mPaint.setStyle(Paint.Style.FILL);
-        mPaint.setAntiAlias(true);
-        mPaint.setColor(0xff11bbff);
-    }
 
     @Override
     public void draw(@NonNull Canvas canvas) {
-        Rect bounds = getBounds();
+        Rect bounds = super.getBounds();
         int width = bounds.width();
         int height = bounds.height();
         if (mWidth != width || mHeight != height) {
@@ -54,24 +47,5 @@ public class ArrowDrawable extends Drawable {
             mHeight = height;
         }
         canvas.drawPath(mPath, mPaint);
-    }
-
-    public void setColor(@ColorInt int color) {
-        mPaint.setColor(color);
-    }
-
-    @Override
-    public void setAlpha(int alpha) {
-        mPaint.setAlpha(alpha);
-    }
-
-    @Override
-    public void setColorFilter(ColorFilter cf) {
-        mPaint.setColorFilter(cf);
-    }
-
-    @Override
-    public int getOpacity() {
-        return PixelFormat.TRANSLUCENT;
     }
 }

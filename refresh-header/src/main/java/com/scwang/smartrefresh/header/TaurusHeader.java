@@ -101,7 +101,7 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
 
         DensityUtil density = new DensityUtil();
 
-        setMinimumHeight(density.dip2px(100));
+        super.setMinimumHeight(density.dip2px(100));
 
         mMatrix = new Matrix();
         mWinds = new HashMap<>();
@@ -112,13 +112,15 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
         mWindPaint.setStrokeWidth(density.dip2px(3));
         mWindPaint.setAlpha(50);
 
+        mSpinnerStyle = SpinnerStyle.Scale;
+
         //<editor-fold desc="setupAnimations">
         mAnimation = new Animation() {
             @Override
             public void applyTransformation(float interpolatedTime, @NonNull Transformation t) {
                 /*SLOW DOWN ANIMATION IN {@link #SLOW_DOWN_ANIMATION_COEFFICIENT} time */
                 mLoadingAnimationTime = LOADING_ANIMATION_COEFFICIENT * (interpolatedTime / SLOW_DOWN_ANIMATION_COEFFICIENT);
-                invalidate();
+                TaurusHeader.super.invalidate();
             }
         };
         mAnimation.setRepeatCount(Animation.INFINITE);
@@ -149,9 +151,9 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
 
         int primaryColor = ta.getColor(R.styleable.TaurusHeader_thPrimaryColor, 0);
         if (primaryColor != 0) {
-            setBackgroundColor(primaryColor);
+            super.setBackgroundColor(primaryColor);
         } else {
-            setBackgroundColor(0xff11bbff);
+            super.setBackgroundColor(0xff11bbff);
         }
 
         ta.recycle();
@@ -163,32 +165,41 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
     //<editor-fold desc="RefreshHeader">
 
     @Override
-    public void onPulling(float percent, int offset, int height, int extendHeight) {
+    public void onMoving(boolean isDragging, float percent, int offset, int height, int extendHeight) {
         mPercent = percent;
         mHeaderHeight = height;
-        mFinishTransformation = 0;
+        if (isDragging) {
+            mFinishTransformation = 0;
+        }
     }
 
-    @Override
-    public void onReleasing(float percent, int offset, int height, int extendHeight) {
-        mPercent = percent;
-        mHeaderHeight = height;
-    }
+//    @Override
+//    public void onPulling(float percent, int offset, int height, int extendHeight) {
+//        mPercent = percent;
+//        mHeaderHeight = height;
+//        mFinishTransformation = 0;
+//    }
+//
+//    @Override
+//    public void onReleasing(float percent, int offset, int height, int extendHeight) {
+//        mPercent = percent;
+//        mHeaderHeight = height;
+//    }
 
     @Override
     public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
         isRefreshing = true;
         mFinishTransformation = 0;
-        startAnimation(mAnimation);
+        super.startAnimation(mAnimation);
     }
 
     @Override
     public int onFinish(@NonNull RefreshLayout layout, boolean success) {
-        clearAnimation();
+        super.clearAnimation();
         if (success) {
-            startAnimation(new Animation() {{
-                setDuration(100);
-                setInterpolator(new AccelerateInterpolator());
+            super.startAnimation(new Animation() {{
+                super.setDuration(100);
+                super.setInterpolator(new AccelerateInterpolator());
             }
                 @Override
                 protected void applyTransformation(float interpolatedTime, Transformation t) {
@@ -196,7 +207,7 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
                         isRefreshing = false;
                     }
                     mFinishTransformation = interpolatedTime;
-                    invalidate();
+                    TaurusHeader.super.invalidate();
                 }
             });
             return 200;
@@ -212,14 +223,14 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
      */
     @Override@Deprecated
     public void setPrimaryColors(@ColorInt int ... colors) {
-        setBackgroundColor(colors[0]);
+        super.setBackgroundColor(colors[0]);
     }
-
-    @NonNull
-    @Override
-    public SpinnerStyle getSpinnerStyle() {
-        return SpinnerStyle.Scale;
-    }
+//
+//    @NonNull
+//    @Override
+//    public SpinnerStyle getSpinnerStyle() {
+//        return SpinnerStyle.Scale;
+//    }
     //</editor-fold>
 
     //<editor-fold desc="draw">
@@ -227,8 +238,8 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
     @Override
     protected void dispatchDraw(Canvas canvas) {
 
-        int width = getWidth();
-        int height = getHeight();
+        int width = super.getWidth();
+        int height = super.getHeight();
         if (isRefreshing) {
             // Set up new set of wind
             while (mWinds.size() < WIND_SET_AMOUNT) {
@@ -324,7 +335,7 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
         // Drag percent will newer get more then 1 here
         float dragPercent = Math.min(1f, Math.abs(mPercent));
 
-        if (isInEditMode()) {
+        if (super.isInEditMode()) {
             dragPercent = 1;
             mHeaderHeight = height;
         }
@@ -407,7 +418,7 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
         matrix.reset();
         float dragPercent = Math.min(1f, Math.abs(mPercent));
 
-        if (isInEditMode()) {
+        if (super.isInEditMode()) {
             dragPercent = 1;
             mHeaderHeight = height;
         }
@@ -484,7 +495,7 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
         float dragPercent = mPercent;
         float rotateAngle = 0;
 
-        if (isInEditMode()) {
+        if (super.isInEditMode()) {
             dragPercent = 1;
             mHeaderHeight = height;
         }

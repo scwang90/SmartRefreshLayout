@@ -1,4 +1,4 @@
-package com.scwang.refreshlayout.fragment.using;
+package com.scwang.refreshlayout.fragment.example;
 
 
 import android.app.Activity;
@@ -23,11 +23,13 @@ import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.activity.FragmentActivity;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
-import com.scwang.refreshlayout.fragment.using.EmptyLayoutExampleFragment.Item;
+import com.scwang.refreshlayout.fragment.example.EmptyLayoutExampleFragment.Item;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 
 import java.util.Arrays;
 
@@ -40,15 +42,16 @@ import static com.scwang.refreshlayout.R.id.refreshLayout;
  * 使用示例-空布页面
  * A simple {@link Fragment} subclass.
  */
-public class EmptyLayoutExampleFragmentOuter extends Fragment implements AdapterView.OnItemClickListener, OnRefreshListener {
+public class EmptyLayoutExampleFragmentInner extends Fragment implements AdapterView.OnItemClickListener, OnRefreshListener {
 
     private View mEmptyLayout;
     private RecyclerView mRecyclerView;
     private RefreshLayout mRefreshLayout;
+    private static boolean mIsNeedDemo = true;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_example_emptylayout_outer, container, false);
+        return inflater.inflate(R.layout.fragment_example_emptylayout_inner, container, false);
     }
 
     @Override
@@ -78,27 +81,33 @@ public class EmptyLayoutExampleFragmentOuter extends Fragment implements Adapter
         image.setImageResource(R.drawable.ic_empty);
 
         TextView empty = (TextView) root.findViewById(R.id.empty_text);
-        empty.setText("暂无数据点击刷新");
+        empty.setText("暂无数据下拉刷新");
 
-        ((View)empty.getParent()).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                doRefresh(0);
-            }
-        });
-
+        /*主动演示刷新*/
+        if (mIsNeedDemo) {
+            mRefreshLayout.getLayout().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (mIsNeedDemo) {
+                        mRefreshLayout.autoRefresh();
+                    }
+                }
+            }, 3000);
+            mRefreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
+                @Override
+                public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
+                    mIsNeedDemo = false;
+                }
+            });
+        }
     }
 
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-        doRefresh(2000);
-    }
-
-    protected void doRefresh(int delayed) {
         mRefreshLayout.getLayout().postDelayed(new Runnable() {
             @Override
             public void run() {
-                mRecyclerView.setAdapter(new BaseRecyclerAdapter<Item>(Arrays.asList(Item.values()), simple_list_item_2, EmptyLayoutExampleFragmentOuter.this) {
+                mRecyclerView.setAdapter(new BaseRecyclerAdapter<Item>(Arrays.asList(Item.values()), simple_list_item_2,EmptyLayoutExampleFragmentInner.this) {
                     @Override
                     protected void onBindViewHolder(SmartViewHolder holder, Item model, int position) {
                         holder.text(android.R.id.text1, model.name());
@@ -109,7 +118,7 @@ public class EmptyLayoutExampleFragmentOuter extends Fragment implements Adapter
                 mRefreshLayout.finishRefresh();
                 mEmptyLayout.setVisibility(View.GONE);
             }
-        }, delayed);
+        }, 2000);
     }
 
     @Override

@@ -29,12 +29,12 @@ public interface RefreshLayout {
      */
     RefreshLayout setFooterHeight(float dp);
 
-    /**
-     * 设置 Footer 高度
-     * @param px 像素
-     * @return RefreshLayout
-     */
-    RefreshLayout setFooterHeightPx(int px);
+//    /**
+//     * 设置 Footer 高度
+//     * @param px 像素
+//     * @return RefreshLayout
+//     */
+//    RefreshLayout setFooterHeightPx(int px);
 
     /**
      * 设置 Header 高度
@@ -43,12 +43,12 @@ public interface RefreshLayout {
      */
     RefreshLayout setHeaderHeight(float dp);
 
-    /**
-     * 设置 Header 高度
-     * @param px 像素
-     * @return RefreshLayout
-     */
-    RefreshLayout setHeaderHeightPx(int px);
+//    /**
+//     * 设置 Header 高度
+//     * @param px 像素
+//     * @return RefreshLayout
+//     */
+//    RefreshLayout setHeaderHeightPx(int px);
 
     /**
      * 设置 Header 起始偏移量
@@ -57,12 +57,12 @@ public interface RefreshLayout {
      */
     RefreshLayout setHeaderInsetStart(float insetDp);
 
-    /**
-     * 设置 Header 起始偏移量
-     * @param insetPx 像素
-     * @return RefreshLayout
-     */
-    RefreshLayout setHeaderInsetStartPx(int insetPx);
+//    /**
+//     * 设置 Header 起始偏移量
+//     * @param insetPx 像素
+//     * @return RefreshLayout
+//     */
+//    RefreshLayout setHeaderInsetStartPx(int insetPx);
 
     /**
      * 设置 Footer 起始偏移量
@@ -71,12 +71,12 @@ public interface RefreshLayout {
      */
     RefreshLayout setFooterInsetStart(float insetDp);
 
-    /**
-     * 设置 Footer 起始偏移量
-     * @param insetPx 像素
-     * @return RefreshLayout
-     */
-    RefreshLayout setFooterInsetStartPx(int insetPx);
+//    /**
+//     * 设置 Footer 起始偏移量
+//     * @param insetPx 像素
+//     * @return RefreshLayout
+//     */
+//    RefreshLayout setFooterInsetStartPx(int insetPx);
 
     /**
      * 显示拖动高度/真实拖动高度 比率（默认0.5，阻尼效果）
@@ -446,12 +446,12 @@ public interface RefreshLayout {
      */
     boolean autoRefresh();
 
-    /**
-     * 自动刷新
-     * @param delayed 开始延时
-     * @return RefreshLayout
-     */
-    boolean autoRefresh(int delayed);
+//    /**
+//     * 自动刷新
+//     * @param delayed 开始延时
+//     * @return RefreshLayout
+//     */
+//    boolean autoRefresh(int delayed);
 
     /**
      * 自动刷新
@@ -468,12 +468,12 @@ public interface RefreshLayout {
      */
     boolean autoLoadMore();
 
-    /**
-     * 自动加载
-     * @param delayed 开始延时
-     * @return RefreshLayout
-     */
-    boolean autoLoadMore(int delayed);
+//    /**
+//     * 自动加载
+//     * @param delayed 开始延时
+//     * @return RefreshLayout
+//     */
+//    boolean autoLoadMore(int delayed);
 
     /**
      * 自动加载
@@ -496,30 +496,30 @@ public interface RefreshLayout {
      */
     boolean isEnableLoadMore();
 
-    /**
-     * 是否正在刷新
-     * @deprecated 后续版本将会移除
-     *      使用 {@link #getState()} == {@link RefreshState#Refreshing} 代替
-     * @return RefreshLayout
-     */
-    @Deprecated
-    boolean isRefreshing();
-
-    /**
-     * 是否正在加载
-     * @deprecated 后续版本将会移除
-     *      使用 {@link #getState()} == {@link RefreshState#Loading} 代替
-     * @return RefreshLayout
-     */
-    @Deprecated
-    boolean isLoading();
-
-    /**
-     * 恢复没有更多数据的原始状态
-     * @deprecated 请使用{@link RefreshLayout#setNoMoreData(boolean)}
-     * @return RefreshLayout
-     */
-    @Deprecated
-    RefreshLayout resetNoMoreData();
+//    /**
+//     * 是否正在刷新
+//     * @deprecated 后续版本将会移除
+//     *      使用 {@link #getState()} == {@link RefreshState#Refreshing} 代替
+//     * @return RefreshLayout
+//     */
+//    @Deprecated
+//    boolean isRefreshing();
+//
+//    /**
+//     * 是否正在加载
+//     * @deprecated 后续版本将会移除
+//     *      使用 {@link #getState()} == {@link RefreshState#Loading} 代替
+//     * @return RefreshLayout
+//     */
+//    @Deprecated
+//    boolean isLoading();
+//
+//    /**
+//     * 恢复没有更多数据的原始状态
+//     * @deprecated 请使用{@link RefreshLayout#setNoMoreData(boolean)}
+//     * @return RefreshLayout
+//     */
+//    @Deprecated
+//    RefreshLayout resetNoMoreData();
 
 }

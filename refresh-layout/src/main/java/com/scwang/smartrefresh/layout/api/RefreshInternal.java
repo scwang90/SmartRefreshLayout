@@ -47,21 +47,30 @@ public interface RefreshInternal extends OnStateChangedListener {
      */
     void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight);
     /**
-     * 手指拖动下拉（会连续多次调用）
+     * 手指拖动下拉（会连续多次调用，添加isDragging并取代之前的onPulling、onReleasing）
+     * @param isDragging true 手指正在拖动 false 回弹动画
      * @param percent 下拉的百分比 值 = offset/footerHeight (0 - percent - (footerHeight+extendHeight) / footerHeight )
      * @param offset 下拉的像素偏移量  0 - offset - (footerHeight+extendHeight)
      * @param height 高度 HeaderHeight or FooterHeight
      * @param extendHeight 扩展高度  extendHeaderHeight or extendFooterHeight
      */
-    void onPulling(float percent, int offset, int height, int extendHeight);
-    /**
-     * 手指释放之后的持续动画（会连续多次调用）
-     * @param percent 下拉的百分比 值 = offset/footerHeight (0 - percent - (footerHeight+extendHeight) / footerHeight )
-     * @param offset 下拉的像素偏移量  0 - offset - (footerHeight+extendHeight)
-     * @param height 高度 HeaderHeight or FooterHeight
-     * @param extendHeight 扩展高度  extendHeaderHeight or extendFooterHeight
-     */
-    void onReleasing(float percent, int offset, int height, int extendHeight);
+    void onMoving(boolean isDragging, float percent, int offset, int height, int extendHeight);
+//    /**
+//     * 手指拖动下拉（会连续多次调用）
+//     * @param percent 下拉的百分比 值 = offset/footerHeight (0 - percent - (footerHeight+extendHeight) / footerHeight )
+//     * @param offset 下拉的像素偏移量  0 - offset - (footerHeight+extendHeight)
+//     * @param height 高度 HeaderHeight or FooterHeight
+//     * @param extendHeight 扩展高度  extendHeaderHeight or extendFooterHeight
+//     */
+//    void onPulling(float percent, int offset, int height, int extendHeight);
+//    /**
+//     * 手指释放之后的持续动画（会连续多次调用）
+//     * @param percent 下拉的百分比 值 = offset/footerHeight (0 - percent - (footerHeight+extendHeight) / footerHeight )
+//     * @param offset 下拉的像素偏移量  0 - offset - (footerHeight+extendHeight)
+//     * @param height 高度 HeaderHeight or FooterHeight
+//     * @param extendHeight 扩展高度  extendHeaderHeight or extendFooterHeight
+//     */
+//    void onReleasing(float percent, int offset, int height, int extendHeight);
 
     /**
      * 释放时刻（调用一次，将会触发加载）

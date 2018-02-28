@@ -229,12 +229,24 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
      */
     public WaveView(Context context) {
         super(context);
-        setUpPaint();
-        setUpPath();
+//        setUpPaint();
+        float density = getResources().getDisplayMetrics().density;
+        mPaint = new Paint();
+        mPaint.setColor(0xff2196F3);
+        mPaint.setAntiAlias(true);
+        mPaint.setStyle(Paint.Style.FILL);
+        mPaint.setShadowLayer((int) (0.5f + 2.0f * density), 0f, 0f, SHADOW_COLOR);
+
+//        setUpPath();
+        mWavePath = new Path();
+        mDropTangentPath = new Path();
+        mDropCirclePath = new Path();
+        mShadowPath = new Path();
+
         resetAnimator();
 
         mDropRect = new RectF();
-        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        super.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         getViewTreeObserver().addOnPreDrawListener(this);
     }
 
@@ -269,7 +281,7 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
         //引っ張ってる最中の波と終わったあとの波
 //    canvas.drawPath(mWavePath, mShadowPaint);
         canvas.drawPath(mWavePath, mPaint);
-        if (!isInEditMode()) {
+        if (!super.isInEditMode()) {
             mWavePath.rewind();
             //円が落ちる部分の描画
             mDropTangentPath.rewind();
@@ -347,26 +359,26 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
         super.onDetachedFromWindow();
     }
 
-    private void setUpPaint() {
-        float density = getResources().getDisplayMetrics().density;
-        mPaint = new Paint();
-        mPaint.setColor(0xff2196F3);
-        mPaint.setAntiAlias(true);
-        mPaint.setStyle(Paint.Style.FILL);
-        mPaint.setShadowLayer((int) (0.5f + 2.0f * density), 0f, 0f, SHADOW_COLOR);
-
-//    float density = getResources().getDisplayMetrics().density;
-//    mShadowPaint = new Paint();
-//    mShadowPaint.setAntiAlias(true);
-//    mShadowPaint.setShadowLayer((int) (0.5f + 2.0f * density), 0f, 0f, SHADOW_COLOR);
-    }
-
-    private void setUpPath() {
-        mWavePath = new Path();
-        mDropTangentPath = new Path();
-        mDropCirclePath = new Path();
-        mShadowPath = new Path();
-    }
+//    private void setUpPaint() {
+//        float density = getResources().getDisplayMetrics().density;
+//        mPaint = new Paint();
+//        mPaint.setColor(0xff2196F3);
+//        mPaint.setAntiAlias(true);
+//        mPaint.setStyle(Paint.Style.FILL);
+//        mPaint.setShadowLayer((int) (0.5f + 2.0f * density), 0f, 0f, SHADOW_COLOR);
+//
+////    float density = getResources().getDisplayMetrics().density;
+////    mShadowPaint = new Paint();
+////    mShadowPaint.setAntiAlias(true);
+////    mShadowPaint.setShadowLayer((int) (0.5f + 2.0f * density), 0f, 0f, SHADOW_COLOR);
+//    }
+//
+//    private void setUpPath() {
+//        mWavePath = new Path();
+//        mDropTangentPath = new Path();
+//        mDropCirclePath = new Path();
+//        mShadowPath = new Path();
+//    }
 
     private void resetAnimator() {
         mDropVertexAnimator = ValueAnimator.ofFloat(0.f, 0.f);
@@ -398,7 +410,7 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
                 mMaxDropHeight - mDropCircleRadius);
         mDropVertexAnimator.start();
         mCurrentCircleCenterY = mMaxDropHeight;
-        postInvalidate();
+        super.postInvalidate();
     }
 
     public void beginPhase(float move1) {
@@ -526,7 +538,7 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
             Log.w("WaveView", "DropHeight is more than " + 500 * (mWidth / 1440.f));
             return;
         }
-        mMaxDropHeight = (int) Math.min(height, getHeight() - mDropCircleRadius);
+        mMaxDropHeight = (int) Math.min(height, super.getHeight() - mDropCircleRadius);
         if (mIsManualRefreshing) {
             mIsManualRefreshing = false;
             manualRefresh();
@@ -665,7 +677,7 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
      */
     public void setWaveColor(@ColorInt int color) {
         mPaint.setColor(color);
-        invalidate();
+        super.invalidate();
     }
 
 //    public void setWaveARGBColor(int a, int r, int g, int b) {

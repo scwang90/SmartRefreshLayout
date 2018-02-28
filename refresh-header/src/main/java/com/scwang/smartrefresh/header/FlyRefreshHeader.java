@@ -56,30 +56,65 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
 
     //<editor-fold desc="RefreshHeader">
 
+
     @Override
-    public void onPulling(float percent, int offset, int height, int extendHeight) {
-        if (offset < 0) {
-            if (mOffset > 0) {
-                offset = 0;
-                percent = 0;
-            } else {
-                return;
+    public void onMoving(boolean isDragging, float percent, int offset, int height, int extendHeight) {
+        if (isDragging || !mIsRefreshing) {
+            if (offset < 0) {
+                if (mOffset > 0) {
+                    offset = 0;
+                    percent = 0;
+                } else {
+                    return;
+                }
             }
-        }
-        mOffset = offset;
-        mCurrentPercent = percent;
-        if (mSceneView != null) {
-            mSceneView.updatePercent(percent);
-            mSceneView.postInvalidate();
-        }
-        if (mFlyView != null) {
-            if (height + extendHeight > 0) {
-                mFlyView.setRotation((-45f) * offset / (height + extendHeight));
-            } else {
-                mFlyView.setRotation((-45f) * percent);
+            mOffset = offset;
+            mCurrentPercent = percent;
+            if (mSceneView != null) {
+                mSceneView.updatePercent(percent);
+                mSceneView.postInvalidate();
+            }
+            if (mFlyView != null) {
+                if (height + extendHeight > 0) {
+                    mFlyView.setRotation((-45f) * offset / (height + extendHeight));
+                } else {
+                    mFlyView.setRotation((-45f) * percent);
+                }
             }
         }
     }
+
+//    @Override
+//    public void onReleasing(float percent, int offset, int height, int extendHeight) {
+//        if (!mIsRefreshing) {
+//            onPulling(percent, offset, height, extendHeight);
+//        }
+//    }
+//
+//    @Override
+//    public void onPulling(float percent, int offset, int height, int extendHeight) {
+//        if (offset < 0) {
+//            if (mOffset > 0) {
+//                offset = 0;
+//                percent = 0;
+//            } else {
+//                return;
+//            }
+//        }
+//        mOffset = offset;
+//        mCurrentPercent = percent;
+//        if (mSceneView != null) {
+//            mSceneView.updatePercent(percent);
+//            mSceneView.postInvalidate();
+//        }
+//        if (mFlyView != null) {
+//            if (height + extendHeight > 0) {
+//                mFlyView.setRotation((-45f) * offset / (height + extendHeight));
+//            } else {
+//                mFlyView.setRotation((-45f) * percent);
+//            }
+//        }
+//    }
 
     @Override
     public void onReleased(@NonNull RefreshLayout layout, int height, int extendHeight) {
@@ -94,7 +129,8 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
             valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
-                    onPulling((float) animation.getAnimatedValue(), 0, 0, 0);
+                    onMoving(true,(float) animation.getAnimatedValue(), 0, 0, 0);
+//                    onPulling((float) animation.getAnimatedValue(), 0, 0, 0);
                 }
             });
             valueAnimator.start();
@@ -131,13 +167,6 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
 
             mFlyAnimator = flyUpAnim;
             mFlyAnimator.start();
-        }
-    }
-
-    @Override
-    public void onReleasing(float percent, int offset, int height, int extendHeight) {
-        if (!mIsRefreshing) {
-            onPulling(percent, offset, height, extendHeight);
         }
     }
 

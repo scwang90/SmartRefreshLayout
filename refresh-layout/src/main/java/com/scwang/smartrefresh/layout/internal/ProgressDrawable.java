@@ -17,30 +17,34 @@ import android.view.animation.LinearInterpolator;
  * Created by SCWANG on 2017/6/16.
  */
 
-public class ProgressDrawable extends Drawable implements Animatable {
+public class ProgressDrawable extends PaintDrawable implements Animatable {
 
     private int mWidth = 0;
     private int mHeight = 0;
     private int mProgressDegree = 0;
     private ValueAnimator mValueAnimator;
     private Path mPath = new Path();
-    private Paint mPaint = new Paint();
 
     public ProgressDrawable() {
-        mPaint.setStyle(Paint.Style.FILL);
-        mPaint.setAntiAlias(true);
-        mPaint.setColor(0xffaaaaaa);
-        setupAnimators();
-    }
-
-    public void setColor(int color) {
-        mPaint.setColor(color);
+        mValueAnimator = ValueAnimator.ofInt(30, 3600);
+        mValueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int value = (int) animation.getAnimatedValue();
+                mProgressDegree = 30 * (value / 30);
+                ProgressDrawable.super.invalidateSelf();
+            }
+        });
+        mValueAnimator.setDuration(10000);
+        mValueAnimator.setInterpolator(new LinearInterpolator());
+        mValueAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        mValueAnimator.setRepeatMode(ValueAnimator.RESTART);
     }
 
     //<editor-fold desc="Drawable">
     @Override
     public void draw(@NonNull Canvas canvas) {
-        Rect bounds = getBounds();
+        Rect bounds = super.getBounds();
         final int width = bounds.width();
         final int height = bounds.height();
         final int r = Math.max(1, width / 20);
@@ -64,37 +68,7 @@ public class ProgressDrawable extends Drawable implements Animatable {
         canvas.restore();
     }
 
-    @Override
-    public void setAlpha(int alpha) {
-        mPaint.setAlpha(alpha);
-    }
-
-    @Override
-    public void setColorFilter(ColorFilter cf) {
-        mPaint.setColorFilter(cf);
-    }
-
-    @Override
-    public int getOpacity() {
-        return PixelFormat.TRANSLUCENT;
-    }
     //</editor-fold>
-
-    private void setupAnimators() {
-        mValueAnimator = ValueAnimator.ofInt(30, 3600);
-        mValueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                int value = (int) animation.getAnimatedValue();
-                mProgressDegree = 30 * (value / 30);
-                invalidateSelf();
-            }
-        });
-        mValueAnimator.setDuration(10000);
-        mValueAnimator.setInterpolator(new LinearInterpolator());
-        mValueAnimator.setRepeatCount(ValueAnimator.INFINITE);
-        mValueAnimator.setRepeatMode(ValueAnimator.RESTART);
-    }
 
     @Override
     public void start() {

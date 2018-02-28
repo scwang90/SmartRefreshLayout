@@ -62,9 +62,11 @@ public class WaterDropHeader extends InternalAbstract implements RefreshHeader {
     public WaterDropHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
+        mSpinnerStyle = SpinnerStyle.Scale;
+
         DensityUtil density = new DensityUtil();
         mWaterDropView = new WaterDropView(context);
-        addView(mWaterDropView, MATCH_PARENT, MATCH_PARENT);
+        super.addView(mWaterDropView, MATCH_PARENT, MATCH_PARENT);
         mWaterDropView.updateCompleteState(0);
 
         mProgressDrawable = new ProgressDrawable();
@@ -77,7 +79,7 @@ public class WaterDropHeader extends InternalAbstract implements RefreshHeader {
         mProgress.setAlpha(255);
         mProgress.setColorSchemeColors(0xffffffff,0xff0099cc,0xffff4444,0xff669900,0xffaa66cc,0xffff8800);
         mImageView.setImageDrawable(mProgress);
-        addView(mImageView, density.dip2px(30), density.dip2px(30));
+        super.addView(mImageView, density.dip2px(30), density.dip2px(30));
     }
 
     @Override
@@ -94,12 +96,12 @@ public class WaterDropHeader extends InternalAbstract implements RefreshHeader {
         );
         int maxWidth = Math.max(mImageView.getMeasuredWidth(), mWaterDropView.getMeasuredHeight());
         int maxHeight = Math.max(mImageView.getMeasuredHeight(), mWaterDropView.getMeasuredHeight());
-        setMeasuredDimension(resolveSize(maxWidth, widthMeasureSpec), resolveSize(maxHeight, heightMeasureSpec));
+        super.setMeasuredDimension(View.resolveSize(maxWidth, widthMeasureSpec), View.resolveSize(maxHeight, heightMeasureSpec));
     }
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        final int measuredWidth = getMeasuredWidth();
+        final int measuredWidth = super.getMeasuredWidth();
 
         final int widthWaterDrop = mWaterDropView.getMeasuredWidth();
         final int heightWaterDrop = mWaterDropView.getMeasuredHeight();
@@ -138,7 +140,7 @@ public class WaterDropHeader extends InternalAbstract implements RefreshHeader {
     @Override
     public void invalidateDrawable(@NonNull Drawable drawable) {
         if (drawable == mProgressDrawable) {
-            invalidate();
+            super.invalidate();
         } else {
             super.invalidateDrawable(drawable);
         }
@@ -148,35 +150,62 @@ public class WaterDropHeader extends InternalAbstract implements RefreshHeader {
 
     //<editor-fold desc="RefreshHeader">
 
-    @Override
-    public void onPulling(float percent, int offset, int height, int extendHeight) {
-        mWaterDropView.updateCompleteState((offset), height + extendHeight);
-        mWaterDropView.postInvalidate();
-
-        float originalDragPercent = 1f * offset / height;
-
-        float dragPercent = Math.min(1f, Math.abs(originalDragPercent));
-        float adjustedPercent = (float) Math.max(dragPercent - .4, 0) * 5 / 3;
-        float extraOS = Math.abs(offset) - height;
-        float tensionSlingshotPercent = Math.max(0, Math.min(extraOS, (float) height * 2)
-                / (float) height);
-        float tensionPercent = (float) ((tensionSlingshotPercent / 4) - Math.pow(
-                (tensionSlingshotPercent / 4), 2)) * 2f;
-        float strokeStart = adjustedPercent * .8f;
-        float rotation = (-0.25f + .4f * adjustedPercent + tensionPercent * 2) * .5f;
-        mProgress.showArrow(true);
-        mProgress.setStartEndTrim(0f, Math.min(MAX_PROGRESS_ANGLE, strokeStart));
-        mProgress.setArrowScale(Math.min(1f, adjustedPercent));
-        mProgress.setProgressRotation(rotation);
-    }
 
     @Override
-    public void onReleasing(float percent, int offset, int height, int extendHeight) {
-        if (mState != RefreshState.Refreshing && mState != RefreshState.RefreshReleased) {
+    public void onMoving(boolean isDragging, float percent, int offset, int height, int extendHeight) {
+        if (isDragging || (mState != RefreshState.Refreshing && mState != RefreshState.RefreshReleased)) {
             mWaterDropView.updateCompleteState(Math.max(offset, 0), height + extendHeight);
             mWaterDropView.postInvalidate();
         }
+        if (isDragging) {
+
+            float originalDragPercent = 1f * offset / height;
+
+            float dragPercent = Math.min(1f, Math.abs(originalDragPercent));
+            float adjustedPercent = (float) Math.max(dragPercent - .4, 0) * 5 / 3;
+            float extraOS = Math.abs(offset) - height;
+            float tensionSlingshotPercent = Math.max(0, Math.min(extraOS, (float) height * 2)
+                    / (float) height);
+            float tensionPercent = (float) ((tensionSlingshotPercent / 4) - Math.pow(
+                    (tensionSlingshotPercent / 4), 2)) * 2f;
+            float strokeStart = adjustedPercent * .8f;
+            float rotation = (-0.25f + .4f * adjustedPercent + tensionPercent * 2) * .5f;
+            mProgress.showArrow(true);
+            mProgress.setStartEndTrim(0f, Math.min(MAX_PROGRESS_ANGLE, strokeStart));
+            mProgress.setArrowScale(Math.min(1f, adjustedPercent));
+            mProgress.setProgressRotation(rotation);
+        }
     }
+
+//    @Override
+//    public void onPulling(float percent, int offset, int height, int extendHeight) {
+//        mWaterDropView.updateCompleteState((offset), height + extendHeight);
+//        mWaterDropView.postInvalidate();
+//
+//        float originalDragPercent = 1f * offset / height;
+//
+//        float dragPercent = Math.min(1f, Math.abs(originalDragPercent));
+//        float adjustedPercent = (float) Math.max(dragPercent - .4, 0) * 5 / 3;
+//        float extraOS = Math.abs(offset) - height;
+//        float tensionSlingshotPercent = Math.max(0, Math.min(extraOS, (float) height * 2)
+//                / (float) height);
+//        float tensionPercent = (float) ((tensionSlingshotPercent / 4) - Math.pow(
+//                (tensionSlingshotPercent / 4), 2)) * 2f;
+//        float strokeStart = adjustedPercent * .8f;
+//        float rotation = (-0.25f + .4f * adjustedPercent + tensionPercent * 2) * .5f;
+//        mProgress.showArrow(true);
+//        mProgress.setStartEndTrim(0f, Math.min(MAX_PROGRESS_ANGLE, strokeStart));
+//        mProgress.setArrowScale(Math.min(1f, adjustedPercent));
+//        mProgress.setProgressRotation(rotation);
+//    }
+//
+//    @Override
+//    public void onReleasing(float percent, int offset, int height, int extendHeight) {
+//        if (mState != RefreshState.Refreshing && mState != RefreshState.RefreshReleased) {
+//            mWaterDropView.updateCompleteState(Math.max(offset, 0), height + extendHeight);
+//            mWaterDropView.postInvalidate();
+//        }
+//    }
 
     @Override
     public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
@@ -229,11 +258,11 @@ public class WaterDropHeader extends InternalAbstract implements RefreshHeader {
             mWaterDropView.setIndicatorColor(colors[0]);
         }
     }
-
-    @NonNull
-    @Override
-    public SpinnerStyle getSpinnerStyle() {
-        return SpinnerStyle.Scale;
-    }
+//
+//    @NonNull
+//    @Override
+//    public SpinnerStyle getSpinnerStyle() {
+//        return SpinnerStyle.Scale;
+//    }
     //</editor-fold>
 }

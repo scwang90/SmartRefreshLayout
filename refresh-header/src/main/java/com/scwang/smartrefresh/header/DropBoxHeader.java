@@ -68,8 +68,10 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
         mBoxBody = new BoxBody();
         mPaint.setAntiAlias(true);
         mAccentColor = 0xff6ea9ff;
-        setBackgroundColor(0xff283645);
-        setMinimumHeight(DensityUtil.dp2px(150));
+        super.setBackgroundColor(0xff283645);
+        super.setMinimumHeight(DensityUtil.dp2px(150));
+
+        mSpinnerStyle = SpinnerStyle.Scale;
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.DropBoxHeader);
         if (ta.hasValue(R.styleable.DropBoxHeader_dhDrawable1)) {
@@ -127,7 +129,7 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 mReboundPercent = (float) animation.getAnimatedValue();
-                DropBoxHeader.this.invalidate();
+                DropBoxHeader.super.invalidate();
             }
         });
         mReboundAnimator.addListener(new AnimatorListenerAdapter() {
@@ -190,8 +192,8 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
     @Override
     protected void dispatchDraw(Canvas canvas) {
 
-        final int width = getWidth();
-        final int height = getHeight();
+        final int width = super.getWidth();
+        final int height = super.getHeight();
 
         final int sideLength = generateSideLength();
         BoxBody body = generateBoxBody(width, height, sideLength);
@@ -202,7 +204,7 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
         mPaint.setColor(mAccentColor);
         canvas.drawPath(generateBoxCoverPath(body), mPaint);
 
-        if (isInEditMode()) {
+        if (super.isInEditMode()) {
             mDropOutPercent = 2.5f;
         }
         if (mDropOutPercent > 0) {
@@ -337,17 +339,25 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
 
     //<editor-fold desc="RefreshHeader">
 
+
     @Override
-    public void onPulling(float percent, int offset, int height, int extendHeight) {
-        if (mState != RefreshState.Refreshing) {
+    public void onMoving(boolean isDragging, float percent, int offset, int height, int extendHeight) {
+        if (!isDragging || mState != RefreshState.Refreshing) {
             mReboundPercent = 1f * Math.max(0, offset - height) / extendHeight;
         }
     }
 
-    @Override
-    public void onReleasing(float percent, int offset, int height, int extendHeight) {
-        mReboundPercent = 1f * Math.max(0, offset - height) / extendHeight;
-    }
+//    @Override
+//    public void onPulling(float percent, int offset, int height, int extendHeight) {
+//        if (mState != RefreshState.Refreshing) {
+//            mReboundPercent = 1f * Math.max(0, offset - height) / extendHeight;
+//        }
+//    }
+//
+//    @Override
+//    public void onReleasing(float percent, int offset, int height, int extendHeight) {
+//        mReboundPercent = 1f * Math.max(0, offset - height) / extendHeight;
+//    }
 
     @Override
     public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
@@ -357,11 +367,11 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
         }
     }
 
-    @NonNull
-    @Override
-    public SpinnerStyle getSpinnerStyle() {
-        return SpinnerStyle.Scale;
-    }
+//    @NonNull
+//    @Override
+//    public SpinnerStyle getSpinnerStyle() {
+//        return SpinnerStyle.Scale;
+//    }
 
     /**
      * @param colors 对应Xml中配置的 srlPrimaryColor srlAccentColor
@@ -370,7 +380,7 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
     @Override@Deprecated
     public void setPrimaryColors(@ColorInt int ... colors) {
         if (colors.length > 0) {
-            setBackgroundColor(colors[0]);
+            super.setBackgroundColor(colors[0]);
             if (colors.length > 1) {
                 mAccentColor = colors[1];
             }

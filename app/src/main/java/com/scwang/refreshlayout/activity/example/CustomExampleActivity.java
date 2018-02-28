@@ -1,4 +1,4 @@
-package com.scwang.refreshlayout.activity.using;
+package com.scwang.refreshlayout.activity.example;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -179,13 +179,18 @@ public class CustomExampleActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onPulling(float percent, int offset, int height, int extendHeight) {
+        public void onMoving(boolean isDragging, float percent, int offset, int height, int extendHeight) {
 
         }
-        @Override
-        public void onReleasing(float percent, int offset, int height, int extendHeight) {
 
-        }
+//        @Override
+//        public void onPulling(float percent, int offset, int height, int extendHeight) {
+//
+//        }
+//        @Override
+//        public void onReleasing(float percent, int offset, int height, int extendHeight) {
+//
+//        }
 
         @Override
         public void onReleased(@NonNull RefreshLayout refreshLayout, int height, int extendHeight) {

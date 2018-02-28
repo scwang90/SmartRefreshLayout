@@ -1,4 +1,4 @@
-package com.scwang.refreshlayout.fragment.using;
+package com.scwang.refreshlayout.fragment.example;
 
 
 import android.content.Context;
@@ -20,7 +20,7 @@ import android.widget.ImageView;
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
-import com.scwang.refreshlayout.fragment.using.NestedScrollExampleFragment.Item;
+import com.scwang.refreshlayout.fragment.example.NestedScrollExampleFragment.Item;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.youth.banner.Banner;

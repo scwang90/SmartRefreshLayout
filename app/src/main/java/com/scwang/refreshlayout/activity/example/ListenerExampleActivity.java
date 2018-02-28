@@ -1,4 +1,4 @@
-package com.scwang.refreshlayout.activity.using;
+package com.scwang.refreshlayout.activity.example;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -28,10 +28,12 @@ public class ListenerExampleActivity extends AppCompatActivity {
     private static DateFormat FORMAT = new SimpleDateFormat("HH:mm sss", Locale.CHINA);
 
     private TextView mTvContent;
-    private String mHeaderPulling;
-    private String mHeaderReleasing;
-    private String mFooterPulling;
-    private String mFooterReleasing;
+    private String mHeaderMoving;
+//    private String mHeaderPulling;
+//    private String mHeaderReleasing;
+    private String mFooterMoving;
+//    private String mFooterPulling;
+//    private String mFooterReleasing;
     private String mFooterStartAnimator;
     private String mHeaderStartAnimator;
     private String mFooterFinish;
@@ -62,20 +64,28 @@ public class ListenerExampleActivity extends AppCompatActivity {
         refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
 
             @Override
-            public void onHeaderPulling(@NonNull RefreshHeader header, float percent, int offset, int headerHeight, int extendHeight) {
-                mHeaderPulling = String.format(Locale.CHINA, "%s\npercent=%.02f offset=%03d\nheight=%03d extend=%03d",
-                        FORMAT.format(new Date()),
+            public void onHeaderMoving(RefreshHeader header, boolean isDragging, float percent, int offset, int headerHeight, int extendHeight) {
+                mHeaderMoving = String.format(Locale.CHINA, "%s\nisDragging=%b,percent=%.02f offset=%03d\nheight=%03d extend=%03d",
+                        FORMAT.format(new Date()),isDragging,
                         percent,offset,headerHeight,extendHeight);
                 updateContent();
             }
 
-            @Override
-            public void onHeaderReleasing(@NonNull RefreshHeader header, float percent, int offset, int headerHeight, int extendHeight) {
-                mHeaderReleasing = String.format(Locale.CHINA, "%s\npercent=%.02f offset=%03d\nheight=%03d extend=%03d",
-                        FORMAT.format(new Date()),
-                        percent,offset,headerHeight,extendHeight);
-                updateContent();
-            }
+//            @Override
+//            public void onHeaderPulling(@NonNull RefreshHeader header, float percent, int offset, int headerHeight, int extendHeight) {
+//                mHeaderPulling = String.format(Locale.CHINA, "%s\npercent=%.02f offset=%03d\nheight=%03d extend=%03d",
+//                        FORMAT.format(new Date()),
+//                        percent,offset,headerHeight,extendHeight);
+//                updateContent();
+//            }
+//
+//            @Override
+//            public void onHeaderReleasing(@NonNull RefreshHeader header, float percent, int offset, int headerHeight, int extendHeight) {
+//                mHeaderReleasing = String.format(Locale.CHINA, "%s\npercent=%.02f offset=%03d\nheight=%03d extend=%03d",
+//                        FORMAT.format(new Date()),
+//                        percent,offset,headerHeight,extendHeight);
+//                updateContent();
+//            }
 
             @Override
             public void onHeaderStartAnimator(@NonNull RefreshHeader header, int headerHeight, int extendHeight) {
@@ -92,20 +102,28 @@ public class ListenerExampleActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFooterPulling(@NonNull RefreshFooter footer, float percent, int offset, int footerHeight, int extendHeight) {
-                mFooterPulling = String.format(Locale.CHINA, "%s\npercent=%.02f\noffset=%03d height=%03d\nextend=%03d",
-                        FORMAT.format(new Date()),
+            public void onFooterMoving(RefreshFooter footer, boolean isDragging, float percent, int offset, int footerHeight, int extendHeight) {
+                mFooterMoving = String.format(Locale.CHINA, "%s\nisDragging=%b,percent=%.02f offset=%03d\nheight=%03d extend=%03d",
+                        FORMAT.format(new Date()),isDragging,
                         percent,offset,footerHeight,extendHeight);
                 updateContent();
             }
 
-            @Override
-            public void onFooterReleasing(@NonNull RefreshFooter footer, float percent, int offset, int footerHeight, int extendHeight) {
-                mFooterReleasing = String.format(Locale.CHINA, "%s\npercent=%.02f\noffset=%03d height=%03d\nextend=%03d",
-                        FORMAT.format(new Date()),
-                        percent,offset,footerHeight,extendHeight);
-                updateContent();
-            }
+//            @Override
+//            public void onFooterPulling(@NonNull RefreshFooter footer, float percent, int offset, int footerHeight, int extendHeight) {
+//                mFooterPulling = String.format(Locale.CHINA, "%s\npercent=%.02f\noffset=%03d height=%03d\nextend=%03d",
+//                        FORMAT.format(new Date()),
+//                        percent,offset,footerHeight,extendHeight);
+//                updateContent();
+//            }
+//
+//            @Override
+//            public void onFooterReleasing(@NonNull RefreshFooter footer, float percent, int offset, int footerHeight, int extendHeight) {
+//                mFooterReleasing = String.format(Locale.CHINA, "%s\npercent=%.02f\noffset=%03d height=%03d\nextend=%03d",
+//                        FORMAT.format(new Date()),
+//                        percent,offset,footerHeight,extendHeight);
+//                updateContent();
+//            }
 
             @Override
             public void onFooterStartAnimator(@NonNull RefreshFooter footer, int footerHeight, int extendHeight) {
@@ -155,23 +173,27 @@ public class ListenerExampleActivity extends AppCompatActivity {
     private void updateContent() {
         mTvContent.setText(String.format(Locale.CHINA,
                 "onStateChanged:%s\n\n" +
-                        "onHeaderPulling:%s\n\n" +
-                        "onHeaderReleasing:%s\n\n" +
+                        "onHeaderMoving:%s\n\n" +
+//                        "onHeaderPulling:%s\n\n" +
+//                        "onHeaderReleasing:%s\n\n" +
                         "onHeaderStartAnimator:%s\n\n" +
                         "onHeaderFinish:%s\n\n" +
-                        "onFooterPulling:%s\n\n" +
-                        "onFooterReleasing:%s\n\n" +
+                        "onFooterMoving:%s\n\n" +
+//                        "onFooterPulling:%s\n\n" +
+//                        "onFooterReleasing:%s\n\n" +
                         "onFooterStartAnimator:%s\n\n" +
                         "onFooterFinish:%s\n\n" +
                         "onRefresh:%s\n\n" +
                         "onLoadMore:%s\n\n",
                 mStateChanged,
-                mHeaderPulling,
-                mHeaderReleasing,
+                mHeaderMoving,
+//                mHeaderPulling,
+//                mHeaderReleasing,
                 mHeaderStartAnimator,
                 mHeaderFinish,
-                mFooterPulling,
-                mFooterReleasing,
+                mFooterMoving,
+//                mFooterPulling,
+//                mFooterReleasing,
                 mFooterStartAnimator,
                 mFooterFinish,
                 mRefresh,

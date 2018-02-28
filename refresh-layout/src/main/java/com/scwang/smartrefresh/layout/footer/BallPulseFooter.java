@@ -36,7 +36,7 @@ public class BallPulseFooter extends InternalAbstract implements RefreshFooter {
 
     private boolean mManualNormalColor;
     private boolean mManualAnimationColor;
-    private SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
+//    private SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
 
     private Paint mPaint;
 
@@ -64,7 +64,7 @@ public class BallPulseFooter extends InternalAbstract implements RefreshFooter {
     public BallPulseFooter(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        setMinimumHeight(DensityUtil.dp2px(60));
+        super.setMinimumHeight(DensityUtil.dp2px(60));
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.BallPulseFooter);
 
@@ -75,10 +75,10 @@ public class BallPulseFooter extends InternalAbstract implements RefreshFooter {
             setAnimatingColor(ta.getColor(R.styleable.BallPulseFooter_srlAnimatingColor, 0));
         }
 
+        mSpinnerStyle = SpinnerStyle.Translate;
         mSpinnerStyle = SpinnerStyle.values()[ta.getInt(R.styleable.BallPulseFooter_srlClassicsSpinnerStyle, mSpinnerStyle.ordinal())];
 
         ta.recycle();
-
 
         mCircleSpacing = DensityUtil.dp2px(4);
 
@@ -123,7 +123,7 @@ public class BallPulseFooter extends InternalAbstract implements RefreshFooter {
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
-        int width = getWidth(), height = getHeight();
+        int width = super.getWidth(), height = super.getHeight();
         float radius = (Math.min(width, height) - mCircleSpacing * 2) / 6;
         float x = width / 2 - (radius * 2 + mCircleSpacing);
         float y = height / 2;
@@ -196,11 +196,11 @@ public class BallPulseFooter extends InternalAbstract implements RefreshFooter {
         }
     }
 
-    @NonNull
-    @Override
-    public SpinnerStyle getSpinnerStyle() {
-        return mSpinnerStyle;
-    }
+//    @NonNull
+//    @Override
+//    public SpinnerStyle getSpinnerStyle() {
+//        return mSpinnerStyle;
+//    }
 
     //</editor-fold>
 

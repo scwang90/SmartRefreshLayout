@@ -7,7 +7,6 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.view.NestedScrollingChild;
 import android.support.v4.view.NestedScrollingParent;
-import android.support.v4.view.ScrollingView;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.Space;
@@ -15,12 +14,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.MeasureSpec;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.AbsListView;
 import android.widget.FrameLayout;
-import android.widget.ListView;
 import android.widget.ScrollView;
 
 import com.scwang.smartrefresh.layout.api.RefreshContent;
@@ -34,7 +31,9 @@ import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+import static com.scwang.smartrefresh.layout.util.DesignUtil.isScrollableView;
+import static com.scwang.smartrefresh.layout.util.DesignUtil.measureViewHeight;
+import static com.scwang.smartrefresh.layout.util.DesignUtil.scrollListBy;
 import static com.scwang.smartrefresh.layout.util.ScrollBoundaryUtil.canScrollDown;
 import static com.scwang.smartrefresh.layout.util.ScrollBoundaryUtil.canScrollUp;
 import static com.scwang.smartrefresh.layout.util.ScrollBoundaryUtil.isTransformedTouchPointInView;
@@ -46,8 +45,8 @@ import static com.scwang.smartrefresh.layout.util.ScrollBoundaryUtil.isTransform
 @SuppressWarnings("WeakerAccess")
 public class RefreshContentWrapper implements RefreshContent {
 
-    protected int mHeaderHeight = Integer.MAX_VALUE;
-    protected int mFooterHeight = mHeaderHeight - 1;
+//    protected int mHeaderHeight = Integer.MAX_VALUE;
+//    protected int mFooterHeight = mHeaderHeight - 1;
     protected View mContentView;//直接内容视图
     protected View mRealContentView;//被包裹的原真实视图
     protected View mScrollableView;
@@ -55,7 +54,7 @@ public class RefreshContentWrapper implements RefreshContent {
     protected View mFixedFooter;
     protected boolean mEnableRefresh = true;
     protected boolean mEnableLoadMore = true;
-    protected MotionEvent mMotionEvent;
+//    protected MotionEvent mMotionEvent;
     protected ScrollBoundaryDeciderAdapter mBoundaryAdapter = new ScrollBoundaryDeciderAdapter();
 
     public RefreshContentWrapper(View view) {
@@ -108,21 +107,20 @@ public class RefreshContentWrapper implements RefreshContent {
         return scrollableView == null ? content : scrollableView;
     }
 
-    protected View findScrollableViewByEvent(View content, MotionEvent event, View orgScrollableView) {
+    protected View findScrollableViewByPoint(View content, PointF event, View orgScrollableView) {
         if (content instanceof ViewGroup && event != null) {
             ViewGroup viewGroup = (ViewGroup) content;
             final int childCount = viewGroup.getChildCount();
             PointF point = new PointF();
             for (int i = childCount; i > 0; i--) {
                 View child = viewGroup.getChildAt(i - 1);
-                if (isTransformedTouchPointInView(viewGroup, child, event.getX(), event.getY(), point)) {
-                    if (!(child instanceof ViewPager) && isScrollableView(child)) {
-                        return child;
-                    } else {
-                        event = MotionEvent.obtain(event);
-                        event.offsetLocation(point.x, point.y);
-                        return findScrollableViewByEvent(child, event, orgScrollableView);
+                if (isTransformedTouchPointInView(viewGroup, child, event.x, event.y, point)) {
+                    if (child instanceof ViewPager || !isScrollableView(child)) {
+                        event.offset(point.x, point.y);
+                        child = findScrollableViewByPoint(child, event, orgScrollableView);
+                        event.offset(-point.x, -point.y);
                     }
+                    return child;
                 }
             }
         }
@@ -157,31 +155,35 @@ public class RefreshContentWrapper implements RefreshContent {
         return mEnableLoadMore && mBoundaryAdapter.canLoadMore(mContentView);
     }
 
-    @Override
-    public View getScrollableView() {
-        return mScrollableView;
-    }
+//    @Override
+//    public View getScrollableView() {
+//        return mScrollableView;
+//    }
 
     @Override
     public void onActionDown(MotionEvent e) {
-        mMotionEvent = MotionEvent.obtain(e);
-        mMotionEvent.offsetLocation(-mContentView.getLeft(), -mContentView.getTop());
+//        mMotionEvent = MotionEvent.obtain(e);
+//        mMotionEvent.offsetLocation(-mContentView.getLeft(), -mContentView.getTop());
+        PointF point = new PointF(e.getX(), e.getY());
+        point.offset(-mContentView.getLeft(), -mContentView.getTop());
         if (mScrollableView != mContentView) {
             //如果内容视图不是 ScrollableView 说明使用了Layout嵌套内容，需要动态搜索 ScrollableView
-            mScrollableView = findScrollableViewByEvent(mContentView, mMotionEvent, mScrollableView);
+            mScrollableView = findScrollableViewByPoint(mContentView, point, mScrollableView);
         }
         if (mScrollableView == mContentView) {
             //如果内容视图就是 ScrollableView 就不需要使用事件来动态搜索 而浪费CPU时间和性能了
-            mBoundaryAdapter.setActionEvent(null);
+//            mBoundaryAdapter.setActionEvent(null);
+            mBoundaryAdapter.mActionEvent = null;
         } else {
-            mBoundaryAdapter.setActionEvent(mMotionEvent);
+            mBoundaryAdapter.mActionEvent = point;
+//            mBoundaryAdapter.setActionEvent(mMotionEvent);
         }
     }
 
-    @Override
-    public void onActionUpOrCancel() {
-        mMotionEvent = null;
-    }
+//    @Override
+//    public void onActionUpOrCancel() {
+//        mMotionEvent = null;
+//    }
 
     @Override
     public void fling(int velocity) {
@@ -238,24 +240,25 @@ public class RefreshContentWrapper implements RefreshContent {
         }
     }
 
-    @Override
-    public void onInitialHeaderAndFooter(int headerHeight, int footerHeight) {
-        mHeaderHeight = headerHeight;
-        mFooterHeight = footerHeight;
-    }
+//    @Override
+//    public void onInitialHeaderAndFooter(int headerHeight, int footerHeight) {
+//        mHeaderHeight = headerHeight;
+//        mFooterHeight = footerHeight;
+//    }
 
     @Override
     public void setScrollBoundaryDecider(ScrollBoundaryDecider boundary) {
         if (boundary instanceof ScrollBoundaryDeciderAdapter) {
             mBoundaryAdapter = ((ScrollBoundaryDeciderAdapter) boundary);
         } else {
-            mBoundaryAdapter.setScrollBoundaryDecider(boundary);
+            mBoundaryAdapter.boundary = (boundary);
         }
     }
 
     @Override
     public void setEnableLoadMoreWhenContentNotFull(boolean enable) {
-        mBoundaryAdapter.setEnableLoadMoreWhenContentNotFull(enable);
+//        mBoundaryAdapter.setEnableLoadMoreWhenContentNotFull(enable);
+        mBoundaryAdapter.mEnableLoadMoreWhenContentNotFull = enable;
     }
 
     @Override
@@ -283,59 +286,6 @@ public class RefreshContentWrapper implements RefreshContent {
         }
         return null;
     }
-    //</editor-fold>
-
-    //<editor-fold desc="static">
-
-    protected static int measureViewHeight(View view) {
-        ViewGroup.LayoutParams p = view.getLayoutParams();
-        if (p == null) {
-            p = new ViewGroup.LayoutParams(MATCH_PARENT,WRAP_CONTENT);
-        }
-        int childHeightSpec;
-        int childWidthSpec = ViewGroup.getChildMeasureSpec(0, 0, p.width);
-        if (p.height > 0) {
-            childHeightSpec = MeasureSpec.makeMeasureSpec(p.height, MeasureSpec.EXACTLY);
-        } else {
-            childHeightSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
-        }
-        view.measure(childWidthSpec, childHeightSpec);
-        return view.getMeasuredHeight();
-    }
-
-    protected static void scrollListBy(@NonNull AbsListView listView, int y) {
-        if (Build.VERSION.SDK_INT >= 19) {
-            // Call the framework version directly
-            listView.scrollListBy(y);
-        } else if (listView instanceof ListView) {
-            // provide backport on earlier versions
-            final int firstPosition = listView.getFirstVisiblePosition();
-            if (firstPosition == ListView.INVALID_POSITION) {
-                return;
-            }
-
-            final View firstView = listView.getChildAt(0);
-            if (firstView == null) {
-                return;
-            }
-
-            final int newTop = firstView.getTop() - y;
-            ((ListView) listView).setSelectionFromTop(firstPosition, newTop);
-        } else {
-            listView.smoothScrollBy(y, 0);
-        }
-    }
-
-    public static boolean isScrollableView(View view) {
-        return view instanceof AbsListView
-                || view instanceof ScrollView
-                || view instanceof ScrollingView
-                || view instanceof WebView
-                || view instanceof ViewPager
-                || view instanceof NestedScrollingChild
-                || view instanceof NestedScrollingParent;
-    }
-
     //</editor-fold>
 
 }

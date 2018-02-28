@@ -39,6 +39,8 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 @SuppressWarnings({"unused", "UnusedReturnValue"})
 public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements RefreshHeader {
 
+    public static final byte ID_TEXT_UPDATE = 4;
+
     public static String REFRESH_HEADER_PULLING = null;//"下拉可以刷新";
     public static String REFRESH_HEADER_REFRESHING = null;//"正在刷新...";
     public static String REFRESH_HEADER_LOADING = null;//"正在加载...";
@@ -98,9 +100,10 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
         DensityUtil density = new DensityUtil();
 
         mTitleText.setTextColor(0xff666666);
-        mTitleText.setText(isInEditMode() ? REFRESH_HEADER_REFRESHING : REFRESH_HEADER_PULLING);
+        mTitleText.setText(super.isInEditMode() ? REFRESH_HEADER_REFRESHING : REFRESH_HEADER_PULLING);
 
         mLastUpdateText = new TextView(context);
+        mLastUpdateText.setId(ID_TEXT_UPDATE);
         mLastUpdateText.setTextColor(0xff7c7c7c);
         LinearLayout.LayoutParams lpUpdateText = new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
         mCenterLayout.addView(mLastUpdateText, lpUpdateText);
@@ -189,10 +192,10 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
 
     }
 
-    @Override
-    protected ClassicsHeader self() {
-        return this;
-    }
+//    @Override
+//    protected ClassicsHeader self() {
+//        return this;
+//    }
 
     //</editor-fold>
 
@@ -254,17 +257,17 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
         return this;
     }
 
-    public ClassicsHeader setLastUpdateText(CharSequence text) {
-        mLastTime = null;
-        mLastUpdateText.setText(text);
-        return this;
-    }
-
     public ClassicsHeader setTimeFormat(DateFormat format) {
         mLastUpdateFormat = format;
         if (mLastTime != null) {
             mLastUpdateText.setText(mLastUpdateFormat.format(mLastTime));
         }
+        return this;
+    }
+
+    public ClassicsHeader setLastUpdateText(CharSequence text) {
+        mLastTime = null;
+        mLastUpdateText.setText(text);
         return this;
     }
 
@@ -277,7 +280,8 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
         mEnableLastTime = enable;
         mLastUpdateText.setVisibility(enable ? VISIBLE : GONE);
         if (mRefreshKernel != null) {
-            mRefreshKernel.requestRemeasureHeightForHeader();
+            mRefreshKernel.requestRemeasureHeightFor(this);
+//            mRefreshKernel.requestRemeasureHeightForHeader();
         }
         return this;
     }
@@ -285,33 +289,41 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
     public ClassicsHeader setTextSizeTime(float size) {
         mLastUpdateText.setTextSize(size);
         if (mRefreshKernel != null) {
-            mRefreshKernel.requestRemeasureHeightForHeader();
+            mRefreshKernel.requestRemeasureHeightFor(this);
+//            mRefreshKernel.requestRemeasureHeightForHeader();
         }
         return this;
     }
 
-    public ClassicsHeader setTextSizeTime(int unit, float size) {
-        mLastUpdateText.setTextSize(unit, size);
-        if (mRefreshKernel != null) {
-            mRefreshKernel.requestRemeasureHeightForHeader();
-        }
-        return this;
-    }
+//    public ClassicsHeader setTextSizeTime(int unit, float size) {
+//        mLastUpdateText.setTextSize(unit, size);
+//        if (mRefreshKernel != null) {
+//            mRefreshKernel.requestRemeasureHeightForHeader();
+//        }
+//        return this;
+//    }
 
     public ClassicsHeader setTextTimeMarginTop(float dp) {
-        return setTextTimeMarginTopPx(DensityUtil.dp2px(dp));
-    }
-
-    public ClassicsHeader setTextTimeMarginTopPx(int px) {
         MarginLayoutParams lp = (MarginLayoutParams)mLastUpdateText.getLayoutParams();
-        lp.topMargin = px;
+        lp.topMargin = DensityUtil.dp2px(dp);
         mLastUpdateText.setLayoutParams(lp);
         return this;
     }
 
-    public TextView getLastUpdateText() {
-        return mLastUpdateText;
-    }
+//    public ClassicsHeader setTextTimeMarginTopPx(int px) {
+//        MarginLayoutParams lp = (MarginLayoutParams)mLastUpdateText.getLayoutParams();
+//        lp.topMargin = px;
+//        mLastUpdateText.setLayoutParams(lp);
+//        return this;
+//    }
+
+//    /**
+//     * @deprecated 使用 findViewById(ID_TEXT_UPDATE) 代替
+//     */
+//    @Deprecated
+//    public TextView getLastUpdateText() {
+//        return mLastUpdateText;
+//    }
 
     //</editor-fold>
 

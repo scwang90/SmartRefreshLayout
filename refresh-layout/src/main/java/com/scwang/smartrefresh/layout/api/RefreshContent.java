@@ -15,22 +15,24 @@ import static android.support.annotation.RestrictTo.Scope.SUBCLASSES;
  */
 @RestrictTo({LIBRARY,LIBRARY_GROUP,SUBCLASSES})
 public interface RefreshContent {
-    void moveSpinner(int spinner);
-    boolean canRefresh();
-    boolean canLoadMore();
 
     View getView();
-    View getScrollableView();
+//    View getScrollableView();
 
     void onActionDown(MotionEvent e);
-    void onActionUpOrCancel();
+//    void onActionUpOrCancel();
 
-    void fling(int velocity);
     void setUpComponent(RefreshKernel kernel, View fixedHeader, View fixedFooter);
-    void onInitialHeaderAndFooter(int headerHeight, int footerHeight);
+//    void onInitialHeaderAndFooter(int headerHeight, int footerHeight);
     void setScrollBoundaryDecider(ScrollBoundaryDecider boundary);
 
     void setEnableLoadMoreWhenContentNotFull(boolean enable);
+
+    void fling(int velocity);
+    void moveSpinner(int spinner);
+
+    boolean canRefresh();
+    boolean canLoadMore();
 
     AnimatorUpdateListener scrollContentWhenFinished(int spinner);
 }

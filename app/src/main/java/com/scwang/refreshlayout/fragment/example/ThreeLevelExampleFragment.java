@@ -1,4 +1,4 @@
-package com.scwang.refreshlayout.fragment.using;
+package com.scwang.refreshlayout.fragment.example;
 
 
 import android.os.Bundle;
@@ -19,7 +19,6 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 import static android.R.layout.simple_list_item_2;
 

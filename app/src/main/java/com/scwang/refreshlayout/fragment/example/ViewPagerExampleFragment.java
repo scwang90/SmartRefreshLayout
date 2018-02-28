@@ -1,4 +1,4 @@
-package com.scwang.refreshlayout.fragment.using;
+package com.scwang.refreshlayout.fragment.example;
 
 
 import android.os.Bundle;

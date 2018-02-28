@@ -95,8 +95,8 @@ public class MountainSceneView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        final int width = getMeasuredWidth();
-        final int height = getMeasuredHeight();
+        final int width = super.getMeasuredWidth();
+        final int height = super.getMeasuredHeight();
         mScaleX = 1f * width / WIDTH;
         mScaleY = 1f * (mViewportHeight > 0 ? mViewportHeight : height) / HEIGHT;
 
@@ -294,7 +294,7 @@ public class MountainSceneView extends View {
 
         mMoveFactor = Math.max(0, mBounceMax);
 
-        int height = getMeasuredHeight();
+        int height = super.getMeasuredHeight();
         updateMountainPath(mMoveFactor, height > 0 ? height : HEIGHT);
         updateTreePath(bendFactor, false);
     }

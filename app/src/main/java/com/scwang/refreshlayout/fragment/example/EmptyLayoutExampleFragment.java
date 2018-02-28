@@ -1,4 +1,4 @@
-package com.scwang.refreshlayout.fragment.using;
+package com.scwang.refreshlayout.fragment.example;
 
 
 import android.app.Activity;
@@ -16,14 +16,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.activity.FragmentActivity;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
-import com.scwang.refreshlayout.fragment.using.EmptyLayoutExampleFragment.Item;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
@@ -32,6 +29,8 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 
 import java.util.Arrays;
+
+import ezy.ui.layout.LoadingLayout;
 
 import static android.R.layout.simple_list_item_2;
 import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
@@ -42,16 +41,29 @@ import static com.scwang.refreshlayout.R.id.refreshLayout;
  * 使用示例-空布页面
  * A simple {@link Fragment} subclass.
  */
-public class EmptyLayoutExampleFragmentInner extends Fragment implements AdapterView.OnItemClickListener, OnRefreshListener {
+public class EmptyLayoutExampleFragment extends Fragment implements AdapterView.OnItemClickListener, OnRefreshListener {
 
-    private View mEmptyLayout;
+    public enum Item {
+        ThirdParty("集成第三方控件", EmptyLayoutExampleFragment.class),
+        NestedInner("内部嵌套", EmptyLayoutExampleFragmentInner.class),
+        NestedOuter("外部嵌套", EmptyLayoutExampleFragmentOuter.class),
+        ;
+        public String name;
+        public Class<?> clazz;
+        Item(String name, Class<?> clazz) {
+            this.name = name;
+            this.clazz = clazz;
+        }
+    }
+
     private RecyclerView mRecyclerView;
     private RefreshLayout mRefreshLayout;
+    private LoadingLayout mLoadingLayout;
     private static boolean mIsNeedDemo = true;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_example_emptylayout_inner, container, false);
+        return inflater.inflate(R.layout.fragment_example_emptylayout, container, false);
     }
 
     @Override
@@ -75,13 +87,8 @@ public class EmptyLayoutExampleFragmentInner extends Fragment implements Adapter
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), VERTICAL));
 
-        mEmptyLayout = root.findViewById(R.id.empty);
-
-        ImageView image = (ImageView) root.findViewById(R.id.empty_image);
-        image.setImageResource(R.drawable.ic_empty);
-
-        TextView empty = (TextView) root.findViewById(R.id.empty_text);
-        empty.setText("暂无数据下拉刷新");
+        mLoadingLayout = (LoadingLayout) root.findViewById(R.id.loading);
+        mLoadingLayout.showEmpty();
 
         /*主动演示刷新*/
         if (mIsNeedDemo) {
@@ -107,7 +114,7 @@ public class EmptyLayoutExampleFragmentInner extends Fragment implements Adapter
         mRefreshLayout.getLayout().postDelayed(new Runnable() {
             @Override
             public void run() {
-                mRecyclerView.setAdapter(new BaseRecyclerAdapter<Item>(Arrays.asList(Item.values()), simple_list_item_2,EmptyLayoutExampleFragmentInner.this) {
+                mRecyclerView.setAdapter(new BaseRecyclerAdapter<Item>(Arrays.asList(Item.values()), simple_list_item_2,EmptyLayoutExampleFragment.this) {
                     @Override
                     protected void onBindViewHolder(SmartViewHolder holder, Item model, int position) {
                         holder.text(android.R.id.text1, model.name());
@@ -116,7 +123,7 @@ public class EmptyLayoutExampleFragmentInner extends Fragment implements Adapter
                     }
                 });
                 mRefreshLayout.finishRefresh();
-                mEmptyLayout.setVisibility(View.GONE);
+                mLoadingLayout.showContent();
             }
         }, 2000);
     }

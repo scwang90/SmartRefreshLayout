@@ -1,4 +1,4 @@
-package com.scwang.refreshlayout.activity.using;
+package com.scwang.refreshlayout.activity.example;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

@@ -108,7 +108,7 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
             mMaskTextBottom = ta.getString(R.styleable.FunGameView_fghMaskTextBottom);
         }
 
-        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        DisplayMetrics metrics = super.getResources().getDisplayMetrics();
         int maskTextSizeTop = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16, metrics);
         int maskTextSizeBottom = maskTextSizeTop * 14 / 16;
 
@@ -122,13 +122,13 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
         mMaskViewTop = createMaskView(context,mMaskTextTopPull, maskTextSizeTop, Gravity.BOTTOM);
         mMaskViewBottom = createMaskView(context,mMaskTextBottom, maskTextSizeBottom, Gravity.TOP);
 
-        if (!isInEditMode()) {
+        if (!super.isInEditMode()) {
             int height = DensityUtil.dp2px(100);
             LayoutParams maskLp = new LayoutParams(MATCH_PARENT, height);
 //            maskLp.topMargin = (int) FunGameView.DIVIDING_LINE_SIZE;
 //            maskLp.bottomMargin = (int) FunGameView.DIVIDING_LINE_SIZE;
-            addView(mShadowView, maskLp);
-            addView(mCurtainLayout, maskLp);
+            super.addView(mShadowView, maskLp);
+            super.addView(mCurtainLayout, maskLp);
 
             mHalfHeaderHeight = (int) ((height/* - 2 * DIVIDING_LINE_SIZE*/) * .5f);
             LayoutParams lpTop = new LayoutParams(MATCH_PARENT, mHalfHeaderHeight);
@@ -268,7 +268,7 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
             resetConfigParams();
         }
 
-        postInvalidate();
+        super.postInvalidate();
     }
 
     /**
@@ -282,7 +282,7 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
             distance = maxDistance;
         }
         controllerPosition = distance;
-        postInvalidate();
+        super.postInvalidate();
     }
 
     //</editor-fold>

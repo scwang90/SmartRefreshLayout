@@ -27,13 +27,6 @@ import android.view.animation.Interpolator;
  */
 public class DropBounceInterpolator implements Interpolator {
 
-    public DropBounceInterpolator() {
-    }
-
-    @SuppressWarnings({"UnusedDeclaration"})
-    public DropBounceInterpolator(Context context, AttributeSet attrs) {
-    }
-
     /**
      * {@inheritDoc}
      * @param v 动画帧

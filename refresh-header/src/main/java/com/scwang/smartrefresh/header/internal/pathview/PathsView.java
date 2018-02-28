@@ -32,16 +32,17 @@ public class PathsView extends View {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(resolveSize(mPathsDrawable.getBounds().width()+getPaddingLeft()+getPaddingRight(), widthMeasureSpec),
-                resolveSize(mPathsDrawable.getBounds().height()+getPaddingTop()+getPaddingBottom(), heightMeasureSpec));
+        super.setMeasuredDimension(
+                View.resolveSize(mPathsDrawable.getBounds().width()+super.getPaddingLeft()+super.getPaddingRight(), widthMeasureSpec),
+                View.resolveSize(mPathsDrawable.getBounds().height()+super.getPaddingTop()+super.getPaddingBottom(), heightMeasureSpec));
     }
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
-        mPathsDrawable.setBounds(getPaddingLeft(), getPaddingTop(),
-                Math.max((right - left) - getPaddingRight(), getPaddingLeft()),
-                Math.max((bottom - top) - getPaddingTop(), getPaddingTop()));
+        mPathsDrawable.setBounds(super.getPaddingLeft(), super.getPaddingTop(),
+                Math.max((right - left) - super.getPaddingRight(), super.getPaddingLeft()),
+                Math.max((bottom - top) - super.getPaddingTop(), super.getPaddingTop()));
     }
 
     @Override

@@ -18,8 +18,8 @@ public class FlyView extends PathsView {
     
     public FlyView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        parserColors(0xffffffff);
-        parserPaths("M2.01,21L23,12 2.01,3 2,10l15,2 -15,2z");
+        super.parserColors(0xffffffff);
+        super.parserPaths("M2.01,21L23,12 2.01,3 2,10l15,2 -15,2z");
         int side = DensityUtil.dp2px(25);
         mPathsDrawable.setBounds(0, 0, side, side);
     }

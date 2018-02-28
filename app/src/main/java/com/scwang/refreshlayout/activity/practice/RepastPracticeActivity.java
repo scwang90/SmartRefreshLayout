@@ -16,6 +16,7 @@ import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.refreshlayout.util.StatusBarUtil;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -104,7 +105,7 @@ public class RepastPracticeActivity extends AppCompatActivity {
             refreshLayout.getLayout().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    refreshLayout.setHeaderInsetStartPx(toolbar.getHeight());
+                    refreshLayout.setHeaderInsetStart(DensityUtil.px2dp(toolbar.getHeight()));
                 }
             }, 500);
         }

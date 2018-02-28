@@ -65,7 +65,8 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
     public BezierCircleHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        setMinimumHeight(DensityUtil.dp2px(100));
+        mSpinnerStyle = SpinnerStyle.Scale;
+        super.setMinimumHeight(DensityUtil.dp2px(100));
         mBackPaint = new Paint();
         mBackPaint.setColor(0xff11bbff);
         mBackPaint.setAntiAlias(true);
@@ -86,7 +87,7 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
-        if (isInEditMode()) {
+        if (super.isInEditMode()) {
             mShowBoll = true;
             mShowOuter = true;
             mHeadHeight = getHeight();
@@ -95,8 +96,8 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
             mBollRadius = mHeadHeight / 6;
         }
 
-        int viewWidth = getWidth();
-        int viewHeight = getHeight();
+        int viewWidth = super.getWidth();
+        int viewHeight = super.getHeight();
         drawWave(canvas, viewWidth, viewHeight);
         drawSpringUp(canvas, viewWidth);
         drawBoll(canvas, viewWidth);
@@ -179,7 +180,7 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
             } else if (swipe <= 10) {
                 mOuterIsStart = true;
             }
-            invalidate();
+            super.invalidate();
         }
 
     }
@@ -225,19 +226,29 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
 
     //<editor-fold desc="RefreshHeader">
 
-    @Override
-    public void onPulling(float percent, int offset, int height, int extendHeight) {
-        mWavePulling = true;
-        mHeadHeight = height;
-        mWaveHeight = Math.max(offset - height, 0) * .8f;
-    }
 
     @Override
-    public void onReleasing(float percent, int offset, int height, int extendHeight) {
-        if (mWavePulling) {
-            onPulling(percent, offset, height, extendHeight);
+    public void onMoving(boolean isDragging, float percent, int offset, int height, int extendHeight) {
+        if (isDragging || mWavePulling) {
+            mWavePulling = true;
+            mHeadHeight = height;
+            mWaveHeight = Math.max(offset - height, 0) * .8f;
         }
     }
+
+//    @Override
+//    public void onPulling(float percent, int offset, int height, int extendHeight) {
+//        mWavePulling = true;
+//        mHeadHeight = height;
+//        mWaveHeight = Math.max(offset - height, 0) * .8f;
+//    }
+//
+//    @Override
+//    public void onReleasing(float percent, int offset, int height, int extendHeight) {
+//        if (mWavePulling) {
+//            onPulling(percent, offset, height, extendHeight);
+//        }
+//    }
 
     @Override
     public void onReleased(@NonNull RefreshLayout refreshLayout, int height, int extendHeight) {
@@ -295,7 +306,7 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
                 }
                 if (!mWavePulling) {
                     mWaveHeight = curValue;
-                    BezierCircleHeader.this.invalidate();
+                    BezierCircleHeader.super.invalidate();
                 }
             }
         });
@@ -314,7 +325,7 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 mFinishRatio = (float) animation.getAnimatedValue();
-                BezierCircleHeader.this.invalidate();
+                BezierCircleHeader.super.invalidate();
             }
         });
         animator.setInterpolator(new AccelerateInterpolator());
@@ -338,10 +349,10 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
         }
     }
 
-    @NonNull
-    @Override
-    public SpinnerStyle getSpinnerStyle() {
-        return SpinnerStyle.Scale;
-    }
+//    @NonNull
+//    @Override
+//    public SpinnerStyle getSpinnerStyle() {
+//        return SpinnerStyle.Scale;
+//    }
     //</editor-fold>
 }

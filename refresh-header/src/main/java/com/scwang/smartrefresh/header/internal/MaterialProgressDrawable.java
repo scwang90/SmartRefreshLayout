@@ -162,7 +162,7 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
     public void showArrow(boolean show) {
         if (mRing.mShowArrow != show) {
             mRing.mShowArrow = show;
-            invalidateSelf();
+            super.invalidateSelf();
         }
     }
 
@@ -172,7 +172,7 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
     public void setArrowScale(float scale) {
         if (mRing.mArrowScale != scale) {
             mRing.mArrowScale = scale;
-            invalidateSelf();
+            super.invalidateSelf();
         }
     }
 
@@ -185,7 +185,7 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
     public void setStartEndTrim(float startAngle, float endAngle) {
         mRing.mStartTrim = (startAngle);
         mRing.mEndTrim = (endAngle);
-        invalidateSelf();
+        super.invalidateSelf();
     }
 
     /*
@@ -195,7 +195,7 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
      */
     public void setProgressRotation(float rotation) {
         mRing.mRotation = (rotation);
-        invalidateSelf();
+        super.invalidateSelf();
     }
 
     /*
@@ -229,7 +229,7 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
 
     @Override
     public void draw(@NonNull Canvas c) {
-        final Rect bounds = getBounds();
+        final Rect bounds = super.getBounds();
         final int saveCount = c.save();
         c.rotate(mRotation, bounds.exactCenterX(), bounds.exactCenterY());
         mRing.draw(c, bounds);
@@ -248,12 +248,12 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
     @Override
     public void setColorFilter(ColorFilter colorFilter) {
         mRing.mPaint.setColorFilter(colorFilter);
-        invalidateSelf();
+        super.invalidateSelf();
     }
 
     void setRotation(float rotation) {
         mRotation = rotation;
-        invalidateSelf();
+        super.invalidateSelf();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.scwang.refreshlayout.activity.using;
+package com.scwang.refreshlayout.activity.example;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -32,7 +32,7 @@ public class AssignXmlExampleActivity extends AppCompatActivity {
         });
 
 
-        /**
+        /*
          * 以下代码仅仅为了演示效果而已，不是必须的
          * 关键代码在 activity_example_assign_xml 中
          */
@@ -40,7 +40,7 @@ public class AssignXmlExampleActivity extends AppCompatActivity {
         if (isFirstEnter) {
             isFirstEnter = false;
             //触发上拉加载
-            refreshLayout.autoLoadMore(250);
+            refreshLayout.autoLoadMore(250, 250, 1.5f);
             //通过多功能监听接口实现 在第一次加载完成之后 自动刷新
             refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener(){
                 @Override
@@ -49,6 +49,14 @@ public class AssignXmlExampleActivity extends AppCompatActivity {
                         refreshLayout.autoRefresh();
                         refreshLayout.setOnMultiPurposeListener(null);
                     }
+                }
+                @Override
+                public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                    refreshLayout.finishLoadMore(2000);
+                }
+                @Override
+                public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                    refreshLayout.finishRefresh(3000);
                 }
             });
         }

@@ -68,8 +68,10 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
     public WaveSwipeHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        addView(mWaveView = new WaveView(context));
-        addView(mCircleView = new ProgressAnimationImageView(getContext()));
+        mSpinnerStyle = SpinnerStyle.MatchLayout;
+
+        super.addView(mWaveView = new WaveView(context));
+        super.addView(mCircleView = new ProgressAnimationImageView(super.getContext()));
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.WaveSwipeHeader);
 
@@ -94,7 +96,7 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(getSize(widthMeasureSpec), getSize(heightMeasureSpec));
+        super.setMeasuredDimension(getSize(widthMeasureSpec), getSize(heightMeasureSpec));
         final int circleDiameter = mProgress.getIntrinsicWidth();
         final int spec = MeasureSpec.makeMeasureSpec(circleDiameter, MeasureSpec.EXACTLY);
         mCircleView.measure(spec, spec);
@@ -103,15 +105,16 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        mWaveView.layout(0, 0, getMeasuredWidth(), getMeasuredHeight());
+        mWaveView.layout(0, 0, super.getMeasuredWidth(), super.getMeasuredHeight());
 
-        final int thisWidth = getMeasuredWidth();
+        final int thisWidth = super.getMeasuredWidth();
         final int circleWidth = mCircleView.getMeasuredWidth();
         final int circleHeight = mCircleView.getMeasuredHeight();
         mCircleView.layout((thisWidth - circleWidth) / 2, -circleHeight , (thisWidth + circleWidth) / 2, 0);
 
-        if (isInEditMode()) {
-            onPulling(0.99f, DensityUtil.dp2px(99), DensityUtil.dp2px(100), DensityUtil.dp2px(100));
+        if (super.isInEditMode()) {
+            onMoving(true, 0.99f, DensityUtil.dp2px(99), DensityUtil.dp2px(100), DensityUtil.dp2px(100));
+//            onPulling(0.99f, DensityUtil.dp2px(99), DensityUtil.dp2px(100), DensityUtil.dp2px(100));
         }
     }
 
@@ -131,50 +134,97 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
     //<editor-fold desc="RefreshHeader">
 
     @Override
-    public void onPulling(float percent, int offset, int height, int extendHeight) {
+    public void onMoving(boolean isDragging, float percent, int offset, int height, int extendHeight) {
+        if (isDragging) {
+            if (mState == RefreshState.Refreshing) {
+                return;
+            }
 
-        if (mState == RefreshState.Refreshing) {
-            return;
-        }
+            float dragPercent = Math.min(1f, percent);
+            float adjustedPercent = (float) Math.max(dragPercent - .4, 0) * 5 / 3;
 
-        float dragPercent = Math.min(1f, percent);
-        float adjustedPercent = (float) Math.max(dragPercent - .4, 0) * 5 / 3;
+            // 0f...2f
+            float tensionSlingshotPercent =
+                    (percent > 3f) ? 2f : (percent > 1f) ? percent - 1f : 0;
+            float tensionPercent = (4f - tensionSlingshotPercent) * tensionSlingshotPercent / 8f;
 
-        // 0f...2f
-        float tensionSlingshotPercent =
-                (percent > 3f) ? 2f : (percent > 1f) ? percent - 1f : 0;
-        float tensionPercent = (4f - tensionSlingshotPercent) * tensionSlingshotPercent / 8f;
+            if (percent < 1f) {
+                float strokeStart = adjustedPercent * .8f;
+                mProgress.setStartEndTrim(0f, Math.min(MAX_PROGRESS_ROTATION_RATE, strokeStart));
+                mProgress.setArrowScale(Math.min(1f, adjustedPercent));
+            }
 
-        if (percent < 1f) {
-            float strokeStart = adjustedPercent * .8f;
-            mProgress.setStartEndTrim(0f, Math.min(MAX_PROGRESS_ROTATION_RATE, strokeStart));
-            mProgress.setArrowScale(Math.min(1f, adjustedPercent));
-        }
+            float rotation = (-0.25f + .4f * adjustedPercent + tensionPercent * 2) * .5f;
+            mProgress.setProgressRotation(rotation);
+            mCircleView.setTranslationY(mWaveView.getCurrentCircleCenterY());
 
-        float rotation = (-0.25f + .4f * adjustedPercent + tensionPercent * 2) * .5f;
-        mProgress.setProgressRotation(rotation);
-        mCircleView.setTranslationY(mWaveView.getCurrentCircleCenterY());
+            float seed = 1f * offset / Math.min(super.getMeasuredWidth(), super.getMeasuredHeight());
+            float firstBounds = seed * (5f - 2 * seed) / 3.5f;
+            float secondBounds = firstBounds - VERTICAL_DRAG_THRESHOLD.FIRST.val;
+            float finalBounds = (firstBounds - VERTICAL_DRAG_THRESHOLD.SECOND.val) / 5;
+            mLastFirstBounds = firstBounds;
 
-        float seed = 1f * offset / Math.min(getMeasuredWidth(), getMeasuredHeight());
-        float firstBounds = seed * (5f - 2 * seed) / 3.5f;
-        float secondBounds = firstBounds - VERTICAL_DRAG_THRESHOLD.FIRST.val;
-        float finalBounds = (firstBounds - VERTICAL_DRAG_THRESHOLD.SECOND.val) / 5;
-        mLastFirstBounds = firstBounds;
-
-        if (firstBounds < VERTICAL_DRAG_THRESHOLD.FIRST.val) {
-            // draw a wave and not draw a circle
-            mWaveView.beginPhase(firstBounds);
-        } else if (firstBounds < VERTICAL_DRAG_THRESHOLD.SECOND.val) {
-            // draw a circle with a wave
-            mWaveView.appearPhase(firstBounds, secondBounds);
-        } else /*if (firstBounds < VERTICAL_DRAG_THRESHOLD.THIRD.val)*/ {
-            // draw a circle with expanding a wave
-            mWaveView.expandPhase(firstBounds, secondBounds, finalBounds);
+            if (firstBounds < VERTICAL_DRAG_THRESHOLD.FIRST.val) {
+                // draw a wave and not draw a circle
+                mWaveView.beginPhase(firstBounds);
+            } else if (firstBounds < VERTICAL_DRAG_THRESHOLD.SECOND.val) {
+                // draw a circle with a wave
+                mWaveView.appearPhase(firstBounds, secondBounds);
+            } else /*if (firstBounds < VERTICAL_DRAG_THRESHOLD.THIRD.val)*/ {
+                // draw a circle with expanding a wave
+                mWaveView.expandPhase(firstBounds, secondBounds, finalBounds);
 //        } else {
 //            // stop to draw a wave and drop a circle
 //            onDropPhase();
+            }
         }
     }
+
+//    @Override
+//    public void onPulling(float percent, int offset, int height, int extendHeight) {
+//
+//        if (mState == RefreshState.Refreshing) {
+//            return;
+//        }
+//
+//        float dragPercent = Math.min(1f, percent);
+//        float adjustedPercent = (float) Math.max(dragPercent - .4, 0) * 5 / 3;
+//
+//        // 0f...2f
+//        float tensionSlingshotPercent =
+//                (percent > 3f) ? 2f : (percent > 1f) ? percent - 1f : 0;
+//        float tensionPercent = (4f - tensionSlingshotPercent) * tensionSlingshotPercent / 8f;
+//
+//        if (percent < 1f) {
+//            float strokeStart = adjustedPercent * .8f;
+//            mProgress.setStartEndTrim(0f, Math.min(MAX_PROGRESS_ROTATION_RATE, strokeStart));
+//            mProgress.setArrowScale(Math.min(1f, adjustedPercent));
+//        }
+//
+//        float rotation = (-0.25f + .4f * adjustedPercent + tensionPercent * 2) * .5f;
+//        mProgress.setProgressRotation(rotation);
+//        mCircleView.setTranslationY(mWaveView.getCurrentCircleCenterY());
+//
+//        float seed = 1f * offset / Math.min(getMeasuredWidth(), getMeasuredHeight());
+//        float firstBounds = seed * (5f - 2 * seed) / 3.5f;
+//        float secondBounds = firstBounds - VERTICAL_DRAG_THRESHOLD.FIRST.val;
+//        float finalBounds = (firstBounds - VERTICAL_DRAG_THRESHOLD.SECOND.val) / 5;
+//        mLastFirstBounds = firstBounds;
+//
+//        if (firstBounds < VERTICAL_DRAG_THRESHOLD.FIRST.val) {
+//            // draw a wave and not draw a circle
+//            mWaveView.beginPhase(firstBounds);
+//        } else if (firstBounds < VERTICAL_DRAG_THRESHOLD.SECOND.val) {
+//            // draw a circle with a wave
+//            mWaveView.appearPhase(firstBounds, secondBounds);
+//        } else /*if (firstBounds < VERTICAL_DRAG_THRESHOLD.THIRD.val)*/ {
+//            // draw a circle with expanding a wave
+//            mWaveView.expandPhase(firstBounds, secondBounds, finalBounds);
+////        } else {
+////            // stop to draw a wave and drop a circle
+////            onDropPhase();
+//        }
+//    }
 
     @Override
     public void onReleased(@NonNull RefreshLayout layout, int height, int extendHeight) {
@@ -258,12 +308,12 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
             }
         }
     }
-
-    @NonNull
-    @Override
-    public SpinnerStyle getSpinnerStyle() {
-        return SpinnerStyle.MatchLayout;
-    }
+//
+//    @NonNull
+//    @Override
+//    public SpinnerStyle getSpinnerStyle() {
+//        return SpinnerStyle.MatchLayout;
+//    }
     //</editor-fold>
 
     //<editor-fold desc="ProgressAnimationImageView">
@@ -293,14 +343,14 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
             super(context);
             mProgress = new MaterialProgressDrawable(context, WaveSwipeHeader.this);
             mProgress.setBackgroundColor(Color.TRANSPARENT);
-            if (isOver600dp(getContext())) { // Make the progress be big
+            if (isOver600dp(super.getContext())) { // Make the progress be big
                 mProgress.updateSizes(MaterialProgressDrawable.LARGE);
             }
-            setImageDrawable(mProgress);
+            super.setImageDrawable(mProgress);
         }
 
         public void setProgressColorSchemeColorsFromResource(@IdRes int... resources) {
-            final Resources res = getResources();
+            final Resources res = super.getResources();
             final int[] colorRes = new int[resources.length];
 
             for (int i = 0; i < resources.length; i++) {

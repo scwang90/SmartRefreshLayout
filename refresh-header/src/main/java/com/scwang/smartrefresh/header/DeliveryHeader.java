@@ -48,7 +48,9 @@ public class DeliveryHeader extends InternalAbstract implements RefreshHeader {
     public DeliveryHeader(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        setMinimumHeight(DensityUtil.dp2px(150));
+        mSpinnerStyle = SpinnerStyle.Scale;
+
+        super.setMinimumHeight(DensityUtil.dp2px(150));
 
         mCloudDrawable = new PathsDrawable();
         mCloudDrawable.parserPaths("M63,0.1A22.6,22.4 0,0 0,42.1 14.2,17.3 17.3,0 0,0 30.9,10.2 17.3,17.3 0,0 0,13.7 25.8,8.8 8.8,0 0,0 8.7,24.2 8.8,8.8 0,0 0,0 32h99a7.9,7.9 0,0 0,0 -0.6,7.9 7.9,0 0,0 -7.9,-7.9 7.9,7.9 0,0 0,-5.8 2.6,22.6 22.4,0 0,0 0.3,-3.6A22.6,22.4 0,0 0,63 0.1Z");
@@ -93,7 +95,7 @@ public class DeliveryHeader extends InternalAbstract implements RefreshHeader {
         );
         mBoxDrawable.setGeometricWidth(DensityUtil.dp2px(50));
 
-        if (isInEditMode()) {
+        if (super.isInEditMode()) {
             mState = RefreshState.Refreshing;
             mAppreciation = 100;
             mCloudX1 = (int)(mCloudDrawable.getBounds().width()*3.5f);
@@ -104,8 +106,8 @@ public class DeliveryHeader extends InternalAbstract implements RefreshHeader {
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
-        final int width = getWidth();
-        final int height = getHeight();
+        final int width = super.getWidth();
+        final int height = super.getHeight();
 
         final int saveCount = canvas.getSaveCount();
         canvas.save();
@@ -168,22 +170,29 @@ public class DeliveryHeader extends InternalAbstract implements RefreshHeader {
     //<editor-fold desc="RefreshHeader">
 
     @Override
-    public void onPulling(float percent, int offset, int height, int extendHeight) {
+    public void onMoving(boolean isDragging, float percent, int offset, int height, int extendHeight) {
         if (mState != RefreshState.Refreshing) {
             mBoxDrawable.setAlpha((int) (255 * (1f - Math.max(0, percent - 1))));
         }
     }
+
+//    @Override
+//    public void onPulling(float percent, int offset, int height, int extendHeight) {
+//        if (mState != RefreshState.Refreshing) {
+//            mBoxDrawable.setAlpha((int) (255 * (1f - Math.max(0, percent - 1))));
+//        }
+//    }
+//
+//    @Override
+//    public void onReleasing(float percent, int offset, int height, int extendHeight) {
+//        if (mState != RefreshState.Refreshing) {
+//            mBoxDrawable.setAlpha((int) (255 * (1f - Math.max(0, percent - 1))));
+//        }
+//    }
 
     @Override
     public void onReleased(@NonNull RefreshLayout layout, int height, int extendHeight) {
         onStartAnimator(layout, height, extendHeight);
-    }
-
-    @Override
-    public void onReleasing(float percent, int offset, int height, int extendHeight) {
-        if (mState != RefreshState.Refreshing) {
-            mBoxDrawable.setAlpha((int) (255 * (1f - Math.max(0, percent - 1))));
-        }
     }
 
     @Override
@@ -195,11 +204,11 @@ public class DeliveryHeader extends InternalAbstract implements RefreshHeader {
         }
     }
 
-    @NonNull
-    @Override
-    public SpinnerStyle getSpinnerStyle() {
-        return SpinnerStyle.Scale;
-    }
+//    @NonNull
+//    @Override
+//    public SpinnerStyle getSpinnerStyle() {
+//        return SpinnerStyle.Scale;
+//    }
 
     /**
      * @param colors 对应Xml中配置的 srlPrimaryColor srlAccentColor
@@ -208,7 +217,7 @@ public class DeliveryHeader extends InternalAbstract implements RefreshHeader {
     @Override@Deprecated
     public void setPrimaryColors(@ColorInt int ... colors) {
         if (colors.length > 0) {
-            setBackgroundColor(colors[0]);
+            super.setBackgroundColor(colors[0]);
             if (colors.length > 1) {
                 mCloudDrawable.parserColors(colors[1]);
             }
@@ -224,7 +233,7 @@ public class DeliveryHeader extends InternalAbstract implements RefreshHeader {
     public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
         mState = RefreshState.Refreshing;
         mBoxDrawable.setAlpha(255);
-        invalidate();
+        super.invalidate();
     }
 
     //</editor-fold>

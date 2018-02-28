@@ -1,4 +1,4 @@
-package com.scwang.refreshlayout.fragment.using;
+package com.scwang.refreshlayout.fragment.example;
 
 
 import android.app.Activity;
@@ -21,9 +21,9 @@ import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.activity.FragmentActivity;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
-import com.scwang.refreshlayout.fragment.using.PureScrollExampleFragment.Item;
+import com.scwang.refreshlayout.fragment.example.PureScrollExampleFragment.Item;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.header.FalsifyHeader;
+import com.scwang.smartrefresh.layout.footer.FalsifyFooter;
 
 import java.util.Arrays;
 
@@ -34,27 +34,29 @@ import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
  * 使用示例-纯滚动模式
  * A simple {@link Fragment} subclass.
  */
-public class PureScrollExampleFragmentHeader extends Fragment implements AdapterView.OnItemClickListener {
+public class PureScrollExampleFragmentFooter extends Fragment implements AdapterView.OnItemClickListener {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_example_purescroll_header, container, false);
+        return inflater.inflate(R.layout.fragment_example_purescroll, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View root, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(root, savedInstanceState);
 
-        final Toolbar toolbar = (Toolbar)root.findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) root.findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getActivity().finish();
             }
         });
+        toolbar.setTitle("Footer单独使用");
 
         RefreshLayout refreshLayout = (RefreshLayout) root.findViewById(R.id.refreshLayout);
-        refreshLayout.setRefreshHeader(new FalsifyHeader(getContext()));//也可以在 XML 中添加 FalsifyHeader
+        refreshLayout.setEnablePureScrollMode(false);
+        refreshLayout.setRefreshFooter(new FalsifyFooter(getContext()));
 
         View view = root.findViewById(R.id.recyclerView);
         if (view instanceof RecyclerView) {

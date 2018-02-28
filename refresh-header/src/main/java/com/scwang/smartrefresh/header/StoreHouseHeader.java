@@ -10,6 +10,7 @@ import android.graphics.PointF;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
@@ -96,19 +97,20 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
         }
         ta.recycle();
 
-        setMinimumHeight(mDrawZoneHeight + DensityUtil.dp2px(40));
+        super.setMinimumHeight(mDrawZoneHeight + DensityUtil.dp2px(40));
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 //        int height = getTopOffset() + mDrawZoneHeight + getBottomOffset();
 //        heightMeasureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY);
-        setMeasuredDimension(resolveSize(getSuggestedMinimumWidth(), widthMeasureSpec),
-                resolveSize(getSuggestedMinimumHeight(), heightMeasureSpec));
+        super.setMeasuredDimension(
+                View.resolveSize(super.getSuggestedMinimumWidth(), widthMeasureSpec),
+                View.resolveSize(super.getSuggestedMinimumHeight(), heightMeasureSpec));
 
-        mOffsetX = (getMeasuredWidth() - mDrawZoneWidth) / 2;
-        mOffsetY = (getMeasuredHeight() - mDrawZoneHeight) / 2;//getTopOffset();
-        mDropHeight = getMeasuredHeight() / 2;//getTopOffset();
+        mOffsetX = (super.getMeasuredWidth() - mDrawZoneWidth) / 2;
+        mOffsetY = (super.getMeasuredHeight() - mDrawZoneHeight) / 2;//getTopOffset();
+        mDropHeight = super.getMeasuredHeight() / 2;//getTopOffset();
     }
 
     @Override
@@ -116,7 +118,7 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
 
         final int c1 = canvas.save();
         final int len = mItemList.size();
-        final float progress = isInEditMode() ? 1 : mProgress;
+        final float progress = super.isInEditMode() ? 1 : mProgress;
 
         for (int i = 0; i < len; i++) {
 
@@ -126,7 +128,7 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
             float offsetY = mOffsetY + storeHouseBarItem.midPoint.y;
 
             if (mIsInLoading) {
-                storeHouseBarItem.getTransformation(getDrawingTime(), mTransformation);
+                storeHouseBarItem.getTransformation(super.getDrawingTime(), mTransformation);
                 canvas.translate(offsetX, offsetY);
             } else {
 
@@ -163,7 +165,7 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
             canvas.restore();
         }
         if (mIsInLoading) {
-            invalidate();
+            super.invalidate();
         }
         canvas.restoreToCount(c1);
 
@@ -257,7 +259,7 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
         mDrawZoneWidth = (int) Math.ceil(drawWidth);
         mDrawZoneHeight = (int) Math.ceil(drawHeight);
         if (shouldLayout) {
-            requestLayout();
+            super.requestLayout();
         }
         return this;
     }
@@ -267,26 +269,33 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
 
     @Override
     public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
-        kernel.requestDrawBackgroundForHeader(mBackgroundColor);
+//        kernel.requestDrawBackgroundForHeader(mBackgroundColor);
         mRefreshKernel = kernel;
+        mRefreshKernel.requestDrawBackgroundFor(this, mBackgroundColor);
     }
 
     @Override
-    public void onPulling(float percent, int offset, int height, int extendHeight) {
+    public void onMoving(boolean isDragging, float percent, int offset, int height, int extendHeight) {
         mProgress = (percent * .8f);
-        invalidate();
+        super.invalidate();
     }
 
-    @Override
-    public void onReleasing(float percent, int offset, int height, int extendHeight) {
-        onPulling(percent, offset, height, extendHeight);
-    }
+//    @Override
+//    public void onPulling(float percent, int offset, int height, int extendHeight) {
+//        mProgress = (percent * .8f);
+//        invalidate();
+//    }
+//
+//    @Override
+//    public void onReleasing(float percent, int offset, int height, int extendHeight) {
+//        onPulling(percent, offset, height, extendHeight);
+//    }
 
     @Override
     public void onReleased(@NonNull RefreshLayout layout, int height, int extendHeight) {
         mIsInLoading = true;
         mAniController.start();
-        invalidate();
+        super.invalidate();
     }
 
     @Override
@@ -294,14 +303,14 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
         mIsInLoading = false;
         mAniController.stop();
         if (success && mEnableFadeAnimation) {
-            startAnimation(new Animation() {{
-                setDuration(250);
-                setInterpolator(new AccelerateInterpolator());
+            super.startAnimation(new Animation() {{
+                super.setDuration(250);
+                super.setInterpolator(new AccelerateInterpolator());
             }
                 @Override
                 protected void applyTransformation(float interpolatedTime, Transformation t) {
                     mProgress = (1 - interpolatedTime);
-                    invalidate();
+                    StoreHouseHeader.super.invalidate();
                     if (interpolatedTime == 1) {
                         for (int i = 0; i < mItemList.size(); i++) {
                             mItemList.get(i).resetPosition(mHorizontalRandomness);
@@ -327,7 +336,8 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
         if (colors.length > 0) {
             mBackgroundColor = colors[0];
             if (mRefreshKernel != null) {
-                mRefreshKernel.requestDrawBackgroundForHeader(colors[0]);
+//                mRefreshKernel.requestDrawBackgroundForHeader(colors[0]);
+                mRefreshKernel.requestDrawBackgroundFor(this, mBackgroundColor);
             }
             if (colors.length > 1) {
                 setTextColor(colors[1]);
@@ -384,7 +394,7 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
 
         private void stop() {
             mRunning = false;
-            removeCallbacks(this);
+            StoreHouseHeader.super.removeCallbacks(this);
         }
     }
 }

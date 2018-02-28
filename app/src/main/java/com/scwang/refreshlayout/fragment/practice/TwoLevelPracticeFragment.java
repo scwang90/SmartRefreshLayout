@@ -12,7 +12,8 @@ import android.widget.Toast;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.util.StatusBarUtil;
-import com.scwang.refreshlayout.widget.TwoLevelHeader;
+import com.scwang.smartrefresh.layout.api.OnTwoLevelListener;
+import com.scwang.smartrefresh.layout.header.TwoLevelHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
@@ -43,9 +44,9 @@ public class TwoLevelPracticeFragment extends Fragment {
 
         final RefreshLayout refreshLayout = (RefreshLayout)root.findViewById(R.id.refreshLayout);
 
-        header.setOnTwoLevelListener(new TwoLevelHeader.OnTwoLevelListener() {
+        header.setOnTwoLevelListener(new OnTwoLevelListener() {
             @Override
-            public boolean onTwoLevel(RefreshLayout refreshLayout) {
+            public boolean onTwoLevel(@NonNull RefreshLayout refreshLayout) {
                 Toast.makeText(getContext(),"触发二楼事件",Toast.LENGTH_SHORT).show();
                 refreshLayout.getLayout().postDelayed(new Runnable() {
                     @Override

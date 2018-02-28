@@ -48,7 +48,7 @@ public class FalsifyHeader extends InternalAbstract implements RefreshHeader {
     @Override
     protected void dispatchDraw(Canvas canvas) {
         super.dispatchDraw(canvas);
-        if (isInEditMode()) {//这段代码在运行时不会执行，只会在Studio编辑预览时运行，不用在意性能问题
+        if (super.isInEditMode()) {//这段代码在运行时不会执行，只会在Studio编辑预览时运行，不用在意性能问题
             int d = DensityUtil.dp2px(5);
 
             Paint paint = new Paint();
@@ -56,14 +56,14 @@ public class FalsifyHeader extends InternalAbstract implements RefreshHeader {
             paint.setColor(0xcccccccc);
             paint.setStrokeWidth(DensityUtil.dp2px(1));
             paint.setPathEffect(new DashPathEffect(new float[]{d, d, d, d}, 1));
-            canvas.drawRect(d, d, getWidth() - d, getBottom() - d, paint);
+            canvas.drawRect(d, d, super.getWidth() - d, super.getBottom() - d, paint);
 
-            TextView textView = new TextView(getContext());
-            textView.setText(getResources().getString(R.string.srl_component_falsify, getClass().getSimpleName(), DensityUtil.px2dp(getHeight())));
+            TextView textView = new TextView(super.getContext());
+            textView.setText(super.getResources().getString(R.string.srl_component_falsify, getClass().getSimpleName(), DensityUtil.px2dp(super.getHeight())));
             textView.setTextColor(0xcccccccc);
             textView.setGravity(Gravity.CENTER);
-            textView.measure(makeMeasureSpec(getWidth(), EXACTLY), makeMeasureSpec(getHeight(), EXACTLY));
-            textView.layout(0, 0, getWidth(), getHeight());
+            textView.measure(makeMeasureSpec(super.getWidth(), EXACTLY), makeMeasureSpec(super.getHeight(), EXACTLY));
+            textView.layout(0, 0, super.getWidth(), super.getHeight());
             textView.draw(canvas);
         }
     }

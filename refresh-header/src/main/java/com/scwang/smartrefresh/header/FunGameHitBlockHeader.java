@@ -115,7 +115,7 @@ public class FunGameHitBlockHeader extends FunGameView {
 
     @Override
     public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
-        final int measuredWidth = getMeasuredWidth();
+        final int measuredWidth = super.getMeasuredWidth();
         blockHeight = height / BLOCK_VERTICAL_NUM - DIVIDING_LINE_SIZE;
         blockWidth = measuredWidth * BLOCK_WIDTH_RATIO;
 
@@ -197,7 +197,7 @@ public class FunGameHitBlockHeader extends FunGameView {
         if (status == STATUS_GAME_PLAY
                 || status == STATUS_GAME_FINISHED
                 || status == STATUS_GAME_FAIL
-                || isInEditMode()) {
+                || super.isInEditMode()) {
             drawBallPath(canvas, width);
         }
     }
@@ -257,7 +257,7 @@ public class FunGameHitBlockHeader extends FunGameView {
 
         canvas.drawCircle(cx, cy, BALL_RADIUS, mPaint);
 
-        invalidate();
+        super.invalidate();
 
     }
 
