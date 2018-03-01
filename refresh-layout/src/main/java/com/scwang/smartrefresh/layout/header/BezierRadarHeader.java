@@ -1,5 +1,6 @@
 package com.scwang.smartrefresh.layout.header;
 
+import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
 import android.content.Context;
@@ -58,7 +59,7 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
     protected float mRadarRadius = 0;
     protected float mRadarCircle = 0;
     protected float mRadarScale = 0;
-    protected AnimatorSet mAnimatorSet;
+    protected Animator mAnimatorSet;
 //    protected ValueAnimator mRadarAnimator;
     protected RectF mRadarRect = new RectF(0,0,0,0);
     //</editor-fold>

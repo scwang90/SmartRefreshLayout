@@ -2,10 +2,10 @@ package com.scwang.smartrefresh.layout.util;
 
 import android.graphics.PointF;
 import android.support.annotation.NonNull;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 
 /**
  * 滚动边界
@@ -98,10 +98,11 @@ public class ScrollBoundaryUtil {
     public static boolean canScrollUp(@NonNull View targetView) {
         if (android.os.Build.VERSION.SDK_INT < 14) {
             if (targetView instanceof AbsListView) {
-                final AbsListView absListView = (AbsListView) targetView;
-                return absListView.getChildCount() > 0
-                        && (absListView.getFirstVisiblePosition() > 0 || absListView.getChildAt(0)
-                        .getTop() < absListView.getPaddingTop());
+                final ViewGroup viewGroup = (ViewGroup) targetView;
+                final AdapterView absListView = (AdapterView) targetView;
+                return viewGroup.getChildCount() > 0
+                        && (absListView.getFirstVisiblePosition() > 0
+                        || viewGroup.getChildAt(0).getTop() < targetView.getPaddingTop());
             } else {
                 return targetView.getScrollY() > 0;
             }
@@ -113,10 +114,11 @@ public class ScrollBoundaryUtil {
     public static boolean canScrollDown(@NonNull View targetView) {
         if (android.os.Build.VERSION.SDK_INT < 14) {
             if (targetView instanceof AbsListView) {
-                final AbsListView absListView = (AbsListView) targetView;
-                return absListView.getChildCount() > 0
-                        && (absListView.getLastVisiblePosition() < absListView.getChildCount() - 1
-                        || absListView.getChildAt(absListView.getChildCount() - 1).getBottom() > absListView.getPaddingBottom());
+                final ViewGroup viewGroup = (ViewGroup) targetView;
+                final AdapterView absListView = (AdapterView) targetView;
+                final int childCount = viewGroup.getChildCount();
+                return childCount > 0 && (absListView.getLastVisiblePosition() < childCount - 1
+                        || viewGroup.getChildAt(childCount - 1).getBottom() > targetView.getPaddingBottom());
             } else {
                 return targetView.getScrollY() < 0;
             }
@@ -129,7 +131,7 @@ public class ScrollBoundaryUtil {
 
     //<editor-fold desc="transform Point">
 
-    public static boolean isTransformedTouchPointInView(@NonNull ViewGroup group,@NonNull View child, float x, float y,PointF outLocalPoint) {
+    public static boolean isTransformedTouchPointInView(@NonNull View group,@NonNull View child, float x, float y,PointF outLocalPoint) {
         if (child.getVisibility() != View.VISIBLE) {
             return false;
         }
@@ -140,8 +142,9 @@ public class ScrollBoundaryUtil {
         point[0] += group.getScrollX() - child.getLeft();
         point[1] += group.getScrollY() - child.getTop();
 //        final boolean isInView = pointInView(child, point[0], point[1], 0);
-        final boolean isInView = point[0] >= 0 && point[1] >= 0 && point[0] < (child.getWidth()) &&
-                point[1] < ((child.getHeight()));
+        final boolean isInView = point[0] >= 0 && point[1] >= 0
+                && point[0] < (child.getWidth())
+                && point[1] < ((child.getHeight()));
         if (isInView && outLocalPoint != null) {
             outLocalPoint.set(point[0]-x, point[1]-y);
         }

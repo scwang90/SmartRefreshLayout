@@ -1,12 +1,14 @@
 package com.scwang.smartrefresh.layout.header;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.scwang.smartrefresh.layout.R;
 import com.scwang.smartrefresh.layout.api.OnTwoLevelListener;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
@@ -57,6 +59,17 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
     public TwoLevelHeader(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mSpinnerStyle = SpinnerStyle.FixedBehind;
+
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.TwoLevelHeader);
+
+        mMaxRage = ta.getFloat(R.styleable.TwoLevelHeader_srlMaxRage, mMaxRage);
+        mFloorRage = ta.getFloat(R.styleable.TwoLevelHeader_srlFloorRage, mFloorRage);
+        mRefreshRage = ta.getFloat(R.styleable.TwoLevelHeader_srlRefreshRage, mRefreshRage);
+        mFloorDuration = ta.getInt(R.styleable.TwoLevelHeader_srlFloorDuration, mFloorDuration);
+        mEnableTwoLevel = ta.getBoolean(R.styleable.TwoLevelHeader_srlEnableTwoLevel, mEnableTwoLevel);
+        mEnablePullToCloseTwoLevel = ta.getBoolean(R.styleable.TwoLevelHeader_srlEnablePullToCloseTwoLevel, mEnablePullToCloseTwoLevel);
+
+        ta.recycle();
     }
 
     //</editor-fold>
@@ -364,12 +377,12 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
 
     /**
      * 是否禁止在二极状态是上滑关闭状态回到初态
-     * @param disable 是否禁止
+     * @param enabled 是否启用
      */
-    public TwoLevelHeader setDisablePullToCloseTwoLevel(boolean disable) {
-        this.mEnablePullToCloseTwoLevel = !disable;
+    public TwoLevelHeader setEnablePullToCloseTwoLevel(boolean enabled) {
+        this.mEnablePullToCloseTwoLevel = enabled;
         if (this.mRefreshKernel != null) {
-            this.mRefreshKernel.requestNeedTouchEventFor(this, disable);
+            this.mRefreshKernel.requestNeedTouchEventFor(this, !enabled);
 //            this.mRefreshKernel.requestNeedTouchEventWhenRefreshing(disable);
         }
         return this;
@@ -387,6 +400,11 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
 
     public TwoLevelHeader setEnableTwoLevel(boolean enabled) {
         this.mEnableTwoLevel = enabled;
+        return this;
+    }
+
+    public TwoLevelHeader setFloorDuration(int duration) {
+        this.mFloorDuration = duration;
         return this;
     }
 

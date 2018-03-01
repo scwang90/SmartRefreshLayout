@@ -213,7 +213,7 @@ public class RefreshContentWrapper implements RefreshContent {
         if (fixedHeader != null || fixedFooter != null) {
             mFixedHeader = fixedHeader;
             mFixedFooter = fixedFooter;
-            FrameLayout frameLayout = new FrameLayout(mContentView.getContext());
+            ViewGroup frameLayout = new FrameLayout(mContentView.getContext());
             kernel.getRefreshLayout().getLayout().removeView(mContentView);
             ViewGroup.LayoutParams layoutParams = mContentView.getLayoutParams();
             frameLayout.addView(mContentView, MATCH_PARENT, MATCH_PARENT);
