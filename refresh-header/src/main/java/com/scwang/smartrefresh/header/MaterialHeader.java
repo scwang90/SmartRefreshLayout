@@ -77,7 +77,7 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
         final ViewGroup thisGroup = this;
         thisView.setMinimumHeight(DensityUtil.dp2px(100));
 
-        mProgress = new MaterialProgressDrawable(context, this);
+        mProgress = new MaterialProgressDrawable(this);
         mProgress.setBackgroundColor(CIRCLE_BG_LIGHT);
         mProgress.setAlpha(255);
         mProgress.setColorSchemeColors(0xff0099cc,0xffff4444,0xff669900,0xffaa66cc,0xffff8800);

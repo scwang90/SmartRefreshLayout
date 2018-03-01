@@ -28,7 +28,6 @@ import android.graphics.drawable.shapes.OvalShape;
 import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.view.View;
-import android.view.animation.Animation;
 import android.widget.ImageView;
 
 /**
@@ -53,7 +52,7 @@ public class CircleImageView extends ImageView {
     public CircleImageView(Context context, int color) {
         super(context);
         final View thisView = this;
-        final float density = thisView.getContext().getResources().getDisplayMetrics().density;
+        final float density = thisView.getResources().getDisplayMetrics().density;
         final int shadowYOffset = (int) (density * Y_OFFSET);
         final int shadowXOffset = (int) (density * X_OFFSET);
 
@@ -144,7 +143,7 @@ public class CircleImageView extends ImageView {
             super();
             mShadowPaint = new Paint();
             mShadowRadius = shadowRadius;
-            updateRadialGradient((int) rect().width());
+            updateRadialGradient((int) super.rect().width());
         }
 
         @Override

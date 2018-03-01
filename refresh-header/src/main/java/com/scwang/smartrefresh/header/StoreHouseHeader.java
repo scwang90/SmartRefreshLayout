@@ -212,7 +212,7 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
     }
 
     public StoreHouseHeader initWithString(String str, int fontSize) {
-        ArrayList<float[]> pointList = StoreHousePath.getPath(str, fontSize * 0.01f, 14);
+        List<float[]> pointList = StoreHousePath.getPath(str, fontSize * 0.01f, 14);
         initWithPointList(pointList);
         return this;
     }
@@ -220,7 +220,7 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
     public StoreHouseHeader initWithStringArray(int id) {
         final View thisView = this;
         String[] points = thisView.getResources().getStringArray(id);
-        ArrayList<float[]> pointList = new ArrayList<>();
+        List<float[]> pointList = new ArrayList<>();
         for (String point : points) {
             String[] x = point.split(",");
             float[] f = new float[4];

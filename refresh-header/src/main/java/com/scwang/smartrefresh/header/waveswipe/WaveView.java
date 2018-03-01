@@ -28,13 +28,9 @@ import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.BounceInterpolator;
-
-import com.scwang.smartrefresh.header.TaurusHeader;
-import com.scwang.smartrefresh.header.waterdrop.WaterDropView;
 
 /**
  * @author amyu
@@ -298,7 +294,7 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
         }
         float circleCenterY = (Float) mDropCircleAnimator.getAnimatedValue();
         float circleCenterX = mWidth / 2.f;
-        mDropRect.setEmpty();
+//        mDropRect.setEmpty();
         //円の座標をRectFに保存
         float scale = (Float) mDisappearCircleAnimator.getAnimatedValue();
         float vertical = (Float) mDropBounceVerticalAnimator.getAnimatedValue();

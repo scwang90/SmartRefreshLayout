@@ -64,7 +64,7 @@ public class WaterDropHeader extends InternalAbstract implements RefreshHeader {
         super(context, attrs, defStyleAttr);
 
         final ViewGroup thisGroup = this;
-        final  DensityUtil density = new DensityUtil();
+        final DensityUtil density = new DensityUtil();
 
         mSpinnerStyle = SpinnerStyle.Scale;
         mWaterDropView = new WaterDropView(context);
@@ -77,7 +77,7 @@ public class WaterDropHeader extends InternalAbstract implements RefreshHeader {
         progressDrawable.setBounds(0, 0, density.dip2px(20), density.dip2px(20));
 
         mImageView = new ImageView(context);
-        mProgress = new MaterialProgressDrawable(context, mImageView);
+        mProgress = new MaterialProgressDrawable(mImageView);
         mProgress.setBackgroundColor(0xffffffff);
         mProgress.setAlpha(255);
         mProgress.setColorSchemeColors(0xffffffff,0xff0099cc,0xffff4444,0xff669900,0xffaa66cc,0xffff8800);

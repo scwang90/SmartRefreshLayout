@@ -248,8 +248,8 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
     protected void dispatchDraw(Canvas canvas) {
 
         final View thisView = this;
-        int width = thisView.getWidth();
-        int height = thisView.getHeight();
+        final int width = thisView.getWidth();
+        final int height = thisView.getHeight();
         if (isRefreshing) {
             // Set up new set of wind
             while (mWinds.size() < WIND_SET_AMOUNT) {

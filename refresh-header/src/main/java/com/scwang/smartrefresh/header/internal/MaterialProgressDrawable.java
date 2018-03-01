@@ -16,7 +16,6 @@
 
 package com.scwang.smartrefresh.header.internal;
 
-import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -43,6 +42,7 @@ import android.view.animation.Transformation;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Fancy progress indicator for Material theme.
@@ -91,7 +91,7 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
     /** The number of points in the progress "star". */
     private static final byte NUM_POINTS = 5;
     /** The list of animators operating on this drawable. */
-    private final ArrayList<Animation> mAnimators = new ArrayList<>();
+    private final List<Animation> mAnimators = new ArrayList<>();
 
     /** The indicator ring, used to manage animation state. */
     private final Ring mRing = new Ring();
@@ -110,16 +110,14 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
     private static final float MAX_PROGRESS_ARC = .8f;
 
     private View mParent;
-    private Resources mResources;
     private Animation mAnimation;
     float mRotationCount;
     private float mWidth;
     private float mHeight;
     boolean mFinishing;
 
-    public MaterialProgressDrawable(Context context, View parent) {
+    public MaterialProgressDrawable(View parent) {
         mParent = parent;
-        mResources = context.getResources();
         setColorSchemeColors(COLORS);
         updateSizes(DEFAULT);
         setupAnimators();
@@ -127,7 +125,7 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
 
     private void setSizeParameters(int progressCircleWidth, int progressCircleHeight,
                                    float centerRadius, float strokeWidth, float arrowWidth, float arrowHeight) {
-        final DisplayMetrics metrics = mResources.getDisplayMetrics();
+        final DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
         final float screenDensity = metrics.density;
 
         mWidth = progressCircleWidth * screenDensity;
@@ -271,7 +269,7 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
 
     @Override
     public boolean isRunning() {
-        final ArrayList<Animation> animators = mAnimators;
+        final List<Animation> animators = mAnimators;
         final int N = animators.size();
         for (int i = 0; i < N; i++) {
             final Animation animator = animators.get(i);

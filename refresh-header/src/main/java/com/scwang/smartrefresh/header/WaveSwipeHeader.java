@@ -335,12 +335,11 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
     /**
      * 現在の向きが600dpを超えているかどうか
      *
-     * @param context {@link Context}
      * @return 600dpを超えているかどうか
      */
-    public static boolean isOver600dp(Context context) {
-        Resources resources = context.getResources();
-        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
+    public static boolean isOver600dp() {
+//        Resources resources = context.getResources();
+        DisplayMetrics displayMetrics = Resources.getSystem().getDisplayMetrics();
         return displayMetrics.widthPixels / displayMetrics.density >= 600;
     }
     /**
@@ -392,9 +391,9 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
          */
         public ProgressAnimationImageView(Context context) {
             super(context);
-            mProgress = new MaterialProgressDrawable(context, WaveSwipeHeader.this);
+            mProgress = new MaterialProgressDrawable(WaveSwipeHeader.this);
             mProgress.setBackgroundColor(Color.TRANSPARENT);
-            if (isOver600dp(context)) { // Make the progress be big
+            if (isOver600dp()) { // Make the progress be big
                 mProgress.updateSizes(MaterialProgressDrawable.LARGE);
             }
             super.setImageDrawable(mProgress);

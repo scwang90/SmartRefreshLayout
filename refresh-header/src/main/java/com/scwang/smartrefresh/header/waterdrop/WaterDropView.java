@@ -11,7 +11,6 @@ import android.support.annotation.ColorInt;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
-import com.scwang.smartrefresh.header.waveswipe.WaveView;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 
@@ -74,7 +73,7 @@ public class WaterDropView extends View {
         //宽度：上圆和下圆的最大直径
         final int width = ((mMaxCircleRadius + STROKE_WIDTH) * 2);
         //高度：上圆半径 + 圆心距 + 下圆半径
-        final int height = (int) Math.ceil(bottomCircle.y+bottomCircle.radius + STROKE_WIDTH * 2);
+        final int height = (int) Math.ceil(bottomCircle.y + bottomCircle.radius + STROKE_WIDTH * 2);
         super.setMeasuredDimension(width + thisView.getPaddingLeft() + thisView.getPaddingRight(),
                 View.resolveSize(height + thisView.getPaddingTop() + thisView.getPaddingBottom(), heightMeasureSpec));
     }

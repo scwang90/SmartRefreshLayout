@@ -83,7 +83,7 @@ public class FunGameHitBlockHeader extends FunGameView {
 
     private List<Point> pointList;
 
-    private boolean isleft;
+    private boolean isLeft;
 
     private int angle;
 
@@ -138,7 +138,7 @@ public class FunGameHitBlockHeader extends FunGameView {
 
         angle = DEFAULT_ANGLE;
 
-        isleft = true;
+        isLeft = true;
 
         if (pointList == null) {
             pointList = new ArrayList<>();
@@ -226,11 +226,11 @@ public class FunGameHitBlockHeader extends FunGameView {
 
         if (cx <= blockLeft + blockHorizontalNum * blockWidth + (blockHorizontalNum - 1) * DIVIDING_LINE_SIZE + BALL_RADIUS) { // 小球进入到色块区域
             if (checkTouchBlock(cx, cy)) { // 反弹回来
-                isleft = false;
+                isLeft = false;
             }
         }
         if (cx <= blockLeft + BALL_RADIUS) { // 小球穿过色块区域
-            isleft = false;
+            isLeft = false;
         }
 
         if (cx + BALL_RADIUS >= racketLeft && cx - BALL_RADIUS < racketLeft + blockWidth) { //小球当前坐标X值在挡板X值区域范围内
@@ -239,7 +239,7 @@ public class FunGameHitBlockHeader extends FunGameView {
                     status = STATUS_GAME_OVER;
                     return;
                 }
-                isleft = true;
+                isLeft = true;
             }
         } else if (cx > width) { // 小球超出挡板区域
             status = STATUS_GAME_OVER;
@@ -251,7 +251,7 @@ public class FunGameHitBlockHeader extends FunGameView {
             angle = 180 + DEFAULT_ANGLE;
         }
 
-        if (isleft) {
+        if (isLeft) {
             cx -= speed;
         } else {
             cx += speed;

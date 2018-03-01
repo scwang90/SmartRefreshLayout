@@ -45,7 +45,7 @@ public abstract class FunGameBase extends InternalAbstract implements RefreshHea
         super(context, attrs, defStyleAttr);
         final View thisView = this;
         thisView.setMinimumHeight(DensityUtil.dp2px(100));
-        mScreenHeightPixels = context.getResources().getDisplayMetrics().heightPixels;
+        mScreenHeightPixels = thisView.getResources().getDisplayMetrics().heightPixels;
         mSpinnerStyle = SpinnerStyle.MatchLayout;
     }
 

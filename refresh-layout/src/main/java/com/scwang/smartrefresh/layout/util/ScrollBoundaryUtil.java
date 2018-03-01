@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
 
 /**
  * 滚动边界
@@ -99,7 +98,7 @@ public class ScrollBoundaryUtil {
         if (android.os.Build.VERSION.SDK_INT < 14) {
             if (targetView instanceof AbsListView) {
                 final ViewGroup viewGroup = (ViewGroup) targetView;
-                final AdapterView absListView = (AdapterView) targetView;
+                final AbsListView absListView = (AbsListView) targetView;
                 return viewGroup.getChildCount() > 0
                         && (absListView.getFirstVisiblePosition() > 0
                         || viewGroup.getChildAt(0).getTop() < targetView.getPaddingTop());
@@ -115,7 +114,7 @@ public class ScrollBoundaryUtil {
         if (android.os.Build.VERSION.SDK_INT < 14) {
             if (targetView instanceof AbsListView) {
                 final ViewGroup viewGroup = (ViewGroup) targetView;
-                final AdapterView absListView = (AdapterView) targetView;
+                final AbsListView absListView = (AbsListView) targetView;
                 final int childCount = viewGroup.getChildCount();
                 return childCount > 0 && (absListView.getLastVisiblePosition() < childCount - 1
                         || viewGroup.getChildAt(childCount - 1).getBottom() > targetView.getPaddingBottom());

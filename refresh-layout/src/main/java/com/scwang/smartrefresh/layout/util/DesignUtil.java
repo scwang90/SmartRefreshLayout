@@ -92,7 +92,9 @@ public class DesignUtil {
                 return;
             }
 
-            final View firstView = listView.getChildAt(0);
+            //noinspection UnnecessaryLocalVariable
+            final ViewGroup listGroup = listView;
+            final View firstView = listGroup.getChildAt(0);
             if (firstView == null) {
                 return;
             }

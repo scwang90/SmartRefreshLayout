@@ -75,7 +75,7 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
     public String mTextLoadingFailed;
 
     protected Paint mPaint;
-    protected TextPaint mPaintText;
+    protected Paint mPaintText;
 
     protected float controllerPosition;
 
@@ -90,12 +90,16 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
     public FunGameView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.FunGameView);
+        final View thisView = this;
+        final ViewGroup thisGroup = this;
+        final TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.FunGameView);
 
         //<editor-fold desc="init - Curtain">
-        mMaskTextBottom = context.getResources().getString(R.string.fgh_mask_bottom);//"拖动控制游戏";//"Scroll to move handle";
-        mMaskTextTopPull = context.getResources().getString(R.string.fgh_mask_top_pull);//"下拉即将展开";//"Pull To Break Out!";
-        mMaskTextTopRelease = context.getResources().getString(R.string.fgh_mask_top_release);//"放手即将展开";//"Release To Break Out!";
+
+
+        mMaskTextBottom = thisView.getResources().getString(R.string.fgh_mask_bottom);//"拖动控制游戏";//"Scroll to move handle";
+        mMaskTextTopPull = thisView.getResources().getString(R.string.fgh_mask_top_pull);//"下拉即将展开";//"Pull To Break Out!";
+        mMaskTextTopRelease = thisView.getResources().getString(R.string.fgh_mask_top_release);//"放手即将展开";//"Release To Break Out!";
         if (ta.hasValue(R.styleable.FunGameView_fghMaskTextTop)) {
             mMaskTextTopPull = mMaskTextTopRelease = ta.getString(R.styleable.FunGameView_fghMaskTextTop);
         }
@@ -109,8 +113,6 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
             mMaskTextBottom = ta.getString(R.styleable.FunGameView_fghMaskTextBottom);
         }
 
-        final View thisView = this;
-        final ViewGroup thisGroup = this;
         DisplayMetrics metrics = thisView.getResources().getDisplayMetrics();
         int maskTextSizeTop = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16, metrics);
         int maskTextSizeBottom = maskTextSizeTop * 14 / 16;
@@ -118,7 +120,7 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
         maskTextSizeTop = ta.getDimensionPixelSize(R.styleable.FunGameView_fghMaskTextSizeTop, maskTextSizeTop);
         maskTextSizeBottom = ta.getDimensionPixelSize(R.styleable.FunGameView_fghMaskTextSizeBottom, maskTextSizeBottom);
 
-        RelativeLayout mCurtainLayout = new RelativeLayout(context);
+        ViewGroup curtainLayout = new RelativeLayout(context);
         mShadowView = new RelativeLayout(context);
         mShadowView.setBackgroundColor(0xFF3A3A3A);
 
@@ -131,14 +133,14 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
 //            maskLp.topMargin = (int) FunGameView.DIVIDING_LINE_SIZE;
 //            maskLp.bottomMargin = (int) FunGameView.DIVIDING_LINE_SIZE;
             thisGroup.addView(mShadowView, maskLp);
-            thisGroup.addView(mCurtainLayout, maskLp);
+            thisGroup.addView(curtainLayout, maskLp);
 
             mHalfHeaderHeight = (int) ((height/* - 2 * DIVIDING_LINE_SIZE*/) * .5f);
             LayoutParams lpTop = new LayoutParams(MATCH_PARENT, mHalfHeaderHeight);
             LayoutParams lpBottom = new LayoutParams(MATCH_PARENT, mHalfHeaderHeight);
             lpBottom.topMargin = height - mHalfHeaderHeight;
-            mCurtainLayout.addView(mMaskViewTop, lpTop);
-            mCurtainLayout.addView(mMaskViewBottom, lpBottom);
+            curtainLayout.addView(mMaskViewTop, lpTop);
+            curtainLayout.addView(mMaskViewBottom, lpBottom);
         }
 
         //</editor-fold>
@@ -215,8 +217,7 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
         mPaint.setColor(mBoundaryColor);
         canvas.drawLine(0, 0, width, 0, mPaint);
         canvas.drawLine(0, height - DIVIDING_LINE_SIZE,
-                width, height - DIVIDING_LINE_SIZE,
-                mPaint);
+                width, height - DIVIDING_LINE_SIZE, mPaint);
     }
 
     /**

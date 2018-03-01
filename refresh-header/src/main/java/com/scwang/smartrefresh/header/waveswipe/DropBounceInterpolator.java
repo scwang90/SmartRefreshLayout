@@ -15,8 +15,6 @@ package com.scwang.smartrefresh.header.waveswipe;
  * limitations under the License.
  */
 
-import android.content.Context;
-import android.util.AttributeSet;
 import android.view.animation.Interpolator;
 
 /**

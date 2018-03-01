@@ -199,7 +199,7 @@ class PathParser {
         int start = 0;
         int end = 1;
 
-        ArrayList<PathDataNode> list = new ArrayList<>();
+        List<PathDataNode> list = new ArrayList<>();
         while (end < pathData.length()) {
             end = nextStart(pathData, end);
             String s = pathData.substring(start, end).trim();
@@ -289,7 +289,7 @@ class PathParser {
         return end;
     }
 
-    private static void addNode(ArrayList<PathDataNode> list, char cmd, float[] val) {
+    private static void addNode(List<PathDataNode> list, char cmd, float[] val) {
         list.add(new PathDataNode(cmd, val));
     }
 
