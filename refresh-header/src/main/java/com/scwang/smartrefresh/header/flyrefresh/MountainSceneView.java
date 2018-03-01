@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.animation.Interpolator;
 
 import com.scwang.smartrefresh.header.R;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 /**
  * 山丘树木场景视图
@@ -95,8 +96,9 @@ public class MountainSceneView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        final int width = super.getMeasuredWidth();
-        final int height = super.getMeasuredHeight();
+        final View thisView = this;
+        final int width = thisView.getMeasuredWidth();
+        final int height = thisView.getMeasuredHeight();
         mScaleX = 1f * width / WIDTH;
         mScaleY = 1f * (mViewportHeight > 0 ? mViewportHeight : height) / HEIGHT;
 
@@ -235,13 +237,14 @@ public class MountainSceneView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        final View thisView = this;
         canvas.drawColor(COLOR_BACKGROUND);
 
         mMountPaint.setColor(COLOR_MOUNTAIN_1);
         canvas.drawPath(mMount1, mMountPaint);
 
         canvas.save();
-        canvas.scale(-1, 1, getWidth() / 2, 0);
+        canvas.scale(-1, 1, thisView.getWidth() / 2, 0);
         drawTree(canvas, 0.12f * mScaleX, 180 * mScaleX, (93 + 20 * mMoveFactor) * mScaleY,
                 COLOR_TREE_3_BTRUNK, COLOR_TREE_3_BRANCH);
         drawTree(canvas, 0.1f * mScaleX, 200 * mScaleX, (96 + 20 * mMoveFactor) * mScaleY,
@@ -294,7 +297,8 @@ public class MountainSceneView extends View {
 
         mMoveFactor = Math.max(0, mBounceMax);
 
-        int height = super.getMeasuredHeight();
+        final View thisView = MountainSceneView.this;
+        int height = thisView.getMeasuredHeight();
         updateMountainPath(mMoveFactor, height > 0 ? height : HEIGHT);
         updateTreePath(bendFactor, false);
     }

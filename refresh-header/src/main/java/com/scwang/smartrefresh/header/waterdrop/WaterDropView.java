@@ -11,6 +11,7 @@ import android.support.annotation.ColorInt;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
+import com.scwang.smartrefresh.header.waveswipe.WaveView;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 
@@ -34,7 +35,7 @@ public class WaterDropView extends View {
 
     public WaterDropView(Context context) {
         super(context);
-
+        final View thisView = this;
         topCircle = new Circle();
         bottomCircle = new Circle();
         mPath = new Path();
@@ -44,10 +45,10 @@ public class WaterDropView extends View {
         mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         mPaint.setStrokeWidth(STROKE_WIDTH = DensityUtil.dp2px(1f));
         mPaint.setShadowLayer(STROKE_WIDTH, STROKE_WIDTH/2, STROKE_WIDTH, 0x99000000);
-        super.setLayerType(LAYER_TYPE_SOFTWARE, null);
+        thisView.setLayerType(LAYER_TYPE_SOFTWARE, null);
 
         int padding = 4 * STROKE_WIDTH;
-        super.setPadding(padding, padding, padding, padding);
+        thisView.setPadding(padding, padding, padding, padding);
 
         mPaint.setColor(Color.GRAY);
         mMaxCircleRadius = DensityUtil.dp2px(20);
@@ -69,28 +70,31 @@ public class WaterDropView extends View {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        final View thisView = this;
         //宽度：上圆和下圆的最大直径
-        int width = (int) ((mMaxCircleRadius + STROKE_WIDTH) * 2);
+        final int width = ((mMaxCircleRadius + STROKE_WIDTH) * 2);
         //高度：上圆半径 + 圆心距 + 下圆半径
-        int height = (int) Math.ceil(bottomCircle.y+bottomCircle.radius + STROKE_WIDTH * 2);
-        super.setMeasuredDimension(width + super.getPaddingLeft() + super.getPaddingRight(),
-                resolveSize(height + super.getPaddingTop() + super.getPaddingBottom(), heightMeasureSpec));
+        final int height = (int) Math.ceil(bottomCircle.y+bottomCircle.radius + STROKE_WIDTH * 2);
+        super.setMeasuredDimension(width + thisView.getPaddingLeft() + thisView.getPaddingRight(),
+                View.resolveSize(height + thisView.getPaddingTop() + thisView.getPaddingBottom(), heightMeasureSpec));
     }
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
-        updateCompleteState(super.getHeight());
+        final View thisView = this;
+        updateCompleteState(thisView.getHeight());
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        final int paddingTop = super.getPaddingTop();
-        final int paddingLeft = super.getPaddingLeft();
-        final int paddingBottom = super.getPaddingBottom();
-        final int height = super.getHeight();
+        final View thisView = this;
+        final int paddingTop = thisView.getPaddingTop();
+        final int paddingLeft = thisView.getPaddingLeft();
+        final int paddingBottom = thisView.getPaddingBottom();
+        final int height = thisView.getHeight();
         canvas.save();
         if (height <= topCircle.radius * 2 + paddingTop + paddingBottom) {
             canvas.translate(paddingLeft, height - topCircle.radius * 2 - paddingBottom);
@@ -166,7 +170,8 @@ public class WaterDropView extends View {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator1) {
                 WaterDropView.this.updateCompleteState((float) valueAnimator1.getAnimatedValue());
-                WaterDropView.super.postInvalidate();
+                final View thisView = WaterDropView.this;
+                thisView.postInvalidate();
             }
         });
         return valueAnimator;
@@ -201,8 +206,9 @@ public class WaterDropView extends View {
      * @param height 高度
      */
     public void updateCompleteState(int height) {
-        final int paddingTop = super.getPaddingTop();
-        final int paddingBottom = super.getPaddingBottom();
+        final View thisView = WaterDropView.this;
+        final int paddingTop = thisView.getPaddingTop();
+        final int paddingBottom = thisView.getPaddingBottom();
         float space = mMaxCircleRadius * 2 + paddingTop + paddingBottom;
         if (height < space) {
             topCircle.radius = mMaxCircleRadius;

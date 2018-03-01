@@ -97,28 +97,31 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
         }
         ta.recycle();
 
-        super.setMinimumHeight(mDrawZoneHeight + DensityUtil.dp2px(40));
+        final View thisView = this;
+        thisView.setMinimumHeight(mDrawZoneHeight + DensityUtil.dp2px(40));
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        final View thisView = this;
 //        int height = getTopOffset() + mDrawZoneHeight + getBottomOffset();
 //        heightMeasureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY);
         super.setMeasuredDimension(
                 View.resolveSize(super.getSuggestedMinimumWidth(), widthMeasureSpec),
                 View.resolveSize(super.getSuggestedMinimumHeight(), heightMeasureSpec));
 
-        mOffsetX = (super.getMeasuredWidth() - mDrawZoneWidth) / 2;
-        mOffsetY = (super.getMeasuredHeight() - mDrawZoneHeight) / 2;//getTopOffset();
-        mDropHeight = super.getMeasuredHeight() / 2;//getTopOffset();
+        mOffsetX = (thisView.getMeasuredWidth() - mDrawZoneWidth) / 2;
+        mOffsetY = (thisView.getMeasuredHeight() - mDrawZoneHeight) / 2;//getTopOffset();
+        mDropHeight = thisView.getMeasuredHeight() / 2;//getTopOffset();
     }
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
 
+        final View thisView = this;
         final int c1 = canvas.save();
         final int len = mItemList.size();
-        final float progress = super.isInEditMode() ? 1 : mProgress;
+        final float progress = thisView.isInEditMode() ? 1 : mProgress;
 
         for (int i = 0; i < len; i++) {
 
@@ -128,7 +131,7 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
             float offsetY = mOffsetY + storeHouseBarItem.midPoint.y;
 
             if (mIsInLoading) {
-                storeHouseBarItem.getTransformation(super.getDrawingTime(), mTransformation);
+                storeHouseBarItem.getTransformation(thisView.getDrawingTime(), mTransformation);
                 canvas.translate(offsetX, offsetY);
             } else {
 
@@ -165,7 +168,7 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
             canvas.restore();
         }
         if (mIsInLoading) {
-            super.invalidate();
+            thisView.invalidate();
         }
         canvas.restoreToCount(c1);
 
@@ -215,7 +218,8 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
     }
 
     public StoreHouseHeader initWithStringArray(int id) {
-        String[] points = getResources().getStringArray(id);
+        final View thisView = this;
+        String[] points = thisView.getResources().getStringArray(id);
         ArrayList<float[]> pointList = new ArrayList<>();
         for (String point : points) {
             String[] x = point.split(",");
@@ -259,7 +263,8 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
         mDrawZoneWidth = (int) Math.ceil(drawWidth);
         mDrawZoneHeight = (int) Math.ceil(drawHeight);
         if (shouldLayout) {
-            super.requestLayout();
+            final View thisView = this;
+            thisView.requestLayout();
         }
         return this;
     }
@@ -277,7 +282,8 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
     @Override
     public void onMoving(boolean isDragging, float percent, int offset, int height, int extendHeight) {
         mProgress = (percent * .8f);
-        super.invalidate();
+        final View thisView = this;
+        thisView.invalidate();
     }
 
 //    @Override
@@ -295,7 +301,8 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
     public void onReleased(@NonNull RefreshLayout layout, int height, int extendHeight) {
         mIsInLoading = true;
         mAniController.start();
-        super.invalidate();
+        final View thisView = this;
+        thisView.invalidate();
     }
 
     @Override
@@ -303,14 +310,16 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
         mIsInLoading = false;
         mAniController.stop();
         if (success && mEnableFadeAnimation) {
-            super.startAnimation(new Animation() {{
+            final View thisView = this;
+            thisView.startAnimation(new Animation() {{
                 super.setDuration(250);
                 super.setInterpolator(new AccelerateInterpolator());
             }
                 @Override
                 protected void applyTransformation(float interpolatedTime, Transformation t) {
+                    final View thisView = StoreHouseHeader.this;
                     mProgress = (1 - interpolatedTime);
-                    StoreHouseHeader.super.invalidate();
+                    thisView.invalidate();
                     if (interpolatedTime == 1) {
                         for (int i = 0; i < mItemList.size(); i++) {
                             mItemList.get(i).resetPosition(mHorizontalRandomness);
@@ -394,7 +403,8 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
 
         private void stop() {
             mRunning = false;
-            StoreHouseHeader.super.removeCallbacks(this);
+            final View thisView = StoreHouseHeader.this;
+            thisView.removeCallbacks(this);
         }
     }
 }

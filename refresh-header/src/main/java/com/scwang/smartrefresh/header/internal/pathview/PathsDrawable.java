@@ -12,6 +12,7 @@ import android.graphics.Region;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 
+import com.scwang.smartrefresh.layout.internal.ArrowDrawable;
 import com.scwang.smartrefresh.layout.internal.PaintDrawable;
 
 import java.util.ArrayList;
@@ -67,7 +68,8 @@ public class PathsDrawable extends PaintDrawable {
         if (mOriginHeight == 0) {
             mOriginHeight = mHeight;
         }
-        Rect bounds = super.getBounds();
+        final Drawable drawable = PathsDrawable.this;
+        final Rect bounds = drawable.getBounds();
         super.setBounds(bounds.left, bounds.top, bounds.left + mWidth, bounds.top + mHeight);
     }
 
@@ -111,9 +113,10 @@ public class PathsDrawable extends PaintDrawable {
     //<editor-fold desc="Drawable">
     @Override
     public void draw(@NonNull Canvas canvas) {
-        Rect bounds = super.getBounds();
-        int width = bounds.width();
-        int height = bounds.height();
+        final Drawable drawable = PathsDrawable.this;
+        final Rect bounds = drawable.getBounds();
+        final int width = bounds.width();
+        final int height = bounds.height();
         if (mPaint.getAlpha() == 0xFF) {
             canvas.save();
             canvas.translate(bounds.left-mStartX, bounds.top-mStartY);
@@ -160,7 +163,8 @@ public class PathsDrawable extends PaintDrawable {
     //<editor-fold desc="API">
 
     public void setGeometricWidth(int width) {
-        Rect bounds = super.getBounds();
+        final Drawable drawable = PathsDrawable.this;
+        final Rect bounds = drawable.getBounds();
         float rate = 1f * width / bounds.width();
         setBounds(
                 (int) (bounds.left * rate),
@@ -172,7 +176,8 @@ public class PathsDrawable extends PaintDrawable {
     }
 
     public void setGeometricHeight(int height) {
-        Rect bounds = super.getBounds();
+        final Drawable drawable = PathsDrawable.this;
+        final Rect bounds = drawable.getBounds();
         float rate = 1f * height / bounds.height();
         setBounds(
                 (int) (bounds.left * rate),
@@ -201,7 +206,7 @@ public class PathsDrawable extends PaintDrawable {
         }
     }
 
-    public void createCachedBitmapIfNeeded(int width, int height) {
+    private void createCachedBitmapIfNeeded(int width, int height) {
         if (mCachedBitmap == null || width != mCachedBitmap.getWidth() || height != mCachedBitmap.getHeight()) {
             mCachedBitmap = Bitmap.createBitmap(width, height,
                     Bitmap.Config.ARGB_8888);

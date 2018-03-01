@@ -11,6 +11,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -96,23 +98,22 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
             REFRESH_HEADER_SECONDARY = context.getString(R.string.srl_header_secondary);
         }
 
-
-        DensityUtil density = new DensityUtil();
-
-        mTitleText.setTextColor(0xff666666);
-        mTitleText.setText(super.isInEditMode() ? REFRESH_HEADER_REFRESHING : REFRESH_HEADER_PULLING);
-
         mLastUpdateText = new TextView(context);
-        mLastUpdateText.setId(ID_TEXT_UPDATE);
         mLastUpdateText.setTextColor(0xff7c7c7c);
-        LinearLayout.LayoutParams lpUpdateText = new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
-        mCenterLayout.addView(mLastUpdateText, lpUpdateText);
         mLastUpdateFormat = new SimpleDateFormat(REFRESH_HEADER_UPDATE, Locale.getDefault());
+
+        final View thisView = this;
+        final View arrowView = mArrowView;
+        final View updateView = mLastUpdateText;
+        final View progressView = mProgressView;
+        final ViewGroup centerLayout = mCenterLayout;
+        final DensityUtil density = new DensityUtil();
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ClassicsHeader);
 
-        LayoutParams lpArrow = (LayoutParams) mArrowView.getLayoutParams();
-        LayoutParams lpProgress = (LayoutParams) mProgressView.getLayoutParams();
+        LayoutParams lpArrow = (LayoutParams) arrowView.getLayoutParams();
+        LayoutParams lpProgress = (LayoutParams) progressView.getLayoutParams();
+        LinearLayout.LayoutParams lpUpdateText = new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
         lpUpdateText.topMargin = ta.getDimensionPixelSize(R.styleable.ClassicsHeader_srlTextTimeMarginTop, density.dip2px(0));
         lpProgress.rightMargin = ta.getDimensionPixelSize(R.styleable.ClassicsFooter_srlDrawableMarginRight, density.dip2px(20));
         lpArrow.rightMargin = lpProgress.rightMargin;
@@ -130,8 +131,6 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
         mFinishDuration = ta.getInt(R.styleable.ClassicsHeader_srlFinishDuration, mFinishDuration);
         mEnableLastTime = ta.getBoolean(R.styleable.ClassicsHeader_srlEnableLastTime, mEnableLastTime);
         mSpinnerStyle = SpinnerStyle.values()[ta.getInt(R.styleable.ClassicsHeader_srlClassicsSpinnerStyle,mSpinnerStyle.ordinal())];
-
-        mLastUpdateText.setVisibility(mEnableLastTime ? VISIBLE : GONE);
 
         if (ta.hasValue(R.styleable.ClassicsHeader_srlDrawableArrow)) {
             mArrowView.setImageDrawable(ta.getDrawable(R.styleable.ClassicsHeader_srlDrawableArrow));
@@ -169,6 +168,12 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
         }
 
         ta.recycle();
+
+        updateView.setId(ID_TEXT_UPDATE);
+        updateView.setVisibility(mEnableLastTime ? VISIBLE : GONE);
+        centerLayout.addView(updateView, lpUpdateText);
+        mTitleText.setTextColor(0xff666666);
+        mTitleText.setText(thisView.isInEditMode() ? REFRESH_HEADER_REFRESHING : REFRESH_HEADER_PULLING);
 
         try {//try 不能删除-否则会出现兼容性问题
             if (context instanceof FragmentActivity) {
@@ -216,30 +221,32 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
 
     @Override
     public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
+        final View arrowView = mArrowView;
+        final View updateView = mLastUpdateText;
         switch (newState) {
             case None:
-                mLastUpdateText.setVisibility(mEnableLastTime ? VISIBLE : GONE);
+                updateView.setVisibility(mEnableLastTime ? VISIBLE : GONE);
             case PullDownToRefresh:
                 mTitleText.setText(REFRESH_HEADER_PULLING);
-                mArrowView.setVisibility(VISIBLE);
-                mArrowView.animate().rotation(0);
+                arrowView.setVisibility(VISIBLE);
+                arrowView.animate().rotation(0);
                 break;
             case Refreshing:
             case RefreshReleased:
                 mTitleText.setText(REFRESH_HEADER_REFRESHING);
-                mArrowView.setVisibility(GONE);
+                arrowView.setVisibility(GONE);
                 break;
             case ReleaseToRefresh:
                 mTitleText.setText(REFRESH_HEADER_RELEASE);
-                mArrowView.animate().rotation(180);
+                arrowView.animate().rotation(180);
                 break;
             case ReleaseToTwoLevel:
                 mTitleText.setText(REFRESH_HEADER_SECONDARY);
-                mArrowView.animate().rotation(0);
+                arrowView.animate().rotation(0);
                 break;
             case Loading:
-                mArrowView.setVisibility(GONE);
-                mLastUpdateText.setVisibility(mEnableLastTime ? INVISIBLE : GONE);
+                arrowView.setVisibility(GONE);
+                updateView.setVisibility(mEnableLastTime ? INVISIBLE : GONE);
                 mTitleText.setText(REFRESH_HEADER_LOADING);
                 break;
         }
@@ -249,9 +256,10 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
     //<editor-fold desc="API">
 
     public ClassicsHeader setLastUpdateTime(Date time) {
+        final View thisView = this;
         mLastTime = time;
         mLastUpdateText.setText(mLastUpdateFormat.format(time));
-        if (mShared != null && !isInEditMode()) {
+        if (mShared != null && !thisView.isInEditMode()) {
             mShared.edit().putLong(KEY_LAST_UPDATE_TIME, time.getTime()).apply();
         }
         return this;
@@ -277,8 +285,9 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
     }
 
     public ClassicsHeader setEnableLastTime(boolean enable) {
+        final View updateView = mLastUpdateText;
         mEnableLastTime = enable;
-        mLastUpdateText.setVisibility(enable ? VISIBLE : GONE);
+        updateView.setVisibility(enable ? VISIBLE : GONE);
         if (mRefreshKernel != null) {
             mRefreshKernel.requestRemeasureHeightFor(this);
 //            mRefreshKernel.requestRemeasureHeightForHeader();
@@ -304,9 +313,10 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
 //    }
 
     public ClassicsHeader setTextTimeMarginTop(float dp) {
-        MarginLayoutParams lp = (MarginLayoutParams)mLastUpdateText.getLayoutParams();
+        final View updateView = mLastUpdateText;
+        MarginLayoutParams lp = (MarginLayoutParams)updateView.getLayoutParams();
         lp.topMargin = DensityUtil.dp2px(dp);
-        mLastUpdateText.setLayoutParams(lp);
+        updateView.setLayoutParams(lp);
         return this;
     }
 

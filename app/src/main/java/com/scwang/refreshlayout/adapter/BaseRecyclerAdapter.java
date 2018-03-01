@@ -164,6 +164,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<SmartV
             convertView = holder.itemView;
             convertView.setTag(holder);
         }
+        holder.setPosition(position);
         onBindViewHolder(holder, position);
         addAnimate(holder, position);
         return convertView;

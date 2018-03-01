@@ -7,6 +7,7 @@ import android.graphics.RectF;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.SparseArray;
+import android.view.View;
 
 import com.scwang.smartrefresh.header.fungame.FunGameView;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
@@ -265,7 +266,8 @@ public class FunGameBattleCityHeader extends FunGameView {
             drawEnemyTank(canvas,width);
             drawBulletPath(canvas,width);
         }
-        if (isInEditMode()) {
+        final View thisView = this;
+        if (thisView.isInEditMode()) {
             drawTank(canvas, new RectF(controllerSize, 0, controllerSize * 2, controllerSize));
             drawTank(canvas, new RectF(0, controllerSize, controllerSize, controllerSize*2));
             drawTank(canvas, new RectF(controllerSize * 3, controllerSize * 2, controllerSize * 4, controllerSize*3));
@@ -386,7 +388,8 @@ public class FunGameBattleCityHeader extends FunGameView {
                 isOverstep = false;
             }
         }
-        super.invalidate();
+        final View thisView = this;
+        thisView.invalidate();
     }
 
     /**

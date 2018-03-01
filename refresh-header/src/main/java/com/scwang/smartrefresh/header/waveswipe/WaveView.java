@@ -28,9 +28,13 @@ import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.BounceInterpolator;
+
+import com.scwang.smartrefresh.header.TaurusHeader;
+import com.scwang.smartrefresh.header.waterdrop.WaterDropView;
 
 /**
  * @author amyu
@@ -219,7 +223,8 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
             new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                    WaveView.this.postInvalidate();
+                    final View thisView = WaveView.this;
+                    thisView.postInvalidate();
                 }
             };
 
@@ -230,7 +235,8 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
     public WaveView(Context context) {
         super(context);
 //        setUpPaint();
-        float density = getResources().getDisplayMetrics().density;
+        final View thisView = this;
+        float density = thisView.getResources().getDisplayMetrics().density;
         mPaint = new Paint();
         mPaint.setColor(0xff2196F3);
         mPaint.setAntiAlias(true);
@@ -246,8 +252,8 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
         resetAnimator();
 
         mDropRect = new RectF();
-        super.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-        getViewTreeObserver().addOnPreDrawListener(this);
+        thisView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        thisView.getViewTreeObserver().addOnPreDrawListener(this);
     }
 
     /**
@@ -258,7 +264,8 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         mWidth = w;
         mDropCircleRadius = w / 14.4f;
-        updateMaxDropHeight((int) Math.min(Math.min(w, h), getHeight() - mDropCircleRadius));
+        final View thisView = this;
+        updateMaxDropHeight((int) Math.min(Math.min(w, h), thisView.getHeight() - mDropCircleRadius));
         super.onSizeChanged(w, h, oldw, oldh);
     }
 
@@ -268,7 +275,8 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
      */
     @Override
     public boolean onPreDraw() {
-        getViewTreeObserver().removeOnPreDrawListener(this);
+        final View thisView = this;
+        thisView.getViewTreeObserver().removeOnPreDrawListener(this);
         if (mDropHeightUpdated) {
             updateMaxDropHeight(mUpdateMaxDropHeight);
         }
@@ -280,8 +288,9 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
         super.onDraw(canvas);
         //引っ張ってる最中の波と終わったあとの波
 //    canvas.drawPath(mWavePath, mShadowPaint);
+        final View thisView = this;
         canvas.drawPath(mWavePath, mPaint);
-        if (!super.isInEditMode()) {
+        if (!thisView.isInEditMode()) {
             mWavePath.rewind();
             //円が落ちる部分の描画
             mDropTangentPath.rewind();
@@ -410,7 +419,8 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
                 mMaxDropHeight - mDropCircleRadius);
         mDropVertexAnimator.start();
         mCurrentCircleCenterY = mMaxDropHeight;
-        super.postInvalidate();
+        final View thisView = WaveView.this;
+        thisView.postInvalidate();
     }
 
     public void beginPhase(float move1) {
@@ -433,16 +443,15 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
         mWavePath.cubicTo(mWidth - mWidth * BEGIN_PHASE_POINTS[1][0],
                 mWidth * (BEGIN_PHASE_POINTS[1][1] + move1), mWidth - mWidth * BEGIN_PHASE_POINTS[0][0],
                 BEGIN_PHASE_POINTS[0][1], mWidth, 0);
-        postInvalidateOnAnimation();
-    }
 
-    public void postInvalidateOnAnimation() {
+        final View thisView = this;
         if (Build.VERSION.SDK_INT >= 16) {
-            super.postInvalidateOnAnimation();
+            thisView.postInvalidateOnAnimation();
         } else {
-            super.invalidate();
+            thisView.invalidate();
         }
     }
+
 
     public void appearPhase(float move1, float move2) {
         onPreDragWave();
@@ -475,7 +484,13 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
         mCurrentCircleCenterY =
                 mWidth * Math.min(BEGIN_PHASE_POINTS[3][1] + move1 + move2, APPEAR_PHASE_POINTS[3][1])
                         + mDropCircleRadius;
-        postInvalidateOnAnimation();
+
+        final View thisView = this;
+        if (Build.VERSION.SDK_INT >= 16) {
+            thisView.postInvalidateOnAnimation();
+        } else {
+            thisView.invalidate();
+        }
     }
 
     public void expandPhase(float move1, float move2, float move3) {
@@ -527,7 +542,13 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
         mCurrentCircleCenterY = mWidth * Math.min(
                 Math.min(BEGIN_PHASE_POINTS[3][1] + move1 + move2, APPEAR_PHASE_POINTS[3][1]) + move3,
                 EXPAND_PHASE_POINTS[3][1]) + mDropCircleRadius;
-        postInvalidateOnAnimation();
+
+        final View thisView = this;
+        if (Build.VERSION.SDK_INT >= 16) {
+            thisView.postInvalidateOnAnimation();
+        } else {
+            thisView.invalidate();
+        }
     }
 
     /**
@@ -538,7 +559,8 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
             Log.w("WaveView", "DropHeight is more than " + 500 * (mWidth / 1440.f));
             return;
         }
-        mMaxDropHeight = (int) Math.min(height, super.getHeight() - mDropCircleRadius);
+        final View thisView = this;
+        mMaxDropHeight = (int) Math.min(height, thisView.getHeight() - mDropCircleRadius);
         if (mIsManualRefreshing) {
             mIsManualRefreshing = false;
             manualRefresh();
@@ -557,7 +579,12 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 mCurrentCircleCenterY = (float) animation.getAnimatedValue();
-                postInvalidateOnAnimation();
+                final View thisView = WaveView.this;
+                if (Build.VERSION.SDK_INT >= 16) {
+                    thisView.postInvalidateOnAnimation();
+                } else {
+                    thisView.invalidate();
+                }
             }
         });
         mDropCircleAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
@@ -614,7 +641,8 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
                 mWavePath.quadTo(0.25f * mWidth, 0, 0.333f * mWidth, h * 0.5f);
                 mWavePath.quadTo(mWidth * 0.5f, h * 1.4f, 0.666f * mWidth, h * 0.5f);
                 mWavePath.quadTo(0.75f * mWidth, 0, mWidth, 0);
-                postInvalidate();
+                final View thisView = WaveView.this;
+                thisView.postInvalidate();
             }
         });
         mWaveReverseAnimator.setInterpolator(new BounceInterpolator());
@@ -677,7 +705,8 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
      */
     public void setWaveColor(@ColorInt int color) {
         mPaint.setColor(color);
-        super.invalidate();
+        final View thisView = this;
+        thisView.invalidate();
     }
 
 //    public void setWaveARGBColor(int a, int r, int g, int b) {

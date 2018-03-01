@@ -55,6 +55,7 @@
     <string name="fragment_example_nested_scroll_integral">嵌套滚动-整体嵌套</string>
     <string name="fragment_example_viewpager">ViewPager</string>
     <string name="fragment_example_three_level">三级刷新</string>
+    <string name="fragment_example_bottom_sheet">Bottom Sheet 对话框</string>
 
     <string name="index_example_basic">基本的使用</string>
     <string name="index_example_style">使用指定的Header和Footer</string>
@@ -66,6 +67,7 @@
     <string name="index_example_custom">自定义Header</string>
     <string name="index_example_snap_helper">结合 SnapHelper 使用</string>
     <string name="index_example_pager">ViewPager 多页面共用一个 RefreshLayout</string>
+    <string name="index_example_bottom_sheet">BottomSheet内部使用加载更多</string>
     <string name="index_example_level">三级刷新</string>
 
     <string name="index_practice_repast">餐饮美食-简单自定义Header-外边距magin</string>

@@ -57,19 +57,19 @@ public class RefreshContentWrapper implements RefreshContent {
 //    protected MotionEvent mMotionEvent;
     protected ScrollBoundaryDeciderAdapter mBoundaryAdapter = new ScrollBoundaryDeciderAdapter();
 
-    public RefreshContentWrapper(View view) {
-        this.mContentView = mRealContentView = view;
+    public RefreshContentWrapper(@NonNull View view) {
+        this.mContentView = mRealContentView = mScrollableView = view;
     }
 
     //<editor-fold desc="findScrollableView">
     protected void findScrollableView(View content, RefreshKernel kernel) {
-        mScrollableView = null;
+        View scrollableView = null;
         CoordinatorLayoutListener listener = null;
         boolean isInEditMode = mContentView.isInEditMode();
-        while (mScrollableView == null || (mScrollableView instanceof NestedScrollingParent
-                && !(mScrollableView instanceof NestedScrollingChild))) {
-            content = findScrollableViewInternal(content, mScrollableView == null);
-            if (content == mScrollableView) {
+        while (scrollableView == null || (scrollableView instanceof NestedScrollingParent
+                && !(scrollableView instanceof NestedScrollingChild))) {
+            content = findScrollableViewInternal(content, scrollableView == null);
+            if (content == scrollableView) {
                 break;
             }
             if (!isInEditMode) {
@@ -84,7 +84,10 @@ public class RefreshContentWrapper implements RefreshContent {
                 }
                 DesignUtil.checkCoordinatorLayout(content, kernel, listener);
             }
-            mScrollableView = content;
+            scrollableView = content;
+        }
+        if (scrollableView != null) {
+            mScrollableView = scrollableView;
         }
     }
 
@@ -135,6 +138,12 @@ public class RefreshContentWrapper implements RefreshContent {
     }
 
     @Override
+    @NonNull
+    public View getScrollableView() {
+        return mScrollableView;
+    }
+
+    @Override
     public void moveSpinner(int spinner) {
         mRealContentView.setTranslationY(spinner);
         if (mFixedHeader != null) {
@@ -154,11 +163,6 @@ public class RefreshContentWrapper implements RefreshContent {
     public boolean canLoadMore() {
         return mEnableLoadMore && mBoundaryAdapter.canLoadMore(mContentView);
     }
-
-//    @Override
-//    public View getScrollableView() {
-//        return mScrollableView;
-//    }
 
     @Override
     public void onActionDown(MotionEvent e) {

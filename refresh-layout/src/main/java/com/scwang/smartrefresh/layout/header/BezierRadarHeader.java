@@ -13,6 +13,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
@@ -76,7 +77,8 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
 
         mSpinnerStyle = SpinnerStyle.Scale;
 
-        DensityUtil density = new DensityUtil();
+        final View thisView = this;
+        final DensityUtil density = new DensityUtil();
 
         mPath = new Path();
         mPaint = new Paint();
@@ -87,9 +89,9 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
         mRadarCircle = density.dip2px(7);
         mPaint.setStrokeWidth(density.dip2px(3));
 
-        super.setMinimumHeight(density.dip2px(100));
+        thisView.setMinimumHeight(density.dip2px(100));
 
-        if (super.isInEditMode()) {
+        if (thisView.isInEditMode()) {
             mWaveTop = 1000;
             mRadarScale = 1;
             mRadarAngle = 270;
@@ -130,7 +132,9 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
     //<editor-fold desc="绘制方法 - draw">
     @Override
     protected void dispatchDraw(Canvas canvas) {
-        final int width = super.getWidth(), height = super.getHeight();
+        final View thisView = this;
+        final int width = thisView.getWidth();
+        final int height = thisView.getHeight();
         drawWave(canvas, width);
         drawDot(canvas, width, height);
         drawRadar(canvas, width, height);
@@ -168,7 +172,8 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
     }
 
     protected void drawRadar(Canvas canvas, int width, int height) {
-        if (/*mRadarAnimator != null*/mAnimatorSet != null || super.isInEditMode()) {
+        final View thisView = this;
+        if (/*mRadarAnimator != null*/mAnimatorSet != null || thisView.isInEditMode()) {
             float radius = mRadarRadius * mRadarScale;
             float circle = mRadarCircle * mRadarScale;
 
@@ -280,7 +285,9 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
         }
 
         final int duration = 400;
-        final int width = super.getWidth(), height = super.getHeight();
+        final View thisView = this;
+        final int width = thisView.getWidth();
+        final int height = thisView.getHeight();
         final float bigRadius = (float) (Math.sqrt(width * width + height * height));
         ValueAnimator animator = ValueAnimator.ofFloat(0, bigRadius);
         animator.setDuration(duration);
@@ -327,10 +334,11 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
     @Override
     public void onHorizontalDrag(float percentX, int offsetX, int offsetMax) {
         mWaveOffsetX = offsetX;
+        final View thisView = this;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            super.postInvalidateOnAnimation();
+            thisView.postInvalidateOnAnimation();
         } else {
-            super.invalidate();
+            thisView.invalidate();
         }
     }
     //</editor-fold>
@@ -349,12 +357,14 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
     }
 
     public BezierRadarHeader setPrimaryColorId(@ColorRes int colorId) {
-        setPrimaryColor(DesignUtil.getColor(super.getContext(), colorId));
+        final View thisView = this;
+        setPrimaryColor(DesignUtil.getColor(thisView.getContext(), colorId));
         return this;
     }
 
     public BezierRadarHeader setAccentColorId(@ColorRes int colorId) {
-        setAccentColor(DesignUtil.getColor(super.getContext(), colorId));
+        final View thisView = this;
+        setAccentColor(DesignUtil.getColor(thisView.getContext(), colorId));
         return this;
     }
 
@@ -398,7 +408,8 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
             } else if (PROPERTY_RADAR_ANGLE == propertyName) {
                 mRadarAngle = (int) animation.getAnimatedValue();
             }
-            BezierRadarHeader.super.invalidate();
+            final View thisView = BezierRadarHeader.this;
+            thisView.invalidate();
         }
     }
     //</editor-fold>

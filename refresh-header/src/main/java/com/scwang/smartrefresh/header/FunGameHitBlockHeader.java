@@ -8,6 +8,7 @@ import android.graphics.Point;
 import android.support.annotation.NonNull;
 import android.support.v4.graphics.ColorUtils;
 import android.util.AttributeSet;
+import android.view.View;
 
 import com.scwang.smartrefresh.header.fungame.FunGameView;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
@@ -115,7 +116,8 @@ public class FunGameHitBlockHeader extends FunGameView {
 
     @Override
     public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
-        final int measuredWidth = super.getMeasuredWidth();
+        final View thisView = this;
+        final int measuredWidth = thisView.getMeasuredWidth();
         blockHeight = height / BLOCK_VERTICAL_NUM - DIVIDING_LINE_SIZE;
         blockWidth = measuredWidth * BLOCK_WIDTH_RATIO;
 
@@ -192,12 +194,13 @@ public class FunGameHitBlockHeader extends FunGameView {
     //<editor-fold desc="绘制方法">
     @Override
     protected void drawGame(Canvas canvas, int width, int height) {
+        final View thisView = this;
         drawColorBlock(canvas);
         drawRacket(canvas);
         if (status == STATUS_GAME_PLAY
                 || status == STATUS_GAME_FINISHED
                 || status == STATUS_GAME_FAIL
-                || super.isInEditMode()) {
+                || thisView.isInEditMode()) {
             drawBallPath(canvas, width);
         }
     }
@@ -257,7 +260,8 @@ public class FunGameHitBlockHeader extends FunGameView {
 
         canvas.drawCircle(cx, cy, BALL_RADIUS, mPaint);
 
-        super.invalidate();
+        final View thisView = this;
+        thisView.invalidate();
 
     }
 

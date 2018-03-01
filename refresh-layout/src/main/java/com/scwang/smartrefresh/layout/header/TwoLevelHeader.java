@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.scwang.smartrefresh.layout.api.OnTwoLevelListener;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
@@ -64,12 +65,13 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        for (int i = 0, len = super.getChildCount(); i < len; i++) {
-            View childAt = super.getChildAt(i);
+        final ViewGroup thisGroup = this;
+        for (int i = 0, len = thisGroup.getChildCount(); i < len; i++) {
+            View childAt = thisGroup.getChildAt(i);
             if (childAt instanceof RefreshHeader) {
                 mWrapperView = childAt;
                 mRefreshHeader = (RefreshHeader) childAt;
-                super.bringChildToFront(childAt);
+                thisGroup.bringChildToFront(childAt);
                 break;
             }
         }
@@ -160,12 +162,13 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
 
     @Override
     public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
+        final View thisView = this;
         if (1f * (extendHeight + height) / height != mMaxRage && mHeaderHeight == 0) {
             mHeaderHeight = height;
             kernel.getRefreshLayout().setHeaderMaxDragRate(mMaxRage);
             return;
         }
-        if (!super.isInEditMode() && mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Translate
+        if (!thisView.isInEditMode() && mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Translate
                 && mRefreshKernel == null) {
             MarginLayoutParams params = (MarginLayoutParams) mRefreshHeader.getView().getLayoutParams();
             params.topMargin -= height;
@@ -329,15 +332,16 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
      * 设置指定的Header
      */
     public TwoLevelHeader setRefreshHeader(RefreshHeader header, int width, int height) {
+        final ViewGroup thisGroup = this;
         if (header != null) {
             if (mRefreshHeader != null) {
-                super.removeView(mRefreshHeader.getView());
+                thisGroup.removeView(mRefreshHeader.getView());
             }
             this.mRefreshHeader = header;
             if (header.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
-                super.addView(mRefreshHeader.getView(), 0, new LayoutParams(width, height));
+                thisGroup.addView(mRefreshHeader.getView(), 0, new LayoutParams(width, height));
             } else {
-                super.addView(mRefreshHeader.getView(), width, height);
+                thisGroup.addView(mRefreshHeader.getView(), width, height);
             }
         }
         return this;

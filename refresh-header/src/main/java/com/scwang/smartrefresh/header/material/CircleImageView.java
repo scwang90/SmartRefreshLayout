@@ -27,6 +27,7 @@ import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Build;
 import android.support.annotation.ColorInt;
+import android.view.View;
 import android.view.animation.Animation;
 import android.widget.ImageView;
 
@@ -51,7 +52,8 @@ public class CircleImageView extends ImageView {
 
     public CircleImageView(Context context, int color) {
         super(context);
-        final float density = super.getContext().getResources().getDisplayMetrics().density;
+        final View thisView = this;
+        final float density = thisView.getContext().getResources().getDisplayMetrics().density;
         final int shadowYOffset = (int) (density * Y_OFFSET);
         final int shadowXOffset = (int) (density * X_OFFSET);
 
@@ -60,33 +62,34 @@ public class CircleImageView extends ImageView {
         ShapeDrawable circle;
         if (android.os.Build.VERSION.SDK_INT >= 21) {
             circle = new ShapeDrawable(new OvalShape());
-            super.setElevation(SHADOW_ELEVATION * density);
+            thisView.setElevation(SHADOW_ELEVATION * density);
         } else {
             OvalShape oval = new OvalShadow(mShadowRadius);
             circle = new ShapeDrawable(oval);
-            this.setLayerType(LAYER_TYPE_SOFTWARE, circle.getPaint());
+            thisView.setLayerType(LAYER_TYPE_SOFTWARE, circle.getPaint());
             circle.getPaint().setShadowLayer(mShadowRadius, shadowXOffset, shadowYOffset,
                     KEY_SHADOW_COLOR);
             final int padding = mShadowRadius;
             // set padding so the inner image sits correctly within the shadow.
-            super.setPadding(padding, padding, padding, padding);
+            thisView.setPadding(padding, padding, padding, padding);
         }
         circle.getPaint().setColor(color);
         if (Build.VERSION.SDK_INT >= 16) {
-            super.setBackground(circle);
+            thisView.setBackground(circle);
         } else {
             //noinspection deprecation
-            super.setBackgroundDrawable(circle);
+            thisView.setBackgroundDrawable(circle);
         }
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        final View thisView = this;
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         if (Build.VERSION.SDK_INT < 21) {
             super.setMeasuredDimension(
-                    super.getMeasuredWidth() + mShadowRadius * 2,
-                    super.getMeasuredHeight() + mShadowRadius * 2);
+                    thisView.getMeasuredWidth() + mShadowRadius * 2,
+                    thisView.getMeasuredHeight() + mShadowRadius * 2);
         }
     }
 
@@ -127,8 +130,9 @@ public class CircleImageView extends ImageView {
 
     @Override
     public void setBackgroundColor(@ColorInt int color) {
-        if (super.getBackground() instanceof ShapeDrawable) {
-            ((ShapeDrawable) super.getBackground()).getPaint().setColor(color);
+        final View thisView = this;
+        if (thisView.getBackground() instanceof ShapeDrawable) {
+            ((ShapeDrawable) thisView.getBackground()).getPaint().setColor(color);
         }
     }
 
@@ -151,8 +155,9 @@ public class CircleImageView extends ImageView {
 
         @Override
         public void draw(Canvas canvas, Paint paint) {
-            final int viewWidth = CircleImageView.this.getWidth();
-            final int viewHeight = CircleImageView.this.getHeight();
+            final View thisView = CircleImageView.this;
+            final int viewWidth = thisView.getWidth();
+            final int viewHeight = thisView.getHeight();
             canvas.drawCircle(viewWidth / 2, viewHeight / 2, viewWidth / 2, mShadowPaint);
             canvas.drawCircle(viewWidth / 2, viewHeight / 2, viewWidth / 2 - mShadowRadius, paint);
         }

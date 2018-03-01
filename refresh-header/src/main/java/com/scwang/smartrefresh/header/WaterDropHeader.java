@@ -15,6 +15,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.scwang.smartrefresh.header.internal.MaterialProgressDrawable;
@@ -62,16 +63,18 @@ public class WaterDropHeader extends InternalAbstract implements RefreshHeader {
     public WaterDropHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        mSpinnerStyle = SpinnerStyle.Scale;
+        final ViewGroup thisGroup = this;
+        final  DensityUtil density = new DensityUtil();
 
-        DensityUtil density = new DensityUtil();
+        mSpinnerStyle = SpinnerStyle.Scale;
         mWaterDropView = new WaterDropView(context);
-        super.addView(mWaterDropView, MATCH_PARENT, MATCH_PARENT);
         mWaterDropView.updateCompleteState(0);
+        thisGroup.addView(mWaterDropView, MATCH_PARENT, MATCH_PARENT);
 
         mProgressDrawable = new ProgressDrawable();
-        mProgressDrawable.setBounds(0, 0, density.dip2px(20), density.dip2px(20));
-        mProgressDrawable.setCallback(this);
+        final Drawable progressDrawable = mProgressDrawable;
+        progressDrawable.setCallback(this);
+        progressDrawable.setBounds(0, 0, density.dip2px(20), density.dip2px(20));
 
         mImageView = new ImageView(context);
         mProgress = new MaterialProgressDrawable(context, mImageView);
@@ -79,44 +82,49 @@ public class WaterDropHeader extends InternalAbstract implements RefreshHeader {
         mProgress.setAlpha(255);
         mProgress.setColorSchemeColors(0xffffffff,0xff0099cc,0xffff4444,0xff669900,0xffaa66cc,0xffff8800);
         mImageView.setImageDrawable(mProgress);
-        super.addView(mImageView, density.dip2px(30), density.dip2px(30));
+        thisGroup.addView(mImageView, density.dip2px(30), density.dip2px(30));
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        LayoutParams lpImage = (LayoutParams) mImageView.getLayoutParams();
-        mImageView.measure(
+        final View imageView = mImageView;
+        final View dropView = mWaterDropView;
+        LayoutParams lpImage = (LayoutParams) imageView.getLayoutParams();
+        imageView.measure(
                 makeMeasureSpec(lpImage.width, EXACTLY),
                 makeMeasureSpec(lpImage.height, EXACTLY)
         );
-        mWaterDropView.measure(
+        dropView.measure(
                 makeMeasureSpec(getSize(widthMeasureSpec), AT_MOST),
                 heightMeasureSpec
         );
-        int maxWidth = Math.max(mImageView.getMeasuredWidth(), mWaterDropView.getMeasuredHeight());
-        int maxHeight = Math.max(mImageView.getMeasuredHeight(), mWaterDropView.getMeasuredHeight());
+        int maxWidth = Math.max(imageView.getMeasuredWidth(), dropView.getMeasuredWidth());
+        int maxHeight = Math.max(imageView.getMeasuredHeight(), dropView.getMeasuredHeight());
         super.setMeasuredDimension(View.resolveSize(maxWidth, widthMeasureSpec), View.resolveSize(maxHeight, heightMeasureSpec));
     }
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        final int measuredWidth = super.getMeasuredWidth();
+        final View thisView = this;
+        final View imageView = mImageView;
+        final View dropView = mWaterDropView;
+        final int measuredWidth = thisView.getMeasuredWidth();
 
-        final int widthWaterDrop = mWaterDropView.getMeasuredWidth();
-        final int heightWaterDrop = mWaterDropView.getMeasuredHeight();
+        final int widthWaterDrop = dropView.getMeasuredWidth();
+        final int heightWaterDrop = dropView.getMeasuredHeight();
         final int leftWaterDrop = measuredWidth / 2 - widthWaterDrop / 2;
         final int topWaterDrop = 0;
-        mWaterDropView.layout(leftWaterDrop, topWaterDrop, leftWaterDrop + widthWaterDrop, topWaterDrop + heightWaterDrop);
+        dropView.layout(leftWaterDrop, topWaterDrop, leftWaterDrop + widthWaterDrop, topWaterDrop + heightWaterDrop);
 
-        final int widthImage = mImageView.getMeasuredWidth();
-        final int heightImage = mImageView.getMeasuredHeight();
+        final int widthImage = imageView.getMeasuredWidth();
+        final int heightImage = imageView.getMeasuredHeight();
         final int leftImage = measuredWidth / 2 - widthImage / 2;
         int topImage = widthWaterDrop / 2 - widthImage / 2;
-        if (topImage + heightImage > mWaterDropView.getBottom() - (widthWaterDrop - widthImage) / 2) {
-            topImage = mWaterDropView.getBottom() - (widthWaterDrop - widthImage) / 2 - heightImage;
+        if (topImage + heightImage > dropView.getBottom() - (widthWaterDrop - widthImage) / 2) {
+            topImage = dropView.getBottom() - (widthWaterDrop - widthImage) / 2 - heightImage;
         }
-        mImageView.layout(leftImage, topImage, leftImage + widthImage, topImage + heightImage);
+        imageView.layout(leftImage, topImage, leftImage + widthImage, topImage + heightImage);
     }
     //</editor-fold>
 
@@ -124,26 +132,31 @@ public class WaterDropHeader extends InternalAbstract implements RefreshHeader {
     @Override
     protected void dispatchDraw(Canvas canvas) {
         super.dispatchDraw(canvas);
+        final View thisView = this;
+        final View dropView = mWaterDropView;
+        final Drawable progressDrawable = mProgressDrawable;
         if (mState == RefreshState.Refreshing) {
             canvas.save();
             canvas.translate(
-                    getWidth()/2-mProgressDrawable.getBounds().width()/2,
+                    thisView.getWidth()/2-progressDrawable.getBounds().width()/2,
                     mWaterDropView.getMaxCircleRadius()
-                            +mWaterDropView.getPaddingTop()
-                            -mProgressDrawable.getBounds().height()/2
+                            +dropView.getPaddingTop()
+                            -progressDrawable.getBounds().height()/2
             );
-            mProgressDrawable.draw(canvas);
+            progressDrawable.draw(canvas);
             canvas.restore();
         }
     }
 
     @Override
     public void invalidateDrawable(@NonNull Drawable drawable) {
-        if (drawable == mProgressDrawable) {
-            super.invalidate();
-        } else {
-            super.invalidateDrawable(drawable);
-        }
+        final View thisView = this;
+        thisView.invalidate();
+//        if (drawable == mProgressDrawable) {
+//            super.invalidate();
+//        } else {
+//            super.invalidateDrawable(drawable);
+//        }
     }
 
     //</editor-fold>
@@ -154,8 +167,9 @@ public class WaterDropHeader extends InternalAbstract implements RefreshHeader {
     @Override
     public void onMoving(boolean isDragging, float percent, int offset, int height, int extendHeight) {
         if (isDragging || (mState != RefreshState.Refreshing && mState != RefreshState.RefreshReleased)) {
+            final View dropView = mWaterDropView;
             mWaterDropView.updateCompleteState(Math.max(offset, 0), height + extendHeight);
-            mWaterDropView.postInvalidate();
+            dropView.postInvalidate();
         }
         if (isDragging) {
 
@@ -209,35 +223,37 @@ public class WaterDropHeader extends InternalAbstract implements RefreshHeader {
 
     @Override
     public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
+        final View dropView = mWaterDropView;
         mState = newState;
         switch (newState) {
             case None:
-                mWaterDropView.setVisibility(View.VISIBLE);
+                dropView.setVisibility(View.VISIBLE);
                 break;
             case PullDownToRefresh:
-                mWaterDropView.setVisibility(View.VISIBLE);
+                dropView.setVisibility(View.VISIBLE);
                 break;
             case PullDownCanceled:
                 break;
             case ReleaseToRefresh:
-                mWaterDropView.setVisibility(View.VISIBLE);
+                dropView.setVisibility(View.VISIBLE);
                 break;
             case Refreshing:
                 break;
             case RefreshFinish:
-                mWaterDropView.setVisibility(View.GONE);
+                dropView.setVisibility(View.GONE);
                 break;
         }
     }
 
     @Override
     public void onReleased(@NonNull final RefreshLayout layout, int height, int extendHeight) {
+        final View dropView = mWaterDropView;
         mProgressDrawable.start();
         mWaterDropView.createAnimator().start();//开始回弹
-        mWaterDropView.animate().setDuration(150).alpha(0).setListener(new AnimatorListenerAdapter() {
+        dropView.animate().setDuration(150).alpha(0).setListener(new AnimatorListenerAdapter() {
             public void onAnimationEnd(Animator animation) {
-                mWaterDropView.setVisibility(GONE);
-                mWaterDropView.setAlpha(1);
+                dropView.setVisibility(GONE);
+                dropView.setAlpha(1);
             }
         });
     }

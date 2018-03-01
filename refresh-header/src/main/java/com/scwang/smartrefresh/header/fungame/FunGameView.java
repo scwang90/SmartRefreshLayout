@@ -18,6 +18,7 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -108,7 +109,9 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
             mMaskTextBottom = ta.getString(R.styleable.FunGameView_fghMaskTextBottom);
         }
 
-        DisplayMetrics metrics = super.getResources().getDisplayMetrics();
+        final View thisView = this;
+        final ViewGroup thisGroup = this;
+        DisplayMetrics metrics = thisView.getResources().getDisplayMetrics();
         int maskTextSizeTop = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16, metrics);
         int maskTextSizeBottom = maskTextSizeTop * 14 / 16;
 
@@ -122,13 +125,13 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
         mMaskViewTop = createMaskView(context,mMaskTextTopPull, maskTextSizeTop, Gravity.BOTTOM);
         mMaskViewBottom = createMaskView(context,mMaskTextBottom, maskTextSizeBottom, Gravity.TOP);
 
-        if (!super.isInEditMode()) {
+        if (!thisView.isInEditMode()) {
             int height = DensityUtil.dp2px(100);
             LayoutParams maskLp = new LayoutParams(MATCH_PARENT, height);
 //            maskLp.topMargin = (int) FunGameView.DIVIDING_LINE_SIZE;
 //            maskLp.bottomMargin = (int) FunGameView.DIVIDING_LINE_SIZE;
-            super.addView(mShadowView, maskLp);
-            super.addView(mCurtainLayout, maskLp);
+            thisGroup.addView(mShadowView, maskLp);
+            thisGroup.addView(mCurtainLayout, maskLp);
 
             mHalfHeaderHeight = (int) ((height/* - 2 * DIVIDING_LINE_SIZE*/) * .5f);
             LayoutParams lpTop = new LayoutParams(MATCH_PARENT, mHalfHeaderHeight);
@@ -193,7 +196,8 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
-        final int width = getWidth();
+        final View thisView = this;
+        final int width = thisView.getWidth();
         final int height = mHeaderHeight;
         drawBoundary(canvas, width, height);
         drawText(canvas, width, height);
@@ -267,8 +271,8 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
         if (status == STATUS_GAME_PREPARE) {
             resetConfigParams();
         }
-
-        super.postInvalidate();
+        final View thisView = this;
+        thisView.postInvalidate();
     }
 
     /**
@@ -276,13 +280,14 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
      */
     @Override
     protected void onManualOperationMove(float percent, int offset, int height, int extendHeight) {
+        final View thisView = this;
         float distance = Math.max(offset, 0);
         float maxDistance = (mHeaderHeight -  2 * DIVIDING_LINE_SIZE - controllerSize);
         if (distance > maxDistance) {
             distance = maxDistance;
         }
         controllerPosition = distance;
-        super.postInvalidate();
+        thisView.postInvalidate();
     }
 
     //</editor-fold>
@@ -291,14 +296,17 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
 
     @Override
     public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
-        if (mHeaderHeight != height && !isInEditMode()) {
+        final View thisView = this;
+        if (mHeaderHeight != height && !thisView.isInEditMode()) {
+            final View topView = mMaskViewTop;
+            final View bottomView = mMaskViewBottom;
             mHalfHeaderHeight = (int) ((height/* - 2 * DIVIDING_LINE_SIZE*/) * .5f);
-            LayoutParams lpTop = (LayoutParams)mMaskViewTop.getLayoutParams();
-            LayoutParams lpBottom = (LayoutParams)mMaskViewBottom.getLayoutParams();
+            LayoutParams lpTop = (LayoutParams)topView.getLayoutParams();
+            LayoutParams lpBottom = (LayoutParams)bottomView.getLayoutParams();
             lpTop.height = lpBottom.height = mHalfHeaderHeight;
             lpBottom.topMargin = height - mHalfHeaderHeight;
-            mMaskViewTop.setLayoutParams(lpTop);
-            mMaskViewBottom.setLayoutParams(lpBottom);
+            topView.setLayoutParams(lpTop);
+            bottomView.setLayoutParams(lpBottom);
         }
         super.onInitialized(kernel, height, extendHeight);
         postStatus(STATUS_GAME_PREPARE);
@@ -316,9 +324,12 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
                 mBoundaryColor = 0xff606060;
             }
             if (colors.length > 1) {
-                mShadowView.setBackgroundColor(colors[1]);
-                mMaskViewTop.setBackgroundColor(colors[1]);
-                mMaskViewBottom.setBackgroundColor(colors[1]);
+                final View topView = mMaskViewTop;
+                final View bottomView = mMaskViewBottom;
+                final View shadowView = mShadowView;
+                shadowView.setBackgroundColor(colors[1]);
+                topView.setBackgroundColor(colors[1]);
+                bottomView.setBackgroundColor(colors[1]);
 
                 mModelColor = colors[1];
                 lModelColor = ColorUtils.setAlphaComponent(colors[1], 225);
@@ -344,16 +355,19 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
     @Override
     public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
         super.onStartAnimator(layout, height, extendHeight);
-        AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.play(ObjectAnimator.ofFloat(mMaskViewTop, "translationY", mMaskViewTop.getTranslationY(), -mHalfHeaderHeight))
-                .with(ObjectAnimator.ofFloat(mMaskViewBottom, "translationY", mMaskViewBottom.getTranslationY(), mHalfHeaderHeight))
-                .with(ObjectAnimator.ofFloat(mShadowView, "alpha", mShadowView.getAlpha(), 0));
+        final View topView = mMaskViewTop;
+        final View bottomView = mMaskViewBottom;
+        final View shadowView = mShadowView;
+        final AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.play(ObjectAnimator.ofFloat(topView, "translationY", topView.getTranslationY(), -mHalfHeaderHeight))
+                .with(ObjectAnimator.ofFloat(bottomView, "translationY", bottomView.getTranslationY(), mHalfHeaderHeight))
+                .with(ObjectAnimator.ofFloat(shadowView, "alpha", shadowView.getAlpha(), 0));
         animatorSet.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                mMaskViewTop.setVisibility(View.GONE);
-                mMaskViewBottom.setVisibility(View.GONE);
-                mShadowView.setVisibility(View.GONE);
+                topView.setVisibility(View.GONE);
+                bottomView.setVisibility(View.GONE);
+                shadowView.setVisibility(View.GONE);
                 postStatus(FunGameView.STATUS_GAME_PLAY);
             }
         });
@@ -370,13 +384,16 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
         } else {
             postStatus(STATUS_GAME_PREPARE);
 
-            mMaskViewTop.setTranslationY(mMaskViewTop.getTranslationY() + mHalfHeaderHeight);
-            mMaskViewBottom.setTranslationY(mMaskViewBottom.getTranslationY() - mHalfHeaderHeight);
-            mShadowView.setAlpha(1.f);
+            final View topView = mMaskViewTop;
+            final View bottomView = mMaskViewBottom;
+            final View shadowView = mShadowView;
+            topView.setTranslationY(topView.getTranslationY() + mHalfHeaderHeight);
+            bottomView.setTranslationY(bottomView.getTranslationY() - mHalfHeaderHeight);
+            shadowView.setAlpha(1.f);
 
-            mMaskViewTop.setVisibility(View.VISIBLE);
-            mMaskViewBottom.setVisibility(View.VISIBLE);
-            mShadowView.setVisibility(View.VISIBLE);
+            topView.setVisibility(View.VISIBLE);
+            bottomView.setVisibility(View.VISIBLE);
+            shadowView.setVisibility(View.VISIBLE);
         }
 
         return super.onFinish(layout, success);

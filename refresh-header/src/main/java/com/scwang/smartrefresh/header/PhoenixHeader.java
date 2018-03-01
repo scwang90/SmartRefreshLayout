@@ -6,9 +6,11 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
@@ -94,9 +96,9 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
     };
     //</editor-fold>
 
-    private PathsDrawable mDrawableSun;
-    private PathsDrawable mDrawableSky;
-    private PathsDrawable mDrawableTown;
+    private Drawable mDrawableSun;
+    private Drawable mDrawableSky;
+    private Drawable mDrawableTown;
     private Matrix mMatrix;
     private float mPercent;
     private float mRotate;
@@ -120,32 +122,19 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
         mMatrix = new Matrix();
         DensityUtil density = new DensityUtil();
         mSunSize = density.dip2px(40);
-        super.setMinimumHeight(density.dip2px(100));
+        final View thisView = this;
+        thisView.setMinimumHeight(density.dip2px(100));
 
         mSpinnerStyle = SpinnerStyle.Scale;
-
-        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.PhoenixHeader);
-
-        int primaryColor = ta.getColor(R.styleable.PhoenixHeader_phPrimaryColor, 0);
-        int accentColor = ta.getColor(R.styleable.PhoenixHeader_phAccentColor, 0);
-        if (primaryColor != 0) {
-            super.setBackgroundColor(primaryColor);
-            if (accentColor != 0) {
-                mDrawableSky.parserColors(primaryColor, accentColor);
-            } else {
-                mDrawableSky.parserColors(primaryColor);
-            }
-        }
-
-        ta.recycle();
 
 
         //<editor-fold desc="setupAnimation">
         mAnimation = new Animation() {
             @Override
             public void applyTransformation(float interpolatedTime, Transformation t) {
+                final View thisView = PhoenixHeader.this;
                 mRotate = (interpolatedTime);
-                PhoenixHeader.super.invalidate();
+                thisView.invalidate();
             }
         };
         mAnimation.setRepeatCount(Animation.INFINITE);
@@ -156,23 +145,43 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
 
         //<editor-fold desc="setupPathsDrawable">
         int widthPixels = Resources.getSystem().getDisplayMetrics().widthPixels;
-        mDrawableTown = new PathsDrawable();
-        mDrawableTown.parserPaths(townPaths);
-        mDrawableTown.parserColors(townColors);
+        PathsDrawable townDrawable = new PathsDrawable();
+        townDrawable.parserPaths(townPaths);
+        townDrawable.parserColors(townColors);
+        mDrawableTown = townDrawable;
         Rect bounds = mDrawableTown.getBounds();
         mDrawableTown.setBounds(0, 0, widthPixels, widthPixels * bounds.height() / bounds.width());
 
-        mDrawableSky = new PathsDrawable();
-        mDrawableSky.parserPaths(skyPaths);
-        mDrawableSky.parserColors(skyColors);
+        PathsDrawable skyDrawable = new PathsDrawable();
+        skyDrawable.parserPaths(skyPaths);
+        skyDrawable.parserColors(skyColors);
+        mDrawableSky = skyDrawable;
         bounds = mDrawableSky.getBounds();
         mDrawableSky.setBounds(0, 0, widthPixels, widthPixels * bounds.height() / bounds.width());
 
-        mDrawableSun = new PathsDrawable();
-        mDrawableSun.parserPaths(sunPaths);
-        mDrawableSun.parserColors(sunColors);
+        PathsDrawable sunDrawable = new PathsDrawable();
+        sunDrawable.parserPaths(sunPaths);
+        sunDrawable.parserColors(sunColors);
+        mDrawableSun = sunDrawable;
         mDrawableSun.setBounds(0, 0, mSunSize, mSunSize);
+
         //</editor-fold>
+
+
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.PhoenixHeader);
+
+        int primaryColor = ta.getColor(R.styleable.PhoenixHeader_phPrimaryColor, 0);
+        int accentColor = ta.getColor(R.styleable.PhoenixHeader_phAccentColor, 0);
+        if (primaryColor != 0) {
+            thisView.setBackgroundColor(primaryColor);
+            if (accentColor != 0) {
+                skyDrawable.parserColors(primaryColor, accentColor);
+            } else {
+                skyDrawable.parserColors(primaryColor);
+            }
+        }
+
+        ta.recycle();
     }
 
     //</editor-fold>
@@ -181,8 +190,8 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
 
     @Override
     public void onMoving(boolean isDragging, float percent, int offset, int height, int extendHeight) {
-        mRotate = mPercent = 1f * offset / height;
         mHeaderHeight = height;
+        mRotate = mPercent = 1f * offset / height;
     }
 
 //    @Override
@@ -200,13 +209,15 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
     @Override
     public void onReleased(@NonNull RefreshLayout layout, int height, int extendHeight) {
         isRefreshing = true;
-        super.startAnimation(mAnimation);
+        final View thisView = this;
+        thisView.startAnimation(mAnimation);
     }
 
     @Override
     public int onFinish(@NonNull RefreshLayout layout, boolean success) {
+        final View thisView = this;
         isRefreshing = false;
-        super.clearAnimation();
+        thisView.clearAnimation();
         return 0;
     }
 
@@ -216,13 +227,14 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
      */
     @Override@Deprecated
     public void setPrimaryColors(@ColorInt int ... colors) {
-        if (mDrawableSky != null) {
+        if (mDrawableSky instanceof PathsDrawable) {
+            final View thisView = this;
             if (colors.length > 1) {
-                super.setBackgroundColor(colors[0]);
-                mDrawableSky.parserColors(colors);
+                thisView.setBackgroundColor(colors[0]);
+                ((PathsDrawable) mDrawableSky).parserColors(colors);
             } else if (colors.length > 0) {
-                super.setBackgroundColor(colors[0]);
-                mDrawableSky.parserColors(colors[0], skyColors[1]);
+                thisView.setBackgroundColor(colors[0]);
+                ((PathsDrawable) mDrawableSky).parserColors(colors[0], skyColors[1]);
             }
         }
     }
@@ -250,10 +262,11 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
     @Override
     protected void dispatchDraw(Canvas canvas) {
 
-        int width = super.getWidth();
-        int height = super.getHeight();
+        final View thisView = this;
+        final int width = thisView.getWidth();
+        final int height = thisView.getHeight();
         drawSky(canvas, width, height);
-        drawSun(canvas, width, height);
+        drawSun(canvas, width);
         drawTown(canvas, width, height);
 
         super.dispatchDraw(canvas);
@@ -271,7 +284,7 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
         float offsetY = height / 2 - bHeight / 2;
 
 //        matrix.postScale(townScale, townScale);
-//        matrix.postTranslate(offsetx, offsety);
+//        matrix.postTranslate(offsetX, offsetY);
 //
 //        canvas.drawBitmap(mSky, matrix, null);
 
@@ -291,27 +304,27 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
         int bHeight = mDrawableTown.getBounds().height();//mTown.getHeight();
         float townScale = 1f * width / bWidth;
         float amplification = (0.3f * Math.max(mPercent - 1, 0) + 1);
-        float offsetx = width / 2 - (int) (width * amplification) / 2;
-        float offsety = mHeaderHeight * 0.1f * mPercent;
+        float offsetX = width / 2 - (int) (width * amplification) / 2;
+        float offsetY = mHeaderHeight * 0.1f * mPercent;
         townScale = amplification * townScale;
 
-        if (offsety + bHeight * townScale < height) {
-            offsety = height - bHeight * townScale;
+        if (offsetY + bHeight * townScale < height) {
+            offsetY = height - bHeight * townScale;
         }
 
 //        matrix.postScale(townScale, townScale, mDrawableTown.getBounds().width() / 2, mDrawableTown.getBounds().height() / 2);
-//        matrix.postTranslate(offsetx, offsety);
+//        matrix.postTranslate(offsetX, offsetY);
 //        canvas.drawBitmap(mTown, matrix, null);
 
         final int saveCount = canvas.getSaveCount();
         canvas.save();
-        canvas.translate(offsetx, offsety);
+        canvas.translate(offsetX, offsetY);
         canvas.scale(townScale, townScale);
         mDrawableTown.draw(canvas);
         canvas.restoreToCount(saveCount);
     }
 
-    private void drawSun(Canvas canvas, int width, int height) {
+    private void drawSun(Canvas canvas, int width) {
         Matrix matrix = mMatrix;
         matrix.reset();
 

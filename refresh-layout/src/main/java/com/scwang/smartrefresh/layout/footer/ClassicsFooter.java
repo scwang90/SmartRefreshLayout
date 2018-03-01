@@ -6,6 +6,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.View;
 
 import com.scwang.smartrefresh.layout.R;
 import com.scwang.smartrefresh.layout.api.RefreshFooter;
@@ -75,15 +76,18 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
             REFRESH_FOOTER_NOTHING = context.getString(R.string.srl_footer_nothing);
         }
 
-        DensityUtil density = new DensityUtil();
+        final View thisView = this;
+        final View arrowView = mArrowView;
+        final View progressView = mProgressView;
+        final DensityUtil density = new DensityUtil();
 
         mTitleText.setTextColor(0xff666666);
-        mTitleText.setText(super.isInEditMode() ? REFRESH_FOOTER_LOADING : REFRESH_FOOTER_PULLING);
+        mTitleText.setText(thisView.isInEditMode() ? REFRESH_FOOTER_LOADING : REFRESH_FOOTER_PULLING);
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ClassicsFooter);
 
-        LayoutParams lpArrow = (LayoutParams) mArrowView.getLayoutParams();
-        LayoutParams lpProgress = (LayoutParams) mProgressView.getLayoutParams();
+        LayoutParams lpArrow = (LayoutParams) arrowView.getLayoutParams();
+        LayoutParams lpProgress = (LayoutParams) progressView.getLayoutParams();
         lpProgress.rightMargin = ta.getDimensionPixelSize(R.styleable.ClassicsFooter_srlDrawableMarginRight, density.dip2px(20));
         lpArrow.rightMargin = lpProgress.rightMargin;
 
@@ -175,12 +179,13 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
     public boolean setNoMoreData(boolean noMoreData) {
         if (mNoMoreData != noMoreData) {
             mNoMoreData = noMoreData;
+            final View arrowView = mArrowView;
             if (noMoreData) {
                 mTitleText.setText(REFRESH_FOOTER_NOTHING);
-                mArrowView.setVisibility(GONE);
+                arrowView.setVisibility(GONE);
             } else {
                 mTitleText.setText(REFRESH_FOOTER_PULLING);
-                mArrowView.setVisibility(VISIBLE);
+                arrowView.setVisibility(VISIBLE);
             }
 //            super.onFinish(mRefreshKernel.getRefreshLayout(), true);
         }
@@ -189,26 +194,27 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
 
     @Override
     public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
+        final View arrowView = mArrowView;
         if (!mNoMoreData) {
             switch (newState) {
                 case None:
-                    mArrowView.setVisibility(VISIBLE);
+                    arrowView.setVisibility(VISIBLE);
                 case PullUpToLoad:
                     mTitleText.setText(REFRESH_FOOTER_PULLING);
-                    mArrowView.animate().rotation(180);
+                    arrowView.animate().rotation(180);
                     break;
                 case Loading:
                 case LoadReleased:
-                    mArrowView.setVisibility(GONE);
+                    arrowView.setVisibility(GONE);
                     mTitleText.setText(REFRESH_FOOTER_LOADING);
                     break;
                 case ReleaseToLoad:
                     mTitleText.setText(REFRESH_FOOTER_RELEASE);
-                    mArrowView.animate().rotation(0);
+                    arrowView.animate().rotation(0);
                     break;
                 case Refreshing:
                     mTitleText.setText(REFRESH_FOOTER_REFRESHING);
-                    mArrowView.setVisibility(GONE);
+                    arrowView.setVisibility(GONE);
                     break;
             }
         }

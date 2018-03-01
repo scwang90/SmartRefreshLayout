@@ -23,7 +23,8 @@ public class ArrowDrawable extends PaintDrawable {
 
     @Override
     public void draw(@NonNull Canvas canvas) {
-        Rect bounds = super.getBounds();
+        final Drawable drawable = ArrowDrawable.this;
+        final Rect bounds = drawable.getBounds();
         int width = bounds.width();
         int height = bounds.height();
         if (mWidth != width || mHeight != height) {

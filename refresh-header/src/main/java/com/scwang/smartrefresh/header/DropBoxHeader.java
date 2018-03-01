@@ -15,6 +15,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.graphics.ColorUtils;
 import android.util.AttributeSet;
+import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 
 import com.scwang.smartrefresh.header.internal.pathview.PathsDrawable;
@@ -68,8 +69,9 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
         mBoxBody = new BoxBody();
         mPaint.setAntiAlias(true);
         mAccentColor = 0xff6ea9ff;
-        super.setBackgroundColor(0xff283645);
-        super.setMinimumHeight(DensityUtil.dp2px(150));
+        final View thisView = this;
+        thisView.setBackgroundColor(0xff283645);
+        thisView.setMinimumHeight(DensityUtil.dp2px(150));
 
         mSpinnerStyle = SpinnerStyle.Scale;
 
@@ -128,8 +130,9 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
         mReboundAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
+                final View thisView = DropBoxHeader.this;
                 mReboundPercent = (float) animation.getAnimatedValue();
-                DropBoxHeader.super.invalidate();
+                thisView.invalidate();
             }
         });
         mReboundAnimator.addListener(new AnimatorListenerAdapter() {
@@ -161,7 +164,8 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
                         mDropOutOverFlow = true;
                     }
                 }
-                DropBoxHeader.this.invalidate();
+                final View thisView = DropBoxHeader.this;
+                thisView.invalidate();
             }
         });
         mDropOutAnimator.addListener(new AnimatorListenerAdapter() {
@@ -192,8 +196,9 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
     @Override
     protected void dispatchDraw(Canvas canvas) {
 
-        final int width = super.getWidth();
-        final int height = super.getHeight();
+        final View thisView = this;
+        final int width = thisView.getWidth();
+        final int height = thisView.getHeight();
 
         final int sideLength = generateSideLength();
         BoxBody body = generateBoxBody(width, height, sideLength);
@@ -204,7 +209,7 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
         mPaint.setColor(mAccentColor);
         canvas.drawPath(generateBoxCoverPath(body), mPaint);
 
-        if (super.isInEditMode()) {
+        if (thisView.isInEditMode()) {
             mDropOutPercent = 2.5f;
         }
         if (mDropOutPercent > 0) {
@@ -380,7 +385,8 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
     @Override@Deprecated
     public void setPrimaryColors(@ColorInt int ... colors) {
         if (colors.length > 0) {
-            super.setBackgroundColor(colors[0]);
+            final View thisView = this;
+            thisView.setBackgroundColor(colors[0]);
             if (colors.length > 1) {
                 mAccentColor = colors[1];
             }

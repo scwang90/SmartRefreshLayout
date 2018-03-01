@@ -72,7 +72,8 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
             mCurrentPercent = percent;
             if (mSceneView != null) {
                 mSceneView.updatePercent(percent);
-                mSceneView.postInvalidate();
+                final View sceneView = mSceneView;
+                sceneView.postInvalidate();
             }
             if (mFlyView != null) {
                 if (height + extendHeight > 0) {

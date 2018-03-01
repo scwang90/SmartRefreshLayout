@@ -1,6 +1,7 @@
 package com.scwang.smartrefresh.layout.api;
 
 import android.animation.ValueAnimator.AnimatorUpdateListener;
+import android.support.annotation.NonNull;
 import android.support.annotation.RestrictTo;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,8 +17,10 @@ import static android.support.annotation.RestrictTo.Scope.SUBCLASSES;
 @RestrictTo({LIBRARY,LIBRARY_GROUP,SUBCLASSES})
 public interface RefreshContent {
 
+    @NonNull
     View getView();
-//    View getScrollableView();
+    @NonNull
+    View getScrollableView();
 
     void onActionDown(MotionEvent e);
 //    void onActionUpOrCancel();

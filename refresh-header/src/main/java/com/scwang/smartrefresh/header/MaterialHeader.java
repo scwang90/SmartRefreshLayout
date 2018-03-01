@@ -10,6 +10,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.scwang.smartrefresh.header.internal.MaterialProgressDrawable;
 import com.scwang.smartrefresh.header.material.CircleImageView;
@@ -44,7 +47,7 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
 
     private boolean mFinished;
     private int mCircleDiameter;
-    private CircleImageView mCircleView;
+    private ImageView mCircleView;
     private MaterialProgressDrawable mProgress;
 
     /**
@@ -70,7 +73,9 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
         super(context, attrs, defStyleAttr);
 
         mSpinnerStyle = SpinnerStyle.MatchLayout;
-        super.setMinimumHeight(DensityUtil.dp2px(100));
+        final View thisView = this;
+        final ViewGroup thisGroup = this;
+        thisView.setMinimumHeight(DensityUtil.dp2px(100));
 
         mProgress = new MaterialProgressDrawable(context, this);
         mProgress.setBackgroundColor(CIRCLE_BG_LIGHT);
@@ -78,9 +83,9 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
         mProgress.setColorSchemeColors(0xff0099cc,0xffff4444,0xff669900,0xffaa66cc,0xffff8800);
         mCircleView = new CircleImageView(context,CIRCLE_BG_LIGHT);
         mCircleView.setImageDrawable(mProgress);
-        super.addView(mCircleView);
+        thisGroup.addView(mCircleView);
 
-        final DisplayMetrics metrics = super.getResources().getDisplayMetrics();
+        final DisplayMetrics metrics = thisView.getResources().getDisplayMetrics();
         mCircleDiameter = (int) (CIRCLE_DIAMETER * metrics.density);
 
         mBezierPath = new Path();
@@ -95,7 +100,7 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
             int radius = ta.getDimensionPixelOffset(R.styleable.MaterialHeader_mhShadowRadius, 0);
             int color = ta.getColor(R.styleable.MaterialHeader_mhShadowColor, 0xff000000);
             mBezierPaint.setShadowLayer(radius, 0, 0, color);
-            super.setLayerType(LAYER_TYPE_SOFTWARE, null);
+            thisView.setLayerType(LAYER_TYPE_SOFTWARE, null);
         }
         ta.recycle();
 
@@ -112,25 +117,28 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        if (super.getChildCount() == 0) {
+        final ViewGroup thisGroup = this;
+        if (thisGroup.getChildCount() == 0) {
             return;
         }
-        final int width = super.getMeasuredWidth();
-        int circleWidth = mCircleView.getMeasuredWidth();
-        int circleHeight = mCircleView.getMeasuredHeight();
+        final View thisView = this;
+        final View circleView = mCircleView;
+        final int width = thisView.getMeasuredWidth();
+        int circleWidth = circleView.getMeasuredWidth();
+        int circleHeight = circleView.getMeasuredHeight();
 
-        if (super.isInEditMode() && mHeadHeight > 0) {
+        if (thisView.isInEditMode() && mHeadHeight > 0) {
             int circleTop = mHeadHeight - circleHeight / 2;
-            mCircleView.layout((width / 2 - circleWidth / 2), circleTop,
+            circleView.layout((width / 2 - circleWidth / 2), circleTop,
                     (width / 2 + circleWidth / 2), circleTop + circleHeight);
 
             mProgress.showArrow(true);
             mProgress.setStartEndTrim(0f, MAX_PROGRESS_ANGLE);
             mProgress.setArrowScale(1);
-            mCircleView.setAlpha(1f);
-            mCircleView.setVisibility(VISIBLE);
+            circleView.setAlpha(1f);
+            circleView.setVisibility(VISIBLE);
         } else {
-            mCircleView.layout((width / 2 - circleWidth / 2), -mCircleDiameter,
+            circleView.layout((width / 2 - circleWidth / 2), -mCircleDiameter,
                     (width / 2 + circleWidth / 2), circleHeight - mCircleDiameter);
         }
     }
@@ -142,8 +150,9 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
             mBezierPath.reset();
             mBezierPath.lineTo(0, mHeadHeight);
             //绘制贝塞尔曲线
-            mBezierPath.quadTo(super.getMeasuredWidth() / 2, mHeadHeight + mWaveHeight * 1.9f, super.getMeasuredWidth(), mHeadHeight);
-            mBezierPath.lineTo(super.getMeasuredWidth(), 0);
+            final View thisView = this;
+            mBezierPath.quadTo(thisView.getMeasuredWidth() / 2, mHeadHeight + mWaveHeight * 1.9f, thisView.getMeasuredWidth(), mHeadHeight);
+            mBezierPath.lineTo(thisView.getMeasuredWidth(), 0);
             canvas.drawPath(mBezierPath, mBezierPaint);
         }
         super.dispatchDraw(canvas);
@@ -154,11 +163,12 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
     //<editor-fold desc="RefreshHeader">
     @Override
     public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
+        final View thisView = this;
         if (!mShowBezierWave) {
             kernel.requestDefaultTranslationContentFor(this, false);
 //            kernel.requestDefaultHeaderTranslationContent(false);
         }
-        if (super.isInEditMode()) {
+        if (thisView.isInEditMode()) {
             mWaveHeight = mHeadHeight = height / 2;
         }
     }
@@ -168,11 +178,14 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
         if (mShowBezierWave) {
             mHeadHeight = Math.min(offset, height);
             mWaveHeight = Math.max(0, offset - height);
-            super.postInvalidate();
+
+            final View thisView = this;
+            thisView.postInvalidate();
         }
 
         if (isDragging || (!mProgress.isRunning() && !mFinished)) {
 
+            final View circleView = mCircleView;
             if (mState != RefreshState.Refreshing) {
                 float originalDragPercent = 1f * offset / height;
 
@@ -190,11 +203,11 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
 
                 float rotation = (-0.25f + .4f * adjustedPercent + tensionPercent * 2) * .5f;
                 mProgress.setProgressRotation(rotation);
-                mCircleView.setAlpha(Math.min(1f, originalDragPercent * 2));
+                circleView.setAlpha(Math.min(1f, originalDragPercent * 2));
             }
 
             float targetY = offset / 2 + mCircleDiameter / 2;
-            mCircleView.setTranslationY(Math.min(offset, targetY));//setTargetOffsetTopAndBottom(targetY - mCurrentTargetOffsetTop, true /* requires update */);
+            circleView.setTranslationY(Math.min(offset, targetY));//setTargetOffsetTopAndBottom(targetY - mCurrentTargetOffsetTop, true /* requires update */);
         }
     }
 
@@ -246,22 +259,24 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
     @Override
     public void onReleased(@NonNull RefreshLayout layout, int height, int extendHeight) {
         mProgress.start();
-        if ((int) mCircleView.getTranslationY() != height / 2 + mCircleDiameter / 2) {
-            mCircleView.animate().translationY(height / 2 + mCircleDiameter / 2);
+        final View circleView = mCircleView;
+        if ((int) circleView.getTranslationY() != height / 2 + mCircleDiameter / 2) {
+            circleView.animate().translationY(height / 2 + mCircleDiameter / 2);
         }
     }
 
     @Override
     public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
+        final View circleView = mCircleView;
         mState = newState;
         switch (newState) {
             case None:
                 break;
             case PullDownToRefresh:
                 mFinished = false;
-                mCircleView.setVisibility(VISIBLE);
-                mCircleView.setScaleX(1);
-                mCircleView.setScaleY(1);
+                circleView.setVisibility(VISIBLE);
+                circleView.setScaleX(1);
+                circleView.setScaleY(1);
                 break;
             case ReleaseToRefresh:
                 break;
@@ -272,8 +287,9 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
 
     @Override
     public int onFinish(@NonNull RefreshLayout layout, boolean success) {
+        final View circleView = mCircleView;
         mProgress.stop();
-        mCircleView.animate().scaleX(0).scaleY(0);
+        circleView.animate().scaleX(0).scaleY(0);
         mFinished = true;
         return 0;
     }
@@ -318,7 +334,8 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
         if (size != SIZE_LARGE && size != SIZE_DEFAULT) {
             return this;
         }
-        DisplayMetrics metrics = super.getResources().getDisplayMetrics();
+        final View thisView = this;
+        DisplayMetrics metrics = thisView.getResources().getDisplayMetrics();
         if (size == SIZE_LARGE) {
             mCircleDiameter = (int) (CIRCLE_DIAMETER_LARGE * metrics.density);
         } else {

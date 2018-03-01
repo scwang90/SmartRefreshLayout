@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.graphics.ColorUtils;
 import android.util.AttributeSet;
+import android.view.View;
 
 import com.scwang.smartrefresh.layout.R;
 import com.scwang.smartrefresh.layout.api.RefreshFooter;
@@ -64,7 +65,8 @@ public class BallPulseFooter extends InternalAbstract implements RefreshFooter {
     public BallPulseFooter(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        super.setMinimumHeight(DensityUtil.dp2px(60));
+        final View thisView = this;
+        thisView.setMinimumHeight(DensityUtil.dp2px(60));
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.BallPulseFooter);
 
@@ -102,7 +104,7 @@ public class BallPulseFooter extends InternalAbstract implements RefreshFooter {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
                     mScaleFloats[index] = (float) animation.getAnimatedValue();
-                    postInvalidate();
+                    thisView.postInvalidate();
                 }
             });
             mAnimators.add(animator);
@@ -123,7 +125,9 @@ public class BallPulseFooter extends InternalAbstract implements RefreshFooter {
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
-        int width = super.getWidth(), height = super.getHeight();
+        final View thisView = this;
+        final int width = thisView.getWidth();
+        final int height = thisView.getHeight();
         float radius = (Math.min(width, height) - mCircleSpacing * 2) / 6;
         float x = width / 2 - (radius * 2 + mCircleSpacing);
         float y = height / 2;

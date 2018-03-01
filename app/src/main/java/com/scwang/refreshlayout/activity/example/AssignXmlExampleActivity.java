@@ -31,7 +31,6 @@ public class AssignXmlExampleActivity extends AppCompatActivity {
             }
         });
 
-
         /*
          * 以下代码仅仅为了演示效果而已，不是必须的
          * 关键代码在 activity_example_assign_xml 中

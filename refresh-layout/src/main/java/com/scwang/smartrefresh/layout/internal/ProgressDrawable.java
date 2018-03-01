@@ -32,7 +32,8 @@ public class ProgressDrawable extends PaintDrawable implements Animatable {
             public void onAnimationUpdate(ValueAnimator animation) {
                 int value = (int) animation.getAnimatedValue();
                 mProgressDegree = 30 * (value / 30);
-                ProgressDrawable.super.invalidateSelf();
+                final Drawable drawable = ProgressDrawable.this;
+                drawable.invalidateSelf();
             }
         });
         mValueAnimator.setDuration(10000);
@@ -44,7 +45,8 @@ public class ProgressDrawable extends PaintDrawable implements Animatable {
     //<editor-fold desc="Drawable">
     @Override
     public void draw(@NonNull Canvas canvas) {
-        Rect bounds = super.getBounds();
+        final Drawable drawable = ProgressDrawable.this;
+        final Rect bounds = drawable.getBounds();
         final int width = bounds.width();
         final int height = bounds.height();
         final int r = Math.max(1, width / 20);

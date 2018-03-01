@@ -1,6 +1,7 @@
 package com.scwang.smartrefresh.layout.util;
 
 import android.graphics.PointF;
+import android.support.annotation.NonNull;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,7 @@ public class ScrollBoundaryUtil {
      * @param touch 按压事件位置
      * @return 是否可以刷新
      */
-    public static boolean canRefresh(View targetView, PointF touch) {
+    public static boolean canRefresh(@NonNull View targetView, PointF touch) {
         if (canScrollUp(targetView) && targetView.getVisibility() == View.VISIBLE) {
             return false;
         }
@@ -51,7 +52,7 @@ public class ScrollBoundaryUtil {
      * @param contentFull 内容是否填满页面 (未填满时，会通过canScrollUp自动判断)
      * @return 是否可以刷新
      */
-    public static boolean canLoadMore(View targetView, PointF touch, boolean contentFull) {
+    public static boolean canLoadMore(@NonNull View targetView, PointF touch, boolean contentFull) {
         if (canScrollDown(targetView) && targetView.getVisibility() == View.VISIBLE) {
             return false;
         }
@@ -94,7 +95,7 @@ public class ScrollBoundaryUtil {
 //        return false;
 //    }
 
-    public static boolean canScrollUp(View targetView) {
+    public static boolean canScrollUp(@NonNull View targetView) {
         if (android.os.Build.VERSION.SDK_INT < 14) {
             if (targetView instanceof AbsListView) {
                 final AbsListView absListView = (AbsListView) targetView;
@@ -109,7 +110,7 @@ public class ScrollBoundaryUtil {
         }
     }
 
-    public static boolean canScrollDown(View targetView) {
+    public static boolean canScrollDown(@NonNull View targetView) {
         if (android.os.Build.VERSION.SDK_INT < 14) {
             if (targetView instanceof AbsListView) {
                 final AbsListView absListView = (AbsListView) targetView;
@@ -128,7 +129,7 @@ public class ScrollBoundaryUtil {
 
     //<editor-fold desc="transform Point">
 
-    public static boolean isTransformedTouchPointInView(ViewGroup group, View child, float x, float y,PointF outLocalPoint) {
+    public static boolean isTransformedTouchPointInView(@NonNull ViewGroup group,@NonNull View child, float x, float y,PointF outLocalPoint) {
         if (child.getVisibility() != View.VISIBLE) {
             return false;
         }

@@ -43,7 +43,8 @@ public abstract class FunGameBase extends InternalAbstract implements RefreshHea
 
     public FunGameBase(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        super.setMinimumHeight(DensityUtil.dp2px(100));
+        final View thisView = this;
+        thisView.setMinimumHeight(DensityUtil.dp2px(100));
         mScreenHeightPixels = context.getResources().getDisplayMetrics().heightPixels;
         mSpinnerStyle = SpinnerStyle.MatchLayout;
     }
@@ -144,7 +145,8 @@ public abstract class FunGameBase extends InternalAbstract implements RefreshHea
         if (mManualOperation) onManualOperationMove(percent, offset, height, extendHeight);
         else {
             mOffset = offset;
-            setTranslationY(mOffset - mHeaderHeight);
+            final View thisView = this;
+            thisView.setTranslationY(mOffset - mHeaderHeight);
         }
     }
 
@@ -165,7 +167,8 @@ public abstract class FunGameBase extends InternalAbstract implements RefreshHea
     @Override
     public void onStartAnimator(@NonNull RefreshLayout refreshLayout, int height, int extendHeight) {
         mIsFinish = false;
-        super.setTranslationY(0);
+        final View thisView = this;
+        thisView.setTranslationY(0);
     }
 
     @Override
@@ -178,8 +181,9 @@ public abstract class FunGameBase extends InternalAbstract implements RefreshHea
     public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
         mRefreshKernel = kernel;
         mHeaderHeight = height;
-        if (!super.isInEditMode()) {
-            super.setTranslationY(mOffset - mHeaderHeight);
+        final View thisView = this;
+        if (!thisView.isInEditMode()) {
+            thisView.setTranslationY(mOffset - mHeaderHeight);
             kernel.requestNeedTouchEventFor(this, true);
 //            kernel.requestNeedTouchEventWhenRefreshing(true);
         }

@@ -10,6 +10,7 @@ import android.graphics.RectF;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
@@ -66,7 +67,8 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
         super(context, attrs, defStyleAttr);
 
         mSpinnerStyle = SpinnerStyle.Scale;
-        super.setMinimumHeight(DensityUtil.dp2px(100));
+        final View thisView = this;
+        thisView.setMinimumHeight(DensityUtil.dp2px(100));
         mBackPaint = new Paint();
         mBackPaint.setColor(0xff11bbff);
         mBackPaint.setAntiAlias(true);
@@ -87,17 +89,18 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
-        if (super.isInEditMode()) {
+        final View thisView = this;
+        final int viewWidth = thisView.getWidth();
+        final int viewHeight = thisView.getHeight();
+        if (thisView.isInEditMode()) {
             mShowBoll = true;
             mShowOuter = true;
-            mHeadHeight = getHeight();
+            mHeadHeight = viewHeight;
             mRefreshStop = 270;
             mBollY = mHeadHeight / 2;
             mBollRadius = mHeadHeight / 6;
         }
 
-        int viewWidth = super.getWidth();
-        int viewHeight = super.getHeight();
         drawWave(canvas, viewWidth, viewHeight);
         drawSpringUp(canvas, viewWidth);
         drawBoll(canvas, viewWidth);
@@ -180,7 +183,8 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
             } else if (swipe <= 10) {
                 mOuterIsStart = true;
             }
-            super.invalidate();
+            final View thisView = this;
+            thisView.invalidate();
         }
 
     }
@@ -306,7 +310,8 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
                 }
                 if (!mWavePulling) {
                     mWaveHeight = curValue;
-                    BezierCircleHeader.super.invalidate();
+                    final View thisView = BezierCircleHeader.this;
+                    thisView.invalidate();
                 }
             }
         });
@@ -324,8 +329,9 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
+                final View thisView = BezierCircleHeader.this;
                 mFinishRatio = (float) animation.getAnimatedValue();
-                BezierCircleHeader.super.invalidate();
+                thisView.invalidate();
             }
         });
         animator.setInterpolator(new AccelerateInterpolator());

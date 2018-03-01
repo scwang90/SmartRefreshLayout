@@ -13,13 +13,14 @@ import android.widget.TextView;
 public class SmartViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private final AdapterView.OnItemClickListener mListener;
+    private int mPosition = -1;
 
     public SmartViewHolder(View itemView, AdapterView.OnItemClickListener mListener) {
         super(itemView);
         this.mListener = mListener;
         itemView.setOnClickListener(this);
 
-        /**
+        /*
          * 设置水波纹背景
          */
         if (itemView.getBackground() == null) {
@@ -36,12 +37,18 @@ public class SmartViewHolder extends RecyclerView.ViewHolder implements View.OnC
         }
     }
 
+    public void setPosition(int position) {
+        mPosition = position;
+    }
+
     @Override
     public void onClick(View v) {
         if (mListener != null) {
             int position = getAdapterPosition();
             if(position >= 0){
                 mListener.onItemClick(null, v, position, getItemId());
+            } else if (mPosition > -1) {
+                mListener.onItemClick(null, v, mPosition, getItemId());
             }
         }
     }
