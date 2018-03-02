@@ -37,34 +37,34 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
     //<editor-fold desc="Field">
     public List<StoreHouseBarItem> mItemList = new ArrayList<>();
 
-    private int mLineWidth = -1;
-    private float mScale = 1;
-    private int mDropHeight = -1;
-    private static final float mInternalAnimationFactor = 0.7f;
-    private int mHorizontalRandomness = -1;
+    protected int mLineWidth = -1;
+    protected float mScale = 1;
+    protected int mDropHeight = -1;
+    protected static final float mInternalAnimationFactor = 0.7f;
+    protected int mHorizontalRandomness = -1;
 
-    private float mProgress = 0;
+    protected float mProgress = 0;
 
-    private int mDrawZoneWidth = 0;
-    private int mDrawZoneHeight = 0;
-    private int mOffsetX = 0;
-    private int mOffsetY = 0;
-    private static final float mBarDarkAlpha = 0.4f;
-    private static final float mFromAlpha = 1.0f;
-    private static final float mToAlpha = 0.4f;
+    protected int mDrawZoneWidth = 0;
+    protected int mDrawZoneHeight = 0;
+    protected int mOffsetX = 0;
+    protected int mOffsetY = 0;
+    protected static final float mBarDarkAlpha = 0.4f;
+    protected static final float mFromAlpha = 1.0f;
+    protected static final float mToAlpha = 0.4f;
 
-    private int mLoadingAniDuration = 1000;
-    private int mLoadingAniSegDuration = 1000;
-    private static final int mLoadingAniItemDuration = 400;
+    protected int mLoadingAniDuration = 1000;
+    protected int mLoadingAniSegDuration = 1000;
+    protected static final int mLoadingAniItemDuration = 400;
 
-    private int mTextColor = Color.WHITE;
-    private int mBackgroundColor = 0;
-    private boolean mIsInLoading = false;
-    private boolean mEnableFadeAnimation = false;
-    private Matrix mMatrix = new Matrix();
-    private RefreshKernel mRefreshKernel;
-    private AniController mAniController = new AniController();
-    private Transformation mTransformation = new Transformation();
+    protected int mTextColor = Color.WHITE;
+    protected int mBackgroundColor = 0;
+    protected boolean mIsInLoading = false;
+    protected boolean mEnableFadeAnimation = false;
+    protected Matrix mMatrix = new Matrix();
+    protected RefreshKernel mRefreshKernel;
+    protected AniController mAniController = new AniController();
+    protected Transformation mTransformation = new Transformation();
     //</editor-fold>
 
     //<editor-fold desc="View">
@@ -358,11 +358,11 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
 
     private class AniController implements Runnable {
 
-        private int mTick = 0;
-        private int mCountPerSeg = 0;
-        private int mSegCount = 0;
-        private int mInterval = 0;
-        private boolean mRunning = true;
+        int mTick = 0;
+        int mCountPerSeg = 0;
+        int mSegCount = 0;
+        int mInterval = 0;
+        boolean mRunning = true;
 
         private void start() {
             mRunning = true;
@@ -397,7 +397,8 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
 
             mTick++;
             if (mRunning && mRefreshKernel != null) {
-                mRefreshKernel.getRefreshLayout().getLayout().postDelayed(this, mInterval);
+                final View refreshView = mRefreshKernel.getRefreshLayout().getLayout();
+                refreshView.postDelayed(this, mInterval);
             }
         }
 

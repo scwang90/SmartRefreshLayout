@@ -233,13 +233,13 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
     }
 
     private void initDataSet() {
-        mDataSet.add(new ItemData(Color.parseColor("#76A9FC"), R.drawable.ic_fly_refresh_poll, "Meeting Minutes", new Date(2014 - 1900, 2, 9)));
+        mDataSet.add(new ItemData(0xFF76A9FC, R.drawable.ic_fly_refresh_poll, "Meeting Minutes", new Date(2014 - 1900, 2, 9)));
         mDataSet.add(new ItemData(Color.GRAY, R.drawable.ic_fly_refresh_folder, "Favorites Photos", new Date(2014 - 1900, 1, 3)));
         mDataSet.add(new ItemData(Color.GRAY, R.drawable.ic_fly_refresh_folder, "Photos", new Date(2014 - 1900, 0, 9)));
     }
 
     private void addItemData() {
-        ItemData itemData = new ItemData(Color.parseColor("#FFC970"), R.drawable.ic_fly_refresh_smartphone, "Magic Cube Show", new Date());
+        ItemData itemData = new ItemData(0xFFFFC970, R.drawable.ic_fly_refresh_smartphone, "Magic Cube Show", new Date());
         mDataSet.add(0, itemData);
         mAdapter.notifyItemInserted(0);
         mLayoutManager.scrollToPosition(0);

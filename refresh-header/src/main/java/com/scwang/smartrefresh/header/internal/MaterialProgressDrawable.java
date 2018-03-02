@@ -451,34 +451,34 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
     }
 
     private class Ring {
-        private final RectF mTempBounds = new RectF();
-        private final Paint mPaint = new Paint();
-        private final Paint mArrowPaint = new Paint();
+        final RectF mTempBounds = new RectF();
+        final Paint mPaint = new Paint();
+        final Paint mArrowPaint = new Paint();
 
-        private float mStartTrim = 0.0f;
-        private float mEndTrim = 0.0f;
-        private float mRotation = 0.0f;
-        private float mStrokeWidth = 5.0f;
-        private float mStrokeInset = 2.5f;
+        float mStartTrim = 0.0f;
+        float mEndTrim = 0.0f;
+        float mRotation = 0.0f;
+        float mStrokeWidth = 5.0f;
+        float mStrokeInset = 2.5f;
 
-        private int[] mColors;
+        int[] mColors;
         // mColorIndex represents the offset into the available mColors that the
         // progress circle should currently display. As the progress circle is
         // animating, the mColorIndex moves by one to the next available color.
-        private int mColorIndex;
-        private float mStartingStartTrim;
-        private float mStartingEndTrim;
-        private float mStartingRotation;
-        private boolean mShowArrow;
-        private Path mArrow;
-        private float mArrowScale;
-        private double mRingCenterRadius;
-        private int mArrowWidth;
-        private int mArrowHeight;
-        private int mAlpha;
-        private final Paint mCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        private int mBackgroundColor;
-        private int mCurrentColor;
+        int mColorIndex;
+        float mStartingStartTrim;
+        float mStartingEndTrim;
+        float mStartingRotation;
+        boolean mShowArrow;
+        Path mArrow;
+        float mArrowScale;
+        double mRingCenterRadius;
+        int mArrowWidth;
+        int mArrowHeight;
+        int mAlpha;
+        final Paint mCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        int mBackgroundColor;
+        int mCurrentColor;
 
         Ring() {
             mPaint.setStrokeCap(Paint.Cap.SQUARE);

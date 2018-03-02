@@ -42,141 +42,141 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
     /**
      * {@link WaveView#mDropCircleAnimator} のDuration
      */
-    private static final long DROP_CIRCLE_ANIMATOR_DURATION = 500;
+    protected static final long DROP_CIRCLE_ANIMATOR_DURATION = 500;
 
     /**
      * {@link WaveView#mDropBounceVerticalAnimator} のDuration
      */
-    private static final long DROP_VERTEX_ANIMATION_DURATION = 500;
+    protected static final long DROP_VERTEX_ANIMATION_DURATION = 500;
 
     /**
      * {@link WaveView#mDropBounceVerticalAnimator} と {@link WaveView#mDropBounceHorizontalAnimator}
      * のDuration
      */
-    private static final long DROP_BOUNCE_ANIMATOR_DURATION = 500;
+    protected static final long DROP_BOUNCE_ANIMATOR_DURATION = 500;
 
     /**
      * {@link WaveView#mDisappearCircleAnimator} のDuration
      */
-    private static final int DROP_REMOVE_ANIMATOR_DURATION = 200;
+    protected static final int DROP_REMOVE_ANIMATOR_DURATION = 200;
 
     /**
      * 波がくねくねしているDuration
      */
-    private static final int WAVE_ANIMATOR_DURATION = 1000;
+    protected static final int WAVE_ANIMATOR_DURATION = 1000;
 
     /**
      * 波の最大の高さ
      */
-    private static final float MAX_WAVE_HEIGHT = 0.2f;
+    protected static final float MAX_WAVE_HEIGHT = 0.2f;
 
     /**
      * 影の色
      */
-    private static final int SHADOW_COLOR = 0x99000000;
+    protected static final int SHADOW_COLOR = 0x99000000;
 
     /**
      * 円のRadius
      */
-    private float mDropCircleRadius = 100;
+    protected float mDropCircleRadius = 100;
 
     /**
      * すべてを描画するPaint
      */
-    private Paint mPaint;
+    protected Paint mPaint;
 
     /**
      * 画面の波を描画するためのPath
      */
-    private Path mWavePath;
+    protected Path mWavePath;
 
     /**
      * 落ちる円の接線を描画するためのPath
      */
-    private Path mDropTangentPath;
+    protected Path mDropTangentPath;
 
     /**
      * 落ちる円を描画するためのPath
      */
-    private Path mDropCirclePath;
+    protected Path mDropCirclePath;
 
 //    /**
 //     * 影のPaint
 //     */
-//  private Paint mShadowPaint;
+//  protected Paint mShadowPaint;
 
     /**
      * 影のPath
      */
-    private Path mShadowPath;
+    protected Path mShadowPath;
 
     /**
      * 落ちる円の座標を入れているRectF
      */
-    private RectF mDropRect;
+    protected RectF mDropRect;
 
     /**
      * Viewの横幅
      */
-    private int mWidth;
+    protected int mWidth;
 
     /**
      * {@link WaveView#mDropCircleAnimator} でアニメーションしてる時の円の中心のY座標
      */
-    private float mCurrentCircleCenterY;
+    protected float mCurrentCircleCenterY;
 
     /**
      * 円が落ちる最大の高さ
      */
-    private int mMaxDropHeight;
+    protected int mMaxDropHeight;
 
-    private boolean mIsManualRefreshing = false;
+    protected boolean mIsManualRefreshing = false;
 
     /**
      * 落ちる円の高さが更新されたかどうか
      */
-    private boolean mDropHeightUpdated = false;
+    protected boolean mDropHeightUpdated = false;
 
     /**
      * {@link WaveView#mMaxDropHeight} を更新するための一時的な値の置き場
      */
-    private int mUpdateMaxDropHeight;
+    protected int mUpdateMaxDropHeight;
 
     /**
      * 落ちてくる円についてくる三角形の一番上の頂点のAnimator
      */
-    private ValueAnimator mDropVertexAnimator;
+    protected ValueAnimator mDropVertexAnimator;
 
     /**
      * 落ちた円が横に伸びるときのAnimator
      */
-    private ValueAnimator mDropBounceVerticalAnimator;
+    protected ValueAnimator mDropBounceVerticalAnimator;
 
     /**
      * 落ちた縁が縦に伸びるときのAnimator
      */
-    private ValueAnimator mDropBounceHorizontalAnimator;
+    protected ValueAnimator mDropBounceHorizontalAnimator;
 
     /**
      * 落ちる円の中心座標のAnimator
      */
-    private ValueAnimator mDropCircleAnimator;
+    protected ValueAnimator mDropCircleAnimator;
 
     /**
      * 落ちた円を消すためのAnimator
      */
-    private ValueAnimator mDisappearCircleAnimator;
+    protected ValueAnimator mDisappearCircleAnimator;
 
     /**
      * 帰ってくる波ののAnimator
      */
-    private ValueAnimator mWaveReverseAnimator;
+    protected ValueAnimator mWaveReverseAnimator;
 
     /**
      * ベジェ曲線を引く際の座標
      * 左側の2つのアンカーポイントでいい感じに右側にも
      */
-    private static final float[][] BEGIN_PHASE_POINTS = {
+    protected static final float[][] BEGIN_PHASE_POINTS = {
             //1
             {0.1655f, 0},           //ハンドル
             {0.4188f, -0.0109f},    //ハンドル
@@ -188,7 +188,7 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
             {0.5f, 0.f}             //アンカーポイント
     };
 
-    private static final float[][] APPEAR_PHASE_POINTS = {
+    protected static final float[][] APPEAR_PHASE_POINTS = {
             //1
             {0.1655f, 0.f},         //ハンドル
             {0.5237f, 0.0553f},     //ハンドル
@@ -200,7 +200,7 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
             {0.5f, 0.2173f}         //アンカーポイント
     };
 
-    private static final float[][] EXPAND_PHASE_POINTS = {
+    protected static final float[][] EXPAND_PHASE_POINTS = {
             //1
             {0.1655f, 0.f},         //ハンドル
             {0.5909f, 0.0000f},     //ハンドル
@@ -215,7 +215,7 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
     /**
      * 各AnimatorのAnimatorUpdateListener
      */
-    private ValueAnimator.AnimatorUpdateListener mAnimatorUpdateListener =
+    protected ValueAnimator.AnimatorUpdateListener mAnimatorUpdateListener =
             new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator valueAnimator) {
@@ -364,7 +364,7 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
         super.onDetachedFromWindow();
     }
 
-//    private void setUpPaint() {
+//    protected void setUpPaint() {
 //        float density = getResources().getDisplayMetrics().density;
 //        mPaint = new Paint();
 //        mPaint.setColor(0xff2196F3);
@@ -378,14 +378,14 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
 ////    mShadowPaint.setShadowLayer((int) (0.5f + 2.0f * density), 0f, 0f, SHADOW_COLOR);
 //    }
 //
-//    private void setUpPath() {
+//    protected void setUpPath() {
 //        mWavePath = new Path();
 //        mDropTangentPath = new Path();
 //        mDropCirclePath = new Path();
 //        mShadowPath = new Path();
 //    }
 
-    private void resetAnimator() {
+    protected void resetAnimator() {
         mDropVertexAnimator = ValueAnimator.ofFloat(0.f, 0.f);
         mDropBounceVerticalAnimator = ValueAnimator.ofFloat(0.f, 0.f);
         mDropBounceHorizontalAnimator = ValueAnimator.ofFloat(0.f, 0.f);
@@ -396,7 +396,7 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
         mDisappearCircleAnimator.start();
     }
 
-    private void onPreDragWave() {
+    protected void onPreDragWave() {
         if (mWaveReverseAnimator != null) {
             if (mWaveReverseAnimator.isRunning()) {
                 mWaveReverseAnimator.cancel();
@@ -550,9 +550,9 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
     /**
      * @param height 高さ
      */
-    private void updateMaxDropHeight(int height) {
+    protected void updateMaxDropHeight(int height) {
         if (500 * (mWidth / 1440.f) > height) {
-            Log.w("WaveView", "DropHeight is more than " + 500 * (mWidth / 1440.f));
+//            Log.w("WaveView", "DropHeight is more than " + 500 * (mWidth / 1440.f));
             return;
         }
         final View thisView = this;

@@ -35,53 +35,53 @@ import java.util.Random;
 public class TaurusHeader extends InternalAbstract implements RefreshHeader {
 
     //<editor-fold desc="Field">
-    private static final float SCALE_START_PERCENT = 0.5f;
-    private static final int ANIMATION_DURATION = 1000;
+    protected static final float SCALE_START_PERCENT = 0.5f;
+    protected static final int ANIMATION_DURATION = 1000;
 
-    private static final float SIDE_CLOUDS_INITIAL_SCALE = 0.6f;//1.05f;
-    private static final float SIDE_CLOUDS_FINAL_SCALE = 1f;//1.55f;
+    protected static final float SIDE_CLOUDS_INITIAL_SCALE = 0.6f;//1.05f;
+    protected static final float SIDE_CLOUDS_FINAL_SCALE = 1f;//1.55f;
 
-    private static final float CENTER_CLOUDS_INITIAL_SCALE = 0.8f;//0.8f;
-    private static final float CENTER_CLOUDS_FINAL_SCALE = 1f;//1.30f;
+    protected static final float CENTER_CLOUDS_INITIAL_SCALE = 0.8f;//0.8f;
+    protected static final float CENTER_CLOUDS_FINAL_SCALE = 1f;//1.30f;
 
-    private static final Interpolator ACCELERATE_DECELERATE_INTERPOLATOR = new AccelerateDecelerateInterpolator();
+    protected static final Interpolator ACCELERATE_DECELERATE_INTERPOLATOR = new AccelerateDecelerateInterpolator();
 
     // Multiply with this animation interpolator time
-    private static final int LOADING_ANIMATION_COEFFICIENT = 80;
-    private static final int SLOW_DOWN_ANIMATION_COEFFICIENT = 6;
+    protected static final int LOADING_ANIMATION_COEFFICIENT = 80;
+    protected static final int SLOW_DOWN_ANIMATION_COEFFICIENT = 6;
     // Amount of lines when is going lading animation
-    private static final int WIND_SET_AMOUNT = 10;
-    private static final int Y_SIDE_CLOUDS_SLOW_DOWN_COF = 4;
-    private static final int X_SIDE_CLOUDS_SLOW_DOWN_COF = 2;
-    private static final int MIN_WIND_LINE_WIDTH = 50;
-    private static final int MAX_WIND_LINE_WIDTH = 300;
-    private static final int MIN_WIND_X_OFFSET = 1000;
-    private static final int MAX_WIND_X_OFFSET = 2000;
-    private static final int RANDOM_Y_COEFFICIENT = 5;
+    protected static final int WIND_SET_AMOUNT = 10;
+    protected static final int Y_SIDE_CLOUDS_SLOW_DOWN_COF = 4;
+    protected static final int X_SIDE_CLOUDS_SLOW_DOWN_COF = 2;
+    protected static final int MIN_WIND_LINE_WIDTH = 50;
+    protected static final int MAX_WIND_LINE_WIDTH = 300;
+    protected static final int MIN_WIND_X_OFFSET = 1000;
+    protected static final int MAX_WIND_X_OFFSET = 2000;
+    protected static final int RANDOM_Y_COEFFICIENT = 5;
 
-    private Drawable mAirplane;
-    private Drawable mCloudCenter;
-    private Matrix mMatrix;
-    private float mPercent;
-    private int mHeaderHeight;
-    private Animation mAnimation;
+    protected Drawable mAirplane;
+    protected Drawable mCloudCenter;
+    protected Matrix mMatrix;
+    protected float mPercent;
+    protected int mHeaderHeight;
+    protected Animation mAnimation;
 
-    private boolean isRefreshing = false;
-    private float mLoadingAnimationTime;
-    private float mLastAnimationTime;
+    protected boolean isRefreshing = false;
+    protected float mLoadingAnimationTime;
+    protected float mLastAnimationTime;
 
-    private Random mRandom;
+    protected Random mRandom;
 //    private boolean mEndOfRefreshing;
 
     //KEY: Y position, Value: X offset of wind
-    private Map<Float, Float> mWinds;
-    private Paint mWindPaint;
-    private float mWindLineWidth;
-    private boolean mNewWindSet;
-    private boolean mInverseDirection;
-    private float mFinishTransformation;
+    protected Map<Float, Float> mWinds;
+    protected Paint mWindPaint;
+    protected float mWindLineWidth;
+    protected boolean mNewWindSet;
+    protected boolean mInverseDirection;
+    protected float mFinishTransformation;
 
-    private enum AnimationPart {
+    protected enum AnimationPart {
         FIRST,
         SECOND,
         THIRD,

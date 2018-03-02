@@ -35,22 +35,22 @@ public class BallPulseFooter extends InternalAbstract implements RefreshFooter {
     //<editor-fold desc="属性变量">
     public static final int DEFAULT_SIZE = 50; //dp
 
-    private boolean mManualNormalColor;
-    private boolean mManualAnimationColor;
-//    private SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
+    protected boolean mManualNormalColor;
+    protected boolean mManualAnimationColor;
+//    protected SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
 
-    private Paint mPaint;
+    protected Paint mPaint;
 
-    private int mNormalColor = 0xffeeeeee;
-    private int mAnimatingColor = 0xffe75946;
+    protected int mNormalColor = 0xffeeeeee;
+    protected int mAnimatingColor = 0xffe75946;
 
-    private float mCircleSpacing;
-    private float[] mScaleFloats = new float[]{1f, 1f, 1f};
+    protected float mCircleSpacing;
+    protected float[] mScaleFloats = new float[]{1f, 1f, 1f};
 
 
-    private boolean mIsStarted = false;
-    private ArrayList<ValueAnimator> mAnimators;
-    private Map<ValueAnimator, ValueAnimator.AnimatorUpdateListener> mUpdateListeners = new HashMap<>();;
+    protected boolean mIsStarted = false;
+    protected ArrayList<ValueAnimator> mAnimators;
+    protected Map<ValueAnimator, ValueAnimator.AnimatorUpdateListener> mUpdateListeners = new HashMap<>();;
     //</editor-fold>
 
     //<editor-fold desc="构造方法">

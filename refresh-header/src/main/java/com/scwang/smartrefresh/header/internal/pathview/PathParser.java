@@ -17,6 +17,7 @@ package com.scwang.smartrefresh.header.internal.pathview;
 import android.graphics.Matrix;
 import android.graphics.Path;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ import java.util.List;
 // update on incompatible API like copyOfRange().
 @SuppressWarnings({"WeakerAccess", "SameParameterValue"})
 class PathParser {
-    private static final String LOGTAG = "PathParser";
+    private static final String TAG = "PathParser";
 
     // Copy from Arrays.copyOfRange() which is only available from API level 9.
 
@@ -40,18 +41,17 @@ class PathParser {
      * @param start    the start index, inclusive
      * @param end      the end index, exclusive
      * @return the new array
-     * @throws ArrayIndexOutOfBoundsException if {@code start < 0 || start > original.length}
-     * @throws IllegalArgumentException       if {@code start > end}
-     * @throws NullPointerException           if {@code original == null}
+//     * @throws ArrayIndexOutOfBoundsException if {@code start < 0 || start > original.length}
+//     * @throws IllegalArgumentException       if {@code start > end}
      */
-    static float[] copyOfRange(float[] original, int start, int end) {
-        if (start > end) {
-            throw new IllegalArgumentException();
-        }
+    static float[] copyOfRange(@NonNull float[] original, int start, int end) {
+//        if (start > end) {
+//            throw new IllegalArgumentException();
+//        }
         int originalLength = original.length;
-        if (start < 0 || start > originalLength) {
-            throw new ArrayIndexOutOfBoundsException();
-        }
+//        if (start < 0 || start > originalLength) {
+//            throw new ArrayIndexOutOfBoundsException();
+//        }
         int resultLength = end - start;
         int copyLength = Math.min(resultLength, originalLength - start);
         float[] result = new float[resultLength];
@@ -59,12 +59,12 @@ class PathParser {
         return result;
     }
 
-    public static List<Path> transformScale(float ratioWidth, float ratioHeight, List<Path> orginPaths, List<String> orginSvgs) {
+    public static List<Path> transformScale(float ratioWidth, float ratioHeight, List<Path> originPaths, List<String> orginSvgs) {
         Matrix matrix = new Matrix();
         matrix.setScale(ratioWidth, ratioHeight);
         List<Path> paths = new ArrayList<>();
         if (Build.VERSION.SDK_INT > 16) {
-            for (Path path : orginPaths) {
+            for (Path path : originPaths) {
                 Path nPath = new Path();
                 path.transform(matrix, nPath);
                 paths.add(nPath);
@@ -89,7 +89,7 @@ class PathParser {
     }
 
     private static void transformScaleCommand(float ratioWidth, float ratioHeight, char cmd, float[] val) {
-        int incr = 2;
+        int inc = 2;
         switch (cmd) {
             case 'z':
             case 'Z':
@@ -100,50 +100,50 @@ class PathParser {
             case 'L':
             case 't':
             case 'T':
-                incr = 2;
+                inc = 2;
                 break;
             case 'h':
             case 'H':
             case 'v':
             case 'V':
-                incr = 1;
+                inc = 1;
                 break;
             case 'c':
             case 'C':
-                incr = 6;
+                inc = 6;
                 break;
             case 's':
             case 'S':
             case 'q':
             case 'Q':
-                incr = 4;
+                inc = 4;
                 break;
             case 'a':
             case 'A':
-                incr = 7;
+                inc = 7;
                 break;
         }
-        for (int k = 0; k < val.length; k += incr) {
+        for (int k = 0; k < val.length; k += inc) {
             switch (cmd) {
-                case 'm': // moveto - Start a new sub-path (relative)
-                case 'M': // moveto - Start a new sub-path
-                case 'l': // lineto - Draw a line from the current point (relative)
-                case 'L': // lineto - Draw a line from the current point
-                case 't': // Draws a quadratic Bézier curve(reflective control point)(relative)
-                case 'T': // Draws a quadratic Bézier curve (reflective control point)
+                case 'm': // moveTo - Start a new sub-path (relative)
+                case 'M': // moveTo - Start a new sub-path
+                case 'l': // lineTo - Draw a line from the current point (relative)
+                case 'L': // lineTo - Draw a line from the current point
+                case 't': // Draws a quadratic Bezier curve(reflective control point)(relative)
+                case 'T': // Draws a quadratic Bezier curve (reflective control point)
                     val[k] *= ratioWidth;
                     val[k + 1] *= ratioHeight;
                     break;
-                case 'h': // horizontal lineto - Draws a horizontal line (relative)
-                case 'H': // horizontal lineto - Draws a horizontal line
+                case 'h': // horizontal lineTo - Draws a horizontal line (relative)
+                case 'H': // horizontal lineTo - Draws a horizontal line
                     val[k] *= ratioWidth;
                     break;
-                case 'v': // vertical lineto - Draws a vertical line from the current point (r)
-                case 'V': // vertical lineto - Draws a vertical line from the current point
+                case 'v': // vertical lineTo - Draws a vertical line from the current point (r)
+                case 'V': // vertical lineTo - Draws a vertical line from the current point
                     val[k] *= ratioHeight;
                     break;
-                case 'c': // curveto - Draws a cubic Bézier curve (relative)
-                case 'C': // curveto - Draws a cubic Bézier curve
+                case 'c': // curveTo - Draws a cubic Bezier curve (relative)
+                case 'C': // curveTo - Draws a cubic Bezier curve
                     val[k] *= ratioWidth;
                     val[k + 1] *= ratioHeight;
                     val[k + 2] *= ratioWidth;
@@ -151,10 +151,10 @@ class PathParser {
                     val[k + 4] *= ratioWidth;
                     val[k + 5] *= ratioHeight;
                     break;
-                case 's': // smooth curveto - Draws a cubic Bézier curve (reflective cp)
-                case 'S': // shorthand/smooth curveto Draws a cubic Bézier curve(reflective cp)
-                case 'q': // Draws a quadratic Bézier (relative)
-                case 'Q': // Draws a quadratic Bézier
+                case 's': // smooth curveTo - Draws a cubic Bezier curve (reflective cp)
+                case 'S': // shorthand/smooth curveTo Draws a cubic Bezier curve(reflective cp)
+                case 'q': // Draws a quadratic Bezier (relative)
+                case 'Q': // Draws a quadratic Bezier
                     val[k] *= ratioWidth;
                     val[k + 1] *= ratioHeight;
                     val[k + 2] *= ratioWidth;
@@ -455,7 +455,7 @@ class PathParser {
         private static void addCommand(Path path, float[] current,
                                        char previousCmd, char cmd, float[] val) {
 
-            int incr = 2;
+            int inc = 2;
             float currentX = current[0];
             float currentY = current[1];
             float ctrlPointX = current[2];
@@ -484,39 +484,39 @@ class PathParser {
                 case 'L':
                 case 't':
                 case 'T':
-                    incr = 2;
+                    inc = 2;
                     break;
                 case 'h':
                 case 'H':
                 case 'v':
                 case 'V':
-                    incr = 1;
+                    inc = 1;
                     break;
                 case 'c':
                 case 'C':
-                    incr = 6;
+                    inc = 6;
                     break;
                 case 's':
                 case 'S':
                 case 'q':
                 case 'Q':
-                    incr = 4;
+                    inc = 4;
                     break;
                 case 'a':
                 case 'A':
-                    incr = 7;
+                    inc = 7;
                     break;
             }
 
-            for (int k = 0; k < val.length; k += incr) {
+            for (int k = 0; k < val.length; k += inc) {
                 switch (cmd) {
-                    case 'm': // moveto - Start a new sub-path (relative)
+                    case 'm': // moveTo - Start a new sub-path (relative)
                         currentX += val[k + 0];
                         currentY += val[k + 1];
                         if (k > 0) {
-                            // According to the spec, if a moveto is followed by multiple
+                            // According to the spec, if a moveTo is followed by multiple
                             // pairs of coordinates, the subsequent pairs are treated as
-                            // implicit lineto commands.
+                            // implicit lineTo commands.
                             path.rLineTo(val[k + 0], val[k + 1]);
                         } else {
                             path.rMoveTo(val[k + 0], val[k + 1]);
@@ -524,13 +524,13 @@ class PathParser {
                             currentSegmentStartY = currentY;
                         }
                         break;
-                    case 'M': // moveto - Start a new sub-path
+                    case 'M': // moveTo - Start a new sub-path
                         currentX = val[k + 0];
                         currentY = val[k + 1];
                         if (k > 0) {
-                            // According to the spec, if a moveto is followed by multiple
+                            // According to the spec, if a moveTo is followed by multiple
                             // pairs of coordinates, the subsequent pairs are treated as
-                            // implicit lineto commands.
+                            // implicit lineTo commands.
                             path.lineTo(val[k + 0], val[k + 1]);
                         } else {
                             path.moveTo(val[k + 0], val[k + 1]);
@@ -538,33 +538,33 @@ class PathParser {
                             currentSegmentStartY = currentY;
                         }
                         break;
-                    case 'l': // lineto - Draw a line from the current point (relative)
+                    case 'l': // lineTo - Draw a line from the current point (relative)
                         path.rLineTo(val[k + 0], val[k + 1]);
                         currentX += val[k + 0];
                         currentY += val[k + 1];
                         break;
-                    case 'L': // lineto - Draw a line from the current point
+                    case 'L': // lineTo - Draw a line from the current point
                         path.lineTo(val[k + 0], val[k + 1]);
                         currentX = val[k + 0];
                         currentY = val[k + 1];
                         break;
-                    case 'h': // horizontal lineto - Draws a horizontal line (relative)
+                    case 'h': // horizontal lineTo - Draws a horizontal line (relative)
                         path.rLineTo(val[k + 0], 0);
                         currentX += val[k + 0];
                         break;
-                    case 'H': // horizontal lineto - Draws a horizontal line
+                    case 'H': // horizontal lineTo - Draws a horizontal line
                         path.lineTo(val[k + 0], currentY);
                         currentX = val[k + 0];
                         break;
-                    case 'v': // vertical lineto - Draws a vertical line from the current point (r)
+                    case 'v': // vertical lineTo - Draws a vertical line from the current point (r)
                         path.rLineTo(0, val[k + 0]);
                         currentY += val[k + 0];
                         break;
-                    case 'V': // vertical lineto - Draws a vertical line from the current point
+                    case 'V': // vertical lineTo - Draws a vertical line from the current point
                         path.lineTo(currentX, val[k + 0]);
                         currentY = val[k + 0];
                         break;
-                    case 'c': // curveto - Draws a cubic Bézier curve (relative)
+                    case 'c': // curveTo - Draws a cubic Bezier curve (relative)
                         path.rCubicTo(val[k + 0], val[k + 1], val[k + 2], val[k + 3],
                                 val[k + 4], val[k + 5]);
 
@@ -574,7 +574,7 @@ class PathParser {
                         currentY += val[k + 5];
 
                         break;
-                    case 'C': // curveto - Draws a cubic Bézier curve
+                    case 'C': // curveTo - Draws a cubic Bezier curve
                         path.cubicTo(val[k + 0], val[k + 1], val[k + 2], val[k + 3],
                                 val[k + 4], val[k + 5]);
                         currentX = val[k + 4];
@@ -582,7 +582,7 @@ class PathParser {
                         ctrlPointX = val[k + 2];
                         ctrlPointY = val[k + 3];
                         break;
-                    case 's': // smooth curveto - Draws a cubic Bézier curve (reflective cp)
+                    case 's': // smooth curveTo - Draws a cubic Bezier curve (reflective cp)
                         reflectiveCtrlPointX = 0;
                         reflectiveCtrlPointY = 0;
                         if (previousCmd == 'c' || previousCmd == 's'
@@ -599,7 +599,7 @@ class PathParser {
                         currentX += val[k + 2];
                         currentY += val[k + 3];
                         break;
-                    case 'S': // shorthand/smooth curveto Draws a cubic Bézier curve(reflective cp)
+                    case 'S': // shorthand/smooth curveTo Draws a cubic Bezier curve(reflective cp)
                         reflectiveCtrlPointX = currentX;
                         reflectiveCtrlPointY = currentY;
                         if (previousCmd == 'c' || previousCmd == 's'
@@ -614,21 +614,21 @@ class PathParser {
                         currentX = val[k + 2];
                         currentY = val[k + 3];
                         break;
-                    case 'q': // Draws a quadratic Bézier (relative)
+                    case 'q': // Draws a quadratic Bezier (relative)
                         path.rQuadTo(val[k + 0], val[k + 1], val[k + 2], val[k + 3]);
                         ctrlPointX = currentX + val[k + 0];
                         ctrlPointY = currentY + val[k + 1];
                         currentX += val[k + 2];
                         currentY += val[k + 3];
                         break;
-                    case 'Q': // Draws a quadratic Bézier
+                    case 'Q': // Draws a quadratic Bezier
                         path.quadTo(val[k + 0], val[k + 1], val[k + 2], val[k + 3]);
                         ctrlPointX = val[k + 0];
                         ctrlPointY = val[k + 1];
                         currentX = val[k + 2];
                         currentY = val[k + 3];
                         break;
-                    case 't': // Draws a quadratic Bézier curve(reflective control point)(relative)
+                    case 't': // Draws a quadratic Bezier curve(reflective control point)(relative)
                         reflectiveCtrlPointX = 0;
                         reflectiveCtrlPointY = 0;
                         if (previousCmd == 'q' || previousCmd == 't'
@@ -643,7 +643,7 @@ class PathParser {
                         currentX += val[k + 0];
                         currentY += val[k + 1];
                         break;
-                    case 'T': // Draws a quadratic Bézier curve (reflective control point)
+                    case 'T': // Draws a quadratic Bezier curve (reflective control point)
                         reflectiveCtrlPointX = currentX;
                         reflectiveCtrlPointY = currentY;
                         if (previousCmd == 'q' || previousCmd == 't'
@@ -702,16 +702,9 @@ class PathParser {
             current[5] = currentSegmentStartY;
         }
 
-        private static void drawArc(Path p,
-                                    float x0,
-                                    float y0,
-                                    float x1,
-                                    float y1,
-                                    float a,
-                                    float b,
-                                    float theta,
-                                    boolean isMoreThanHalf,
-                                    boolean isPositiveArc) {
+        private static void drawArc(Path p, float x0, float y0, float x1, float y1,
+                                    float a, float b, float theta,
+                                    boolean isMoreThanHalf, boolean isPositiveArc) {
 
             /* Convert rotation angle from degrees to radians */
             double thetaD = Math.toRadians(theta);
@@ -733,12 +726,12 @@ class PathParser {
             /* Solve for intersecting unit circles */
             double dsq = dx * dx + dy * dy;
             if (dsq == 0.0) {
-                Log.w(LOGTAG, " Points are coincident");
+//                Log.w(TAG, " Points are coincident");
                 return; /* Points are coincident */
             }
             double disc = 1.0 / dsq - 1.0 / 4.0;
             if (disc < 0.0) {
-                Log.w(LOGTAG, "Points are too far apart " + dsq);
+//                Log.w(TAG, "Points are too far apart " + dsq);
                 float adjust = (float) (Math.sqrt(dsq) / 1.99999);
                 drawArc(p, x0, y0, x1, y1, a * adjust,
                         b * adjust, theta, isMoreThanHalf, isPositiveArc);

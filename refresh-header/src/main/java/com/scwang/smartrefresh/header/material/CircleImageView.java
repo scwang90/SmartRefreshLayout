@@ -38,13 +38,13 @@ import android.widget.ImageView;
 @SuppressLint("ViewConstructor")
 public class CircleImageView extends ImageView {
 
-    private static final int KEY_SHADOW_COLOR = 0x1E000000;
-    private static final int FILL_SHADOW_COLOR = 0x3D000000;
+    protected static final int KEY_SHADOW_COLOR = 0x1E000000;
+    protected static final int FILL_SHADOW_COLOR = 0x3D000000;
     // PX
-    private static final float X_OFFSET = 0f;
-    private static final float Y_OFFSET = 1.75f;
-    private static final float SHADOW_RADIUS = 3.5f;
-    private static final int SHADOW_ELEVATION = 4;
+    protected static final float X_OFFSET = 0f;
+    protected static final float Y_OFFSET = 1.75f;
+    protected static final float SHADOW_RADIUS = 3.5f;
+    protected static final int SHADOW_ELEVATION = 4;
 
 //    private Animation.AnimationListener mListener;
     int mShadowRadius;
@@ -126,14 +126,14 @@ public class CircleImageView extends ImageView {
 //            setBackgroundColor(context.getResources().getColor(colorRes));
 //        }
 //    }
-
-    @Override
-    public void setBackgroundColor(@ColorInt int color) {
-        final View thisView = this;
-        if (thisView.getBackground() instanceof ShapeDrawable) {
-            ((ShapeDrawable) thisView.getBackground()).getPaint().setColor(color);
-        }
-    }
+//
+//    @Override
+//    public void setBackgroundColor(@ColorInt int color) {
+//        final View thisView = this;
+//        if (thisView.getBackground() instanceof ShapeDrawable) {
+//            ((ShapeDrawable) thisView.getBackground()).getPaint().setColor(color);
+//        }
+//    }
 
     private class OvalShadow extends OvalShape {
         private RadialGradient mRadialGradient;

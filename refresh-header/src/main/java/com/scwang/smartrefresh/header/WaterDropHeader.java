@@ -42,13 +42,13 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 public class WaterDropHeader extends InternalAbstract implements RefreshHeader {
 
     //<editor-fold desc="Field">
-    private static final float MAX_PROGRESS_ANGLE = 0.8f;
+    protected static final float MAX_PROGRESS_ANGLE = 0.8f;
 
-    private RefreshState mState;
-    private ImageView mImageView;
-    private WaterDropView mWaterDropView;
-    private ProgressDrawable mProgressDrawable;
-    private MaterialProgressDrawable mProgress;
+    protected RefreshState mState;
+    protected ImageView mImageView;
+    protected WaterDropView mWaterDropView;
+    protected ProgressDrawable mProgressDrawable;
+    protected MaterialProgressDrawable mProgress;
     //</editor-fold>
 
     //<editor-fold desc="ViewGroup">

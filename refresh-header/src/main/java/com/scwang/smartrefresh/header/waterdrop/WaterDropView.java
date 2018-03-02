@@ -22,15 +22,15 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
 @SuppressWarnings("unused")
 public class WaterDropView extends View {
 
-    private Circle topCircle;
-    private Circle bottomCircle;
+    protected Circle topCircle;
+    protected Circle bottomCircle;
 
-    private Path mPath;
-    private Paint mPaint;
-    private int mMaxCircleRadius;//圆半径最大值
-    private int mMinCircleRadius;//圆半径最小值
-    private static int STROKE_WIDTH = 2;//边线宽度
-    private final static int BACK_ANIM_DURATION = 180;
+    protected Path mPath;
+    protected Paint mPaint;
+    protected int mMaxCircleRadius;//圆半径最大值
+    protected int mMinCircleRadius;//圆半径最小值
+    protected static int STROKE_WIDTH = 2;//边线宽度
+    protected final static int BACK_ANIM_DURATION = 180;
 
     public WaterDropView(Context context) {
         super(context);
@@ -150,7 +150,8 @@ public class WaterDropView extends View {
      */
     private double getAngle() {
         if (bottomCircle.radius > topCircle.radius) {
-            throw new IllegalStateException("bottomCircle's radius must be less than the topCircle's");
+//            throw new IllegalStateException("bottomCircle's radius must be less than the topCircle's");
+            return 0;
         }
         return Math.asin((topCircle.radius - bottomCircle.radius) / (bottomCircle.y - topCircle.y));
     }
@@ -162,7 +163,7 @@ public class WaterDropView extends View {
      * 圆心距减速从最大值减到0(下圆Y从当前位置移动到上圆Y)。
      * @return Animator
      */
-    public Animator createAnimator() {
+    public ValueAnimator createAnimator() {
         ValueAnimator valueAnimator = ValueAnimator.ofFloat(1, 0.001f).setDuration(BACK_ANIM_DURATION);
         valueAnimator.setInterpolator(new DecelerateInterpolator());
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {

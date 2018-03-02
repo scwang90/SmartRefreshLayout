@@ -16,14 +16,14 @@ import android.view.animation.LinearInterpolator;
  * 旋转动画
  * Created by SCWANG on 2017/6/16.
  */
-
+@SuppressWarnings("WeakerAccess")
 public class ProgressDrawable extends PaintDrawable implements Animatable {
 
-    private int mWidth = 0;
-    private int mHeight = 0;
-    private int mProgressDegree = 0;
-    private ValueAnimator mValueAnimator;
-    private Path mPath = new Path();
+    protected int mWidth = 0;
+    protected int mHeight = 0;
+    protected int mProgressDegree = 0;
+    protected ValueAnimator mValueAnimator;
+    protected Path mPath = new Path();
 
     public ProgressDrawable() {
         mValueAnimator = ValueAnimator.ofInt(30, 3600);

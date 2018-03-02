@@ -42,9 +42,9 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
     /**
      * 落ちる前の回転の最大のAngle値
      */
-    private static final float MAX_PROGRESS_ROTATION_RATE = 0.8f;
+    protected static final float MAX_PROGRESS_ROTATION_RATE = 0.8f;
 
-    private enum VERTICAL_DRAG_THRESHOLD {
+    protected enum VERTICAL_DRAG_THRESHOLD {
         FIRST(0.1f), SECOND(0.16f + FIRST.val), THIRD(0.5f + FIRST.val);
 //        FIRST(0.2f), SECOND(0.26f + FIRST.val), THIRD(0.7f + FIRST.val);
         final float val;
@@ -54,11 +54,11 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
     }
 
     //<editor-fold desc="DropHeader">
-    private WaveView mWaveView;
-    private RefreshState mState;
-    private MaterialProgressDrawable mProgress;
-    private ProgressAnimationImageView mCircleView;
-    private float mLastFirstBounds;
+    protected WaveView mWaveView;
+    protected RefreshState mState;
+    protected MaterialProgressDrawable mProgress;
+    protected ProgressAnimationImageView mCircleView;
+    protected float mLastFirstBounds;
 
     public WaveSwipeHeader(Context context) {
         this(context, null);
@@ -348,12 +348,12 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
      *
      * @author jmatsu
      */
-    private class ProgressAnimationImageView extends ImageView {
+    protected class ProgressAnimationImageView extends ImageView {
 
         /**
          * AnimationのStartとEnd時にListenerにアレする
          */
-        private Animation.AnimationListener mListener;
+        protected Animation.AnimationListener mListener;
 
         /**
          * {@link AnimationImageView#mListener} のセット

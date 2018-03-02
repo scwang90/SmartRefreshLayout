@@ -27,8 +27,8 @@ import com.scwang.smartrefresh.layout.util.CoordinatorLayoutListener;
 import com.scwang.smartrefresh.layout.util.DesignUtil;
 
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.Queue;
-import java.util.concurrent.LinkedBlockingQueue;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static com.scwang.smartrefresh.layout.util.DesignUtil.isScrollableView;
@@ -93,7 +93,7 @@ public class RefreshContentWrapper implements RefreshContent {
 
     protected View findScrollableViewInternal(View content, boolean selfable) {
         View scrollableView = null;
-        Queue<View> views = new LinkedBlockingQueue<>(Collections.singletonList(content));
+        Queue<View> views = new LinkedList<>(Collections.singletonList(content));
         while (!views.isEmpty() && scrollableView == null) {
             View view = views.poll();
             if (view != null) {

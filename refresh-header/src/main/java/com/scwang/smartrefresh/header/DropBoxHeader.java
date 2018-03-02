@@ -36,20 +36,20 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
 public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
 
     //<editor-fold desc="Field">
-    private Path mPath;
-    private Paint mPaint;
-    private BoxBody mBoxBody;
-    private int mAccentColor;
-    private int mHeaderHeight;
-    private boolean mDropOutOverFlow;
-    private Drawable mDrawable1;
-    private Drawable mDrawable2;
-    private Drawable mDrawable3;
-    private float mDropOutPercent;
-    private float mReboundPercent;
-    private ValueAnimator mReboundAnimator;
-    private ValueAnimator mDropOutAnimator;
-    private RefreshState mState;
+    protected Path mPath;
+    protected Paint mPaint;
+    protected BoxBody mBoxBody;
+    protected int mAccentColor;
+    protected int mHeaderHeight;
+    protected boolean mDropOutOverFlow;
+    protected Drawable mDrawable1;
+    protected Drawable mDrawable2;
+    protected Drawable mDrawable3;
+    protected float mDropOutPercent;
+    protected float mReboundPercent;
+    protected ValueAnimator mReboundAnimator;
+    protected ValueAnimator mDropOutAnimator;
+    protected RefreshState mState;
     //</editor-fold>
 
     //<editor-fold desc="View">
@@ -418,15 +418,15 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
 
     private static class BoxBody {
 
-        private int boxCenterX;
-        private int boxCenterY;
-        private int boxBottom;
-        private int boxTop;
-        private int boxLeft;
-        private int boxCenterTop;
-        private int boxCenterBottom;
-        private int boxRight;
-        private int boxSideLength;
+        int boxCenterX;
+        int boxCenterY;
+        int boxBottom;
+        int boxTop;
+        int boxLeft;
+        int boxCenterTop;
+        int boxCenterBottom;
+        int boxRight;
+        int boxSideLength;
 
         BoxBody measure(int width, int height, int sideLength, int margin) {
             boxSideLength = sideLength;

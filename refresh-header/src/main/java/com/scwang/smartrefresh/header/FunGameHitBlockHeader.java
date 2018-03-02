@@ -28,32 +28,32 @@ public class FunGameHitBlockHeader extends FunGameView {
     /**
      * 默认矩形块竖向排列的数目
      */
-    private static final int BLOCK_VERTICAL_NUM = 5;
+    protected static final int BLOCK_VERTICAL_NUM = 5;
 
     /**
      * 默认矩形块横向排列的数目
      */
-    private static final int BLOCK_HORIZONTAL_NUM = 3;
+    protected static final int BLOCK_HORIZONTAL_NUM = 3;
 
     /**
      * 矩形块的宽度占屏幕宽度比率
      */
-    private static final float BLOCK_WIDTH_RATIO = .01806f;
+    protected static final float BLOCK_WIDTH_RATIO = .01806f;
 
     /**
      * 挡板所在位置占屏幕宽度的比率
      */
-    private static final float RACKET_POSITION_RATIO = .8f;
+    protected static final float RACKET_POSITION_RATIO = .8f;
 
     /**
      * 矩形块所在位置占屏幕宽度的比率
      */
-    private static final float BLOCK_POSITION_RATIO = .08f;
+    protected static final float BLOCK_POSITION_RATIO = .08f;
 
     /**
      * 小球默认其实弹射角度
      */
-    private static final int DEFAULT_ANGLE = 30;
+    protected static final int DEFAULT_ANGLE = 30;
 
     /**
      * 分割线默认宽度大小
@@ -63,33 +63,33 @@ public class FunGameHitBlockHeader extends FunGameView {
     /**
      * 小球移动速度
      */
-    private static final int SPEED = 3;
+    protected static final int SPEED = 3;
 
     /**
      * 矩形砖块的高度、宽度
      */
-    private float blockHeight, blockWidth;
+    protected float blockHeight, blockWidth;
 
     /**
      * 小球半径
      */
-    private float BALL_RADIUS;
+    protected float BALL_RADIUS;
 
-    private Paint blockPaint;
+    protected Paint blockPaint;
 
-    private float blockLeft, racketLeft;
+    protected float blockLeft, racketLeft;
 
-    private float cx, cy;
+    protected float cx, cy;
 
-    private List<Point> pointList;
+    protected List<Point> pointList;
 
-    private boolean isLeft;
+    protected boolean isLeft;
 
-    private int angle;
+    protected int angle;
 
-    private int blockHorizontalNum;
+    protected int blockHorizontalNum;
 
-    private int speed;
+    protected int speed;
     //</editor-fold>
 
     //<editor-fold desc="初始方法">
@@ -152,7 +152,7 @@ public class FunGameHitBlockHeader extends FunGameView {
      * @param y 小球当前坐标Y值
      * @return 小球位于挡板Y值区域范围内：true，反之：false
      */
-    private boolean checkTouchRacket(float y) {
+    protected boolean checkTouchRacket(float y) {
         boolean flag = false;
         float diffVal = y - controllerPosition;
         if (diffVal >= 0 && diffVal <= controllerSize) { // 小球位于挡板Y值区域范围内
@@ -168,7 +168,7 @@ public class FunGameHitBlockHeader extends FunGameView {
      * @param y 小球坐标Y值
      * @return 撞击到：true，反之：false
      */
-    private boolean checkTouchBlock(float x, float y) {
+    protected boolean checkTouchBlock(float x, float y) {
         int columnX = (int) ((x - blockLeft - BALL_RADIUS - speed) / blockWidth);
         columnX = columnX == blockHorizontalNum ? columnX - 1 : columnX;
         int rowY = (int) (y / blockHeight);
@@ -210,7 +210,7 @@ public class FunGameHitBlockHeader extends FunGameView {
      *
      * @param canvas 默认画布
      */
-    private void drawRacket(Canvas canvas) {
+    protected void drawRacket(Canvas canvas) {
         mPaint.setColor(rModelColor);
         canvas.drawRect(racketLeft, controllerPosition, racketLeft + blockWidth, controllerPosition + controllerSize, mPaint);
     }
@@ -221,7 +221,7 @@ public class FunGameHitBlockHeader extends FunGameView {
      * @param canvas 默认画布
      * @param width  视图宽度
      */
-    private void drawBallPath(Canvas canvas, int width) {
+    protected void drawBallPath(Canvas canvas, int width) {
         mPaint.setColor(mModelColor);
 
         if (cx <= blockLeft + blockHorizontalNum * blockWidth + (blockHorizontalNum - 1) * DIVIDING_LINE_SIZE + BALL_RADIUS) { // 小球进入到色块区域
@@ -270,7 +270,7 @@ public class FunGameHitBlockHeader extends FunGameView {
      *
      * @param canvas 默认画布
      */
-    private void drawColorBlock(Canvas canvas) {
+    protected void drawColorBlock(Canvas canvas) {
         float left, top;
         int column, row;
         for (int i = 0; i < blockHorizontalNum * BLOCK_VERTICAL_NUM; i++) {

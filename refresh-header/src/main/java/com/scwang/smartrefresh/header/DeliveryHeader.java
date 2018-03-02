@@ -27,15 +27,15 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
 public class DeliveryHeader extends InternalAbstract implements RefreshHeader {
 
     //<editor-fold desc="Field">
-    private int mCloudX1;
-    private int mCloudX2;
-    private int mCloudX3;
-    private int mHeaderHeight;
-    private float mAppreciation;
-    private RefreshState mState;
-    private Drawable mCloudDrawable;
-    private Drawable mUmbrellaDrawable;
-    private Drawable mBoxDrawable;
+    protected int mCloudX1;
+    protected int mCloudX2;
+    protected int mCloudX3;
+    protected int mHeaderHeight;
+    protected float mAppreciation;
+    protected RefreshState mState;
+    protected Drawable mCloudDrawable;
+    protected Drawable mUmbrellaDrawable;
+    protected Drawable mBoxDrawable;
     //</editor-fold>
 
     //<editor-fold desc="View">

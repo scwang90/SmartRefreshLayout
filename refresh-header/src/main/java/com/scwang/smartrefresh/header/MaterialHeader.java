@@ -38,27 +38,27 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
     // Maps to ProgressBar default style
     public static final int SIZE_DEFAULT = 1;
 
-    private static final int CIRCLE_BG_LIGHT = 0xFFFAFAFA;
-    private static final float MAX_PROGRESS_ANGLE = .8f;
+    protected static final int CIRCLE_BG_LIGHT = 0xFFFAFAFA;
+    protected static final float MAX_PROGRESS_ANGLE = .8f;
     @VisibleForTesting
-    private static final int CIRCLE_DIAMETER = 40;
+    protected static final int CIRCLE_DIAMETER = 40;
     @VisibleForTesting
-    private static final int CIRCLE_DIAMETER_LARGE = 56;
+    protected static final int CIRCLE_DIAMETER_LARGE = 56;
 
-    private boolean mFinished;
-    private int mCircleDiameter;
-    private ImageView mCircleView;
-    private MaterialProgressDrawable mProgress;
+    protected boolean mFinished;
+    protected int mCircleDiameter;
+    protected ImageView mCircleView;
+    protected MaterialProgressDrawable mProgress;
 
     /**
      * 贝塞尔背景
      */
-    private int mWaveHeight;
-    private int mHeadHeight;
-    private Path mBezierPath;
-    private Paint mBezierPaint;
-    private boolean mShowBezierWave = false;
-    private RefreshState mState;
+    protected int mWaveHeight;
+    protected int mHeadHeight;
+    protected Path mBezierPath;
+    protected Paint mBezierPaint;
+    protected boolean mShowBezierWave = false;
+    protected RefreshState mState;
 
     //<editor-fold desc="MaterialHeader">
     public MaterialHeader(Context context) {
@@ -109,7 +109,8 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
     @Override
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.setMeasuredDimension(getSize(widthMeasureSpec), getSize(heightMeasureSpec));
-        mCircleView.measure(MeasureSpec.makeMeasureSpec(mCircleDiameter, MeasureSpec.EXACTLY),
+        final View circleView = mCircleView;
+        circleView.measure(MeasureSpec.makeMeasureSpec(mCircleDiameter, MeasureSpec.EXACTLY),
                 MeasureSpec.makeMeasureSpec(mCircleDiameter, MeasureSpec.EXACTLY));
 //        setMeasuredDimension(resolveSize(getSuggestedMinimumWidth(), widthMeasureSpec),
 //                resolveSize(getSuggestedMinimumHeight(), heightMeasureSpec));

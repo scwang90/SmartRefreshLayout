@@ -30,14 +30,14 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
 
-    private View mFlyView;
-    private Animator mFlyAnimator;
-    private RefreshLayout mRefreshLayout;
-    private RefreshKernel mRefreshKernel;
-    private MountainSceneView mSceneView;
-    private int mOffset = 0;
-    private float mCurrentPercent;
-    private boolean mIsRefreshing = false;
+    protected View mFlyView;
+    protected AnimatorSet mFlyAnimator;
+    protected RefreshLayout mRefreshLayout;
+    protected RefreshKernel mRefreshKernel;
+    protected MountainSceneView mSceneView;
+    protected int mOffset = 0;
+    protected float mCurrentPercent;
+    protected boolean mIsRefreshing = false;
 
     //<editor-fold desc="View">
     public FlyRefreshHeader(Context context) {
@@ -278,9 +278,8 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
             }
         });
 
-        AnimatorSet flyAnimator = new AnimatorSet();
-        flyAnimator.playSequentially(flyDownAnim, flyInAnim);
-        mFlyAnimator = flyAnimator;
+        mFlyAnimator = new AnimatorSet();
+        mFlyAnimator.playSequentially(flyDownAnim, flyInAnim);
         mFlyAnimator.start();
     }
     //</editor-fold>

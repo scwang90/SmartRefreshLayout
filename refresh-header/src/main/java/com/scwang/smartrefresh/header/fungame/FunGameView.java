@@ -45,15 +45,15 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
      */
     protected float DIVIDING_LINE_SIZE = 1.f;
 
-    private View mShadowView;
-    private TextView mMaskViewTop;
-    private TextView mMaskViewBottom;
+    protected View mShadowView;
+    protected TextView mMaskViewTop;
+    protected TextView mMaskViewBottom;
 
     public String mMaskTextBottom;
     public String mMaskTextTopPull;
     public String mMaskTextTopRelease;
 
-    private int mHalfHeaderHeight;
+    protected int mHalfHeaderHeight;
 
     //</editor-fold>
 
@@ -161,7 +161,7 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
         mTextLoadingFailed = context.getString(R.string.fgh_text_loading_failed);
 
         mBackColor = ta.getColor(R.styleable.FunGameView_fghBackColor, 0);
-        lModelColor = ta.getColor(R.styleable.FunGameView_fghLeftColor, Color.rgb(0, 0, 0));
+        lModelColor = ta.getColor(R.styleable.FunGameView_fghLeftColor, Color.BLACK);
         mModelColor = ta.getColor(R.styleable.FunGameView_fghMiddleColor, Color.BLACK);
         rModelColor = ta.getColor(R.styleable.FunGameView_fghRightColor, 0xFFA5A5A5);
 
@@ -183,12 +183,14 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
     }
 
     protected TextView createMaskView(Context context, String text, int textSize, int gravity) {
-        TextView maskView = new TextView(context);
+        final TextView maskView = new TextView(context);
         maskView.setTextColor(Color.BLACK);
-        maskView.setBackgroundColor(Color.WHITE);
         maskView.setGravity(gravity | Gravity.CENTER_HORIZONTAL);
         maskView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
         maskView.setText(text);
+        //noinspection UnnecessaryLocalVariable
+        final View view = maskView;
+        view.setBackgroundColor(Color.WHITE);
         return maskView;
     }
 

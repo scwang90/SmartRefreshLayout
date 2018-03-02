@@ -9,6 +9,7 @@ import android.graphics.Path;
 import android.graphics.RectF;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
+import android.support.v4.graphics.ColorUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
@@ -29,27 +30,27 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
 
     //<editor-fold desc="Field">
 
-    private Path mPath;
-    private Paint mBackPaint;
-    private Paint mFrontPaint;
-    private Paint mOuterPaint;
-    private float mWaveHeight;
-    private float mHeadHeight;
-    private float mSpringRatio;
-    private float mFinishRatio;
+    protected Path mPath;
+    protected Paint mBackPaint;
+    protected Paint mFrontPaint;
+    protected Paint mOuterPaint;
+    protected float mWaveHeight;
+    protected float mHeadHeight;
+    protected float mSpringRatio;
+    protected float mFinishRatio;
 
-    private float mBollY;//弹出球体的Y坐标
-    private boolean mShowBoll;//是否显示中心球体
-    private boolean mShowBollTail;//是否显示球体拖拽的尾巴
-    private boolean mShowOuter;
-    private float mBollRadius;//球体半径
+    protected float mBollY;//弹出球体的Y坐标
+    protected boolean mShowBoll;//是否显示中心球体
+    protected boolean mShowBollTail;//是否显示球体拖拽的尾巴
+    protected boolean mShowOuter;
+    protected float mBollRadius;//球体半径
 
-    private int mRefreshStop = 90;
-    private int mRefreshStart = 90;
-    private boolean mOuterIsStart = true;
+    protected int mRefreshStop = 90;
+    protected int mRefreshStart = 90;
+    protected boolean mOuterIsStart = true;
 
-    private static final int TARGET_DEGREE = 270;
-    private boolean mWavePulling = false;
+    protected static final int TARGET_DEGREE = 270;
+    protected boolean mWavePulling = false;
 
     //</editor-fold>
 
@@ -195,8 +196,7 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
             if (mFinishRatio < 0.3) {
                 canvas.drawCircle(viewWidth / 2, mBollY, mBollRadius, mFrontPaint);
                 int outerR = (int) (mBollRadius + mOuterPaint.getStrokeWidth() * 2 * (1+mFinishRatio / 0.3f));
-                int afterColor = Color.argb((int) (0xff * (1 - mFinishRatio / 0.3f)), Color.red(beforeColor),
-                        Color.green(beforeColor), Color.blue(beforeColor));
+                int afterColor = ColorUtils.setAlphaComponent(beforeColor, (int) (0xff * (1 - mFinishRatio / 0.3f)));
                 mOuterPaint.setColor(afterColor);
                 canvas.drawArc(new RectF(viewWidth / 2 - outerR, mBollY - outerR, viewWidth / 2 + outerR, mBollY + outerR),
                         0, 360, false, mOuterPaint);
