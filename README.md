@@ -2,12 +2,9 @@
 
 [![License](https://img.shields.io/badge/License%20-Apache%202-337ab7.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Arsenal](https://img.shields.io/badge/Arsenal%20-%20SmartRefresh-4cae4c.svg)](https://android-arsenal.com/details/1/6001)
-[![Jcenter](https://img.shields.io/badge/%20Jcenter%20-1.0.5.1-5bc0de.svg)](https://bintray.com/scwang90/maven/SmartRefreshLayout/_latestVersion)
+[![Jcenter](https://img.shields.io/badge/%20Jcenter%20-1.1.0-5bc0de.svg)](https://bintray.com/scwang90/maven/SmartRefreshLayout/_latestVersion)
 [![MinSdk](https://img.shields.io/badge/%20MinSdk%20-%2012%2B%20-f0ad4e.svg)](https://android-arsenal.com/api?level=12)
-[![Methods](https://img.shields.io/badge/Methods%20%7C%20Size%20-%201362%20%7C%20138%20KB-d9534f.svg)](http://www.methodscount.com/?lib=com.scwang.smartrefresh%3ASmartRefreshLayout%3A1.0.4)
-
-<!-- [![Platform](https://img.shields.io/badge/Platform-Android-f0ad4e.svg)](https://www.android.com) -->
-<!-- [![Author](https://img.shields.io/badge/Author-scwang90-11bbff.svg)](https://github.com/scwang90) -->
+[![Methods](https://img.shields.io/badge/Methods%20%7C%20Size%20-%20901%20%7C%20122%20KB-d9534f.svg)](http://www.methodscount.com/?lib=com.scwang.smartrefresh%3ASmartRefreshLayout%3A1.0.4)
 
 ## [English](https://github.com/scwang90/SmartRefreshLayout/blob/master/README_EN.md) | 中文
 
@@ -54,7 +51,7 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
 |![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_practive_repast.gif)|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_practive_profile.gif)|
 
 #### 样式演示 Style
-|Delivery|Dropbox|
+|Delivery|DropBox|
 |:---:|:---:|
 |![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_Delivery.gif)|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_Dropbox.gif)|
 |[Refresh-your-delivery](https://dribbble.com/shots/2753803-Refresh-your-delivery)|[Dropbox-Refresh](https://dribbble.com/shots/3470499-Dropbox-Refresh)|
@@ -102,12 +99,12 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
 ## 简单用例
 #### 1.在 build.gradle 中添加依赖
 ```
-//1.0.5 为 1.0.4 与 1.1.0 的过度版，其中API改动过大，老用户升级需谨慎
-compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.5.1'
-compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.5.1'//没有使用特殊Header，可以不加这行
+//1.1.0 API改动过大，老用户升级需谨慎
+compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-1'
+compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-1'//没有使用特殊Header，可以不加这行
 compile 'com.android.support:appcompat-v7:25.3.1'//版本随意（必须）
 
-//1.0.4 当1.0.5出现问题可以回退到1.0.4-7
+//1.0.4 当1.1.0出现问题可以回退到1.0.4-7
 compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-7'
 compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4-7'//没有使用特殊Header，可以不加这行
 compile 'com.android.support:appcompat-v7:25.3.1'//版本随意（必须）
