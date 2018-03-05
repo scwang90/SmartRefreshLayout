@@ -17,7 +17,7 @@ import android.view.animation.LinearInterpolator;
  * Created by SCWANG on 2017/6/16.
  */
 @SuppressWarnings("WeakerAccess")
-public class ProgressDrawable extends PaintDrawable implements Animatable {
+public class ProgressDrawable extends PaintDrawable implements Animatable , ValueAnimator.AnimatorUpdateListener{
 
     protected int mWidth = 0;
     protected int mHeight = 0;
@@ -27,19 +27,18 @@ public class ProgressDrawable extends PaintDrawable implements Animatable {
 
     public ProgressDrawable() {
         mValueAnimator = ValueAnimator.ofInt(30, 3600);
-        mValueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                int value = (int) animation.getAnimatedValue();
-                mProgressDegree = 30 * (value / 30);
-                final Drawable drawable = ProgressDrawable.this;
-                drawable.invalidateSelf();
-            }
-        });
         mValueAnimator.setDuration(10000);
         mValueAnimator.setInterpolator(new LinearInterpolator());
         mValueAnimator.setRepeatCount(ValueAnimator.INFINITE);
         mValueAnimator.setRepeatMode(ValueAnimator.RESTART);
+    }
+
+    @Override
+    public void onAnimationUpdate(ValueAnimator animation) {
+        int value = (int) animation.getAnimatedValue();
+        mProgressDegree = 30 * (value / 30);
+        final Drawable drawable = ProgressDrawable.this;
+        drawable.invalidateSelf();
     }
 
     //<editor-fold desc="Drawable">
@@ -75,6 +74,7 @@ public class ProgressDrawable extends PaintDrawable implements Animatable {
     @Override
     public void start() {
         if (!mValueAnimator.isRunning()) {
+            mValueAnimator.addUpdateListener(this);
             mValueAnimator.start();
         }
     }
@@ -82,6 +82,8 @@ public class ProgressDrawable extends PaintDrawable implements Animatable {
     @Override
     public void stop() {
         if (mValueAnimator.isRunning()) {
+            mValueAnimator.removeAllListeners();
+            mValueAnimator.removeAllUpdateListeners();
             mValueAnimator.cancel();
         }
     }

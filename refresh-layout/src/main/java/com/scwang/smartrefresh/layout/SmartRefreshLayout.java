@@ -58,7 +58,6 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnStateChangedListener;
 import com.scwang.smartrefresh.layout.util.DelayedRunnable;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
-import com.scwang.smartrefresh.layout.util.DesignUtil;
 import com.scwang.smartrefresh.layout.util.ScrollBoundaryUtil;
 import com.scwang.smartrefresh.layout.util.ViscousFluidInterpolator;
 
@@ -73,7 +72,9 @@ import static android.view.View.MeasureSpec.makeMeasureSpec;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static com.scwang.smartrefresh.layout.util.DensityUtil.dp2px;
-import static com.scwang.smartrefresh.layout.util.DesignUtil.isScrollableView;
+import static com.scwang.smartrefresh.layout.util.SmartUtil.fling;
+import static com.scwang.smartrefresh.layout.util.SmartUtil.getColor;
+import static com.scwang.smartrefresh.layout.util.SmartUtil.isScrollableView;
 import static java.lang.System.currentTimeMillis;
 
 /**
@@ -271,6 +272,10 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         mEnableOverScrollDrag = ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnableOverScrollDrag, mEnableOverScrollDrag);
         mFixedHeaderViewId = ta.getResourceId(R.styleable.SmartRefreshLayout_srlFixedHeaderViewId, View.NO_ID);
         mFixedFooterViewId = ta.getResourceId(R.styleable.SmartRefreshLayout_srlFixedFooterViewId, View.NO_ID);
+
+        if (mEnablePureScrollMode && !ta.hasValue(R.styleable.SmartRefreshLayout_srlEnableOverScrollDrag)) {
+            mEnableOverScrollDrag = true;
+        }
 
         mManualLoadMore = ta.hasValue(R.styleable.SmartRefreshLayout_srlEnableLoadMore);
         mManualNestedScrolling = ta.hasValue(R.styleable.SmartRefreshLayout_srlEnableNestedScrolling);
@@ -1260,7 +1265,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     } else {
                         animationRunnable = null;
                         mKernel.moveSpinner(0, true);
-                        mRefreshContent.fling((int) -mVelocity);
+                        fling(mRefreshContent.getScrollableView(), (int) -mVelocity);
                         if (mFooterLocked && velocity > 0) {
                             mFooterLocked = false;
                         }
@@ -2285,7 +2290,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         final View thisView = this;
         final int[] colors = new int[primaryColorId.length];
         for (int i = 0; i < primaryColorId.length; i++) {
-            colors[i] = DesignUtil.getColor(thisView.getContext(), primaryColorId[i]);
+            colors[i] = getColor(thisView.getContext(), primaryColorId[i]);
         }
         setPrimaryColors(colors);
         return this;

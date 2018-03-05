@@ -356,8 +356,6 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
         protected Animation.AnimationListener mListener;
 
         /**
-         * {@link AnimationImageView#mListener} のセット
-         *
          * @param listener {@link android.view.animation.Animation.AnimationListener}
          */
         public void setAnimationListener(Animation.AnimationListener listener) {

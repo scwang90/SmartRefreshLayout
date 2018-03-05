@@ -37,7 +37,6 @@ public abstract class InternalAbstract extends RelativeLayout implements Refresh
         super(context, attrs, defStyleAttr);
     }
 
-
     @NonNull
     public View getView() {
         return mWrapperView == null ? this : mWrapperView;

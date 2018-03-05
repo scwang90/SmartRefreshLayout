@@ -28,6 +28,8 @@ import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 import com.scwang.smartrefresh.layout.util.DesignUtil;
 
+import static com.scwang.smartrefresh.layout.util.SmartUtil.getColor;
+
 /**
  * 贝塞尔曲线类雷达风格刷新组件
  * Created by lcodecore on 2016/10/2.
@@ -359,13 +361,13 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
 
     public BezierRadarHeader setPrimaryColorId(@ColorRes int colorId) {
         final View thisView = this;
-        setPrimaryColor(DesignUtil.getColor(thisView.getContext(), colorId));
+        setPrimaryColor(getColor(thisView.getContext(), colorId));
         return this;
     }
 
     public BezierRadarHeader setAccentColorId(@ColorRes int colorId) {
         final View thisView = this;
-        setAccentColor(DesignUtil.getColor(thisView.getContext(), colorId));
+        setAccentColor(getColor(thisView.getContext(), colorId));
         return this;
     }
 

@@ -13,7 +13,6 @@ import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.util.StatusBarUtil;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
@@ -60,13 +59,16 @@ public class WeiboPracticeActivity extends AppCompatActivity {
             }
         });
 
-        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+        refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                refreshLayout.finishRefresh(3000);
+            }
+
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 refreshLayout.finishLoadMore(2000);
             }
-        });
-        refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
             @Override
             public void onHeaderMoving(RefreshHeader header, boolean isDragging, float percent, int offset, int headerHeight, int extendHeight) {
                 mOffset = offset / 2;

@@ -3,27 +3,22 @@ package com.scwang.smartrefresh.layout.impl;
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.graphics.PointF;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.view.NestedScrollingChild;
 import android.support.v4.view.NestedScrollingParent;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.Space;
-import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.AbsListView;
 import android.widget.FrameLayout;
-import android.widget.ScrollView;
 
 import com.scwang.smartrefresh.layout.api.RefreshContent;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.ScrollBoundaryDecider;
-import com.scwang.smartrefresh.layout.util.CoordinatorLayoutListener;
+import com.scwang.smartrefresh.layout.listener.CoordinatorLayoutListener;
 import com.scwang.smartrefresh.layout.util.DesignUtil;
 
 import java.util.Collections;
@@ -31,19 +26,19 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static com.scwang.smartrefresh.layout.util.DesignUtil.isScrollableView;
-import static com.scwang.smartrefresh.layout.util.DesignUtil.measureViewHeight;
-import static com.scwang.smartrefresh.layout.util.DesignUtil.scrollListBy;
 import static com.scwang.smartrefresh.layout.util.ScrollBoundaryUtil.canScrollDown;
 import static com.scwang.smartrefresh.layout.util.ScrollBoundaryUtil.canScrollUp;
 import static com.scwang.smartrefresh.layout.util.ScrollBoundaryUtil.isTransformedTouchPointInView;
+import static com.scwang.smartrefresh.layout.util.SmartUtil.isScrollableView;
+import static com.scwang.smartrefresh.layout.util.SmartUtil.measureViewHeight;
+import static com.scwang.smartrefresh.layout.util.SmartUtil.scrollListBy;
 
 /**
  * 刷新内容包装
  * Created by SCWANG on 2017/5/26.
  */
 @SuppressWarnings("WeakerAccess")
-public class RefreshContentWrapper implements RefreshContent {
+public class RefreshContentWrapper implements RefreshContent , CoordinatorLayoutListener, AnimatorUpdateListener {
 
 //    protected int mHeaderHeight = Integer.MAX_VALUE;
 //    protected int mFooterHeight = mHeaderHeight - 1;
@@ -52,6 +47,7 @@ public class RefreshContentWrapper implements RefreshContent {
     protected View mScrollableView;
     protected View mFixedHeader;
     protected View mFixedFooter;
+    protected int mLastSpinner = 0;
     protected boolean mEnableRefresh = true;
     protected boolean mEnableLoadMore = true;
 //    protected MotionEvent mMotionEvent;
@@ -64,7 +60,6 @@ public class RefreshContentWrapper implements RefreshContent {
     //<editor-fold desc="findScrollableView">
     protected void findScrollableView(View content, RefreshKernel kernel) {
         View scrollableView = null;
-        CoordinatorLayoutListener listener = null;
         boolean isInEditMode = mContentView.isInEditMode();
         while (scrollableView == null || (scrollableView instanceof NestedScrollingParent
                 && !(scrollableView instanceof NestedScrollingChild))) {
@@ -73,22 +68,19 @@ public class RefreshContentWrapper implements RefreshContent {
                 break;
             }
             if (!isInEditMode) {
-                if (listener == null) {
-                    listener = new CoordinatorLayoutListener() {
-                        @Override
-                        public void update(boolean enableRefresh, boolean enableLoadMore) {
-                            mEnableRefresh = enableRefresh;
-                            mEnableLoadMore = enableLoadMore;
-                        }
-                    };
-                }
-                DesignUtil.checkCoordinatorLayout(content, kernel, listener);
+                DesignUtil.checkCoordinatorLayout(content, kernel, this);
             }
             scrollableView = content;
         }
         if (scrollableView != null) {
             mScrollableView = scrollableView;
         }
+    }
+
+    @Override
+    public void onCoordinatorUpdate(boolean enableRefresh, boolean enableLoadMore) {
+        mEnableRefresh = enableRefresh;
+        mEnableLoadMore = enableLoadMore;
     }
 
     protected View findScrollableViewInternal(View content, boolean selfable) {
@@ -190,23 +182,6 @@ public class RefreshContentWrapper implements RefreshContent {
 //    }
 
     @Override
-    public void fling(int velocity) {
-        if (mScrollableView instanceof ScrollView) {
-            ((ScrollView) mScrollableView).fling(velocity);
-        } else if (mScrollableView instanceof AbsListView) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                ((AbsListView) mScrollableView).fling(velocity);
-            }
-        } else if (mScrollableView instanceof WebView) {
-            ((WebView) mScrollableView).flingScroll(0, velocity);
-        } else if (mScrollableView instanceof NestedScrollView) {
-            ((NestedScrollView) mScrollableView).fling(velocity);
-        } else if (mScrollableView instanceof RecyclerView) {
-            ((RecyclerView) mScrollableView).fling(0, velocity);
-        }
-    }
-
-    @Override
     public void setUpComponent(RefreshKernel kernel, View fixedHeader, View fixedFooter) {
         findScrollableView(mContentView, kernel);
 
@@ -269,26 +244,26 @@ public class RefreshContentWrapper implements RefreshContent {
     public AnimatorUpdateListener scrollContentWhenFinished(final int spinner) {
         if (mScrollableView != null && spinner != 0) {
             if ((spinner < 0 && canScrollDown(mScrollableView)) || (spinner > 0 && canScrollUp(mScrollableView))) {
-                return new AnimatorUpdateListener() {
-                    int lastValue = spinner;
-                    @Override
-                    public void onAnimationUpdate(ValueAnimator animation) {
-                        int value = (int) animation.getAnimatedValue();
-                        try {
-                            if (mScrollableView instanceof AbsListView) {
-                                scrollListBy((AbsListView) mScrollableView, value - lastValue);
-                            } else {
-                                mScrollableView.scrollBy(0, value - lastValue);
-                            }
-                        } catch (Throwable ignored) {
-                            //根据用户反馈，此处可能会有BUG
-                        }
-                        lastValue = value;
-                    }
-                };
+                mLastSpinner = spinner;
+                return this;
             }
         }
         return null;
+    }
+
+    @Override
+    public void onAnimationUpdate(ValueAnimator animation) {
+        int value = (int) animation.getAnimatedValue();
+        try {
+            if (mScrollableView instanceof AbsListView) {
+                scrollListBy((AbsListView) mScrollableView, value - mLastSpinner);
+            } else {
+                mScrollableView.scrollBy(0, value - mLastSpinner);
+            }
+        } catch (Throwable ignored) {
+            //根据用户反馈，此处可能会有BUG
+        }
+        mLastSpinner = value;
     }
     //</editor-fold>
 

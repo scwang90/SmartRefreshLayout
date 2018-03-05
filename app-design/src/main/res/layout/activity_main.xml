@@ -6,9 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorAccent"
     app:srlAccentColor="@android:color/white"
     app:srlPrimaryColor="@color/colorPrimary"
-    android:background="@color/colorAccent"
     tools:context="com.app_design.MainActivity">
 
     <com.scwang.smartrefresh.layout.header.FalsifyHeader
@@ -24,6 +24,7 @@
 
     <com.scwang.smartrefresh.layout.footer.ClassicsFooter
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        app:srlClassicsSpinnerStyle="FixedBehind"/>
 
 </com.scwang.smartrefresh.layout.SmartRefreshLayout>

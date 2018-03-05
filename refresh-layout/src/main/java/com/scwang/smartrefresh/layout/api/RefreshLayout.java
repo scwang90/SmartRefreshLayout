@@ -436,13 +436,13 @@ public interface RefreshLayout {
 
     /**
      * 获取实体布局视图
-     * @return RefreshLayout
+     * @return ViewGroup
      */
     ViewGroup getLayout();
 
     /**
      * 自动刷新
-     * @return RefreshLayout
+     * @return 是否成功（状态不符合会失败）
      */
     boolean autoRefresh();
 
@@ -458,13 +458,13 @@ public interface RefreshLayout {
      * @param delayed 开始延时
      * @param duration 拖拽动画持续时间
      * @param dragRate 拉拽的高度比率（要求 ≥ 1 ）
-     * @return RefreshLayout
+     * @return 是否成功（状态不符合会失败）
      */
     boolean autoRefresh(int delayed, int duration, float dragRate);
 
     /**
      * 自动加载
-     * @return RefreshLayout
+     * @return 是否成功（状态不符合会失败）
      */
     boolean autoLoadMore();
 
@@ -480,19 +480,17 @@ public interface RefreshLayout {
      * @param delayed 开始延时
      * @param duration 拖拽动画持续时间
      * @param dragRate 拉拽的高度比率（要求 ≥ 1 ）
-     * @return RefreshLayout
+     * @return 是否成功（状态不符合会失败）
      */
     boolean autoLoadMore(int delayed, int duration, float dragRate);
 
     /**
      * 是否启用下拉刷新
-     * @return RefreshLayout
      */
     boolean isEnableRefresh();
 
     /**
      * 是否启用加载更多
-     * @return RefreshLayout
      */
     boolean isEnableLoadMore();
 

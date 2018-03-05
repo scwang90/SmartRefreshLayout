@@ -35,16 +35,16 @@ dependencies {
 //    compile project(':refresh-layout')
 
     compile ('com.android.support:design:25.3.1') {
-//        exclude group: 'com.andr oid.support'
+//        exclude group: 'com.android.support'
     }
 
-    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.5'
-    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.5'
+    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-1'
+    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-1'
 //    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-7'
 //    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4-7'
 //    compile 'com.android.support:design:25.3.1'
-//    compile 'com.android.support:appcompat-v7:22.1.0'
-//    compile 'com.android.support:recyclerview-v7:22.1.0'
+    compile 'com.android.support:appcompat-v7:25.3.0'
+    compile 'com.android.support:recyclerview-v7:25.3.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
 }

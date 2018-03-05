@@ -172,7 +172,6 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
         updateView.setId(ID_TEXT_UPDATE);
         updateView.setVisibility(mEnableLastTime ? VISIBLE : GONE);
         centerLayout.addView(updateView, lpUpdateText);
-        mTitleText.setTextColor(0xff666666);
         mTitleText.setText(thisView.isInEditMode() ? REFRESH_HEADER_REFRESHING : REFRESH_HEADER_PULLING);
 
         try {//try 不能删除-否则会出现兼容性问题

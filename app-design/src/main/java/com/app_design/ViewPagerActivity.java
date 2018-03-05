@@ -1,6 +1,7 @@
 package com.app_design;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -94,14 +95,14 @@ public class ViewPagerActivity extends AppCompatActivity {
             super.onViewCreated(view, savedInstanceState);
             mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
                 @Override
-                public void onRefresh(RefreshLayout refreshLayout) {
+                public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                     mAdapter.refresh(initData());
                     refreshLayout.finishRefresh(2000);
                 }
             });
             mRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
                 @Override
-                public void onLoadMore(RefreshLayout refreshLayout) {
+                public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                     mAdapter.loadMore(initData());
                     refreshLayout.finishLoadMore(2000);
                 }

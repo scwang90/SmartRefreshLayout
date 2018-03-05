@@ -98,6 +98,7 @@ public class BallPulseFooter extends InternalAbstract implements RefreshFooter {
 
             animator.setDuration(750);
             animator.setRepeatCount(ValueAnimator.INFINITE);
+            animator.setTarget(i);
             animator.setStartDelay(delays[i]);
 
             mUpdateListeners.put(animator, new ValueAnimator.AnimatorUpdateListener() {

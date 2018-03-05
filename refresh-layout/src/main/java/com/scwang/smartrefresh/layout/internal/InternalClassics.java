@@ -29,6 +29,7 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
 import com.scwang.smartrefresh.layout.util.DesignUtil;
 
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+import static com.scwang.smartrefresh.layout.util.SmartUtil.getColor;
 
 /**
  * 经典组件
@@ -65,6 +66,7 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
         mArrowView = new ImageView(context);
         mProgressView = new ImageView(context);
         mTitleText = new TextView(context);
+        mTitleText.setTextColor(0xff666666);
         mCenterLayout = new LinearLayout(context);
         mCenterLayout.setGravity(Gravity.CENTER_HORIZONTAL);
         mCenterLayout.setOrientation(LinearLayout.VERTICAL);
@@ -143,7 +145,7 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
             arrowView.animate().cancel();
             progressView.animate().cancel();
         }
-        Drawable drawable = mProgressView.getDrawable();
+        final Drawable drawable = mProgressView.getDrawable();
         if (drawable instanceof Animatable) {
             if (((Animatable) drawable).isRunning()) {
                 ((Animatable) drawable).stop();
@@ -297,13 +299,13 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
 
     public T setPrimaryColorId(@ColorRes int colorId) {
         final View thisView = this;
-        setPrimaryColor(DesignUtil.getColor(thisView.getContext(), colorId));
+        setPrimaryColor(getColor(thisView.getContext(), colorId));
         return self();
     }
 
     public T setAccentColorId(@ColorRes int colorId) {
         final View thisView = this;
-        setAccentColor(DesignUtil.getColor(thisView.getContext(), colorId));
+        setAccentColor(getColor(thisView.getContext(), colorId));
         return self();
     }
 

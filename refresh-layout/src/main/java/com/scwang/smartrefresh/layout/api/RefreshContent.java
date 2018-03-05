@@ -14,7 +14,6 @@ import static android.support.annotation.RestrictTo.Scope.SUBCLASSES;
  * 刷新内容组件
  * Created by SCWANG on 2017/5/26.
  */
-@RestrictTo({LIBRARY,LIBRARY_GROUP,SUBCLASSES})
 public interface RefreshContent {
 
     @NonNull
@@ -31,7 +30,6 @@ public interface RefreshContent {
 
     void setEnableLoadMoreWhenContentNotFull(boolean enable);
 
-    void fling(int velocity);
     void moveSpinner(int spinner);
 
     boolean canRefresh();
