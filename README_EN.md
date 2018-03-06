@@ -213,7 +213,7 @@ This library does't use serialization and deserialization, JNI, reflection, so t
 ## Donate
 
 If you like this library's design, feel it help to you, you can point the upper right corner "Star" support Thank you! ^ _ ^  
-You can also scan the qr code below to ask the author to drink a cup of coffee.
+You can also click the PayPal below to ask the author to drink a cup of coffee.
 
 [![](https://www.paypalobjects.com/webstatic/i/logo/rebrand/ppcom.svg 'click to donate')](https://www.paypal.me/scwang90/10.24)
 
