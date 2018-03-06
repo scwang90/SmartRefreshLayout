@@ -215,11 +215,9 @@ This library does't use serialization and deserialization, JNI, reflection, so t
 If you like this library's design, feel it help to you, you can point the upper right corner "Star" support Thank you! ^ _ ^  
 You can also scan the qr code below to ask the author to drink a cup of coffee.
 
-<a href="https://www.paypal.me/scwang90/10.24" target="_blank"><img src="https://www.paypalobjects.com/webstatic/i/logo/rebrand/ppcom.svg" width="100" height="40" style="margin-bottom:-15px;"></a> 
-> click to donate  
+[![](https://www.paypalobjects.com/webstatic/i/logo/rebrand/ppcom.svg 'click to donate')](https://www.paypal.me/scwang90/10.24)
 
-
-If in the donation message note name, will be record to the list  
+If in the donation message note name, it will be record to the list  
 [Donation list](art/md_donationlist.md)
 
 ## Discuss
