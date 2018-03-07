@@ -1,4 +1,4 @@
-# Android Smart Refresh Layout Framework
+# SmartRefreshLayout
 
 [![License](https://img.shields.io/badge/License%20-Apache%202-337ab7.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Arsenal](https://img.shields.io/badge/Arsenal%20-%20SmartRefresh-4cae4c.svg)](https://android-arsenal.com/details/1/6001)
@@ -213,7 +213,7 @@ This library does't use serialization and deserialization, JNI, reflection, so t
 ## Donate
 
 If you like this library's design, feel it help to you, you can point the upper right corner "Star" support Thank you! ^ _ ^  
-You can also scan the qr code below to ask the author to drink a cup of coffee.
+You can also click the PayPal below to ask the author to drink a cup of coffee.
 
 [![](https://www.paypalobjects.com/webstatic/i/logo/rebrand/ppcom.svg 'click to donate')](https://www.paypal.me/scwang90/10.24)
 
