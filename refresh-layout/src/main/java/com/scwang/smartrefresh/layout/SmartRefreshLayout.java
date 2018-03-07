@@ -398,6 +398,15 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             }
 
             if (mRefreshContent == null) {
+                for (int i = 0, len = getChildCount(); i < len; i++) {
+                    View view = getChildAt(i);
+                    if ((mRefreshHeader == null || view != mRefreshHeader.getView())&&
+                            (mRefreshFooter == null || view != mRefreshFooter.getView())) {
+                        mRefreshContent = new RefreshContentWrapper(view);
+                    }
+                }
+            }
+            if (mRefreshContent == null) {
                 final int padding = DensityUtil.dp2px(20);
                 final TextView errorView = new TextView(thisView.getContext());
                 errorView.setTextColor(0xffff6600);
@@ -2331,7 +2340,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     @Override
     public SmartRefreshLayout finishRefresh() {
         long passTime = System.currentTimeMillis() - mLastOpenTime;
-        return finishRefresh(Math.max(0, 1000 - (int) passTime));//保证刷新动画有1000毫秒的时间
+        return finishRefresh(Math.max(0, 300 - (int) passTime));//保证刷新动画有3000毫秒的时间
     }
 
     /**
@@ -2341,7 +2350,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     @Override
     public SmartRefreshLayout finishLoadMore() {
         long passTime = System.currentTimeMillis() - mLastOpenTime;
-        return finishLoadMore(Math.max(0, 1000 - (int) passTime));//保证加载动画有1000毫秒的时间
+        return finishLoadMore(Math.max(0, 300 - (int) passTime));//保证加载动画有300毫秒的时间
     }
 
     /**
@@ -2362,7 +2371,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     @Override
     public SmartRefreshLayout finishRefresh(boolean success) {
         long passTime = System.currentTimeMillis() - mLastOpenTime;
-        return finishRefresh(success ? Math.max(0, 1000 - (int) passTime) : 0, success);//保证加载动画有1000毫秒的时间
+        return finishRefresh(success ? Math.max(0, 300 - (int) passTime) : 0, success);//保证加载动画有300毫秒的时间
     }
 
     /**
@@ -2431,7 +2440,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     @Override
     public SmartRefreshLayout finishLoadMore(boolean success) {
         long passTime = System.currentTimeMillis() - mLastOpenTime;
-        return finishLoadMore(success ? Math.max(0, 1000 - (int) passTime) : 0, success, false);
+        return finishLoadMore(success ? Math.max(0, 300 - (int) passTime) : 0, success, false);
     }
 
     /**
@@ -2538,7 +2547,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     @Override
     public SmartRefreshLayout finishLoadMoreWithNoMoreData() {
         long passTime = System.currentTimeMillis() - mLastOpenTime;
-        return finishLoadMore(Math.max(0, 1000 - (int) passTime), true, true);
+        return finishLoadMore(Math.max(0, 300 - (int) passTime), true, true);
     }
 
     /**
