@@ -2340,7 +2340,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     @Override
     public SmartRefreshLayout finishRefresh() {
         long passTime = System.currentTimeMillis() - mLastOpenTime;
-        return finishRefresh(Math.max(0, 300 - (int) passTime));//保证刷新动画有3000毫秒的时间
+        return finishRefresh(Math.max(0, 300 - (int) passTime));//保证刷新动画有300毫秒的时间
     }
 
     /**
