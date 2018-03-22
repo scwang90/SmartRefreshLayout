@@ -20,9 +20,10 @@ XML属性
 
 ## 1.获取当前状态？isRefreshing(),isLoading() 不见了？
 
-版本的迭代，刷新的状态越来越多，仅仅由 isRefreshing(),isLoading()  已经无法满足要求，再1.0.5版本之后本库直
-接将 内部 State 开放出来，并标记 isRefreshing(),isLoading() 过期，鼓励大家使用 getState 来代替。getState
-比前两个方法更有用，具体参考下面代码。
+版本的迭代，刷新的状态越来越多，仅仅 isRefreshing(),isLoading() 已经无法满足要求，在1.0.5版本之后本库直接将
+内部 State 开放出来，并在1.0.5版本标记 isRefreshing(),isLoading() 过期，鼓励大家使用 getState 来代替。将在
+1.1.0版本删除这两个API。
+getState 比前两个方法更有用，具体参考下面代码。
 ~~~java
     refreshLayout.getState() == RefreshState.None //空闲状态
     refreshLayout.getState() == RefreshState.Loading//代替 isLoading
@@ -37,10 +38,11 @@ XML属性
 
 ## 2.嵌套WebView，还没滚动到顶部就开始下拉刷新了？
 
-WebView 的问题多由内部Html中采用了绝对坐标导致的，所以问题很难从java层面区解决这个问题，对于这个问题，我建议
-直接再Html内部实现下拉刷新，或者采用自定义滚动边界，参考#394。
+> WebView 的问题多由内部Html中采用了绝对坐标导致的，所以问题很难从java层面解决这个问题，我建议直接再Html内部实现下拉刷新，或者采用自定义滚动边界，参考 [#394](https://github.com/scwang90/SmartRefreshLayout/issues/394)。
 
-## 3.列表内容才几条，却可以上啦加载？
+## 3.列表内容才几条，却可以上拉加载？
+
+SmartRefresh提供了对数据不满一页判断处理，可以通过EnableLoadMoreWhenContentNotFull来控制
 
 代码设置
 ~~~java
@@ -57,7 +59,9 @@ XML属性
 ~~~
 
 
-## 4.如何修改刷新文字？
+## 4.如何修改经典刷新文字？
+
+SmartRefresh的经典文字自带了国际化（中/英），如需自定义文字显示，可以通过以下两种方法设置：
 
 代码设置
 ~~~java
@@ -115,7 +119,7 @@ SmartRefresh触发下拉刷新的距离就是 Header 的高度乘以比率：Hea
 HeaderTriggerRate 默认是 1，改成0.5，那么再下拉到一半的时候就可以刷新了
 改变这个距离就是 setHeaderHeight，footer 类推
 
-### 相关方法
+相关方法
 |name|format|description|
 |:---:|:---:|:---:|
 |setHeaderHeight|dimension|Header的标准高度|
@@ -123,7 +127,7 @@ HeaderTriggerRate 默认是 1，改成0.5，那么再下拉到一半的时候就
 |setHeaderTriggerRate|float|Header触发刷新距离 与 HeaderHeight 的比率（默认1）|
 |setFooterTriggerRate|float|Footer触发加载距离 与 FooterHeight 的比率（默认1）|
 
-### 相关属性
+相关属性
 |name|format|description|
 |:---:|:---:|:---:|
 |srlHeaderHeight|dimension|Header的标准高度（dp）|
@@ -137,14 +141,14 @@ SmartRefresh的阻尼相关参数有两个
 > DragRate = 显示拖动距离 / 手指真是拖动距离 （要求<= 1，越小阻尼越大）
 > MaxDragRate = 最大拖动距离 / Header或者Footer的高度 （要求>=1,越大阻尼越小）
 
-### 相关方法
+相关方法
 |name|format|description|
 |:---:|:---:|:---:|
 |setDragRate|dimension|设置拖动比率|
 |setHeaderMaxDragRate|float|Header最大拖动距离 与 HeaderHeight 的比率（默认1）|
 |setFooterMaxDragRate|float|Footer最大拖动距离 与 FooterHeight 的比率（默认1）|
 
-### 相关属性
+相关属性
 |name|format|description|
 |:---:|:---:|:---:|
 |srlDragRate|dimension|设置拖动比率|
@@ -153,9 +157,11 @@ SmartRefresh的阻尼相关参数有两个
 
 ## 7.全局设置基本参数
 
+SmartRefresh提供的全局设置方法不仅可以设置 Header 和 Footer 的样式，其他的参数也可以直接设置如下：
+
 ~~~java
 public class App extends Application {
-    static {
+    static {//使用static代码段可以防止内存泄漏
         SmartRefreshLayout.setDefaultRefreshHeaderCreator(new DefaultRefreshHeaderCreator() {
             @NonNull
             @Override
