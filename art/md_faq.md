@@ -119,17 +119,17 @@ SmartRefresh触发下拉刷新的距离就是 Header 的高度乘以比率：Hea
 HeaderTriggerRate 默认是 1，改成0.5，那么再下拉到一半的时候就可以刷新了
 改变这个距离就是 setHeaderHeight，footer 类推
 
-### 相关方法
+##### 相关方法
 |name|format|description|
-|:------------------:|:-------:|:----------------------------------:|
+|:-:|:-:|:-:|
 |setHeaderHeight|dimension|Header的标准高度|
 |setFooterHeight|dimension|Footer的标准高度|
 |setHeaderTriggerRate|float|Header触发刷新距离与HeaderHeight的比率（默认1）|
 |setFooterTriggerRate|float|Footer触发加载距离与FooterHeight的比率（默认1）|
 
-相关属性
+##### 相关属性
 |name|format|description|
-|:------------------:|:-------:|:----------------------------------:|
+|:-:|:-:|:-:|
 |srlHeaderHeight|dimension|Header的标准高度（dp）|
 |srlFooterHeight|dimension|Footer的标准高度（dp）|
 |srlHeaderTriggerRate|float|Header触发刷新距离与HeaderHeight的比率（默认1）|
@@ -141,14 +141,14 @@ SmartRefresh的阻尼相关参数有两个
 > DragRate = 显示拖动距离 / 手指真是拖动距离 （要求<= 1，越小阻尼越大）  
 > MaxDragRate = 最大拖动距离 / Header或者Footer的高度 （要求>=1,越大阻尼越小）
 
-相关方法
+##### 相关方法
 |name|format|description|
 |:-:|:-:|:-:|
 |setDragRate|dimension|设置拖动比率|
 |setHeaderMaxDragRate|float|Header最大拖动距离与HeaderHeight的比率（默认1）|
 |setFooterMaxDragRate|float|Footer最大拖动距离与FooterHeight的比率（默认1）|
 
-相关属性
+##### 相关属性
 |name|format|description|
 |:-:|:-:|:-:|
 |srlDragRate|dimension|设置拖动比率|
@@ -163,7 +163,6 @@ SmartRefresh提供的全局设置方法不仅可以设置 Header 和 Footer 的�
 public class App extends Application {
     static {//使用static代码段可以防止内存泄漏
         SmartRefreshLayout.setDefaultRefreshHeaderCreator(new DefaultRefreshHeaderCreator() {
-            @NonNull
             @Override
             public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
                 //开始设置全局的基本参数
@@ -194,7 +193,6 @@ XML属性
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srlEnableOverScrollDrag="false"
         app:srlEnableAutoLoadMore="false">
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 ~~~
