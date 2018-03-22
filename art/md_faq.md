@@ -2,10 +2,13 @@
 
 ## 0.恢复经典模式
 
+SmartRefresh默认使用了比较新的功能，如：越界回弹、越界拖动、自动加载更多，这些效果都是比较流行，并且具有仿苹果的效果，如果之前使用很早的经典刷新库的童鞋感觉不适应，这些功能都是可以关闭的。
+
 代码设置
 ~~~java
     refreshLayout.setEnableAutoLoadMore(false);//使上拉加载具有弹性效果
     refreshLayout.setEnableOverScrollDrag(false);//禁止越界拖动
+    refreshLayout.setEnableOverScrollBounce(false);//关闭越界回弹功能
 ~~~
 XML属性
 ~~~xml
@@ -14,7 +17,8 @@ XML属性
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:srlEnableOverScrollDrag="false"
-        app:srlEnableAutoLoadMore="false">
+        app:srlEnableAutoLoadMore="false"
+        app:srlEnableOverScrollBounce="false">
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 ~~~
 
