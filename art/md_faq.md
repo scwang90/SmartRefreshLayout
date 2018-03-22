@@ -120,40 +120,40 @@ HeaderTriggerRate 默认是 1，改成0.5，那么再下拉到一半的时候就
 改变这个距离就是 setHeaderHeight，footer 类推
 
 相关方法
-|name|format|description|
-|:---:|:---:|:---:|
-|setHeaderHeight|dimension|Header的标准高度|
-|setFooterHeight|dimension|Footer的标准高度|
-|setHeaderTriggerRate|float|Header触发刷新距离 与 HeaderHeight 的比率（默认1）|
-|setFooterTriggerRate|float|Footer触发加载距离 与 FooterHeight 的比率（默认1）|
+|         name         |  format   |             description              |
+| :------------------: | :-------: | :----------------------------------: |
+|   setHeaderHeight    | dimension |             Header的标准高度              |
+|   setFooterHeight    | dimension |             Footer的标准高度              |
+| setHeaderTriggerRate |   float   | Header触发刷新距离 与 HeaderHeight 的比率（默认1） |
+| setFooterTriggerRate |   float   | Footer触发加载距离 与 FooterHeight 的比率（默认1） |
 
 相关属性
-|name|format|description|
-|:---:|:---:|:---:|
-|srlHeaderHeight|dimension|Header的标准高度（dp）|
-|srlFooterHeight|dimension|Footer的标准高度（dp）|
-|srlHeaderTriggerRate|float|Header触发刷新距离 与 HeaderHeight 的比率（默认1）|
-|srlFooterTriggerRate|float|Footer触发加载距离 与 FooterHeight 的比率（默认1）|
+|         name         |  format   |             description              |
+| :------------------: | :-------: | :----------------------------------: |
+|   srlHeaderHeight    | dimension |           Header的标准高度（dp）            |
+|   srlFooterHeight    | dimension |           Footer的标准高度（dp）            |
+| srlHeaderTriggerRate |   float   | Header触发刷新距离 与 HeaderHeight 的比率（默认1） |
+| srlFooterTriggerRate |   float   | Footer触发加载距离 与 FooterHeight 的比率（默认1） |
 
 ## 6.阻尼效果参数
 
 SmartRefresh的阻尼相关参数有两个
-> DragRate = 显示拖动距离 / 手指真是拖动距离 （要求<= 1，越小阻尼越大）
+> DragRate = 显示拖动距离 / 手指真是拖动距离 （要求<= 1，越小阻尼越大）  
 > MaxDragRate = 最大拖动距离 / Header或者Footer的高度 （要求>=1,越大阻尼越小）
 
 相关方法
-|name|format|description|
-|:---:|:---:|:---:|
-|setDragRate|dimension|设置拖动比率|
-|setHeaderMaxDragRate|float|Header最大拖动距离 与 HeaderHeight 的比率（默认1）|
-|setFooterMaxDragRate|float|Footer最大拖动距离 与 FooterHeight 的比率（默认1）|
+|         name         |  format   |             description              |
+| :------------------: | :-------: | :----------------------------------: |
+|     setDragRate      | dimension |                设置拖动比率                |
+| setHeaderMaxDragRate |   float   | Header最大拖动距离 与 HeaderHeight 的比率（默认1） |
+| setFooterMaxDragRate |   float   | Footer最大拖动距离 与 FooterHeight 的比率（默认1） |
 
 相关属性
-|name|format|description|
-|:---:|:---:|:---:|
-|srlDragRate|dimension|设置拖动比率|
-|srlHeaderMaxDragRate|float|Header最大拖动距离 与 HeaderHeight 的比率（默认1）|
-|srlFooterMaxDragRate|float|Footer最大拖动距离 与 FooterHeight 的比率（默认1）|
+|         name         |  format   |             description              |
+| :------------------: | :-------: | :----------------------------------: |
+|     srlDragRate      | dimension |                设置拖动比率                |
+| srlHeaderMaxDragRate |   float   | Header最大拖动距离 与 HeaderHeight 的比率（默认1） |
+| srlFooterMaxDragRate |   float   | Footer最大拖动距离 与 FooterHeight 的比率（默认1） |
 
 ## 7.全局设置基本参数
 
