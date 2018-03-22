@@ -24,7 +24,7 @@ public interface RefreshLayout {
 
     /**
      * 设置 Footer 高度
-     * @param dp 虚拟像素
+     * @param dp 虚拟像素（px需要调用px2dp转换）
      * @return RefreshLayout
      */
     RefreshLayout setFooterHeight(float dp);
@@ -38,7 +38,7 @@ public interface RefreshLayout {
 
     /**
      * 设置 Header 高度
-     * @param dp 虚拟像素
+     * @param dp 虚拟像素（px需要调用px2dp转换）
      * @return RefreshLayout
      */
     RefreshLayout setHeaderHeight(float dp);
@@ -52,10 +52,10 @@ public interface RefreshLayout {
 
     /**
      * 设置 Header 起始偏移量
-     * @param insetDp 虚拟像素
+     * @param dp 虚拟像素（px需要调用px2dp转换）
      * @return RefreshLayout
      */
-    RefreshLayout setHeaderInsetStart(float insetDp);
+    RefreshLayout setHeaderInsetStart(float dp);
 
 //    /**
 //     * 设置 Header 起始偏移量
@@ -66,10 +66,10 @@ public interface RefreshLayout {
 
     /**
      * 设置 Footer 起始偏移量
-     * @param insetDp 虚拟像素
+     * @param dp 虚拟像素（px需要调用px2dp转换）
      * @return RefreshLayout
      */
-    RefreshLayout setFooterInsetStart(float insetDp);
+    RefreshLayout setFooterInsetStart(float dp);
 
 //    /**
 //     * 设置 Footer 起始偏移量
