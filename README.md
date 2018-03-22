@@ -108,9 +108,9 @@ compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-1'
 compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-1'//没有使用特殊Header，可以不加这行
 compile 'com.android.support:appcompat-v7:25.3.1'//版本 23以上（必须）
 
-//1.0.4 当1.1.0出现问题可以回退到1.0.4-7
-compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-7'
-compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4-7'//没有使用特殊Header，可以不加这行
+//1.0.5 当1.1.0出现问题可以回退到1.0.5-1
+compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.5-1'
+compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.5-1'//没有使用特殊Header，可以不加这行
 compile 'com.android.support:appcompat-v7:25.3.1'//版本 23以上（必须）
 compile 'com.android.support:design:25.3.1'//版本随意（非必须，引用可以解决无法预览问题）
 ```
@@ -123,7 +123,7 @@ compile 'com.android.support:design:25.3.1'//版本随意（非必须，引用�
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerview"
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:overScrollMode="never"
