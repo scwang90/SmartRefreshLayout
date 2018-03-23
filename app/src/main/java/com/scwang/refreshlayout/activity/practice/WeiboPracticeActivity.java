@@ -70,19 +70,19 @@ public class WeiboPracticeActivity extends AppCompatActivity {
                 refreshLayout.finishLoadMore(2000);
             }
             @Override
-            public void onHeaderMoving(RefreshHeader header, boolean isDragging, float percent, int offset, int headerHeight, int extendHeight) {
+            public void onHeaderMoving(RefreshHeader header, boolean isDragging, float percent, int offset, int headerHeight, int maxDragHeight) {
                 mOffset = offset / 2;
                 parallax.setTranslationY(mOffset - mScrollY);
                 toolbar.setAlpha(1 - Math.min(percent, 1));
             }
 //            @Override
-//            public void onHeaderPulling(@NonNull RefreshHeader header, float percent, int offset, int bottomHeight, int extendHeight) {
+//            public void onHeaderPulling(@NonNull RefreshHeader header, float percent, int offset, int bottomHeight, int maxDragHeight) {
 //                mOffset = offset / 2;
 //                parallax.setTranslationY(mOffset - mScrollY);
 //                toolbar.setAlpha(1 - Math.min(percent, 1));
 //            }
 //            @Override
-//            public void onHeaderReleasing(@NonNull RefreshHeader header, float percent, int offset, int bottomHeight, int extendHeight) {
+//            public void onHeaderReleasing(@NonNull RefreshHeader header, float percent, int offset, int bottomHeight, int maxDragHeight) {
 //                mOffset = offset / 2;
 //                parallax.setTranslationY(mOffset - mScrollY);
 //                toolbar.setAlpha(1 - Math.min(percent, 1));

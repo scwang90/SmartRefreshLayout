@@ -139,11 +139,11 @@ public class FunGameBattleCityHeader extends FunGameView {
     }
 
     @Override
-    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
+    public void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight) {
         controllerSize = height / TANK_ROW_NUM;
         barrelSize = (int) Math.floor(controllerSize * TANK_BARREL_RATIO + .5f);
         bulletRadius = (barrelSize - 2 * DIVIDING_LINE_SIZE) * .5f;
-        super.onInitialized(kernel, height, extendHeight);
+        super.onInitialized(kernel, height, maxDragHeight);
     }
 
     //</editor-fold>
@@ -276,6 +276,7 @@ public class FunGameBattleCityHeader extends FunGameView {
 
     /**
      * 绘制子弹路径
+     * @param width 华埠宽度
      * @param canvas 默认画布
      */
     protected void drawBulletPath(Canvas canvas, int width) {
@@ -324,6 +325,7 @@ public class FunGameBattleCityHeader extends FunGameView {
 
     /**
      * 绘制我方坦克
+     * @param width 华埠宽度
      * @param canvas 默认画布
      */
     protected void drawSelfTank(Canvas canvas, int width) {
@@ -352,6 +354,7 @@ public class FunGameBattleCityHeader extends FunGameView {
     /**
      * 绘制三条轨道上的敌方坦克
      * @param canvas 默认画布
+     * @param width 华埠宽度
      */
     protected void drawEnemyTank(Canvas canvas, int width) {
         mPaint.setColor(lModelColor);

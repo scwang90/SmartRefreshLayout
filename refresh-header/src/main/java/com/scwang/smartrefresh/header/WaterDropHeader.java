@@ -165,10 +165,10 @@ public class WaterDropHeader extends InternalAbstract implements RefreshHeader {
 
 
     @Override
-    public void onMoving(boolean isDragging, float percent, int offset, int height, int extendHeight) {
+    public void onMoving(boolean isDragging, float percent, int offset, int height, int maxDragHeight) {
         if (isDragging || (mState != RefreshState.Refreshing && mState != RefreshState.RefreshReleased)) {
             final View dropView = mWaterDropView;
-            mWaterDropView.updateCompleteState(Math.max(offset, 0), height + extendHeight);
+            mWaterDropView.updateCompleteState(Math.max(offset, 0), height + maxDragHeight);
             dropView.postInvalidate();
         }
         if (isDragging) {
@@ -192,8 +192,8 @@ public class WaterDropHeader extends InternalAbstract implements RefreshHeader {
     }
 
 //    @Override
-//    public void onPulling(float percent, int offset, int height, int extendHeight) {
-//        mWaterDropView.updateCompleteState((offset), height + extendHeight);
+//    public void onPulling(float percent, int offset, int height, int maxDragHeight) {
+//        mWaterDropView.updateCompleteState((offset), height + maxDragHeight);
 //        mWaterDropView.postInvalidate();
 //
 //        float originalDragPercent = 1f * offset / height;
@@ -214,9 +214,9 @@ public class WaterDropHeader extends InternalAbstract implements RefreshHeader {
 //    }
 //
 //    @Override
-//    public void onReleasing(float percent, int offset, int height, int extendHeight) {
+//    public void onReleasing(float percent, int offset, int height, int maxDragHeight) {
 //        if (mState != RefreshState.Refreshing && mState != RefreshState.RefreshReleased) {
-//            mWaterDropView.updateCompleteState(Math.max(offset, 0), height + extendHeight);
+//            mWaterDropView.updateCompleteState(Math.max(offset, 0), height + maxDragHeight);
 //            mWaterDropView.postInvalidate();
 //        }
 //    }
@@ -246,7 +246,7 @@ public class WaterDropHeader extends InternalAbstract implements RefreshHeader {
     }
 
     @Override
-    public void onReleased(@NonNull final RefreshLayout layout, int height, int extendHeight) {
+    public void onReleased(@NonNull final RefreshLayout layout, int height, int maxDragHeight) {
         final View dropView = mWaterDropView;
         mProgressDrawable.start();
         mWaterDropView.createAnimator().start();//开始回弹

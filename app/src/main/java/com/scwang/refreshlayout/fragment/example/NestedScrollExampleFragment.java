@@ -39,7 +39,8 @@ public class NestedScrollExampleFragment extends Fragment implements AdapterView
 
     public enum Item {
         NestedStandard("标准嵌套", NestedScrollExampleFragment.class),
-        NestedIntegral("整体嵌套", NestedScrollUsingFragmentIntegral.class),
+        NestedIntegral("整体嵌套", NestedScrollExampleFragmentIntegral.class),
+        NestedViewPager("ViewPager", NestedScrollExampleFragmentViewPager.class),
         ;
         public String name;
         public Class<?> clazz;

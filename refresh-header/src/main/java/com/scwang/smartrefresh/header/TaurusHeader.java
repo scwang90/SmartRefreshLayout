@@ -171,7 +171,7 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
     //<editor-fold desc="RefreshHeader">
 
     @Override
-    public void onMoving(boolean isDragging, float percent, int offset, int height, int extendHeight) {
+    public void onMoving(boolean isDragging, float percent, int offset, int height, int maxDragHeight) {
         mPercent = percent;
         mHeaderHeight = height;
         if (isDragging) {
@@ -180,20 +180,20 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
     }
 
 //    @Override
-//    public void onPulling(float percent, int offset, int height, int extendHeight) {
+//    public void onPulling(float percent, int offset, int height, int maxDragHeight) {
 //        mPercent = percent;
 //        mHeaderHeight = height;
 //        mFinishTransformation = 0;
 //    }
 //
 //    @Override
-//    public void onReleasing(float percent, int offset, int height, int extendHeight) {
+//    public void onReleasing(float percent, int offset, int height, int maxDragHeight) {
 //        mPercent = percent;
 //        mHeaderHeight = height;
 //    }
 
     @Override
-    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
+    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int maxDragHeight) {
         isRefreshing = true;
         mFinishTransformation = 0;
         final View thisView = this;

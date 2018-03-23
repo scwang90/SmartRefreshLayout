@@ -273,32 +273,32 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
     //<editor-fold desc="RefreshHeader">
 
     @Override
-    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
+    public void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight) {
 //        kernel.requestDrawBackgroundForHeader(mBackgroundColor);
         mRefreshKernel = kernel;
         mRefreshKernel.requestDrawBackgroundFor(this, mBackgroundColor);
     }
 
     @Override
-    public void onMoving(boolean isDragging, float percent, int offset, int height, int extendHeight) {
+    public void onMoving(boolean isDragging, float percent, int offset, int height, int maxDragHeight) {
         mProgress = (percent * .8f);
         final View thisView = this;
         thisView.invalidate();
     }
 
 //    @Override
-//    public void onPulling(float percent, int offset, int height, int extendHeight) {
+//    public void onPulling(float percent, int offset, int height, int maxDragHeight) {
 //        mProgress = (percent * .8f);
 //        invalidate();
 //    }
 //
 //    @Override
-//    public void onReleasing(float percent, int offset, int height, int extendHeight) {
-//        onPulling(percent, offset, height, extendHeight);
+//    public void onReleasing(float percent, int offset, int height, int maxDragHeight) {
+//        onPulling(percent, offset, height, maxDragHeight);
 //    }
 
     @Override
-    public void onReleased(@NonNull RefreshLayout layout, int height, int extendHeight) {
+    public void onReleased(@NonNull RefreshLayout layout, int height, int maxDragHeight) {
         mIsInLoading = true;
         mAniController.start();
         final View thisView = this;

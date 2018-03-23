@@ -23,14 +23,14 @@ public class RefreshHeaderWrapper extends InternalAbstract implements RefreshHea
     }
 
 //    @Override
-//    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
+//    public void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight) {
 //        if (mWrapperView instanceof RefreshInternal) {
 //            RefreshKernel proxy = (RefreshKernel) Proxy.newProxyInstance(RefreshKernel.class.getClassLoader(), new Class[]{RefreshKernel.class}, this);
 //            proxy.requestDrawBackgroundForFooter(0);
 //            proxy.requestRemeasureHeightForFooter();
 //            proxy.requestNeedTouchEventWhenLoading(false);
 //            mRefreshKernel = kernel;
-//            ((RefreshInternal) mWrapperView).onInitialized(proxy, height, extendHeight);
+//            ((RefreshInternal) mWrapperView).onInitialized(proxy, height, maxDragHeight);
 //        } else {
 //            ViewGroup.LayoutParams params = mWrapperView.getLayoutParams();
 //            if (params instanceof SmartRefreshLayout.LayoutParams) {

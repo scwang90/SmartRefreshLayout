@@ -147,7 +147,7 @@ public class BallPulseFooter extends InternalAbstract implements RefreshFooter {
     //<editor-fold desc="刷新方法 - RefreshFooter">
 
     @Override
-    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
+    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int maxDragHeight) {
         if (mIsStarted) return;
 
         for (int i = 0; i < mAnimators.size(); i++) {

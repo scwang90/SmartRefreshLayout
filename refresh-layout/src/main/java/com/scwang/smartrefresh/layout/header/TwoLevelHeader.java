@@ -174,9 +174,9 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
     }
 
     @Override
-    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
+    public void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight) {
         final View thisView = this;
-        if (1f * (extendHeight + height) / height != mMaxRage && mHeaderHeight == 0) {
+        if (1f * (maxDragHeight + height) / height != mMaxRage && mHeaderHeight == 0) {
             mHeaderHeight = height;
             kernel.getRefreshLayout().setHeaderMaxDragRate(mMaxRage);
             return;
@@ -195,8 +195,8 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
         mHeaderHeight = height;
         mRefreshKernel = kernel;
         mRefreshKernel.requestFloorDuration(mFloorDuration);
-        mRefreshHeader.onInitialized(mRefreshKernel, height, extendHeight);
-//        mRefreshHeader.onInitialized(proxy, height, extendHeight);
+        mRefreshHeader.onInitialized(mRefreshKernel, height, maxDragHeight);
+//        mRefreshHeader.onInitialized(proxy, height, maxDragHeight);
         mRefreshKernel.requestNeedTouchEventFor(this, !mEnablePullToCloseTwoLevel);
 //        mRefreshKernel.requestNeedTouchEventWhenRefreshing(!mEnablePullToCloseTwoLevel);
 
@@ -241,9 +241,9 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
     }
 
     @Override
-    public void onMoving(boolean isDragging, float percent, int offset, int height, int extendHeight) {
+    public void onMoving(boolean isDragging, float percent, int offset, int height, int maxDragHeight) {
         moveSpinner(offset);
-        mRefreshHeader.onMoving(isDragging, percent, offset, height, extendHeight);
+        mRefreshHeader.onMoving(isDragging, percent, offset, height, maxDragHeight);
         if (isDragging) {
             if (mPercent < mFloorRage && percent >= mFloorRage && mEnableTwoLevel) {
                 mRefreshKernel.setState(RefreshState.ReleaseToTwoLevel);
@@ -257,9 +257,9 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
     }
 
 //    @Override
-//    public void onPulling(float percent, int offset, int height, int extendHeight) {
+//    public void onPulling(float percent, int offset, int height, int maxDragHeight) {
 //        moveSpinner(offset);
-//        mRefreshHeader.onPulling(percent, offset, height, extendHeight);
+//        mRefreshHeader.onPulling(percent, offset, height, maxDragHeight);
 //        if (mPercent < mFloorRage && percent >= mFloorRage && mEnableTwoLevel) {
 //            mRefreshKernel.setState(RefreshState.ReleaseToTwoLevel);
 //        } else if (mPercent >= mFloorRage && percent < mRefreshRage) {
@@ -271,9 +271,9 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
 //    }
 //
 //    @Override
-//    public void onReleasing(float percent, int offset, int height, int extendHeight) {
+//    public void onReleasing(float percent, int offset, int height, int maxDragHeight) {
 //        moveSpinner(offset);
-//        mRefreshHeader.onReleasing(percent, offset, height, extendHeight);
+//        mRefreshHeader.onReleasing(percent, offset, height, maxDragHeight);
 //    }
 
     protected void moveSpinner(int spinner) {
@@ -296,8 +296,8 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
     }
 //
 //    @Override
-//    public void onReleased(@NonNull RefreshLayout refreshLayout, int height, int extendHeight) {
-//        mRefreshHeader.onReleased(refreshLayout, height, extendHeight);
+//    public void onReleased(@NonNull RefreshLayout refreshLayout, int height, int maxDragHeight) {
+//        mRefreshHeader.onReleased(refreshLayout, height, maxDragHeight);
 //    }
 //
 //    @NonNull
@@ -317,8 +317,8 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
 //    }
 //
 //    @Override
-//    public void onStartAnimator(@NonNull RefreshLayout refreshLayout, int height, int extendHeight) {
-//        mRefreshHeader.onStartAnimator(refreshLayout, height, extendHeight);
+//    public void onStartAnimator(@NonNull RefreshLayout refreshLayout, int height, int maxDragHeight) {
+//        mRefreshHeader.onStartAnimator(refreshLayout, height, maxDragHeight);
 //    }
 //
 //    @Override

@@ -64,34 +64,34 @@ public class ListenerExampleActivity extends AppCompatActivity {
         refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
 
             @Override
-            public void onHeaderMoving(RefreshHeader header, boolean isDragging, float percent, int offset, int headerHeight, int extendHeight) {
+            public void onHeaderMoving(RefreshHeader header, boolean isDragging, float percent, int offset, int headerHeight, int maxDragHeight) {
                 mHeaderMoving = String.format(Locale.CHINA, "%s\nisDragging=%b,percent=%.02f offset=%03d\nheight=%03d extend=%03d",
                         FORMAT.format(new Date()),isDragging,
-                        percent,offset,headerHeight,extendHeight);
+                        percent,offset,headerHeight,maxDragHeight);
                 updateContent();
             }
 
 //            @Override
-//            public void onHeaderPulling(@NonNull RefreshHeader header, float percent, int offset, int headerHeight, int extendHeight) {
+//            public void onHeaderPulling(@NonNull RefreshHeader header, float percent, int offset, int headerHeight, int maxDragHeight) {
 //                mHeaderPulling = String.format(Locale.CHINA, "%s\npercent=%.02f offset=%03d\nheight=%03d extend=%03d",
 //                        FORMAT.format(new Date()),
-//                        percent,offset,headerHeight,extendHeight);
+//                        percent,offset,headerHeight,maxDragHeight);
 //                updateContent();
 //            }
 //
 //            @Override
-//            public void onHeaderReleasing(@NonNull RefreshHeader header, float percent, int offset, int headerHeight, int extendHeight) {
+//            public void onHeaderReleasing(@NonNull RefreshHeader header, float percent, int offset, int headerHeight, int maxDragHeight) {
 //                mHeaderReleasing = String.format(Locale.CHINA, "%s\npercent=%.02f offset=%03d\nheight=%03d extend=%03d",
 //                        FORMAT.format(new Date()),
-//                        percent,offset,headerHeight,extendHeight);
+//                        percent,offset,headerHeight,maxDragHeight);
 //                updateContent();
 //            }
 
             @Override
-            public void onHeaderStartAnimator(@NonNull RefreshHeader header, int headerHeight, int extendHeight) {
+            public void onHeaderStartAnimator(@NonNull RefreshHeader header, int headerHeight, int maxDragHeight) {
                 mHeaderStartAnimator = String.format(Locale.CHINA, "%s\nheight=%03d extend=%03d",
                         FORMAT.format(new Date()),
-                        headerHeight,extendHeight);
+                        headerHeight,maxDragHeight);
                 updateContent();
             }
 
@@ -102,34 +102,34 @@ public class ListenerExampleActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFooterMoving(RefreshFooter footer, boolean isDragging, float percent, int offset, int footerHeight, int extendHeight) {
+            public void onFooterMoving(RefreshFooter footer, boolean isDragging, float percent, int offset, int footerHeight, int maxDragHeight) {
                 mFooterMoving = String.format(Locale.CHINA, "%s\nisDragging=%b,percent=%.02f offset=%03d\nheight=%03d extend=%03d",
                         FORMAT.format(new Date()),isDragging,
-                        percent,offset,footerHeight,extendHeight);
+                        percent,offset,footerHeight,maxDragHeight);
                 updateContent();
             }
 
 //            @Override
-//            public void onFooterPulling(@NonNull RefreshFooter footer, float percent, int offset, int footerHeight, int extendHeight) {
+//            public void onFooterPulling(@NonNull RefreshFooter footer, float percent, int offset, int footerHeight, int maxDragHeight) {
 //                mFooterPulling = String.format(Locale.CHINA, "%s\npercent=%.02f\noffset=%03d height=%03d\nextend=%03d",
 //                        FORMAT.format(new Date()),
-//                        percent,offset,footerHeight,extendHeight);
+//                        percent,offset,footerHeight,maxDragHeight);
 //                updateContent();
 //            }
 //
 //            @Override
-//            public void onFooterReleasing(@NonNull RefreshFooter footer, float percent, int offset, int footerHeight, int extendHeight) {
+//            public void onFooterReleasing(@NonNull RefreshFooter footer, float percent, int offset, int footerHeight, int maxDragHeight) {
 //                mFooterReleasing = String.format(Locale.CHINA, "%s\npercent=%.02f\noffset=%03d height=%03d\nextend=%03d",
 //                        FORMAT.format(new Date()),
-//                        percent,offset,footerHeight,extendHeight);
+//                        percent,offset,footerHeight,maxDragHeight);
 //                updateContent();
 //            }
 
             @Override
-            public void onFooterStartAnimator(@NonNull RefreshFooter footer, int footerHeight, int extendHeight) {
+            public void onFooterStartAnimator(@NonNull RefreshFooter footer, int footerHeight, int maxDragHeight) {
                 mFooterStartAnimator = String.format(Locale.CHINA, "%s\nheight=%03d extend=%03d",
                         FORMAT.format(new Date()),
-                        footerHeight,extendHeight);
+                        footerHeight,maxDragHeight);
                 updateContent();
             }
 
@@ -143,12 +143,14 @@ public class ListenerExampleActivity extends AppCompatActivity {
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 mRefresh = String.format(Locale.CHINA, "%s",FORMAT.format(new Date()));
                 updateContent();
+                refreshLayout.finishRefresh(2000);
             }
 
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 mLoadMore = String.format(Locale.CHINA, "%s",FORMAT.format(new Date()));
                 updateContent();
+                refreshLayout.finishLoadMore(1000);
             }
 
             @Override

@@ -346,22 +346,22 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
 
 
     @Override
-    public void onMoving(boolean isDragging, float percent, int offset, int height, int extendHeight) {
+    public void onMoving(boolean isDragging, float percent, int offset, int height, int maxDragHeight) {
         if (!isDragging || mState != RefreshState.Refreshing) {
-            mReboundPercent = 1f * Math.max(0, offset - height) / extendHeight;
+            mReboundPercent = 1f * Math.max(0, offset - height) / maxDragHeight;
         }
     }
 
 //    @Override
-//    public void onPulling(float percent, int offset, int height, int extendHeight) {
+//    public void onPulling(float percent, int offset, int height, int maxDragHeight) {
 //        if (mState != RefreshState.Refreshing) {
-//            mReboundPercent = 1f * Math.max(0, offset - height) / extendHeight;
+//            mReboundPercent = 1f * Math.max(0, offset - height) / maxDragHeight;
 //        }
 //    }
 //
 //    @Override
-//    public void onReleasing(float percent, int offset, int height, int extendHeight) {
-//        mReboundPercent = 1f * Math.max(0, offset - height) / extendHeight;
+//    public void onReleasing(float percent, int offset, int height, int maxDragHeight) {
+//        mReboundPercent = 1f * Math.max(0, offset - height) / maxDragHeight;
 //    }
 
     @Override
@@ -394,7 +394,7 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
     }
 
     @Override
-    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
+    public void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight) {
         mHeaderHeight = height;
         final int sideLength = generateSideLength();
         mDrawable1.setBounds(0, 0, sideLength, sideLength);
@@ -403,7 +403,7 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
     }
 
     @Override
-    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
+    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int maxDragHeight) {
         if (mDropOutAnimator != null) {
             mDropOutAnimator.start();
         }

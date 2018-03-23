@@ -58,7 +58,7 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
 
 
     @Override
-    public void onMoving(boolean isDragging, float percent, int offset, int height, int extendHeight) {
+    public void onMoving(boolean isDragging, float percent, int offset, int height, int maxDragHeight) {
         if (isDragging || !mIsRefreshing) {
             if (offset < 0) {
                 if (mOffset > 0) {
@@ -76,8 +76,8 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
                 sceneView.postInvalidate();
             }
             if (mFlyView != null) {
-                if (height + extendHeight > 0) {
-                    mFlyView.setRotation((-45f) * offset / (height + extendHeight));
+                if (height + maxDragHeight > 0) {
+                    mFlyView.setRotation((-45f) * offset / (height + maxDragHeight));
                 } else {
                     mFlyView.setRotation((-45f) * percent);
                 }
@@ -86,14 +86,14 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
     }
 
 //    @Override
-//    public void onReleasing(float percent, int offset, int height, int extendHeight) {
+//    public void onReleasing(float percent, int offset, int height, int maxDragHeight) {
 //        if (!mIsRefreshing) {
-//            onPulling(percent, offset, height, extendHeight);
+//            onPulling(percent, offset, height, maxDragHeight);
 //        }
 //    }
 //
 //    @Override
-//    public void onPulling(float percent, int offset, int height, int extendHeight) {
+//    public void onPulling(float percent, int offset, int height, int maxDragHeight) {
 //        if (offset < 0) {
 //            if (mOffset > 0) {
 //                offset = 0;
@@ -109,8 +109,8 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
 //            mSceneView.postInvalidate();
 //        }
 //        if (mFlyView != null) {
-//            if (height + extendHeight > 0) {
-//                mFlyView.setRotation((-45f) * offset / (height + extendHeight));
+//            if (height + maxDragHeight > 0) {
+//                mFlyView.setRotation((-45f) * offset / (height + maxDragHeight));
 //            } else {
 //                mFlyView.setRotation((-45f) * percent);
 //            }
@@ -118,7 +118,7 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
 //    }
 
     @Override
-    public void onReleased(@NonNull RefreshLayout layout, int height, int extendHeight) {
+    public void onReleased(@NonNull RefreshLayout layout, int height, int maxDragHeight) {
         /*
          * 提前关闭 下拉视图偏移
          */
@@ -185,7 +185,7 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
     }
 
     @Override
-    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
+    public void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight) {
         mRefreshKernel = kernel;
         mRefreshLayout = kernel.getRefreshLayout();
         mRefreshLayout.setEnableOverScrollDrag(false);

@@ -214,7 +214,7 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
 
 
     @Override
-    public void onMoving(boolean isDragging, float percent, int offset, int height, int extendHeight) {
+    public void onMoving(boolean isDragging, float percent, int offset, int height, int maxDragHeight) {
         if (isDragging || mWavePulling) {
             mWavePulling = true;
             mWaveTop = Math.min(height, offset);
@@ -224,7 +224,7 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
     }
 
 //    @Override
-//    public void onPulling(float percent, int offset, int height, int extendHeight) {
+//    public void onPulling(float percent, int offset, int height, int maxDragHeight) {
 //        mWavePulling = true;
 //        mWaveTop = Math.min(height, offset);
 //        mWaveHeight = (int) (1.9f * Math.max(0, offset - height));
@@ -232,14 +232,14 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
 //    }
 //
 //    @Override
-//    public void onReleasing(float percent, int offset, int height, int extendHeight) {
+//    public void onReleasing(float percent, int offset, int height, int maxDragHeight) {
 //        if (mWavePulling) {
-//            onPulling(percent, offset, height, extendHeight);
+//            onPulling(percent, offset, height, maxDragHeight);
 //        }
 //    }
 
     @Override
-    public void onReleased(@NonNull final RefreshLayout refreshLayout, int height, int extendHeight) {
+    public void onReleased(@NonNull final RefreshLayout refreshLayout, int height, int maxDragHeight) {
         mWaveTop = height;
         mWavePulling = false;
 

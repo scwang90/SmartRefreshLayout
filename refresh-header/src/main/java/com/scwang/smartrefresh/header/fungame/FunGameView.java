@@ -282,7 +282,7 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
      * 移动控制器（控制器对象为具体控件中的右边图像模型）
      */
     @Override
-    protected void onManualOperationMove(float percent, int offset, int height, int extendHeight) {
+    protected void onManualOperationMove(float percent, int offset, int height, int maxDragHeight) {
         final View thisView = this;
         float distance = Math.max(offset, 0);
         float maxDistance = (mHeaderHeight -  2 * DIVIDING_LINE_SIZE - controllerSize);
@@ -298,7 +298,7 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
     //<editor-fold desc="生命周期">
 
     @Override
-    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
+    public void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight) {
         final View thisView = this;
         if (mHeaderHeight != height && !thisView.isInEditMode()) {
             final View topView = mMaskViewTop;
@@ -311,7 +311,7 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
             topView.setLayoutParams(lpTop);
             bottomView.setLayoutParams(lpBottom);
         }
-        super.onInitialized(kernel, height, extendHeight);
+        super.onInitialized(kernel, height, maxDragHeight);
         postStatus(STATUS_GAME_PREPARE);
     }
 
@@ -356,8 +356,8 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
     }
 
     @Override
-    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
-        super.onStartAnimator(layout, height, extendHeight);
+    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int maxDragHeight) {
+        super.onStartAnimator(layout, height, maxDragHeight);
         final View topView = mMaskViewTop;
         final View bottomView = mMaskViewBottom;
         final View shadowView = mShadowView;

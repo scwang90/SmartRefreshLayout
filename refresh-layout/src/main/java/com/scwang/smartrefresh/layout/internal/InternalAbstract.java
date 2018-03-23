@@ -84,9 +84,9 @@ public abstract class InternalAbstract extends RelativeLayout implements Refresh
     }
 
     @Override
-    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
+    public void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight) {
         if (mWrapperView instanceof RefreshInternal) {
-            ((RefreshInternal) mWrapperView).onInitialized(kernel, height, extendHeight);
+            ((RefreshInternal) mWrapperView).onInitialized(kernel, height, maxDragHeight);
         } else if (mWrapperView != null) {
             ViewGroup.LayoutParams params = mWrapperView.getLayoutParams();
             if (params instanceof SmartRefreshLayout.LayoutParams) {
@@ -108,37 +108,37 @@ public abstract class InternalAbstract extends RelativeLayout implements Refresh
     }
 
     @Override
-    public void onMoving(boolean isDragging, float percent, int offset, int height, int extendHeight) {
+    public void onMoving(boolean isDragging, float percent, int offset, int height, int maxDragHeight) {
         if (mWrapperView instanceof RefreshInternal) {
-            ((RefreshInternal) mWrapperView).onMoving(isDragging, percent, offset, height, extendHeight);
+            ((RefreshInternal) mWrapperView).onMoving(isDragging, percent, offset, height, maxDragHeight);
         }
     }
 
 //    @Override
-//    public void onPulling(float percent, int offset, int height, int extendHeight) {
+//    public void onPulling(float percent, int offset, int height, int maxDragHeight) {
 //        if (mWrapperView instanceof RefreshInternal) {
-//            ((RefreshInternal) mWrapperView).onPulling(percent, offset, height, extendHeight);
+//            ((RefreshInternal) mWrapperView).onPulling(percent, offset, height, maxDragHeight);
 //        }
 //    }
 //
 //    @Override
-//    public void onReleasing(float percent, int offset, int height, int extendHeight) {
+//    public void onReleasing(float percent, int offset, int height, int maxDragHeight) {
 //        if (mWrapperView instanceof RefreshInternal) {
-//            ((RefreshInternal) mWrapperView).onReleasing(percent, offset, height, extendHeight);
+//            ((RefreshInternal) mWrapperView).onReleasing(percent, offset, height, maxDragHeight);
 //        }
 //    }
 
     @Override
-    public void onReleased(@NonNull RefreshLayout refreshLayout, int height, int extendHeight) {
+    public void onReleased(@NonNull RefreshLayout refreshLayout, int height, int maxDragHeight) {
         if (mWrapperView instanceof RefreshInternal) {
-            ((RefreshInternal) mWrapperView).onReleased(refreshLayout, height, extendHeight);
+            ((RefreshInternal) mWrapperView).onReleased(refreshLayout, height, maxDragHeight);
         }
     }
 
     @Override
-    public void onStartAnimator(@NonNull RefreshLayout refreshLayout, int height, int extendHeight) {
+    public void onStartAnimator(@NonNull RefreshLayout refreshLayout, int height, int maxDragHeight) {
         if (mWrapperView instanceof RefreshInternal) {
-            ((RefreshInternal) mWrapperView).onStartAnimator(refreshLayout, height, extendHeight);
+            ((RefreshInternal) mWrapperView).onStartAnimator(refreshLayout, height, maxDragHeight);
         }
     }
 

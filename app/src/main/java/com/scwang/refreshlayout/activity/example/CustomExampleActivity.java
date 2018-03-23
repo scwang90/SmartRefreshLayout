@@ -131,13 +131,14 @@ public class CustomExampleActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
+        public void onStartAnimator(@NonNull RefreshLayout layout, int height, int maxDragHeight) {
             mProgressDrawable.start();//开始动画
         }
 
         @Override
         public int onFinish(@NonNull RefreshLayout layout, boolean success) {
             mProgressDrawable.stop();//停止动画
+            mProgressView.setVisibility(GONE);//隐藏动画
             if (success){
                 mHeaderText.setText("刷新完成");
             } else {
@@ -174,26 +175,26 @@ public class CustomExampleActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
+        public void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight) {
 
         }
 
         @Override
-        public void onMoving(boolean isDragging, float percent, int offset, int height, int extendHeight) {
+        public void onMoving(boolean isDragging, float percent, int offset, int height, int maxDragHeight) {
 
         }
 
 //        @Override
-//        public void onPulling(float percent, int offset, int height, int extendHeight) {
+//        public void onPulling(float percent, int offset, int height, int maxDragHeight) {
 //
 //        }
 //        @Override
-//        public void onReleasing(float percent, int offset, int height, int extendHeight) {
+//        public void onReleasing(float percent, int offset, int height, int maxDragHeight) {
 //
 //        }
 
         @Override
-        public void onReleased(@NonNull RefreshLayout refreshLayout, int height, int extendHeight) {
+        public void onReleased(@NonNull RefreshLayout refreshLayout, int height, int maxDragHeight) {
 
         }
 

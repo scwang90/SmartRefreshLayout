@@ -178,29 +178,29 @@ public class DeliveryHeader extends InternalAbstract implements RefreshHeader {
     //<editor-fold desc="RefreshHeader">
 
     @Override
-    public void onMoving(boolean isDragging, float percent, int offset, int height, int extendHeight) {
+    public void onMoving(boolean isDragging, float percent, int offset, int height, int maxDragHeight) {
         if (mState != RefreshState.Refreshing) {
             mBoxDrawable.setAlpha((int) (255 * (1f - Math.max(0, percent - 1))));
         }
     }
 
 //    @Override
-//    public void onPulling(float percent, int offset, int height, int extendHeight) {
+//    public void onPulling(float percent, int offset, int height, int maxDragHeight) {
 //        if (mState != RefreshState.Refreshing) {
 //            mBoxDrawable.setAlpha((int) (255 * (1f - Math.max(0, percent - 1))));
 //        }
 //    }
 //
 //    @Override
-//    public void onReleasing(float percent, int offset, int height, int extendHeight) {
+//    public void onReleasing(float percent, int offset, int height, int maxDragHeight) {
 //        if (mState != RefreshState.Refreshing) {
 //            mBoxDrawable.setAlpha((int) (255 * (1f - Math.max(0, percent - 1))));
 //        }
 //    }
 
     @Override
-    public void onReleased(@NonNull RefreshLayout layout, int height, int extendHeight) {
-        onStartAnimator(layout, height, extendHeight);
+    public void onReleased(@NonNull RefreshLayout layout, int height, int maxDragHeight) {
+        onStartAnimator(layout, height, maxDragHeight);
     }
 
     @Override
@@ -234,12 +234,12 @@ public class DeliveryHeader extends InternalAbstract implements RefreshHeader {
     }
 
     @Override
-    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
+    public void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight) {
         mHeaderHeight = height;
     }
 
     @Override
-    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
+    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int maxDragHeight) {
         mState = RefreshState.Refreshing;
         mBoxDrawable.setAlpha(255);
         final View thisView = this;

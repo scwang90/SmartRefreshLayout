@@ -57,17 +57,17 @@ public class SecondFloorPracticeFragment extends Fragment {
                 refreshLayout.finishRefresh(2000);
             }
             @Override
-            public void onHeaderMoving(RefreshHeader header, boolean isDragging, float percent, int offset, int headerHeight, int extendHeight) {
+            public void onHeaderMoving(RefreshHeader header, boolean isDragging, float percent, int offset, int headerHeight, int maxDragHeight) {
                 toolbar.setAlpha(1 - Math.min(percent, 1));
                 floor.setTranslationY(Math.min(offset - floor.getHeight() + toolbar.getHeight(), refreshLayout.getLayout().getHeight() - floor.getHeight()));
             }
 //            @Override
-//            public void onHeaderPulling(@NonNull RefreshHeader header, float percent, int offset, int bottomHeight, int extendHeight) {
+//            public void onHeaderPulling(@NonNull RefreshHeader header, float percent, int offset, int bottomHeight, int maxDragHeight) {
 //                toolbar.setAlpha(1 - Math.min(percent, 1));
 //                floor.setTranslationY(Math.min(offset - floor.getHeight() + toolbar.getHeight(), refreshLayout.getLayout().getHeight() - floor.getHeight()));
 //            }
 //            @Override
-//            public void onHeaderReleasing(@NonNull RefreshHeader header, float percent, int offset, int bottomHeight, int extendHeight) {
+//            public void onHeaderReleasing(@NonNull RefreshHeader header, float percent, int offset, int bottomHeight, int maxDragHeight) {
 //                toolbar.setAlpha(1 - Math.min(percent, 1));
 //                floor.setTranslationY(Math.min(offset - floor.getHeight() + toolbar.getHeight(), refreshLayout.getLayout().getHeight() - floor.getHeight()));
 //            }

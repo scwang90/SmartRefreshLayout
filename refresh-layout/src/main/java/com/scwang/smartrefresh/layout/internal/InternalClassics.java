@@ -162,7 +162,7 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
 
     //<editor-fold desc="RefreshHeader">
     @Override
-    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
+    public void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight) {
         mRefreshKernel = kernel;
         mRefreshKernel.requestDrawBackgroundFor(this, mBackgroundColor);
 //        if (this instanceof RefreshHeader) {
@@ -173,7 +173,7 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
     }
 
     @Override
-    public void onStartAnimator(@NonNull RefreshLayout refreshLayout, int height, int extendHeight) {
+    public void onStartAnimator(@NonNull RefreshLayout refreshLayout, int height, int maxDragHeight) {
         final View progressView = mProgressView;
         if (progressView.getVisibility() != VISIBLE) {
             progressView.setVisibility(VISIBLE);
@@ -187,8 +187,8 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
     }
 
     @Override
-    public void onReleased(@NonNull RefreshLayout refreshLayout, int height, int extendHeight) {
-        onStartAnimator(refreshLayout, height, extendHeight);
+    public void onReleased(@NonNull RefreshLayout refreshLayout, int height, int maxDragHeight) {
+        onStartAnimator(refreshLayout, height, maxDragHeight);
     }
 
     @Override

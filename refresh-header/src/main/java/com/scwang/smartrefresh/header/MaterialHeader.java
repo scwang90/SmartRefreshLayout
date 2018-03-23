@@ -163,7 +163,7 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
 
     //<editor-fold desc="RefreshHeader">
     @Override
-    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
+    public void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight) {
         final View thisView = this;
         if (!mShowBezierWave) {
             kernel.requestDefaultTranslationContentFor(this, false);
@@ -175,7 +175,7 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
     }
 
     @Override
-    public void onMoving(boolean isDragging, float percent, int offset, int height, int extendHeight) {
+    public void onMoving(boolean isDragging, float percent, int offset, int height, int maxDragHeight) {
         if (mShowBezierWave) {
             mHeadHeight = Math.min(offset, height);
             mWaveHeight = Math.max(0, offset - height);
@@ -213,7 +213,7 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
     }
 
 //    @Override
-//    public void onPulling(float percent, int offset, int height, int extendHeight) {
+//    public void onPulling(float percent, int offset, int height, int maxDragHeight) {
 //        if (mShowBezierWave) {
 //            mHeadHeight = Math.min(offset, height);
 //            mWaveHeight = Math.max(0, offset - height);
@@ -245,9 +245,9 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
 //    }
 //
 //    @Override
-//    public void onReleasing(float percent, int offset, int height, int extendHeight) {
+//    public void onReleasing(float percent, int offset, int height, int maxDragHeight) {
 //        if (!mProgress.isRunning() && !mFinished) {
-//            onPulling(percent, offset, height, extendHeight);
+//            onPulling(percent, offset, height, maxDragHeight);
 //        } else {
 //            if (mShowBezierWave) {
 //                mHeadHeight = Math.min(offset, height);
@@ -258,7 +258,7 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
 //    }
 
     @Override
-    public void onReleased(@NonNull RefreshLayout layout, int height, int extendHeight) {
+    public void onReleased(@NonNull RefreshLayout layout, int height, int maxDragHeight) {
         mProgress.start();
         final View circleView = mCircleView;
         if ((int) circleView.getTranslationY() != height / 2 + mCircleDiameter / 2) {

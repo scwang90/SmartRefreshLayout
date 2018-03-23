@@ -144,7 +144,7 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
     //<editor-fold desc="RefreshHeader">
 
     @Override
-    public void onMoving(boolean isDragging, float percent, int offset, int height, int extendHeight) {
+    public void onMoving(boolean isDragging, float percent, int offset, int height, int maxDragHeight) {
         if (isDragging) {
             if (mState == RefreshState.Refreshing) {
                 return;
@@ -193,7 +193,7 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
     }
 
 //    @Override
-//    public void onPulling(float percent, int offset, int height, int extendHeight) {
+//    public void onPulling(float percent, int offset, int height, int maxDragHeight) {
 //
 //        if (mState == RefreshState.Refreshing) {
 //            return;
@@ -239,7 +239,7 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
 //    }
 
     @Override
-    public void onReleased(@NonNull RefreshLayout layout, int height, int extendHeight) {
+    public void onReleased(@NonNull RefreshLayout layout, int height, int maxDragHeight) {
         mLastFirstBounds = 0;
         mWaveView.animationDropCircle();
         mProgress.setAlpha(0xff);

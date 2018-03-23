@@ -115,7 +115,7 @@ public class FunGameHitBlockHeader extends FunGameView {
     }
 
     @Override
-    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
+    public void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight) {
         final View thisView = this;
         final int measuredWidth = thisView.getMeasuredWidth();
         blockHeight = height / BLOCK_VERTICAL_NUM - DIVIDING_LINE_SIZE;
@@ -125,7 +125,7 @@ public class FunGameHitBlockHeader extends FunGameView {
         racketLeft = measuredWidth * RACKET_POSITION_RATIO;
 
         controllerSize = (int) (blockHeight * 1.6f);
-        super.onInitialized(kernel, height, extendHeight);
+        super.onInitialized(kernel, height, maxDragHeight);
     }
     //</editor-fold>
 

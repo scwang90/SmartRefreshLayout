@@ -147,9 +147,9 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
     //<editor-fold desc="RefreshFooter">
 
     @Override
-    public void onStartAnimator(@NonNull RefreshLayout refreshLayout, int height, int extendHeight) {
+    public void onStartAnimator(@NonNull RefreshLayout refreshLayout, int height, int maxDragHeight) {
         if (!mNoMoreData) {
-            super.onStartAnimator(refreshLayout, height, extendHeight);
+            super.onStartAnimator(refreshLayout, height, maxDragHeight);
         }
     }
 

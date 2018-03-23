@@ -112,7 +112,7 @@ public abstract class FunGameBase extends InternalAbstract implements RefreshHea
         }
     }
 
-    protected abstract void onManualOperationMove(float percent, int offset, int height, int extendHeight);
+    protected abstract void onManualOperationMove(float percent, int offset, int height, int maxDragHeight);
 
     protected void onManualOperationRelease() {
         if (mIsFinish) {
@@ -141,8 +141,8 @@ public abstract class FunGameBase extends InternalAbstract implements RefreshHea
 
 
     @Override
-    public void onMoving(boolean isDragging, float percent, int offset, int height, int extendHeight) {
-        if (mManualOperation) onManualOperationMove(percent, offset, height, extendHeight);
+    public void onMoving(boolean isDragging, float percent, int offset, int height, int maxDragHeight) {
+        if (mManualOperation) onManualOperationMove(percent, offset, height, maxDragHeight);
         else {
             mOffset = offset;
             final View thisView = this;
@@ -151,8 +151,8 @@ public abstract class FunGameBase extends InternalAbstract implements RefreshHea
     }
 
 //    @Override
-//    public void onPulling(float percent, int offset, int height, int extendHeight) {
-//        if (mManualOperation) onManualOperationMove(percent, offset, height, extendHeight);
+//    public void onPulling(float percent, int offset, int height, int maxDragHeight) {
+//        if (mManualOperation) onManualOperationMove(percent, offset, height, maxDragHeight);
 //        else {
 //            mOffset = offset;
 //            setTranslationY(mOffset - mHeaderHeight);
@@ -160,12 +160,12 @@ public abstract class FunGameBase extends InternalAbstract implements RefreshHea
 //    }
 //
 //    @Override
-//    public void onReleasing(float percent, int offset, int height, int extendHeight) {
-//        onPulling(percent, offset, height, extendHeight);
+//    public void onReleasing(float percent, int offset, int height, int maxDragHeight) {
+//        onPulling(percent, offset, height, maxDragHeight);
 //    }
 
     @Override
-    public void onStartAnimator(@NonNull RefreshLayout refreshLayout, int height, int extendHeight) {
+    public void onStartAnimator(@NonNull RefreshLayout refreshLayout, int height, int maxDragHeight) {
         mIsFinish = false;
         final View thisView = this;
         thisView.setTranslationY(0);
@@ -178,7 +178,7 @@ public abstract class FunGameBase extends InternalAbstract implements RefreshHea
     }
 
     @Override
-    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
+    public void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight) {
         mRefreshKernel = kernel;
         mHeaderHeight = height;
         final View thisView = this;

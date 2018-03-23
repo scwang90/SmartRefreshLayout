@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.scwang.refreshlayout.fragment.example.NestedScrollUsingFragmentIntegral">
+    tools:context="com.scwang.refreshlayout.fragment.example.NestedScrollExampleFragmentIntegral">
 
     <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"

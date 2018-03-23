@@ -58,7 +58,8 @@ public class RefreshExampleFragment extends Fragment implements AdapterView.OnIt
         SnapHelper(R.string.index_example_snap_helper, SnapHelperExampleActivity.class),
         ViewPager(R.string.index_example_pager, ViewPagerExampleFragment.class),
         BottomSheet(R.string.index_example_bottom_sheet,BottomSheetExampleFragment.class),
-        ThreeLevel(R.string.index_example_level, ThreeLevelExampleFragment.class),;
+//        ThreeLevel(R.string.index_example_level, ThreeLevelExampleFragment.class),
+        ;
         public int nameId;
         public Class<?> clazz;
 

@@ -232,7 +232,7 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
 
 
     @Override
-    public void onMoving(boolean isDragging, float percent, int offset, int height, int extendHeight) {
+    public void onMoving(boolean isDragging, float percent, int offset, int height, int maxDragHeight) {
         if (isDragging || mWavePulling) {
             mWavePulling = true;
             mHeadHeight = height;
@@ -241,21 +241,21 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
     }
 
 //    @Override
-//    public void onPulling(float percent, int offset, int height, int extendHeight) {
+//    public void onPulling(float percent, int offset, int height, int maxDragHeight) {
 //        mWavePulling = true;
 //        mHeadHeight = height;
 //        mWaveHeight = Math.max(offset - height, 0) * .8f;
 //    }
 //
 //    @Override
-//    public void onReleasing(float percent, int offset, int height, int extendHeight) {
+//    public void onReleasing(float percent, int offset, int height, int maxDragHeight) {
 //        if (mWavePulling) {
-//            onPulling(percent, offset, height, extendHeight);
+//            onPulling(percent, offset, height, maxDragHeight);
 //        }
 //    }
 
     @Override
-    public void onReleased(@NonNull RefreshLayout refreshLayout, int height, int extendHeight) {
+    public void onReleased(@NonNull RefreshLayout refreshLayout, int height, int maxDragHeight) {
         mWavePulling = false;
         mHeadHeight = height;
         mBollRadius = height / 6;

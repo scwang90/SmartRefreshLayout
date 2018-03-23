@@ -189,25 +189,25 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
     //<editor-fold desc="RefreshHeader">
 
     @Override
-    public void onMoving(boolean isDragging, float percent, int offset, int height, int extendHeight) {
+    public void onMoving(boolean isDragging, float percent, int offset, int height, int maxDragHeight) {
         mHeaderHeight = height;
         mRotate = mPercent = 1f * offset / height;
     }
 
 //    @Override
-//    public void onPulling(float percent, int offset, int height, int extendHeight) {
+//    public void onPulling(float percent, int offset, int height, int maxDragHeight) {
 //        mRotate = mPercent = 1f * offset / height;
 //        mHeaderHeight = height;
 //    }
 //
 //    @Override
-//    public void onReleasing(float percent, int offset, int height, int extendHeight) {
+//    public void onReleasing(float percent, int offset, int height, int maxDragHeight) {
 //        mRotate = mPercent = 1f * offset / height;
 //        mHeaderHeight = height;
 //    }
 
     @Override
-    public void onReleased(@NonNull RefreshLayout layout, int height, int extendHeight) {
+    public void onReleased(@NonNull RefreshLayout layout, int height, int maxDragHeight) {
         isRefreshing = true;
         final View thisView = this;
         thisView.startAnimation(mAnimation);
@@ -252,7 +252,7 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
 //    }
 //
 //    @Override
-//    public int defineExtendHeight() {
+//    public int definemaxDragHeight() {
 //        return (int) (defineHeight() * 0.3f);
 //    }
 

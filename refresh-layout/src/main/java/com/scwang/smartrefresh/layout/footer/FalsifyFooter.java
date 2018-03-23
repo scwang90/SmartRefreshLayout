@@ -74,13 +74,13 @@ public class FalsifyFooter extends InternalAbstract implements RefreshFooter {
     //<editor-fold desc="RefreshFooter">
 
     @Override
-    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
+    public void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight) {
         mRefreshKernel = kernel;
         kernel.getRefreshLayout().setEnableAutoLoadMore(false);
     }
 
     @Override
-    public void onReleased(@NonNull RefreshLayout layout, int height, int extendHeight) {
+    public void onReleased(@NonNull RefreshLayout layout, int height, int maxDragHeight) {
         if (mRefreshKernel != null) {
             mRefreshKernel.setState(RefreshState.None);
             //onReleased 的时候 调用 setState(RefreshState.None); 并不会立刻改变成 None

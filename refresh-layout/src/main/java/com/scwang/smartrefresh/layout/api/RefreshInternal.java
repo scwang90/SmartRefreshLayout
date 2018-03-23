@@ -43,50 +43,50 @@ public interface RefreshInternal extends OnStateChangedListener {
      * 尺寸定义完成 （如果高度不改变（代码修改：setHeader），只调用一次, 在RefreshLayout#onMeasure中调用）
      * @param kernel RefreshKernel
      * @param height HeaderHeight or FooterHeight
-     * @param extendHeight extendHeaderHeight or extendFooterHeight
+     * @param maxDragHeight 最大拖动高度
      */
-    void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight);
+    void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight);
     /**
      * 手指拖动下拉（会连续多次调用，添加isDragging并取代之前的onPulling、onReleasing）
      * @param isDragging true 手指正在拖动 false 回弹动画
-     * @param percent 下拉的百分比 值 = offset/footerHeight (0 - percent - (footerHeight+extendHeight) / footerHeight )
-     * @param offset 下拉的像素偏移量  0 - offset - (footerHeight+extendHeight)
+     * @param percent 下拉的百分比 值 = offset/footerHeight (0 - percent - (footerHeight+maxDragHeight) / footerHeight )
+     * @param offset 下拉的像素偏移量  0 - offset - (footerHeight+maxDragHeight)
      * @param height 高度 HeaderHeight or FooterHeight
-     * @param extendHeight 扩展高度  extendHeaderHeight or extendFooterHeight
+     * @param maxDragHeight 最大拖动高度
      */
-    void onMoving(boolean isDragging, float percent, int offset, int height, int extendHeight);
+    void onMoving(boolean isDragging, float percent, int offset, int height, int maxDragHeight);
 //    /**
 //     * 手指拖动下拉（会连续多次调用）
-//     * @param percent 下拉的百分比 值 = offset/footerHeight (0 - percent - (footerHeight+extendHeight) / footerHeight )
-//     * @param offset 下拉的像素偏移量  0 - offset - (footerHeight+extendHeight)
+//     * @param percent 下拉的百分比 值 = offset/footerHeight (0 - percent - (footerHeight+maxDragHeight) / footerHeight )
+//     * @param offset 下拉的像素偏移量  0 - offset - (footerHeight+maxDragHeight)
 //     * @param height 高度 HeaderHeight or FooterHeight
-//     * @param extendHeight 扩展高度  extendHeaderHeight or extendFooterHeight
+//     * @param maxDragHeight 最大拖动高度
 //     */
-//    void onPulling(float percent, int offset, int height, int extendHeight);
+//    void onPulling(float percent, int offset, int height, int maxDragHeight);
 //    /**
 //     * 手指释放之后的持续动画（会连续多次调用）
-//     * @param percent 下拉的百分比 值 = offset/footerHeight (0 - percent - (footerHeight+extendHeight) / footerHeight )
-//     * @param offset 下拉的像素偏移量  0 - offset - (footerHeight+extendHeight)
+//     * @param percent 下拉的百分比 值 = offset/footerHeight (0 - percent - (footerHeight+maxDragHeight) / footerHeight )
+//     * @param offset 下拉的像素偏移量  0 - offset - (footerHeight+maxDragHeight)
 //     * @param height 高度 HeaderHeight or FooterHeight
-//     * @param extendHeight 扩展高度  extendHeaderHeight or extendFooterHeight
+//     * @param maxDragHeight 最大拖动高度
 //     */
-//    void onReleasing(float percent, int offset, int height, int extendHeight);
+//    void onReleasing(float percent, int offset, int height, int maxDragHeight);
 
     /**
      * 释放时刻（调用一次，将会触发加载）
      * @param refreshLayout RefreshLayout
      * @param height 高度 HeaderHeight or FooterHeight
-     * @param extendHeight 扩展高度  extendHeaderHeight or extendFooterHeight
+     * @param maxDragHeight 最大拖动高度
      */
-    void onReleased(@NonNull RefreshLayout refreshLayout, int height, int extendHeight);
+    void onReleased(@NonNull RefreshLayout refreshLayout, int height, int maxDragHeight);
 
     /**
      * 开始动画
      * @param refreshLayout RefreshLayout
      * @param height HeaderHeight or FooterHeight
-     * @param extendHeight extendHeaderHeight or extendFooterHeight
+     * @param maxDragHeight 最大拖动高度
      */
-    void onStartAnimator(@NonNull RefreshLayout refreshLayout, int height, int extendHeight);
+    void onStartAnimator(@NonNull RefreshLayout refreshLayout, int height, int maxDragHeight);
 
     /**
      * 动画结束
