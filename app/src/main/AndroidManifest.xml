@@ -37,14 +37,14 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.style.FlyRefreshStyleActivity"
-            android:label="@string/title_activity_fly_refresh"
+            android:label="@string/title_activity_style_fly_refresh"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.using.NestedLayoutUsingActivity"
+            android:name=".activity.example.NestedLayoutExampleActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.style.WaveSwipStyleActivity"
-            android:label="@string/title_activity_style_wave_swip"
+            android:name=".activity.style.WaveSwipeStyleActivity"
+            android:label="@string/title_activity_style_wave_swipe"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.style.MaterialStyleActivity"
@@ -63,7 +63,7 @@
             android:label="@string/title_activity_style_taurus"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.style.BezierStyleActivity"
+            android:name=".activity.style.BezierRadarStyleActivity"
             android:label="@string/title_activity_style_bezier"
             android:screenOrientation="portrait" />
         <activity
@@ -71,52 +71,52 @@
             android:label="@string/title_activity_style_classics"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.style.CircleStyleActivity"
+            android:name=".activity.style.BezierCircleStyleActivity"
             android:label="@string/title_activity_style_circle"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.style.FunGameBattleCityStyleActivity"
-            android:label="@string/title_activity_style_fungame_battlecity"
+            android:label="@string/title_activity_style_battle_city"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.style.FunGameHitBlockStyleActivity"
-            android:label="@string/title_activity_style_fungame_hitblock"
+            android:label="@string/title_activity_style_hit_block"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.style.StoreHouseStyleActivity"
             android:label="@string/title_activity_style_storehouse"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.style.DropboxStyleActivity"
-            android:label="@string/title_activity_style_dropbox"
+            android:name=".activity.style.DropBoxStyleActivity"
+            android:label="@string/title_activity_style_drop_box"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.style.DeliveryStyleActivity"
-            android:label="@string/title_activity_style_dropbox"
+            android:label="@string/title_activity_style_drop_box"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.using.BasicUsingActivity"
-            android:label="@string/title_activity_using_basic"
+            android:name=".activity.example.BasicExampleActivity"
+            android:label="@string/title_activity_example_basic"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.using.AssignDefaultUsingActivity"
-            android:label="@string/title_activity_using_assign_default"
+            android:name=".activity.example.AssignDefaultExampleActivity"
+            android:label="@string/title_activity_example_assign_default"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.using.AssignXmlUsingActivity"
-            android:label="@string/title_activity_using_assign_xml"
+            android:name=".activity.example.AssignXmlExampleActivity"
+            android:label="@string/title_activity_example_assign_xml"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.using.AssignCodeUsingActivity"
-            android:label="@string/title_activity_using_assign_code"
+            android:name=".activity.example.AssignCodeExampleActivity"
+            android:label="@string/title_activity_example_assign_code"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.using.OverScrollUsingActivity"
-            android:label="@string/title_activity_using_overscroll"
+            android:name=".activity.example.OverScrollExampleActivity"
+            android:label="@string/title_activity_example_over_scroll"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.using.ListenerUsingActivity"
-            android:label="@string/title_activity_using_listener"
+            android:name=".activity.example.ListenerExampleActivity"
+            android:label="@string/title_activity_example_listener"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.practice.RepastPracticeActivity"
@@ -127,12 +127,12 @@
             android:label="@string/title_activity_practice_profile"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.practice.WebviewPracticeActivity"
+            android:name=".activity.practice.WebViewPracticeActivity"
             android:label="@string/title_activity_practice_profile"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.practice.FeedlistPracticeActivity"
-            android:label="@string/title_activity_practice_feedlist"
+            android:label="@string/title_activity_practice_feed_list"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.practice.WeiboPracticeActivity"
@@ -142,13 +142,13 @@
             android:label="@string/title_activity_practice_banner"
             android:screenOrientation="portrait" />
         <activity android:name=".activity.practice.QQBrowserPracticeActivity"
-            android:label="@string/title_activity_practice_qqbrowser"
+            android:label="@string/title_activity_practice_qq_browser"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.using.CustomUsingActivity"
-            android:label="@string/title_activity_using_custom"
+        <activity android:name=".activity.example.CustomExampleActivity"
+            android:label="@string/title_activity_example_custom"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.using.SnapHelperUsingActivity"
-            android:label="@string/title_activity_using_snaphelper"
+        <activity android:name=".activity.example.SnapHelperExampleActivity"
+            android:label="@string/title_activity_example_snap_helper"
             android:screenOrientation="portrait"/>
     </application>
 

@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.scwang.refreshlayout.activity.style.BezierStyleActivity"
+    tools:context="com.scwang.refreshlayout.activity.style.BezierRadarStyleActivity"
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"
         app:navigationIcon="?attr/homeAsUpIndicator"
-        app:title="@string/title_activity_style_dropbox"/>
+        app:title="@string/title_activity_style_drop_box"/>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
@@ -23,7 +23,7 @@
         app:srlAccentColor="@android:color/white"
         app:srlEnableHeaderTranslationContent="true"
         app:srlEnableLoadMore="false">
-        <com.scwang.smartrefresh.header.DropboxHeader
+        <com.scwang.smartrefresh.header.DropBoxHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <android.support.v7.widget.RecyclerView

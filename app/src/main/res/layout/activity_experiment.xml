@@ -6,27 +6,48 @@
     android:layout_height="match_parent"
     tools:context="com.scwang.refreshlayout.activity.ExperimentActivity">
 
-    <com.scwang.refreshlayout.widget.RefreshLayout
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#888">
-        <com.scwang.smartrefresh.layout.header.ClassicsHeader
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srlPrimaryColor="#444"
-            app:srlAccentColor="@android:color/white"/>
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#1bf"
-            android:overScrollMode="never"
-            tools:listitem="@android:layout/simple_list_item_2"/>
-        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+            android:gravity="center"
+            android:text="Content"/>
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srlPrimaryColor="#444"
-            app:srlAccentColor="@android:color/white"/>
-    </com.scwang.refreshlayout.widget.RefreshLayout>
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Footer"/>
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Footer"/>
+        <!--<com.scwang.smartrefresh.layout.header.ClassicsHeader-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:gravity="center"-->
+            <!--android:text="Header"/>-->
+
+        <!--<com.scwang.smartrefresh.layout.header.ClassicsHeader-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--app:srlPrimaryColor="#444"-->
+            <!--app:srlAccentColor="@android:color/white"/>-->
+        <!--<android.support.v7.widget.RecyclerView-->
+            <!--android:id="@+id/recyclerView"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="#1bf"-->
+            <!--android:overScrollMode="never"-->
+            <!--tools:listitem="@android:layout/simple_list_item_2"/>-->
+        <!--<com.scwang.smartrefresh.layout.footer.ClassicsFooter-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--app:srlPrimaryColor="#444"-->
+            <!--app:srlAccentColor="@android:color/white"/>-->
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </android.support.constraint.ConstraintLayout>

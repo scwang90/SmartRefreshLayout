@@ -18,11 +18,11 @@ public class StoreHouseBarItem extends Animation {
     public float translationX;
     public int index;
 
-    private final Paint mPaint = new Paint();
-    private float mFromAlpha = 1.0f;
-    private float mToAlpha = 0.4f;
-    private PointF mCStartPoint;
-    private PointF mCEndPoint;
+    protected final Paint mPaint = new Paint();
+    protected float mFromAlpha = 1.0f;
+    protected float mToAlpha = 0.4f;
+    protected PointF mCStartPoint;
+    protected PointF mCEndPoint;
 
     public StoreHouseBarItem(int index, PointF start, PointF end, int color, int lineWidth) {
         this.index = index;
@@ -48,8 +48,7 @@ public class StoreHouseBarItem extends Animation {
 
     public void resetPosition(int horizontalRandomness) {
         Random random = new Random();
-        int randomNumber = -random.nextInt(horizontalRandomness) + horizontalRandomness;
-        translationX = randomNumber;
+        translationX = -random.nextInt(horizontalRandomness) + horizontalRandomness;
     }
 
     @Override

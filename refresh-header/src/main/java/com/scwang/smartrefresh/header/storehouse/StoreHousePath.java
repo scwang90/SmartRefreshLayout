@@ -3,6 +3,7 @@ package com.scwang.smartrefresh.header.storehouse;
 import android.util.SparseArray;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * StoreHouse 路径
@@ -13,7 +14,7 @@ public class StoreHousePath {
     private static final SparseArray<float[]> sPointList;
 
     static {
-        sPointList = new SparseArray<float[]>();
+        sPointList = new SparseArray<>();
         float[][] LETTERS = new float[][]{
                 new float[]{
                         // A
@@ -311,24 +312,20 @@ public class StoreHousePath {
             sPointList.append(i + 48, NUMBERS[i]);
         }
         // blank
-        addChar(' ', new float[]{});
+        sPointList.append(' ', new float[]{});
         // -
-        addChar('-', new float[]{
+        sPointList.append('-', new float[]{
                 0, 36, 47, 36
         });
         // .
-        addChar('.', new float[]{
+        sPointList.append('.', new float[]{
                 24, 60, 24, 72
         });
     }
 
-    public static void addChar(char c, float[] points) {
-        sPointList.append(c, points);
-    }
-
-    public static ArrayList<float[]> getPath(String str) {
-        return getPath(str, 1, 14);
-    }
+//    public static ArrayList<float[]> getPath(String str) {
+//        return getPath(str, 1, 14);
+//    }
 
     /**
      * 根据符号和自提获取路径
@@ -337,8 +334,9 @@ public class StoreHousePath {
      * @param gapBetweenLetter 字符
      * @return ArrayList of float[] {x1, y1, x2, y2}
      */
-    public static ArrayList<float[]> getPath(String str, float scale, int gapBetweenLetter) {
-        ArrayList<float[]> list = new ArrayList<>();
+    @SuppressWarnings("SameParameterValue")
+    public static List<float[]> getPath(String str, float scale, int gapBetweenLetter) {
+        List<float[]> list = new ArrayList<>();
         float offsetForWidth = 0;
         for (int i = 0; i < str.length(); i++) {
             int pos = str.charAt(i);

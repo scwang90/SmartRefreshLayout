@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -82,15 +83,15 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
          *----------------------------------------------------------*/
 
         MountainSceneView mSceneView = (MountainSceneView) findViewById(R.id.mountain);
-        mFlyView = (FlyView) findViewById(R.id.flyview);
-        mFlyRefreshHeader = (FlyRefreshHeader)findViewById(R.id.flyrefresh);
+        mFlyView = (FlyView) findViewById(R.id.flyView);
+        mFlyRefreshHeader = (FlyRefreshHeader)findViewById(R.id.flyRefresh);
         mFlyRefreshHeader.setUp(mSceneView, mFlyView);//绑定场景和纸飞机
         mRefreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
         mRefreshLayout.setReboundInterpolator(new ElasticOutInterpolator());//设置回弹插值器，会带有弹簧震动效果
         mRefreshLayout.setReboundDuration(800);//设置回弹动画时长
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh(RefreshLayout refreshLayout) {
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 View child = mListView.getChildAt(0);
                 if (child != null) {
                     //开始刷新的时候个第一个item设置动画效果
@@ -111,18 +112,23 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
             }
         });
         //设置 让 AppBarLayout 和 RefreshLayout 的滚动同步 并不保持 toolbar 位置不变
-        final AppBarLayout appBar = (AppBarLayout) findViewById(R.id.app_bar);
+        final AppBarLayout appBar = (AppBarLayout) findViewById(R.id.appbar);
         mRefreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
             @Override
-            public void onHeaderPulling(RefreshHeader header, float percent, int offset, int footerHeight, int extendHeight) {
+            public void onHeaderMoving(RefreshHeader header, boolean isDragging, float percent, int offset, int headerHeight, int maxDragHeight) {
                 appBar.setTranslationY(offset);
                 toolbar.setTranslationY(-offset);
             }
-            @Override
-            public void onHeaderReleasing(RefreshHeader header, float percent, int offset, int footerHeight, int extendHeight) {
-                appBar.setTranslationY(offset);
-                toolbar.setTranslationY(-offset);
-            }
+//            @Override
+//            public void onHeaderPulling(@NonNull RefreshHeader header, float percent, int offset, int footerHeight, int maxDragHeight) {
+//                appBar.setTranslationY(offset);
+//                toolbar.setTranslationY(-offset);
+//            }
+//            @Override
+//            public void onHeaderReleasing(@NonNull RefreshHeader header, float percent, int offset, int footerHeight, int maxDragHeight) {
+//                appBar.setTranslationY(offset);
+//                toolbar.setTranslationY(-offset);
+//            }
         });
         /*-----------------------------------------------------------
          * 关键代码-结束
@@ -143,7 +149,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
         mListView.setLayoutManager(mLayoutManager);
         mListView.setAdapter(mAdapter);
         mListView.setItemAnimator(new SampleItemAnimator());
-        mToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        mToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbarLayout);
         mActionButton = (FloatingActionButton) findViewById(R.id.fab);
         /*
          * 设置点击 ActionButton 时候触发自动刷新 并改变主题颜色
@@ -227,13 +233,13 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
     }
 
     private void initDataSet() {
-        mDataSet.add(new ItemData(Color.parseColor("#76A9FC"), R.drawable.ic_fly_refresh_poll, "Meeting Minutes", new Date(2014 - 1900, 2, 9)));
+        mDataSet.add(new ItemData(0xFF76A9FC, R.drawable.ic_fly_refresh_poll, "Meeting Minutes", new Date(2014 - 1900, 2, 9)));
         mDataSet.add(new ItemData(Color.GRAY, R.drawable.ic_fly_refresh_folder, "Favorites Photos", new Date(2014 - 1900, 1, 3)));
         mDataSet.add(new ItemData(Color.GRAY, R.drawable.ic_fly_refresh_folder, "Photos", new Date(2014 - 1900, 0, 9)));
     }
 
     private void addItemData() {
-        ItemData itemData = new ItemData(Color.parseColor("#FFC970"), R.drawable.ic_fly_refresh_smartphone, "Magic Cube Show", new Date());
+        ItemData itemData = new ItemData(0xFFFFC970, R.drawable.ic_fly_refresh_smartphone, "Magic Cube Show", new Date());
         mDataSet.add(0, itemData);
         mAdapter.notifyItemInserted(0);
         mLayoutManager.scrollToPosition(0);

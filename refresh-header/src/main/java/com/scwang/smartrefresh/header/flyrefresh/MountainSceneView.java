@@ -8,82 +8,68 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
-import android.os.Build;
 import android.support.annotation.ColorInt;
-import android.support.annotation.RequiresApi;
+import android.support.v4.graphics.ColorUtils;
+import android.support.v4.view.animation.PathInterpolatorCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.Interpolator;
 
 import com.scwang.smartrefresh.header.R;
-import com.scwang.smartrefresh.header.util.ColorUtils;
 
 /**
  * 山丘树木场景视图
  * Created by jing on 2015-5-28.
  * from https://github.com/race604/FlyRefresh
  */
+@SuppressWarnings("UnnecessaryLocalVariable")
 public class MountainSceneView extends View {
 
-    private int COLOR_BACKGROUND = Color.parseColor("#7ECEC9");
-    private int COLOR_MOUNTAIN_1 = Color.parseColor("#86DAD7");
-    private int COLOR_MOUNTAIN_2 = Color.parseColor("#3C929C");
-    private int COLOR_MOUNTAIN_3 = Color.parseColor("#3E5F73");
-    private int COLOR_TREE_1_BRANCH = Color.parseColor("#1F7177");
-    private int COLOR_TREE_1_BTRUNK = Color.parseColor("#0C3E48");
-    private int COLOR_TREE_2_BRANCH = Color.parseColor("#34888F");
-    private int COLOR_TREE_2_BTRUNK = Color.parseColor("#1B6169");
-    private int COLOR_TREE_3_BRANCH = Color.parseColor("#57B1AE");
-    private int COLOR_TREE_3_BTRUNK = Color.parseColor("#62A4AD");
+    protected int COLOR_BACKGROUND = 0xFF7ECEC9;
+    protected int COLOR_MOUNTAIN_1 = 0xFF86DAD7;
+    protected int COLOR_MOUNTAIN_2 = 0xFF3C929C;
+    protected int COLOR_MOUNTAIN_3 = 0xFF3E5F73;
+    protected int COLOR_TREE_1_BRANCH = 0xFF1F7177;
+    protected int COLOR_TREE_1_BRINK = 0xFF0C3E48;
+    protected int COLOR_TREE_2_BRANCH = 0xFF34888F;
+    protected int COLOR_TREE_2_BRINK = 0xFF1B6169;
+    protected int COLOR_TREE_3_BRANCH = 0xFF57B1AE;
+    protected int COLOR_TREE_3_BRINK = 0xFF62A4AD;
 
-    private static final int WIDTH = 240;
-    private static final int HEIGHT = 180;
+    protected static final int WIDTH = 240;
+    protected static final int HEIGHT = 180;
 
-    private static final int TREE_WIDTH = 100;
-    private static final int TREE_HEIGHT = 200;
+    protected static final int TREE_WIDTH = 100;
+    protected static final int TREE_HEIGHT = 200;
 
-    private Paint mMountPaint = new Paint();
-    private Paint mTrunkPaint = new Paint();
-    private Paint mBranchPaint = new Paint();
-    private Paint mBoarderPaint = new Paint();
+    protected Paint mMountPaint = new Paint();
+    protected Paint mTrunkPaint = new Paint();
+    protected Paint mBranchPaint = new Paint();
+    protected Paint mBoarderPaint = new Paint();
 
-    private Path mMount1 = new Path();
-    private Path mMount2 = new Path();
-    private Path mMount3 = new Path();
-    private Path mTrunk = new Path();
-    private Path mBranch = new Path();
-    private Matrix mTransMatrix = new Matrix();
+    protected Path mMount1 = new Path();
+    protected Path mMount2 = new Path();
+    protected Path mMount3 = new Path();
+    protected Path mTrunk = new Path();
+    protected Path mBranch = new Path();
+    protected Matrix mTransMatrix = new Matrix();
 
-    private float mScaleX = 5f;
-    private float mScaleY = 5f;
-    private float mMoveFactor = 0;
-    private float mBounceMax = 1;
-    private float mTreeBendFactor = Float.MAX_VALUE;
-    private int mViewportHeight = 0;
+    protected float mScaleX = 5f;
+    protected float mScaleY = 5f;
+    protected float mMoveFactor = 0;
+    protected float mBounceMax = 1;
+    protected float mTreeBendFactor = Float.MAX_VALUE;
+    protected int mViewportHeight = 0;
 
     //<editor-fold desc="MountainSceneView">
+
     public MountainSceneView(Context context) {
-        super(context);
-        initView(context, null);
+        this(context, null);
     }
 
     public MountainSceneView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initView(context, attrs);
-    }
 
-    public MountainSceneView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        initView(context, attrs);
-    }
-
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    public MountainSceneView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        initView(context, attrs);
-    }
-
-    private void initView(Context context, AttributeSet attrs) {
         mMountPaint.setAntiAlias(true);
         mMountPaint.setStyle(Paint.Style.FILL);
 
@@ -105,11 +91,13 @@ public class MountainSceneView extends View {
         updateTreePath(mMoveFactor, true);
     }
 
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        final int width = getMeasuredWidth();
-        final int height = getMeasuredHeight();
+        final View thisView = this;
+        final int width = thisView.getMeasuredWidth();
+        final int height = thisView.getMeasuredHeight();
         mScaleX = 1f * width / WIDTH;
         mScaleY = 1f * (mViewportHeight > 0 ? mViewportHeight : height) / HEIGHT;
 
@@ -248,29 +236,30 @@ public class MountainSceneView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        final View thisView = this;
         canvas.drawColor(COLOR_BACKGROUND);
 
         mMountPaint.setColor(COLOR_MOUNTAIN_1);
         canvas.drawPath(mMount1, mMountPaint);
 
         canvas.save();
-        canvas.scale(-1, 1, getWidth() / 2, 0);
+        canvas.scale(-1, 1, thisView.getWidth() / 2, 0);
         drawTree(canvas, 0.12f * mScaleX, 180 * mScaleX, (93 + 20 * mMoveFactor) * mScaleY,
-                COLOR_TREE_3_BTRUNK, COLOR_TREE_3_BRANCH);
+                COLOR_TREE_3_BRINK, COLOR_TREE_3_BRANCH);
         drawTree(canvas, 0.1f * mScaleX, 200 * mScaleX, (96 + 20 * mMoveFactor) * mScaleY,
-                COLOR_TREE_3_BTRUNK, COLOR_TREE_3_BRANCH);
+                COLOR_TREE_3_BRINK, COLOR_TREE_3_BRANCH);
         canvas.restore();
         mMountPaint.setColor(COLOR_MOUNTAIN_2);
         canvas.drawPath(mMount2, mMountPaint);
 
         drawTree(canvas, 0.2f * mScaleX, 160 * mScaleX, (105 + 30 * mMoveFactor) * mScaleY,
-                COLOR_TREE_1_BTRUNK, COLOR_TREE_1_BRANCH);
+                COLOR_TREE_1_BRINK, COLOR_TREE_1_BRANCH);
 
         drawTree(canvas, 0.14f * mScaleX, 180 * mScaleX, (105 + 30 * mMoveFactor) * mScaleY,
-                COLOR_TREE_2_BTRUNK, COLOR_TREE_2_BRANCH);
+                COLOR_TREE_2_BRINK, COLOR_TREE_2_BRANCH);
 
         drawTree(canvas, 0.16f * mScaleX, 140 * mScaleX, (105 + 30 * mMoveFactor) * mScaleY,
-                COLOR_TREE_2_BTRUNK, COLOR_TREE_2_BRANCH);
+                COLOR_TREE_2_BRINK, COLOR_TREE_2_BRANCH);
 
         mMountPaint.setColor(COLOR_MOUNTAIN_3);
         canvas.drawPath(mMount3, mMountPaint);
@@ -279,26 +268,26 @@ public class MountainSceneView extends View {
     //</editor-fold>
 
     public void setPrimaryColor(@ColorInt int color) {
-//        private int COLOR_BACKGROUND = Color.parseColor("#7ECEC9");
-//        private int COLOR_MOUNTAIN_1 = Color.parseColor("#86DAD7");
-//        private int COLOR_MOUNTAIN_2 = Color.parseColor("#3C929C");
-//        private int COLOR_MOUNTAIN_3 = Color.parseColor("#3E5F73");
-//        private int COLOR_TREE_1_BRANCH = Color.parseColor("#1F7177");
-//        private int COLOR_TREE_1_BTRUNK = Color.parseColor("#0C3E48");
-//        private int COLOR_TREE_2_BRANCH = Color.parseColor("#34888F");
-//        private int COLOR_TREE_2_BTRUNK = Color.parseColor("#1B6169");
-//        private int COLOR_TREE_3_BRANCH = Color.parseColor("#57B1AE");
-//        private int COLOR_TREE_3_BTRUNK = Color.parseColor("#62A4AD");
+//        private int COLOR_BACKGROUND = 0xFF7ECEC9;
+//        private int COLOR_MOUNTAIN_1 = 0xFF86DAD7;
+//        private int COLOR_MOUNTAIN_2 = 0xFF3C929C;
+//        private int COLOR_MOUNTAIN_3 = 0xFF3E5F73;
+//        private int COLOR_TREE_1_BRANCH = 0xFF1F7177;
+//        private int COLOR_TREE_1_BRINK = 0xFF0C3E48;
+//        private int COLOR_TREE_2_BRANCH = 0xFF34888F;
+//        private int COLOR_TREE_2_BRINK = 0xFF1B6169;
+//        private int COLOR_TREE_3_BRANCH = 0xFF57B1AE;
+//        private int COLOR_TREE_3_BRINK = 0xFF62A4AD;
         COLOR_BACKGROUND = color;
         COLOR_MOUNTAIN_1 = ColorUtils.compositeColors(0x99ffffff,color);
         COLOR_MOUNTAIN_2 = ColorUtils.compositeColors(0x993C929C,color);
         COLOR_MOUNTAIN_3 = ColorUtils.compositeColors(0xCC3E5F73,color);
         COLOR_TREE_1_BRANCH = ColorUtils.compositeColors(0x551F7177,color);
-        COLOR_TREE_1_BTRUNK = ColorUtils.compositeColors(0xCC0C3E48,color);
+        COLOR_TREE_1_BRINK = ColorUtils.compositeColors(0xCC0C3E48,color);
         COLOR_TREE_2_BRANCH = ColorUtils.compositeColors(0x5534888F,color);
-        COLOR_TREE_2_BTRUNK = ColorUtils.compositeColors(0xCC1B6169,color);
+        COLOR_TREE_2_BRINK = ColorUtils.compositeColors(0xCC1B6169,color);
         COLOR_TREE_3_BRANCH = ColorUtils.compositeColors(0x5557B1AE,color);
-        COLOR_TREE_3_BTRUNK = ColorUtils.compositeColors(0xCC62A4AD,color);
+        COLOR_TREE_3_BRINK = ColorUtils.compositeColors(0xCC62A4AD,color);
     }
 
     public void updatePercent(float percent) {
@@ -307,7 +296,8 @@ public class MountainSceneView extends View {
 
         mMoveFactor = Math.max(0, mBounceMax);
 
-        int height = getMeasuredHeight();
+        final View thisView = MountainSceneView.this;
+        int height = thisView.getMeasuredHeight();
         updateMountainPath(mMoveFactor, height > 0 ? height : HEIGHT);
         updateTreePath(bendFactor, false);
     }

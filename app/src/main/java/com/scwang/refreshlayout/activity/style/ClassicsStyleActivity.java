@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
@@ -37,21 +39,21 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
     private BaseRecyclerAdapter<Item> mAdpater;
 
     private enum Item {
-        尺寸拉伸("下拉的时候Header的高度跟随变大"),
-        位置平移("下拉的时候Header的位置向下偏移"),
-        背后固定("下拉的时候Header固定在背后"),
-        显示时间("开启显示上次更新功能"),
-        隐藏时间("关闭显示上次更新功能"),
-        默认主题("更改为默认主题颜色"),
-        橙色主题("更改为橙色主题颜色"),
-        红色主题("更改为红色主题颜色"),
-        绿色主题("更改为绿色主题颜色"),
-        蓝色主题("更改为蓝色主题颜色"),
-        加载更多("上拉加载更多"),
+        尺寸拉伸(R.string.item_style_spinner_scale),
+        位置平移(R.string.item_style_spinner_translation),
+        背后固定(R.string.item_style_spinner_behind),
+        显示时间(R.string.item_style_spinner_update_on),
+        隐藏时间(R.string.item_style_spinner_update_off),
+        加载更多(R.string.item_style_load_more),
+        默认主题(R.string.item_style_theme_default_abstract),
+        橙色主题(R.string.item_style_theme_orange_abstract),
+        红色主题(R.string.item_style_theme_red_abstract),
+        绿色主题(R.string.item_style_theme_green_abstract),
+        蓝色主题(R.string.item_style_theme_blue_abstract),
         ;
-        public String name;
-        Item(String name) {
-            this.name = name;
+        public int nameId;
+        Item(@StringRes int nameId) {
+            this.nameId = nameId;
         }
     }
 
@@ -77,13 +79,14 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
 
         mRefreshLayout = (RefreshLayout)findViewById(R.id.refreshLayout);
 
-        int deta = new Random().nextInt(7 * 24 * 60 * 60 * 1000);
+        int delta = new Random().nextInt(7 * 24 * 60 * 60 * 1000);
         mClassicsHeader = (ClassicsHeader)mRefreshLayout.getRefreshHeader();
-        mClassicsHeader.setLastUpdateTime(new Date(System.currentTimeMillis()-deta));
+        mClassicsHeader.setLastUpdateTime(new Date(System.currentTimeMillis()-delta));
         mClassicsHeader.setTimeFormat(new SimpleDateFormat("更新于 MM-dd HH:mm", Locale.CHINA));
         mClassicsHeader.setTimeFormat(new DynamicTimeFormat("更新于 %s"));
 
-        mDrawableProgress = mClassicsHeader.getProgressView().getDrawable();
+//        mDrawableProgress = mClassicsHeader.getProgressView().getDrawable();
+        mDrawableProgress = ((ImageView)mClassicsHeader.findViewById(ClassicsHeader.ID_IMAGE_PROGRESS)).getDrawable();
         if (mDrawableProgress instanceof LayerDrawable) {
             mDrawableProgress = ((LayerDrawable) mDrawableProgress).getDrawable(0);
         }
@@ -98,7 +101,7 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
                 @Override
                 protected void onBindViewHolder(SmartViewHolder holder, Item model, int position) {
                     holder.text(android.R.id.text1, model.name());
-                    holder.text(android.R.id.text2, model.name);
+                    holder.text(android.R.id.text2, model.nameId);
                     holder.textColorId(android.R.id.text2, R.color.colorTextAssistant);
                 }
             });

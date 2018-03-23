@@ -1,3 +1,11 @@
 <resources>
-    <string name="app_name">SmartRefreshHeader</string>
+    <string name="fgh_mask_top_pull">Pull To Break Out!</string>
+    <string name="fgh_mask_top_release">Release To Break Out!</string>
+    <string name="fgh_mask_bottom">Scroll to move handle</string>
+
+    <string name="fgh_text_game_over">Game Over</string>
+    <string name="fgh_text_loading">Refreshing…</string>
+    <string name="fgh_text_loading_finish">Refreshing Finished</string>
+    <string name="fgh_text_loading_failed">Refreshing Failed</string>
+
 </resources>

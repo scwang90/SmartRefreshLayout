@@ -5,27 +5,26 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.os.Build;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
+import android.widget.ImageView;
 
 import com.scwang.smartrefresh.header.internal.MaterialProgressDrawable;
-import com.scwang.smartrefresh.header.waveswipe.AnimationImageView;
-import com.scwang.smartrefresh.header.waveswipe.DisplayUtil;
 import com.scwang.smartrefresh.header.waveswipe.WaveView;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
-import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import static android.view.View.MeasureSpec.EXACTLY;
@@ -37,14 +36,15 @@ import static android.view.View.MeasureSpec.makeMeasureSpec;
  * Created by SCWANG on 2017/6/4.
  * from https://github.com/recruit-lifestyle/WaveSwipeRefreshLayout
  */
-public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
+@SuppressWarnings("ALL")
+public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
 
     /**
      * 落ちる前の回転の最大のAngle値
      */
-    private static final float MAX_PROGRESS_ROTATION_RATE = 0.8f;
+    protected static final float MAX_PROGRESS_ROTATION_RATE = 0.8f;
 
-    private enum VERTICAL_DRAG_THRESHOLD {
+    protected enum VERTICAL_DRAG_THRESHOLD {
         FIRST(0.1f), SECOND(0.16f + FIRST.val), THIRD(0.5f + FIRST.val);
 //        FIRST(0.2f), SECOND(0.26f + FIRST.val), THIRD(0.7f + FIRST.val);
         final float val;
@@ -54,35 +54,28 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
     }
 
     //<editor-fold desc="DropHeader">
-    private WaveView mWaveView;
-    private RefreshState mState;
-    private ProgressAnimationImageView mCircleView;
-    private float mLastFirstBounds;
+    protected WaveView mWaveView;
+    protected RefreshState mState;
+    protected MaterialProgressDrawable mProgress;
+    protected ProgressAnimationImageView mCircleView;
+    protected float mLastFirstBounds;
 
     public WaveSwipeHeader(Context context) {
-        super(context);
-        this.initView(context, null);
+        this(context, null);
     }
 
     public WaveSwipeHeader(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        this.initView(context, attrs);
+        this(context, attrs, 0);
     }
 
     public WaveSwipeHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.initView(context, attrs);
-    }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    public WaveSwipeHeader(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        this.initView(context, attrs);
-    }
+        mSpinnerStyle = SpinnerStyle.MatchLayout;
 
-    private void initView(Context context, AttributeSet attrs) {
-        addView(mWaveView = new WaveView(context));
-        addView(mCircleView = new ProgressAnimationImageView(getContext()));
+        final ViewGroup thisGroup = this;
+        thisGroup.addView(mWaveView = new WaveView(context));
+        thisGroup.addView(mCircleView = new ProgressAnimationImageView(context));
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.WaveSwipeHeader);
 
@@ -92,9 +85,9 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
             mWaveView.setWaveColor(primaryColor);
         }
         if (accentColor != 0) {
-            mCircleView.setProgressColorSchemeColors(accentColor);
+            mProgress.setColorSchemeColors(accentColor);
         } else {
-            mCircleView.setProgressColorSchemeColors(0xffffffff);
+            mProgress.setColorSchemeColors(0xffffffff);
         }
         if (ta.hasValue(R.styleable.WaveSwipeHeader_wshShadowRadius)) {
             int radius = ta.getDimensionPixelOffset(R.styleable.WaveSwipeHeader_wshShadowRadius, 0);
@@ -107,22 +100,31 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(getSize(widthMeasureSpec), getSize(heightMeasureSpec));
-        mCircleView.measure();
-        mWaveView.measure(makeMeasureSpec(getSize(widthMeasureSpec), EXACTLY),makeMeasureSpec(getSize(heightMeasureSpec), EXACTLY));
+        super.setMeasuredDimension(getSize(widthMeasureSpec), getSize(heightMeasureSpec));
+        final View waveView = mWaveView;
+        final View cricleView = mCircleView;
+        final Drawable progress = mProgress;
+        final int circleDiameter = progress.getIntrinsicWidth();
+        final int spec = MeasureSpec.makeMeasureSpec(circleDiameter, MeasureSpec.EXACTLY);
+        cricleView.measure(spec, spec);
+        waveView.measure(makeMeasureSpec(getSize(widthMeasureSpec), EXACTLY),makeMeasureSpec(getSize(heightMeasureSpec), EXACTLY));
     }
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        mWaveView.layout(0, 0, getMeasuredWidth(), getMeasuredHeight());
+        final View thisView = this;
+        final View waveView = mWaveView;
+        final View cricleView = mCircleView;
+        waveView.layout(0, 0, thisView.getMeasuredWidth(), thisView.getMeasuredHeight());
 
-        final int thisWidth = getMeasuredWidth();
-        final int circleWidth = mCircleView.getMeasuredWidth();
-        final int circleHeight = mCircleView.getMeasuredHeight();
-        mCircleView.layout((thisWidth - circleWidth) / 2, -circleHeight , (thisWidth + circleWidth) / 2, 0);
+        final int thisWidth = thisView.getMeasuredWidth();
+        final int circleWidth = cricleView.getMeasuredWidth();
+        final int circleHeight = cricleView.getMeasuredHeight();
+        cricleView.layout((thisWidth - circleWidth) / 2, -circleHeight , (thisWidth + circleWidth) / 2, 0);
 
-        if (isInEditMode()) {
-            onPulling(0.99f, DensityUtil.dp2px(99), DensityUtil.dp2px(100), DensityUtil.dp2px(100));
+        if (thisView.isInEditMode()) {
+            onMoving(true, 0.99f, DensityUtil.dp2px(99), DensityUtil.dp2px(100), DensityUtil.dp2px(100));
+//            onPulling(0.99f, DensityUtil.dp2px(99), DensityUtil.dp2px(100), DensityUtil.dp2px(100));
         }
     }
 
@@ -134,7 +136,7 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
      * @param colors セットするColor達
      */
     public void setColorSchemeColors(int... colors) {
-        mCircleView.setProgressColorSchemeColors(colors);
+        mProgress.setColorSchemeColors(colors);
     }
 
     //</editor-fold>
@@ -142,108 +144,137 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
     //<editor-fold desc="RefreshHeader">
 
     @Override
-    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
+    public void onMoving(boolean isDragging, float percent, int offset, int height, int maxDragHeight) {
+        if (isDragging) {
+            if (mState == RefreshState.Refreshing) {
+                return;
+            }
+            final View cricleView = mCircleView;
 
-    }
+            float dragPercent = Math.min(1f, percent);
+            float adjustedPercent = (float) Math.max(dragPercent - .4, 0) * 5 / 3;
 
-    @Override
-    public boolean isSupportHorizontalDrag() {
-        return false;
-    }
+            // 0f...2f
+            float tensionSlingshotPercent =
+                    (percent > 3f) ? 2f : (percent > 1f) ? percent - 1f : 0;
+            float tensionPercent = (4f - tensionSlingshotPercent) * tensionSlingshotPercent / 8f;
 
-    @Override
-    public void onHorizontalDrag(float percentX, int offsetX, int offsetMax) {
-    }
+            if (percent < 1f) {
+                float strokeStart = adjustedPercent * .8f;
+                mProgress.setStartEndTrim(0f, Math.min(MAX_PROGRESS_ROTATION_RATE, strokeStart));
+                mProgress.setArrowScale(Math.min(1f, adjustedPercent));
+            }
 
-    @Override
-    public void onPulling(float percent, int offset, int height, int extendHeight) {
+            float rotation = (-0.25f + .4f * adjustedPercent + tensionPercent * 2) * .5f;
+            mProgress.setProgressRotation(rotation);
+            cricleView.setTranslationY(mWaveView.getCurrentCircleCenterY());
 
-        if (mState == RefreshState.Refreshing) {
-            return;
-        }
+            final View thisView = this;
+            float seed = 1f * offset / Math.min(thisView.getMeasuredWidth(), thisView.getMeasuredHeight());
+            float firstBounds = seed * (5f - 2 * seed) / 3.5f;
+            float secondBounds = firstBounds - VERTICAL_DRAG_THRESHOLD.FIRST.val;
+            float finalBounds = (firstBounds - VERTICAL_DRAG_THRESHOLD.SECOND.val) / 5;
+            mLastFirstBounds = firstBounds;
 
-        float dragPercent = Math.min(1f, percent);
-        float adjustedPercent = (float) Math.max(dragPercent - .4, 0) * 5 / 3;
-
-        // 0f...2f
-        float tensionSlingshotPercent =
-                (percent > 3f) ? 2f : (percent > 1f) ? percent - 1f : 0;
-        float tensionPercent = (4f - tensionSlingshotPercent) * tensionSlingshotPercent / 8f;
-
-        if (percent < 1f) {
-            float strokeStart = adjustedPercent * .8f;
-            mCircleView.setProgressStartEndTrim(0f, Math.min(MAX_PROGRESS_ROTATION_RATE, strokeStart));
-            mCircleView.setArrowScale(Math.min(1f, adjustedPercent));
-        }
-
-        float rotation = (-0.25f + .4f * adjustedPercent + tensionPercent * 2) * .5f;
-        mCircleView.setProgressRotation(rotation);
-        mCircleView.setTranslationY(mWaveView.getCurrentCircleCenterY());
-
-        float seed = 1f * offset / Math.min(getMeasuredWidth(), getMeasuredHeight());
-        float firstBounds = seed * (5f - 2 * seed) / 3.5f;
-        float secondBounds = firstBounds - VERTICAL_DRAG_THRESHOLD.FIRST.val;
-        float finalBounds = (firstBounds - VERTICAL_DRAG_THRESHOLD.SECOND.val) / 5;
-        mLastFirstBounds = firstBounds;
-
-        if (firstBounds < VERTICAL_DRAG_THRESHOLD.FIRST.val) {
-            // draw a wave and not draw a circle
-            mWaveView.beginPhase(firstBounds);
-        } else if (firstBounds < VERTICAL_DRAG_THRESHOLD.SECOND.val) {
-            // draw a circle with a wave
-            mWaveView.appearPhase(firstBounds, secondBounds);
-        } else /*if (firstBounds < VERTICAL_DRAG_THRESHOLD.THIRD.val)*/ {
-            // draw a circle with expanding a wave
-            mWaveView.expandPhase(firstBounds, secondBounds, finalBounds);
+            if (firstBounds < VERTICAL_DRAG_THRESHOLD.FIRST.val) {
+                // draw a wave and not draw a circle
+                mWaveView.beginPhase(firstBounds);
+            } else if (firstBounds < VERTICAL_DRAG_THRESHOLD.SECOND.val) {
+                // draw a circle with a wave
+                mWaveView.appearPhase(firstBounds, secondBounds);
+            } else /*if (firstBounds < VERTICAL_DRAG_THRESHOLD.THIRD.val)*/ {
+                // draw a circle with expanding a wave
+                mWaveView.expandPhase(firstBounds, secondBounds, finalBounds);
 //        } else {
 //            // stop to draw a wave and drop a circle
 //            onDropPhase();
+            }
         }
     }
 
-    @Override
-    public void onReleasing(float percent, int offset, int height, int extendHeight) {
-    }
+//    @Override
+//    public void onPulling(float percent, int offset, int height, int maxDragHeight) {
+//
+//        if (mState == RefreshState.Refreshing) {
+//            return;
+//        }
+//
+//        float dragPercent = Math.min(1f, percent);
+//        float adjustedPercent = (float) Math.max(dragPercent - .4, 0) * 5 / 3;
+//
+//        // 0f...2f
+//        float tensionSlingshotPercent =
+//                (percent > 3f) ? 2f : (percent > 1f) ? percent - 1f : 0;
+//        float tensionPercent = (4f - tensionSlingshotPercent) * tensionSlingshotPercent / 8f;
+//
+//        if (percent < 1f) {
+//            float strokeStart = adjustedPercent * .8f;
+//            mProgress.setStartEndTrim(0f, Math.min(MAX_PROGRESS_ROTATION_RATE, strokeStart));
+//            mProgress.setArrowScale(Math.min(1f, adjustedPercent));
+//        }
+//
+//        float rotation = (-0.25f + .4f * adjustedPercent + tensionPercent * 2) * .5f;
+//        mProgress.setProgressRotation(rotation);
+//        mCircleView.setTranslationY(mWaveView.getCurrentCircleCenterY());
+//
+//        float seed = 1f * offset / Math.min(getMeasuredWidth(), getMeasuredHeight());
+//        float firstBounds = seed * (5f - 2 * seed) / 3.5f;
+//        float secondBounds = firstBounds - VERTICAL_DRAG_THRESHOLD.FIRST.val;
+//        float finalBounds = (firstBounds - VERTICAL_DRAG_THRESHOLD.SECOND.val) / 5;
+//        mLastFirstBounds = firstBounds;
+//
+//        if (firstBounds < VERTICAL_DRAG_THRESHOLD.FIRST.val) {
+//            // draw a wave and not draw a circle
+//            mWaveView.beginPhase(firstBounds);
+//        } else if (firstBounds < VERTICAL_DRAG_THRESHOLD.SECOND.val) {
+//            // draw a circle with a wave
+//            mWaveView.appearPhase(firstBounds, secondBounds);
+//        } else /*if (firstBounds < VERTICAL_DRAG_THRESHOLD.THIRD.val)*/ {
+//            // draw a circle with expanding a wave
+//            mWaveView.expandPhase(firstBounds, secondBounds, finalBounds);
+////        } else {
+////            // stop to draw a wave and drop a circle
+////            onDropPhase();
+//        }
+//    }
 
     @Override
-    public void onReleased(RefreshLayout layout, int height, int extendHeight) {
+    public void onReleased(@NonNull RefreshLayout layout, int height, int maxDragHeight) {
         mLastFirstBounds = 0;
         mWaveView.animationDropCircle();
-        mCircleView.makeProgressTransparent();
-        mCircleView.startProgress();
+        mProgress.setAlpha(0xff);
+        mProgress.start();
         ValueAnimator animator = ValueAnimator.ofFloat(0, 0);
         animator.setDuration(500);
         animator.setInterpolator(new AccelerateDecelerateInterpolator());
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                mCircleView.setTranslationY(
-                        mWaveView.getCurrentCircleCenterY() + mCircleView.getHeight() / 2.f);
+                final View cricleView = mCircleView;
+                cricleView.setTranslationY(
+                        mWaveView.getCurrentCircleCenterY() + cricleView.getHeight() / 2.f);
             }
         });
         animator.start();
     }
 
     @Override
-    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
-
-    }
-
-    @Override
-    public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
+    public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
+        final View cricleView = mCircleView;
         mState = newState;
         switch (newState) {
             case None:
                 break;
             case PullDownToRefresh:
-                mCircleView.showArrow(true);
-                mCircleView.scaleWithKeepingAspectRatio(1f);
-                mCircleView.makeProgressTransparent();
+                mProgress.showArrow(true);
+                cricleView.setScaleX(1f);
+                cricleView.setScaleY(1f);
+                mProgress.setAlpha(0xff);
                 break;
             case PullDownCanceled:
-                mCircleView.showArrow(false);
-                mCircleView.setProgressRotation(0);
-                mCircleView.setProgressStartEndTrim(0f, 0f);
+                mProgress.showArrow(false);
+                mProgress.setProgressRotation(0);
+                mProgress.setStartEndTrim(0f, 0f);
                 mWaveView.startWaveAnimation(mLastFirstBounds);
                 mLastFirstBounds = 0;
                 break;
@@ -256,10 +287,12 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
 
     @Override
     public int onFinish(@NonNull RefreshLayout layout, boolean success) {
+        final View cricleView = mCircleView;
         Animation scaleDownAnimation = new Animation() {
             @Override
             public void applyTransformation(float interpolatedTime, Transformation t) {
-                mCircleView.scaleWithKeepingAspectRatio(1 - interpolatedTime);
+                cricleView.setScaleX(1 - interpolatedTime);
+                cricleView.setScaleY(1 - interpolatedTime);
             }
         };
         scaleDownAnimation.setDuration(200);
@@ -267,13 +300,13 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
             public void onAnimationStart(Animation animation) {}
             public void onAnimationRepeat(Animation animation) {}
             public void onAnimationEnd(Animation animation) {
-                mCircleView.stopProgress();
-                mCircleView.makeProgressTransparent();
+                mProgress.stop();
+                mProgress.setAlpha(0xff);
                 mWaveView.startDisappearCircleAnimation();
             }
         });
-        mCircleView.clearAnimation();
-        mCircleView.startAnimation(scaleDownAnimation);
+        cricleView.clearAnimation();
+        cricleView.startAnimation(scaleDownAnimation);
         return 0;
     }
 
@@ -286,95 +319,87 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
         if (colors.length > 0) {
             mWaveView.setWaveColor(colors[0]);
             if (colors.length > 1) {
-                mCircleView.setProgressColorSchemeColors(colors[1]);
+                mProgress.setColorSchemeColors(colors[1]);
             }
         }
     }
-
-    @NonNull
-    @Override
-    public View getView() {
-        return this;
-    }
-
-    @NonNull
-    @Override
-    public SpinnerStyle getSpinnerStyle() {
-        return SpinnerStyle.MatchLayout;
-    }
+//
+//    @NonNull
+//    @Override
+//    public SpinnerStyle getSpinnerStyle() {
+//        return SpinnerStyle.MatchLayout;
+//    }
     //</editor-fold>
 
     //<editor-fold desc="ProgressAnimationImageView">
+    /**
+     * 現在の向きが600dpを超えているかどうか
+     *
+     * @return 600dpを超えているかどうか
+     */
+    public static boolean isOver600dp() {
+//        Resources resources = context.getResources();
+        DisplayMetrics displayMetrics = Resources.getSystem().getDisplayMetrics();
+        return displayMetrics.widthPixels / displayMetrics.density >= 600;
+    }
     /**
      * Custom view has progress drawable.
      * Some features of MaterialProgressDrawable are decorated.
      *
      * @author jmatsu
      */
-    private class ProgressAnimationImageView extends AnimationImageView {
-        private final MaterialProgressDrawable mProgress;
+    protected class ProgressAnimationImageView extends ImageView {
 
+        /**
+         * AnimationのStartとEnd時にListenerにアレする
+         */
+        protected Animation.AnimationListener mListener;
+
+        /**
+         * @param listener {@link android.view.animation.Animation.AnimationListener}
+         */
+        public void setAnimationListener(Animation.AnimationListener listener) {
+            mListener = listener;
+        }
+
+        /**
+         * ViewのAnimationのStart時にセットされたListenerの {@link android.view.animation.Animation.AnimationListener#onAnimationStart(Animation)}
+         * を呼ぶ
+         */
+        @Override public void onAnimationStart() {
+            super.onAnimationStart();
+            if (mListener != null) {
+                mListener.onAnimationStart(getAnimation());
+            }
+        }
+
+        /**
+         * ViewのAnimationのEnd時にセットされたListenerの {@link android.view.animation.Animation.AnimationListener#onAnimationEnd(Animation)}
+         * (Animation)} を呼ぶ
+         */
+        @Override public void onAnimationEnd() {
+            super.onAnimationEnd();
+            if (mListener != null) {
+                mListener.onAnimationEnd(getAnimation());
+            }
+        }
         /**
          * Constructor
          * {@inheritDoc}
          */
         public ProgressAnimationImageView(Context context) {
             super(context);
-            mProgress = new MaterialProgressDrawable(context, WaveSwipeHeader.this);
+            mProgress = new MaterialProgressDrawable(WaveSwipeHeader.this);
             mProgress.setBackgroundColor(Color.TRANSPARENT);
-            if (DisplayUtil.isOver600dp(getContext())) { // Make the progress be big
+            if (isOver600dp()) { // Make the progress be big
                 mProgress.updateSizes(MaterialProgressDrawable.LARGE);
             }
-            setImageDrawable(mProgress);
-        }
-
-        public void measure() {
-            final int circleDiameter = mProgress.getIntrinsicWidth();
-            measure(makeMeasureSpecExactly(circleDiameter), makeMeasureSpecExactly(circleDiameter));
-        }
-
-        private int makeMeasureSpecExactly(int length) {
-            return MeasureSpec.makeMeasureSpec(length, MeasureSpec.EXACTLY);
-        }
-
-        public void makeProgressTransparent() {
-            mProgress.setAlpha(0xff);
-        }
-
-        public void showArrow(boolean show) {
-            mProgress.showArrow(show);
-        }
-
-        public void setArrowScale(float scale) {
-            mProgress.setArrowScale(scale);
-        }
-
-        public void setProgressAlpha(int alpha) {
-            mProgress.setAlpha(alpha);
-        }
-
-        public void setProgressStartEndTrim(float startAngle, float endAngle) {
-            mProgress.setStartEndTrim(startAngle, endAngle);
-        }
-
-        public void setProgressRotation(float rotation) {
-            mProgress.setProgressRotation(rotation);
-        }
-
-        public void startProgress() {
-            mProgress.start();
-        }
-
-        public void stopProgress() {
-            mProgress.stop();
-        }
-
-        public void setProgressColorSchemeColors(@NonNull int... colors) {
-            mProgress.setColorSchemeColors(colors);
+            super.setImageDrawable(mProgress);
         }
 
         public void setProgressColorSchemeColorsFromResource(@IdRes int... resources) {
-            final Resources res = getResources();
+            final View thisView = this;
+            final Resources res = thisView.getResources();
             final int[] colorRes = new int[resources.length];
 
             for (int i = 0; i < resources.length; i++) {
@@ -384,10 +409,6 @@ public class WaveSwipeHeader extends ViewGroup implements RefreshHeader {
             setColorSchemeColors(colorRes);
         }
 
-        public void scaleWithKeepingAspectRatio(float scale) {
-            this.setScaleX(scale);
-            this.setScaleY(scale);
-        }
     }
     //</editor-fold>
 }

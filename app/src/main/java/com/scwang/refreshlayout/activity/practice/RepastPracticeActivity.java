@@ -1,6 +1,7 @@
 package com.scwang.refreshlayout.activity.practice;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.refreshlayout.util.StatusBarUtil;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -62,7 +64,7 @@ public class RepastPracticeActivity extends AppCompatActivity {
             RecyclerView recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setItemAnimator(new DefaultItemAnimator());
-            recyclerView.setAdapter(mAdapter = new BaseRecyclerAdapter<Model>(loadModels(), R.layout.listitem_practive_repast) {
+            recyclerView.setAdapter(mAdapter = new BaseRecyclerAdapter<Model>(loadModels(), R.layout.listitem_practice_repast) {
                 @Override
                 protected void onBindViewHolder(SmartViewHolder holder, Model model, int position) {
                     holder.text(R.id.name, model.name);
@@ -74,7 +76,7 @@ public class RepastPracticeActivity extends AppCompatActivity {
 
             refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
                 @Override
-                public void onRefresh(final RefreshLayout refreshLayout) {
+                public void onRefresh(@NonNull final RefreshLayout refreshLayout) {
                     refreshLayout.getLayout().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -84,7 +86,7 @@ public class RepastPracticeActivity extends AppCompatActivity {
                     }, 2000);
                 }
                 @Override
-                public void onLoadMore(final RefreshLayout refreshLayout) {
+                public void onLoadMore(@NonNull final RefreshLayout refreshLayout) {
                     refreshLayout.getLayout().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -103,7 +105,7 @@ public class RepastPracticeActivity extends AppCompatActivity {
             refreshLayout.getLayout().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    refreshLayout.setHeaderInsetStartPx(toolbar.getHeight());
+                    refreshLayout.setHeaderInsetStart(DensityUtil.px2dp(toolbar.getHeight()));
                 }
             }, 500);
         }
@@ -112,7 +114,7 @@ public class RepastPracticeActivity extends AppCompatActivity {
         StatusBarUtil.darkMode(this);
         StatusBarUtil.setPaddingSmart(this, view);
         StatusBarUtil.setPaddingSmart(this, toolbar);
-        StatusBarUtil.setPaddingSmart(this, findViewById(R.id.blurview));
+        StatusBarUtil.setPaddingSmart(this, findViewById(R.id.blurView));
 
     }
 

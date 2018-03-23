@@ -5,15 +5,14 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.annotation.VisibleForTesting;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.scwang.smartrefresh.header.internal.MaterialProgressDrawable;
 import com.scwang.smartrefresh.header.material.CircleImageView;
@@ -22,6 +21,7 @@ import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import static android.view.View.MeasureSpec.getSize;
@@ -31,69 +31,61 @@ import static android.view.View.MeasureSpec.getSize;
  * Created by SCWANG on 2017/6/2.
  */
 @SuppressWarnings("unused")
-public class MaterialHeader extends ViewGroup implements RefreshHeader {
+public class MaterialHeader extends InternalAbstract implements RefreshHeader {
 
     // Maps to ProgressBar.Large style
     public static final int SIZE_LARGE = 0;
     // Maps to ProgressBar default style
     public static final int SIZE_DEFAULT = 1;
 
-    private static final int CIRCLE_BG_LIGHT = 0xFFFAFAFA;
-    private static final float MAX_PROGRESS_ANGLE = .8f;
+    protected static final int CIRCLE_BG_LIGHT = 0xFFFAFAFA;
+    protected static final float MAX_PROGRESS_ANGLE = .8f;
     @VisibleForTesting
-    private static final int CIRCLE_DIAMETER = 40;
+    protected static final int CIRCLE_DIAMETER = 40;
     @VisibleForTesting
-    private static final int CIRCLE_DIAMETER_LARGE = 56;
+    protected static final int CIRCLE_DIAMETER_LARGE = 56;
 
-    private boolean mFinished;
-    private int mCircleDiameter;
-    private CircleImageView mCircleView;
-    private MaterialProgressDrawable mProgress;
+    protected boolean mFinished;
+    protected int mCircleDiameter;
+    protected ImageView mCircleView;
+    protected MaterialProgressDrawable mProgress;
 
     /**
      * 贝塞尔背景
      */
-    private int mWaveHeight;
-    private int mHeadHeight;
-    private Path mBezierPath;
-    private Paint mBezierPaint;
-    private boolean mShowBezierWave = false;
-    private RefreshState mState;
+    protected int mWaveHeight;
+    protected int mHeadHeight;
+    protected Path mBezierPath;
+    protected Paint mBezierPaint;
+    protected boolean mShowBezierWave = false;
+    protected RefreshState mState;
 
     //<editor-fold desc="MaterialHeader">
     public MaterialHeader(Context context) {
-        super(context);
-        initView(context, null);
+        this(context, null);
     }
 
     public MaterialHeader(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        initView(context, attrs);
+        this(context, attrs, 0);
     }
 
     public MaterialHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initView(context, attrs);
-    }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    public MaterialHeader(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        initView(context, attrs);
-    }
+        mSpinnerStyle = SpinnerStyle.MatchLayout;
+        final View thisView = this;
+        final ViewGroup thisGroup = this;
+        thisView.setMinimumHeight(DensityUtil.dp2px(100));
 
-    private void initView(Context context, AttributeSet attrs) {
-        setMinimumHeight(DensityUtil.dp2px(100));
-
-        mProgress = new MaterialProgressDrawable(context, this);
+        mProgress = new MaterialProgressDrawable(this);
         mProgress.setBackgroundColor(CIRCLE_BG_LIGHT);
         mProgress.setAlpha(255);
         mProgress.setColorSchemeColors(0xff0099cc,0xffff4444,0xff669900,0xffaa66cc,0xffff8800);
         mCircleView = new CircleImageView(context,CIRCLE_BG_LIGHT);
         mCircleView.setImageDrawable(mProgress);
-        addView(mCircleView);
+        thisGroup.addView(mCircleView);
 
-        final DisplayMetrics metrics = getResources().getDisplayMetrics();
+        final DisplayMetrics metrics = thisView.getResources().getDisplayMetrics();
         mCircleDiameter = (int) (CIRCLE_DIAMETER * metrics.density);
 
         mBezierPath = new Path();
@@ -108,7 +100,7 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
             int radius = ta.getDimensionPixelOffset(R.styleable.MaterialHeader_mhShadowRadius, 0);
             int color = ta.getColor(R.styleable.MaterialHeader_mhShadowColor, 0xff000000);
             mBezierPaint.setShadowLayer(radius, 0, 0, color);
-            setLayerType(LAYER_TYPE_SOFTWARE, null);
+            thisView.setLayerType(LAYER_TYPE_SOFTWARE, null);
         }
         ta.recycle();
 
@@ -116,8 +108,9 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
 
     @Override
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(getSize(widthMeasureSpec), getSize(heightMeasureSpec));
-        mCircleView.measure(MeasureSpec.makeMeasureSpec(mCircleDiameter, MeasureSpec.EXACTLY),
+        super.setMeasuredDimension(getSize(widthMeasureSpec), getSize(heightMeasureSpec));
+        final View circleView = mCircleView;
+        circleView.measure(MeasureSpec.makeMeasureSpec(mCircleDiameter, MeasureSpec.EXACTLY),
                 MeasureSpec.makeMeasureSpec(mCircleDiameter, MeasureSpec.EXACTLY));
 //        setMeasuredDimension(resolveSize(getSuggestedMinimumWidth(), widthMeasureSpec),
 //                resolveSize(getSuggestedMinimumHeight(), heightMeasureSpec));
@@ -125,25 +118,28 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        if (getChildCount() == 0) {
+        final ViewGroup thisGroup = this;
+        if (thisGroup.getChildCount() == 0) {
             return;
         }
-        final int width = getMeasuredWidth();
-        int circleWidth = mCircleView.getMeasuredWidth();
-        int circleHeight = mCircleView.getMeasuredHeight();
+        final View thisView = this;
+        final View circleView = mCircleView;
+        final int width = thisView.getMeasuredWidth();
+        int circleWidth = circleView.getMeasuredWidth();
+        int circleHeight = circleView.getMeasuredHeight();
 
-        if (isInEditMode() && mHeadHeight > 0) {
+        if (thisView.isInEditMode() && mHeadHeight > 0) {
             int circleTop = mHeadHeight - circleHeight / 2;
-            mCircleView.layout((width / 2 - circleWidth / 2), circleTop,
+            circleView.layout((width / 2 - circleWidth / 2), circleTop,
                     (width / 2 + circleWidth / 2), circleTop + circleHeight);
 
             mProgress.showArrow(true);
             mProgress.setStartEndTrim(0f, MAX_PROGRESS_ANGLE);
             mProgress.setArrowScale(1);
-            mCircleView.setAlpha(1f);
-            mCircleView.setVisibility(VISIBLE);
+            circleView.setAlpha(1f);
+            circleView.setVisibility(VISIBLE);
         } else {
-            mCircleView.layout((width / 2 - circleWidth / 2), -mCircleDiameter,
+            circleView.layout((width / 2 - circleWidth / 2), -mCircleDiameter,
                     (width / 2 + circleWidth / 2), circleHeight - mCircleDiameter);
         }
     }
@@ -155,8 +151,9 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
             mBezierPath.reset();
             mBezierPath.lineTo(0, mHeadHeight);
             //绘制贝塞尔曲线
-            mBezierPath.quadTo(getMeasuredWidth() / 2, mHeadHeight + mWaveHeight * 1.9f, getMeasuredWidth(), mHeadHeight);
-            mBezierPath.lineTo(getMeasuredWidth(), 0);
+            final View thisView = this;
+            mBezierPath.quadTo(thisView.getMeasuredWidth() / 2, mHeadHeight + mWaveHeight * 1.9f, thisView.getMeasuredWidth(), mHeadHeight);
+            mBezierPath.lineTo(thisView.getMeasuredWidth(), 0);
             canvas.drawPath(mBezierPath, mBezierPaint);
         }
         super.dispatchDraw(canvas);
@@ -166,93 +163,121 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
 
     //<editor-fold desc="RefreshHeader">
     @Override
-    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
+    public void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight) {
+        final View thisView = this;
         if (!mShowBezierWave) {
-            kernel.requestDefaultHeaderTranslationContent(false);
+            kernel.requestDefaultTranslationContentFor(this, false);
+//            kernel.requestDefaultHeaderTranslationContent(false);
         }
-        if (isInEditMode()) {
+        if (thisView.isInEditMode()) {
             mWaveHeight = mHeadHeight = height / 2;
         }
     }
 
     @Override
-    public boolean isSupportHorizontalDrag() {
-        return false;
-    }
-
-    @Override
-    public void onHorizontalDrag(float percentX, int offsetX, int offsetMax) {
-    }
-
-    @Override
-    public void onPulling(float percent, int offset, int height, int extendHeight) {
+    public void onMoving(boolean isDragging, float percent, int offset, int height, int maxDragHeight) {
         if (mShowBezierWave) {
             mHeadHeight = Math.min(offset, height);
             mWaveHeight = Math.max(0, offset - height);
-            postInvalidate();
+
+            final View thisView = this;
+            thisView.postInvalidate();
         }
 
-        if (mState != RefreshState.Refreshing) {
-            float originalDragPercent = 1f * offset / height;
+        if (isDragging || (!mProgress.isRunning() && !mFinished)) {
 
-            float dragPercent = Math.min(1f, Math.abs(originalDragPercent));
-            float adjustedPercent = (float) Math.max(dragPercent - .4, 0) * 5 / 3;
-            float extraOS = Math.abs(offset) - height;
-            float tensionSlingshotPercent = Math.max(0, Math.min(extraOS, (float) height * 2)
-                    / (float) height);
-            float tensionPercent = (float) ((tensionSlingshotPercent / 4) - Math.pow(
-                    (tensionSlingshotPercent / 4), 2)) * 2f;
-            float strokeStart = adjustedPercent * .8f;
-            mProgress.showArrow(true);
-            mProgress.setStartEndTrim(0f, Math.min(MAX_PROGRESS_ANGLE, strokeStart));
-            mProgress.setArrowScale(Math.min(1f, adjustedPercent));
+            final View circleView = mCircleView;
+            if (mState != RefreshState.Refreshing) {
+                float originalDragPercent = 1f * offset / height;
 
-            float rotation = (-0.25f + .4f * adjustedPercent + tensionPercent * 2) * .5f;
-            mProgress.setProgressRotation(rotation);
-            mCircleView.setAlpha(Math.min(1f, originalDragPercent*2));
-        }
+                float dragPercent = Math.min(1f, Math.abs(originalDragPercent));
+                float adjustedPercent = (float) Math.max(dragPercent - .4, 0) * 5 / 3;
+                float extraOS = Math.abs(offset) - height;
+                float tensionSlingshotPercent = Math.max(0, Math.min(extraOS, (float) height * 2)
+                        / (float) height);
+                float tensionPercent = (float) ((tensionSlingshotPercent / 4) - Math.pow(
+                        (tensionSlingshotPercent / 4), 2)) * 2f;
+                float strokeStart = adjustedPercent * .8f;
+                mProgress.showArrow(true);
+                mProgress.setStartEndTrim(0f, Math.min(MAX_PROGRESS_ANGLE, strokeStart));
+                mProgress.setArrowScale(Math.min(1f, adjustedPercent));
 
-        float targetY = offset / 2 + mCircleDiameter / 2;
-        mCircleView.setTranslationY(Math.min(offset, targetY));//setTargetOffsetTopAndBottom(targetY - mCurrentTargetOffsetTop, true /* requires update */);
-    }
-
-    @Override
-    public void onReleasing(float percent, int offset, int height, int extendHeight) {
-        if (!mProgress.isRunning() && !mFinished) {
-            onPulling(percent, offset, height, extendHeight);
-        } else {
-            if (mShowBezierWave) {
-                mHeadHeight = Math.min(offset, height);
-                mWaveHeight = Math.max(0, offset - height);
-                postInvalidate();
+                float rotation = (-0.25f + .4f * adjustedPercent + tensionPercent * 2) * .5f;
+                mProgress.setProgressRotation(rotation);
+                circleView.setAlpha(Math.min(1f, originalDragPercent * 2));
             }
+
+            float targetY = offset / 2 + mCircleDiameter / 2;
+            circleView.setTranslationY(Math.min(offset, targetY));//setTargetOffsetTopAndBottom(targetY - mCurrentTargetOffsetTop, true /* requires update */);
         }
     }
 
+//    @Override
+//    public void onPulling(float percent, int offset, int height, int maxDragHeight) {
+//        if (mShowBezierWave) {
+//            mHeadHeight = Math.min(offset, height);
+//            mWaveHeight = Math.max(0, offset - height);
+//            postInvalidate();
+//        }
+//
+//        if (mState != RefreshState.Refreshing) {
+//            float originalDragPercent = 1f * offset / height;
+//
+//            float dragPercent = Math.min(1f, Math.abs(originalDragPercent));
+//            float adjustedPercent = (float) Math.max(dragPercent - .4, 0) * 5 / 3;
+//            float extraOS = Math.abs(offset) - height;
+//            float tensionSlingshotPercent = Math.max(0, Math.min(extraOS, (float) height * 2)
+//                    / (float) height);
+//            float tensionPercent = (float) ((tensionSlingshotPercent / 4) - Math.pow(
+//                    (tensionSlingshotPercent / 4), 2)) * 2f;
+//            float strokeStart = adjustedPercent * .8f;
+//            mProgress.showArrow(true);
+//            mProgress.setStartEndTrim(0f, Math.min(MAX_PROGRESS_ANGLE, strokeStart));
+//            mProgress.setArrowScale(Math.min(1f, adjustedPercent));
+//
+//            float rotation = (-0.25f + .4f * adjustedPercent + tensionPercent * 2) * .5f;
+//            mProgress.setProgressRotation(rotation);
+//            mCircleView.setAlpha(Math.min(1f, originalDragPercent*2));
+//        }
+//
+//        float targetY = offset / 2 + mCircleDiameter / 2;
+//        mCircleView.setTranslationY(Math.min(offset, targetY));//setTargetOffsetTopAndBottom(targetY - mCurrentTargetOffsetTop, true /* requires update */);
+//    }
+//
+//    @Override
+//    public void onReleasing(float percent, int offset, int height, int maxDragHeight) {
+//        if (!mProgress.isRunning() && !mFinished) {
+//            onPulling(percent, offset, height, maxDragHeight);
+//        } else {
+//            if (mShowBezierWave) {
+//                mHeadHeight = Math.min(offset, height);
+//                mWaveHeight = Math.max(0, offset - height);
+//                postInvalidate();
+//            }
+//        }
+//    }
+
     @Override
-    public void onReleased(RefreshLayout layout, int height, int extendHeight) {
+    public void onReleased(@NonNull RefreshLayout layout, int height, int maxDragHeight) {
         mProgress.start();
-        if ((int) mCircleView.getTranslationY() != height / 2 + mCircleDiameter / 2) {
-            mCircleView.animate().translationY(height / 2 + mCircleDiameter / 2);
+        final View circleView = mCircleView;
+        if ((int) circleView.getTranslationY() != height / 2 + mCircleDiameter / 2) {
+            circleView.animate().translationY(height / 2 + mCircleDiameter / 2);
         }
     }
 
     @Override
-    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
-
-    }
-
-    @Override
-    public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
+    public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
+        final View circleView = mCircleView;
         mState = newState;
         switch (newState) {
             case None:
                 break;
             case PullDownToRefresh:
                 mFinished = false;
-                mCircleView.setVisibility(VISIBLE);
-                mCircleView.setScaleX(1);
-                mCircleView.setScaleY(1);
+                circleView.setVisibility(VISIBLE);
+                circleView.setScaleX(1);
+                circleView.setScaleY(1);
                 break;
             case ReleaseToRefresh:
                 break;
@@ -263,8 +288,9 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
 
     @Override
     public int onFinish(@NonNull RefreshLayout layout, boolean success) {
+        final View circleView = mCircleView;
         mProgress.stop();
-        mCircleView.animate().scaleX(0).scaleY(0);
+        circleView.animate().scaleX(0).scaleY(0);
         mFinished = true;
         return 0;
     }
@@ -280,17 +306,11 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
         }
     }
 
-    @NonNull
-    @Override
-    public View getView() {
-        return this;
-    }
-
-    @NonNull
-    @Override
-    public SpinnerStyle getSpinnerStyle() {
-        return SpinnerStyle.MatchLayout;
-    }
+//    @NonNull
+//    @Override
+//    public SpinnerStyle getSpinnerStyle() {
+//        return SpinnerStyle.MatchLayout;
+//    }
     //</editor-fold>
 
 
@@ -315,7 +335,8 @@ public class MaterialHeader extends ViewGroup implements RefreshHeader {
         if (size != SIZE_LARGE && size != SIZE_DEFAULT) {
             return this;
         }
-        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        final View thisView = this;
+        DisplayMetrics metrics = thisView.getResources().getDisplayMetrics();
         if (size == SIZE_LARGE) {
             mCircleDiameter = (int) (CIRCLE_DIAMETER_LARGE * metrics.density);
         } else {

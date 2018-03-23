@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.CoordinatorLayoutListener;
 
 /**
  * Design 兼容包缺省尝试
@@ -32,7 +33,7 @@ public class DesignUtil {
                 ((AppBarLayout) view).addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
                     @Override
                     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                        listener.update(
+                        listener.onCoordinatorUpdate(
                                 verticalOffset >= 0,
                                 refreshLayout.isEnableLoadMore() && (appBarLayout.getTotalScrollRange() + verticalOffset) <= 0);
                     }

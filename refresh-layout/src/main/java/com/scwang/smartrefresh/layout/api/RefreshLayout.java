@@ -24,59 +24,59 @@ public interface RefreshLayout {
 
     /**
      * 设置 Footer 高度
-     * @param dp 虚拟像素
+     * @param dp 虚拟像素（px需要调用px2dp转换）
      * @return RefreshLayout
      */
     RefreshLayout setFooterHeight(float dp);
 
-    /**
-     * 设置 Footer 高度
-     * @param px 像素
-     * @return RefreshLayout
-     */
-    RefreshLayout setFooterHeightPx(int px);
+//    /**
+//     * 设置 Footer 高度
+//     * @param px 像素
+//     * @return RefreshLayout
+//     */
+//    RefreshLayout setFooterHeightPx(int px);
 
     /**
      * 设置 Header 高度
-     * @param dp 虚拟像素
+     * @param dp 虚拟像素（px需要调用px2dp转换）
      * @return RefreshLayout
      */
     RefreshLayout setHeaderHeight(float dp);
 
-    /**
-     * 设置 Header 高度
-     * @param px 像素
-     * @return RefreshLayout
-     */
-    RefreshLayout setHeaderHeightPx(int px);
+//    /**
+//     * 设置 Header 高度
+//     * @param px 像素
+//     * @return RefreshLayout
+//     */
+//    RefreshLayout setHeaderHeightPx(int px);
 
     /**
      * 设置 Header 起始偏移量
-     * @param insetDp 虚拟像素
+     * @param dp 虚拟像素（px需要调用px2dp转换）
      * @return RefreshLayout
      */
-    RefreshLayout setHeaderInsetStart(float insetDp);
+    RefreshLayout setHeaderInsetStart(float dp);
 
-    /**
-     * 设置 Header 起始偏移量
-     * @param insetPx 像素
-     * @return RefreshLayout
-     */
-    RefreshLayout setHeaderInsetStartPx(int insetPx);
-
-    /**
-     * 设置 Footer 起始偏移量
-     * @param insetDp 虚拟像素
-     * @return RefreshLayout
-     */
-    RefreshLayout setFooterInsetStart(float insetDp);
+//    /**
+//     * 设置 Header 起始偏移量
+//     * @param insetPx 像素
+//     * @return RefreshLayout
+//     */
+//    RefreshLayout setHeaderInsetStartPx(int insetPx);
 
     /**
      * 设置 Footer 起始偏移量
-     * @param insetPx 像素
+     * @param dp 虚拟像素（px需要调用px2dp转换）
      * @return RefreshLayout
      */
-    RefreshLayout setFooterInsetStartPx(int insetPx);
+    RefreshLayout setFooterInsetStart(float dp);
+
+//    /**
+//     * 设置 Footer 起始偏移量
+//     * @param insetPx 像素
+//     * @return RefreshLayout
+//     */
+//    RefreshLayout setFooterInsetStartPx(int insetPx);
 
     /**
      * 显示拖动高度/真实拖动高度 比率（默认0.5，阻尼效果）
@@ -436,185 +436,88 @@ public interface RefreshLayout {
 
     /**
      * 获取实体布局视图
-     * @return RefreshLayout
+     * @return ViewGroup
      */
     ViewGroup getLayout();
 
     /**
      * 自动刷新
-     * @return RefreshLayout
+     * @return 是否成功（状态不符合会失败）
      */
     boolean autoRefresh();
 
-    /**
-     * 自动刷新
-     * @param delayed 开始延时
-     * @return RefreshLayout
-     */
-    boolean autoRefresh(int delayed);
+//    /**
+//     * 自动刷新
+//     * @param delayed 开始延时
+//     * @return RefreshLayout
+//     */
+//    boolean autoRefresh(int delayed);
 
     /**
      * 自动刷新
      * @param delayed 开始延时
      * @param duration 拖拽动画持续时间
      * @param dragRate 拉拽的高度比率（要求 ≥ 1 ）
-     * @return RefreshLayout
+     * @return 是否成功（状态不符合会失败）
      */
     boolean autoRefresh(int delayed, int duration, float dragRate);
 
     /**
      * 自动加载
-     * @return RefreshLayout
+     * @return 是否成功（状态不符合会失败）
      */
     boolean autoLoadMore();
 
-    /**
-     * 自动加载
-     * @param delayed 开始延时
-     * @return RefreshLayout
-     */
-    boolean autoLoadMore(int delayed);
+//    /**
+//     * 自动加载
+//     * @param delayed 开始延时
+//     * @return RefreshLayout
+//     */
+//    boolean autoLoadMore(int delayed);
 
     /**
      * 自动加载
      * @param delayed 开始延时
      * @param duration 拖拽动画持续时间
      * @param dragRate 拉拽的高度比率（要求 ≥ 1 ）
-     * @return RefreshLayout
+     * @return 是否成功（状态不符合会失败）
      */
     boolean autoLoadMore(int delayed, int duration, float dragRate);
 
     /**
      * 是否启用下拉刷新
-     * @return RefreshLayout
      */
     boolean isEnableRefresh();
 
     /**
      * 是否启用加载更多
-     * @return RefreshLayout
      */
     boolean isEnableLoadMore();
 
-    /**
-     * 是否正在刷新
-     * @deprecated 后续版本将会移除
-     *      使用 {@link #getState()} == {@link RefreshState#Refreshing} 代替
-     * @return RefreshLayout
-     */
-    @Deprecated
-    boolean isRefreshing();
+//    /**
+//     * 是否正在刷新
+//     * @deprecated 后续版本将会移除
+//     *      使用 {@link #getState()} == {@link RefreshState#Refreshing} 代替
+//     * @return RefreshLayout
+//     */
+//    @Deprecated
+//    boolean isRefreshing();
+//
+//    /**
+//     * 是否正在加载
+//     * @deprecated 后续版本将会移除
+//     *      使用 {@link #getState()} == {@link RefreshState#Loading} 代替
+//     * @return RefreshLayout
+//     */
+//    @Deprecated
+//    boolean isLoading();
+//
+//    /**
+//     * 恢复没有更多数据的原始状态
+//     * @deprecated 请使用{@link RefreshLayout#setNoMoreData(boolean)}
+//     * @return RefreshLayout
+//     */
+//    @Deprecated
+//    RefreshLayout resetNoMoreData();
 
-    /**
-     * 是否正在加载
-     * @deprecated 后续版本将会移除
-     *      使用 {@link #getState()} == {@link RefreshState#Loading} 代替
-     * @return RefreshLayout
-     */
-    @Deprecated
-    boolean isLoading();
-
-    /**
-     * @deprecated 后续版本将会移除
-     * @return RefreshLayout
-     */
-    boolean isLoadmoreFinished();
-
-    /**
-     * @deprecated 后续版本将会移除
-     * @return RefreshLayout
-     */
-    @Deprecated
-    boolean isEnableAutoLoadMore();
-
-    /**
-     * @deprecated 后续版本将会移除
-     * @return RefreshLayout
-     */
-    @Deprecated
-    boolean isEnableOverScrollBounce();
-
-    /**
-     * @deprecated 后续版本将会移除
-     * @return RefreshLayout
-     */
-    @Deprecated
-    boolean isEnablePureScrollMode();
-
-    /**
-     * @deprecated 后续版本将会移除
-     * @return RefreshLayout
-     */
-    @Deprecated
-    boolean isEnableScrollContentWhenLoaded();
-
-    /**
-     * 恢复没有更多数据的原始状态
-     * @deprecated 请使用{@link RefreshLayout#setNoMoreData(boolean)}
-     * @return RefreshLayout
-     */
-    @Deprecated
-    RefreshLayout resetNoMoreData();
-
-    /**
-     * 恢复没有更多数据的原始状态
-     * @param finished 是否有更多数据
-     * @deprecated 后续版本将会移除 使用 {@link RefreshLayout#setNoMoreData(boolean)} 代替
-     * @return RefreshLayout
-     */
-    @Deprecated
-    RefreshLayout setLoadmoreFinished(boolean finished);
-
-
-    /**
-     * 完成加载
-     * @deprecated 使用 {@link #finishLoadMore()} 代替
-     * @return RefreshLayout
-     */
-    @Deprecated
-    RefreshLayout finishLoadmore();
-
-    /**
-     * 完成加载
-     * @param delayed 延时
-     * @deprecated 使用 {@link #finishLoadMore(int)} 代替
-     * @return RefreshLayout
-     */
-    @Deprecated
-    RefreshLayout finishLoadmore(int delayed);
-
-    /**
-     * 完成加载
-     * @param success 数据是否成功
-     * @deprecated 使用 {@link #finishLoadMore(boolean)} 代替
-     * @return RefreshLayout
-     */
-    @Deprecated
-    RefreshLayout finishLoadmore(boolean success);
-
-    /**
-     * 单独设置加载监听器
-     * @param listener 过期的监听器
-     * @deprecated 使用 {@link #setOnLoadMoreListener(OnLoadMoreListener)} 代替
-     * @return RefreshLayout
-     */
-    @Deprecated
-    RefreshLayout setOnLoadmoreListener(OnLoadmoreListener listener);
-
-    /**
-     * 同时设置刷新和加载监听器
-     * @param listener 过期的监听器
-     * @deprecated 使用 {@link #setOnRefreshLoadMoreListener(OnRefreshLoadMoreListener)} 代替
-     * @return RefreshLayout
-     */
-    @Deprecated
-    RefreshLayout setOnRefreshLoadmoreListener(OnRefreshLoadmoreListener listener);
-
-    /**
-     * 完成加载并标记没有更多数据
-     * @deprecated 使用 {@link #finishLoadMoreWithNoMoreData()} 代替
-     * @return RefreshLayout
-     */
-    @Deprecated
-    RefreshLayout finishLoadmoreWithNoMoreData();
 }

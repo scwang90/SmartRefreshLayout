@@ -18,7 +18,7 @@
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <com.scwang.refreshlayout.widget.TwoLevelHeader
+        <com.scwang.smartrefresh.layout.header.TwoLevelHeader
             android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -26,7 +26,7 @@
                 android:id="@+id/classics"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-        </com.scwang.refreshlayout.widget.TwoLevelHeader>
+        </com.scwang.smartrefresh.layout.header.TwoLevelHeader>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"

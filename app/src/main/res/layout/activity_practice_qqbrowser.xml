@@ -11,7 +11,7 @@
     <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"
         app:navigationIcon="?attr/homeAsUpIndicator"
-        app:title="@string/title_activity_practice_webview"/>
+        app:title="@string/title_activity_practice_web_view"/>
 
     <ezy.ui.layout.LoadingLayout
         android:id="@+id/loading"
@@ -33,7 +33,7 @@
                 android:gravity="center_horizontal"
                 android:textColor="#aaa"
                 android:textSize="16sp"
-                android:text="@string/github_qqbrowser_kernel"
+                android:text="@string/github_qq_browser_kernel"
                 app:layout_srlBackgroundColor="#555"
                 app:layout_srlSpinnerStyle="FixedBehind"/>
             <WebView

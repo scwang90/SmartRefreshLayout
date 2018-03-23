@@ -7,14 +7,14 @@
     tools:context="com.scwang.refreshlayout.activity.style.PhoenixStyleActivity">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar"
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/toolbar_layout"
+            android:id="@+id/toolbarLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"

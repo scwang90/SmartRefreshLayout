@@ -24,7 +24,7 @@ import com.scwang.refreshlayout.activity.practice.FeedlistPracticeActivity;
 import com.scwang.refreshlayout.activity.practice.ProfilePracticeActivity;
 import com.scwang.refreshlayout.activity.practice.QQBrowserPracticeActivity;
 import com.scwang.refreshlayout.activity.practice.RepastPracticeActivity;
-import com.scwang.refreshlayout.activity.practice.WebviewPracticeActivity;
+import com.scwang.refreshlayout.activity.practice.WebViewPracticeActivity;
 import com.scwang.refreshlayout.activity.practice.WeiboPracticeActivity;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
@@ -43,15 +43,15 @@ import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 public class RefreshPractiveFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private enum Item {
-        Repast(R.string.index_item_repast, RepastPracticeActivity.class),
-        Profile(R.string.index_item_profile, ProfilePracticeActivity.class),
-        WebView(R.string.index_item_webview, WebviewPracticeActivity.class),
-        FeedList(R.string.index_item_feedlist, FeedlistPracticeActivity.class),
-        Weibo(R.string.index_item_weibo, WeiboPracticeActivity.class),
-        Banner(R.string.index_item_banner, BannerPracticeActivity.class),
-        QQBrowser(R.string.index_item_qqbrowser, QQBrowserPracticeActivity.class),
+        Repast(R.string.index_practice_repast, RepastPracticeActivity.class),
+        Profile(R.string.index_practice_profile, ProfilePracticeActivity.class),
+        WebView(R.string.index_practice_web_view, WebViewPracticeActivity.class),
+        FeedList(R.string.index_practice_feed_list, FeedlistPracticeActivity.class),
+        Weibo(R.string.index_practice_weibo, WeiboPracticeActivity.class),
+        Banner(R.string.index_practice_banner, BannerPracticeActivity.class),
+        QQBrowser(R.string.index_practice_qq_browser, QQBrowserPracticeActivity.class),
 //        TwoLevel("二级刷新", SecondFloorPracticeFragment.class),
-        SecondFloor(R.string.index_item_secondfloor, SecondFloorPracticeFragment.class),
+        SecondFloor(R.string.index_practice_second_floor, SecondFloorPracticeFragment.class),
         ;
         @StringRes
         public int name;

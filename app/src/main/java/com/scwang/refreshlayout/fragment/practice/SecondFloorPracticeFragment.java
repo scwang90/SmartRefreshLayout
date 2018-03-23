@@ -12,7 +12,8 @@ import android.widget.Toast;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.util.StatusBarUtil;
-import com.scwang.refreshlayout.widget.TwoLevelHeader;
+import com.scwang.smartrefresh.layout.api.OnTwoLevelListener;
+import com.scwang.smartrefresh.layout.header.TwoLevelHeader;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -47,20 +48,34 @@ public class SecondFloorPracticeFragment extends Fragment {
         final RefreshLayout refreshLayout = (RefreshLayout)root.findViewById(R.id.refreshLayout);
         refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
             @Override
-            public void onHeaderPulling(RefreshHeader header, float percent, int offset, int bottomHeight, int extendHeight) {
-                toolbar.setAlpha(1 - Math.min(percent, 1));
-                floor.setTranslationY(Math.min(offset - floor.getHeight() + toolbar.getHeight(), refreshLayout.getLayout().getHeight() - floor.getHeight()));
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                refreshLayout.finishLoadMore(2000);
             }
             @Override
-            public void onHeaderReleasing(RefreshHeader header, float percent, int offset, int bottomHeight, int extendHeight) {
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                Toast.makeText(getContext(),"触发刷新事件",Toast.LENGTH_SHORT).show();
+                refreshLayout.finishRefresh(2000);
+            }
+            @Override
+            public void onHeaderMoving(RefreshHeader header, boolean isDragging, float percent, int offset, int headerHeight, int maxDragHeight) {
                 toolbar.setAlpha(1 - Math.min(percent, 1));
                 floor.setTranslationY(Math.min(offset - floor.getHeight() + toolbar.getHeight(), refreshLayout.getLayout().getHeight() - floor.getHeight()));
             }
+//            @Override
+//            public void onHeaderPulling(@NonNull RefreshHeader header, float percent, int offset, int bottomHeight, int maxDragHeight) {
+//                toolbar.setAlpha(1 - Math.min(percent, 1));
+//                floor.setTranslationY(Math.min(offset - floor.getHeight() + toolbar.getHeight(), refreshLayout.getLayout().getHeight() - floor.getHeight()));
+//            }
+//            @Override
+//            public void onHeaderReleasing(@NonNull RefreshHeader header, float percent, int offset, int bottomHeight, int maxDragHeight) {
+//                toolbar.setAlpha(1 - Math.min(percent, 1));
+//                floor.setTranslationY(Math.min(offset - floor.getHeight() + toolbar.getHeight(), refreshLayout.getLayout().getHeight() - floor.getHeight()));
+//            }
         });
 
-        header.setOnTwoLevelListener(new TwoLevelHeader.OnTwoLevelListener() {
+        header.setOnTwoLevelListener(new OnTwoLevelListener() {
             @Override
-            public boolean onTwoLevel(RefreshLayout refreshLayout) {
+            public boolean onTwoLevel(@NonNull RefreshLayout refreshLayout) {
                 Toast.makeText(getContext(),"触发二楼事件",Toast.LENGTH_SHORT).show();
                 root.findViewById(R.id.secondfloor_content).animate().alpha(1).setDuration(2000);
                 refreshLayout.getLayout().postDelayed(new Runnable() {
@@ -74,13 +89,13 @@ public class SecondFloorPracticeFragment extends Fragment {
             }
         });
 
-        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(RefreshLayout refreshLayout) {
-                Toast.makeText(getContext(),"触发刷新事件",Toast.LENGTH_SHORT).show();
-                refreshLayout.finishRefresh(2000);
-            }
-        });
+//        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+//            @Override
+//            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+//                Toast.makeText(getContext(),"触发刷新事件",Toast.LENGTH_SHORT).show();
+//                refreshLayout.finishRefresh(2000);
+//            }
+//        });
 
         //状态栏透明和间距处理
         StatusBarUtil.immersive(getActivity());

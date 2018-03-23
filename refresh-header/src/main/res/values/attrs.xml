@@ -34,26 +34,28 @@
         <attr name="msvViewportHeight" format="dimension"/>
     </declare-styleable>
 
-    <declare-styleable name="FunGameHeader">
-        <attr name="fgvMaskTopText" format="string" />
-        <attr name="fgvMaskBottomText" format="string" />
-        <attr name="fgvTopTextSize" format="dimension" />
-        <attr name="fgvBottomTextSize" format="dimension" />
-    </declare-styleable>
-
     <declare-styleable name="FunGameView">
-        <attr name="fgvBackColor" format="color" />
-        <attr name="fgvLeftColor" format="color" />
-        <attr name="fgvMiddleColor" format="color" />
-        <attr name="fgvRightColor" format="color" />
-        <attr name="fgvTextLoading" format="string" />
-        <attr name="fgvTextLoadingFinished" format="string" />
-        <attr name="fgvTextGameOver" format="string" />
+
+        <attr name="fghMaskTextTop" format="string" />
+        <attr name="fghMaskTextTopPull" format="string" />
+        <attr name="fghMaskTextTopRelease" format="string" />
+        <attr name="fghMaskTextBottom" format="string" />
+        <attr name="fghMaskTextSizeTop" format="dimension" />
+        <attr name="fghMaskTextSizeBottom" format="dimension" />
+
+        <attr name="fghBackColor" format="color" />
+        <attr name="fghLeftColor" format="color" />
+        <attr name="fghMiddleColor" format="color" />
+        <attr name="fghRightColor" format="color" />
+        <attr name="fghTextLoading" format="string" />
+        <attr name="fghTextLoadingFinished" format="string" />
+        <attr name="fghTextLoadingFailed" format="string" />
+        <attr name="fghTextGameOver" format="string" />
     </declare-styleable>
 
     <declare-styleable name="FunGameHitBlockHeader">
-        <attr name="fgvBlockHorizontalNum" format="integer" />
-        <attr name="fgvBallSpeed" format="dimension">
+        <attr name="fghBlockHorizontalNum" format="integer" />
+        <attr name="fghBallSpeed" format="dimension">
             <!--<enum name="low" value="1.5dp" />-->
             <!--<enum name="medium" value="3dp" />-->
             <!--<enum name="fast" value="4.5dp" />-->
@@ -68,7 +70,7 @@
     </declare-styleable>
 
 
-    <declare-styleable name="DropboxHeader">
+    <declare-styleable name="DropBoxHeader">
         <attr name="dhDrawable1" format="reference" />
         <attr name="dhDrawable2" format="reference" />
         <attr name="dhDrawable3" format="reference" />

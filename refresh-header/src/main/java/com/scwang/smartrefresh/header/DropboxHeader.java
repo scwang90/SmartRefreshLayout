@@ -10,90 +10,74 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
+import android.support.v4.graphics.ColorUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 
-import com.scwang.smartrefresh.header.util.ColorUtils;
+import com.scwang.smartrefresh.header.internal.pathview.PathsDrawable;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
-import com.scwang.smartrefresh.layout.internal.pathview.PathsDrawable;
+import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 /**
- * DropboxRefresh
+ * DropBoxRefresh
  * Created by SCWANG on 2017/6/24.
- * design https://dribbble.com/shots/3470499-Dropbox-Refresh
+ * design https://dribbble.com/shots/3470499-DropBox-Refresh
  */
 
-public class DropboxHeader extends View implements RefreshHeader {
+public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
 
     //<editor-fold desc="Field">
-    private Path mPath;
-    private Paint mPaint;
-    private BoxBody mBoxBody;
-    private int mAccentColor;
-    private int mHeaderHeight;
-    private boolean mDropOutOverFlow;
-    private Drawable mDrawable1;
-    private Drawable mDrawable2;
-    private Drawable mDrawable3;
-    private float mDropOutPercent;
-    private float mReboundPercent;
-    private ValueAnimator mReboundAnimator;
-    private ValueAnimator mDropOutAnimator;
-    private RefreshState mState;
+    protected Path mPath;
+    protected Paint mPaint;
+    protected BoxBody mBoxBody;
+    protected int mAccentColor;
+    protected int mHeaderHeight;
+    protected boolean mDropOutOverFlow;
+    protected Drawable mDrawable1;
+    protected Drawable mDrawable2;
+    protected Drawable mDrawable3;
+    protected float mDropOutPercent;
+    protected float mReboundPercent;
+    protected ValueAnimator mReboundAnimator;
+    protected ValueAnimator mDropOutAnimator;
+    protected RefreshState mState;
     //</editor-fold>
 
     //<editor-fold desc="View">
-    public DropboxHeader(Context context) {
-        super(context);
-        this.initView(context, null);
+    public DropBoxHeader(Context context) {
+        this(context, null);
     }
 
-    public DropboxHeader(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        this.initView(context, attrs);
+    public DropBoxHeader(Context context, @Nullable AttributeSet attrs) {
+        this(context, attrs, 0);
     }
 
-    public DropboxHeader(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public DropBoxHeader(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.initView(context, attrs);
-    }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    public DropboxHeader(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        this.initView(context, attrs);
-    }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(resolveSize(getSuggestedMinimumWidth(), widthMeasureSpec),
-                resolveSize(getSuggestedMinimumHeight(), heightMeasureSpec));
-    }
-
-    private void initView(Context context, AttributeSet attrs) {
         mPath = new Path();
         mPaint = new Paint();
         mBoxBody = new BoxBody();
         mPaint.setAntiAlias(true);
         mAccentColor = 0xff6ea9ff;
-        setBackgroundColor(0xff283645);
-        setMinimumHeight(DensityUtil.dp2px(150));
+        final View thisView = this;
+        thisView.setBackgroundColor(0xff283645);
+        thisView.setMinimumHeight(DensityUtil.dp2px(150));
 
+        mSpinnerStyle = SpinnerStyle.Scale;
 
-        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.DropboxHeader);
-        if (ta.hasValue(R.styleable.DropboxHeader_dhDrawable1)) {
-            mDrawable1 = ta.getDrawable(R.styleable.DropboxHeader_dhDrawable1);
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.DropBoxHeader);
+        if (ta.hasValue(R.styleable.DropBoxHeader_dhDrawable1)) {
+            mDrawable1 = ta.getDrawable(R.styleable.DropBoxHeader_dhDrawable1);
         } else {
             PathsDrawable drawable1 = new PathsDrawable();
             drawable1.parserPaths(
@@ -106,8 +90,8 @@ public class DropboxHeader extends View implements RefreshHeader {
             );
             mDrawable1 = drawable1;
         }
-        if (ta.hasValue(R.styleable.DropboxHeader_dhDrawable2)) {
-            mDrawable2 = ta.getDrawable(R.styleable.DropboxHeader_dhDrawable2);
+        if (ta.hasValue(R.styleable.DropBoxHeader_dhDrawable2)) {
+            mDrawable2 = ta.getDrawable(R.styleable.DropBoxHeader_dhDrawable2);
         } else {
             PathsDrawable drawable2 = new PathsDrawable();
             drawable2.parserPaths(
@@ -125,8 +109,8 @@ public class DropboxHeader extends View implements RefreshHeader {
             );
             mDrawable2 = drawable2;
         }
-        if (ta.hasValue(R.styleable.DropboxHeader_dhDrawable3)) {
-            mDrawable3 = ta.getDrawable(R.styleable.DropboxHeader_dhDrawable3);
+        if (ta.hasValue(R.styleable.DropBoxHeader_dhDrawable3)) {
+            mDrawable3 = ta.getDrawable(R.styleable.DropBoxHeader_dhDrawable3);
         } else {
             PathsDrawable drawable3 = new PathsDrawable();
             drawable3.parserPaths("M6.021,2.188L6.021,11.362C5.46,11.327 4.843,11.414 4.229,11.663C2.624,12.312 1.696,13.729 2.155,14.825C2.62,15.924 4.294,16.284 5.898,15.634C7.131,15.134 7.856,14.184 7.965,13.272L7.958,4.387L15.02,3.028L15.02,9.406C14.422,9.343 13.746,9.432 13.076,9.703C11.471,10.353 10.544,11.77 11.004,12.866C11.467,13.964 13.141,14.325 14.746,13.675C15.979,13.174 16.836,12.224 16.947,11.313L16.958,0.002L6.021,2.188L6.021,2.188Z");
@@ -139,25 +123,6 @@ public class DropboxHeader extends View implements RefreshHeader {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        initAnimator();
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        if (mReboundAnimator != null) {
-            mReboundAnimator.removeAllUpdateListeners();
-            mReboundAnimator.removeAllListeners();
-            mReboundAnimator = null;
-        }
-        if (mDropOutAnimator != null) {
-            mDropOutAnimator.removeAllUpdateListeners();
-            mDropOutAnimator.removeAllListeners();
-            mDropOutAnimator = null;
-        }
-    }
-
-    private void initAnimator() {
         AccelerateInterpolator interpolator = new AccelerateInterpolator();
         mReboundAnimator = ValueAnimator.ofFloat(0, 1, 0);
         mReboundAnimator.setInterpolator(interpolator);
@@ -165,8 +130,9 @@ public class DropboxHeader extends View implements RefreshHeader {
         mReboundAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
+                final View thisView = DropBoxHeader.this;
                 mReboundPercent = (float) animation.getAnimatedValue();
-                DropboxHeader.this.invalidate();
+                thisView.invalidate();
             }
         });
         mReboundAnimator.addListener(new AnimatorListenerAdapter() {
@@ -176,6 +142,8 @@ public class DropboxHeader extends View implements RefreshHeader {
                     if (mDropOutAnimator != null) {
                         mDropOutAnimator.start();
                     }
+                } else {
+                    mDropOutPercent = 0;
                 }
             }
         });
@@ -196,7 +164,8 @@ public class DropboxHeader extends View implements RefreshHeader {
                         mDropOutOverFlow = true;
                     }
                 }
-                DropboxHeader.this.invalidate();
+                final View thisView = DropBoxHeader.this;
+                thisView.invalidate();
             }
         });
         mDropOutAnimator.addListener(new AnimatorListenerAdapter() {
@@ -210,9 +179,26 @@ public class DropboxHeader extends View implements RefreshHeader {
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
-        final int width = getWidth();
-        final int height = getHeight();
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if (mReboundAnimator != null) {
+            mReboundAnimator.removeAllUpdateListeners();
+            mReboundAnimator.removeAllListeners();
+            mReboundAnimator = null;
+        }
+        if (mDropOutAnimator != null) {
+            mDropOutAnimator.removeAllUpdateListeners();
+            mDropOutAnimator.removeAllListeners();
+            mDropOutAnimator = null;
+        }
+    }
+
+    @Override
+    protected void dispatchDraw(Canvas canvas) {
+
+        final View thisView = this;
+        final int width = thisView.getWidth();
+        final int height = thisView.getHeight();
 
         final int sideLength = generateSideLength();
         BoxBody body = generateBoxBody(width, height, sideLength);
@@ -223,7 +209,7 @@ public class DropboxHeader extends View implements RefreshHeader {
         mPaint.setColor(mAccentColor);
         canvas.drawPath(generateBoxCoverPath(body), mPaint);
 
-        if (isInEditMode()) {
+        if (thisView.isInEditMode()) {
             mDropOutPercent = 2.5f;
         }
         if (mDropOutPercent > 0) {
@@ -256,6 +242,7 @@ public class DropboxHeader extends View implements RefreshHeader {
             }
         }
 
+        super.dispatchDraw(canvas);
     }
 
     //</editor-fold>
@@ -291,7 +278,7 @@ public class DropboxHeader extends View implements RefreshHeader {
 
         final double offsetAngle = mReboundPercent * (Math.PI * 2 / 5);
 
-        /**
+        /*
          * 开始画左上的盖子
          */
         final float offsetLeftTopX = sideLength * (float) Math.sin(Math.PI / 3 - offsetAngle / 2);
@@ -302,7 +289,7 @@ public class DropboxHeader extends View implements RefreshHeader {
         mPath.lineTo(body.boxLeft - offsetLeftTopX, body.boxCenterTop - offsetLeftTopY);
         mPath.close();
 
-        /**
+        /*
          * 开始画左下的盖子
          */
         final float offsetLeftBottomX = sideLength * (float) Math.sin(Math.PI / 3 + offsetAngle);
@@ -313,7 +300,7 @@ public class DropboxHeader extends View implements RefreshHeader {
         mPath.lineTo(body.boxLeft - offsetLeftBottomX, body.boxCenterTop + offsetLeftBottomY);
         mPath.close();
 
-        /**
+        /*
          * 开始画右上的盖子
          */
         final float offsetRightTopX = sideLength * (float) Math.sin(Math.PI / 3 - offsetAngle / 2);
@@ -324,7 +311,7 @@ public class DropboxHeader extends View implements RefreshHeader {
         mPath.lineTo(body.boxRight + offsetRightTopX, body.boxCenterTop - offsetRightTopY);
         mPath.close();
 
-        /**
+        /*
          * 开始画右下的盖子
          */
         final float offsetRightBottomX = sideLength * (float) Math.sin(Math.PI / 3 + offsetAngle);
@@ -357,51 +344,39 @@ public class DropboxHeader extends View implements RefreshHeader {
 
     //<editor-fold desc="RefreshHeader">
 
-    @Override
-    public boolean isSupportHorizontalDrag() {
-        return false;
-    }
 
     @Override
-    public void onHorizontalDrag(float percentX, int offsetX, int offsetMax) {
-    }
-
-    @Override
-    public void onPulling(float percent, int offset, int height, int extendHeight) {
-        if (mState != RefreshState.Refreshing) {
-            mReboundPercent = 1f * Math.max(0, offset - height) / extendHeight;
+    public void onMoving(boolean isDragging, float percent, int offset, int height, int maxDragHeight) {
+        if (!isDragging || mState != RefreshState.Refreshing) {
+            mReboundPercent = 1f * Math.max(0, offset - height) / maxDragHeight;
         }
     }
 
-    @Override
-    public void onReleased(RefreshLayout layout, int height, int extendHeight) {
+//    @Override
+//    public void onPulling(float percent, int offset, int height, int maxDragHeight) {
+//        if (mState != RefreshState.Refreshing) {
+//            mReboundPercent = 1f * Math.max(0, offset - height) / maxDragHeight;
+//        }
+//    }
+//
+//    @Override
+//    public void onReleasing(float percent, int offset, int height, int maxDragHeight) {
+//        mReboundPercent = 1f * Math.max(0, offset - height) / maxDragHeight;
+//    }
 
-    }
-
     @Override
-    public void onReleasing(float percent, int offset, int height, int extendHeight) {
-        mReboundPercent = 1f * Math.max(0, offset - height) / extendHeight;
-    }
-
-    @Override
-    public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
+    public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
         mState = newState;
         if (newState == RefreshState.None) {
             mDropOutOverFlow = false;
         }
     }
 
-    @NonNull
-    @Override
-    public View getView() {
-        return this;
-    }
-
-    @NonNull
-    @Override
-    public SpinnerStyle getSpinnerStyle() {
-        return SpinnerStyle.Scale;
-    }
+//    @NonNull
+//    @Override
+//    public SpinnerStyle getSpinnerStyle() {
+//        return SpinnerStyle.Scale;
+//    }
 
     /**
      * @param colors 对应Xml中配置的 srlPrimaryColor srlAccentColor
@@ -410,7 +385,8 @@ public class DropboxHeader extends View implements RefreshHeader {
     @Override@Deprecated
     public void setPrimaryColors(@ColorInt int ... colors) {
         if (colors.length > 0) {
-            setBackgroundColor(colors[0]);
+            final View thisView = this;
+            thisView.setBackgroundColor(colors[0]);
             if (colors.length > 1) {
                 mAccentColor = colors[1];
             }
@@ -418,7 +394,7 @@ public class DropboxHeader extends View implements RefreshHeader {
     }
 
     @Override
-    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
+    public void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight) {
         mHeaderHeight = height;
         final int sideLength = generateSideLength();
         mDrawable1.setBounds(0, 0, sideLength, sideLength);
@@ -427,7 +403,7 @@ public class DropboxHeader extends View implements RefreshHeader {
     }
 
     @Override
-    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
+    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int maxDragHeight) {
         if (mDropOutAnimator != null) {
             mDropOutAnimator.start();
         }
@@ -442,15 +418,15 @@ public class DropboxHeader extends View implements RefreshHeader {
 
     private static class BoxBody {
 
-        private int boxCenterX;
-        private int boxCenterY;
-        private int boxBottom;
-        private int boxTop;
-        private int boxLeft;
-        private int boxCenterTop;
-        private int boxCenterBottom;
-        private int boxRight;
-        private int boxSideLength;
+        int boxCenterX;
+        int boxCenterY;
+        int boxBottom;
+        int boxTop;
+        int boxLeft;
+        int boxCenterTop;
+        int boxCenterBottom;
+        int boxRight;
+        int boxSideLength;
 
         BoxBody measure(int width, int height, int sideLength, int margin) {
             boxSideLength = sideLength;

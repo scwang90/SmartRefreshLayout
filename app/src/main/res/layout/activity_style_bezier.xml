@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.scwang.refreshlayout.activity.style.BezierStyleActivity"
+    tools:context="com.scwang.refreshlayout.activity.style.BezierRadarStyleActivity"
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
@@ -24,7 +24,7 @@
         <com.scwang.smartrefresh.layout.header.BezierRadarHeader
             android:id="@+id/header"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"

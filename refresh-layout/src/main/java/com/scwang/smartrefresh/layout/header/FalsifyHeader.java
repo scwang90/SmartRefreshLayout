@@ -1,15 +1,10 @@
 package com.scwang.smartrefresh.layout.header;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
-import android.os.Build;
-import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -20,7 +15,7 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
-import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import static android.view.View.MeasureSpec.EXACTLY;
@@ -34,56 +29,46 @@ import static android.view.View.MeasureSpec.makeMeasureSpec;
  * Created by SCWANG on 2017/6/14.
  */
 
-public class FalsifyHeader extends View implements RefreshHeader {
+public class FalsifyHeader extends InternalAbstract implements RefreshHeader {
 
     protected RefreshKernel mRefreshKernel;
 
     //<editor-fold desc="FalsifyHeader">
     public FalsifyHeader(Context context) {
-        super(context);
+        this(context, null);
     }
 
     public FalsifyHeader(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        this(context, attrs, 0);
     }
 
     public FalsifyHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    public FalsifyHeader(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-    }
-
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(resolveSize(getSuggestedMinimumWidth(), widthMeasureSpec),
-                resolveSize(getSuggestedMinimumHeight(), heightMeasureSpec));
-    }
-
-    @Override
-    @SuppressLint("DrawAllocation")
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-        if (isInEditMode()) {//这段代码在运行时不会执行，只会在Studio编辑预览时运行，不用在意性能问题
+    protected void dispatchDraw(Canvas canvas) {
+        super.dispatchDraw(canvas);
+        final View thisView = this;
+        if (thisView.isInEditMode()) {//这段代码在运行时不会执行，只会在Studio编辑预览时运行，不用在意性能问题
             int d = DensityUtil.dp2px(5);
 
             Paint paint = new Paint();
             paint.setStyle(Paint.Style.STROKE);
-            paint.setColor(0x44ffffff);
+            paint.setColor(0xcccccccc);
             paint.setStrokeWidth(DensityUtil.dp2px(1));
             paint.setPathEffect(new DashPathEffect(new float[]{d, d, d, d}, 1));
-            canvas.drawRect(d, d, getWidth() - d, getBottom() - d, paint);
+            canvas.drawRect(d, d, thisView.getWidth() - d, thisView.getBottom() - d, paint);
 
-            TextView textView = new TextView(getContext());
-            textView.setText(R.string.srl_component_falsify);
-            textView.setText(String.format(textView.getText().toString(), getClass().getSimpleName(), DensityUtil.px2dp(getHeight())));
-            textView.setTextColor(0x44ffffff);
+            TextView textView = new TextView(thisView.getContext());
+            textView.setText(thisView.getResources().getString(R.string.srl_component_falsify, getClass().getSimpleName(), DensityUtil.px2dp(thisView.getHeight())));
+            textView.setTextColor(0xcccccccc);
             textView.setGravity(Gravity.CENTER);
-            textView.measure(makeMeasureSpec(getWidth(), EXACTLY), makeMeasureSpec(getHeight(), EXACTLY));
-            textView.layout(0, 0, getWidth(), getHeight());
-            textView.draw(canvas);
+            //noinspection UnnecessaryLocalVariable
+            View view = textView;
+            view.measure(makeMeasureSpec(thisView.getWidth(), EXACTLY), makeMeasureSpec(thisView.getHeight(), EXACTLY));
+            view.layout(0, 0, thisView.getWidth(), thisView.getHeight());
+            view.draw(canvas);
         }
     }
 
@@ -92,31 +77,12 @@ public class FalsifyHeader extends View implements RefreshHeader {
     //<editor-fold desc="RefreshHeader">
 
     @Override
-    public void onInitialized(@NonNull RefreshKernel kernel, int height, int extendHeight) {
+    public void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight) {
         mRefreshKernel = kernel;
     }
 
     @Override
-    public boolean isSupportHorizontalDrag() {
-        return false;
-    }
-
-    @Override
-    public void onHorizontalDrag(float percentX, int offsetX, int offsetMax) {
-    }
-
-    @Override
-    public void onPulling(float percent, int offset, int height, int extendHeight) {
-
-    }
-
-    @Override
-    public void onReleasing(float percent, int offset, int height, int extendHeight) {
-
-    }
-
-    @Override
-    public void onReleased(RefreshLayout layout, int height, int extendHeight) {
+    public void onReleased(@NonNull RefreshLayout layout, int height, int maxDragHeight) {
         if (mRefreshKernel != null) {
             mRefreshKernel.setState(RefreshState.None);
             //onReleased 的时候 调用 setState(RefreshState.None); 并不会立刻改变成 None
@@ -126,35 +92,6 @@ public class FalsifyHeader extends View implements RefreshHeader {
         }
     }
 
-    @Override
-    public void onStartAnimator(@NonNull RefreshLayout layout, int height, int extendHeight) {
-    }
-
-    @Override
-    public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
-    }
-
-    @Override
-    public int onFinish(@NonNull RefreshLayout layout, boolean success) {
-        return 0;
-    }
-
-    @Override@Deprecated
-    public void setPrimaryColors(@ColorInt int ... colors) {
-
-    }
-
-    @NonNull
-    @Override
-    public View getView() {
-        return this;
-    }
-
-    @NonNull
-    @Override
-    public SpinnerStyle getSpinnerStyle() {
-        return SpinnerStyle.Translate;
-    }
     //</editor-fold>
 
 }

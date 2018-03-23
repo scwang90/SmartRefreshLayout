@@ -2,6 +2,7 @@ package com.scwang.refreshlayout.activity.practice;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -19,7 +20,7 @@ import java.util.Locale;
 /**
  * 网页-Github
  */
-public class WebviewPracticeActivity extends AppCompatActivity {
+public class WebViewPracticeActivity extends AppCompatActivity {
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -39,7 +40,7 @@ public class WebviewPracticeActivity extends AppCompatActivity {
         final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh(RefreshLayout refreshLayout) {
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 webView.loadUrl("https://github.com/scwang90/SmartRefreshLayout");
             }
         });
@@ -67,7 +68,7 @@ public class WebviewPracticeActivity extends AppCompatActivity {
         StatusBarUtil.setPaddingSmart(this, webView);
         StatusBarUtil.setPaddingSmart(this, toolbar);
         StatusBarUtil.setMargin(this, findViewById(R.id.header));
-        StatusBarUtil.setPaddingSmart(this, findViewById(R.id.blurview));
+        StatusBarUtil.setPaddingSmart(this, findViewById(R.id.blurView));
     }
 
 }

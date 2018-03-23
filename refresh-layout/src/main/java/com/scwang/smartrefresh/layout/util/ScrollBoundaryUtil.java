@@ -1,10 +1,25 @@
 package com.scwang.smartrefresh.layout.util;
 
+import android.content.Context;
 import android.graphics.PointF;
-import android.view.MotionEvent;
+import android.os.Build;
+import android.support.annotation.ColorRes;
+import android.support.annotation.NonNull;
+import android.support.v4.view.NestedScrollingChild;
+import android.support.v4.view.NestedScrollingParent;
+import android.support.v4.view.ScrollingView;
+import android.support.v4.view.ViewPager;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.AbsListView;
+import android.widget.ListView;
+import android.widget.ScrollView;
+
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 /**
  * 滚动边界
@@ -16,76 +31,92 @@ public class ScrollBoundaryUtil {
 
     //<editor-fold desc="滚动判断">
 
-    public static boolean canRefresh(View targetView, MotionEvent event) {
+    /**
+     * 判断内容是否可以刷新
+     * @param targetView 内容视图
+     * @param touch 按压事件位置
+     * @return 是否可以刷新
+     */
+    public static boolean canRefresh(@NonNull View targetView, PointF touch) {
         if (canScrollUp(targetView) && targetView.getVisibility() == View.VISIBLE) {
             return false;
         }
-        //event == null 时 canRefresh 不会动态递归搜索
-        if (targetView instanceof ViewGroup && event != null) {
+        //touch == null 时 canRefresh 不会动态递归搜索
+        if (targetView instanceof ViewGroup && touch != null) {
             ViewGroup viewGroup = (ViewGroup) targetView;
             final int childCount = viewGroup.getChildCount();
             PointF point = new PointF();
             for (int i = childCount; i > 0; i--) {
                 View child = viewGroup.getChildAt(i - 1);
-                if (isTransformedTouchPointInView(viewGroup, child, event.getX(), event.getY(), point)) {
-                    event = MotionEvent.obtain(event);
-                    event.offsetLocation(point.x, point.y);
-                    return canRefresh(child, event);
+                if (isTransformedTouchPointInView(viewGroup, child, touch.x, touch.y, point)) {
+                    touch.offset(point.x, point.y);
+                    boolean can = canRefresh(child, touch);
+                    touch.offset(-point.x, -point.y);
+                    return can;
                 }
             }
         }
         return true;
     }
 
-    public static boolean canLoadMore(View targetView, MotionEvent event) {
-        if (!canScrollDown(targetView) && canScrollUp(targetView) && targetView.getVisibility() == View.VISIBLE) {
-            return true;
-        }
-        //event == null 时 canLoadMore 不会动态递归搜索
-        if (targetView instanceof ViewGroup && event != null) {
-            ViewGroup viewGroup = (ViewGroup) targetView;
-            final int childCount = viewGroup.getChildCount();
-            PointF point = new PointF();
-            for (int i = 0; i < childCount; i++) {
-                View child = viewGroup.getChildAt(i);
-                if (isTransformedTouchPointInView(viewGroup, child, event.getX(), event.getY(), point)) {
-                    event = MotionEvent.obtain(event);
-                    event.offsetLocation(point.x, point.y);
-                    return canLoadMore(child, event);
-                }
-            }
-        }
-        return false;
-    }
-
-    public static boolean canScrollDown(View targetView, MotionEvent event) {
+    /**
+     * 判断内容视图是否可以加载更多
+     * @param targetView 内容视图
+     * @param touch 按压事件位置
+     * @param contentFull 内容是否填满页面 (未填满时，会通过canScrollUp自动判断)
+     * @return 是否可以刷新
+     */
+    public static boolean canLoadMore(@NonNull View targetView, PointF touch, boolean contentFull) {
         if (canScrollDown(targetView) && targetView.getVisibility() == View.VISIBLE) {
-            return true;
+            return false;
         }
-        //event == null 时 canScrollDown 不会动态递归搜索
-        if (targetView instanceof ViewGroup && event != null) {
+        //touch == null 时 canLoadMore 不会动态递归搜索
+        if (targetView instanceof ViewGroup && touch != null) {
             ViewGroup viewGroup = (ViewGroup) targetView;
             final int childCount = viewGroup.getChildCount();
             PointF point = new PointF();
             for (int i = 0; i < childCount; i++) {
                 View child = viewGroup.getChildAt(i);
-                if (isTransformedTouchPointInView(viewGroup, child, event.getX(), event.getY(), point)) {
-                    event = MotionEvent.obtain(event);
-                    event.offsetLocation(point.x, point.y);
-                    return canScrollDown(child, event);
+                if (isTransformedTouchPointInView(viewGroup, child, touch.x, touch.y, point)) {
+                    touch.offset(point.x, point.y);
+                    boolean can = canLoadMore(child, touch, contentFull);
+                    touch.offset(-point.x, -point.y);
+                    return can;
                 }
             }
         }
-        return false;
+        return (contentFull || canScrollUp(targetView));
     }
 
-    public static boolean canScrollUp(View targetView) {
+//    public static boolean canScrollDown(View targetView, MotionEvent event) {
+//        if (canScrollDown(targetView) && targetView.getVisibility() == View.VISIBLE) {
+//            return true;
+//        }
+//        //event == null 时 canScrollDown 不会动态递归搜索
+//        if (targetView instanceof ViewGroup && event != null) {
+//            ViewGroup viewGroup = (ViewGroup) targetView;
+//            final int childCount = viewGroup.getChildCount();
+//            PointF point = new PointF();
+//            for (int i = 0; i < childCount; i++) {
+//                View child = viewGroup.getChildAt(i);
+//                if (isTransformedTouchPointInView(viewGroup, child, event.getX(), event.getY(), point)) {
+//                    event = MotionEvent.obtain(event);
+//                    event.offsetLocation(point.x, point.y);
+//                    return canScrollDown(child, event);
+//                }
+//            }
+//        }
+//        return false;
+//    }
+
+    public static boolean canScrollUp(@NonNull View targetView) {
         if (android.os.Build.VERSION.SDK_INT < 14) {
             if (targetView instanceof AbsListView) {
+                final ViewGroup viewGroup = (ViewGroup) targetView;
                 final AbsListView absListView = (AbsListView) targetView;
-                return absListView.getChildCount() > 0
-                        && (absListView.getFirstVisiblePosition() > 0 || absListView.getChildAt(0)
-                        .getTop() < absListView.getPaddingTop());
+                return viewGroup.getChildCount() > 0
+                        && (absListView.getFirstVisiblePosition() > 0
+                        || viewGroup.getChildAt(0).getTop() < targetView.getPaddingTop());
             } else {
                 return targetView.getScrollY() > 0;
             }
@@ -94,13 +125,14 @@ public class ScrollBoundaryUtil {
         }
     }
 
-    public static boolean canScrollDown(View targetView) {
+    public static boolean canScrollDown(@NonNull View targetView) {
         if (android.os.Build.VERSION.SDK_INT < 14) {
             if (targetView instanceof AbsListView) {
+                final ViewGroup viewGroup = (ViewGroup) targetView;
                 final AbsListView absListView = (AbsListView) targetView;
-                return absListView.getChildCount() > 0
-                        && (absListView.getLastVisiblePosition() < absListView.getChildCount() - 1
-                        || absListView.getChildAt(absListView.getChildCount() - 1).getBottom() > absListView.getPaddingBottom());
+                final int childCount = viewGroup.getChildCount();
+                return childCount > 0 && (absListView.getLastVisiblePosition() < childCount - 1
+                        || viewGroup.getChildAt(childCount - 1).getBottom() > targetView.getPaddingBottom());
             } else {
                 return targetView.getScrollY() < 0;
             }
@@ -113,33 +145,39 @@ public class ScrollBoundaryUtil {
 
     //<editor-fold desc="transform Point">
 
-    public static boolean isTransformedTouchPointInView(ViewGroup group, View child, float x, float y,PointF outLocalPoint) {
+    public static boolean isTransformedTouchPointInView(@NonNull View group,@NonNull View child, float x, float y,PointF outLocalPoint) {
         if (child.getVisibility() != View.VISIBLE) {
             return false;
         }
         final float[] point = new float[2];
         point[0] = x;
         point[1] = y;
-        transformPointToViewLocal(group, child, point);
-        final boolean isInView = pointInView(child, point[0], point[1], 0);
+//        transformPointToViewLocal(group, child, point);
+        point[0] += group.getScrollX() - child.getLeft();
+        point[1] += group.getScrollY() - child.getTop();
+//        final boolean isInView = pointInView(child, point[0], point[1], 0);
+        final boolean isInView = point[0] >= 0 && point[1] >= 0
+                && point[0] < (child.getWidth())
+                && point[1] < ((child.getHeight()));
         if (isInView && outLocalPoint != null) {
             outLocalPoint.set(point[0]-x, point[1]-y);
         }
         return isInView;
     }
 
-    public static boolean pointInView(View view, float localX, float localY, float slop) {
-        final float left = /*Math.max(view.getPaddingLeft(), 0)*/ - slop;
-        final float top = /*Math.max(view.getPaddingTop(), 0)*/ - slop;
-        final float width = view.getWidth()/* - Math.max(view.getPaddingLeft(), 0) - Math.max(view.getPaddingRight(), 0)*/;
-        final float height = view.getHeight()/* - Math.max(view.getPaddingTop(), 0) - Math.max(view.getPaddingBottom(), 0)*/;
-        return localX >= left && localY >= top && localX < ((width) + slop) &&
-                localY < ((height) + slop);
-    }
+//    public static boolean pointInView(View view, float localX, float localY, float slop) {
+//        final float left = /*Math.max(view.getPaddingLeft(), 0)*/ - slop;
+//        final float top = /*Math.max(view.getPaddingTop(), 0)*/ - slop;
+//        final float width = view.getWidth()/* - Math.max(view.getPaddingLeft(), 0) - Math.max(view.getPaddingRight(), 0)*/;
+//        final float height = view.getHeight()/* - Math.max(view.getPaddingTop(), 0) - Math.max(view.getPaddingBottom(), 0)*/;
+//        return localX >= left && localY >= top && localX < ((width) + slop) &&
+//                localY < ((height) + slop);
+//    }
 
-    public static void transformPointToViewLocal(ViewGroup group, View child, float[] point) {
-        point[0] += group.getScrollX() - child.getLeft();
-        point[1] += group.getScrollY() - child.getTop();
-    }
+//    public static void transformPointToViewLocal(ViewGroup group, View child, float[] point) {
+//        point[0] += group.getScrollX() - child.getLeft();
+//        point[1] += group.getScrollY() - child.getTop();
+//    }
     //</editor-fold>
+
 }

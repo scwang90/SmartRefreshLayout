@@ -75,7 +75,6 @@
 
     <declare-styleable name="BallPulseFooter">
         <attr name="srlClassicsSpinnerStyle"/>
-        <attr name="srlIndicatorColor" format="color"/>
         <attr name="srlAnimatingColor" format="color"/>
         <attr name="srlNormalColor" format="color"/>
     </declare-styleable>
@@ -109,6 +108,15 @@
         <attr name="srlDrawableSize"/>
         <attr name="srlDrawableArrowSize"/>
         <attr name="srlDrawableProgressSize"/>
+    </declare-styleable>
+
+    <declare-styleable name="TwoLevelHeader">
+        <attr name="srlMaxRage" format="float"/>
+        <attr name="srlFloorRage" format="float"/>
+        <attr name="srlRefreshRage" format="float"/>
+        <attr name="srlFloorDuration" format="integer"/>
+        <attr name="srlEnableTwoLevel" format="boolean"/>
+        <attr name="srlEnablePullToCloseTwoLevel" format="boolean"/>
     </declare-styleable>
 
 </resources>
