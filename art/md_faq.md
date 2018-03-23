@@ -7,7 +7,7 @@ SmartRefresh默认使用了比较新的功能，如：越界回弹、越界拖�
 代码设置
 ~~~java
     refreshLayout.setEnableAutoLoadMore(false);//使上拉加载具有弹性效果
-    refreshLayout.setEnableOverScrollDrag(false);//禁止越界拖动
+    refreshLayout.setEnableOverScrollDrag(false);//禁止越界拖动（1.0.4以上版本）
     refreshLayout.setEnableOverScrollBounce(false);//关闭越界回弹功能
 ~~~
 XML属性
@@ -22,7 +22,7 @@ XML属性
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 ~~~
 
-## 1.获取当前状态？isRefreshing(),isLoading() 不见了？
+## 1.获取当前状态？isRefreshing(),isLoading() 不见了？（1.1.0以上版本）
 
 版本的迭代，刷新的状态越来越多，仅仅 isRefreshing(),isLoading() 已经无法满足要求，在1.0.5版本之后本库直接将
 内部 State 开放出来，并在1.0.5版本标记 isRefreshing(),isLoading() 过期，鼓励大家使用 getState 来代替。将在
@@ -94,7 +94,7 @@ public class App extends Application {
 }
 ~~~
 
-资源覆盖
+资源覆盖（1.1.0 以上版本）
 ~~~xml
 <resources>
     <string name="srl_header_pulling">下拉可以刷新</string>
@@ -115,6 +115,8 @@ public class App extends Application {
     <string name="srl_footer_nothing">没有更多数据了</string>
 </resources>
 ~~~
+
+#### 注意：上次更新时间的英文格式需要加单引号如： 'Last update' M-d HH:mm
 
 ## 5.触发下拉刷新的距离
 
