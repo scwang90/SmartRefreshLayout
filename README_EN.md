@@ -98,11 +98,10 @@ Please rest assured that I have divided it into three packages, when used to ref
 ## Usage
 #### 1.Add a gradle dependency.
 ```
-compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-1'
-compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-1'//If you use the special Header
+compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-2'
+compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-2'//If you use the special Header
 
 compile 'com.android.support:appcompat-v7:25.3.1'
-compile 'com.android.support:design:25.3.1'//（Not necessary，Can solve problems that cannot be previewed）
 
 ```
 
