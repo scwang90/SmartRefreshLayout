@@ -58,7 +58,7 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
 #### 样式演示 Style
 |Delivery|DropBox|
 |:---:|:---:|
-|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_Delivery.gif)|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_DropBox.gif)|
+|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_Delivery.gif)|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_Dropbox.gif)|
 |[Refresh-your-delivery](https://dribbble.com/shots/2753803-Refresh-your-delivery)|[Dropbox-Refresh](https://dribbble.com/shots/3470499-DropBox-Refresh)|
 
 上面这两个是我自己实现的，下面的是我把github上其它优秀的Header进行的整理和集合还有优化：
