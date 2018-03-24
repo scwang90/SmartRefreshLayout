@@ -131,7 +131,7 @@
             android:label="@string/title_activity_practice_profile"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.practice.FeedlistPracticeActivity"
+            android:name=".activity.practice.FeedListPracticeActivity"
             android:label="@string/title_activity_practice_feed_list"
             android:screenOrientation="portrait" />
         <activity
