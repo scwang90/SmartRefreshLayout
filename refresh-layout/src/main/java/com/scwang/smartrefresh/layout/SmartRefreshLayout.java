@@ -445,8 +445,12 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                                     break;
                                 }
                             }
-                            View thisParent = (View) parent;
-                            parent = thisParent.getParent();
+                            if (parent instanceof View) {
+                                View thisParent = (View) parent;
+                                parent = thisParent.getParent();
+                            } else {
+                                break;
+                            }
                         }
                     }
                 });
