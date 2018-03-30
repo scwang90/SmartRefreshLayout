@@ -300,7 +300,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
         ta.recycle();
 
-    }
+    }//86985902
     //</editor-fold>
 
     //<editor-fold desc="生命周期 life cycle">
