@@ -367,8 +367,8 @@ xml代码设置
 |getRefreshHeader|RefreshHeader|获取Header|
 |getRefreshFooter|RefreshFooter|获取Footer|
 |getState|RefreshState|获取当前状态|
-|isRefreshing|boolean|是否正在刷新|
-|isLoading|boolean|是否正在加载|
+|isRefreshing|boolean|是否正在刷新(1.1.0版本用 getState 代替)|
+|isLoading|boolean|是否正在加载(1.1.0版本用 getState 代替)|
 |autoRefresh|(int delayed)|触发自动刷新|
 |autoLoadMore|(int delayed)|触发自动加载|
 
