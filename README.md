@@ -236,6 +236,17 @@ SmartRefreshLayout 没有使用到：序列化、反序列化、JNI、反射，�
 如果在捐赠留言中备注名称，将会被记录到列表中~ 如果你也是github开源作者，捐赠时可以留下github项目地址或者个人主页地址，链接将会被添加到列表中起到互相推广的作用
 [捐赠列表](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_donationlist.md)
 
+#### 友情链接
+[github/razerdp](https://github.com/razerdp)  
+[github/SuperChenC/s-mvp](https://github.com/SuperChenC/s-mvp)  
+[github/KingJA/LoadSir](https://github.com/KingJA/LoadSir)  
+[github/jianshijiuyou](https://github.com/jianshijiuyou)  
+[github/zxy198717](https://github.com/zxy198717)  
+[github/addappcn](https://github.com/addappcn)  
+[github/RainliFu](https://github.com/RainliFu)  
+[github/sugarya](https://github.com/sugarya)  
+[github/stormzhang](https://github.com/stormzhang)
+
 ## 讨论
 
 ### QQ解决群 - 602537182 （付费）  
