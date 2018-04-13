@@ -10,7 +10,7 @@
 >修改：把仿苹果越界拖动功能默认为关闭，需要手动打开  
 >修改：部分Header的命名修改为严格骆驼峰  
 
-## V 1.0.5 (1.1.0过度板)
+## V 1.0.5 (1.1.0过度版)
 >添加：类似淘宝二楼的二级下拉刷新 TwoLevelHeader  
 >添加：srlEnableScrollContentWhenRefreshed 属性和对应方法  
 >添加：srlEnableClipHeaderWhenFixedBehind  属性和对应方法  
