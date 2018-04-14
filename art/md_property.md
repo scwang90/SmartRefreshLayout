@@ -52,7 +52,7 @@ public class RefreshActivity extends Activity {
 
         refreshLayout.setRefreshHeader(new ClassicsHeader(this));//设置Header
         refreshLayout.setRefreshFooter(new ClassicsFooter(this));//设置Footer
-        refreshLayout.setRefreshContent(new View(this));//设置刷新Content（用于动态替换空布局）1.0.4
+        refreshLayout.setRefreshContent(new View(this));//设置刷新Content（用于动态替换空布局，不推荐）1.0.4
 
         refreshLayout.autoRefresh();//自动刷新
         refreshLayout.autoLoadMore();//自动加载
@@ -65,7 +65,7 @@ public class RefreshActivity extends Activity {
         refreshlayout.finishRefresh(false);//结束刷新（刷新失败）
         refreshlayout.finishLoadMore(false);//结束加载（加载失败）
         refreshLayout.finishLoadMoreWithNoMoreData();//完成加载并标记没有更多数据 1.0.4
-        refreshLayout.resetNoMoreData();//恢复没有更多数据的原始状态 1.0.4
+        refreshLayout.resetNoMoreData();//恢复没有更多数据的原始状态 1.0.4（1.1.0删除）
         refreshLayout.setNoMoreData(false);//恢复没有更多数据的原始状态 1.0.5
 
     }
@@ -116,12 +116,16 @@ xml代码设置
 
     app:srlFixedFooterViewId="@+id/header_fixed"
     app:srlFixedHeaderViewId="@+id/footer_fixed"
+    app:srlHeaderTranslationViewId="@+id/header_translation"
+    app:srlFooterTranslationViewId="@+id/footer_translation"
     />
     <!--srlAccentColor:强调颜色-->
     <!--srlPrimaryColor:主题颜色-->
     <!--srlEnablePreviewInEditMode:是否启用Android Studio编辑xml时预览效果-->
     <!--srlFixedFooterViewId:指定一个View在内容列表滚动时固定-->
     <!--srlFixedHeaderViewId:指定一个View在内容列表滚动时固定-->
+    <!--srlFixedFooterViewId:指定下拉Header时偏移的视图Id-->
+    <!--srlFixedHeaderViewId:指定上拉Footer时偏移的视图Id-->
     <!--未说明的：看上面的set方法说明-->
 ~~~
 
@@ -136,8 +140,9 @@ public class RefreshActivity extends Activity {
         ClassicsHeader.REFRESH_HEADER_RELEASE = "释放立即刷新";
         ClassicsHeader.REFRESH_HEADER_FINISH = "刷新完成";
         ClassicsHeader.REFRESH_HEADER_FAILED = "刷新失败";
+        ClassicsHeader.REFRESH_HEADER_SECONDARY = "释放进入二楼";
         ClassicsHeader.REFRESH_HEADER_LASTTIME = "上次更新 M-d HH:mm";
-        ClassicsHeader.REFRESH_HEADER_LASTTIME = "'Last update' M-d HH:mm"
+        ClassicsHeader.REFRESH_HEADER_LASTTIME = "'Last update' M-d HH:mm";
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,6 +152,7 @@ public class RefreshActivity extends Activity {
         ClassicsHeader.REFRESH_HEADER_RELEASE = getString(R.string.header_release);//"释放立即刷新";
         ClassicsHeader.REFRESH_HEADER_FINISH = getString(R.string.header_finish);//"刷新完成";
         ClassicsHeader.REFRESH_HEADER_FAILED = getString(R.string.header_failed);//"刷新失败";
+        ClassicsHeader.REFRESH_HEADER_SECONDARY = getString(R.string.header_secondary);//"释放进入二楼";
         ClassicsHeader.REFRESH_HEADER_LASTTIME = getString(R.string.header_lasttime);//"上次更新 M-d HH:mm";
         ClassicsHeader.REFRESH_HEADER_LASTTIME = getString(R.string.header_lasttime);//"'Last update' M-d HH:mm"
         //下面示例中的值等于默认值
@@ -154,30 +160,30 @@ public class RefreshActivity extends Activity {
         header.setAccentColor(android.R.color.white);//设置强调颜色
         header.setPrimaryColor(R.color.colorPrimary);//设置主题颜色
         header.setTextSizeTitle(16);//设置标题文字大小（sp单位）
-        header.setTextSizeTitle(16, TypedValue.COMPLEX_UNIT_SP);//同上
+        header.setTextSizeTitle(16, TypedValue.COMPLEX_UNIT_SP);//同上（1.1.0版本删除）
         header.setTextSizeTime(10);//设置时间文字大小（sp单位）
-        header.setTextSizeTime(10, TypedValue.COMPLEX_UNIT_SP);//同上
+        header.setTextSizeTime(10, TypedValue.COMPLEX_UNIT_SP);//同上（1.1.0版本删除）
         header.setTextTimeMarginTop(10);//设置时间文字的上边距（dp单位）
-        header.setTextTimeMarginTopPx(10);//同上-像素单位
+        header.setTextTimeMarginTopPx(10);//同上-像素单位（1.1.0版本删除）
         header.setEnableLastTime(true);//是否显示时间
-        header.setFinishDuration(500);//设置刷新完成显示的停留时间
+        header.setFinishDuration(500);//设置刷新完成显示的停留时间（设为0可以关闭停留功能）
         header.setDrawableSize(20);//同时设置箭头和图片的大小（dp单位）
         header.setDrawableArrowSize(20);//设置箭头的大小（dp单位）
         header.setDrawableProgressSize(20);//设置图片的大小（dp单位）
         header.setDrawableMarginRight(20);//设置图片和箭头和文字的间距（dp单位）
         header.setDrawableSizePx(20);//同上-像素单位
-        header.setDrawableArrowSizePx(20);//同上-像素单位
-        header.setDrawableProgressSizePx(20);//同上-像素单位
-        header.setDrawableMarginRightPx(20);//同上-像素单位
-        header.setArrowBitmap(bitmap);//设置箭头位图
+        header.setDrawableArrowSizePx(20);//同上-像素单位（1.1.0版本删除）
+        header.setDrawableProgressSizePx(20);//同上-像素单位（1.1.0版本删除）
+        header.setDrawableMarginRightPx(20);//同上-像素单位（1.1.0版本删除）
+        header.setArrowBitmap(bitmap);//设置箭头位图（1.1.0版本删除）
         header.setArrowDrawable(drawable);//设置箭头图片
         header.setArrowResource(R.drawable.ic_arrow);//设置箭头资源
-        header.setProgressBitmap(bitmap);//设置图片位图
+        header.setProgressBitmap(bitmap);//设置图片位图（1.1.0版本删除）
         header.setProgressDrawable(drawable);//设置图片
         header.setProgressResource(R.drawable.ic_progress);//设置图片资源
-        header.setTimeFormat(new DynamicTimeFormat("上次更新 %s"));//设置时间格式化
-        header.setLastUpdateText("上次更新 3秒前");//手动更新时间文字设置
-        header.setSpinnerStyle(SpinnerStyle.Translate);//设置状态（不支持：MatchLayout）
+        header.setTimeFormat(new DynamicTimeFormat("上次更新 %s"));//设置时间格式化（时间会自动更新）
+        header.setLastUpdateText("上次更新 3秒前");//手动更新时间文字设置（将不会自动更新时间）
+        header.setSpinnerStyle(SpinnerStyle.Translate);//设置移动样式（不支持：MatchLayout）
     }
 }
 ~~~
@@ -211,23 +217,23 @@ java代码设置
 ~~~java
 public class RefreshActivity extends Activity {
     static {
-        ClassicsFooter.REFRESH_FOOTER_PULLUP = "上拉加载更多";
+        ClassicsFooter.REFRESH_FOOTER_PULLING = "上拉加载更多";
         ClassicsFooter.REFRESH_FOOTER_RELEASE = "释放立即加载";
         ClassicsFooter.REFRESH_FOOTER_REFRESHING = "正在刷新...";
         ClassicsFooter.REFRESH_FOOTER_LOADING = "正在加载...";
         ClassicsFooter.REFRESH_FOOTER_FINISH = "加载完成";
         ClassicsFooter.REFRESH_FOOTER_FAILED = "加载失败";
-        ClassicsFooter.REFRESH_FOOTER_ALLLOADED = "全部加载完成";
+        ClassicsFooter.REFRESH_FOOTER_NOTHING = "没有更多数据了";
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ClassicsFooter.REFRESH_FOOTER_PULLUP = getString(R.string.footer_pullup);//"上拉加载更多";
+        ClassicsFooter.REFRESH_FOOTER_PULLING = getString(R.string.footer_pulling);//"上拉加载更多";
         ClassicsFooter.REFRESH_FOOTER_RELEASE = getString(R.string.footer_release);//"释放立即加载";
         ClassicsFooter.REFRESH_FOOTER_REFRESHING = getString(R.string.footer_refreshing);//"正在刷新...";
         ClassicsFooter.REFRESH_FOOTER_LOADING = getString(R.string.footer_loading);//"正在加载...";
         ClassicsFooter.REFRESH_FOOTER_FINISH = getString(R.string.footer_finish);//"加载完成";
         ClassicsFooter.REFRESH_FOOTER_FAILED = getString(R.string.footer_failed);//"加载失败";
-        ClassicsFooter.REFRESH_FOOTER_ALLLOADED = getString(R.string.footer_allloaded);//"全部加载完成";
+        ClassicsFooter.REFRESH_FOOTER_NOTHING = getString(R.string.footer_nothing);//"没有更多数据了";
 
         //下面示例中的值等于默认值
         ClassicsFooter footer = (ClassicsFooter)findViewById(R.id.footer);
@@ -240,17 +246,17 @@ public class RefreshActivity extends Activity {
         footer.setDrawableArrowSize(20);//设置箭头的大小（dp单位）
         footer.setDrawableProgressSize(20);//设置图片的大小（dp单位）
         footer.setDrawableMarginRight(20);//设置图片和箭头和文字的间距（dp单位）
-        footer.setDrawableSizePx(20);//同上-像素单位
-        footer.setDrawableArrowSizePx(20);//同上-像素单位
-        footer.setDrawableProgressSizePx(20);//同上-像素单位
-        footer.setDrawableMarginRightPx(20);//同上-像素单位
-        footer.setArrowBitmap(bitmap);//设置箭头位图
+        footer.setDrawableSizePx(20);//同上-像素单位（1.1.0版本删除）
+        footer.setDrawableArrowSizePx(20);//同上-像素单位（1.1.0版本删除）
+        footer.setDrawableProgressSizePx(20);//同上-像素单位（1.1.0版本删除）
+        footer.setDrawableMarginRightPx(20);//同上-像素单位（1.1.0版本删除）
+        footer.setArrowBitmap(bitmap);//设置箭头位图（1.1.0版本删除）
         footer.setArrowDrawable(drawable);//设置箭头图片
         footer.setArrowResource(R.drawable.ic_arrow);//设置箭头资源
-        footer.setProgressBitmap(bitmap);//设置图片位图
+        footer.setProgressBitmap(bitmap);//设置图片位图（1.1.0版本删除）
         footer.setProgressDrawable(drawable);//设置图片
         footer.setProgressResource(R.drawable.ic_progress);//设置图片资源
-        footer.setSpinnerStyle(SpinnerStyle.Translate);//设置状态（不支持：MatchLayout）
+        footer.setSpinnerStyle(SpinnerStyle.Translate);//设置移动样式（不支持：MatchLayout）
     }
 }
 ~~~
@@ -311,8 +317,10 @@ xml代码设置
 |srlEnableClipFooterWhenFixedBehind|boolean|是否剪裁Footer当时样式为FixedBehind时V1.0.5|
 |srlDisableContentWhenRefresh|boolean|是否在刷新的时候禁止内容的一切手势操作（默认false）|
 |srlDisableContentWhenLoading|boolean|是否在加载的时候禁止内容的一切手势操作（默认false）|
-|srlFixedHeaderViewId|id|指定固定的视图Id|
-|srlFixedFooterViewId|id|指定固定的视图Id|
+|srlFixedHeaderViewId|id|指定固定顶部的视图Id|
+|srlFixedFooterViewId|id|指定固定底部的视图Id|
+|srlHeaderTranslationViewId|id|指定下拉Header时偏移的视图Id|
+|srlFooterTranslationViewId|id|指定上拉Footer时偏移的视图Id|
 
 ## Method
 
@@ -361,14 +369,14 @@ xml代码设置
 |finishLoadMore|(int delayed)|完成加载，结束加载动画|
 |finishRefresh|(boolean success)|完成刷新，并设置是否成功|
 |finishLoadMore|(boolean success)|完成加载，并设置是否成功|
-|finishLoadMoreWithNoMoreData||完成加载并标记没有更多数据V1.0.4|
-|resetNoMoreData||恢复没有更多数据的原始状态V1.0.4|
+|finishLoadMoreWithNoMoreData||完成加载并标记没有更多数据(V1.0.4)|
+|resetNoMoreData||V1.0.4（V1.1.0删除，用 setNoMoreData(false) 代替）|
 |setNoMoreData|boolean|设置更多数据状态V1.0.5|
 |getRefreshHeader|RefreshHeader|获取Header|
 |getRefreshFooter|RefreshFooter|获取Footer|
 |getState|RefreshState|获取当前状态|
-|isRefreshing|boolean|是否正在刷新(1.1.0版本用 getState 代替)|
-|isLoading|boolean|是否正在加载(1.1.0版本用 getState 代替)|
+|isRefreshing|boolean|(V1.1.0删除，版本用 getState==Refreshing 代替)|
+|isLoading|boolean|(V1.1.0删除，版本用 getState==Loading 代替)|
 |autoRefresh|(int delayed)|触发自动刷新|
 |autoLoadMore|(int delayed)|触发自动加载|
 
@@ -396,8 +404,8 @@ xml代码设置
 |setAccentColor|color|强调颜色|
 |setArrowDrawable|drawable|设置箭头图片|
 |setProgressDrawable|drawable|设置转动图片|
-|setArrowBitmap|bitmap|设置箭头图片|
-|setProgressBitmap|bitmap|设置转动图片|
+|setArrowBitmap|bitmap|设置箭头图片(V1.1.0版本删除)|
+|setProgressBitmap|bitmap|设置转动图片(V1.1.0版本删除)|
 |setArrowResource|int|设置箭头图片|
 |setProgressResource|int|设置转动图片|
 |setSpinnerStyle|enum|变换样式：参考属性srlSpinnerStyle|
@@ -406,4 +414,4 @@ xml代码设置
 |setEnableLastTime|boolean|是否显示上次更新时间（默认true）|
 |setTextSizeTitle|dimension|标题文字大小（默认16sp）|
 |setTextSizeTime|dimension|时间文字大小（默认12sp）|
-|setLastUpdateText|string|手动设置更新时间|
+|setLastUpdateText|string|手动设置更新时间，将不会自动更新时间|

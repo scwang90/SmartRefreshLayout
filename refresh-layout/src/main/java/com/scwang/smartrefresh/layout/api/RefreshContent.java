@@ -2,13 +2,8 @@ package com.scwang.smartrefresh.layout.api;
 
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.support.annotation.NonNull;
-import android.support.annotation.RestrictTo;
 import android.view.MotionEvent;
 import android.view.View;
-
-import static android.support.annotation.RestrictTo.Scope.LIBRARY;
-import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
-import static android.support.annotation.RestrictTo.Scope.SUBCLASSES;
 
 /**
  * 刷新内容组件
@@ -30,7 +25,7 @@ public interface RefreshContent {
 
     void setEnableLoadMoreWhenContentNotFull(boolean enable);
 
-    void moveSpinner(int spinner);
+    void moveSpinner(int spinner, int headerTranslationViewId, int footerTranslationViewId);
 
     boolean canRefresh();
     boolean canLoadMore();

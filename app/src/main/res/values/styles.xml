@@ -44,7 +44,7 @@
     </style>
 
 
-    <style name="AppTheme.Divison">
+    <style name="AppTheme.Division">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/division_line</item>
         <item name="android:dividerHeight">@dimen/division_line</item>
@@ -52,7 +52,7 @@
         <item name="android:background">@color/colorDivision</item>
     </style>
 
-    <style name="AppTheme.Divison.Middle">
+    <style name="AppTheme.Division.Middle">
         <item name="android:layout_marginLeft">@dimen/padding_common</item>
         <!--<item name="android:layout_marginStart">@dimen/padding_common</item>-->
     </style>

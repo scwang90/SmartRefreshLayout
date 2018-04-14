@@ -136,8 +136,35 @@ public class RefreshContentWrapper implements RefreshContent , CoordinatorLayout
     }
 
     @Override
-    public void moveSpinner(int spinner) {
-        mRealContentView.setTranslationY(spinner);
+    public void moveSpinner(int spinner, int headerTranslationViewId, int footerTranslationViewId) {
+        boolean translated = false;
+        if (headerTranslationViewId != View.NO_ID) {
+            View headerTranslationView = mRealContentView.findViewById(headerTranslationViewId);
+            if (headerTranslationView != null) {
+                if (spinner > 0) {
+                    translated = true;
+                    headerTranslationView.setTranslationY(spinner);
+                } else if (headerTranslationView.getTranslationY() > 0) {
+                    headerTranslationView.setTranslationY(0);
+                }
+            }
+        }
+        if (footerTranslationViewId != View.NO_ID) {
+            View footerTranslationView = mRealContentView.findViewById(footerTranslationViewId);
+            if (footerTranslationView != null) {
+                if (spinner < 0) {
+                    translated = true;
+                    footerTranslationView.setTranslationY(spinner);
+                } else if (footerTranslationView.getTranslationY() < 0) {
+                    footerTranslationView.setTranslationY(0);
+                }
+            }
+        }
+        if (!translated) {
+            mRealContentView.setTranslationY(spinner);
+        } else {
+            mRealContentView.setTranslationY(0);
+        }
         if (mFixedHeader != null) {
             mFixedHeader.setTranslationY(Math.max(0, spinner));
         }

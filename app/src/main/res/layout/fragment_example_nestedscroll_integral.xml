@@ -15,7 +15,8 @@
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:srlFooterTranslationViewId="@+id/recyclerView">
         <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -25,6 +26,15 @@
         <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorBackgroundDark"
+                android:overScrollMode="never"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                tools:listitem="@android:layout/simple_list_item_2"/>
 
             <android.support.design.widget.AppBarLayout
                 android:id="@+id/appbar"
@@ -168,7 +178,7 @@
                     android:orientation="vertical"
                     app:layout_collapseMode="pin"
                     app:layout_scrollFlags="exitUntilCollapsed|enterAlways|enterAlwaysCollapsed">
-                    <View style="@style/AppTheme.Divison"/>
+                    <View style="@style/AppTheme.Division"/>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -186,18 +196,9 @@
                             android:textColor="@color/colorPrimary"
                             android:text="菜单列表"/>
                     </LinearLayout>
-                    <View style="@style/AppTheme.Divison"/>
+                    <View style="@style/AppTheme.Division"/>
                 </LinearLayout>
             </android.support.design.widget.AppBarLayout>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/colorBackgroundDark"
-                android:overScrollMode="never"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                tools:listitem="@android:layout/simple_list_item_2"/>
 
         </android.support.design.widget.CoordinatorLayout>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
