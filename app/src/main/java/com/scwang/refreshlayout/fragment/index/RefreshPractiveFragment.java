@@ -20,7 +20,7 @@ import android.widget.AdapterView;
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.activity.FragmentActivity;
 import com.scwang.refreshlayout.activity.practice.BannerPracticeActivity;
-import com.scwang.refreshlayout.activity.practice.FeedlistPracticeActivity;
+import com.scwang.refreshlayout.activity.practice.FeedListPracticeActivity;
 import com.scwang.refreshlayout.activity.practice.ProfilePracticeActivity;
 import com.scwang.refreshlayout.activity.practice.QQBrowserPracticeActivity;
 import com.scwang.refreshlayout.activity.practice.RepastPracticeActivity;
@@ -46,7 +46,7 @@ public class RefreshPractiveFragment extends Fragment implements AdapterView.OnI
         Repast(R.string.index_practice_repast, RepastPracticeActivity.class),
         Profile(R.string.index_practice_profile, ProfilePracticeActivity.class),
         WebView(R.string.index_practice_web_view, WebViewPracticeActivity.class),
-        FeedList(R.string.index_practice_feed_list, FeedlistPracticeActivity.class),
+        FeedList(R.string.index_practice_feed_list, FeedListPracticeActivity.class),
         Weibo(R.string.index_practice_weibo, WeiboPracticeActivity.class),
         Banner(R.string.index_practice_banner, BannerPracticeActivity.class),
         QQBrowser(R.string.index_practice_qq_browser, QQBrowserPracticeActivity.class),

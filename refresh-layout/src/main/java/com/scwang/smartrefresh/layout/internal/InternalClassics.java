@@ -1,7 +1,6 @@
 package com.scwang.smartrefresh.layout.internal;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -19,14 +18,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.scwang.smartrefresh.layout.api.RefreshFooter;
-import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshInternal;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
-import com.scwang.smartrefresh.layout.util.DesignUtil;
 
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static com.scwang.smartrefresh.layout.util.SmartUtil.getColor;
@@ -318,11 +314,6 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
         mTitleText.setTextSize(size);
         if (mRefreshKernel != null) {
             mRefreshKernel.requestRemeasureHeightFor(this);
-//            if (this instanceof RefreshHeader) {
-//                mRefreshKernel.requestRemeasureHeightForHeader();
-//            } else if (this instanceof RefreshFooter) {
-//                mRefreshKernel.requestRemeasureHeightForFooter();
-//            }
         }
         return self();
     }

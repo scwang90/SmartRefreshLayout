@@ -46,7 +46,7 @@
                         android:gravity="end"
                         android:text="@string/region_name"/>
                 </LinearLayout>
-                <View style="@style/AppTheme.Divison"/>
+                <View style="@style/AppTheme.Division"/>
             </LinearLayout>
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView"

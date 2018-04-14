@@ -159,7 +159,7 @@
                                 android:textColor="@android:color/white"
                                 android:text="访客总量 15"/>
 
-                            <View style="@style/AppTheme.Divison"
+                            <View style="@style/AppTheme.Division"
                                 android:layout_alignParentBottom="true"/>
                         </RelativeLayout>
 

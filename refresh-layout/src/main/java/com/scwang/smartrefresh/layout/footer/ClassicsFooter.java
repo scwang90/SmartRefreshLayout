@@ -187,7 +187,6 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
                 mTitleText.setText(REFRESH_FOOTER_PULLING);
                 arrowView.setVisibility(VISIBLE);
             }
-//            super.onFinish(mRefreshKernel.getRefreshLayout(), true);
         }
         return true;
     }

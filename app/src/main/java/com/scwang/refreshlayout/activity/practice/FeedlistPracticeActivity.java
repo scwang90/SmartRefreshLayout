@@ -11,7 +11,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 /**
  * 微博列表
  */
-public class FeedlistPracticeActivity extends AppCompatActivity {
+public class FeedListPracticeActivity extends AppCompatActivity {
 
     private static boolean isFirstEnter = true;
 

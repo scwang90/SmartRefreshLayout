@@ -98,8 +98,8 @@ Please rest assured that I have divided it into three packages, when used to ref
 ## Usage
 #### 1.Add a gradle dependency.
 ```
-compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-2'
-compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-2'//If you use the special Header
+compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-4'
+compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-4'//If you use the special Header
 
 compile 'com.android.support:appcompat-v7:25.3.1'
 
@@ -211,13 +211,24 @@ This library does't use serialization and deserialization, JNI, reflection, so t
 
 ## Donate
 
-If you like this library's design, feel it help to you, you can point the upper right corner "Star" support Thank you! ^ _ ^  
+If you like this library's design, feel it help to you, you can point the upper right corner "Star" support Thank you! ^ _ ^
 You can also click the PayPal below to ask the author to drink a cup of coffee.
 
-[![](https://www.paypalobjects.com/webstatic/i/logo/rebrand/ppcom.svg 'click to donate')](https://www.paypal.me/scwang90/10.24)
+[![](https://www.paypalobjects.com/webstatic/i/logo/rebrand/ppcom.svg 'click to donate')](https://www.paypal.me/scwang90)
 
 If in the donation message note name, it will be record to the list  
 [Donation list](art/md_donationlist.md)
+
+#### blogroll
+[github/razerdp](https://github.com/razerdp)  
+[github/SuperChenC/s-mvp](https://github.com/SuperChenC/s-mvp)  
+[github/KingJA/LoadSir](https://github.com/KingJA/LoadSir)  
+[github/jianshijiuyou](https://github.com/jianshijiuyou)  
+[github/zxy198717](https://github.com/zxy198717)  
+[github/addappcn](https://github.com/addappcn)  
+[github/RainliFu](https://github.com/RainliFu)  
+[github/sugarya](https://github.com/sugarya)  
+[github/stormzhang](https://github.com/stormzhang)
 
 ## Discuss
 
