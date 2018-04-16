@@ -10,6 +10,8 @@
     <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"
         app:navigationIcon="?attr/homeAsUpIndicator"
+        app:contentInsetStart="0dp"
+        app:contentInsetStartWithNavigation="0dp"
         app:title="@string/fragment_example_nested_scroll_integral"/>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
@@ -55,6 +57,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
                         android:background="@color/colorDivision"
+                        tools:background="@mipmap/gif_header_repast"
                         app:layout_collapseMode="parallax"
                         app:is_auto_play="true"/>
                 </android.support.design.widget.CollapsingToolbarLayout>
