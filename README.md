@@ -34,7 +34,6 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
  - [属性文档](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_property.md)
  - [常见问题](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_faq.md)
  - [智能之处](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_smart.md)
- - [常见问题](https://github.com/scwang90/SmartRefreshLayout/issues/71)
  - [更新日志](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_update.md)
  - [博客文章](https://segmentfault.com/a/1190000010066071)
  - [源码下载](https://github.com/scwang90/SmartRefreshLayout/releases)
