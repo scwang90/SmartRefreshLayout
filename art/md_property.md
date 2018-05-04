@@ -359,8 +359,8 @@ xml代码设置
 |setRefreshHeader|RefreshHeader|设置指定的Header（默认贝塞尔雷达）|
 |setRefreshFooter|RefreshFooter|设置指定的Footer（默认球脉冲）|
 |setRefreshContent|View|设置刷新Content（用于动态替换空布局）|
-|setOnRefreshListener|OnRefreshListener|设置刷新监听器（默认3秒后关刷新）|
-|setOnLoadMoreListener|OnLoadMoreListener|设置加载监听器（默认3秒后关加载）|
+|setOnRefreshListener|OnRefreshListener|设置刷新监听器（不设置，默认3秒后关刷新）|
+|setOnLoadMoreListener|OnLoadMoreListener|设置加载监听器（不设置，默认3秒后关加载）|
 |setOnRefreshLoadMoreListener|OnRefreshLoadMoreListener|同时设置上面两个监听器|
 |setOnMultiPurposeListener|OnMultiPurposeListener|设置多功能监听器|
 |setLoadMoreFinished|boolean|设置全部数据加载完成，之后不会触发加载事件|
