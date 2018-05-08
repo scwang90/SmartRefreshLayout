@@ -124,8 +124,8 @@ xml代码设置
     <!--srlEnablePreviewInEditMode:是否启用Android Studio编辑xml时预览效果-->
     <!--srlFixedFooterViewId:指定一个View在内容列表滚动时固定-->
     <!--srlFixedHeaderViewId:指定一个View在内容列表滚动时固定-->
-    <!--srlFixedFooterViewId:指定下拉Header时偏移的视图Id-->
-    <!--srlFixedHeaderViewId:指定上拉Footer时偏移的视图Id-->
+    <!--srlHeaderTranslationViewId:指定下拉Header时偏移的视图Id-->
+    <!--srlFooterTranslationViewId:指定上拉Footer时偏移的视图Id-->
     <!--未说明的：看上面的set方法说明-->
 ~~~
 
