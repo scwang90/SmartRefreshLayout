@@ -49,6 +49,7 @@ public class RefreshActivity extends Activity {
 
         refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener());//设置多功能监听器
         refreshLayout.setScrollBoundaryDecider(new ScrollBoundaryDecider());//设置滚动边界判断
+        refreshLayout.setScrollBoundaryDecider(new ScrollBoundaryDeciderAdapter());//自定义滚动边界
 
         refreshLayout.setRefreshHeader(new ClassicsHeader(this));//设置Header
         refreshLayout.setRefreshFooter(new ClassicsFooter(this));//设置Footer
