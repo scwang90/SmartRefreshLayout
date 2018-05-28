@@ -65,6 +65,11 @@ public class BallPulseFooter extends InternalAbstract implements RefreshFooter {
     public BallPulseFooter(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
+        mPaint = new Paint();
+        mPaint.setColor(Color.WHITE);
+        mPaint.setStyle(Paint.Style.FILL);
+        mPaint.setAntiAlias(true);
+
         final View thisView = this;
         thisView.setMinimumHeight(DensityUtil.dp2px(60));
 
@@ -83,11 +88,6 @@ public class BallPulseFooter extends InternalAbstract implements RefreshFooter {
         ta.recycle();
 
         mCircleSpacing = DensityUtil.dp2px(4);
-
-        mPaint = new Paint();
-        mPaint.setColor(Color.WHITE);
-        mPaint.setStyle(Paint.Style.FILL);
-        mPaint.setAntiAlias(true);
 
         mAnimators = new ArrayList<>();
         final int[] delays = new int[]{120, 240, 360};
