@@ -215,7 +215,7 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
      *
      * @param colors
      */
-    public void setColorSchemeColors(int... colors) {
+    public void setColorSchemeColors(@ColorInt int... colors) {
         mRing.mColors = (colors);
         mRing.setColorIndex(0);
     }

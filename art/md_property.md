@@ -59,16 +59,45 @@ public class RefreshActivity extends Activity {
         refreshLayout.autoLoadMore();//自动加载
         refreshLayout.autoRefresh(400);//延迟400毫秒后自动刷新
         refreshLayout.autoLoadMore(400);//延迟400毫秒后自动加载
-        refreshlayout.finishRefresh();//结束刷新
-        refreshlayout.finishLoadMore();//结束加载
-        refreshlayout.finishRefresh(3000);//延迟3000毫秒后结束刷新
-        refreshlayout.finishLoadMore(3000);//延迟3000毫秒后结束加载
-        refreshlayout.finishRefresh(false);//结束刷新（刷新失败）
-        refreshlayout.finishLoadMore(false);//结束加载（加载失败）
+        refreshLayout.finishRefresh();//结束刷新
+        refreshLayout.finishLoadMore();//结束加载
+        refreshLayout.finishRefresh(3000);//延迟3000毫秒后结束刷新
+        refreshLayout.finishLoadMore(3000);//延迟3000毫秒后结束加载
+        refreshLayout.finishRefresh(false);//结束刷新（刷新失败）
+        refreshLayout.finishLoadMore(false);//结束加载（加载失败）
         refreshLayout.finishLoadMoreWithNoMoreData();//完成加载并标记没有更多数据 1.0.4
         refreshLayout.resetNoMoreData();//恢复没有更多数据的原始状态 1.0.4（1.1.0删除）
         refreshLayout.setNoMoreData(false);//恢复没有更多数据的原始状态 1.0.5
 
+    }
+}
+
+//全局一次性设置默认属性和默认Header
+public class App extends Application {
+    static {//使用static代码段可以防止内存泄漏
+
+        //设置全局默认配置（优先级最低，会被其他设置覆盖）
+        SmartRefreshLayout.setDefaultRefreshInitializer(new DefaultRefreshInitializer() {
+            @Override
+            public void initialize(@NonNull Context context, @NonNull RefreshLayout layout) {
+                //开始设置全局的基本参数（可以被下面的DefaultRefreshHeaderCreator覆盖）
+                layout.setReboundDuration(1000);
+                layout.setReboundInterpolator(new DropBounceInterpolator());
+                layout.setFooterHeight(100);
+                layout.setDisableContentWhenLoading(false);
+                layout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);
+            }
+        });
+
+        //全局设置默认的 Header
+        SmartRefreshLayout.setDefaultRefreshHeaderCreator(new DefaultRefreshHeaderCreator() {
+            @Override
+            public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
+                //开始设置全局的基本参数（这里设置的属性只跟下面的MaterialHeader绑定，其他Header不会生效，能覆盖DefaultRefreshInitializer的属性和Xml设置的属性）
+                layout.setEnableHeaderTranslationContent(false);
+                return new MaterialHeader(context).setColorSchemeResources(R.color.colorRed,R.color.colorGreen,R.color.colorBlue);
+            }
+        });
     }
 }
 ~~~

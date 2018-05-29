@@ -168,16 +168,27 @@ SmartRefresh提供的全局设置方法不仅可以设置 Header 和 Footer 的�
 ~~~java
 public class App extends Application {
     static {//使用static代码段可以防止内存泄漏
-        SmartRefreshLayout.setDefaultRefreshHeaderCreator(new DefaultRefreshHeaderCreator() {
+
+        //设置全局默认配置（优先级最低，会被其他设置覆盖）
+        SmartRefreshLayout.setDefaultRefreshInitializer(new DefaultRefreshInitializer() {
             @Override
-            public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
+            public void initialize(@NonNull Context context, @NonNull RefreshLayout layout) {
                 //开始设置全局的基本参数
                 layout.setReboundDuration(1000);
                 layout.setReboundInterpolator(new DropBounceInterpolator());
                 layout.setFooterHeight(100);
                 layout.setDisableContentWhenLoading(false);
-                //更多的 set 方法
-                return new ClassicsHeader(context).setSpinnerStyle(SpinnerStyle.Translate);
+                layout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);
+            }
+        });
+
+        //全局设置默认的 Header
+        SmartRefreshLayout.setDefaultRefreshHeaderCreator(new DefaultRefreshHeaderCreator() {
+            @Override
+            public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
+                //开始设置全局的基本参数（这里设置的属性只跟下面的MaterialHeader绑定，其他Header不会生效，能覆盖DefaultRefreshInitializer的属性和Xml设置的属性）
+                layout.setEnableHeaderTranslationContent(false);
+                return new MaterialHeader(context).setColorSchemeResources(R.color.colorRed,R.color.colorGreen,R.color.colorBlue);
             }
         });
     }

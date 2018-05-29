@@ -6,8 +6,10 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.support.annotation.ColorInt;
+import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -23,6 +25,7 @@ import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
+import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 import static android.view.View.MeasureSpec.getSize;
 
@@ -321,9 +324,24 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
      * @param colors ColorScheme
      * @return MaterialHeader
      */
-    public MaterialHeader setColorSchemeColors(int... colors) {
+    public MaterialHeader setColorSchemeColors(@ColorInt int... colors) {
         mProgress.setColorSchemeColors(colors);
         return this;
+    }
+
+    /**
+     * 设置 ColorScheme
+     * @param colorIds ColorSchemeResources
+     * @return MaterialHeader
+     */
+    public MaterialHeader setColorSchemeResources(@ColorRes int... colorIds) {
+        final View thisView = this;
+        final Context context = thisView.getContext();
+        int[] colors = new int[colorIds.length];
+        for (int i = 0; i < colorIds.length; i++) {
+            colors[i] = SmartUtil.getColor(context, colorIds[i]);
+        }
+        return setColorSchemeColors(colors);
     }
 
     /**
