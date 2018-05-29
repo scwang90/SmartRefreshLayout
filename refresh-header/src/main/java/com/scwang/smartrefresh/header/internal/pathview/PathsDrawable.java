@@ -97,6 +97,8 @@ public class PathsDrawable extends PaintDrawable {
             float ratioHeight = 1f * height / mOriginHeight;
             mPaths = PathParser.transformScale(ratioWidth, ratioHeight, mltOriginPath, mltOriginSvg);
             if (!onMeasure()) {
+                mWidth = width;
+                mHeight = height;
                 mStartX = (int) (1f * ox * width / mOriginWidth);
                 mStartY = (int) (1f * oy * height / mOriginHeight);
                 super.setBounds(left, top, right, bottom);

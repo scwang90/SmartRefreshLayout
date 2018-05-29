@@ -13,14 +13,14 @@ import android.view.MenuItem;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.fragment.index.RefreshExampleFragment;
-import com.scwang.refreshlayout.fragment.index.RefreshPractiveFragment;
+import com.scwang.refreshlayout.fragment.index.RefreshPracticeFragment;
 import com.scwang.refreshlayout.fragment.index.RefreshStylesFragment;
 import com.scwang.refreshlayout.util.StatusBarUtil;
 
 public class IndexMainActivity extends AppCompatActivity implements OnNavigationItemSelectedListener {
 
     private enum TabFragment {
-        practice(R.id.navigation_practice, RefreshPractiveFragment.class),
+        practice(R.id.navigation_practice, RefreshPracticeFragment.class),
         styles(R.id.navigation_style, RefreshStylesFragment.class),
         using(R.id.navigation_example, RefreshExampleFragment.class),
         ;

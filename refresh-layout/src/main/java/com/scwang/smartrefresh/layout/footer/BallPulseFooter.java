@@ -65,15 +65,18 @@ public class BallPulseFooter extends InternalAbstract implements RefreshFooter {
     public BallPulseFooter(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
+        final View thisView = this;
+        thisView.setMinimumHeight(DensityUtil.dp2px(60));
+
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.BallPulseFooter);
+
         mPaint = new Paint();
         mPaint.setColor(Color.WHITE);
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setAntiAlias(true);
 
-        final View thisView = this;
-        thisView.setMinimumHeight(DensityUtil.dp2px(60));
-
-        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.BallPulseFooter);
+        mSpinnerStyle = SpinnerStyle.Translate;
+        mSpinnerStyle = SpinnerStyle.values()[ta.getInt(R.styleable.BallPulseFooter_srlClassicsSpinnerStyle, mSpinnerStyle.ordinal())];
 
         if (ta.hasValue(R.styleable.BallPulseFooter_srlNormalColor)) {
             setNormalColor(ta.getColor(R.styleable.BallPulseFooter_srlNormalColor, 0));
@@ -81,9 +84,6 @@ public class BallPulseFooter extends InternalAbstract implements RefreshFooter {
         if (ta.hasValue(R.styleable.BallPulseFooter_srlAnimatingColor)) {
             setAnimatingColor(ta.getColor(R.styleable.BallPulseFooter_srlAnimatingColor, 0));
         }
-
-        mSpinnerStyle = SpinnerStyle.Translate;
-        mSpinnerStyle = SpinnerStyle.values()[ta.getInt(R.styleable.BallPulseFooter_srlClassicsSpinnerStyle, mSpinnerStyle.ordinal())];
 
         ta.recycle();
 

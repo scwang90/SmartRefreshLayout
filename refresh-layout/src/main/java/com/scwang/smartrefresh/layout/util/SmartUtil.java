@@ -26,6 +26,7 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
  */
 
 public class SmartUtil {
+
     public static int getColor(@NonNull Context context, @ColorRes int colorId) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             return context.getColor(colorId);
@@ -80,8 +81,12 @@ public class SmartUtil {
                 || view instanceof ScrollView
                 || view instanceof ScrollingView
                 || view instanceof WebView
+                || view instanceof NestedScrollingChild;
+    }
+
+    public static boolean isContentView(View view) {
+        return isScrollableView(view)
                 || view instanceof ViewPager
-                || view instanceof NestedScrollingChild
                 || view instanceof NestedScrollingParent;
     }
 
