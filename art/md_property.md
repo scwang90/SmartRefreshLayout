@@ -13,14 +13,14 @@ public class RefreshActivity extends Activity {
         refreshLayout.setReboundDuration(300);//回弹动画时长（毫秒）
 
         refreshLayout.setHeaderHeight(100);//Header标准高度（显示下拉高度>=标准高度 触发刷新）
-        refreshLayout.setHeaderHeightPx(100);//同上-像素为单位
+        refreshLayout.setHeaderHeightPx(100);//同上-像素为单位 （V1.1.0删除）
         refreshLayout.setFooterHeight(100);//Footer标准高度（显示上拉高度>=标准高度 触发加载）
-        refreshLayout.setFooterHeightPx(100);//同上-像素为单位
+        refreshLayout.setFooterHeightPx(100);//同上-像素为单位 （V1.1.0删除）
 
         refreshLayout.setFooterHeaderInsetStart(0);//设置 Header 起始位置偏移量 1.0.5
-        refreshLayout.setFooterHeaderInsetStartPx(0);//同上-像素为单位 1.0.5
+        refreshLayout.setFooterHeaderInsetStartPx(0);//同上-像素为单位 1.0.5 （V1.1.0删除）
         refreshLayout.setFooterFooterInsetStart(0);//设置 Footer 起始位置偏移量 1.0.5
-        refreshLayout.setFooterFooterInsetStartPx(0);//同上-像素为单位 1.0.5
+        refreshLayout.setFooterFooterInsetStartPx(0);//同上-像素为单位 1.0.5 （V1.1.0删除）
 
         refreshLayout.setHeaderMaxDragRate(2);//最大显示下拉高度/Header标准高度
         refreshLayout.setFooterMaxDragRate(2);//最大显示下拉高度/Footer标准高度
@@ -51,9 +51,9 @@ public class RefreshActivity extends Activity {
         refreshLayout.setScrollBoundaryDecider(new ScrollBoundaryDecider());//设置滚动边界判断
         refreshLayout.setScrollBoundaryDecider(new ScrollBoundaryDeciderAdapter());//自定义滚动边界
 
-        refreshLayout.setRefreshHeader(new ClassicsHeader(this));//设置Header
-        refreshLayout.setRefreshFooter(new ClassicsFooter(this));//设置Footer
-        refreshLayout.setRefreshContent(new View(this));//设置刷新Content（用于动态替换空布局，不推荐）1.0.4
+        refreshLayout.setRefreshHeader(new ClassicsHeader(context));//设置Header
+        refreshLayout.setRefreshFooter(new ClassicsFooter(context));//设置Footer
+        refreshLayout.setRefreshContent(new View(context));//设置刷新Content（用于动态替换空布局，不推荐）1.0.4
 
         refreshLayout.autoRefresh();//自动刷新
         refreshLayout.autoLoadMore();//自动加载
