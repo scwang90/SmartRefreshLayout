@@ -14,6 +14,7 @@ import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.listener.OnStateChangedListener;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
@@ -144,8 +145,8 @@ public abstract class InternalAbstract extends RelativeLayout implements Refresh
 
     @Override
     public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
-        if (mWrapperView instanceof RefreshInternal) {
-            ((RefreshInternal) mWrapperView).onStateChanged(refreshLayout, oldState, newState);
+        if (mWrapperView instanceof OnStateChangedListener) {
+            ((OnStateChangedListener) mWrapperView).onStateChanged(refreshLayout, oldState, newState);
         }
     }
 }
