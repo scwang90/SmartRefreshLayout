@@ -236,7 +236,7 @@ SmartRefreshLayout 没有使用到：序列化、反序列化、JNI、反射，�
 [捐赠列表](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_donationlist.md)
 
 #### 友情链接
-[github/fly803/BaseProject](https://github.com/fly803/BaseProject)
+[github/fly803/BaseProject](https://github.com/fly803/BaseProject)  
 [github/razerdp](https://github.com/razerdp)  
 [github/SuperChenC/s-mvp](https://github.com/SuperChenC/s-mvp)  
 [github/KingJA/LoadSir](https://github.com/KingJA/LoadSir)  
