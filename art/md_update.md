@@ -12,10 +12,10 @@
 >精简：极度精简代码，是的dex-size从139kb降低到121kb  
 >兼容：修改算法使得可以在BottomSheetDialog内部使用  
 >修改：把仿苹果越界拖动功能默认为关闭，需要手动打开  
->修改：部分Header的命名修改为严格骆驼峰
->修复：BallPulseFooter在Xml初始化颜色无效问题
->修复：EnableLoadMoreWhenContentNotFull=false导致无法加载的问题
->修复：onDetachedFromWindow 报NPE错误问题
+>修改：部分Header的命名修改为严格骆驼峰  
+>修复：BallPulseFooter在Xml初始化颜色无效问题  
+>修复：EnableLoadMoreWhenContentNotFull=false导致无法加载的问题  
+>修复：onDetachedFromWindow 报NPE错误问题  
 
 ## V 1.0.5 (1.1.0过度版)
 >添加：类似淘宝二楼的二级下拉刷新 TwoLevelHeader  
