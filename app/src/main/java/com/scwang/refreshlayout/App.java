@@ -28,8 +28,12 @@ public class App extends Application {
         SmartRefreshLayout.setDefaultRefreshInitializer(new DefaultRefreshInitializer() {
             @Override
             public void initialize(@NonNull Context context, @NonNull RefreshLayout layout) {
-                //全局设置主题颜色（优先级最低）
-                layout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);
+                //全局设置（优先级最低）
+                layout.setEnableAutoLoadMore(true);
+                layout.setEnableOverScrollDrag(false);
+                layout.setEnableOverScrollBounce(true);
+                layout.setEnableLoadMoreWhenContentNotFull(true);
+                layout.setEnableScrollContentWhenRefreshed(true);
             }
         });
         SmartRefreshLayout.setDefaultRefreshHeaderCreator(new DefaultRefreshHeaderCreator() {
