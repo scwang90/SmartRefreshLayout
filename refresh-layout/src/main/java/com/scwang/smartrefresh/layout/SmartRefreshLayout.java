@@ -15,7 +15,6 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.view.NestedScrollingChild;
 import android.support.v4.view.NestedScrollingChildHelper;
 import android.support.v4.view.NestedScrollingParent;
 import android.support.v4.view.NestedScrollingParentHelper;
@@ -2423,6 +2422,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             @Override
             public void run() {
                 if (mState == RefreshState.Refreshing && mRefreshHeader != null && mRefreshContent != null) {
+                    if (success) {
+                        setNoMoreData(false);
+                    }
                     notifyStateChanged(RefreshState.RefreshFinish);
                     int startDelay = mRefreshHeader.onFinish(SmartRefreshLayout.this, success);
                     if (mOnMultiPurposeListener != null && mRefreshHeader instanceof RefreshHeader) {
@@ -3139,9 +3141,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             if (mPaint == null && backgroundColor != 0) {
                 mPaint = new Paint();
             }
-            if (mRefreshHeader != null && mRefreshHeader.getView() == internal.getView()) {
+            if (mRefreshHeader != null && mRefreshHeader.equals(internal)) {
                 mHeaderBackgroundColor = backgroundColor;
-            } else if (mRefreshFooter != null && mRefreshFooter.getView() == internal.getView()) {
+            } else if (mRefreshFooter != null && mRefreshFooter.equals(internal)) {
                 mFooterBackgroundColor = backgroundColor;
             }
             return this;
@@ -3167,9 +3169,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
         @Override
         public RefreshKernel requestNeedTouchEventFor(@NonNull RefreshInternal internal, boolean request) {
-            if (mRefreshHeader != null && mRefreshHeader.getView() == internal.getView()) {
+            if (mRefreshHeader != null && mRefreshHeader.equals(internal)) {
                 mHeaderNeedTouchEventWhenRefreshing = request;
-            } else if (mRefreshFooter != null && mRefreshFooter.getView() == internal.getView()) {
+            } else if (mRefreshFooter != null && mRefreshFooter.equals(internal)) {
                 mFooterNeedTouchEventWhenLoading = request;
             }
             return this;
@@ -3187,12 +3189,12 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
         @Override
         public RefreshKernel requestDefaultTranslationContentFor(@NonNull RefreshInternal internal, boolean translation) {
-            if (mRefreshHeader != null && mRefreshHeader.getView() == internal.getView()) {
+            if (mRefreshHeader != null && mRefreshHeader.equals(internal)) {
                 if (!mManualHeaderTranslationContent) {
                     mManualHeaderTranslationContent = true;
                     mEnableHeaderTranslationContent = translation;
                 }
-            } else if (mRefreshFooter != null && mRefreshFooter.getView() == internal.getView()) {
+            } else if (mRefreshFooter != null && mRefreshFooter.equals(internal)) {
                 if (!mManualFooterTranslationContent) {
                     mManualFooterTranslationContent = true;
                     mEnableFooterTranslationContent = translation;
@@ -3210,11 +3212,11 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 //        }
         @Override
         public RefreshKernel requestRemeasureHeightFor(@NonNull RefreshInternal internal) {
-            if (mRefreshHeader != null && mRefreshHeader.getView() == internal.getView()) {
+            if (mRefreshHeader != null && mRefreshHeader.equals(internal)) {
                 if (mHeaderHeightStatus.notified) {
                     mHeaderHeightStatus = mHeaderHeightStatus.unNotify();
                 }
-            } else if (mRefreshFooter != null && mRefreshFooter.getView() == internal.getView()) {
+            } else if (mRefreshFooter != null && mRefreshFooter.equals(internal)) {
                 if (mFooterHeightStatus.notified) {
                     mFooterHeightStatus = mFooterHeightStatus.unNotify();
                 }
