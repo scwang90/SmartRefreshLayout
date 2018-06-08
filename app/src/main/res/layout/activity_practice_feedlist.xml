@@ -19,7 +19,8 @@
         app:srlAccentColor="#fff"
         app:srlPrimaryColor="#444"
         app:srlFixedHeaderViewId="@+id/profile"
-        app:srlEnablePreviewInEditMode="false">
+        app:srlEnablePreviewInEditMode="false"
+        app:srlEnableLoadMoreWhenContentNotFull="false">
 
         <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
