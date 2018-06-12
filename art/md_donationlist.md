@@ -36,7 +36,7 @@
 |[未留名]|2018-4-19|微信|||
 |**宇|2018-4-17|阿里|||
 |[pay_join]|2018-4-16|腾讯|👍||
-|razerdp|2018-4-12|微信|👍|[github.com/razerdp](https://github.com/razerdp)|
+|razerdp|2018-4-12|微信|👍|[github/razerdp](https://github.com/razerdp)|
 |**军|2018-4-5|阿里|👍||
 |**亮|2018-4-4|阿里|👍👍👍👍👍||
 |[未留名]|2018-3-30|阿里|||
@@ -109,7 +109,7 @@
 |[pay_join]|2017-11-17|腾讯|👍||
 |[pay_join]|2017-11-13|腾讯|👍||
 |[pay_join]|2017-11-13|腾讯|👍||
-|KingJA|2017-11-11|微信|👍👍|[LoadSir](https://github.com/KingJA/LoadSir)|
+|KingJA|2017-11-11|微信|👍👍|[github/KingJA/LoadSir](https://github.com/KingJA/LoadSir)|
 |[未留名]|2017-11-10|阿里|||
 |[pay_join]|2017-11-9|腾讯|👍||
 |[未留名]|2017-11-9|微信|||
@@ -168,7 +168,7 @@
 |[pay_join]|2017-7-27|腾讯|||
 |[pay_join]|2017-7-27|腾讯|||
 |□□|2017-7-27|微信|👍👍👍👍👍||
-|XiaoJiaqing|2017-7-26|微信|👍|[XiaoJianqing](https://github.com/XiaoJiaqing)|
+|XiaoJiaqing|2017-7-26|微信|👍|[github/XiaoJianqing](https://github.com/XiaoJiaqing)|
 |[未留名]|2017-7-26|阿里|👍| |
 |[未留名]|2017-7-26|腾讯|大神，请你喝水||
 |Bter|2017-7-23|微信|不错的smart||
@@ -184,15 +184,15 @@
 |[未留名]|2017-7-14|微信|| |
 |[未留名]|2017-7-14|微信|👍| |
 |[未留名]|2017-7-13|微信|👍| |
-|剑弑九幽|2017-7-13|阿里|👍|[jianshijiuyou](https://github.com/jianshijiuyou)|
-|zxy198717|2017-7-13|微信|👍|[zxy198717](https://github.com/zxy198717)|
+|剑弑九幽|2017-7-13|阿里|👍|[github/jianshijiuyou](https://github.com/jianshijiuyou)|
+|zxy198717|2017-7-13|微信|👍|[github/zxy198717](https://github.com/zxy198717)|
 |[未留名]|2017-7-12|阿里|| |
-|matt|2017-7-12|微信|👍|[addappcn](https://github.com/addappcn)|
+|matt|2017-7-12|微信|👍|[github/addappcn](https://github.com/addappcn)|
 |[未留名]|2017-7-12|微信|谢谢分享| |
-|RainliFu|2017-7-12|微信|👍|[RainliFu](https://github.com/RainliFu)|
+|RainliFu|2017-7-12|微信|👍|[github/RainliFu](https://github.com/RainliFu)|
 |[未留名]|2017-7-12|微信|Six!Six!Six| |
 |[未留名]|2017-7-11|微信|👍| |
 |[未留名]|2017-7-11|微信|感谢你的开源项目| |
-|sugarya|2017-7-11|微信|👍|[sugarya](https://github.com/sugarya)|
-|stormzhang|2017-7-11|微信|👍|[stormzhang](https://github.com/stormzhang)
+|sugarya|2017-7-11|微信|👍|[github/sugarya](https://github.com/sugarya)|
+|stormzhang|2017-7-11|微信|👍|[github/stormzhang](https://github.com/stormzhang)
 |[未留名]|2017-7-10|微信| | |
