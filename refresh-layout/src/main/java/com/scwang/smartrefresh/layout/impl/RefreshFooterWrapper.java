@@ -41,7 +41,7 @@ public class RefreshFooterWrapper extends InternalAbstract implements RefreshFoo
 
     @Override
     public boolean setNoMoreData(boolean noMoreData) {
-        return mWrapperView instanceof RefreshFooter && ((RefreshFooter) mWrapperView).setNoMoreData(noMoreData);
+        return mWrappedInternal instanceof RefreshFooter && ((RefreshFooter) mWrappedInternal).setNoMoreData(noMoreData);
     }
 
 //    @Override

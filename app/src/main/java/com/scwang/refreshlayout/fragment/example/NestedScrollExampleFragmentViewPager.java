@@ -114,6 +114,7 @@ public class NestedScrollExampleFragmentViewPager extends Fragment {
             refreshLayout.setRefreshHeader(new PhoenixHeader(inflater.getContext()));
             refreshLayout.setRefreshContent(mRecyclerView = new RecyclerView(inflater.getContext()));
             refreshLayout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);
+            refreshLayout.setEnableLoadMore(false);
             return refreshLayout.getLayout();
         }
 

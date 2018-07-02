@@ -29,7 +29,7 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static com.scwang.smartrefresh.layout.util.ScrollBoundaryUtil.canScrollDown;
 import static com.scwang.smartrefresh.layout.util.ScrollBoundaryUtil.canScrollUp;
 import static com.scwang.smartrefresh.layout.util.ScrollBoundaryUtil.isTransformedTouchPointInView;
-import static com.scwang.smartrefresh.layout.util.SmartUtil.isScrollableView;
+import static com.scwang.smartrefresh.layout.util.SmartUtil.isContentView;
 import static com.scwang.smartrefresh.layout.util.SmartUtil.measureViewHeight;
 import static com.scwang.smartrefresh.layout.util.SmartUtil.scrollListBy;
 
@@ -89,7 +89,7 @@ public class RefreshContentWrapper implements RefreshContent , CoordinatorLayout
         while (!views.isEmpty() && scrollableView == null) {
             View view = views.poll();
             if (view != null) {
-                if ((selfable || view != content) && isScrollableView(view)) {
+                if ((selfable || view != content) && isContentView(view)) {
                     scrollableView = view;
                 } else if (view instanceof ViewGroup) {
                     ViewGroup group = (ViewGroup) view;
@@ -110,7 +110,7 @@ public class RefreshContentWrapper implements RefreshContent , CoordinatorLayout
             for (int i = childCount; i > 0; i--) {
                 View child = viewGroup.getChildAt(i - 1);
                 if (isTransformedTouchPointInView(viewGroup, child, event.x, event.y, point)) {
-                    if (child instanceof ViewPager || !isScrollableView(child)) {
+                    if (child instanceof ViewPager || !isContentView(child)) {
                         event.offset(point.x, point.y);
                         child = findScrollableViewByPoint(child, event, orgScrollableView);
                         event.offset(-point.x, -point.y);

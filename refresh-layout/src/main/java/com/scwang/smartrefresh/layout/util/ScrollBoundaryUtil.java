@@ -1,25 +1,10 @@
 package com.scwang.smartrefresh.layout.util;
 
-import android.content.Context;
 import android.graphics.PointF;
-import android.os.Build;
-import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
-import android.support.v4.view.NestedScrollingChild;
-import android.support.v4.view.NestedScrollingParent;
-import android.support.v4.view.ScrollingView;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.AbsListView;
-import android.widget.ListView;
-import android.widget.ScrollView;
-
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 /**
  * 滚动边界
@@ -71,7 +56,7 @@ public class ScrollBoundaryUtil {
             return false;
         }
         //touch == null 时 canLoadMore 不会动态递归搜索
-        if (targetView instanceof ViewGroup && touch != null) {
+        if (targetView instanceof ViewGroup && touch != null && !SmartUtil.isScrollableView(targetView)) {
             ViewGroup viewGroup = (ViewGroup) targetView;
             final int childCount = viewGroup.getChildCount();
             PointF point = new PointF();

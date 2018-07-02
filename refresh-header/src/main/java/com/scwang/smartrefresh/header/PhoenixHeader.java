@@ -146,22 +146,31 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
         //<editor-fold desc="setupPathsDrawable">
         int widthPixels = Resources.getSystem().getDisplayMetrics().widthPixels;
         PathsDrawable townDrawable = new PathsDrawable();
-        townDrawable.parserPaths(townPaths);
         townDrawable.parserColors(townColors);
+        if (!townDrawable.parserPaths(townPaths)) {
+            townDrawable.declareOriginal(1, 0, 1870, 416);
+        }
+//        townDrawable.printOriginal("townDrawable");
         mDrawableTown = townDrawable;
         Rect bounds = mDrawableTown.getBounds();
         mDrawableTown.setBounds(0, 0, widthPixels, widthPixels * bounds.height() / bounds.width());
 
         PathsDrawable skyDrawable = new PathsDrawable();
-        skyDrawable.parserPaths(skyPaths);
         skyDrawable.parserColors(skyColors);
+        if (!skyDrawable.parserPaths(skyPaths)) {
+            skyDrawable.declareOriginal(0, 0, 1600, 1040);
+        }
+//        skyDrawable.printOriginal("skyDrawable");
         mDrawableSky = skyDrawable;
         bounds = mDrawableSky.getBounds();
         mDrawableSky.setBounds(0, 0, widthPixels, widthPixels * bounds.height() / bounds.width());
 
         PathsDrawable sunDrawable = new PathsDrawable();
-        sunDrawable.parserPaths(sunPaths);
         sunDrawable.parserColors(sunColors);
+        if (!sunDrawable.parserPaths(sunPaths)) {
+            sunDrawable.declareOriginal(0, 0, 228, 228);
+        }
+//        sunDrawable.printOriginal("sunDrawable");
         mDrawableSun = sunDrawable;
         mDrawableSun.setBounds(0, 0, mSunSize, mSunSize);
 

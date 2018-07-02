@@ -55,8 +55,8 @@ public class PathsView extends View {
         mPathsDrawable.draw(canvas);
     }
 
-    public void parserPaths(String... paths) {
-        mPathsDrawable.parserPaths(paths);
+    public boolean parserPaths(String... paths) {
+        return mPathsDrawable.parserPaths(paths);
     }
 
     public void parserColors(int... colors) {

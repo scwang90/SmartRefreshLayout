@@ -484,15 +484,15 @@ public interface RefreshLayout {
      */
     boolean autoLoadMore(int delayed, int duration, float dragRate);
 
-    /**
-     * 是否启用下拉刷新
-     */
-    boolean isEnableRefresh();
-
-    /**
-     * 是否启用加载更多
-     */
-    boolean isEnableLoadMore();
+//    /**
+//     * 是否启用下拉刷新
+//     */
+//    boolean isEnableRefresh();
+//
+//    /**
+//     * 是否启用加载更多
+//     */
+//    boolean isEnableLoadMore();
 
 //    /**
 //     * 是否正在刷新
