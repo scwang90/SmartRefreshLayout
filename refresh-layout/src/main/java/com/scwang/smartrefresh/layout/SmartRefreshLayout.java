@@ -294,6 +294,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
         mManualLoadMore = ta.hasValue(R.styleable.SmartRefreshLayout_srlEnableLoadMore);
         mManualHeaderTranslationContent = ta.hasValue(R.styleable.SmartRefreshLayout_srlEnableHeaderTranslationContent);
+        mManualFooterTranslationContent = ta.hasValue(R.styleable.SmartRefreshLayout_srlEnableFooterTranslationContent);
         mManualNestedScrolling = mManualNestedScrolling || ta.hasValue(R.styleable.SmartRefreshLayout_srlEnableNestedScrolling);
         mHeaderHeightStatus = ta.hasValue(R.styleable.SmartRefreshLayout_srlHeaderHeight) ? DimensionStatus.XmlLayoutUnNotify : mHeaderHeightStatus;
         mFooterHeightStatus = ta.hasValue(R.styleable.SmartRefreshLayout_srlFooterHeight) ? DimensionStatus.XmlLayoutUnNotify : mFooterHeightStatus;
@@ -1242,7 +1243,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     }
 
     protected boolean isEnableTranslationContent(boolean enable, RefreshInternal internal) {
-        return enable || internal.getSpinnerStyle() == SpinnerStyle.FixedBehind;
+        return enable || mEnablePureScrollMode || internal.getSpinnerStyle() == SpinnerStyle.FixedBehind;
     }
 
     protected boolean isEnableRefreshOrLoadMore(boolean enable) {
@@ -1966,6 +1967,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     @Override
     public SmartRefreshLayout setEnableFooterTranslationContent(boolean enabled) {
         this.mEnableFooterTranslationContent = enabled;
+        this.mManualFooterTranslationContent = true;
         return this;
     }
 
@@ -3021,7 +3023,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             if (mRefreshContent != null) {
                 Integer tSpinner = null;
                 if (spinner >= 0 && mRefreshHeader != null) {
-                    if (isEnableTranslationContent(SmartRefreshLayout.this.mEnableHeaderTranslationContent, SmartRefreshLayout.this.mRefreshHeader)) {
+                    if (isEnableTranslationContent(mEnableHeaderTranslationContent, mRefreshHeader)) {
                         tSpinner = spinner;
                     } else if (oldSpinner < 0) {
                         tSpinner = 0;
@@ -3056,7 +3058,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     if (oldSpinner != mSpinner) {
                         if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Translate) {
                             mRefreshHeader.getView().setTranslationY(mSpinner);
-                            if (mHeaderBackgroundColor != 0 && mPaint != null && !mEnableHeaderTranslationContent) {
+                            if (mHeaderBackgroundColor != 0 && mPaint != null && !isEnableTranslationContent(mEnableHeaderTranslationContent,mRefreshHeader)) {
                                 thisView.invalidate();
                             }
                         } else if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale){
@@ -3095,7 +3097,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     if (oldSpinner != mSpinner) {
                         if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Translate) {
                             mRefreshFooter.getView().setTranslationY(mSpinner);
-                            if (mFooterBackgroundColor != 0 && mPaint != null && !mEnableFooterTranslationContent) {
+                            if (mFooterBackgroundColor != 0 && mPaint != null && !isEnableTranslationContent(mEnableFooterTranslationContent, mRefreshFooter)) {
                                 thisView.invalidate();
                             }
                         } else if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Scale){
@@ -3174,16 +3176,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             }
             return this;
         }
-//        @Override
-//        public RefreshKernel requestNeedTouchEventWhenRefreshing(boolean request) {
-//            mHeaderNeedTouchEventWhenRefreshing = request;
-//            return this;
-//        }
-//        @Override
-//        public RefreshKernel requestNeedTouchEventWhenLoading(boolean request) {
-//            mFooterNeedTouchEventWhenLoading = request;
-//            return this;
-//        }
 
         @Override
         public RefreshKernel requestDefaultTranslationContentFor(@NonNull RefreshInternal internal, boolean translation) {
@@ -3200,14 +3192,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             }
             return this;
         }
-//        @Override
-//        public RefreshKernel requestDefaultHeaderTranslationContent(boolean translation) {
-//            if (!mManualHeaderTranslationContent) {
-//                mManualHeaderTranslationContent = true;
-//                mEnableHeaderTranslationContent = translation;
-//            }
-//            return this;
-//        }
         @Override
         public RefreshKernel requestRemeasureHeightFor(@NonNull RefreshInternal internal) {
             if (mRefreshHeader != null && mRefreshHeader.equals(internal)) {
@@ -3221,20 +3205,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             }
             return this;
         }
-//        @Override
-//        public RefreshKernel requestRemeasureHeightForHeader() {
-//            if (mHeaderHeightStatus.notified) {
-//                mHeaderHeightStatus = mHeaderHeightStatus.unNotify();
-//            }
-//            return this;
-//        }
-//        @Override
-//        public RefreshKernel requestRemeasureHeightForFooter() {
-//            if (mFooterHeightStatus.notified) {
-//                mFooterHeightStatus = mFooterHeightStatus.unNotify();
-//            }
-//            return this;
-//        }
         @Override
         public RefreshKernel requestFloorDuration(int duration) {
             mFloorDuration = duration;

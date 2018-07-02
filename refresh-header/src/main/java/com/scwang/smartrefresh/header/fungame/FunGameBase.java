@@ -72,13 +72,14 @@ public abstract class FunGameBase extends InternalAbstract implements RefreshHea
                         final double H = mScreenHeightPixels * 2 / 3;
                         final double x = Math.max(0, dy * 0.5);
                         final double y = Math.min(M * (1 - Math.pow(100, -x / H)), x);// 公式 y = M(1-40^(-x/H))
-                        mRefreshKernel.moveSpinner((int) y, false);
+                        mRefreshKernel.moveSpinner(Math.max(1, (int) y), false);
                     } else {
-                        final double M = mHeaderHeight * 2;
-                        final double H = mScreenHeightPixels * 2 / 3;
-                        final double x = -Math.min(0, dy * 0.5);
-                        final double y = -Math.min(M * (1 - Math.pow(100, -x / H)), x);// 公式 y = M(1-40^(-x/H))
-                        mRefreshKernel.moveSpinner((int) y, false);
+//                        final double M = mHeaderHeight * 2;
+//                        final double H = mScreenHeightPixels * 2 / 3;
+//                        final double x = -Math.min(0, dy * 0.5);
+//                        final double y = -Math.min(M * (1 - Math.pow(100, -x / H)), x);// 公式 y = M(1-40^(-x/H))
+//                        mRefreshKernel.moveSpinner((int) y, false);
+                        mRefreshKernel.moveSpinner(1, false);
                     }
                     break;
                 case MotionEvent.ACTION_UP:
@@ -98,13 +99,16 @@ public abstract class FunGameBase extends InternalAbstract implements RefreshHea
     //</editor-fold>
 
     //<editor-fold desc="abstract">
-    boolean enableLoadMore;
+//    boolean enableLoadMore;
     protected void onManualOperationStart() {
         if (!mManualOperation) {
             mManualOperation = true;
             mRefreshContent = mRefreshKernel.getRefreshContent();
-            enableLoadMore = mRefreshKernel.getRefreshLayout().isEnableLoadMore();
-            mRefreshKernel.getRefreshLayout().setEnableLoadMore(false);
+//            if (mRefreshContent instanceof CoordinatorLayoutListener) {
+//                ((CoordinatorLayoutListener) mRefreshContent).onCoordinatorUpdate(true, false);
+//            }
+//            enableLoadMore = mRefreshKernel.getRefreshLayout().isEnableLoadMore();
+//            mRefreshKernel.getRefreshLayout().setEnableLoadMore(false);
             View contentView = mRefreshContent.getView();
             MarginLayoutParams params = (MarginLayoutParams)contentView.getLayoutParams();
             params.topMargin += mHeaderHeight;
@@ -117,13 +121,14 @@ public abstract class FunGameBase extends InternalAbstract implements RefreshHea
     protected void onManualOperationRelease() {
         if (mIsFinish) {
             mManualOperation = false;
-            mRefreshKernel.getRefreshLayout().setEnableLoadMore(enableLoadMore);
+//            if (mRefreshContent instanceof CoordinatorLayoutListener) {
+//                ((CoordinatorLayoutListener) mRefreshContent).onCoordinatorUpdate(true, true);
+//            }
+//            mRefreshKernel.getRefreshLayout().setEnableLoadMore(enableLoadMore);
             if (mTouchY != -1) {//还没松手
                 onFinish(mRefreshKernel.getRefreshLayout(), mLastFinish);
-//                mRefreshKernel.setStateRefreshingFinish();
                 mRefreshKernel.setState(RefreshState.RefreshFinish);
                 mRefreshKernel.animSpinner(0);
-//                mRefreshKernel.getRefreshLayout().finishRefresh(0);
             } else {
                 mRefreshKernel.moveSpinner(mHeaderHeight, true);
             }
