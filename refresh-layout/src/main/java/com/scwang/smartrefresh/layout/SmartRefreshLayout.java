@@ -58,7 +58,6 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnStateChangedListener;
 import com.scwang.smartrefresh.layout.util.DelayedRunnable;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
-import com.scwang.smartrefresh.layout.util.ScrollBoundaryUtil;
 import com.scwang.smartrefresh.layout.util.ViscousFluidInterpolator;
 
 import java.util.ArrayList;
@@ -1695,16 +1694,16 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         return mNestedChild.isNestedScrollingEnabled();
     }
 
-    @Override
-    public boolean canScrollVertically(int direction) {
-        View target = mRefreshContent.getScrollableView();
-        if (direction < 0) {
-            return mEnableOverScrollDrag || isEnableRefreshOrLoadMore(mEnableRefresh) || ScrollBoundaryUtil.canScrollUp(target);
-        } else if (direction > 0) {
-            return mEnableOverScrollDrag || isEnableRefreshOrLoadMore(mEnableLoadMore) || ScrollBoundaryUtil.canScrollDown(target);
-        }
-        return true;
-    }
+//    @Override
+//    public boolean canScrollVertically(int direction) {
+//        View target = mRefreshContent.getScrollableView();
+//        if (direction < 0) {
+//            return mEnableOverScrollDrag || isEnableRefreshOrLoadMore(mEnableRefresh) || ScrollBoundaryUtil.canScrollUp(target);
+//        } else if (direction > 0) {
+//            return mEnableOverScrollDrag || isEnableRefreshOrLoadMore(mEnableLoadMore) || ScrollBoundaryUtil.canScrollDown(target);
+//        }
+//        return true;
+//    }
 
     //    @Override
 //    @Deprecated

@@ -101,8 +101,8 @@ public class BasicExampleActivity extends AppCompatActivity {
                 RecyclerView recyclerView = new RecyclerView(getBaseContext());
                 recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext()));
                 recyclerView.setAdapter(mAdapter);
-                refreshLayout.setEnableRefresh(true);
-                refreshLayout.setEnableNestedScroll(true);
+                refreshLayout.setEnableRefresh(false);
+                refreshLayout.setEnableNestedScroll(false);
                 refreshLayout.setRefreshContent(recyclerView);
                 dialog.setContentView(dialogView);
                 dialog.show();

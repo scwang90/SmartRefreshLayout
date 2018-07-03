@@ -70,6 +70,12 @@ public class BottomSheetExampleFragment extends Fragment {
             }
         });
 
+        /*
+         * 重点：设置 srlEnableNestedScrolling 为 false 才可以兼容 BottomSheet
+         * notice：Set srlEnableNestedScrolling to false to be compatible with BottomSheet
+         */
+        refreshLayout.setEnableNestedScroll(false);
+
         RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recyclerView);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

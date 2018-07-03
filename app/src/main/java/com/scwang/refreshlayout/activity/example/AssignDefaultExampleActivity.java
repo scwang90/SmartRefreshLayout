@@ -50,8 +50,8 @@ public class AssignDefaultExampleActivity extends AppCompatActivity {
         final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
         if (isFirstEnter) {
             isFirstEnter = false;
-            //触发上拉加载
-            refreshLayout.autoLoadMore();
+//            //触发上拉加载
+//            refreshLayout.autoLoadMore();
             //通过多功能监听接口实现 在第一次加载完成之后 自动刷新
             refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener(){
                 @Override
