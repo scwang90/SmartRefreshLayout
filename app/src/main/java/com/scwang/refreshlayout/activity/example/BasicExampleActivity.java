@@ -8,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Toast;
@@ -16,7 +15,6 @@ import android.widget.Toast;
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
@@ -98,17 +96,15 @@ public class BasicExampleActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 BottomSheetDialog dialog=new BottomSheetDialog(BasicExampleActivity.this);
-                View dialogView = View.inflate(BasicExampleActivity.this, R.layout.activity_example_basic, null);
-                dialog.setContentView(dialogView);
-                AbsListView listView = (AbsListView) dialogView.findViewById(R.id.listView);
-                listView.setAdapter(mAdapter);
-                ViewGroup parentGroup = (ViewGroup) listView.getParent();
-                parentGroup.removeView(listView);
-                RecyclerView recyclerView = new RecyclerView(BasicExampleActivity.this);
-                recyclerView.setLayoutManager(new LinearLayoutManager(BasicExampleActivity.this));
+                View dialogView = View.inflate(getBaseContext(), R.layout.activity_example_basic, null);
+                RefreshLayout refreshLayout = (RefreshLayout) dialogView.findViewById(R.id.refreshLayout);
+                RecyclerView recyclerView = new RecyclerView(getBaseContext());
+                recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext()));
                 recyclerView.setAdapter(mAdapter);
-                ((SmartRefreshLayout) parentGroup).setEnableRefresh(false);
-                ((SmartRefreshLayout) parentGroup).setRefreshContent(recyclerView);
+                refreshLayout.setEnableRefresh(true);
+                refreshLayout.setEnableNestedScroll(true);
+                refreshLayout.setRefreshContent(recyclerView);
+                dialog.setContentView(dialogView);
                 dialog.show();
             }
         });
