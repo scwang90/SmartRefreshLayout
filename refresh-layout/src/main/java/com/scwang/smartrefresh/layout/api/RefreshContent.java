@@ -17,10 +17,8 @@ public interface RefreshContent {
     View getScrollableView();
 
     void onActionDown(MotionEvent e);
-//    void onActionUpOrCancel();
 
     void setUpComponent(RefreshKernel kernel, View fixedHeader, View fixedFooter);
-//    void onInitialHeaderAndFooter(int headerHeight, int footerHeight);
     void setScrollBoundaryDecider(ScrollBoundaryDecider boundary);
 
     void setEnableLoadMoreWhenContentNotFull(boolean enable);

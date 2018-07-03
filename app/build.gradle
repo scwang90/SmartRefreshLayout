@@ -79,21 +79,22 @@ dependencies {
     //noinspection GradleDependency
     compile 'com.android.support:cardview-v7:25.3.0'
 
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support.constraint:constraint-layout:1.1.2'
+
     compile 'com.flyco.roundview:FlycoRoundView_Lib:1.1.4@aar'
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34'
     compile 'com.github.czy1121:loadinglayout:1.0.1'
     compile 'com.github.mmin18:realtimeblurview:1.0.6'
-    compile 'com.google.code.gson:gson:2.8.0'
+    compile 'com.google.code.gson:gson:2.8.2'
     compile 'com.wang.avi:library:2.1.3'
     compile 'com.youth.banner:banner:1.4.9'  //最新版本
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'jp.wasabeef:recyclerview-animators:2.2.6'
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
-//    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-8'
-//    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-8'
+//    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-9'
+//    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-9'
     testCompile 'junit:junit:4.12'
 
-    compile 'com.github.bumptech.glide:glide:4.0.0-RC1'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0-RC1'
+    compile 'com.github.bumptech.glide:glide:4.0.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0'
 }

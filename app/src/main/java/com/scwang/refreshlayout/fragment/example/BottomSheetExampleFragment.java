@@ -15,27 +15,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
 
 import com.scwang.refreshlayout.R;
-import com.scwang.refreshlayout.activity.example.BasicExampleActivity;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.Arrays;
 import java.util.Collection;
 
 import static android.R.layout.simple_list_item_2;
 import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
-import static com.scwang.refreshlayout.R.id.recyclerView;
-import static com.scwang.refreshlayout.R.id.refreshLayout;
 
 /**
  * 使用示例-BottomSheet
@@ -76,6 +69,12 @@ public class BottomSheetExampleFragment extends Fragment {
                 },2000);
             }
         });
+
+        /*
+         * 重点：设置 srlEnableNestedScrolling 为 false 才可以兼容 BottomSheet
+         * notice：Set srlEnableNestedScrolling to false to be compatible with BottomSheet
+         */
+        refreshLayout.setEnableNestedScroll(false);
 
         RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recyclerView);
         recyclerView.setItemAnimator(new DefaultItemAnimator());

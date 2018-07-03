@@ -17,7 +17,6 @@ import static android.support.annotation.RestrictTo.Scope.SUBCLASSES;
  * 刷新内部组件
  * Created by SCWANG on 2017/5/26.
  */
-@RestrictTo({LIBRARY,LIBRARY_GROUP,SUBCLASSES})
 public interface RefreshInternal extends OnStateChangedListener {
     /**
      * 获取实体视图
@@ -45,6 +44,7 @@ public interface RefreshInternal extends OnStateChangedListener {
      * @param height HeaderHeight or FooterHeight
      * @param maxDragHeight 最大拖动高度
      */
+    @RestrictTo({LIBRARY,LIBRARY_GROUP,SUBCLASSES})
     void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight);
     /**
      * 手指拖动下拉（会连续多次调用，添加isDragging并取代之前的onPulling、onReleasing）
@@ -54,23 +54,8 @@ public interface RefreshInternal extends OnStateChangedListener {
      * @param height 高度 HeaderHeight or FooterHeight
      * @param maxDragHeight 最大拖动高度
      */
+    @RestrictTo({LIBRARY,LIBRARY_GROUP,SUBCLASSES})
     void onMoving(boolean isDragging, float percent, int offset, int height, int maxDragHeight);
-//    /**
-//     * 手指拖动下拉（会连续多次调用）
-//     * @param percent 下拉的百分比 值 = offset/footerHeight (0 - percent - (footerHeight+maxDragHeight) / footerHeight )
-//     * @param offset 下拉的像素偏移量  0 - offset - (footerHeight+maxDragHeight)
-//     * @param height 高度 HeaderHeight or FooterHeight
-//     * @param maxDragHeight 最大拖动高度
-//     */
-//    void onPulling(float percent, int offset, int height, int maxDragHeight);
-//    /**
-//     * 手指释放之后的持续动画（会连续多次调用）
-//     * @param percent 下拉的百分比 值 = offset/footerHeight (0 - percent - (footerHeight+maxDragHeight) / footerHeight )
-//     * @param offset 下拉的像素偏移量  0 - offset - (footerHeight+maxDragHeight)
-//     * @param height 高度 HeaderHeight or FooterHeight
-//     * @param maxDragHeight 最大拖动高度
-//     */
-//    void onReleasing(float percent, int offset, int height, int maxDragHeight);
 
     /**
      * 释放时刻（调用一次，将会触发加载）
@@ -78,6 +63,7 @@ public interface RefreshInternal extends OnStateChangedListener {
      * @param height 高度 HeaderHeight or FooterHeight
      * @param maxDragHeight 最大拖动高度
      */
+    @RestrictTo({LIBRARY,LIBRARY_GROUP,SUBCLASSES})
     void onReleased(@NonNull RefreshLayout refreshLayout, int height, int maxDragHeight);
 
     /**
@@ -86,6 +72,7 @@ public interface RefreshInternal extends OnStateChangedListener {
      * @param height HeaderHeight or FooterHeight
      * @param maxDragHeight 最大拖动高度
      */
+    @RestrictTo({LIBRARY,LIBRARY_GROUP,SUBCLASSES})
     void onStartAnimator(@NonNull RefreshLayout refreshLayout, int height, int maxDragHeight);
 
     /**
@@ -94,6 +81,7 @@ public interface RefreshInternal extends OnStateChangedListener {
      * @param success 数据是否成功刷新或加载
      * @return 完成动画所需时间 如果返回 Integer.MAX_VALUE 将取消本次完成事件，继续保持原有状态
      */
+    @RestrictTo({LIBRARY,LIBRARY_GROUP,SUBCLASSES})
     int onFinish(@NonNull RefreshLayout refreshLayout, boolean success);
 
     /**
@@ -102,6 +90,7 @@ public interface RefreshInternal extends OnStateChangedListener {
      * @param offsetX 下拉时，手指水平坐标对屏幕的偏移（0 - offsetX - LayoutWidth）
      * @param offsetMax 最大的偏移量
      */
+    @RestrictTo({LIBRARY,LIBRARY_GROUP,SUBCLASSES})
     void onHorizontalDrag(float percentX, int offsetX, int offsetMax);
 
     /**

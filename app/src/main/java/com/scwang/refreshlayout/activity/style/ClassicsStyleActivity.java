@@ -44,7 +44,7 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
         背后固定(R.string.item_style_spinner_behind),
         显示时间(R.string.item_style_spinner_update_on),
         隐藏时间(R.string.item_style_spinner_update_off),
-        加载更多(R.string.item_style_load_more),
+//        加载更多(R.string.item_style_load_more),
         默认主题(R.string.item_style_theme_default_abstract),
         橙色主题(R.string.item_style_theme_orange_abstract),
         红色主题(R.string.item_style_theme_red_abstract),
@@ -167,9 +167,9 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
             case 橙色主题:
                 setThemeColor(android.R.color.holo_orange_light, android.R.color.holo_orange_dark);
                 break;
-            case 加载更多:
-                mRefreshLayout.autoLoadMore();
-                return;
+//            case 加载更多:
+//                mRefreshLayout.autoLoadMore();
+//                return;
         }
         mRefreshLayout.autoRefresh();
     }

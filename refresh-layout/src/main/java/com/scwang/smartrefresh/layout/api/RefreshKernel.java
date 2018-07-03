@@ -63,7 +63,7 @@ public interface RefreshKernel {
      * @param backgroundColor 背景颜色
      * @return RefreshKernel
      */
-    RefreshKernel requestDrawBackgroundFor(RefreshInternal internal, int backgroundColor);
+    RefreshKernel requestDrawBackgroundFor(@NonNull RefreshInternal internal, int backgroundColor);
     /**
      * 请求事件
      * @param request 请求

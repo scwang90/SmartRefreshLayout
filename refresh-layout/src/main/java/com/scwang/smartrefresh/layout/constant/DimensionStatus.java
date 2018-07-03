@@ -61,9 +61,9 @@ public enum DimensionStatus {
     /**
      * 是否没有达到新的状态
      * @param status 新转台
-     * @return 大于等于
+     * @return 大于等于 gte
      */
-    public boolean gteReplaceWith(DimensionStatus status) {
+    public boolean gteStatusWith(DimensionStatus status) {
         return ordinal() >= status.ordinal();
     }
 }
