@@ -446,12 +446,12 @@ public interface RefreshLayout {
      */
     boolean autoRefresh();
 
-//    /**
-//     * 自动刷新
-//     * @param delayed 开始延时
-//     * @return RefreshLayout
-//     */
-//    boolean autoRefresh(int delayed);
+    /**
+     * 自动刷新
+     * @param delayed 开始延时
+     * @return RefreshLayout
+     */
+    boolean autoRefresh(int delayed);
 
     /**
      * 自动刷新
@@ -462,27 +462,27 @@ public interface RefreshLayout {
      */
     boolean autoRefresh(int delayed, int duration, float dragRate);
 
-    /**
-     * 自动加载
-     * @return 是否成功（状态不符合会失败）
-     */
-    boolean autoLoadMore();
-
+//    /**
+//     * 自动加载
+//     * @return 是否成功（状态不符合会失败）
+//     */
+//    boolean autoLoadMore();
+//
 //    /**
 //     * 自动加载
 //     * @param delayed 开始延时
 //     * @return RefreshLayout
 //     */
 //    boolean autoLoadMore(int delayed);
-
-    /**
-     * 自动加载
-     * @param delayed 开始延时
-     * @param duration 拖拽动画持续时间
-     * @param dragRate 拉拽的高度比率（要求 ≥ 1 ）
-     * @return 是否成功（状态不符合会失败）
-     */
-    boolean autoLoadMore(int delayed, int duration, float dragRate);
+//
+//    /**
+//     * 自动加载
+//     * @param delayed 开始延时
+//     * @param duration 拖拽动画持续时间
+//     * @param dragRate 拉拽的高度比率（要求 ≥ 1 ）
+//     * @return 是否成功（状态不符合会失败）
+//     */
+//    boolean autoLoadMore(int delayed, int duration, float dragRate);
 
 //    /**
 //     * 是否启用下拉刷新

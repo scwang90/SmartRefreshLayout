@@ -26,7 +26,6 @@ import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
-import com.scwang.smartrefresh.layout.util.DesignUtil;
 
 import static com.scwang.smartrefresh.layout.util.SmartUtil.getColor;
 

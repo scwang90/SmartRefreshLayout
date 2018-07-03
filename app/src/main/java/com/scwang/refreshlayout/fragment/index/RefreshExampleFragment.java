@@ -31,7 +31,6 @@ import com.scwang.refreshlayout.fragment.example.EmptyLayoutExampleFragment;
 import com.scwang.refreshlayout.fragment.example.NestedScrollExampleFragment;
 import com.scwang.refreshlayout.fragment.example.PureScrollExampleFragment;
 import com.scwang.refreshlayout.fragment.example.SpecifyStyleExampleFragment;
-import com.scwang.refreshlayout.fragment.example.ThreeLevelExampleFragment;
 import com.scwang.refreshlayout.fragment.example.ViewPagerExampleFragment;
 import com.scwang.refreshlayout.util.StatusBarUtil;
 

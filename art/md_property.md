@@ -53,7 +53,7 @@ public class RefreshActivity extends Activity {
 
         refreshLayout.setRefreshHeader(new ClassicsHeader(context));//设置Header
         refreshLayout.setRefreshFooter(new ClassicsFooter(context));//设置Footer
-        refreshLayout.setRefreshContent(new View(context));//设置刷新Content（用于动态替换空布局，不推荐）1.0.4
+        refreshLayout.setRefreshContent(new View(context));//设置刷新Content（用于非xml布局代替addView）1.0.4
 
         refreshLayout.autoRefresh();//自动刷新
         refreshLayout.autoLoadMore();//自动加载

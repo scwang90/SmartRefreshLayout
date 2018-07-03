@@ -13,10 +13,9 @@ import android.widget.Toast;
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.util.StatusBarUtil;
 import com.scwang.smartrefresh.layout.api.OnTwoLevelListener;
-import com.scwang.smartrefresh.layout.header.TwoLevelHeader;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.scwang.smartrefresh.layout.header.TwoLevelHeader;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 
 /**

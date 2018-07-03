@@ -26,7 +26,6 @@ import android.graphics.Shader;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Build;
-import android.support.annotation.ColorInt;
 import android.view.View;
 import android.widget.ImageView;
 

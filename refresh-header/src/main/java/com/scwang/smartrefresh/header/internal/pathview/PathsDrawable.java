@@ -8,12 +8,10 @@ import android.graphics.Rect;
 import android.graphics.Region;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.scwang.smartrefresh.layout.internal.PaintDrawable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
