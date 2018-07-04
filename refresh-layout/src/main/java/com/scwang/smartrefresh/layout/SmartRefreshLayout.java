@@ -2601,8 +2601,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     reboundAnimator.addUpdateListener(new AnimatorUpdateListener() {
                         @Override
                         public void onAnimationUpdate(ValueAnimator animation) {
-                            mKernel.moveSpinner((int) animation.getAnimatedValue(), false);
-//                            mKernel.moveSpinner((int) animation.getAnimatedValue(), true);
+                            mKernel.moveSpinner((int) animation.getAnimatedValue(), true);
                         }
                     });
                     reboundAnimator.addListener(new AnimatorListenerAdapter() {
@@ -2610,15 +2609,14 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                         public void onAnimationStart(Animator animation) {
                             final View thisView = SmartRefreshLayout.this;
                             mLastTouchX = thisView.getMeasuredWidth() / 2;
-                            mKernel.setState(RefreshState.ReleaseToRefresh);
-//                            mKernel.setState(RefreshState.PullDownToRefresh);
+                            mKernel.setState(RefreshState.PullDownToRefresh);
                         }
                         @Override
                         public void onAnimationEnd(Animator animation) {
                             reboundAnimator = null;
-//                            if (mState != RefreshState.ReleaseToRefresh) {
-//                                mKernel.setState(RefreshState.ReleaseToRefresh);
-//                            }
+                            if (mState != RefreshState.ReleaseToRefresh) {
+                                mKernel.setState(RefreshState.ReleaseToRefresh);
+                            }
                             overSpinner();
                         }
                     });
@@ -2678,8 +2676,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 //                    reboundAnimator.addUpdateListener(new AnimatorUpdateListener() {
 //                        @Override
 //                        public void onAnimationUpdate(ValueAnimator animation) {
-//                            mKernel.moveSpinner((int) animation.getAnimatedValue(), false);
-////                            mKernel.moveSpinner((int) animation.getAnimatedValue(), true);
+//                            mKernel.moveSpinner((int) animation.getAnimatedValue(), true);
 //                        }
 //                    });
 //                    reboundAnimator.addListener(new AnimatorListenerAdapter() {
@@ -2687,16 +2684,15 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 //                        public void onAnimationStart(Animator animation) {
 //                            final View thisView = SmartRefreshLayout.this;
 //                            mLastTouchX = thisView.getMeasuredWidth() / 2;
-//                            mKernel.setState(RefreshState.ReleaseToLoad);
-////                            mKernel.setState(RefreshState.PullUpToLoad);
+//                            mKernel.setState(RefreshState.PullUpToLoad);
 //                        }
 //
 //                        @Override
 //                        public void onAnimationEnd(Animator animation) {
 //                            reboundAnimator = null;
-////                            if (mState != RefreshState.ReleaseToLoad) {
-////                                mKernel.setState(RefreshState.ReleaseToLoad);
-////                            }
+//                            if (mState != RefreshState.ReleaseToLoad) {
+//                                mKernel.setState(RefreshState.ReleaseToLoad);
+//                            }
 //                            if (mEnableAutoLoadMore) {
 //                                mEnableAutoLoadMore = false;
 //                                overSpinner();
