@@ -936,7 +936,11 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                             } else {
                                 mKernel.setState(RefreshState.PullUpToLoad);
                             }
-                            thisView.getParent().requestDisallowInterceptTouchEvent(true);//通知父控件不要拦截事件
+                            ViewParent parent = thisView.getParent();
+                            if (parent != null) {
+                                //修复问题 https://github.com/scwang90/SmartRefreshLayout/issues/580
+                                parent.requestDisallowInterceptTouchEvent(true);//通知父控件不要拦截事件
+                            }
                         }
                     } else if (Math.abs(dx) >= mTouchSlop && Math.abs(dx) > Math.abs(dy) && mDragDirection != 'v') {
                         mDragDirection = 'h';//标记为水平拖动，将无法再次触发 下拉刷新 上拉加载
