@@ -105,6 +105,10 @@ public class EmptyLayoutExampleFragment extends Fragment implements AdapterView.
                 public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
                     mIsNeedDemo = false;
                 }
+                @Override
+                public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                    refreshLayout.finishLoadMore(2000);
+                }
             });
         }
     }

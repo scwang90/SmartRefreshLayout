@@ -33,7 +33,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleY="-1"
-            android:background="#5511bbff"
             app:mhShowBezierWave="true"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 

@@ -278,6 +278,7 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
             case PullDownToRefresh:
                 mFinished = false;
                 circleView.setVisibility(VISIBLE);
+                circleView.setTranslationY(0);
                 circleView.setScaleX(1);
                 circleView.setScaleY(1);
                 break;

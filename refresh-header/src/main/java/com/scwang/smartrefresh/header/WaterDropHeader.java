@@ -224,31 +224,38 @@ public class WaterDropHeader extends InternalAbstract implements RefreshHeader {
     @Override
     public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
         final View dropView = mWaterDropView;
+        final View imageView = mImageView;
         mState = newState;
         switch (newState) {
             case None:
                 dropView.setVisibility(View.VISIBLE);
+                imageView.setVisibility(View.VISIBLE);
                 break;
             case PullDownToRefresh:
                 dropView.setVisibility(View.VISIBLE);
+                imageView.setVisibility(View.VISIBLE);
                 break;
             case PullDownCanceled:
                 break;
             case ReleaseToRefresh:
                 dropView.setVisibility(View.VISIBLE);
+                imageView.setVisibility(View.VISIBLE);
                 break;
             case Refreshing:
                 break;
             case RefreshFinish:
                 dropView.setVisibility(View.GONE);
+                imageView.setVisibility(View.GONE);
                 break;
         }
     }
 
     @Override
     public void onReleased(@NonNull final RefreshLayout layout, int height, int maxDragHeight) {
+        final View imageView = mImageView;
         final View dropView = mWaterDropView;
         mProgressDrawable.start();
+        imageView.setVisibility(GONE);
         mWaterDropView.createAnimator().start();//开始回弹
         dropView.animate().setDuration(150).alpha(0).setListener(new AnimatorListenerAdapter() {
             public void onAnimationEnd(Animator animation) {

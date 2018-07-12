@@ -580,7 +580,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.MatchLayout) {
                     heightSpec = makeMeasureSpec(getSize(heightSpec) - lp.topMargin - lp.bottomMargin, EXACTLY);
                 } else if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Scale && !isInEditMode) {
-                    final int height = Math.max(0, mEnableLoadMore ? -mSpinner : 0);
+                    final int height = Math.max(0, isEnableRefreshOrLoadMore(mEnableLoadMore) ? -mSpinner : 0);
                     heightSpec = makeMeasureSpec(Math.max(height - lp.topMargin - lp.bottomMargin, 0), EXACTLY);
                 }
 
