@@ -506,44 +506,35 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
                 if (mHeaderHeightStatus.gteStatusWith(DimensionStatus.XmlLayoutUnNotify)) {
                     heightSpec = makeMeasureSpec(Math.max(mHeaderHeight - lp.bottomMargin - lp.topMargin, 0), EXACTLY);
-                    headerView.measure(widthSpec, heightSpec);
-                } else if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.MatchLayout) {
-                    int headerHeight = 0;
-                    if (!mHeaderHeightStatus.notified) {
-                        super.measureChild(headerView, widthSpec, makeMeasureSpec(Math.max(getSize(heightSpec) - lp.bottomMargin - lp.topMargin, 0), AT_MOST));
-                        headerHeight = headerView.getMeasuredHeight();
-                    }
-                    headerView.measure(widthSpec, makeMeasureSpec(Math.max(getSize(heightSpec) - lp.bottomMargin - lp.topMargin, 0), EXACTLY));
-                    if (headerHeight > 0 && headerHeight != headerView.getMeasuredHeight()) {
-                        mHeaderHeight = headerHeight + lp.bottomMargin + lp.topMargin;
-                    }
                 } else if (lp.height > 0) {
                     if (mHeaderHeightStatus.canReplaceWith(DimensionStatus.XmlExactUnNotify)) {
                         mHeaderHeight = lp.height + lp.bottomMargin + lp.topMargin;
                         mHeaderHeightStatus = DimensionStatus.XmlExactUnNotify;
                     }
                     heightSpec = makeMeasureSpec(lp.height, EXACTLY);
-                    headerView.measure(widthSpec, heightSpec);
                 } else if (lp.height == WRAP_CONTENT) {
                     heightSpec = makeMeasureSpec(Math.max(getSize(heightMeasureSpec) - lp.bottomMargin - lp.topMargin, 0), AT_MOST);
                     headerView.measure(widthSpec, heightSpec);
                     int measuredHeight = headerView.getMeasuredHeight();
-                    if (measuredHeight > 0 && mHeaderHeightStatus.canReplaceWith(DimensionStatus.XmlWrapUnNotify)) {
+                    if (measuredHeight > 0 && measuredHeight != (getSize(heightMeasureSpec) - lp.bottomMargin - lp.topMargin) && mHeaderHeightStatus.canReplaceWith(DimensionStatus.XmlWrapUnNotify)) {
                         mHeaderHeightStatus = DimensionStatus.XmlWrapUnNotify;
                         mHeaderHeight = headerView.getMeasuredHeight() + lp.bottomMargin + lp.topMargin;
+                        heightSpec = -1;
                     } else if (measuredHeight <= 0) {
                         heightSpec = makeMeasureSpec(Math.max(mHeaderHeight - lp.bottomMargin - lp.topMargin, 0), EXACTLY);
-                        headerView.measure(widthSpec, heightSpec);
                     }
                 } else if (lp.height == MATCH_PARENT) {
                     heightSpec = makeMeasureSpec(Math.max(mHeaderHeight - lp.bottomMargin - lp.topMargin, 0), EXACTLY);
-                    headerView.measure(widthSpec, heightSpec);
-                } else {
-                    headerView.measure(widthSpec, heightSpec);
                 }
-                if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale && !isInEditMode) {
+
+                if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.MatchLayout) {
+                    heightSpec = makeMeasureSpec(Math.max(getSize(heightMeasureSpec) - lp.bottomMargin - lp.topMargin, 0), EXACTLY);
+                } else if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale && !isInEditMode) {
                     final int height = Math.max(0, isEnableRefreshOrLoadMore(mEnableRefresh) ? mSpinner : 0);
                     heightSpec = makeMeasureSpec(Math.max(height - lp.bottomMargin - lp.topMargin, 0), EXACTLY);
+                }
+
+                if (heightSpec != -1) {
                     headerView.measure(widthSpec, heightSpec);
                 }
 
@@ -562,47 +553,38 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 final LayoutParams lp = (LayoutParams) footerView.getLayoutParams();
                 final int widthSpec = ViewGroup.getChildMeasureSpec(widthMeasureSpec, lp.leftMargin + lp.rightMargin, lp.width);
                 int heightSpec = heightMeasureSpec;
+
                 if (mFooterHeightStatus.gteStatusWith(DimensionStatus.XmlLayoutUnNotify)) {
                     heightSpec = makeMeasureSpec(Math.max(mFooterHeight - lp.topMargin - lp.bottomMargin, 0), EXACTLY);
-                    footerView.measure(widthSpec, heightSpec);
-                } else if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.MatchLayout) {
-                    int footerHeight = 0;
-                    if (!mFooterHeightStatus.notified) {
-                        super.measureChild(footerView, widthSpec, makeMeasureSpec(getSize(heightSpec) - lp.topMargin - lp.bottomMargin, AT_MOST));
-                        footerHeight = footerView.getMeasuredHeight();
-                    }
-                    footerView.measure(widthSpec, makeMeasureSpec(getSize(heightSpec) - lp.topMargin - lp.bottomMargin, EXACTLY));
-                    if (footerHeight > 0 && footerHeight != footerView.getMeasuredHeight()) {
-                        mHeaderHeight = footerHeight + lp.topMargin + lp.bottomMargin;
-                    }
                 } else if (lp.height > 0) {
                     if (mFooterHeightStatus.canReplaceWith(DimensionStatus.XmlExactUnNotify)) {
                         mFooterHeight = lp.height + lp.topMargin + lp.bottomMargin;
                         mFooterHeightStatus = DimensionStatus.XmlExactUnNotify;
                     }
                     heightSpec = makeMeasureSpec(lp.height, EXACTLY);
-                    footerView.measure(widthSpec, heightSpec);
                 } else if (lp.height == WRAP_CONTENT) {
                     heightSpec = makeMeasureSpec(Math.max(getSize(heightMeasureSpec) - lp.topMargin - lp.bottomMargin, 0), AT_MOST);
                     footerView.measure(widthSpec, heightSpec);
                     int measuredHeight = footerView.getMeasuredHeight();
-                    if (measuredHeight > 0 && mFooterHeightStatus.canReplaceWith(DimensionStatus.XmlWrapUnNotify)) {
+                    if (measuredHeight > 0 && measuredHeight != (getSize(heightMeasureSpec) - lp.topMargin - lp.bottomMargin) && mFooterHeightStatus.canReplaceWith(DimensionStatus.XmlWrapUnNotify)) {
                         mFooterHeightStatus = DimensionStatus.XmlWrapUnNotify;
                         mFooterHeight = footerView.getMeasuredHeight() + lp.topMargin + lp.bottomMargin;
+                        heightSpec = -1;
                     } else if (measuredHeight <= 0) {
                         heightSpec = makeMeasureSpec(Math.max(mFooterHeight - lp.topMargin - lp.bottomMargin, 0), EXACTLY);
-                        footerView.measure(widthSpec, heightSpec);
                     }
                 } else if (lp.height == MATCH_PARENT) {
                     heightSpec = makeMeasureSpec(Math.max(mFooterHeight - lp.topMargin - lp.bottomMargin, 0), EXACTLY);
-                    footerView.measure(widthSpec, heightSpec);
-                } else {
-                    footerView.measure(widthSpec, heightSpec);
                 }
 
-                if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Scale && !isInEditMode) {
+                if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.MatchLayout) {
+                    heightSpec = makeMeasureSpec(getSize(heightSpec) - lp.topMargin - lp.bottomMargin, EXACTLY);
+                } else if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Scale && !isInEditMode) {
                     final int height = Math.max(0, mEnableLoadMore ? -mSpinner : 0);
                     heightSpec = makeMeasureSpec(Math.max(height - lp.topMargin - lp.bottomMargin, 0), EXACTLY);
+                }
+
+                if (heightSpec != -1) {
                     footerView.measure(widthSpec, heightSpec);
                 }
 
@@ -693,7 +675,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 int left = lp.leftMargin;
                 int top = lp.topMargin + thisView.getMeasuredHeight() - mFooterInsetStart;
 
-                if (isPreviewMode
+                if (style == SpinnerStyle.MatchLayout) {
+                    top = lp.topMargin - mFooterInsetStart;
+                } else if (isPreviewMode
                         || style == SpinnerStyle.FixedFront
                         || style == SpinnerStyle.FixedBehind) {
                     top = top - mFooterHeight;
