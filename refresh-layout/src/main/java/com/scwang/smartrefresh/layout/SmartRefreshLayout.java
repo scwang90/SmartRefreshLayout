@@ -493,7 +493,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     protected void onMeasure(final int widthMeasureSpec,final int heightMeasureSpec) {
         int minimumHeight = 0;
         final View thisView = this;
-        final boolean isInEditMode = thisView.isInEditMode() && mEnablePreviewInEditMode;
+        final boolean needPreview = thisView.isInEditMode() && mEnablePreviewInEditMode;
 
         for (int i = 0, len = super.getChildCount(); i < len; i++) {
             View child = super.getChildAt(i);
@@ -502,40 +502,37 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 final View headerView = mRefreshHeader.getView();
                 final LayoutParams lp = (LayoutParams) headerView.getLayoutParams();
                 final int widthSpec = ViewGroup.getChildMeasureSpec(widthMeasureSpec, lp.leftMargin + lp.rightMargin, lp.width);
-                int heightSpec = heightMeasureSpec;
+                int height = mHeaderHeight;
 
-                if (mHeaderHeightStatus.gteStatusWith(DimensionStatus.XmlLayoutUnNotify)) {
-                    heightSpec = makeMeasureSpec(Math.max(mHeaderHeight - lp.bottomMargin - lp.topMargin, 0), EXACTLY);
-                } else if (lp.height > 0) {
-                    if (mHeaderHeightStatus.canReplaceWith(DimensionStatus.XmlExactUnNotify)) {
-                        mHeaderHeight = lp.height + lp.bottomMargin + lp.topMargin;
-                        mHeaderHeightStatus = DimensionStatus.XmlExactUnNotify;
+                if (mHeaderHeightStatus.ordinal() < DimensionStatus.XmlLayoutUnNotify.ordinal()) {
+                    if (lp.height > 0) {
+                        height =  lp.height + lp.bottomMargin + lp.topMargin;
+                        if (mHeaderHeightStatus.canReplaceWith(DimensionStatus.XmlExactUnNotify)) {
+                            mHeaderHeight = lp.height + lp.bottomMargin + lp.topMargin;
+                            mHeaderHeightStatus = DimensionStatus.XmlExactUnNotify;
+                        }
+                    } else if (lp.height == WRAP_CONTENT && (mRefreshHeader.getSpinnerStyle() != SpinnerStyle.MatchLayout || !mHeaderHeightStatus.notified)) {
+                        final int maxHeight = Math.max(getSize(heightMeasureSpec) - lp.bottomMargin - lp.topMargin, 0);
+                        headerView.measure(widthSpec, makeMeasureSpec(maxHeight, AT_MOST));
+                        final int measuredHeight = headerView.getMeasuredHeight();
+                        if (measuredHeight > 0) {
+                            height = -1;
+                            if (measuredHeight != (maxHeight) && mHeaderHeightStatus.canReplaceWith(DimensionStatus.XmlWrapUnNotify)) {
+                                mHeaderHeight = measuredHeight + lp.bottomMargin + lp.topMargin;
+                                mHeaderHeightStatus = DimensionStatus.XmlWrapUnNotify;
+                            }
+                        }
                     }
-                    heightSpec = makeMeasureSpec(lp.height, EXACTLY);
-                } else if (lp.height == WRAP_CONTENT) {
-                    heightSpec = makeMeasureSpec(Math.max(getSize(heightMeasureSpec) - lp.bottomMargin - lp.topMargin, 0), AT_MOST);
-                    headerView.measure(widthSpec, heightSpec);
-                    int measuredHeight = headerView.getMeasuredHeight();
-                    if (measuredHeight > 0 && measuredHeight != (getSize(heightMeasureSpec) - lp.bottomMargin - lp.topMargin) && mHeaderHeightStatus.canReplaceWith(DimensionStatus.XmlWrapUnNotify)) {
-                        mHeaderHeightStatus = DimensionStatus.XmlWrapUnNotify;
-                        mHeaderHeight = headerView.getMeasuredHeight() + lp.bottomMargin + lp.topMargin;
-                        heightSpec = -1;
-                    } else if (measuredHeight <= 0) {
-                        heightSpec = makeMeasureSpec(Math.max(mHeaderHeight - lp.bottomMargin - lp.topMargin, 0), EXACTLY);
-                    }
-                } else if (lp.height == MATCH_PARENT) {
-                    heightSpec = makeMeasureSpec(Math.max(mHeaderHeight - lp.bottomMargin - lp.topMargin, 0), EXACTLY);
                 }
 
                 if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.MatchLayout) {
-                    heightSpec = makeMeasureSpec(Math.max(getSize(heightMeasureSpec) - lp.bottomMargin - lp.topMargin, 0), EXACTLY);
-                } else if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale && !isInEditMode) {
-                    final int height = Math.max(0, isEnableRefreshOrLoadMore(mEnableRefresh) ? mSpinner : 0);
-                    heightSpec = makeMeasureSpec(Math.max(height - lp.bottomMargin - lp.topMargin, 0), EXACTLY);
+                    height = getSize(heightMeasureSpec);
+                } else if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale && !needPreview) {
+                    height = Math.max(0, isEnableRefreshOrLoadMore(mEnableRefresh) ? mSpinner : 0);
                 }
 
-                if (heightSpec != -1) {
-                    headerView.measure(widthSpec, heightSpec);
+                if (height != -1) {
+                    headerView.measure(widthSpec, makeMeasureSpec(Math.max(height - lp.bottomMargin - lp.topMargin, 0), EXACTLY));
                 }
 
                 if (!mHeaderHeightStatus.notified) {
@@ -543,7 +540,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     mRefreshHeader.onInitialized(mKernel, mHeaderHeight, (int) (mHeaderMaxDragRate * mHeaderHeight));
                 }
 
-                if (isInEditMode && isEnableRefreshOrLoadMore(mEnableRefresh)) {
+                if (needPreview && isEnableRefreshOrLoadMore(mEnableRefresh)) {
                     minimumHeight += headerView.getMeasuredHeight();
                 }
             }
@@ -552,40 +549,37 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 final View footerView = mRefreshFooter.getView();
                 final LayoutParams lp = (LayoutParams) footerView.getLayoutParams();
                 final int widthSpec = ViewGroup.getChildMeasureSpec(widthMeasureSpec, lp.leftMargin + lp.rightMargin, lp.width);
-                int heightSpec = heightMeasureSpec;
+                int height = mFooterHeight;
 
-                if (mFooterHeightStatus.gteStatusWith(DimensionStatus.XmlLayoutUnNotify)) {
-                    heightSpec = makeMeasureSpec(Math.max(mFooterHeight - lp.topMargin - lp.bottomMargin, 0), EXACTLY);
-                } else if (lp.height > 0) {
-                    if (mFooterHeightStatus.canReplaceWith(DimensionStatus.XmlExactUnNotify)) {
-                        mFooterHeight = lp.height + lp.topMargin + lp.bottomMargin;
-                        mFooterHeightStatus = DimensionStatus.XmlExactUnNotify;
+                if (mFooterHeightStatus.ordinal() < DimensionStatus.XmlLayoutUnNotify.ordinal()) {
+                    if (lp.height > 0) {
+                        height = lp.height + lp.topMargin + lp.bottomMargin;
+                        if (mFooterHeightStatus.canReplaceWith(DimensionStatus.XmlExactUnNotify)) {
+                            mFooterHeight = lp.height + lp.topMargin + lp.bottomMargin;
+                            mFooterHeightStatus = DimensionStatus.XmlExactUnNotify;
+                        }
+                    } else if (lp.height == WRAP_CONTENT && (mRefreshFooter.getSpinnerStyle() != SpinnerStyle.MatchLayout || !mFooterHeightStatus.notified)) {
+                        int maxHeight = Math.max(getSize(heightMeasureSpec) - lp.bottomMargin - lp.topMargin, 0);
+                        footerView.measure(widthSpec, makeMeasureSpec(maxHeight, AT_MOST));
+                        int measuredHeight = footerView.getMeasuredHeight();
+                        if (measuredHeight > 0) {
+                            height = -1;
+                            if (measuredHeight != (maxHeight) && mFooterHeightStatus.canReplaceWith(DimensionStatus.XmlWrapUnNotify)) {
+                                mFooterHeight = measuredHeight + lp.topMargin + lp.bottomMargin;
+                                mFooterHeightStatus = DimensionStatus.XmlWrapUnNotify;
+                            }
+                        }
                     }
-                    heightSpec = makeMeasureSpec(lp.height, EXACTLY);
-                } else if (lp.height == WRAP_CONTENT) {
-                    heightSpec = makeMeasureSpec(Math.max(getSize(heightMeasureSpec) - lp.topMargin - lp.bottomMargin, 0), AT_MOST);
-                    footerView.measure(widthSpec, heightSpec);
-                    int measuredHeight = footerView.getMeasuredHeight();
-                    if (measuredHeight > 0 && measuredHeight != (getSize(heightMeasureSpec) - lp.topMargin - lp.bottomMargin) && mFooterHeightStatus.canReplaceWith(DimensionStatus.XmlWrapUnNotify)) {
-                        mFooterHeightStatus = DimensionStatus.XmlWrapUnNotify;
-                        mFooterHeight = footerView.getMeasuredHeight() + lp.topMargin + lp.bottomMargin;
-                        heightSpec = -1;
-                    } else if (measuredHeight <= 0) {
-                        heightSpec = makeMeasureSpec(Math.max(mFooterHeight - lp.topMargin - lp.bottomMargin, 0), EXACTLY);
-                    }
-                } else if (lp.height == MATCH_PARENT) {
-                    heightSpec = makeMeasureSpec(Math.max(mFooterHeight - lp.topMargin - lp.bottomMargin, 0), EXACTLY);
                 }
 
                 if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.MatchLayout) {
-                    heightSpec = makeMeasureSpec(getSize(heightSpec) - lp.topMargin - lp.bottomMargin, EXACTLY);
-                } else if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Scale && !isInEditMode) {
-                    final int height = Math.max(0, isEnableRefreshOrLoadMore(mEnableLoadMore) ? -mSpinner : 0);
-                    heightSpec = makeMeasureSpec(Math.max(height - lp.topMargin - lp.bottomMargin, 0), EXACTLY);
+                    height = getSize(heightMeasureSpec);
+                } else if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Scale && !needPreview) {
+                    height = Math.max(0, isEnableRefreshOrLoadMore(mEnableLoadMore) ? -mSpinner : 0);
                 }
 
-                if (heightSpec != -1) {
-                    footerView.measure(widthSpec, heightSpec);
+                if (height != -1) {
+                    footerView.measure(widthSpec, makeMeasureSpec(Math.max(height - lp.bottomMargin - lp.topMargin, 0), EXACTLY));
                 }
 
                 if (!mFooterHeightStatus.notified) {
@@ -593,7 +587,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     mRefreshFooter.onInitialized(mKernel, mFooterHeight, (int) (mFooterMaxDragRate * mFooterHeight));
                 }
 
-                if (isInEditMode && isEnableRefreshOrLoadMore(mEnableLoadMore)) {
+                if (needPreview && isEnableRefreshOrLoadMore(mEnableLoadMore)) {
                     minimumHeight += footerView.getMeasuredHeight();
                 }
             }
@@ -601,14 +595,14 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             if (mRefreshContent != null && mRefreshContent.getView() == child) {
                 final View contentView = mRefreshContent.getView();
                 final LayoutParams lp = (LayoutParams) contentView.getLayoutParams();
+                final boolean showHeader = (mRefreshHeader != null && isEnableRefreshOrLoadMore(mEnableRefresh) && isEnableTranslationContent(mEnableHeaderTranslationContent, mRefreshHeader));
+                final boolean showFooter = (mRefreshFooter != null && isEnableRefreshOrLoadMore(mEnableLoadMore) && isEnableTranslationContent(mEnableFooterTranslationContent, mRefreshFooter));
                 final int widthSpec = ViewGroup.getChildMeasureSpec(widthMeasureSpec,
-                        thisView.getPaddingLeft() + thisView.getPaddingRight() +
-                                lp.leftMargin + lp.rightMargin, lp.width);
+                        thisView.getPaddingLeft() + thisView.getPaddingRight() +  lp.leftMargin + lp.rightMargin, lp.width);
                 final int heightSpec = ViewGroup.getChildMeasureSpec(heightMeasureSpec,
-                        thisView.getPaddingTop() + thisView.getPaddingBottom() +
-                                lp.topMargin + lp.bottomMargin +
-                                ((isInEditMode && isEnableRefreshOrLoadMore(mEnableRefresh) && mRefreshHeader != null && isEnableTranslationContent(mEnableHeaderTranslationContent, mRefreshHeader)) ? mHeaderHeight : 0) +
-                                ((isInEditMode && isEnableRefreshOrLoadMore(mEnableLoadMore) && mRefreshFooter != null && isEnableTranslationContent(mEnableFooterTranslationContent, mRefreshFooter)) ? mFooterHeight : 0), lp.height);
+                        thisView.getPaddingTop() + thisView.getPaddingBottom() + lp.topMargin + lp.bottomMargin +
+                                ((needPreview && showHeader) ? mHeaderHeight : 0) +
+                                ((needPreview && showFooter) ? mFooterHeight : 0), lp.height);
                 contentView.measure(widthSpec, heightSpec);
                 minimumHeight += contentView.getMeasuredHeight();
             }
@@ -977,7 +971,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 mCurrentVelocity = (int) mVelocityTracker.getYVelocity();
                 startFlingIfNeed(null);
             case MotionEvent.ACTION_CANCEL:
-//                mRefreshContent.onActionUpOrCancel();
                 mVelocityTracker.clear();//清空速度追踪器
                 mDragDirection = 'n';//关闭拖动方向
                 if (mFalsifyEvent != null) {
@@ -1324,12 +1317,12 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             if (animationRunnable == this && !mState.isFinishing) {
                 if (Math.abs(mSpinner) >= Math.abs(mSmoothDistance)) {
                     if (mSmoothDistance != 0) {
-                        mVelocity *= Math.pow(0.45f, ++mFrame);//刷新、加载时回弹滚动数度衰减
+                        mVelocity *= Math.pow(0.45f, ++mFrame * 2);//刷新、加载时回弹滚动数度衰减
                     } else {
-                        mVelocity *= Math.pow(0.85f, ++mFrame);//回弹滚动数度衰减
+                        mVelocity *= Math.pow(0.85f, ++mFrame * 2);//回弹滚动数度衰减
                     }
                 } else {
-                    mVelocity *= Math.pow(0.95f, ++mFrame);//平滑滚动数度衰减
+                    mVelocity *= Math.pow(0.95f, ++mFrame * 2);//平滑滚动数度衰减
                 }
                 long now = AnimationUtils.currentAnimationTimeMillis();
                 float t = 1f * (now - mLastTime) / 1000;

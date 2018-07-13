@@ -32,8 +32,7 @@
         <com.scwang.smartrefresh.header.MaterialHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scaleY="-1"
-            app:mhShowBezierWave="true"/>
+            android:scaleY="-1"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>
