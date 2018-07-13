@@ -58,12 +58,12 @@ public enum DimensionStatus {
         return ordinal() < status.ordinal() || ((!notified || CodeExact == this) && ordinal() == status.ordinal());
     }
 
-    /**
-     * 是否没有达到新的状态
-     * @param status 新转台
-     * @return 大于等于 gte
-     */
-    public boolean gteStatusWith(DimensionStatus status) {
-        return ordinal() >= status.ordinal();
-    }
+//    /**
+//     * 是否没有达到新的状态
+//     * @param status 新转台
+//     * @return 大于等于 gte
+//     */
+//    public boolean gteStatusWith(DimensionStatus status) {
+//        return ordinal() >= status.ordinal();
+//    }
 }

@@ -10,11 +10,15 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshFooter;
+import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshInternal;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.impl.RefreshFooterWrapper;
+import com.scwang.smartrefresh.layout.impl.RefreshHeaderWrapper;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
@@ -164,6 +168,21 @@ public abstract class InternalAbstract extends RelativeLayout implements Refresh
     @Override
     public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
         if (mWrappedInternal != null && mWrappedInternal != this) {
+            if (this instanceof RefreshFooterWrapper && mWrappedInternal instanceof RefreshHeader) {
+                if (oldState.isFooter) {
+                    oldState = oldState.toHeader();
+                }
+                if (newState.isFooter) {
+                    newState = newState.toHeader();
+                }
+            } else if (this instanceof RefreshHeaderWrapper && mWrappedInternal instanceof RefreshFooter) {
+                if (oldState.isHeader) {
+                    oldState = oldState.toFooter();
+                }
+                if (newState.isHeader) {
+                    newState = newState.toFooter();
+                }
+            }
             mWrappedInternal.onStateChanged(refreshLayout, oldState, newState);
         }
     }
