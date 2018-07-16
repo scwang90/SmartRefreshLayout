@@ -314,7 +314,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
         ta.recycle();
 
-    }//86985902
+    }
     //</editor-fold>
 
     //<editor-fold desc="生命周期 life cycle">
@@ -339,21 +339,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 contentLevel = i > 0 ? 1 : 0;
             }
         }
-
-//        int[] indexArray = {1,0,2};
-//
-//        for (int index : indexArray) {
-//            if (index < count) {
-//                View view = super.getChildAt(index);
-//                if (!(view instanceof RefreshInternal)) {
-//                    indexContent = index;
-//                }
-//                if (isContentView(view)) {
-//                    indexContent = index;
-//                    break;
-//                }
-//            }
-//        }
 
         int indexHeader = -1;
         int indexFooter = -1;
