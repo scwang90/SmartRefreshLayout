@@ -60,6 +60,7 @@ import com.scwang.smartrefresh.layout.util.DelayedRunnable;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 import com.scwang.smartrefresh.layout.util.ViscousFluidInterpolator;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -198,22 +199,24 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     protected boolean mFooterLocked = false;//Footer 正在loading 的时候是否锁住 列表不能向上滚动
 
 
-    protected static DefaultRefreshFooterCreator sFooterCreator = new DefaultRefreshFooterCreator() {
-        @NonNull
-        @Override
-        public RefreshFooter createRefreshFooter(@NonNull Context context, @NonNull RefreshLayout layout) {
-            return new BallPulseFooter(context);
-        }
-    };
-    protected static DefaultRefreshHeaderCreator sHeaderCreator = new DefaultRefreshHeaderCreator() {
-        @NonNull
-        @Override
-        public RefreshHeader createRefreshHeader(@NonNull Context context, @NonNull RefreshLayout layout) {
-            return new BezierRadarHeader(context);
-        }
-    };
+    protected static WeakReference<DefaultRefreshFooterCreator> sFooterCreator = null;
+    //            new DefaultRefreshFooterCreator() {
+//        @NonNull
+//        @Override
+//        public RefreshFooter createRefreshFooter(@NonNull Context context, @NonNull RefreshLayout layout) {
+//            return new BallPulseFooter(context);
+//        }
+//    };
+    protected static WeakReference<DefaultRefreshHeaderCreator> sHeaderCreator = null;
+//        new DefaultRefreshHeaderCreator() {
+//        @NonNull
+//        @Override
+//        public RefreshHeader createRefreshHeader(@NonNull Context context, @NonNull RefreshLayout layout) {
+//            return new BezierRadarHeader(context);
+//        }
+//    };
 
-    protected static DefaultRefreshInitializer sRefreshInitializer;
+    protected static WeakReference<DefaultRefreshInitializer> sRefreshInitializer;
 
     //</editor-fold>
 
@@ -246,8 +249,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         mFooterHeight = density.dip2px(60);
         mHeaderHeight = density.dip2px(100);
 
-        if (sRefreshInitializer != null) {
-            sRefreshInitializer.initialize(context, this);//调用全局初始化
+        DefaultRefreshInitializer initializer = sRefreshInitializer == null ? null : sRefreshInitializer.get();
+        if (initializer != null) {
+            initializer.initialize(context, this);//调用全局初始化
         }
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.SmartRefreshLayout);
@@ -327,7 +331,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         int indexContent = -1;
         for (int i = 0; i < count; i++) {
             View view = super.getChildAt(i);
-             if (isContentView(view) && (contentLevel < 2 || i == 1)) {
+            if (isContentView(view) && (contentLevel < 2 || i == 1)) {
                 indexContent = i;
                 contentLevel = 2;
             } else if (!(view instanceof RefreshInternal) && contentLevel < 1) {
@@ -399,10 +403,20 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             }
 
             if (mRefreshHeader == null) {
-                setRefreshHeader(sHeaderCreator.createRefreshHeader(thisView.getContext(), this));
+                DefaultRefreshHeaderCreator creator = sHeaderCreator == null ? null : sHeaderCreator.get();
+                if (creator != null) {
+                    setRefreshHeader(creator.createRefreshHeader(thisView.getContext(), this));
+                } else {
+                    setRefreshHeader(new BezierRadarHeader(thisView.getContext()));
+                }
             }
             if (mRefreshFooter == null) {
-                setRefreshFooter(sFooterCreator.createRefreshFooter(thisView.getContext(), this));
+                DefaultRefreshFooterCreator creator = sFooterCreator == null ? null : sFooterCreator.get();
+                if (creator != null) {
+                    setRefreshFooter(creator.createRefreshFooter(thisView.getContext(), this));
+                } else {
+                    setRefreshFooter(new BallPulseFooter(thisView.getContext()));
+                }
             } else {
                 mEnableLoadMore = mEnableLoadMore || !mManualLoadMore;
             }
@@ -2703,7 +2717,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      * @param creator Header构建器
      */
     public static void setDefaultRefreshHeaderCreator(@NonNull DefaultRefreshHeaderCreator creator) {
-        sHeaderCreator = creator;
+        sHeaderCreator = new WeakReference<>(creator);
     }
 
     /**
@@ -2711,8 +2725,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      * @param creator Footer构建器
      */
     public static void setDefaultRefreshFooterCreator(@NonNull DefaultRefreshFooterCreator creator) {
-        sFooterCreator = creator;
-//        sManualFooterCreator = true;
+        sFooterCreator = new WeakReference<>(creator);
     }
 
     /**
@@ -2720,7 +2733,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      * @param initializer 全局初始化器
      */
     public static void setDefaultRefreshInitializer(@NonNull DefaultRefreshInitializer initializer) {
-        sRefreshInitializer = initializer;
+        sRefreshInitializer = new WeakReference<>(initializer);
     }
 
     //<editor-fold desc="丢弃的API">
