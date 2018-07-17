@@ -11,8 +11,7 @@ android {
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
-        testInstrume
-        ntationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
         renderscriptTargetApi 25
