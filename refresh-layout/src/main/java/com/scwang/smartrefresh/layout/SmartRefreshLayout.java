@@ -2359,13 +2359,13 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      */
     @Override
     public SmartRefreshLayout finishRefresh(int delayed, final boolean success) {
+        if (mState == RefreshState.Refreshing && success) {
+            setNoMoreData(false);
+        }
         postDelayed(new Runnable() {
             @Override
             public void run() {
                 if (mState == RefreshState.Refreshing && mRefreshHeader != null && mRefreshContent != null) {
-                    if (success) {
-                        setNoMoreData(false);
-                    }
                     notifyStateChanged(RefreshState.RefreshFinish);
                     int startDelay = mRefreshHeader.onFinish(SmartRefreshLayout.this, success);
                     if (mOnMultiPurposeListener != null && mRefreshHeader instanceof RefreshHeader) {
