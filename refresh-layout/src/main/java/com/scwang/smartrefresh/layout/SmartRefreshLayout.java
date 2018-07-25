@@ -288,8 +288,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         if (mEnablePureScrollMode && !ta.hasValue(R.styleable.SmartRefreshLayout_srlEnableOverScrollDrag)) {
             mEnableOverScrollDrag = true;
         }
-
-        mManualLoadMore = ta.hasValue(R.styleable.SmartRefreshLayout_srlEnableLoadMore);
+        if (ta.hasValue(R.styleable.SmartRefreshLayout_srlEnableLoadMore)) {
+          mManualLoadMore = ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnableLoadMore, mManualLoadMore);
+        }
         mManualHeaderTranslationContent = ta.hasValue(R.styleable.SmartRefreshLayout_srlEnableHeaderTranslationContent);
         mManualFooterTranslationContent = ta.hasValue(R.styleable.SmartRefreshLayout_srlEnableFooterTranslationContent);
         mManualNestedScrolling = mManualNestedScrolling || ta.hasValue(R.styleable.SmartRefreshLayout_srlEnableNestedScrolling);
