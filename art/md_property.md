@@ -66,6 +66,7 @@ public class RefreshActivity extends Activity {
         refreshLayout.finishRefresh(false);//结束刷新（刷新失败）
         refreshLayout.finishLoadMore(false);//结束加载（加载失败）
         refreshLayout.finishLoadMoreWithNoMoreData();//完成加载并标记没有更多数据 1.0.4
+        refreshLayout.closeHeaderOrFooter();//关闭正在打开状态的 Header 或者 Footer（1.1.0）
         refreshLayout.resetNoMoreData();//恢复没有更多数据的原始状态 1.0.4（1.1.0删除）
         refreshLayout.setNoMoreData(false);//恢复没有更多数据的原始状态 1.0.5
 
@@ -400,6 +401,7 @@ xml代码设置
 |finishRefresh|(boolean success)|完成刷新，并设置是否成功|
 |finishLoadMore|(boolean success)|完成加载，并设置是否成功|
 |finishLoadMoreWithNoMoreData||完成加载并标记没有更多数据(V1.0.4)|
+|closeHeaderOrFooter||关闭 Header 或者 Footer（1.1.0）|
 |resetNoMoreData||V1.0.4（V1.1.0删除，用 setNoMoreData(false) 代替）|
 |setNoMoreData|boolean|设置更多数据状态V1.0.5|
 |getRefreshHeader|RefreshHeader|获取Header|

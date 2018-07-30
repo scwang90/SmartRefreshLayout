@@ -408,6 +408,12 @@ public interface RefreshLayout {
     RefreshLayout finishLoadMoreWithNoMoreData();
 
     /**
+     * 关闭 Header 或者 Footer
+     * @return RefreshLayout
+     */
+    RefreshLayout closeHeaderOrFooter();
+
+    /**
      * 恢复没有更多数据的原始状态
      * @param noMoreData 是否有更多数据
      * @return RefreshLayout
@@ -462,37 +468,28 @@ public interface RefreshLayout {
      */
     boolean autoRefresh(int delayed, int duration, float dragRate);
 
-//    /**
-//     * 自动加载
-//     * @return 是否成功（状态不符合会失败）
-//     */
-//    boolean autoLoadMore();
-//
-//    /**
-//     * 自动加载
-//     * @param delayed 开始延时
-//     * @return RefreshLayout
-//     */
-//    boolean autoLoadMore(int delayed);
-//
-//    /**
-//     * 自动加载
-//     * @param delayed 开始延时
-//     * @param duration 拖拽动画持续时间
-//     * @param dragRate 拉拽的高度比率（要求 ≥ 1 ）
-//     * @return 是否成功（状态不符合会失败）
-//     */
-//    boolean autoLoadMore(int delayed, int duration, float dragRate);
+    /**
+     * 自动加载
+     * @return 是否成功（状态不符合会失败）
+     */
+    boolean autoLoadMore();
 
-//    /**
-//     * 是否启用下拉刷新
-//     */
-//    boolean isEnableRefresh();
-//
-//    /**
-//     * 是否启用加载更多
-//     */
-//    boolean isEnableLoadMore();
+    /**
+     * 自动加载
+     * @param delayed 开始延时
+     * @return RefreshLayout
+     */
+    boolean autoLoadMore(int delayed);
+
+    /**
+     * 自动加载
+     * @param delayed 开始延时
+     * @param duration 拖拽动画持续时间
+     * @param dragRate 拉拽的高度比率（要求 ≥ 1 ）
+     * @return 是否成功（状态不符合会失败）
+     */
+    boolean autoLoadMore(int delayed, int duration, float dragRate);
+
 
 //    /**
 //     * 是否正在刷新
