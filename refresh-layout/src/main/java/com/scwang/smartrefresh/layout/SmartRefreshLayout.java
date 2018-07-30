@@ -198,22 +198,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     protected boolean mFooterLocked = false;//Footer 正在loading 的时候是否锁住 列表不能向上滚动
 
 
-    protected static DefaultRefreshFooterCreator sFooterCreator = new DefaultRefreshFooterCreator() {
-        @NonNull
-        @Override
-        public RefreshFooter createRefreshFooter(@NonNull Context context, @NonNull RefreshLayout layout) {
-            return new BallPulseFooter(context);
-        }
-    };
-    protected static DefaultRefreshHeaderCreator sHeaderCreator = new DefaultRefreshHeaderCreator() {
-        @NonNull
-        @Override
-        public RefreshHeader createRefreshHeader(@NonNull Context context, @NonNull RefreshLayout layout) {
-            return new BezierRadarHeader(context);
-        }
-    };
-
-    protected static DefaultRefreshInitializer sRefreshInitializer;
+    protected static DefaultRefreshFooterCreator sFooterCreator = null;
+    protected static DefaultRefreshHeaderCreator sHeaderCreator = null;
+    protected static DefaultRefreshInitializer sRefreshInitializer = null;
 
     //</editor-fold>
 
@@ -289,9 +276,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             mEnableOverScrollDrag = true;
         }
 
-        mManualLoadMore = ta.hasValue(R.styleable.SmartRefreshLayout_srlEnableLoadMore);
-        mManualHeaderTranslationContent = ta.hasValue(R.styleable.SmartRefreshLayout_srlEnableHeaderTranslationContent);
-        mManualFooterTranslationContent = ta.hasValue(R.styleable.SmartRefreshLayout_srlEnableFooterTranslationContent);
+        mManualLoadMore = mManualLoadMore || ta.hasValue(R.styleable.SmartRefreshLayout_srlEnableLoadMore);
+        mManualHeaderTranslationContent = mManualHeaderTranslationContent || ta.hasValue(R.styleable.SmartRefreshLayout_srlEnableHeaderTranslationContent);
+        mManualFooterTranslationContent = mManualFooterTranslationContent || ta.hasValue(R.styleable.SmartRefreshLayout_srlEnableFooterTranslationContent);
         mManualNestedScrolling = mManualNestedScrolling || ta.hasValue(R.styleable.SmartRefreshLayout_srlEnableNestedScrolling);
         mHeaderHeightStatus = ta.hasValue(R.styleable.SmartRefreshLayout_srlHeaderHeight) ? DimensionStatus.XmlLayoutUnNotify : mHeaderHeightStatus;
         mFooterHeightStatus = ta.hasValue(R.styleable.SmartRefreshLayout_srlFooterHeight) ? DimensionStatus.XmlLayoutUnNotify : mFooterHeightStatus;
@@ -310,7 +297,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
         ta.recycle();
 
-    }//86985902
+    }
     //</editor-fold>
 
     //<editor-fold desc="生命周期 life cycle">
@@ -335,21 +322,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 contentLevel = i > 0 ? 1 : 0;
             }
         }
-
-//        int[] indexArray = {1,0,2};
-//
-//        for (int index : indexArray) {
-//            if (index < count) {
-//                View view = super.getChildAt(index);
-//                if (!(view instanceof RefreshInternal)) {
-//                    indexContent = index;
-//                }
-//                if (isContentView(view)) {
-//                    indexContent = index;
-//                    break;
-//                }
-//            }
-//        }
 
         int indexHeader = -1;
         int indexFooter = -1;
@@ -399,10 +371,20 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             }
 
             if (mRefreshHeader == null) {
-                setRefreshHeader(sHeaderCreator.createRefreshHeader(thisView.getContext(), this));
+                if (sHeaderCreator != null) {
+                    setRefreshHeader(sHeaderCreator.createRefreshHeader(thisView.getContext(), this));
+                } else {
+                    setRefreshHeader(new BezierRadarHeader(thisView.getContext()));
+                }
             }
             if (mRefreshFooter == null) {
-                setRefreshFooter(sFooterCreator.createRefreshFooter(thisView.getContext(), this));
+                if (sFooterCreator != null) {
+                    setRefreshFooter(sFooterCreator.createRefreshFooter(thisView.getContext(), this));
+                } else {
+                    boolean old = mEnableLoadMore;
+                    setRefreshFooter(new BallPulseFooter(thisView.getContext()));
+                    mEnableLoadMore = old;
+                }
             } else {
                 mEnableLoadMore = mEnableLoadMore || !mManualLoadMore;
             }
@@ -2360,13 +2342,13 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      */
     @Override
     public SmartRefreshLayout finishRefresh(int delayed, final boolean success) {
+        if (mState == RefreshState.Refreshing && success) {
+            setNoMoreData(false);
+        }
         postDelayed(new Runnable() {
             @Override
             public void run() {
                 if (mState == RefreshState.Refreshing && mRefreshHeader != null && mRefreshContent != null) {
-                    if (success) {
-                        setNoMoreData(false);
-                    }
                     notifyStateChanged(RefreshState.RefreshFinish);
                     int startDelay = mRefreshHeader.onFinish(SmartRefreshLayout.this, success);
                     if (mOnMultiPurposeListener != null && mRefreshHeader instanceof RefreshHeader) {
@@ -2542,12 +2524,28 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     }
 
     /**
+     * 关闭 Header 或者 Footer
+     * @return RefreshLayout
+     */
+    @Override
+    public RefreshLayout closeHeaderOrFooter() {
+        if (mState == RefreshState.Refreshing) {
+            finishRefresh();
+        } else if (mState == RefreshState.Loading) {
+            finishLoadMore();
+        } else if (mSpinner != 0) {
+            animSpinner(0, 0, mReboundInterpolator, mReboundDuration);
+        }
+        return this;
+    }
+
+    /**
      * 自动刷新
      * @return 是否成功
      */
     @Override
     public boolean autoRefresh() {
-        return autoRefresh(mHandler == null ? 400 : 0, mReboundDuration, 1f * ((mHeaderMaxDragRate/2 + 0.5f) * mHeaderHeight) / (mHeaderHeight == 0 ? 1 : mHeaderHeight));
+        return autoRefresh(mHandler == null ? 400 : 0);
     }
 
     /**
@@ -2616,87 +2614,87 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         }
     }
 
-//    /**
-//     * 自动加载
-//     * @return 是否成功
-//     */
-//    @Override
-//    public boolean autoLoadMore() {
-//        return autoLoadMore(0, mReboundDuration, 1f * (mFooterHeight * (mFooterMaxDragRate / 2 + 0.5f)) / (mFooterHeight == 0 ? 1 : mFooterHeight));
-//    }
-//
-//    /**
-//     * 自动加载
-//     * @param delayed 开始延时
-//     * @return 是否成功
-//     */
-//    @Override
-//    public boolean autoLoadMore(int delayed) {
-//        return autoLoadMore(delayed, mReboundDuration, 1f * (mFooterHeight * (mFooterMaxDragRate / 2 + 0.5f)) / (mFooterHeight == 0 ? 1 : mFooterHeight));
-//    }
-//
-//    /**
-//     * 自动加载
-//     * @param delayed 开始延时
-//     * @param duration 拖拽动画持续时间
-//     * @param dragRate 拉拽的高度比率（要求 ≥ 1 ）
-//     * @return 是否成功
-//     */
-//    @Override
-//    public boolean autoLoadMore(int delayed, final int duration, final float dragRate) {
-//        if (mState == RefreshState.None && (isEnableRefreshOrLoadMore(mEnableLoadMore) && !mFooterNoMoreData)) {
-//            if (reboundAnimator != null) {
-//                reboundAnimator.cancel();
-//            }
-//            Runnable runnable = new Runnable() {
-//                @Override
-//                public void run() {
-//                    reboundAnimator = ValueAnimator.ofInt(mSpinner, -(int) (mFooterHeight * dragRate));
-//                    reboundAnimator.setDuration(duration);
-//                    reboundAnimator.setInterpolator(new DecelerateInterpolator());
-//                    reboundAnimator.addUpdateListener(new AnimatorUpdateListener() {
-//                        @Override
-//                        public void onAnimationUpdate(ValueAnimator animation) {
-//                            mKernel.moveSpinner((int) animation.getAnimatedValue(), true);
-//                        }
-//                    });
-//                    reboundAnimator.addListener(new AnimatorListenerAdapter() {
-//                        @Override
-//                        public void onAnimationStart(Animator animation) {
-//                            final View thisView = SmartRefreshLayout.this;
-//                            mLastTouchX = thisView.getMeasuredWidth() / 2;
-//                            mKernel.setState(RefreshState.PullUpToLoad);
-//                        }
-//
-//                        @Override
-//                        public void onAnimationEnd(Animator animation) {
-//                            reboundAnimator = null;
-//                            if (mState != RefreshState.ReleaseToLoad) {
-//                                mKernel.setState(RefreshState.ReleaseToLoad);
-//                            }
-//                            if (mEnableAutoLoadMore) {
-//                                mEnableAutoLoadMore = false;
-//                                overSpinner();
-//                                mEnableAutoLoadMore = true;
-//                            } else {
-//                                overSpinner();
-//                            }
-//                        }
-//                    });
-//                    reboundAnimator.start();
-//                }
-//            };
-//            if (delayed > 0) {
-//                reboundAnimator = new ValueAnimator();
-//                postDelayed(runnable, delayed);
-//            } else {
-//                runnable.run();
-//            }
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
+    /**
+     * 自动加载
+     * @return 是否成功
+     */
+    @Override
+    public boolean autoLoadMore() {
+        return autoLoadMore(0);
+    }
+
+    /**
+     * 自动加载
+     * @param delayed 开始延时
+     * @return 是否成功
+     */
+    @Override
+    public boolean autoLoadMore(int delayed) {
+        return autoLoadMore(delayed, mReboundDuration, 1f * (mFooterHeight * (mFooterMaxDragRate / 2 + 0.5f)) / (mFooterHeight == 0 ? 1 : mFooterHeight));
+    }
+
+    /**
+     * 自动加载
+     * @param delayed 开始延时
+     * @param duration 拖拽动画持续时间
+     * @param dragRate 拉拽的高度比率（要求 ≥ 1 ）
+     * @return 是否成功
+     */
+    @Override
+    public boolean autoLoadMore(int delayed, final int duration, final float dragRate) {
+        if (mState == RefreshState.None && (isEnableRefreshOrLoadMore(mEnableLoadMore) && !mFooterNoMoreData)) {
+            if (reboundAnimator != null) {
+                reboundAnimator.cancel();
+            }
+            Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                    reboundAnimator = ValueAnimator.ofInt(mSpinner, -(int) (mFooterHeight * dragRate));
+                    reboundAnimator.setDuration(duration);
+                    reboundAnimator.setInterpolator(new DecelerateInterpolator());
+                    reboundAnimator.addUpdateListener(new AnimatorUpdateListener() {
+                        @Override
+                        public void onAnimationUpdate(ValueAnimator animation) {
+                            mKernel.moveSpinner((int) animation.getAnimatedValue(), true);
+                        }
+                    });
+                    reboundAnimator.addListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationStart(Animator animation) {
+                            final View thisView = SmartRefreshLayout.this;
+                            mLastTouchX = thisView.getMeasuredWidth() / 2;
+                            mKernel.setState(RefreshState.PullUpToLoad);
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            reboundAnimator = null;
+                            if (mState != RefreshState.ReleaseToLoad) {
+                                mKernel.setState(RefreshState.ReleaseToLoad);
+                            }
+                            if (mEnableAutoLoadMore) {
+                                mEnableAutoLoadMore = false;
+                                overSpinner();
+                                mEnableAutoLoadMore = true;
+                            } else {
+                                overSpinner();
+                            }
+                        }
+                    });
+                    reboundAnimator.start();
+                }
+            };
+            if (delayed > 0) {
+                reboundAnimator = new ValueAnimator();
+                postDelayed(runnable, delayed);
+            } else {
+                runnable.run();
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     /**
      * 设置默认 Header 构建器
@@ -2712,7 +2710,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      */
     public static void setDefaultRefreshFooterCreator(@NonNull DefaultRefreshFooterCreator creator) {
         sFooterCreator = creator;
-//        sManualFooterCreator = true;
     }
 
     /**
