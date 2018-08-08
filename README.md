@@ -221,6 +221,12 @@ refreshLayout.setRefreshHeader(new BezierRadarHeader(this).setEnableHorizontalDr
 refreshLayout.setRefreshFooter(new BallPulseFooter(this).setSpinnerStyle(SpinnerStyle.Scale));
 ```
 
+#### 4.更多使用说明
+
+ - [属性文档](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_property.md)
+ - [常见问题](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_faq.md)
+ - [自定义Header](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_custom.md)
+
 ## 混淆
 
 SmartRefreshLayout 没有使用到：序列化、反序列化、JNI、反射，所以并不需要添加混淆过滤代码，并且已经混淆测试通过，如果你在项目的使用中混淆之后出现问题，请及时通知我。
