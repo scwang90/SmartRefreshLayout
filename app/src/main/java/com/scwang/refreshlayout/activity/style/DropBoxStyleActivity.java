@@ -31,6 +31,20 @@ public class DropBoxStyleActivity extends AppCompatActivity implements AdapterVi
         红色主题(R.string.item_style_theme_red_abstract),
         绿色主题(R.string.item_style_theme_green_abstract),
         蓝色主题(R.string.item_style_theme_blue_abstract),
+
+
+        默认1主题(R.string.item_style_theme_default_abstract),
+        橙色1主题(R.string.item_style_theme_orange_abstract),
+        红色1主题(R.string.item_style_theme_red_abstract),
+        绿色1主题(R.string.item_style_theme_green_abstract),
+        蓝色1主题(R.string.item_style_theme_blue_abstract),
+
+
+        默认2主题(R.string.item_style_theme_default_abstract),
+        橙色2主题(R.string.item_style_theme_orange_abstract),
+        红色2主题(R.string.item_style_theme_red_abstract),
+        绿色2主题(R.string.item_style_theme_green_abstract),
+        蓝色2主题(R.string.item_style_theme_blue_abstract),
         ;
         public int nameId;
         Item(@StringRes int nameId) {
