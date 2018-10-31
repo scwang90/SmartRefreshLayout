@@ -20,7 +20,7 @@ public class FeedListPracticeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_practice_feedlist);
 
-        final Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -28,7 +28,7 @@ public class FeedListPracticeActivity extends AppCompatActivity {
             }
         });
 
-        final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
+        final RefreshLayout refreshLayout = findViewById(R.id.refreshLayout);
         if (isFirstEnter) {
             isFirstEnter = false;
             refreshLayout.autoRefresh();

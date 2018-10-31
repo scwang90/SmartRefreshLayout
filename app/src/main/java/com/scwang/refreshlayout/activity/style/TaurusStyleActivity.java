@@ -58,7 +58,7 @@ public class TaurusStyleActivity extends AppCompatActivity implements AdapterVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_style_taurus);
 
-        mToolbar = (Toolbar)findViewById(R.id.toolbar);
+        mToolbar = findViewById(R.id.toolbar);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,14 +66,14 @@ public class TaurusStyleActivity extends AppCompatActivity implements AdapterVie
             }
         });
 
-        mRefreshLayout = (RefreshLayout)findViewById(R.id.refreshLayout);
+        mRefreshLayout = findViewById(R.id.refreshLayout);
         if (isFirstEnter) {
             isFirstEnter = false;
             mRefreshLayout.autoRefresh();//第一次进入触发自动刷新，演示效果
         }
 
-        mAppBarLayout = (AppBarLayout) findViewById(R.id.appbar);
-        mToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbarLayout);
+        mAppBarLayout = findViewById(R.id.appbar);
+        mToolbarLayout = findViewById(R.id.toolbarLayout);
 
         View view = findViewById(R.id.recyclerView);
         if (view instanceof RecyclerView) {
@@ -98,7 +98,7 @@ public class TaurusStyleActivity extends AppCompatActivity implements AdapterVie
         /*
          * 监听 AppBarLayout 的关闭和开启 给 ActionButton 设置关闭隐藏动画
          */
-        mActionButton = (FloatingActionButton) findViewById(R.id.fab);
+        mActionButton = findViewById(R.id.fab);
         mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean misAppbarExpand = true;
             View fab = findViewById(R.id.fab);

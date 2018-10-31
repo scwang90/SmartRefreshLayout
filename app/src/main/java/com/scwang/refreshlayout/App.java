@@ -29,7 +29,6 @@ public class App extends Application {
             @Override
             public void initialize(@NonNull Context context, @NonNull RefreshLayout layout) {
                 //全局设置（优先级最低）
-                layout.setEnableLoadMore(false);
                 layout.setEnableAutoLoadMore(true);
                 layout.setEnableOverScrollDrag(false);
                 layout.setEnableOverScrollBounce(true);

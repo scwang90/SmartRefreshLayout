@@ -145,7 +145,7 @@
     ]]></string>
     <string name="description_define_in_code">\n
         Usage： \n
-        final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);\n
+        final RefreshLayout refreshLayout = findViewById(R.id.refreshLayout);\n
         refreshLayout.setRefreshHeader(new MaterialHeader(this));\n
         refreshLayout.setRefreshFooter(new BallPulseFooter(this));\n\n
     </string>

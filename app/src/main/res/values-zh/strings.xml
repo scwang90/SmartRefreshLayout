@@ -154,7 +154,7 @@
         1.设置一次生效一次，需要多处设置，建议特别的页面使用\n
         2.优先级最高，即使使用了会覆盖方法一和方法二的设置\n\n
         使用方法： \n
-        final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);\n
+        final RefreshLayout refreshLayout = findViewById(R.id.refreshLayout);\n
         //设置 Header 为 Material风格\n
         refreshLayout.setRefreshHeader(new MaterialHeader(this));\n
         //设置 Footer 为 三球动画\n

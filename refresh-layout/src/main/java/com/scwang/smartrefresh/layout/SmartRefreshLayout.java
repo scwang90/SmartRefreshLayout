@@ -1087,12 +1087,12 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 //                    mRefreshFooter.onReleased(this, mFooterHeight, (int) (mFooterMaxDragRate * mFooterHeight));
 //                }
 //            }
-            mFooterLocked = true;
+            mFooterLocked = true;//Footer 正在loading 的时候是否锁住 列表不能向上滚动
             notifyStateChanged(RefreshState.Loading);
             if (mLoadMoreListener != null) {
                 mLoadMoreListener.onLoadMore(this);
             } else if (mOnMultiPurposeListener == null) {
-                finishLoadMore(2000);
+                finishLoadMore(2000);//如果没有任何加载监听器，两秒之后自动关闭
             }
             if (mRefreshFooter != null) {
                 mRefreshFooter.onStartAnimator(this, mFooterHeight, (int) (mFooterMaxDragRate * mFooterHeight));

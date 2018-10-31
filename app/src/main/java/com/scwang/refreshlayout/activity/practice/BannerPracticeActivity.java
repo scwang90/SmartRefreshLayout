@@ -43,7 +43,7 @@ public class BannerPracticeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_practice_banner);
 
-        final Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,8 +51,8 @@ public class BannerPracticeActivity extends AppCompatActivity {
             }
         });
 
-        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
+        final RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        final RefreshLayout refreshLayout = findViewById(R.id.refreshLayout);
 
         mAdapter = new QuickAdapter();
         recyclerView.addItemDecoration(new DividerItemDecoration(this, VERTICAL));

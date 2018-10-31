@@ -49,7 +49,7 @@ public class ListenerExampleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_example_listener);
 
-        final Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,10 +57,10 @@ public class ListenerExampleActivity extends AppCompatActivity {
             }
         });
 
-        mTvContent = (TextView) findViewById(R.id.content);
+        mTvContent = findViewById(R.id.content);
         mTvContent.setMovementMethod(ScrollingMovementMethod.getInstance());
 
-        final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
+        final RefreshLayout refreshLayout = findViewById(R.id.refreshLayout);
         refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
 
             @Override

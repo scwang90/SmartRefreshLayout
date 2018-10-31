@@ -35,7 +35,7 @@ public class AssignDefaultExampleActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_example_assign_default);
 
-        final Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,7 +47,7 @@ public class AssignDefaultExampleActivity extends AppCompatActivity {
          * 以下代码仅仅为了演示效果而已，不是必须的
          * 关键代码在构造函数中
          */
-        final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
+        final RefreshLayout refreshLayout = findViewById(R.id.refreshLayout);
         if (isFirstEnter) {
             isFirstEnter = false;
 //            //触发上拉加载

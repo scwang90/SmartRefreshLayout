@@ -38,7 +38,7 @@ public class BasicExampleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_example_basic);
 
-        final Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,7 +46,7 @@ public class BasicExampleActivity extends AppCompatActivity {
             }
         });
 
-        AbsListView listView = (AbsListView) findViewById(R.id.listView);
+        AbsListView listView = findViewById(R.id.listView);
         listView.setAdapter(mAdapter = new BaseRecyclerAdapter<Void>(simple_list_item_2) {
             @Override
             protected void onBindViewHolder(SmartViewHolder holder, Void model, int position) {
@@ -56,7 +56,7 @@ public class BasicExampleActivity extends AppCompatActivity {
             }
         });
 
-        final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
+        final RefreshLayout refreshLayout = findViewById(R.id.refreshLayout);
         refreshLayout.setEnableAutoLoadMore(true);//开启自动加载功能（非必须）
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -97,7 +97,7 @@ public class BasicExampleActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 BottomSheetDialog dialog=new BottomSheetDialog(BasicExampleActivity.this);
                 View dialogView = View.inflate(getBaseContext(), R.layout.activity_example_basic, null);
-                RefreshLayout refreshLayout = (RefreshLayout) dialogView.findViewById(R.id.refreshLayout);
+                RefreshLayout refreshLayout = dialogView.findViewById(R.id.refreshLayout);
                 RecyclerView recyclerView = new RecyclerView(getBaseContext());
                 recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext()));
                 recyclerView.setAdapter(mAdapter);

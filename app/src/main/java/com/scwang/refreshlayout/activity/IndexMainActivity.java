@@ -68,10 +68,10 @@ public class IndexMainActivity extends AppCompatActivity implements OnNavigation
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_index_main);
 
-        final BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        final BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this);
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.content);
+        ViewPager viewPager = findViewById(R.id.content);
         viewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @Override
             public int getCount() {
@@ -101,7 +101,7 @@ public class IndexMainActivity extends AppCompatActivity implements OnNavigation
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        ((ViewPager) findViewById(R.id.content)).setCurrentItem(TabFragment.from(item.getItemId()).ordinal());
+        ((ViewPager)findViewById(R.id.content)).setCurrentItem(TabFragment.from(item.getItemId()).ordinal());
 //        getSupportFragmentManager()
 //                .beginTransaction()
 //                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
