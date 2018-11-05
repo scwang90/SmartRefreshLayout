@@ -70,7 +70,7 @@ public class EmptyLayoutExampleFragment extends Fragment implements AdapterView.
     public void onViewCreated(@NonNull View root, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(root, savedInstanceState);
 
-        final Toolbar toolbar = (Toolbar)root.findViewById(R.id.toolbar);
+        final Toolbar toolbar = root.findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,16 +78,16 @@ public class EmptyLayoutExampleFragment extends Fragment implements AdapterView.
             }
         });
 
-        mRefreshLayout = (RefreshLayout) root.findViewById(refreshLayout);
+        mRefreshLayout = root.findViewById(refreshLayout);
         mRefreshLayout.setRefreshHeader(new ClassicsHeader(getContext()).setSpinnerStyle(SpinnerStyle.FixedBehind).setPrimaryColorId(R.color.colorPrimary).setAccentColorId(android.R.color.white));
         mRefreshLayout.setOnRefreshListener(this);
 
-        mRecyclerView = (RecyclerView) root.findViewById(recyclerView);
+        mRecyclerView = root.findViewById(recyclerView);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), VERTICAL));
 
-        mLoadingLayout = (LoadingLayout) root.findViewById(R.id.loading);
+        mLoadingLayout = root.findViewById(R.id.loading);
         mLoadingLayout.showEmpty();
 
         /*主动演示刷新*/

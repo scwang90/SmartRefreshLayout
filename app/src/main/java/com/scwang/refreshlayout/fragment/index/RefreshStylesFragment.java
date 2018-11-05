@@ -99,6 +99,7 @@ public class RefreshStylesFragment extends Fragment implements AdapterView.OnIte
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), VERTICAL));
             recyclerView.setAdapter(new BaseRecyclerAdapter<Item>(Arrays.asList(Item.values()), simple_list_item_2,this) {
+                @NonNull
                 @Override
                 public SmartViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
                     SmartViewHolder holder = super.onCreateViewHolder(parent, viewType);
@@ -129,7 +130,7 @@ public class RefreshStylesFragment extends Fragment implements AdapterView.OnIte
         }
 
 
-        RefreshLayout refreshLayout = (RefreshLayout) root.findViewById(R.id.refreshLayout);
+        RefreshLayout refreshLayout = root.findViewById(R.id.refreshLayout);
         if (refreshLayout != null) {
             refreshLayout.setOnRefreshListener(new OnRefreshListener() {
                 @Override

@@ -45,7 +45,7 @@ public class PureScrollExampleFragmentHeader extends Fragment implements Adapter
     public void onViewCreated(@NonNull View root, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(root, savedInstanceState);
 
-        final Toolbar toolbar = (Toolbar)root.findViewById(R.id.toolbar);
+        final Toolbar toolbar = root.findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,7 +53,7 @@ public class PureScrollExampleFragmentHeader extends Fragment implements Adapter
             }
         });
 
-        RefreshLayout refreshLayout = (RefreshLayout) root.findViewById(R.id.refreshLayout);
+        RefreshLayout refreshLayout = root.findViewById(R.id.refreshLayout);
         refreshLayout.setRefreshHeader(new FalsifyHeader(getContext()));//也可以在 XML 中添加 FalsifyHeader
 
         View view = root.findViewById(R.id.recyclerView);

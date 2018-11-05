@@ -67,7 +67,7 @@ public class ViewPagerExampleFragment extends Fragment implements OnRefreshListe
     public void onViewCreated(@NonNull View root, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(root, savedInstanceState);
 
-        final Toolbar toolbar = (Toolbar)root.findViewById(R.id.toolbar);
+        final Toolbar toolbar = root.findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,13 +75,13 @@ public class ViewPagerExampleFragment extends Fragment implements OnRefreshListe
             }
         });
 
-        mRefreshLayout = (RefreshLayout) root.findViewById(refreshLayout);
+        mRefreshLayout = root.findViewById(refreshLayout);
         mRefreshLayout.setOnRefreshLoadMoreListener(this);
         mRefreshLayout.setRefreshHeader(new ClassicsHeader(getContext()));
         mRefreshLayout.setRefreshFooter(new ClassicsFooter(getContext()));
 
-        mViewPager = (ViewPager) root.findViewById(R.id.viewPager);
-        mTabLayout = (TabLayout) root.findViewById(R.id.tableLayout);
+        mViewPager = root.findViewById(R.id.viewPager);
+        mTabLayout = root.findViewById(R.id.tableLayout);
 
         mViewPager.setAdapter(mAdapter = new SmartPagerAdapter(Item.values()));
         mTabLayout.setupWithViewPager(mViewPager, true);

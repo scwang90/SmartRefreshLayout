@@ -45,7 +45,7 @@ public class PureScrollExampleFragmentFooter extends Fragment implements Adapter
     public void onViewCreated(@NonNull View root, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(root, savedInstanceState);
 
-        Toolbar toolbar = (Toolbar) root.findViewById(R.id.toolbar);
+        Toolbar toolbar = root.findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,7 +54,7 @@ public class PureScrollExampleFragmentFooter extends Fragment implements Adapter
         });
         toolbar.setTitle("Footer单独使用");
 
-        RefreshLayout refreshLayout = (RefreshLayout) root.findViewById(R.id.refreshLayout);
+        RefreshLayout refreshLayout = root.findViewById(R.id.refreshLayout);
         refreshLayout.setEnablePureScrollMode(false);
         refreshLayout.setRefreshFooter(new FalsifyFooter(getContext()));
 

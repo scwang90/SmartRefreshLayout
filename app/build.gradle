@@ -75,10 +75,9 @@ dependencies {
 //    }
 
     implementation 'com.android.support:design:27.1.1'
-    //noinspection GradleDependency
     implementation 'com.android.support:cardview-v7:27.1.1'
-
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'com.google.android:flexbox:1.1.0'
 
     implementation 'com.flyco.roundview:FlycoRoundView_Lib:1.1.4@aar'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34'

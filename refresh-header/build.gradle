@@ -28,7 +28,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -36,9 +36,7 @@ dependencies {
     //noinspection GradleDependency
     api 'com.android.support:support-annotations:25.1.0'
     //noinspection GradleDependency,GradleCompatible
-    api ('com.android.support:support-v4:22.1.0') {
-        exclude group: 'com.android.support'
-    }
+    api 'com.android.support:support-v4:22.1.0'
     api project(':refresh-layout')
 }
 

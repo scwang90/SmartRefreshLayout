@@ -189,6 +189,12 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
 //            // stop to draw a wave and drop a circle
 //            onDropPhase();
             }
+        } else if (mLastFirstBounds != 0 && mState == RefreshState.None) {
+            mProgress.showArrow(false);
+            mProgress.setProgressRotation(0);
+            mProgress.setStartEndTrim(0f, 0f);
+            mWaveView.startWaveAnimation(mLastFirstBounds);
+            mLastFirstBounds = 0;
         }
     }
 

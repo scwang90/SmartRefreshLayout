@@ -1620,6 +1620,10 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             moveSpinnerInfinitely(mTotalUnconsumed -= dy);
         }
 
+        if (mFooterLocked && dyConsumed < 0) {
+            mFooterLocked = false;//内容向下滚动时 解锁Footer 的锁定
+        }
+
     }
 
     @Override
