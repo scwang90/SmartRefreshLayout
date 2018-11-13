@@ -104,8 +104,8 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
 #### 1.在 build.gradle 中添加依赖
 ```
 //1.1.0 API改动过大，老用户升级需谨慎
-compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
-compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-14'//没有使用特殊Header，可以不加这行
+compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-15'
+compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-15'//没有使用特殊Header，可以不加这行
 compile 'com.android.support:appcompat-v7:25.3.1'//版本 23以上（必须）
 
 //1.0.5 当1.1.0出现问题可以回退到1.0.5.1
@@ -266,7 +266,7 @@ SmartRefreshLayout 没有使用到：序列化、反序列化、JNI、反射，�
 我也有自己的工作和娱乐时间，只有大家理解和支持我，我才能专心的为大家解决问题。不过用担心，我已经建立了另一个可以免费
 进入的QQ讨论群。
 
-### QQ讨论群 - 477963933 （新）  538979188 （满）
+### QQ讨论群 - 914275312 （新） 477963933 （满）  538979188 （满）
 #### 进群须知
 这个群，免费进入，大家可以相互讨论本库的相关使用和出现的问题，群主也会在里面解决问题，如果提出的问题，群成员不能帮助
 解决，需要群主解决，但是要花费群主五分钟以上的时间（本库Bug除外），群主将不会解决这个问题，如果项目紧急，请付费进入解

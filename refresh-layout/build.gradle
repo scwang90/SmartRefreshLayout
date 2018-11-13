@@ -50,7 +50,9 @@ publish {
     groupId = 'com.scwang.smartrefresh'
     artifactId = 'SmartRefreshLayout'
 //    version = '1.1.0-alpha-14'
-    publishVersion = '1.1.0-alpha-14'
+    publishVersion = '1.1.0-alpha-15'
     desc = 'An intelligent refresh layout'
     website = "https://github.com/scwang90/${rootProject.name}"
+    archivesPath = '../build/outputs' //指定将要上传的压缩包路径，如果不写则默认上传系统生成的jar和aar
+//    archivesName = 'bintray-release'  //指定将要上传的压缩包所含的关键字，如果不写，默认过滤artifactId
 }
