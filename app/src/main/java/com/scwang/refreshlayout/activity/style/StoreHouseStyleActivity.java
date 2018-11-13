@@ -55,7 +55,7 @@ public class StoreHouseStyleActivity extends AppCompatActivity implements Adapte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_style_storehouse);
 
-        mToolbar = (Toolbar)findViewById(R.id.toolbar);
+        mToolbar = findViewById(R.id.toolbar);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,7 +63,7 @@ public class StoreHouseStyleActivity extends AppCompatActivity implements Adapte
             }
         });
 
-        mRefreshLayout = (RefreshLayout)findViewById(R.id.refreshLayout);
+        mRefreshLayout = findViewById(R.id.refreshLayout);
         if (isFirstEnter) {
             isFirstEnter = false;
             mRefreshLayout.autoRefresh();//第一次进入触发自动刷新，演示效果

@@ -29,7 +29,7 @@ public class WeiboPracticeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_practice_weibo);
 
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,8 +43,8 @@ public class WeiboPracticeActivity extends AppCompatActivity {
 
         final View parallax = findViewById(R.id.parallax);
         final View buttonBar = findViewById(R.id.buttonBarLayout);
-        final NestedScrollView scrollView = (NestedScrollView)findViewById(R.id.scrollView);
-        final RefreshLayout refreshLayout = (RefreshLayout)findViewById(R.id.refreshLayout);
+        final NestedScrollView scrollView = findViewById(R.id.scrollView);
+        final RefreshLayout refreshLayout = findViewById(R.id.refreshLayout);
 
         findViewById(R.id.attention).setOnClickListener(new View.OnClickListener() {
             @Override

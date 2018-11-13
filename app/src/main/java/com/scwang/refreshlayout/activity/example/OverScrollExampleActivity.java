@@ -22,7 +22,7 @@ public class OverScrollExampleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_example_overscroll);
 
-        final Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -30,8 +30,8 @@ public class OverScrollExampleActivity extends AppCompatActivity {
             }
         });
 
-        final WebView webView = (WebView) findViewById(R.id.webView);
-        final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
+        final WebView webView = findViewById(R.id.webView);
+        final RefreshLayout refreshLayout = findViewById(R.id.refreshLayout);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
@@ -52,7 +52,7 @@ public class OverScrollExampleActivity extends AppCompatActivity {
                 refreshLayout.finishRefresh();
             }
         });
-//        TextView textView = (TextView) findViewById(R.id.textView);
+//        TextView textView = findViewById(R.id.textView);
 //        textView.setMovementMethod(new ScrollingMovementMethod());
     }
 

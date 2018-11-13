@@ -47,7 +47,7 @@ public class BottomSheetExampleFragment extends Fragment {
     public void onViewCreated(@NonNull View root, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(root, savedInstanceState);
 
-        final Toolbar toolbar = (Toolbar)root.findViewById(R.id.toolbar);
+        final Toolbar toolbar = root.findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,7 +55,7 @@ public class BottomSheetExampleFragment extends Fragment {
             }
         });
 
-        RefreshLayout refreshLayout = (RefreshLayout) root.findViewById(R.id.refreshLayout);
+        RefreshLayout refreshLayout = root.findViewById(R.id.refreshLayout);
         refreshLayout.setRefreshHeader(new ClassicsHeader(getContext()).setSpinnerStyle(SpinnerStyle.FixedBehind).setPrimaryColorId(R.color.colorPrimary).setAccentColorId(android.R.color.white));
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
@@ -76,7 +76,7 @@ public class BottomSheetExampleFragment extends Fragment {
          */
         refreshLayout.setEnableNestedScroll(false);
 
-        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), VERTICAL));

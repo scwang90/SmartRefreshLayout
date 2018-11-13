@@ -69,7 +69,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fly_refresh);
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,11 +82,11 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
          * 关键代码-开始
          *----------------------------------------------------------*/
 
-        MountainSceneView mSceneView = (MountainSceneView) findViewById(R.id.mountain);
-        mFlyView = (FlyView) findViewById(R.id.flyView);
-        mFlyRefreshHeader = (FlyRefreshHeader)findViewById(R.id.flyRefresh);
+        MountainSceneView mSceneView = findViewById(R.id.mountain);
+        mFlyView = findViewById(R.id.flyView);
+        mFlyRefreshHeader = findViewById(R.id.flyRefresh);
         mFlyRefreshHeader.setUp(mSceneView, mFlyView);//绑定场景和纸飞机
-        mRefreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
+        mRefreshLayout = findViewById(R.id.refreshLayout);
         mRefreshLayout.setReboundInterpolator(new ElasticOutInterpolator());//设置回弹插值器，会带有弹簧震动效果
         mRefreshLayout.setReboundDuration(800);//设置回弹动画时长
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
@@ -112,7 +112,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
             }
         });
         //设置 让 AppBarLayout 和 RefreshLayout 的滚动同步 并不保持 toolbar 位置不变
-        final AppBarLayout appBar = (AppBarLayout) findViewById(R.id.appbar);
+        final AppBarLayout appBar = findViewById(R.id.appbar);
         mRefreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
             @Override
             public void onHeaderMoving(RefreshHeader header, boolean isDragging, float percent, int offset, int headerHeight, int maxDragHeight) {
@@ -145,12 +145,12 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
         initDataSet();
         mAdapter = new ItemAdapter(this);
         mLayoutManager = new LinearLayoutManager(this);
-        mListView = (RecyclerView) findViewById(R.id.recyclerView);
+        mListView = findViewById(R.id.recyclerView);
         mListView.setLayoutManager(mLayoutManager);
         mListView.setAdapter(mAdapter);
         mListView.setItemAnimator(new SampleItemAnimator());
-        mToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbarLayout);
-        mActionButton = (FloatingActionButton) findViewById(R.id.fab);
+        mToolbarLayout = findViewById(R.id.toolbarLayout);
+        mActionButton = findViewById(R.id.fab);
         /*
          * 设置点击 ActionButton 时候触发自动刷新 并改变主题颜色
          */

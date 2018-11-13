@@ -54,7 +54,7 @@ public class BezierRadarStyleActivity extends AppCompatActivity implements Adapt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_style_bezier);
 
-        mToolbar = (Toolbar)findViewById(R.id.toolbar);
+        mToolbar = findViewById(R.id.toolbar);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,8 +62,8 @@ public class BezierRadarStyleActivity extends AppCompatActivity implements Adapt
             }
         });
 
-        mRefreshLayout = (RefreshLayout)findViewById(R.id.refreshLayout);
-        mRefreshHeader = (BezierRadarHeader) findViewById(R.id.header);
+        mRefreshLayout = findViewById(R.id.refreshLayout);
+        mRefreshHeader = findViewById(R.id.header);
         if (isFirstEnter) {
             isFirstEnter = false;
             mRefreshLayout.autoRefresh();//第一次进入触发自动刷新，演示效果

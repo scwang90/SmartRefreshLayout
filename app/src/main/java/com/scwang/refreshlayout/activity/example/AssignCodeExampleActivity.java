@@ -26,7 +26,7 @@ public class AssignCodeExampleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_example_assign_code);
 
-        final Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -35,7 +35,7 @@ public class AssignCodeExampleActivity extends AppCompatActivity {
         });
 
 
-        final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
+        final RefreshLayout refreshLayout = findViewById(R.id.refreshLayout);
         //设置 Header 为 Material风格
         refreshLayout.setRefreshHeader(new MaterialHeader(this).setShowBezierWave(true));
         //设置 Footer 为 球脉冲

@@ -1,14 +1,15 @@
+apply plugin: 'com.aaron.gradle.bintray-release'//必须写在第一行
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
+//apply plugin: 'com.novoda.bintray-release'
 
 android {
 
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         minSdkVersion 12
-        targetSdkVersion 25
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
 
@@ -27,24 +28,20 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testCompile 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
+
     //noinspection GradleDependency
-    provided 'com.android.support:support-annotations:25.1.0'
+    api 'com.android.support:support-annotations:25.1.0'
     //noinspection GradleDependency,GradleCompatible
-    provided ('com.android.support:support-v4:22.1.0') {
-        exclude group: 'com.android.support'
-    }
+    api 'com.android.support:support-v4:22.1.0'
     //noinspection GradleDependency,GradleCompatible
-    provided ('com.android.support:recyclerview-v7:21.0.0') {
-        exclude group: 'com.android.support'
-    }
-    provided ('com.android.support:design:23.0.0') {
-        exclude group: 'com.android.support'
-    }
+    api 'com.android.support:recyclerview-v7:21.0.0'
+    //noinspection GradleDependency,GradleCompatible
+    api 'com.android.support:design:23.0.0'
 
 }
 
@@ -52,7 +49,10 @@ publish {
     userOrg = 'scwang90'
     groupId = 'com.scwang.smartrefresh'
     artifactId = 'SmartRefreshLayout'
-    version = '1.1.0-alpha-14'
-    description = 'An intelligent refresh layout'
+//    version = '1.1.0-alpha-14'
+    publishVersion = '1.1.0-alpha-15'
+    desc = 'An intelligent refresh layout'
     website = "https://github.com/scwang90/${rootProject.name}"
+    archivesPath = '../build/outputs' //指定将要上传的压缩包路径，如果不写则默认上传系统生成的jar和aar
+//    archivesName = 'bintray-release'  //指定将要上传的压缩包所含的关键字，如果不写，默认过滤artifactId
 }

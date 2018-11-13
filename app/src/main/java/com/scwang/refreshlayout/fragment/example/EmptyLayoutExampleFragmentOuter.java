@@ -55,7 +55,7 @@ public class EmptyLayoutExampleFragmentOuter extends Fragment implements Adapter
     public void onViewCreated(@NonNull View root, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(root, savedInstanceState);
 
-        final Toolbar toolbar = (Toolbar)root.findViewById(R.id.toolbar);
+        final Toolbar toolbar = root.findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,21 +63,21 @@ public class EmptyLayoutExampleFragmentOuter extends Fragment implements Adapter
             }
         });
 
-        mRefreshLayout = (RefreshLayout) root.findViewById(refreshLayout);
+        mRefreshLayout = root.findViewById(refreshLayout);
         mRefreshLayout.setRefreshHeader(new ClassicsHeader(getContext()).setSpinnerStyle(SpinnerStyle.FixedBehind).setPrimaryColorId(R.color.colorPrimary).setAccentColorId(android.R.color.white));
         mRefreshLayout.setOnRefreshListener(this);
 
-        mRecyclerView = (RecyclerView) root.findViewById(recyclerView);
+        mRecyclerView = root.findViewById(recyclerView);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), VERTICAL));
 
         mEmptyLayout = root.findViewById(R.id.empty);
 
-        ImageView image = (ImageView) root.findViewById(R.id.empty_image);
+        ImageView image = root.findViewById(R.id.empty_image);
         image.setImageResource(R.drawable.ic_empty);
 
-        TextView empty = (TextView) root.findViewById(R.id.empty_text);
+        TextView empty = root.findViewById(R.id.empty_text);
         empty.setText("暂无数据点击刷新");
 
         ((View)empty.getParent()).setOnClickListener(new View.OnClickListener() {

@@ -53,7 +53,7 @@ public class NestedScrollExampleFragmentIntegral extends Fragment implements Ada
     public void onViewCreated(@NonNull final View root, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(root, savedInstanceState);
 
-        Toolbar toolbar = (Toolbar) root.findViewById(R.id.toolbar);
+        Toolbar toolbar = root.findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,12 +61,12 @@ public class NestedScrollExampleFragmentIntegral extends Fragment implements Ada
            }
         });
 
-        Banner banner = (Banner) root.findViewById(R.id.banner);
+        Banner banner = root.findViewById(R.id.banner);
         banner.setImageLoader(new BannerImageLoader());
         banner.setImages(Arrays.asList(image_weibo_home_2,gif_header_repast));
         banner.start();
 
-        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), VERTICAL));
@@ -79,7 +79,7 @@ public class NestedScrollExampleFragmentIntegral extends Fragment implements Ada
             }
         });
 
-        RefreshLayout refreshLayout = (RefreshLayout) root.findViewById(R.id.refreshLayout);
+        RefreshLayout refreshLayout = root.findViewById(R.id.refreshLayout);
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull final RefreshLayout refreshLayout) {

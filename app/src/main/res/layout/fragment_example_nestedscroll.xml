@@ -40,7 +40,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:srlPrimaryColor="@color/colorPrimary"
         app:srlAccentColor="@android:color/white"
-        app:srlEnableLoadMore="false">
+        app:srlEnableLoadMore="true">
         <com.scwang.smartrefresh.header.PhoenixHeader
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

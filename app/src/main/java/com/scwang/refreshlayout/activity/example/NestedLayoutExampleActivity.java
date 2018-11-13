@@ -38,7 +38,7 @@ public class NestedLayoutExampleActivity extends AppCompatActivity implements Ad
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_example_region);
 
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
@@ -78,7 +78,7 @@ public class NestedLayoutExampleActivity extends AppCompatActivity implements Ad
          * 以下代码仅仅为了演示效果而已，不是必须的
          * 关键代码在 activity_example_assign_xml 中
          */
-        final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
+        final RefreshLayout refreshLayout = findViewById(R.id.refreshLayout);
         if (isFirstEnter && refreshLayout != null) {
             isFirstEnter = false;
             //触发上拉加载

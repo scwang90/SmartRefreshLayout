@@ -24,7 +24,7 @@ public class QQBrowserPracticeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_practice_qqbrowser);
 
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -32,9 +32,9 @@ public class QQBrowserPracticeActivity extends AppCompatActivity {
             }
         });
 
-        final LoadingLayout loading = (LoadingLayout) findViewById(R.id.loading);
+        final LoadingLayout loading = findViewById(R.id.loading);
 
-        final WebView webView = (WebView) findViewById(R.id.webView);
+        final WebView webView = findViewById(R.id.webView);
         webView.loadUrl("https://github.com/scwang90/SmartRefreshLayout");
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient(){

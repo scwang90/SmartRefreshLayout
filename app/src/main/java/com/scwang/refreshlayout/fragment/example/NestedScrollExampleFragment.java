@@ -67,7 +67,7 @@ public class NestedScrollExampleFragment extends Fragment implements AdapterView
     public void onViewCreated(@NonNull final View root, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(root, savedInstanceState);
 
-        Toolbar toolbar = (Toolbar) root.findViewById(R.id.toolbar);
+        Toolbar toolbar = root.findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,7 +76,7 @@ public class NestedScrollExampleFragment extends Fragment implements AdapterView
         });
 
         final BaseRecyclerAdapter<Item> adapter;
-        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), VERTICAL));
@@ -101,18 +101,18 @@ public class NestedScrollExampleFragment extends Fragment implements AdapterView
                     adapter.loadMore(Arrays.asList(Item.values()));
                 }
             };
-            final RefreshLayout refreshLayout = (RefreshLayout) root.findViewById(R.id.refreshLayout);
+            final RefreshLayout refreshLayout = root.findViewById(R.id.refreshLayout);
             refreshLayout.setEnableFooterFollowWhenLoadFinished(true);
             refreshLayout.setRefreshFooter(new ClassicsFooter(getContext()));
             refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
                 @Override
                 public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                    if (adapter.getItemCount() < 20) {
-                        loadMore.run();
-                        refreshLayout.finishLoadMore(2000);
-                    } else {
-                        refreshLayout.finishLoadMoreWithNoMoreData();
-                    }
+//                    if (adapter.getItemCount() < 20) {
+//                        loadMore.run();
+//                        refreshLayout.finishLoadMore(2000);
+//                    } else {
+//                        refreshLayout.finishLoadMoreWithNoMoreData();
+//                    }
                 }
             });
             loadMore.run();
@@ -121,7 +121,7 @@ public class NestedScrollExampleFragment extends Fragment implements AdapterView
         /*
          * 监听 AppBarLayout 的关闭和开启 ActionButton 设置关闭隐藏动画
          */
-        AppBarLayout appBarLayout = (AppBarLayout) root.findViewById(R.id.appbar);
+        AppBarLayout appBarLayout = root.findViewById(R.id.appbar);
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean misAppbarExpand = true;
             View fab = root.findViewById(R.id.fab);
