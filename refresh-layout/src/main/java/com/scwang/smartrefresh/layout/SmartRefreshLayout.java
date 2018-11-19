@@ -690,6 +690,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             reboundAnimator.cancel();
             reboundAnimator = null;
         }
+        mFooterLocked = false;
     }
 
     @Override
