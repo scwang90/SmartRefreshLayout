@@ -29,6 +29,12 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
  - 支持设多种滑动方式：平移、拉伸、背后固定、顶层固定、全屏
  - 支持所有可滚动视图的越界回弹
 
+## 每天领红包
+
+最近开通了支付宝商家，生成了个红包二维码，经常用支付宝的童鞋可有扫码领优惠红包，扫码只会拿红包，不会有任何损失，每天都可以扫码哦！
+
+![支付宝红包](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/pay_alipay_red_packet.png?raw=true)
+
 ## 传送门
 
  - [属性文档](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_property.md)
@@ -104,8 +110,8 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
 #### 1.在 build.gradle 中添加依赖
 ```
 //1.1.0 API改动过大，老用户升级需谨慎
-compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
-compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-14'//没有使用特殊Header，可以不加这行
+compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-15'
+compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-15'//没有使用特殊Header，可以不加这行
 compile 'com.android.support:appcompat-v7:25.3.1'//版本 23以上（必须）
 
 //1.0.5 当1.1.0出现问题可以回退到1.0.5.1
@@ -236,28 +242,28 @@ SmartRefreshLayout 没有使用到：序列化、反序列化、JNI、反射，�
 如果你喜欢 SmartRefreshLayout 的设计，感觉 SmartRefreshLayout 帮助到了你，可以点右上角 "Star" 支持一下 谢谢！ ^_^
 你也还可以扫描下面的二维码~ 请作者喝一杯咖啡。
 
-![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/pay_alipay.jpg) ![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/pay_wxpay.jpg) ![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/pay_tencent.jpg)
+![](https://github.com/scwang90/SmartRefreshLayout/raw/master/blob/pay_alipay.jpg?raw=true) ![](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/pay_wxpay.jpg?raw=true) ![](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/pay_tencent.jpg?raw=true)
 
 如果在捐赠留言中备注名称，将会被记录到列表中~ 如果你也是github开源作者，捐赠时可以留下github项目地址或者个人主页地址，链接将会被添加到列表中起到互相推广的作用
 [捐赠列表](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_donationlist.md)
 
 #### 友情链接
-[github/dengyuhan](https://github.com/dengyuhan)  
-[github/zrp2017](https://github.com/zrp2017)  
-[github/fly803/BaseProject](https://github.com/fly803/BaseProject)  
-[github/razerdp](https://github.com/razerdp)  
-[github/SuperChenC/s-mvp](https://github.com/SuperChenC/s-mvp)  
-[github/KingJA/LoadSir](https://github.com/KingJA/LoadSir)  
-[github/jianshijiuyou](https://github.com/jianshijiuyou)  
-[github/zxy198717](https://github.com/zxy198717)  
-[github/addappcn](https://github.com/addappcn)  
-[github/RainliFu](https://github.com/RainliFu)  
-[github/sugarya](https://github.com/sugarya)  
+[github/dengyuhan](https://github.com/dengyuhan)
+[github/zrp2017](https://github.com/zrp2017)
+[github/fly803/BaseProject](https://github.com/fly803/BaseProject)
+[github/razerdp](https://github.com/razerdp)
+[github/SuperChenC/s-mvp](https://github.com/SuperChenC/s-mvp)
+[github/KingJA/LoadSir](https://github.com/KingJA/LoadSir)
+[github/jianshijiuyou](https://github.com/jianshijiuyou)
+[github/zxy198717](https://github.com/zxy198717)
+[github/addappcn](https://github.com/addappcn)
+[github/RainliFu](https://github.com/RainliFu)
+[github/sugarya](https://github.com/sugarya)
 [github/stormzhang](https://github.com/stormzhang)
 
 ## 讨论
 
-### QQ解决群 - 538979188（付费） 602537182 （付费）
+### QQ解决群 - 602537182 （付费）
 #### 进群须知
 自开群以来，还是有很多的朋友提出了很多问题，我也解决了很多问题，其中有大半问题是本库的Bug导致，也有些是使用者项目本
 身的环境问题，这花费了我大量的时间，经过我的观察和测试，到目前为止，本库的bug已经越来越少，当然不能说完全没有，但是
@@ -266,7 +272,7 @@ SmartRefreshLayout 没有使用到：序列化、反序列化、JNI、反射，�
 我也有自己的工作和娱乐时间，只有大家理解和支持我，我才能专心的为大家解决问题。不过用担心，我已经建立了另一个可以免费
 进入的QQ讨论群。
 
-### QQ讨论群 - 914275312 （新） 477963933 （满）
+### QQ讨论群 - 914275312 （新） 477963933 （满）  538979188 （满）
 #### 进群须知
 这个群，免费进入，大家可以相互讨论本库的相关使用和出现的问题，群主也会在里面解决问题，如果提出的问题，群成员不能帮助
 解决，需要群主解决，但是要花费群主五分钟以上的时间（本库Bug除外），群主将不会解决这个问题，如果项目紧急，请付费进入解
