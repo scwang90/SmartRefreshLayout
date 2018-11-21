@@ -15,6 +15,10 @@
 也吸取了现在流行的各种刷新布局的优点，包括谷歌官方的 [SwipeRefreshLayout](https://developer.android.com/reference/android/support/v4/widget/SwipeRefreshLayout.html)，其他第三方的 [Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)、[TwinklingRefreshLayout](https://github.com/lcodecorex/TwinklingRefreshLayout) 。还集成了各种炫酷的 Header 和 Footer。
 SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷新框架，并集成各种的炫酷、多样、实用、美观的Header和Footer。
 
+## 每天领红包
+
+![支付宝红包](art/pay_alipay_red_packet.jpg)
+
 ## 特点功能:
 
  - 支持多点触摸
