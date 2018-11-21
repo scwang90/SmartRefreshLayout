@@ -17,7 +17,7 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
 
 ## 每天领红包
 
-![支付宝红包](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/pay_alipay_red_packet.jpg)
+![支付宝红包](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/pay_alipay_red_packet.png?raw=true)
 
 ## 特点功能:
 
