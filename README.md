@@ -242,7 +242,7 @@ SmartRefreshLayout 没有使用到：序列化、反序列化、JNI、反射，�
 如果你喜欢 SmartRefreshLayout 的设计，感觉 SmartRefreshLayout 帮助到了你，可以点右上角 "Star" 支持一下 谢谢！ ^_^
 你也还可以扫描下面的二维码~ 请作者喝一杯咖啡。
 
-![](https://github.com/scwang90/SmartRefreshLayout/raw/master/blob/pay_alipay.jpg?raw=true) ![](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/pay_wxpay.jpg?raw=true) ![](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/pay_tencent.jpg?raw=true)
+![](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/pay_alipay.jpg?raw=true) ![](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/pay_wxpay.jpg?raw=true) ![](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/pay_tencent.jpg?raw=true)
 
 如果在捐赠留言中备注名称，将会被记录到列表中~ 如果你也是github开源作者，捐赠时可以留下github项目地址或者个人主页地址，链接将会被添加到列表中起到互相推广的作用
 [捐赠列表](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_donationlist.md)
