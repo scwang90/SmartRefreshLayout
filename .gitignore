@@ -1,6 +1,6 @@
 *.iml
 .gradle
-.idea
 /local.properties
+/.idea
 /build
 /bintrayUpload-key.bat
