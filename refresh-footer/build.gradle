@@ -33,7 +33,7 @@ dependencies {
     })
     testImplementation 'junit:junit:4.12'
 //    api 'com.android.support:support-compat:25.3.1'
-    api project(':refresh-layout')
+    compileOnly project(':refresh-layout')
 }
 
 //publish {

@@ -34,10 +34,10 @@ dependencies {
     })
     testImplementation 'junit:junit:4.12'
     //noinspection GradleDependency
-    api 'com.android.support:support-annotations:25.1.0'
+    compileOnly 'com.android.support:support-annotations:25.1.0'
     //noinspection GradleDependency,GradleCompatible
-    api 'com.android.support:support-v4:22.1.0'
-    api project(':refresh-layout')
+    compileOnly 'com.android.support:support-v4:22.1.0'
+    compileOnly project(':refresh-layout')
 }
 
 publish {
@@ -45,7 +45,7 @@ publish {
     groupId = 'com.scwang.smartrefresh'
     artifactId = 'SmartRefreshHeader'
 //    version = '1.1.0-alpha-14'
-    publishVersion = '1.1.0-alpha-15'
+    publishVersion = '1.1.0-alpha-16'
     desc = 'Some delicate headers of SmartRefreshLayout'
     website = "https://github.com/scwang90/${rootProject.name}"
     archivesPath = '../build/outputs' //指定将要上传的压缩包路径，如果不写则默认上传系统生成的jar和aar
