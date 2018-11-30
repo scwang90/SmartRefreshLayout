@@ -41,6 +41,6 @@ public enum RefreshState {
         if (isFooter && !isTwoLevel) {
             return values()[ordinal()-1];
         }
-        return null;
+        return this;
     }
 }
