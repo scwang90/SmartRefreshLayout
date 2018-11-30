@@ -35,13 +35,13 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 
     //noinspection GradleDependency
-    api 'com.android.support:support-annotations:25.1.0'
+    compileOnly 'com.android.support:support-annotations:25.1.0'
     //noinspection GradleDependency,GradleCompatible
-    api 'com.android.support:support-v4:22.1.0'
+    compileOnly 'com.android.support:support-v4:22.1.0'
     //noinspection GradleDependency,GradleCompatible
-    api 'com.android.support:recyclerview-v7:21.0.0'
+    compileOnly 'com.android.support:recyclerview-v7:21.0.0'
     //noinspection GradleDependency,GradleCompatible
-    api 'com.android.support:design:23.0.0'
+    compileOnly 'com.android.support:design:23.0.0'
 
 }
 
@@ -50,7 +50,7 @@ publish {
     groupId = 'com.scwang.smartrefresh'
     artifactId = 'SmartRefreshLayout'
 //    version = '1.1.0-alpha-14'
-    publishVersion = '1.1.0-alpha-15'
+    publishVersion = '1.1.0-alpha-16'
     desc = 'An intelligent refresh layout'
     website = "https://github.com/scwang90/${rootProject.name}"
     archivesPath = '../build/outputs' //指定将要上传的压缩包路径，如果不写则默认上传系统生成的jar和aar
