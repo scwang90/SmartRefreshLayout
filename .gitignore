@@ -1,6 +1,13 @@
 *.iml
 .gradle
 /local.properties
-/.idea
+/.idea/caches
+/.idea/codeStyles
+/.idea/libraries
+/.idea/gradle.xml
+/.idea/modules.xml
+/.idea/runConfigurations.xml
+/.idea/vcs.xml
+/.idea/workspace.xml
 /build
 /bintrayUpload-key.bat
