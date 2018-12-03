@@ -1,15 +1,9 @@
 @ECHO OFF
 
-set aa=伟大的中国！我为你自豪！
-echo 替换前：%aa%
-echo 替换后：%aa:中国=中华人民共和国%
-echo aa = %aa%
-set aa=%aa:中国=中华人民共和国%
-echo aa = %aa%
-
 SET sdk=null
 SET tool=null
-FOR /F "eol=; tokens=2,2 delims==" %%i IN ('findstr /i "sdk.dir" local.properties') DO SET sdk=%%i
+
+FOR /F %%i IN ('findstr /i "sdk.dir" local.properties') DO SET sdk=%%i
 FOR /F %%i IN ('findstr /i "buildToolsVersion" %~dp0app\build.gradle') DO SET tool=%%i
 
 findstr /i "sdk.dir" local.properties
@@ -19,6 +13,7 @@ rem type %~dp0app\build.gradle
 rem type local.properties
 
 echo tool=%tool%
+echo sdk=%sdk%
 
 IF %sdk% == null (
     ECHO 没找到SDK，脚本中止
@@ -29,7 +24,7 @@ SET sdk=%sdk:\\=\%
 SET sdk=%sdk:\:=:%
 set sdk=%sdk%\build-tools\28.0.3\dx.bat
 
-echo skd=%sdk%
+echo skk=%sdk%
 
 rem %sdk%
 rem ./gradlew assemble
