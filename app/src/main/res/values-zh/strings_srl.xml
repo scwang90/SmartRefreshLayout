@@ -1,0 +1,20 @@
+<resources>
+
+    <string name="srl_header_pulling">\@下拉刷新</string>
+    <string name="srl_header_refreshing">\@正在刷新…</string>
+    <string name="srl_header_loading">\@正在加载…</string>
+    <string name="srl_header_release">\@释放刷新</string>
+    <string name="srl_header_finish">\@刷新完成</string>
+    <string name="srl_header_failed">\@刷新失败</string>
+    <string name="srl_header_update">\@上次更新 M-d HH:mm</string>
+    <string name="srl_header_secondary">\@进入二楼</string>
+
+    <string name="srl_footer_pulling">\@上拉加载</string>
+    <string name="srl_footer_release">\@释放加载</string>
+    <string name="srl_footer_loading">\@正在加载…</string>
+    <string name="srl_footer_refreshing">\@正在刷新…</string>
+    <string name="srl_footer_finish">\@加载完成</string>
+    <string name="srl_footer_failed">\@加载失败</string>
+    <string name="srl_footer_nothing">\@没有更多数据了</string>
+
+</resources>

@@ -107,12 +107,12 @@ public class NestedScrollExampleFragment extends Fragment implements AdapterView
             refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
                 @Override
                 public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-//                    if (adapter.getItemCount() < 20) {
-//                        loadMore.run();
-//                        refreshLayout.finishLoadMore(2000);
-//                    } else {
-//                        refreshLayout.finishLoadMoreWithNoMoreData();
-//                    }
+                    if (adapter.getItemCount() < 20) {
+                        loadMore.run();
+                        refreshLayout.finishLoadMore(2000);
+                    } else {
+                        refreshLayout.finishLoadMoreWithNoMoreData();
+                    }
                 }
             });
             loadMore.run();

@@ -55,6 +55,7 @@
         <attr name="srlEnableScrollContentWhenRefreshed" format="boolean"/>
         <attr name="srlEnableLoadMoreWhenContentNotFull" format="boolean"/>
         <attr name="srlEnableFooterFollowWhenLoadFinished" format="boolean"/>
+        <attr name="srlEnableFooterFollowWhenNoMoreData" format="boolean"/>
         <attr name="srlEnableClipHeaderWhenFixedBehind" format="boolean"/>
         <attr name="srlEnableClipFooterWhenFixedBehind" format="boolean"/>
         <attr name="srlEnableOverScrollDrag" format="boolean"/>

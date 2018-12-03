@@ -149,8 +149,8 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
         }
     }
 
+    @SuppressWarnings("unchecked")
     protected T self() {
-        //noinspection unchecked
         return (T) this;
     }
 
