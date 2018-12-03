@@ -66,7 +66,7 @@ public class BasicExampleActivity extends AppCompatActivity {
                     public void run() {
                         mAdapter.refresh(initData());
                         refreshLayout.finishRefresh();
-                        refreshLayout.setNoMoreData(false);
+                        refreshLayout.resetNoMoreData();//setNoMoreData(false);
                     }
                 }, 2000);
             }

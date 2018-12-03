@@ -32,7 +32,7 @@
             android:clipToPadding="false"
             android:padding="@dimen/padding_common_d"
             android:overScrollMode="never"
-            tools:listitem="@layout/listitem_style_delivery"/>
+            tools:listitem="@layout/item_style_delivery"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

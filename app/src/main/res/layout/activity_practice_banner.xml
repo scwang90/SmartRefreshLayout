@@ -30,7 +30,7 @@
             android:paddingTop="?attr/actionBarSize"
             android:background="@android:color/white"
             android:overScrollMode="never"
-            tools:listitem="@layout/listitem_movie_item"/>
+            tools:listitem="@layout/item_movie_item"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <com.github.mmin18.widget.RealtimeBlurView
@@ -38,6 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:realtimeBlurRadius="10dp"
+        android:alpha="0.5"
         app:realtimeOverlayColor="@color/colorPrimaryOverlay"/>
 
     <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"

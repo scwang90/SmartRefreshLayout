@@ -25,13 +25,13 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
  * Created by SCWANG on 2018/3/5.
  */
 
-public class SmartUtil {
+public abstract class SmartUtil {
 
+    @SuppressWarnings("deprecation")
     public static int getColor(@NonNull Context context, @ColorRes int colorId) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             return context.getColor(colorId);
         }
-        //noinspection deprecation
         return context.getResources().getColor(colorId);
     }
 

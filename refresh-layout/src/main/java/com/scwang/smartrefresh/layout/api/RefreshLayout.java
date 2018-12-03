@@ -550,16 +550,16 @@ public interface RefreshLayout {
      * @return true or false, Status non-compliance will fail.
      *         是否成功（状态不符合会失败）
      */
+    @Deprecated
     boolean autoRefresh(int delayed);
 
     /**
-     * Display refresh animation, only animation no event.
+     * Display refresh animation without triggering events.
      * 显示刷新动画，不触发事件
-     * @param animationOnly animation only 只有动画
      * @return true or false, Status non-compliance will fail.
      *         是否成功（状态不符合会失败）
      */
-    boolean autoRefresh(boolean animationOnly);
+    boolean autoRefreshAnimationOnly();
 
     /**
      * Display refresh animation, Multifunction.
@@ -588,16 +588,16 @@ public interface RefreshLayout {
      * @return true or false, Status non-compliance will fail.
      *         是否成功（状态不符合会失败）
      */
+    @Deprecated
     boolean autoLoadMore(int delayed);
 
     /**
-     * Display load more animation, only animation no event.
+     * Display load more animation without triggering events.
      * 显示加载动画，不触发事件
-     * @param animationOnly animation only 只有动画
      * @return true or false, Status non-compliance will fail.
      *         是否成功（状态不符合会失败）
      */
-    boolean autoLoadMore(boolean animationOnly);
+    boolean autoLoadMoreAnimationOnly();
 
     /**
      * Display load more animation and trigger load more event, Delayed start.

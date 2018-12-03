@@ -2387,7 +2387,11 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      * @return RefreshLayout
      */
     @Override
+    @Deprecated
     public SmartRefreshLayout setNoMoreData(boolean noMoreData) {
+        if (mState == RefreshState.Loading) {
+            finishLoadMore();
+        }
         mFooterNoMoreData = noMoreData;
         if (mRefreshFooter instanceof RefreshFooter && !((RefreshFooter)mRefreshFooter).setNoMoreData(noMoreData)) {
             System.out.println("Footer:" + mRefreshFooter + " NoMoreData is not supported.(不支持NoMoreData)");
@@ -2402,7 +2406,11 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      */
     @Override
     public RefreshLayout resetNoMoreData() {
-        return setNoMoreData(false);
+        mFooterNoMoreData = false;
+        if (mRefreshFooter instanceof RefreshFooter && !((RefreshFooter)mRefreshFooter).setNoMoreData(false)) {
+            System.out.println("Footer:" + mRefreshFooter + " NoMoreData is not supported.(不支持NoMoreData)");
+        }
+        return this;
     }
 
     /**
@@ -2460,7 +2468,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     @Override
     public SmartRefreshLayout finishRefresh(int delayed, final boolean success) {
         if (mState == RefreshState.Refreshing && success) {
-            setNoMoreData(false);
+            resetNoMoreData();
         }
         postDelayed(new Runnable() {
             @Override
@@ -2669,7 +2677,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      */
     @Override
     public boolean autoRefresh() {
-        return autoRefresh(mHandler == null ? 400 : 0);
+        return autoRefresh(mHandler == null ? 400 : 0, mReboundDuration, 1f * ((mHeaderMaxDragRate/2 + 0.5f) * mHeaderHeight) / (mHeaderHeight == 0 ? 1 : mHeaderHeight), false);
     }
 
     /**
@@ -2680,21 +2688,21 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      *         是否成功（状态不符合会失败）
      */
     @Override
+    @Deprecated
     public boolean autoRefresh(int delayed) {
         return autoRefresh(delayed, mReboundDuration, 1f * ((mHeaderMaxDragRate/2 + 0.5f) * mHeaderHeight) / (mHeaderHeight == 0 ? 1 : mHeaderHeight), false);
     }
 
 
     /**
-     * Display refresh animation, only animation no event.
+     * Display refresh animation without triggering events.
      * 显示刷新动画，不触发事件
-     * @param animationOnly animation only 只有动画
      * @return true or false, Status non-compliance will fail.
      *         是否成功（状态不符合会失败）
      */
     @Override
-    public boolean autoRefresh(boolean animationOnly) {
-        return autoRefresh(mHandler == null ? 400 : 0, mReboundDuration, 1f * ((mHeaderMaxDragRate/2 + 0.5f) * mHeaderHeight) / (mHeaderHeight == 0 ? 1 : mHeaderHeight), animationOnly);
+    public boolean autoRefreshAnimationOnly() {
+        return autoRefresh(mHandler == null ? 400 : 0, mReboundDuration, 1f * ((mHeaderMaxDragRate/2 + 0.5f) * mHeaderHeight) / (mHeaderHeight == 0 ? 1 : mHeaderHeight), true);
     }
 
     /**
@@ -2770,7 +2778,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      */
     @Override
     public boolean autoLoadMore() {
-        return autoLoadMore(0);
+        return autoLoadMore(0, mReboundDuration, 1f * (mFooterHeight * (mFooterMaxDragRate / 2 + 0.5f)) / (mFooterHeight == 0 ? 1 : mFooterHeight), false);
     }
 
     /**
@@ -2781,20 +2789,20 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      *         是否成功（状态不符合会失败）
      */
     @Override
+    @Deprecated
     public boolean autoLoadMore(int delayed) {
         return autoLoadMore(delayed, mReboundDuration, 1f * (mFooterHeight * (mFooterMaxDragRate / 2 + 0.5f)) / (mFooterHeight == 0 ? 1 : mFooterHeight), false);
     }
 
     /**
-     * Display load more animation, only animation no event.
+     * Display load more animation without triggering events.
      * 显示加载动画，不触发事件
-     * @param animationOnly animation only 只有动画
      * @return true or false, Status non-compliance will fail.
      *         是否成功（状态不符合会失败）
      */
     @Override
-    public boolean autoLoadMore(boolean animationOnly) {
-        return autoLoadMore(0, mReboundDuration, 1f * (mFooterHeight * (mFooterMaxDragRate / 2 + 0.5f)) / (mFooterHeight == 0 ? 1 : mFooterHeight), animationOnly);
+    public boolean autoLoadMoreAnimationOnly() {
+        return autoLoadMore(0, mReboundDuration, 1f * (mFooterHeight * (mFooterMaxDragRate / 2 + 0.5f)) / (mFooterHeight == 0 ? 1 : mFooterHeight), true);
     }
 
     /**

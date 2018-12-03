@@ -36,7 +36,7 @@ import static android.view.View.MeasureSpec.makeMeasureSpec;
  * Created by SCWANG on 2017/6/4.
  * from https://github.com/recruit-lifestyle/WaveSwipeRefreshLayout
  */
-@SuppressWarnings("ALL")
+@SuppressWarnings("unused")
 public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
 
     /**
@@ -139,6 +139,17 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
         mProgress.setColorSchemeColors(colors);
     }
 
+    public void setColorSchemeColorIds(@IdRes int... resources) {
+        final View thisView = this;
+        final Resources res = thisView.getResources();
+        final int[] colorRes = new int[resources.length];
+
+        for (int i = 0; i < resources.length; i++) {
+            colorRes[i] = res.getColor(resources[i]);
+        }
+
+        mProgress.setColorSchemeColors(colorRes);
+    }
     //</editor-fold>
 
     //<editor-fold desc="RefreshHeader">
@@ -149,7 +160,7 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
             if (mState == RefreshState.Refreshing) {
                 return;
             }
-            final View cricleView = mCircleView;
+            final View circleView = mCircleView;
 
             float dragPercent = Math.min(1f, percent);
             float adjustedPercent = (float) Math.max(dragPercent - .4, 0) * 5 / 3;
@@ -167,7 +178,7 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
 
             float rotation = (-0.25f + .4f * adjustedPercent + tensionPercent * 2) * .5f;
             mProgress.setProgressRotation(rotation);
-            cricleView.setTranslationY(mWaveView.getCurrentCircleCenterY());
+            circleView.setTranslationY(mWaveView.getCurrentCircleCenterY());
 
             final View thisView = this;
             float seed = 1f * offset / Math.min(thisView.getMeasuredWidth(), thisView.getMeasuredHeight());
@@ -321,6 +332,7 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
      * @deprecated 请使用 {@link RefreshLayout#setPrimaryColorsId(int...)}
      */
     @Override@Deprecated
+    @SuppressWarnings("deprecation")
     public void setPrimaryColors(@ColorInt int ... colors) {
         if (colors.length > 0) {
             mWaveView.setWaveColor(colors[0]);
@@ -403,17 +415,17 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
             super.setImageDrawable(mProgress);
         }
 
-        public void setProgressColorSchemeColorsFromResource(@IdRes int... resources) {
-            final View thisView = this;
-            final Resources res = thisView.getResources();
-            final int[] colorRes = new int[resources.length];
-
-            for (int i = 0; i < resources.length; i++) {
-                colorRes[i] = res.getColor(resources[i]);
-            }
-
-            setColorSchemeColors(colorRes);
-        }
+//        public void setProgressColorSchemeColorsFromResource(@IdRes int... resources) {
+//            final View thisView = this;
+//            final Resources res = thisView.getResources();
+//            final int[] colorRes = new int[resources.length];
+//
+//            for (int i = 0; i < resources.length; i++) {
+//                colorRes[i] = res.getColor(resources[i]);
+//            }
+//
+//            setColorSchemeColors(colorRes);
+//        }
 
     }
     //</editor-fold>

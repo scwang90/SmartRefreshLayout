@@ -64,7 +64,7 @@ public class RepastPracticeActivity extends AppCompatActivity {
             RecyclerView recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setItemAnimator(new DefaultItemAnimator());
-            recyclerView.setAdapter(mAdapter = new BaseRecyclerAdapter<Model>(loadModels(), R.layout.listitem_practice_repast) {
+            recyclerView.setAdapter(mAdapter = new BaseRecyclerAdapter<Model>(loadModels(), R.layout.item_practice_repast) {
                 @Override
                 protected void onBindViewHolder(SmartViewHolder holder, Model model, int position) {
                     holder.text(R.id.name, model.name);
@@ -81,7 +81,7 @@ public class RepastPracticeActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             refreshLayout.finishRefresh();
-                            refreshLayout.setNoMoreData(false);//恢复上拉状态
+                            refreshLayout.resetNoMoreData();//setNoMoreData(false);//恢复上拉状态
                         }
                     }, 2000);
                 }

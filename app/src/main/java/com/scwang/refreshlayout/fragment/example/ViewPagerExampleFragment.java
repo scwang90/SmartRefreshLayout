@@ -166,7 +166,7 @@ public class ViewPagerExampleFragment extends Fragment implements OnRefreshListe
                 public void run() {
                     mAdapter.refresh(initData());
                     refreshLayout.finishRefresh();
-                    refreshLayout.setNoMoreData(false);
+                    refreshLayout.resetNoMoreData();//setNoMoreData(false);
                 }
             }, 2000);
         }
