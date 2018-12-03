@@ -33,7 +33,7 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
 
 最近开通了支付宝商家，生成了个红包二维码，经常用支付宝的童鞋可有扫码领优惠红包，扫码只会拿红包，不会有任何损失，每天都可以扫码哦！
 
-![支付宝红包](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/pay_alipay_red_packet.png?raw=true)
+![支付宝红包](https://github.com/scwang90/MultiWaveHeader/blob/master/art/pay_alipay_red_packet.png?raw=true)
 
 ## 传送门
 

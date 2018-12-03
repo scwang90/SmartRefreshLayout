@@ -1,10 +1,24 @@
 @ECHO OFF
 
+type %~dp0app\build.gradle | findstr "buildToolsVersion"
+
+findstr /i "buildToolsVersion" %~dp0app\build.gradle
+
+set str=    buildToolsVersion '27.0.3'
+echo 当前硬盘的分区有：
+for /f %%i in (%str%) do echo %%i
+rem for %%i in (%str%) do if exist %%i: echo %%i:
+
+
+
 SET sdk=null
 SET tool=null
 
-FOR /F %%i IN ('findstr /i "sdk.dir" local.properties') DO SET sdk=%%i
-FOR /F %%i IN ('findstr /i "buildToolsVersion" %~dp0app\build.gradle') DO SET tool=%%i
+FOR /F "delims==" %%i IN ('findstr /i "sdk.dir" local.properties') DO SET sdk=%%i
+FOR /F "delims= " %%i IN ('findstr /i "buildToolsVersion" %~dp0app\build.gradle') DO SET tool=%%i
+
+
+REM FOR /F %%i IN ('type %~dp0app\build.gradle') DO ECHO %%i
 
 findstr /i "sdk.dir" local.properties
 findstr /i "buildToolsVersion" %~dp0app\build.gradle
