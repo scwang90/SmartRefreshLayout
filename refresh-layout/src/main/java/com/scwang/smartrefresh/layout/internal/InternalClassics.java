@@ -43,8 +43,8 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
     protected ImageView mProgressView;
     protected LinearLayout mCenterLayout;
     protected RefreshKernel mRefreshKernel;
-    protected ArrowDrawable mArrowDrawable;
-    protected ProgressDrawable mProgressDrawable;
+    protected PaintDrawable mArrowDrawable;
+    protected PaintDrawable mProgressDrawable;
 //    protected SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
     protected Integer mAccentColor;
     protected Integer mPrimaryColor;

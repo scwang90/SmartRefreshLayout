@@ -127,10 +127,10 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
         }
 
         if (ta.hasValue(R.styleable.ClassicsFooter_srlPrimaryColor)) {
-            setPrimaryColor(ta.getColor(R.styleable.ClassicsFooter_srlPrimaryColor, 0));
+            super.setPrimaryColor(ta.getColor(R.styleable.ClassicsFooter_srlPrimaryColor, 0));
         }
         if (ta.hasValue(R.styleable.ClassicsFooter_srlAccentColor)) {
-            setAccentColor(ta.getColor(R.styleable.ClassicsFooter_srlAccentColor, 0));
+            super.setAccentColor(ta.getColor(R.styleable.ClassicsFooter_srlAccentColor, 0));
         }
 
         ta.recycle();

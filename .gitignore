@@ -1,4 +1,7 @@
 *.iml
+*.txt
+.project
+.classpath
 .gradle
 /local.properties
 /.idea/caches
@@ -12,3 +15,4 @@
 /.idea/markdown-navigator.xml
 /build
 /bintrayUpload-key.bat
+

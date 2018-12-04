@@ -161,7 +161,7 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
         }
 
         if (ta.hasValue(R.styleable.ClassicsHeader_srlPrimaryColor)) {
-            setPrimaryColor(ta.getColor(R.styleable.ClassicsHeader_srlPrimaryColor, 0));
+            super.setPrimaryColor(ta.getColor(R.styleable.ClassicsHeader_srlPrimaryColor, 0));
         }
         if (ta.hasValue(R.styleable.ClassicsHeader_srlAccentColor)) {
             setAccentColor(ta.getColor(R.styleable.ClassicsHeader_srlAccentColor, 0));

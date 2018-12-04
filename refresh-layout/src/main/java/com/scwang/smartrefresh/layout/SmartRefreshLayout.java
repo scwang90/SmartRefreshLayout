@@ -1099,7 +1099,10 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 mRefreshFooter.onStartAnimator(this, mFooterHeight, (int) (mFooterMaxDragRate * mFooterHeight));
             }
             if (mOnMultiPurposeListener != null && mRefreshFooter instanceof RefreshFooter) {
-                mOnMultiPurposeListener.onLoadMore(this);
+                final OnLoadMoreListener listener = mOnMultiPurposeListener;
+                if (listener != null) {
+                    listener.onLoadMore(this);
+                }
                 mOnMultiPurposeListener.onFooterStartAnimator((RefreshFooter) mRefreshFooter, mFooterHeight, (int) (mFooterMaxDragRate * mFooterHeight));
             }
         }
@@ -2134,7 +2137,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         this.mHeaderBackgroundColor = 0;
         this.mHeaderNeedTouchEventWhenRefreshing = false;
         this.mHeaderHeightStatus = mHeaderHeightStatus.unNotify();
-        if (header.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
+        if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
             super.addView(mRefreshHeader.getView(), 0, new LayoutParams(width, height));
         } else {
             super.addView(mRefreshHeader.getView(), width, height);
