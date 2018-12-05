@@ -303,6 +303,10 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
     //<editor-fold desc="生命周期 life cycle">
 
+    /**
+     * 重写 onFinishInflate 来完成 smart 的特定功能
+     * 1.智能寻找 Xml 中定义的 Content、Header、Footer
+     */
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
@@ -352,6 +356,13 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
     }
 
+    /**
+     * 重写 onAttachedToWindow 来完成 smart 的特定功能
+     * 1.添加默认或者全局设置的 Header 和 Footer （缺省情况下才会）
+     * 2.做 Content 为空时的 TextView 提示
+     * 3.智能开启 嵌套滚动 NestedScrollingEnabled
+     * 4.初始化 主题颜色 和 调整 Header Footer Content 的显示顺序
+     */
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
@@ -472,6 +483,14 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
     }
 
+    /**
+     * 测量 Header Footer Content
+     * 1.测量代码看起来很复杂，时因为 Header Footer 有四种拉伸变换样式 {@link SpinnerStyle}，每一种样式有自己的测量方法
+     * 2.提供预览测量，可以在编辑 XML 的时候直接预览 （isInEditMode）
+     * 3.恢复水平触摸位置缓存 mLastTouchX 到屏幕中央
+     * @param widthMeasureSpec 水平测量参数
+     * @param heightMeasureSpec 竖直测量参数
+     */
     @Override
     protected void onMeasure(final int widthMeasureSpec,final int heightMeasureSpec) {
         int minimumHeight = 0;
@@ -598,6 +617,15 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         mLastTouchX = thisView.getMeasuredWidth() / 2;
     }
 
+    /**
+     * 布局 Header Footer Content
+     * 1.布局代码看起来相对简单，时因为测量的时候，已经做了复杂的计算，布局的时候，直接按照测量结果，布局就可以了
+     * @param changed 是否改变
+     * @param l 左
+     * @param t 上
+     * @param r 右
+     * @param b 下
+     */
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         final View thisView = this;
@@ -669,6 +697,11 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         }
     }
 
+    /**
+     * 重写 onDetachedFromWindow 来完成 smart 的特定功能
+     * 1.恢复原始状态
+     * 2.清除动画数据 （防止内存泄露）
+     */
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
@@ -693,6 +726,14 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         }
     }
 
+    /**
+     * 重写 drawChild 来完成 smart 的特定功能
+     * 1.为 Header 和 Footer 绘制背景 （设置了背景才绘制）
+     * 2.为 Header 和 Footer 在 FixedBehind 样式时，做剪裁功能 （mEnableClipHeaderWhenFixedBehind=true 才做）
+     * @param canvas 绘制发布
+     * @param child 需要绘制的子View
+     * @param drawingTime 绘制耗时
+     */
     @Override
     protected boolean drawChild(Canvas canvas, View child, long drawingTime) {
         final View thisView = this;
@@ -752,6 +793,12 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
     //<editor-fold desc="惯性计算">
     protected boolean mVerticalPermit = false;                  //竖直通信证（用于特殊事件的权限判定）
+
+    /**
+     * 重写 computeScroll 来完成 smart 的特定功能
+     * 1.越界回弹
+     * 2.边界碰撞
+     */
     @Override
     public void computeScroll() {
         int lastCurY = mScroller.getCurrY();
@@ -783,6 +830,12 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     //<editor-fold desc="滑动判断 judgement of slide">
     protected MotionEvent mFalsifyEvent = null;
 
+    /**
+     * 事件分发 （手势核心）
+     * 1.多点触摸
+     * 2.无缝衔接内容滚动
+     * @param e 事件
+     */
     @Override
     public boolean dispatchTouchEvent(MotionEvent e) {
 
@@ -975,6 +1028,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     }
 
     /**
+     * 在必要的时候 开始 Fling 模式
      * @param flingVelocity 速度
      * @return true 可以拦截 嵌套滚动的 Fling
      */
@@ -1008,7 +1062,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         return false;
     }
 
-    /*
+    /**
      * 在动画执行时，触摸屏幕，打断动画，转为拖动状态
      */
     protected boolean interceptAnimatorByAction(int action) {
@@ -1053,6 +1107,10 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
     //<editor-fold desc="状态更改 state changes">
 
+    /**
+     * 设置并通知状态改变 （setState）
+     * @param state 状态
+     */
     protected void notifyStateChanged(RefreshState state) {
         final RefreshState oldState = mState;
         if (oldState != state) {
@@ -1073,6 +1131,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         }
     }
 
+    /**
+     * 直接将状态设置为 Loading 正在加载
+     */
     protected void setStateDirectLoading() {
         if (mState != RefreshState.Loading) {
             mLastOpenTime = currentTimeMillis();
@@ -1108,6 +1169,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         }
     }
 
+    /**
+     * 设置状态为 Loading 正在加载
+     */
     protected void setStateLoading() {
         AnimatorListenerAdapter listener = new AnimatorListenerAdapter() {
             @Override
@@ -1135,6 +1199,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         }
     }
 
+    /**
+     * 设置状态为 Refreshing 正在刷新
+     */
     protected void setStateRefreshing() {
         AnimatorListenerAdapter listener = new AnimatorListenerAdapter() {
             @Override
@@ -1189,6 +1256,10 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         }
     }
 
+    /**
+     * 设置 副状态
+     * @param state 状态
+     */
     protected void setViceState(RefreshState state) {
         if (mState.isDragging && mState.isHeader != state.isHeader) {
             notifyStateChanged(RefreshState.None);
@@ -1198,10 +1269,16 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         }
     }
 
+    /**
+     * 判断是否 下拉的时候 需要 移动内容
+     */
     protected boolean isEnableTranslationContent(boolean enable, RefreshInternal internal) {
         return enable || mEnablePureScrollMode || internal == null || internal.getSpinnerStyle() == SpinnerStyle.FixedBehind;
     }
 
+    /**
+     * 判断时候可以 刷新 或者 加载
+     */
     protected boolean isEnableRefreshOrLoadMore(boolean enable) {
         return enable && !mEnablePureScrollMode;
     }
@@ -1330,7 +1407,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     }
     //</editor-fold>
 
-    /*
+    /**
      * 执行回弹动画
      */
     protected ValueAnimator animSpinner(int endSpinner, int startDelay, Interpolator interpolator, int duration) {
@@ -1373,7 +1450,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         return null;
     }
 
-    /*
+    /**
      * 越界回弹动画
      */
     protected void animSpinnerBounce(final float velocity) {
@@ -1390,7 +1467,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         }
     }
 
-    /*
+    /**
      * 手势拖动结束
      * 开始执行回弹动画
      */
@@ -1441,6 +1518,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         }
     }
 
+    /**
+     * 黏性移动 spinner
+     */
     protected void moveSpinnerInfinitely(float spinner) {
         final View thisView = this;
         if (mState == RefreshState.TwoLevel && spinner > 0) {
@@ -2938,6 +3018,11 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     //</editor-fold>
 
     //<editor-fold desc="核心接口 RefreshKernel">
+
+    /**
+     * 刷新布局核心功能接口
+     * 为功能复杂的 Header 或者 Footer 开放的接口
+     */
     public class RefreshKernelImpl implements RefreshKernel {
 
         @NonNull
@@ -3290,6 +3375,10 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
     //<editor-fold desc="内存泄漏 postDelayed优化">
 
+    /**
+     * 重写 post 和 postDelayed
+     * 自己用 Handler 和 DelayedRunnable 实现 防止内存泄漏
+     */
     @Override
     public boolean post(@NonNull Runnable action) {
         if (mHandler == null) {
@@ -3300,6 +3389,10 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         return mHandler.post(new DelayedRunnable(action,0));
     }
 
+    /**
+     * 重写 post 和 postDelayed
+     * 自己用 Handler 和 DelayedRunnable 实现 防止内存泄漏
+     */
     @Override
     public boolean postDelayed(@NonNull Runnable action, long delayMillis) {
         if (delayMillis == 0) {

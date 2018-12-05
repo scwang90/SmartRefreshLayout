@@ -24,6 +24,7 @@ import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.smartrefresh.header.PhoenixHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -102,7 +103,7 @@ public class NestedScrollExampleFragmentViewPager extends Fragment {
         }
     }
 
-    public static class SmartFragment extends Fragment {
+    public static class SmartFragment extends Fragment implements OnRefreshLoadMoreListener {
 
         private RecyclerView mRecyclerView;
         private BaseRecyclerAdapter<Void> mAdapter;
@@ -114,6 +115,7 @@ public class NestedScrollExampleFragmentViewPager extends Fragment {
             refreshLayout.setRefreshContent(mRecyclerView = new RecyclerView(inflater.getContext()));
             refreshLayout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);
             refreshLayout.setEnableLoadMore(false);
+            refreshLayout.setOnRefreshLoadMoreListener(this);
             return refreshLayout.getLayout();
         }
 
@@ -138,14 +140,14 @@ public class NestedScrollExampleFragmentViewPager extends Fragment {
         }
 
         public void onRefresh(final RefreshLayout refreshLayout) {
-            refreshLayout.getLayout().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mAdapter.refresh(initData());
-                    refreshLayout.finishRefresh();
-                    refreshLayout.resetNoMoreData();//setNoMoreData(false);
-                }
-            }, 2000);
+//            refreshLayout.getLayout().postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    mAdapter.refresh(initData());
+//                    refreshLayout.finishRefresh();
+//                    refreshLayout.resetNoMoreData();//setNoMoreData(false);
+//                }
+//            }, 2000);
         }
 
         public void onLoadMore(final RefreshLayout refreshLayout) {

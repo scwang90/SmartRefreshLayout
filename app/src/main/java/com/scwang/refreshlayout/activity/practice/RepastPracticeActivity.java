@@ -50,7 +50,7 @@ public class RepastPracticeActivity extends AppCompatActivity {
         });
 
         final RefreshLayout refreshLayout = findViewById(R.id.refreshLayout);
-        refreshLayout.setEnableFooterFollowWhenLoadFinished(true);
+        refreshLayout.setEnableFooterFollowWhenNoMoreData(true);
 
         //第一次进入演示刷新
         if (isFirstEnter) {

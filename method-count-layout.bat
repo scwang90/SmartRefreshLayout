@@ -62,8 +62,8 @@ if "%ERRORLEVEL%" == "0" (
 
 
 REM set PATH_DEX=%~dp0art/app-debug.apk
-
-call java -jar ./art/dex-method-counts.jar --filter=all --include-classes --include-detail --output-style=tree --package-filter=android  %PATH_DEX% > %OUTPUT%
+REM --package-filter=android
+call java -jar ./art/dex-method-counts.jar --filter=all --include-classes --include-detail --output-style=tree   %PATH_DEX% > %OUTPUT%
 
 call ./method-count-words.bat %OUTPUT% %OUTPUT:.txt=-count.txt%
 
