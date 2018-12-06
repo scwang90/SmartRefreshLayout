@@ -1648,8 +1648,11 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         mNestedParent.onNestedScrollAccepted(child, target, axes);
         // Dispatch up to the nested parent
         mNestedChild.startNestedScroll(axes & ViewCompat.SCROLL_AXIS_VERTICAL);
+
         mTotalUnconsumed = mSpinner;//0;
         mNestedInProgress = true;
+
+        interceptAnimatorByAction(MotionEvent.ACTION_DOWN);
     }
 
     @Override
