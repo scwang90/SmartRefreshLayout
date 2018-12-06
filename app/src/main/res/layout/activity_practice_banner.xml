@@ -38,7 +38,6 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:realtimeBlurRadius="10dp"
-        android:alpha="0.5"
         app:realtimeOverlayColor="@color/colorPrimaryOverlay"/>
 
     <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
