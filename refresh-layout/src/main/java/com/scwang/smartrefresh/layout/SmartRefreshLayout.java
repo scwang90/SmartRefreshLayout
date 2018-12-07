@@ -1134,7 +1134,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     /**
      * 直接将状态设置为 Loading 正在加载
      */
-    protected void setStateDirectLoading() {
+    protected void setStateDirectLoading(boolean triggerLoadMoreEvent) {
         if (mState != RefreshState.Loading) {
             mLastOpenTime = currentTimeMillis();
 //            if (mState != RefreshState.LoadReleased) {
@@ -1152,7 +1152,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             mFooterLocked = true;//Footer 正在loading 的时候是否锁住 列表不能向上滚动
             notifyStateChanged(RefreshState.Loading);
             if (mLoadMoreListener != null) {
-                mLoadMoreListener.onLoadMore(this);
+                if (triggerLoadMoreEvent) {
+                    mLoadMoreListener.onLoadMore(this);
+                }
             } else if (mOnMultiPurposeListener == null) {
                 finishLoadMore(2000);//如果没有任何加载监听器，两秒之后自动关闭
             }
@@ -1161,7 +1163,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             }
             if (mOnMultiPurposeListener != null && mRefreshFooter instanceof RefreshFooter) {
                 final OnLoadMoreListener listener = mOnMultiPurposeListener;
-                if (listener != null) {
+                if (listener != null && triggerLoadMoreEvent) {
                     listener.onLoadMore(this);
                 }
                 mOnMultiPurposeListener.onFooterStartAnimator((RefreshFooter) mRefreshFooter, mFooterHeight, (int) (mFooterMaxDragRate * mFooterHeight));
@@ -1176,7 +1178,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         AnimatorListenerAdapter listener = new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                setStateDirectLoading();
+                setStateDirectLoading(true);
             }
         };
         notifyStateChanged(RefreshState.LoadReleased);
@@ -1564,11 +1566,28 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 && mState != RefreshState.Refreshing
                 && mState != RefreshState.Loading
                 && mState != RefreshState.LoadFinish) {
-            setStateDirectLoading();
             if (mDisableContentWhenLoading) {
                 animationRunnable = null;
                 mKernel.animSpinner(-mFooterHeight);
             }
+            setStateDirectLoading(false);
+            /*
+             * 自动加载模式时，延迟触发 onLoadMore ，mReboundDuration 保证动画能顺利执行
+             */
+            postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (mLoadMoreListener != null) {
+                        mLoadMoreListener.onLoadMore(SmartRefreshLayout.this);
+                    } else if (mOnMultiPurposeListener == null) {
+                        finishLoadMore(2000);//如果没有任何加载监听器，两秒之后自动关闭
+                    }
+                    final OnLoadMoreListener listener = mOnMultiPurposeListener;
+                    if (listener != null) {
+                        listener.onLoadMore(SmartRefreshLayout.this);
+                    }
+                }
+            }, mReboundDuration);
         }
     }
 
