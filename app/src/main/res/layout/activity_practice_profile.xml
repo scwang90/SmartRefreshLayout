@@ -42,7 +42,7 @@
                     android:textColor="@android:color/white"
                     android:text="Kanye West"/>
 
-                <TextView  style="@style/AppTheme.Label.Discription"
+                <TextView  style="@style/AppTheme.Label.Description"
                     android:layout_marginTop="@dimen/padding_common"
                     android:textColor="@android:color/white"
                     android:text="American hip hop musician, songwriter,\nrecord producer and film director"/>

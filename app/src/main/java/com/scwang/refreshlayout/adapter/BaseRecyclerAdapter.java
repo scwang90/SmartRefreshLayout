@@ -29,7 +29,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<SmartV
     private final List<T> mList;
     private int mLastPosition = -1;
     private boolean mOpenAnimationEnable = true;
-    private AdapterView.OnItemClickListener mListener;
+    protected AdapterView.OnItemClickListener mListener;
 
     public BaseRecyclerAdapter(@LayoutRes int layoutId) {
         setHasStableIds(false);

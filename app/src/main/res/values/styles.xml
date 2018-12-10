@@ -92,7 +92,7 @@
         <item name="android:textSize">@dimen/textsize_small</item>
     </style>
 
-    <style name="AppTheme.Label.Discription">
+    <style name="AppTheme.Label.Description">
         <item name="android:gravity">top</item>
         <item name="android:lineSpacingExtra">5dp</item>
         <item name="android:ellipsize">end</item>
@@ -185,7 +185,7 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="AppTheme.CommonBar.Value" parent="AppTheme.Label.Discription">
+    <style name="AppTheme.CommonBar.Value" parent="AppTheme.Label.Description">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:layout_height">wrap_content</item>

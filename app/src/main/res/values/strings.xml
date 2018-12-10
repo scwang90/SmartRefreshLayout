@@ -56,6 +56,7 @@
     <string name="fragment_example_viewpager">ViewPager</string>
     <string name="fragment_example_three_level">Three Level Refresh</string>
     <string name="fragment_example_bottom_sheet">Bottom Sheet</string>
+    <string name="fragment_example_flexbox_layout">Flexbox Layout Manager</string>
 
     <string name="index_practice_repast">Simple customization header, HeaderInsetStart</string>
     <string name="index_practice_profile">Pure scroll mode</string>
@@ -78,6 +79,7 @@
     <string name="index_example_pager">The usage of ViewPager</string>
     <string name="index_example_bottom_sheet">The usage of BottomSheet</string>
     <string name="index_example_level">The usage of three level refresh</string>
+    <string name="index_example_flexbox">The usage of FlexboxLayoutManager</string>
 
     <string name="item_style_theme_orange_abstract">Change theme to orange color</string>
     <string name="item_style_theme_red_abstract">Change theme to red color</string>
@@ -149,4 +151,7 @@
         refreshLayout.setRefreshHeader(new MaterialHeader(this));\n
         refreshLayout.setRefreshFooter(new BallPulseFooter(this));\n\n
     </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

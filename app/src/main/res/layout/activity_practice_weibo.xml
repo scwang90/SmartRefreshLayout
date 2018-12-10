@@ -127,7 +127,7 @@
                                         android:text="粉丝 62"/>
                                 </LinearLayout>
 
-                                <TextView style="@style/AppTheme.Label.Discription"
+                                <TextView style="@style/AppTheme.Label.Description"
                                     android:id="@+id/signature"
                                     android:layout_below="@id/relationship"
                                     android:layout_marginTop="@dimen/padding_common"
@@ -244,7 +244,7 @@
                                 android:layout_gravity="center_vertical"
                                 android:textColor="@android:color/tertiary_text_dark"
                                 android:text="Steffen Norgaard Andersen"/>
-                            <TextView style="@style/AppTheme.Label.Discription"
+                            <TextView style="@style/AppTheme.Label.Description"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginTop="@dimen/padding_common_d"
                                 android:textColor="@android:color/tertiary_text_dark"
@@ -560,7 +560,7 @@
                                 android:layout_gravity="center_vertical"
                                 android:textColor="@android:color/tertiary_text_dark"
                                 android:text="Steffen Norgaard Andersen"/>
-                            <TextView style="@style/AppTheme.Label.Discription"
+                            <TextView style="@style/AppTheme.Label.Description"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginTop="@dimen/padding_common_d"
                                 android:textColor="@android:color/tertiary_text_dark"
@@ -749,7 +749,7 @@
                                 android:layout_gravity="center_vertical"
                                 android:textColor="@android:color/tertiary_text_dark"
                                 android:text="Steffen Norgaard Andersen"/>
-                            <TextView style="@style/AppTheme.Label.Discription"
+                            <TextView style="@style/AppTheme.Label.Description"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginTop="@dimen/padding_common_d"
                                 android:textColor="@android:color/tertiary_text_dark"
@@ -938,7 +938,7 @@
                                 android:layout_gravity="center_vertical"
                                 android:textColor="@android:color/tertiary_text_dark"
                                 android:text="Steffen Norgaard Andersen"/>
-                            <TextView style="@style/AppTheme.Label.Discription"
+                            <TextView style="@style/AppTheme.Label.Description"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginTop="@dimen/padding_common_d"
                                 android:textColor="@android:color/tertiary_text_dark"
