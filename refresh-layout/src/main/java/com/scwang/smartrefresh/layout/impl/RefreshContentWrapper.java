@@ -43,7 +43,7 @@ public class RefreshContentWrapper implements RefreshContent , CoordinatorLayout
 //    protected int mHeaderHeight = Integer.MAX_VALUE;
 //    protected int mFooterHeight = mHeaderHeight - 1;
     protected View mContentView;//直接内容视图
-    protected View mRealContentView;//被包裹的原真实视图
+    protected View mOriginalContentView;//被包裹的原真实视图
     protected View mScrollableView;
     protected View mFixedHeader;
     protected View mFixedFooter;
@@ -54,7 +54,7 @@ public class RefreshContentWrapper implements RefreshContent , CoordinatorLayout
     protected ScrollBoundaryDeciderAdapter mBoundaryAdapter = new ScrollBoundaryDeciderAdapter();
 
     public RefreshContentWrapper(@NonNull View view) {
-        this.mContentView = mRealContentView = mScrollableView = view;
+        this.mContentView = mOriginalContentView = mScrollableView = view;
     }
 
     //<editor-fold desc="findScrollableView">
@@ -139,7 +139,7 @@ public class RefreshContentWrapper implements RefreshContent , CoordinatorLayout
     public void moveSpinner(int spinner, int headerTranslationViewId, int footerTranslationViewId) {
         boolean translated = false;
         if (headerTranslationViewId != View.NO_ID) {
-            View headerTranslationView = mRealContentView.findViewById(headerTranslationViewId);
+            View headerTranslationView = mOriginalContentView.findViewById(headerTranslationViewId);
             if (headerTranslationView != null) {
                 if (spinner > 0) {
                     translated = true;
@@ -150,7 +150,7 @@ public class RefreshContentWrapper implements RefreshContent , CoordinatorLayout
             }
         }
         if (footerTranslationViewId != View.NO_ID) {
-            View footerTranslationView = mRealContentView.findViewById(footerTranslationViewId);
+            View footerTranslationView = mOriginalContentView.findViewById(footerTranslationViewId);
             if (footerTranslationView != null) {
                 if (spinner < 0) {
                     translated = true;
@@ -161,9 +161,9 @@ public class RefreshContentWrapper implements RefreshContent , CoordinatorLayout
             }
         }
         if (!translated) {
-            mRealContentView.setTranslationY(spinner);
+            mOriginalContentView.setTranslationY(spinner);
         } else {
-            mRealContentView.setTranslationY(0);
+            mOriginalContentView.setTranslationY(0);
         }
         if (mFixedHeader != null) {
             mFixedHeader.setTranslationY(Math.max(0, spinner));
@@ -282,10 +282,11 @@ public class RefreshContentWrapper implements RefreshContent , CoordinatorLayout
     public void onAnimationUpdate(ValueAnimator animation) {
         int value = (int) animation.getAnimatedValue();
         try {
+            int dy = value = mLastSpinner;
             if (mScrollableView instanceof AbsListView) {
-                scrollListBy((AbsListView) mScrollableView, value - mLastSpinner);
+                scrollListBy((AbsListView) mScrollableView, dy);
             } else {
-                mScrollableView.scrollBy(0, value - mLastSpinner);
+                mScrollableView.scrollBy(0, dy);
             }
         } catch (Throwable ignored) {
             //根据用户反馈，此处可能会有BUG

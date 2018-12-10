@@ -1,0 +1,90 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.scwang.refreshlayout.fragment.practice.InstantPracticeFragment">
+
+    <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:title="@string/fragment_practice_instant">
+    </android.support.v7.widget.Toolbar>
+
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scaleY="-1"
+        app:srlEnableRefresh="false"
+        app:srlEnableAutoLoadMore="false"
+        app:srlEnableNestedScrolling="false">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none"
+            android:fadeScrollbars="false"
+            android:dividerHeight="0dp"
+            android:divider="@android:color/transparent"
+            tools:itemCount="1"
+            android:scaleY="-1"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_practice_instant"/>
+        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+            android:id="@+id/footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleY="-1">
+        </com.scwang.smartrefresh.layout.footer.ClassicsFooter>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <View style="@style/AppTheme.Division"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dip"
+        android:background="#f8f8f8"
+        android:gravity="center_vertical">
+        <ImageView
+            android:id="@+id/more"
+            android:padding="2dp"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/skin_instantchat_more"
+            android:background="?attr/selectableItemBackgroundBorderless"/>
+        <EditText style="@style/AppTheme.Label.Description"
+            android:id="@+id/input"
+            android:layout_margin="3dip"
+            android:layout_width="0dip"
+            android:layout_weight="1.0"
+            android:layout_height="wrap_content"
+            android:maxLength="300"
+            android:imeOptions="actionSend"
+            android:inputType="textPersonName"
+            android:hint="@string/instant_message_input_hint"
+            android:background="@mipmap/skin_common_btn_blue_disabled"
+            android:padding="@dimen/dimenPaddingCommon"/>
+        <TextView
+            android:id="@+id/send"
+            android:layout_width="50dp"
+            android:layout_height="38dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:text="@string/instant_message_send"
+            android:textColor="@android:color/white"
+            android:background="@drawable/button_blue"
+            android:gravity="center"/>
+    </LinearLayout>
+
+</LinearLayout>

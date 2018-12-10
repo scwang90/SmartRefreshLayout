@@ -2,6 +2,7 @@ package com.scwang.refreshlayout.adapter;
 
 import android.database.DataSetObservable;
 import android.database.DataSetObserver;
+import android.os.Message;
 import android.support.annotation.LayoutRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
+
+import com.scwang.refreshlayout.fragment.practice.InstantPracticeFragment;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -60,6 +63,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<SmartV
         }
     }
 
+
     //<editor-fold desc="RecyclerAdapter">
     @Override
     public SmartViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -92,6 +96,10 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<SmartV
 
     //<editor-fold desc="API">
 
+    public T get(int index) {
+        return mList.get(index);
+    }
+
     public BaseRecyclerAdapter<T> setOnItemClickListener(AdapterView.OnItemClickListener listener) {
         mListener = listener;
         return this;
@@ -112,6 +120,15 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<SmartV
         notifyListDataSetChanged();
         return this;
     }
+
+    public BaseRecyclerAdapter<T> insert(Collection<T> collection) {
+        mList.addAll(0, collection);
+        notifyDataSetChanged();
+        notifyListDataSetChanged();
+        return this;
+    }
+
+
     //</editor-fold>
 
     //<editor-fold desc="ListAdapter">

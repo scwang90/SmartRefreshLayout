@@ -38,12 +38,12 @@
                     android:src="@mipmap/image_avatar_3"/>
 
                 <TextView  style="@style/AppTheme.Label.Title.Large"
-                    android:layout_marginTop="@dimen/padding_common"
+                    android:layout_marginTop="@dimen/dimenPaddingCommon"
                     android:textColor="@android:color/white"
                     android:text="Kanye West"/>
 
                 <TextView  style="@style/AppTheme.Label.Description"
-                    android:layout_marginTop="@dimen/padding_common"
+                    android:layout_marginTop="@dimen/dimenPaddingCommon"
                     android:textColor="@android:color/white"
                     android:text="American hip hop musician, songwriter,\nrecord producer and film director"/>
 
@@ -78,7 +78,7 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="@dimen/padding_common"
+                        android:layout_margin="@dimen/dimenPaddingCommon"
                         android:contentDescription="@string/app_name"
                         app:srcCompat="@drawable/ic_fly_refresh_folder"/>
                 </com.flyco.roundview.RoundFrameLayout>
@@ -105,7 +105,7 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="@dimen/padding_common"
+                        android:layout_margin="@dimen/dimenPaddingCommon"
                         android:contentDescription="@string/app_name"
                         app:srcCompat="@drawable/ic_fly_refresh_poll"/>
                 </com.flyco.roundview.RoundFrameLayout>
@@ -132,7 +132,7 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="@dimen/padding_common"
+                        android:layout_margin="@dimen/dimenPaddingCommon"
                         android:contentDescription="@string/app_name"
                         app:srcCompat="@drawable/ic_fly_refresh_smartphone"/>
                 </com.flyco.roundview.RoundFrameLayout>
@@ -159,7 +159,7 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="@dimen/padding_common"
+                        android:layout_margin="@dimen/dimenPaddingCommon"
                         android:contentDescription="@string/app_name"
                         app:srcCompat="@drawable/ic_fly_refresh_send"/>
                 </com.flyco.roundview.RoundFrameLayout>

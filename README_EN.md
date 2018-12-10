@@ -183,7 +183,7 @@ Note: this method is the lowest priority.
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/padding_common"
+        android:padding="@dimen/dimenPaddingCommon"
         android:background="@android:color/white"
         android:text="@string/description_define_in_xml"/>
     <com.scwang.smartrefresh.layout.footer.ClassicsFooter

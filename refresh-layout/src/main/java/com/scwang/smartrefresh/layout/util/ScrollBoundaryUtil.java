@@ -63,6 +63,9 @@ public class ScrollBoundaryUtil {
             for (int i = 0; i < childCount; i++) {
                 View child = viewGroup.getChildAt(i);
                 if (isTransformedTouchPointInView(viewGroup, child, touch.x, touch.y, point)) {
+                    if (child.isFocusableInTouchMode()) {
+                        return false;
+                    }
                     touch.offset(point.x, point.y);
                     boolean can = canLoadMore(child, touch, contentFull);
                     touch.offset(-point.x, -point.y);

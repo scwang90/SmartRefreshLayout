@@ -59,6 +59,7 @@
         <attr name="srlEnableClipHeaderWhenFixedBehind" format="boolean"/>
         <attr name="srlEnableClipFooterWhenFixedBehind" format="boolean"/>
         <attr name="srlEnableOverScrollDrag" format="boolean"/>
+        <!--<attr name="srlEnableNestedScrollingOnly" format="boolean"/>-->
         <attr name="srlDisableContentWhenRefresh" format="boolean"/>
         <attr name="srlDisableContentWhenLoading" format="boolean"/>
         <attr name="srlFixedHeaderViewId" format="reference"/>

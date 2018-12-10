@@ -88,4 +88,20 @@ public class SmartViewHolder extends RecyclerView.ViewHolder implements View.OnC
         }
         return this;
     }
+
+    public SmartViewHolder gone(int id) {
+        View view = findViewById(id);
+        if (view != null) {
+            view.setVisibility(View.GONE);
+        }
+        return this;
+    }
+
+    public SmartViewHolder visible(int id) {
+        View view = findViewById(id);
+        if (view != null) {
+            view.setVisibility(View.VISIBLE);
+        }
+        return this;
+    }
 }

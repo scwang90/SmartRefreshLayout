@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:left="@dimen/padding_common">
+    <item android:left="@dimen/dimenPaddingCommon">
         <shape android:shape="rectangle">
             <solid android:color="@color/colorDivision" />
             <size android:height="@dimen/division_line"/>

@@ -134,6 +134,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     protected boolean mEnableScrollContentWhenLoaded = true;//是否在加载更多完成之后滚动内容显示新数据
     protected boolean mEnableScrollContentWhenRefreshed = true;//是否在刷新完成之后滚动内容显示新数据
     protected boolean mEnableLoadMoreWhenContentNotFull = true;//在内容不满一页的时候，是否可以上拉加载更多
+//    protected boolean mEnableNestedScrollingOnly = false;//是否只启用嵌套滚动模式，关闭传功滚动模式（启用之后，嵌套滚动也自动被开启，默认如果开启嵌套滚动的话，传功滚动模式必要时也辅助滚动）
     protected boolean mDisableContentWhenRefresh = false;//是否开启在刷新时候禁止操作内容视图
     protected boolean mDisableContentWhenLoading = false;//是否开启在刷新时候禁止操作内容视图
     protected boolean mFooterNoMoreData = false;//数据是否全部加载完成，如果完成就不能在触发加载事件
@@ -269,6 +270,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         mEnableClipHeaderWhenFixedBehind = ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnableClipHeaderWhenFixedBehind, mEnableClipHeaderWhenFixedBehind);
         mEnableClipFooterWhenFixedBehind = ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnableClipFooterWhenFixedBehind, mEnableClipFooterWhenFixedBehind);
         mEnableOverScrollDrag = ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnableOverScrollDrag, mEnableOverScrollDrag);
+//        mEnableNestedScrollingOnly = ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnableNestedScrollingOnly, mEnableNestedScrollingOnly);
         mFixedHeaderViewId = ta.getResourceId(R.styleable.SmartRefreshLayout_srlFixedHeaderViewId, mFixedHeaderViewId);
         mFixedFooterViewId = ta.getResourceId(R.styleable.SmartRefreshLayout_srlFixedFooterViewId, mFixedFooterViewId);
         mHeaderTranslationViewId = ta.getResourceId(R.styleable.SmartRefreshLayout_srlHeaderTranslationViewId, mHeaderTranslationViewId);
@@ -868,6 +870,11 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         //---------------------------------------------------------------------------
         //</editor-fold>
 
+
+
+        //---------------------------------------------------------------------------
+        //嵌套滚动模式辅助
+        //---------------------------------------------------------------------------
         final View thisView = this;
         if (mNestedInProgress) {//嵌套滚动时，补充竖直方向不滚动，但是水平方向滚动，需要通知 onHorizontalDrag
             int totalUnconsumed = mTotalUnconsumed;
@@ -899,6 +906,16 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             return false;
         }
 
+//        if (mEnableNestedScrollingOnly && mNestedChild.isNestedScrollingEnabled()) {
+//            return super.dispatchTouchEvent(e);
+//        }
+        //-------------------------------------------------------------------------//
+
+
+
+        //---------------------------------------------------------------------------
+        //传统模式滚动
+        //---------------------------------------------------------------------------
         switch (action) {
             case MotionEvent.ACTION_DOWN:
                 /*----------------------------------------------------*/
@@ -1025,6 +1042,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 }
                 break;
         }
+        //-------------------------------------------------------------------------//
         return super.dispatchTouchEvent(e);
     }
 
@@ -2186,6 +2204,27 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         return this;
     }
 
+//    /**
+//     * Sets whether to enable pure nested scrolling mode
+//     * Smart scrolling supports both [nested scrolling] and [traditional scrolling] modes
+//     * With nested scrolling enabled, traditional mode also works when necessary
+//     * However, sometimes interference and conflict can occur. If you find this conflict, you can try to turn on [pure nested scrolling] mode and [traditional mode] off
+//     * 设置是否开启【纯嵌套滚动】模式
+//     * Smart 的滚动支持 【嵌套滚动】 + 【传统滚动】 两种模式
+//     * 在开启 【嵌套滚动】 的情况下，【传统模式】也会在必要的时候发挥作用
+//     * 但是有时候也会发生干扰和冲突，如果您发现了这个冲突，可以尝试开启 【纯嵌套滚动】模式，【传统模式】关闭
+//     * @param enabled 是否启用
+//     * @return RefreshLayout
+//     */
+//    @Override
+//    public RefreshLayout setEnableNestedScrollOnly(boolean enabled) {
+//        if (enabled && !mNestedChild.isNestedScrollingEnabled()) {
+//            mNestedChild.setNestedScrollingEnabled(true);
+//        }
+//        mEnableNestedScrollingOnly = enabled;
+//        return this;
+//    }
+
     /**
      * Set whether to enable the action content view when refreshing.
      * 设置是否开启在刷新时候禁止操作内容视图
@@ -3213,6 +3252,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
          * 移动滚动 Scroll
          * moveSpinner 的取名来自 谷歌官方的 {@link android.support.v4.widget.SwipeRefreshLayout#moveSpinner(float)}
          */
+        @SuppressWarnings("ConstantConditions")
         public RefreshKernel moveSpinner(int spinner, boolean isDragging) {
             if (mSpinner == spinner
                     && (mRefreshHeader == null || !mRefreshHeader.isSupportHorizontalDrag())
