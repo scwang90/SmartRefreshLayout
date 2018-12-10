@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -12,10 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.google.android.flexbox.AlignItems;
-import com.google.android.flexbox.FlexDirection;
-import com.google.android.flexbox.FlexWrap;
-import com.google.android.flexbox.FlexboxLayoutManager;
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
@@ -47,15 +44,16 @@ public class FlexboxLayoutManagerFragment extends Fragment {
             }
         });
 
-        FlexboxLayoutManager manager = new FlexboxLayoutManager(root.getContext());
-        //设置主轴排列方式
-        manager.setFlexDirection(FlexDirection.ROW);
-        //设置是否换行
-        manager.setFlexWrap(FlexWrap.WRAP);
-        manager.setAlignItems(AlignItems.STRETCH);
+//        FlexboxLayoutManager manager = new FlexboxLayoutManager(root.getContext());
+//        //设置主轴排列方式
+//        manager.setFlexDirection(FlexDirection.ROW);
+//        //设置是否换行
+//        manager.setFlexWrap(FlexWrap.WRAP);
+//        manager.setAlignItems(AlignItems.STRETCH);
 
         RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(manager);
+//        recyclerView.setLayoutManager(manager);
+        recyclerView.setLayoutManager(new LinearLayoutManager(root.getContext()));
         recyclerView.setClipToPadding(false);
         recyclerView.setPadding(DensityUtil.dp2px(2.5f),DensityUtil.dp2px(2.5f),DensityUtil.dp2px(2.5f),DensityUtil.dp2px(2.5f));
 
@@ -75,31 +73,20 @@ public class FlexboxLayoutManagerFragment extends Fragment {
 
                 holder.itemView.setBackgroundResource(colorIds[random.nextInt(colorIds.length)]);
                 holder.itemView.setMinimumWidth(DensityUtil.dp2px(70f + random.nextInt(70)));
-
-//                ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
-//                if (lp instanceof FlexboxLayoutManager.LayoutParams) {
-//                    FlexboxLayoutManager.LayoutParams flexboxLp =
-//                            (FlexboxLayoutManager.LayoutParams) holder.itemView.getLayoutParams();
-//                    flexboxLp.setFlexGrow(1.0f);
-//                    flexboxLp.bottomMargin = DensityUtil.dp2px(2.5f);
-//                    flexboxLp.topMargin = DensityUtil.dp2px(2.5f);
-//                    flexboxLp.leftMargin = DensityUtil.dp2px(2.5f);
-//                    flexboxLp.rightMargin = DensityUtil.dp2px(2.5f);
-//                }
             }
             @NonNull
             @Override
             public SmartViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                FlexboxLayoutManager.LayoutParams lp = new FlexboxLayoutManager.LayoutParams(-2,-2);
-                lp.setFlexGrow(1);
-                lp.bottomMargin = DensityUtil.dp2px(2.5f);
-                lp.topMargin = DensityUtil.dp2px(2.5f);
-                lp.leftMargin = DensityUtil.dp2px(2.5f);
-                lp.rightMargin = DensityUtil.dp2px(2.5f);
+//                FlexboxLayoutManager.LayoutParams lp = new FlexboxLayoutManager.LayoutParams(-2,-2);
+//                lp.setFlexGrow(1);
+//                lp.bottomMargin = DensityUtil.dp2px(2.5f);
+//                lp.topMargin = DensityUtil.dp2px(2.5f);
+//                lp.leftMargin = DensityUtil.dp2px(2.5f);
+//                lp.rightMargin = DensityUtil.dp2px(2.5f);
                 ImageView imageVIew = new ImageView(parent.getContext());
                 imageVIew.setMinimumWidth(DensityUtil.dp2px(90f));
                 imageVIew.setMinimumHeight(DensityUtil.dp2px(90f));
-                imageVIew.setLayoutParams(lp);
+//                imageVIew.setLayoutParams(lp);
                 return new SmartViewHolder(imageVIew, mListener);
             }
         });

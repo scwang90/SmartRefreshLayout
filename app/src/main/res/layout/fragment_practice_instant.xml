@@ -40,7 +40,8 @@
             android:id="@+id/footer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scaleY="-1">
+            android:scaleY="-1"
+            app:srlTextPulling="下拉加载更多">
         </com.scwang.smartrefresh.layout.footer.ClassicsFooter>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
