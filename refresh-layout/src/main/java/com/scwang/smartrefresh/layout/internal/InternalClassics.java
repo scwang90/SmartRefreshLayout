@@ -286,9 +286,11 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
         mTitleText.setTextColor(accentColor);
         if (mArrowDrawable != null) {
             mArrowDrawable.setColor(accentColor);
+            mArrowView.invalidateDrawable(mArrowDrawable);
         }
         if (mProgressDrawable != null) {
             mProgressDrawable.setColor(accentColor);
+            mProgressView.invalidateDrawable(mProgressDrawable);
         }
         return self();
     }

@@ -55,6 +55,27 @@ public class BasicExampleActivity extends AppCompatActivity {
                 holder.textColorId(android.R.id.text2, R.color.colorTextAssistant);
             }
         });
+        //todo SCROLL_STATE_IDLE
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            int SCROLL_STATE_IDLE = 0;
+            int SCROLL_STATE_TOUCH_SCROLL = 1;
+            int SCROLL_STATE_FLING = 2;
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (scrollState == SCROLL_STATE_IDLE) {
+                    System.out.println("SCROLL_STATE_IDLE");
+                } else if (scrollState == SCROLL_STATE_TOUCH_SCROLL) {
+                    System.out.println("SCROLL_STATE_TOUCH_SCROLL");
+                } else if (scrollState == SCROLL_STATE_FLING) {
+                    System.out.println("SCROLL_STATE_FLING");
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+            }
+        });
 
         final RefreshLayout refreshLayout = findViewById(R.id.refreshLayout);
         refreshLayout.setEnableAutoLoadMore(true);//开启自动加载功能（非必须）

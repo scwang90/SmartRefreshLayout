@@ -2534,12 +2534,12 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     @Override
     @Deprecated
     public SmartRefreshLayout setNoMoreData(boolean noMoreData) {
-        if (mState == RefreshState.Loading) {
+        if (mState == RefreshState.Loading && noMoreData) {
             finishLoadMore();
         }
         mFooterNoMoreData = noMoreData;
         if (mRefreshFooter instanceof RefreshFooter && !((RefreshFooter)mRefreshFooter).setNoMoreData(noMoreData)) {
-            System.out.println("Footer:" + mRefreshFooter + " NoMoreData is not supported.(不支持NoMoreData)");
+            System.out.println("Footer:" + mRefreshFooter + " NoMoreData is not supported.(不支持NoMoreData，请使用ClassicsFooter或者自定义)");
         }
         return this;
     }
@@ -2553,7 +2553,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     public RefreshLayout resetNoMoreData() {
         mFooterNoMoreData = false;
         if (mRefreshFooter instanceof RefreshFooter && !((RefreshFooter)mRefreshFooter).setNoMoreData(false)) {
-            System.out.println("Footer:" + mRefreshFooter + " NoMoreData is not supported.(不支持NoMoreData)");
+            System.out.println("Footer:" + mRefreshFooter + " NoMoreData is not supported.(不支持NoMoreData，请使用ClassicsFooter或者自定义)");
         }
         return this;
     }
