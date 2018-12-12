@@ -120,7 +120,7 @@ public class TaurusStyleActivity extends AppCompatActivity implements AdapterVie
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        switch (Item.values()[position]) {
+        switch (Item.values()[position % Item.values().length]) {
             case 折叠:
                 mAppBarLayout.setExpanded(false, true);
                 mAppBarLayout.setEnabled(false);
