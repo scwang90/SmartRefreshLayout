@@ -102,17 +102,17 @@ public class NestedScrollExampleFragment extends Fragment implements AdapterView
                 }
             };
             final RefreshLayout refreshLayout = root.findViewById(R.id.refreshLayout);
-            refreshLayout.setEnableFooterFollowWhenLoadFinished(true);
+            refreshLayout.setEnableFooterFollowWhenNoMoreData(true);
             refreshLayout.setRefreshFooter(new ClassicsFooter(getContext()));
             refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
                 @Override
                 public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-//                    if (adapter.getItemCount() < 20) {
-//                        loadMore.run();
-//                        refreshLayout.finishLoadMore(2000);
-//                    } else {
-//                        refreshLayout.finishLoadMoreWithNoMoreData();
-//                    }
+                    if (adapter.getItemCount() < 100) {
+                        loadMore.run();
+                        refreshLayout.finishLoadMore(2000);
+                    } else {
+                        refreshLayout.finishLoadMoreWithNoMoreData();
+                    }
                 }
             });
             loadMore.run();

@@ -16,6 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
@@ -90,6 +92,14 @@ public class NestedScrollExampleFragmentIntegral extends Fragment implements Ada
                         refreshLayout.finishLoadMore();
                     }
                 }, 2000);
+            }
+        });
+
+        TextView textView = root.findViewById(R.id.target);
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "点击测试", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.scwang.refreshlayout.app"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -47,6 +47,7 @@ repositories {
 }
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:support-v4:27.1.1'
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -55,9 +56,9 @@ dependencies {
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
     testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 
-//    implementation project(':refresh-footer')
-//    implementation project(':refresh-header')
-//    implementation project(':refresh-layout')
+    implementation project(':refresh-footer')
+    implementation project(':refresh-header')
+    implementation project(':refresh-layout')
 
 //    //noinspection GradleDependency,GradleCompatible
 //    implementation ('com.android.support:support-v4:22.1.0') {
@@ -68,7 +69,7 @@ dependencies {
 //        exclude group: 'com.android.support'
 //    }
 //    implementation ('com.android.support:cardview-v7:23.0.0') {
-//        exclude group: 'com.android.support'
+//        exclude group: 'com.androidflexboxlayout.support'
 //    }
 //    implementation ('com.android.support:design:25.3.0') {
 //        exclude group: 'com.android.support'
@@ -77,20 +78,20 @@ dependencies {
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support:cardview-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-//    implementation 'com.google.android:flexbox:1.1.0'
 
     implementation 'com.flyco.roundview:FlycoRoundView_Lib:1.1.4@aar'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34'
     implementation 'com.github.czy1121:loadinglayout:1.0.1'
     implementation 'com.github.mmin18:realtimeblurview:1.0.6'
-    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.google.android:flexbox:1.0.0'
     implementation 'com.wang.avi:library:2.1.3'
     implementation 'com.youth.banner:banner:1.4.9'  //最新版本
     implementation 'de.hdodenhof:circleimageview:2.1.0'
     implementation 'jp.wasabeef:recyclerview-animators:2.2.6'
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
-    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-15'
-    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-15'
+//    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-16'
+//    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-16'
     testImplementation 'junit:junit:4.12'
 
     implementation 'com.github.bumptech.glide:glide:4.7.1'

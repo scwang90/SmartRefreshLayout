@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="150dp"
     android:background="@android:color/white"
-    android:layout_marginTop="@dimen/padding_common">
+    android:layout_marginTop="@dimen/dimenPaddingCommon">
 
     <ImageView
         android:id="@+id/image"
@@ -20,7 +20,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
-        android:padding="@dimen/padding_common">
+        android:padding="@dimen/dimenPaddingCommon">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/avatar"
@@ -32,7 +32,7 @@
             android:id="@+id/nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/padding_common_d"
+            android:layout_marginTop="@dimen/dimenPaddingDiminutive"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             tools:text="小花"/>
 
@@ -40,7 +40,7 @@
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/padding_common_h"
+            android:layout_marginTop="@dimen/dimenPaddingHorizontal"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             tools:text="香煎蛋果儿"/>
 

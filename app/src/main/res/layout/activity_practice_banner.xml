@@ -30,7 +30,7 @@
             android:paddingTop="?attr/actionBarSize"
             android:background="@android:color/white"
             android:overScrollMode="never"
-            tools:listitem="@layout/listitem_movie_item"/>
+            tools:listitem="@layout/item_movie_item"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <com.github.mmin18.widget.RealtimeBlurView

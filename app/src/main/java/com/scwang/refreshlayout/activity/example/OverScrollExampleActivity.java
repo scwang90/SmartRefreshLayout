@@ -43,10 +43,12 @@ public class OverScrollExampleActivity extends AppCompatActivity {
 
         webView.setWebViewClient(new WebViewClient(){
             @Override
+            @SuppressWarnings("deprecation")
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
                 return true;
             }
+
             @Override
             public void onPageCommitVisible(WebView view, String url) {
                 refreshLayout.finishRefresh();

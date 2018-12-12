@@ -29,6 +29,7 @@ import android.os.Build;
 import android.view.View;
 import android.widget.ImageView;
 
+
 /**
  * Private class created to work around issues with AnimationListeners being
  * called before the animation is actually complete and support shadows on older
@@ -48,6 +49,7 @@ public class CircleImageView extends ImageView {
 //    private Animation.AnimationListener mListener;
     int mShadowRadius;
 
+    @SuppressWarnings("deprecation")
     public CircleImageView(Context context, int color) {
         super(context);
         final View thisView = this;
@@ -75,7 +77,6 @@ public class CircleImageView extends ImageView {
         if (Build.VERSION.SDK_INT >= 16) {
             thisView.setBackground(circle);
         } else {
-            //noinspection deprecation
             thisView.setBackgroundDrawable(circle);
         }
     }

@@ -21,6 +21,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Locale;
 
 public class NestedLayoutExampleActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
@@ -61,7 +62,7 @@ public class NestedLayoutExampleActivity extends AppCompatActivity implements Ad
                 }
             }.setOnItemClickListener(this));
             recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                DateFormat dateFormat = new SimpleDateFormat("hh:mm:ss SSS");
+                DateFormat dateFormat = new SimpleDateFormat("hh:mm:ss SSS", Locale.CHINA);
                 @Override
                 public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                     Log.e("recyclerView", dateFormat.format(new Date()) + " - onScrollStateChanged - " + newState);

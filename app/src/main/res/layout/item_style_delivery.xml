@@ -13,14 +13,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/padding_common">
+        android:padding="@dimen/dimenPaddingCommon">
 
         <View
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:background="#fff0f0f0"
-            android:layout_marginEnd="@dimen/padding_common"
-            android:layout_marginRight="@dimen/padding_common"/>
+            android:layout_marginEnd="@dimen/dimenPaddingCommon"
+            android:layout_marginRight="@dimen/dimenPaddingCommon"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,7 +30,7 @@
                 android:layout_width="200dp"
                 android:layout_height="10dp"
                 android:background="#fff0f0f0"
-                android:layout_marginTop="@dimen/padding_common"/>
+                android:layout_marginTop="@dimen/dimenPaddingCommon"/>
             <View
                 android:layout_width="100dp"
                 android:layout_height="10dp"
@@ -40,7 +40,7 @@
                 android:layout_width="100dp"
                 android:layout_height="10dp"
                 android:background="#fff0f0f0"
-                android:layout_marginTop="@dimen/padding_common"/>
+                android:layout_marginTop="@dimen/dimenPaddingCommon"/>
         </LinearLayout>
 
     </LinearLayout>

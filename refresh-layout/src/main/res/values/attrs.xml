@@ -13,6 +13,23 @@
     <attr name="srlDrawableProgress" format="reference"/><!--转动图片-->
     <attr name="srlEnableHorizontalDrag" format="boolean"/><!--支持水平拖动-->
 
+    <attr name="srlTextPulling" format="string"/>
+    <attr name="srlTextLoading" format="string"/>
+    <attr name="srlTextRelease" format="string"/>
+    <attr name="srlTextFinish" format="string"/>
+    <attr name="srlTextFailed" format="string"/>
+    <attr name="srlTextUpdate" format="string"/>
+    <attr name="srlTextSecondary" format="string"/>
+    <attr name="srlTextRefreshing" format="string"/>
+
+    <!--<attr name="srlTextPulling" format="string" />-->
+    <!--<attr name="srlTextRelease" format="string" />-->
+    <!--<attr name="srlTextLoading" format="string" />-->
+    <!--<attr name="srlTextRefreshing" format="string" />-->
+    <!--<attr name="srlTextFinish" format="string" />-->
+    <!--<attr name="srlTextFailed" format="string" />-->
+    <attr name="srlTextNothing" format="string" />
+
     <attr name="srlClassicsSpinnerStyle" format="enum">
         <enum name="Translate" value="0"/><!--平行移动-->
         <enum name="Scale" value="1"/><!--拉伸形变-->
@@ -55,9 +72,11 @@
         <attr name="srlEnableScrollContentWhenRefreshed" format="boolean"/>
         <attr name="srlEnableLoadMoreWhenContentNotFull" format="boolean"/>
         <attr name="srlEnableFooterFollowWhenLoadFinished" format="boolean"/>
+        <attr name="srlEnableFooterFollowWhenNoMoreData" format="boolean"/>
         <attr name="srlEnableClipHeaderWhenFixedBehind" format="boolean"/>
         <attr name="srlEnableClipFooterWhenFixedBehind" format="boolean"/>
         <attr name="srlEnableOverScrollDrag" format="boolean"/>
+        <!--<attr name="srlEnableNestedScrollingOnly" format="boolean"/>-->
         <attr name="srlDisableContentWhenRefresh" format="boolean"/>
         <attr name="srlDisableContentWhenLoading" format="boolean"/>
         <attr name="srlFixedHeaderViewId" format="reference"/>
@@ -96,6 +115,16 @@
         <attr name="srlTextSizeTime"/>
         <attr name="srlTextTimeMarginTop" format="dimension"/>
         <attr name="srlEnableLastTime" format="boolean"/>
+
+        <attr name="srlTextPulling"/>
+        <attr name="srlTextLoading"/>
+        <attr name="srlTextRelease"/>
+        <attr name="srlTextFinish"/>
+        <attr name="srlTextFailed"/>
+        <attr name="srlTextUpdate"/>
+        <attr name="srlTextSecondary"/>
+        <attr name="srlTextRefreshing"/>
+
     </declare-styleable>
 
     <declare-styleable name="ClassicsFooter">
@@ -110,6 +139,15 @@
         <attr name="srlDrawableSize"/>
         <attr name="srlDrawableArrowSize"/>
         <attr name="srlDrawableProgressSize"/>
+
+        <attr name="srlTextPulling"/>
+        <attr name="srlTextRelease"/>
+        <attr name="srlTextLoading"/>
+        <attr name="srlTextRefreshing"/>
+        <attr name="srlTextFinish"/>
+        <attr name="srlTextFailed"/>
+        <attr name="srlTextNothing"/>
+
     </declare-styleable>
 
     <declare-styleable name="TwoLevelHeader">

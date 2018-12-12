@@ -98,8 +98,8 @@ Please rest assured that I have divided it into three packages, when used to ref
 ## Usage
 #### 1.Add a gradle dependency.
 ```
-compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-16'
-compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-16'//If you use the special Header
+compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-17'
+compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-17'//If you use the special Header
 
 compile 'com.android.support:appcompat-v7:25.3.1'
 
@@ -183,7 +183,7 @@ Note: this method is the lowest priority.
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/padding_common"
+        android:padding="@dimen/dimenPaddingCommon"
         android:background="@android:color/white"
         android:text="@string/description_define_in_xml"/>
     <com.scwang.smartrefresh.layout.footer.ClassicsFooter

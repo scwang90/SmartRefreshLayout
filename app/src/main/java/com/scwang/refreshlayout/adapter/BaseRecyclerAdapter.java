@@ -29,7 +29,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<SmartV
     private final List<T> mList;
     private int mLastPosition = -1;
     private boolean mOpenAnimationEnable = true;
-    private AdapterView.OnItemClickListener mListener;
+    protected AdapterView.OnItemClickListener mListener;
 
     public BaseRecyclerAdapter(@LayoutRes int layoutId) {
         setHasStableIds(false);
@@ -59,6 +59,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<SmartV
             mLastPosition = postion;
         }
     }
+
 
     //<editor-fold desc="RecyclerAdapter">
     @Override
@@ -92,6 +93,10 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<SmartV
 
     //<editor-fold desc="API">
 
+    public T get(int index) {
+        return mList.get(index);
+    }
+
     public BaseRecyclerAdapter<T> setOnItemClickListener(AdapterView.OnItemClickListener listener) {
         mListener = listener;
         return this;
@@ -112,6 +117,15 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<SmartV
         notifyListDataSetChanged();
         return this;
     }
+
+    public BaseRecyclerAdapter<T> insert(Collection<T> collection) {
+        mList.addAll(0, collection);
+        notifyDataSetChanged();
+        notifyListDataSetChanged();
+        return this;
+    }
+
+
     //</editor-fold>
 
     //<editor-fold desc="ListAdapter">

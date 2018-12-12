@@ -18,8 +18,8 @@
         android:layout_gravity="bottom"
         android:paddingTop="2dp"
         android:paddingBottom="2dp"
-        android:paddingLeft="@dimen/padding_common"
-        android:paddingRight="@dimen/padding_common"
+        android:paddingLeft="@dimen/dimenPaddingCommon"
+        android:paddingRight="@dimen/dimenPaddingCommon"
         android:background="#44000000"
         tools:text="50%"
         android:textColor="@android:color/white" />

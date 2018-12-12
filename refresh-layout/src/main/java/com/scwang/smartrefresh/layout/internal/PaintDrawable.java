@@ -9,7 +9,6 @@ import android.graphics.drawable.Drawable;
  * 画笔 Drawable
  * Created by SCWANG on 2017/6/16.
  */
-
 public abstract class PaintDrawable extends Drawable {
 
     protected Paint mPaint = new Paint();

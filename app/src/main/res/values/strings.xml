@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SmartRefreshLayout</string>
+    <string name="app_name">SmartRefresh</string>
 
     <string name="title_style">Style</string>
     <string name="title_example">Example</string>
@@ -56,6 +56,9 @@
     <string name="fragment_example_viewpager">ViewPager</string>
     <string name="fragment_example_three_level">Three Level Refresh</string>
     <string name="fragment_example_bottom_sheet">Bottom Sheet</string>
+    <string name="fragment_example_flexbox_layout">Flexbox Layout Manager</string>
+
+    <string name="fragment_practice_instant">Instant</string>
 
     <string name="index_practice_repast">Simple customization header, HeaderInsetStart</string>
     <string name="index_practice_profile">Pure scroll mode</string>
@@ -65,6 +68,8 @@
     <string name="index_practice_banner">Use banner</string>
     <string name="index_practice_qq_browser">Imitate QQ browser</string>
     <string name="index_practice_second_floor">Imitate the second floor of "Treasure Prospecting"</string>
+    <string name="index_practice_instant">Instant Messaging</string>
+
 
     <string name="index_example_basic">The basic usage of refresh layout</string>
     <string name="index_example_style">Specify the style of Header and Footer</string>
@@ -78,6 +83,7 @@
     <string name="index_example_pager">The usage of ViewPager</string>
     <string name="index_example_bottom_sheet">The usage of BottomSheet</string>
     <string name="index_example_level">The usage of three level refresh</string>
+    <string name="index_example_flexbox">The usage of FlexboxLayoutManager</string>
 
     <string name="item_style_theme_orange_abstract">Change theme to orange color</string>
     <string name="item_style_theme_red_abstract">Change theme to red color</string>
@@ -149,4 +155,7 @@
         refreshLayout.setRefreshHeader(new MaterialHeader(this));\n
         refreshLayout.setRefreshFooter(new BallPulseFooter(this));\n\n
     </string>
+    <string name="instant_message_input_hint">输入消息</string>
+    <string name="instant_message_send">发送</string>
+
 </resources>

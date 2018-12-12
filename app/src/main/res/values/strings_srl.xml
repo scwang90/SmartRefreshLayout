@@ -1,0 +1,20 @@
+<resources>
+
+    <string name="srl_header_pulling">Pull Down To Refresh</string>
+    <string name="srl_header_refreshing">Refreshing…</string>
+    <string name="srl_header_loading">Wait For Loading…</string>
+    <string name="srl_header_release">Release To Refresh</string>
+    <string name="srl_header_finish">Refresh Finished</string>
+    <string name="srl_header_failed">Refresh Failed</string>
+    <string name="srl_header_update">\'Last Update\' M-d HH:mm</string>
+    <string name="srl_header_secondary">Release To Second Floor </string>
+
+    <string name="srl_footer_pulling">Pull Up To Load More</string>
+    <string name="srl_footer_release">Release To Load More</string>
+    <string name="srl_footer_loading">Loading…</string>
+    <string name="srl_footer_refreshing">Wait For Refreshing…</string>
+    <string name="srl_footer_finish">Load More Finished</string>
+    <string name="srl_footer_failed">Load More Failed</string>
+    <string name="srl_footer_nothing">No More Data</string>
+
+</resources>

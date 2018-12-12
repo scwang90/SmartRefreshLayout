@@ -21,7 +21,7 @@
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="wrap_content"-->
             <!--android:scrollbars = "vertical"-->
-            <!--android:padding="@dimen/padding_common"-->
+            <!--android:padding="@dimen/dimenPaddingCommon"-->
             <!--android:text="@string/large_text"/>-->
         <!--<ScrollView-->
             <!--android:id="@+id/scrollView"-->
@@ -31,7 +31,7 @@
             <!--<TextView-->
                 <!--android:layout_width="match_parent"-->
                 <!--android:layout_height="wrap_content"-->
-                <!--android:layout_margin="@dimen/padding_common"-->
+                <!--android:layout_margin="@dimen/dimenPaddingCommon"-->
                 <!--android:text="@string/large_text"/>-->
         <!--</ScrollView>-->
         <WebView

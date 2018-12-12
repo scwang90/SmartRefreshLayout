@@ -17,6 +17,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.internal.InternalAbstract;
+import com.scwang.smartrefresh.layout.listener.OnStateChangedListener;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
@@ -40,7 +41,7 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
     protected int mHeaderHeight;
 //    protected int mPaintAlpha;
 //    protected Paint mPaint;
-    protected RefreshHeader mRefreshHeader;
+    protected RefreshInternal mRefreshHeader;
     protected RefreshKernel mRefreshKernel;
     protected OnTwoLevelListener mTwoLevelListener;
 //    protected SpinnerStyle mSpinnerStyle = SpinnerStyle.FixedBehind;
@@ -112,7 +113,7 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        final RefreshHeader refreshHeader = mRefreshHeader;
+        final RefreshInternal refreshHeader = mRefreshHeader;
         if (refreshHeader != null) {
             int mode = MeasureSpec.getMode(heightMeasureSpec);
             if (mode == MeasureSpec.AT_MOST) {
@@ -136,7 +137,7 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
     @Override
     public void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight) {
         final View thisView = this;
-        final RefreshHeader refreshHeader = mRefreshHeader;
+        final RefreshInternal refreshHeader = mRefreshHeader;
         if (refreshHeader == null) {
             return;
         }
@@ -164,9 +165,10 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
 
     @Override
     public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
-        final RefreshHeader refreshHeader = mRefreshHeader;
+        final RefreshInternal refreshHeader = mRefreshHeader;
         if (refreshHeader != null) {
-            refreshHeader.onStateChanged(refreshLayout, oldState, newState);
+            final OnStateChangedListener listener = mRefreshHeader;
+            listener.onStateChanged(refreshLayout, oldState, newState);
             switch (newState) {
                 case TwoLevelReleased:
                     if (refreshHeader.getView() != this) {
@@ -197,7 +199,7 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
     @Override
     public void onMoving(boolean isDragging, float percent, int offset, int height, int maxDragHeight) {
         moveSpinner(offset);
-        final RefreshHeader refreshHeader = mRefreshHeader;
+        final RefreshInternal refreshHeader = mRefreshHeader;
         final RefreshKernel refreshKernel = mRefreshKernel;
         if (refreshHeader != null) {
             refreshHeader.onMoving(isDragging, percent, offset, height, maxDragHeight);
@@ -215,7 +217,7 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
     }
 
     protected void moveSpinner(int spinner) {
-        final RefreshHeader refreshHeader = mRefreshHeader;
+        final RefreshInternal refreshHeader = mRefreshHeader;
         if (mSpinner != spinner && refreshHeader != null) {
             mSpinner = spinner;
             switch (refreshHeader.getSpinnerStyle()) {
@@ -253,16 +255,16 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
     public TwoLevelHeader setRefreshHeader(RefreshHeader header, int width, int height) {
         final ViewGroup thisGroup = this;
         if (header != null) {
-            final RefreshHeader refreshHeader = mRefreshHeader;
+            RefreshInternal refreshHeader = mRefreshHeader;
             if (refreshHeader != null) {
                 thisGroup.removeView(refreshHeader.getView());
             }
-            if (header.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
-                thisGroup.addView(header.getView(), 0, new LayoutParams(width, height));
+            refreshHeader = header;
+            if (refreshHeader.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
+                thisGroup.addView(refreshHeader.getView(), 0, new LayoutParams(width, height));
             } else {
-                thisGroup.addView(header.getView(), width, height);
+                thisGroup.addView(refreshHeader.getView(), width, height);
             }
-//            this.mWrappedView = header.getView();
             this.mRefreshHeader = header;
             this.mWrappedInternal = header;
         }

@@ -33,7 +33,7 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
 
 最近开通了支付宝商家，生成了个红包二维码，经常用支付宝的童鞋可有扫码领优惠红包，扫码只会拿红包，不会有任何损失，每天都可以扫码哦！
 
-![支付宝红包](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/pay_alipay_red_packet.png?raw=true)
+![支付宝红包](https://github.com/scwang90/MultiWaveHeader/blob/master/art/pay_alipay_red_packet.png?raw=true)
 
 ## 传送门
 
@@ -110,8 +110,8 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
 #### 1.在 build.gradle 中添加依赖
 ```
 //1.1.0 API改动过大，老用户升级需谨慎
-compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-16'
-compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-16'//没有使用特殊Header，可以不加这行
+compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-17'
+compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-17'//没有使用特殊Header，可以不加这行
 compile 'com.android.support:appcompat-v7:25.3.1'//版本 23以上（必须）
 
 //1.0.5 当1.1.0出现问题可以回退到1.0.5.1
@@ -203,7 +203,7 @@ public class App extends Application {
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/padding_common"
+        android:padding="@dimen/dimenPaddingCommon"
         android:background="@android:color/white"
         android:text="@string/description_define_in_xml"/>
     <com.scwang.smartrefresh.layout.footer.ClassicsFooter

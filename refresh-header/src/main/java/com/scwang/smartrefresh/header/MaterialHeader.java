@@ -141,8 +141,8 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
             circleView.setAlpha(1f);
             circleView.setVisibility(VISIBLE);
         } else {
-            circleView.layout((width / 2 - circleWidth / 2), -mCircleDiameter,
-                    (width / 2 + circleWidth / 2), circleHeight - mCircleDiameter);
+            circleView.layout((width / 2 - circleWidth / 2), -circleHeight,
+                    (width / 2 + circleWidth / 2), 0);
         }
     }
 

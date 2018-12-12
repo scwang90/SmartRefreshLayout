@@ -56,6 +56,9 @@
     <string name="fragment_example_viewpager">ViewPager</string>
     <string name="fragment_example_three_level">三级刷新</string>
     <string name="fragment_example_bottom_sheet">Bottom Sheet 对话框</string>
+    <string name="fragment_example_flexbox_layout">Flexbox Layout 管理器</string>
+
+    <string name="fragment_practice_instant">即时通讯</string>
 
     <string name="index_example_basic">基本的使用</string>
     <string name="index_example_style">使用指定的Header和Footer</string>
@@ -69,6 +72,7 @@
     <string name="index_example_pager">ViewPager 多页面共用一个 RefreshLayout</string>
     <string name="index_example_bottom_sheet">BottomSheet内部使用加载更多</string>
     <string name="index_example_level">三级刷新</string>
+    <string name="index_example_flexbox">结合 FlexboxLayoutManager 使用</string>
 
     <string name="index_practice_repast">餐饮美食-简单自定义Header-外边距magin</string>
     <string name="index_practice_profile">个人中心-PureScrollMode-纯滚动模式</string>
@@ -78,6 +82,7 @@
     <string name="index_practice_banner">滚动广告-Banner</string>
     <string name="index_practice_qq_browser">QQ浏览器-模拟QQ浏览器内核提示</string>
     <string name="index_practice_second_floor">二级刷新-仿淘宝二楼</string>
+    <string name="index_practice_instant">即时通讯</string>
 
     <string name="item_style_theme_orange_abstract">更改为橙色主题颜色</string>
     <string name="item_style_theme_red_abstract">更改为红色主题颜色</string>
