@@ -1,11 +1,11 @@
-apply plugin: 'com.aaron.gradle.bintray-release'//必须写在第一行
+//apply plugin: 'com.aaron.gradle.bintray-release'//必须写在第一行
 apply plugin: 'com.android.library'
 //apply plugin: 'com.novoda.bintray-release'
 
 android {
 
-    compileSdkVersion 27
-    buildToolsVersion '27.0.3'
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
         minSdkVersion 12
@@ -13,7 +13,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }
     buildTypes {
@@ -29,25 +29,25 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.1-beta01', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testImplementation 'junit:junit:4.12'
     //noinspection GradleDependency
-    compileOnly 'com.android.support:support-annotations:25.1.0'
+    compileOnly 'androidx.annotation:annotation:1.0.1'
     //noinspection GradleDependency,GradleCompatible
-    compileOnly 'com.android.support:support-v4:22.1.0'
+    compileOnly 'androidx.legacy:legacy-support-v4:1.0.0'
     compileOnly project(':refresh-layout')
 }
-
-publish {
-    userOrg = 'scwang90'
-    groupId = 'com.scwang.smartrefresh'
-    artifactId = 'SmartRefreshHeader'
-//    version = '1.1.0-alpha-14'
-    publishVersion = '1.1.0-alpha-17'
-    desc = 'Some delicate headers of SmartRefreshLayout'
-    website = "https://github.com/scwang90/${rootProject.name}"
-    archivesPath = '../build/outputs' //指定将要上传的压缩包路径，如果不写则默认上传系统生成的jar和aar
-//    archivesName = 'bintray-release'  //指定将要上传的压缩包所含的关键字，如果不写，默认过滤artifactId
-}
+//
+//publish {
+//    userOrg = 'scwang90'
+//    groupId = 'com.scwang.smartrefresh'
+//    artifactId = 'SmartRefreshHeader'
+////    version = '1.1.0-alpha-14'
+//    publishVersion = '1.1.0-alpha-17'
+//    desc = 'Some delicate headers of SmartRefreshLayout'
+//    website = "https://github.com/scwang90/${rootProject.name}"
+//    archivesPath = '../build/outputs' //指定将要上传的压缩包路径，如果不写则默认上传系统生成的jar和aar
+////    archivesName = 'bintray-release'  //指定将要上传的压缩包所含的关键字，如果不写，默认过滤artifactId
+//}

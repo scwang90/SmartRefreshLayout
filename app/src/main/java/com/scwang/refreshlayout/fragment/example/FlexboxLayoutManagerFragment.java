@@ -2,12 +2,12 @@ package com.scwang.refreshlayout.fragment.example;
 
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,8 +52,8 @@ public class FlexboxLayoutManagerFragment extends Fragment {
         //设置主轴排列方式
         manager.setFlexDirection(FlexDirection.ROW);
         //设置是否换行
-        manager.setFlexWrap(FlexWrap.WRAP);
-        manager.setAlignItems(AlignItems.STRETCH);
+        manager.setFlexWrap(FlexWrap.NOWRAP);
+        manager.setAlignItems(AlignItems.CENTER);
 
         RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
 //        recyclerView.setLayoutManager(manager);
@@ -67,7 +67,6 @@ public class FlexboxLayoutManagerFragment extends Fragment {
 
             @Override
             protected void onBindViewHolder(SmartViewHolder holder, Object model, int position) {
-
                 int[] colorIds = {
                         R.color.colorPrimaryDark,
                         android.R.color.holo_green_dark,
@@ -76,7 +75,7 @@ public class FlexboxLayoutManagerFragment extends Fragment {
                 };
 
                 holder.itemView.setBackgroundResource(colorIds[random.nextInt(colorIds.length)]);
-                holder.itemView.setMinimumWidth(DensityUtil.dp2px(70f + random.nextInt(70)));
+//                holder.itemView.setMinimumWidth(DensityUtil.dp2px(70f + random.nextInt(70)));
             }
             @NonNull
             @Override
@@ -88,9 +87,12 @@ public class FlexboxLayoutManagerFragment extends Fragment {
                 lp.leftMargin = DensityUtil.dp2px(2.5f);
                 lp.rightMargin = DensityUtil.dp2px(2.5f);
                 ImageView imageVIew = new ImageView(parent.getContext());
-                imageVIew.setMinimumWidth(DensityUtil.dp2px(90f));
-                imageVIew.setMinimumHeight(DensityUtil.dp2px(90f));
+//                imageVIew.setMinimumWidth(DensityUtil.dp2px(90f));
+//                imageVIew.setMinimumHeight(DensityUtil.dp2px(90f));
+                lp.width = DensityUtil.dp2px(70f + random.nextInt(70));
+                lp.height = DensityUtil.dp2px(90f);
                 imageVIew.setLayoutParams(lp);
+//                imageVIew.setMinimumWidth(DensityUtil.dp2px(70f + random.nextInt(70)));
                 return new SmartViewHolder(imageVIew, mListener);
             }
         });

@@ -40,7 +40,7 @@
     <!--fgC = (YY * (0xff * 0xFF) - (0xff * 0xff * (0xFF - 0xcc)))/(0xFF*0xcc)  -->
     <!--fgC = (0xff * 0xFF)*(YY - 0x33)/(0xFF*0xcc)  -->
     <!--fgC = 0xF*(YY - 0x33)/0xc  -->
-    <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
+    <androidx.appcompat.widget.Toolbar style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"
         android:background="@android:color/transparent"
         app:navigationIcon="@drawable/ic_arrow_back_white_24dp"

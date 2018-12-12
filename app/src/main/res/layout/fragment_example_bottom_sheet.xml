@@ -6,7 +6,7 @@
     android:orientation="vertical"
     tools:context="com.scwang.refreshlayout.fragment.example.BottomSheetExampleFragment">
 
-    <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
+    <androidx.appcompat.widget.Toolbar style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"
         app:navigationIcon="?attr/homeAsUpIndicator"
         app:title="@string/fragment_example_bottom_sheet"/>
@@ -19,7 +19,7 @@
         app:srlEnableNestedScrolling="false">
         <!--Set srlEnableNestedScrolling to false to be compatible with BottomSheet-->
         <!--设置 srlEnableNestedScrolling 为 false 才可以兼容 BottomSheet-->
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

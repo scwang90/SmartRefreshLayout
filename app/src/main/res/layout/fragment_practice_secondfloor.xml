@@ -61,7 +61,7 @@
             app:srlPrimaryColor="@android:color/white"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
-    <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
+    <androidx.appcompat.widget.Toolbar style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -69,6 +69,6 @@
         app:navigationIcon="?attr/homeAsUpIndicator"
         app:title="淘宝二楼">
 
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
 </FrameLayout>
