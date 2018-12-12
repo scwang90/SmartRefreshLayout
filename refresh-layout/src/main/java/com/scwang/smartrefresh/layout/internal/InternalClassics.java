@@ -202,7 +202,7 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
         return mFinishDuration;//延迟500毫秒之后再弹回
     }
 
-    @Override@Deprecated
+    @Override
     public void setPrimaryColors(@ColorInt int ... colors) {
         if (colors.length > 0) {
             final View thisView = this;

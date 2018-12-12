@@ -10,7 +10,6 @@ import com.scwang.smartrefresh.layout.constant.RefreshState;
  * 为功能复杂的 Header 或者 Footer 开放的接口
  * Created by SCWANG on 2017/5/26.
  */
-
 @SuppressWarnings({"unused", "UnusedReturnValue", "SameParameterValue"})
 public interface RefreshKernel {
 

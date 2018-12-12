@@ -74,7 +74,7 @@ public abstract class InternalAbstract extends RelativeLayout implements Refresh
         return 0;
     }
 
-    @Override@Deprecated
+    @Override
     public void setPrimaryColors(@ColorInt int ... colors) {
         if (mWrappedInternal != null && mWrappedInternal != this) {
             mWrappedInternal.setPrimaryColors(colors);

@@ -42,6 +42,7 @@ import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -233,9 +234,14 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
     }
 
     private void initDataSet() {
-        mDataSet.add(new ItemData(0xFF76A9FC, R.drawable.ic_fly_refresh_poll, "Meeting Minutes", new Date(2014 - 1900, 2, 9)));
-        mDataSet.add(new ItemData(Color.GRAY, R.drawable.ic_fly_refresh_folder, "Favorites Photos", new Date(2014 - 1900, 1, 3)));
-        mDataSet.add(new ItemData(Color.GRAY, R.drawable.ic_fly_refresh_folder, "Photos", new Date(2014 - 1900, 0, 9)));
+        try {
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
+            mDataSet.add(new ItemData(0xFF76A9FC, R.drawable.ic_fly_refresh_poll, "Meeting Minutes", format.parse("2014-03-09")));
+            mDataSet.add(new ItemData(Color.GRAY, R.drawable.ic_fly_refresh_folder, "Favorites Photos", format.parse("2014-02-03")));
+            mDataSet.add(new ItemData(Color.GRAY, R.drawable.ic_fly_refresh_folder, "Photos", format.parse("2014-01-09")));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     private void addItemData() {
@@ -272,18 +278,19 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
             dateFormat = SimpleDateFormat.getDateInstance(DateFormat.DEFAULT, Locale.ENGLISH);
         }
 
+        @NonNull
         @Override
-        public ItemViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
             View view = mInflater.inflate(R.layout.activity_fly_refresh_item, viewGroup, false);
             return new ItemViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(ItemViewHolder itemViewHolder, int i) {
+        public void onBindViewHolder(@NonNull ItemViewHolder itemViewHolder, int i) {
             final ItemData data = mDataSet.get(i);
             ShapeDrawable drawable = new ShapeDrawable(new OvalShape());
             drawable.getPaint().setColor(data.color);
-            itemViewHolder.icon.setBackgroundDrawable(drawable);
+            itemViewHolder.icon.setBackground(drawable);
             itemViewHolder.icon.setImageResource(data.icon);
             itemViewHolder.title.setText(data.title);
             itemViewHolder.subTitle.setText(dateFormat.format(data.time));

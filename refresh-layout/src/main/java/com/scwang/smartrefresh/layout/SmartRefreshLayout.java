@@ -1083,6 +1083,8 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
     /**
      * 在动画执行时，触摸屏幕，打断动画，转为拖动状态
+     * @param action MotionEvent
+     * @return 是否成功打断
      */
     protected boolean interceptAnimatorByAction(int action) {
         if (action == MotionEvent.ACTION_DOWN) {
@@ -1152,6 +1154,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
     /**
      * 直接将状态设置为 Loading 正在加载
+     * @param triggerLoadMoreEvent 是否触发加载回调
      */
     protected void setStateDirectLoading(boolean triggerLoadMoreEvent) {
         if (mState != RefreshState.Loading) {
@@ -1292,6 +1295,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
     /**
      * 判断是否 下拉的时候 需要 移动内容
+     * @param enable mEnableHeaderTranslationContent or mEnableFooterTranslationContent
+     * @param internal mRefreshHeader or mRefreshFooter
+     * @return enable
      */
     protected boolean isEnableTranslationContent(boolean enable, RefreshInternal internal) {
         return enable || mEnablePureScrollMode || internal == null || internal.getSpinnerStyle() == SpinnerStyle.FixedBehind;
@@ -1299,6 +1305,8 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
     /**
      * 判断时候可以 刷新 或者 加载
+     * @param enable mEnableRefresh or mEnableLoadMore
+     * @return enable
      */
     protected boolean isEnableRefreshOrLoadMore(boolean enable) {
         return enable && !mEnablePureScrollMode;
@@ -1430,6 +1438,11 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
     /**
      * 执行回弹动画
+     * @param endSpinner 目标值
+     * @param startDelay 延时参数
+     * @param interpolator 加速器
+     * @param duration 时长
+     * @return ValueAnimator or null
      */
     protected ValueAnimator animSpinner(int endSpinner, int startDelay, Interpolator interpolator, int duration) {
         if (mSpinner != endSpinner) {
@@ -1473,6 +1486,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
     /**
      * 越界回弹动画
+     * @param velocity 速度
      */
     protected void animSpinnerBounce(final float velocity) {
         if (reboundAnimator == null) {
@@ -1541,6 +1555,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
     /**
      * 黏性移动 spinner
+     * @param spinner 偏移量
      */
     protected void moveSpinnerInfinitely(float spinner) {
         final View thisView = this;

@@ -619,6 +619,7 @@ public interface RefreshLayout {
      * @param delayed 开始延时
      * @param duration 拖拽动画持续时间
      * @param dragRate 拉拽的高度比率（要求 ≥ 1 ）
+     * @param animationOnly 是否只是显示动画，不回调
      * @return true or false, Status non-compliance will fail.
      *         是否成功（状态不符合会失败）
      */

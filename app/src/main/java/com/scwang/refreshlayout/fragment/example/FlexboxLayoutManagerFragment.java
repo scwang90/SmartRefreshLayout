@@ -13,6 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.google.android.flexbox.AlignItems;
+import com.google.android.flexbox.FlexDirection;
+import com.google.android.flexbox.FlexWrap;
+import com.google.android.flexbox.FlexboxLayoutManager;
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
@@ -44,12 +48,12 @@ public class FlexboxLayoutManagerFragment extends Fragment {
             }
         });
 
-//        FlexboxLayoutManager manager = new FlexboxLayoutManager(root.getContext());
-//        //设置主轴排列方式
-//        manager.setFlexDirection(FlexDirection.ROW);
-//        //设置是否换行
-//        manager.setFlexWrap(FlexWrap.WRAP);
-//        manager.setAlignItems(AlignItems.STRETCH);
+        FlexboxLayoutManager manager = new FlexboxLayoutManager(root.getContext());
+        //设置主轴排列方式
+        manager.setFlexDirection(FlexDirection.ROW);
+        //设置是否换行
+        manager.setFlexWrap(FlexWrap.WRAP);
+        manager.setAlignItems(AlignItems.STRETCH);
 
         RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
 //        recyclerView.setLayoutManager(manager);
@@ -77,16 +81,16 @@ public class FlexboxLayoutManagerFragment extends Fragment {
             @NonNull
             @Override
             public SmartViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//                FlexboxLayoutManager.LayoutParams lp = new FlexboxLayoutManager.LayoutParams(-2,-2);
-//                lp.setFlexGrow(1);
-//                lp.bottomMargin = DensityUtil.dp2px(2.5f);
-//                lp.topMargin = DensityUtil.dp2px(2.5f);
-//                lp.leftMargin = DensityUtil.dp2px(2.5f);
-//                lp.rightMargin = DensityUtil.dp2px(2.5f);
+                FlexboxLayoutManager.LayoutParams lp = new FlexboxLayoutManager.LayoutParams(-2,-2);
+                lp.setFlexGrow(1);
+                lp.bottomMargin = DensityUtil.dp2px(2.5f);
+                lp.topMargin = DensityUtil.dp2px(2.5f);
+                lp.leftMargin = DensityUtil.dp2px(2.5f);
+                lp.rightMargin = DensityUtil.dp2px(2.5f);
                 ImageView imageVIew = new ImageView(parent.getContext());
                 imageVIew.setMinimumWidth(DensityUtil.dp2px(90f));
                 imageVIew.setMinimumHeight(DensityUtil.dp2px(90f));
-//                imageVIew.setLayoutParams(lp);
+                imageVIew.setLayoutParams(lp);
                 return new SmartViewHolder(imageVIew, mListener);
             }
         });

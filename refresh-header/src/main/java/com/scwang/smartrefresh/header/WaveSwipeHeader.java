@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
@@ -102,11 +103,11 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.setMeasuredDimension(getSize(widthMeasureSpec), getSize(heightMeasureSpec));
         final View waveView = mWaveView;
-        final View cricleView = mCircleView;
+        final View circleView = mCircleView;
         final Drawable progress = mProgress;
         final int circleDiameter = progress.getIntrinsicWidth();
         final int spec = MeasureSpec.makeMeasureSpec(circleDiameter, MeasureSpec.EXACTLY);
-        cricleView.measure(spec, spec);
+        circleView.measure(spec, spec);
         waveView.measure(makeMeasureSpec(getSize(widthMeasureSpec), EXACTLY),makeMeasureSpec(getSize(heightMeasureSpec), EXACTLY));
     }
 
@@ -114,13 +115,13 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         final View thisView = this;
         final View waveView = mWaveView;
-        final View cricleView = mCircleView;
+        final View circleView = mCircleView;
         waveView.layout(0, 0, thisView.getMeasuredWidth(), thisView.getMeasuredHeight());
 
         final int thisWidth = thisView.getMeasuredWidth();
-        final int circleWidth = cricleView.getMeasuredWidth();
-        final int circleHeight = cricleView.getMeasuredHeight();
-        cricleView.layout((thisWidth - circleWidth) / 2, -circleHeight , (thisWidth + circleWidth) / 2, 0);
+        final int circleWidth = circleView.getMeasuredWidth();
+        final int circleHeight = circleView.getMeasuredHeight();
+        circleView.layout((thisWidth - circleWidth) / 2, -circleHeight , (thisWidth + circleWidth) / 2, 0);
 
         if (thisView.isInEditMode()) {
             onMoving(true, 0.99f, DensityUtil.dp2px(99), DensityUtil.dp2px(100), DensityUtil.dp2px(100));
@@ -139,13 +140,18 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
         mProgress.setColorSchemeColors(colors);
     }
 
+    @SuppressWarnings("deprecation")
     public void setColorSchemeColorIds(@IdRes int... resources) {
         final View thisView = this;
         final Resources res = thisView.getResources();
         final int[] colorRes = new int[resources.length];
 
         for (int i = 0; i < resources.length; i++) {
-            colorRes[i] = res.getColor(resources[i]);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                colorRes[i] = res.getColor(resources[i], getContext().getTheme());
+            } else {
+                colorRes[i] = res.getColor(resources[i]);
+            }
         }
 
         mProgress.setColorSchemeColors(colorRes);
@@ -267,9 +273,9 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                final View cricleView = mCircleView;
-                cricleView.setTranslationY(
-                        mWaveView.getCurrentCircleCenterY() + cricleView.getHeight() / 2.f);
+                final View circleView = mCircleView;
+                circleView.setTranslationY(
+                        mWaveView.getCurrentCircleCenterY() + circleView.getHeight() / 2.f);
             }
         });
         animator.start();
@@ -277,15 +283,15 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
 
     @Override
     public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
-        final View cricleView = mCircleView;
+        final View circleView = mCircleView;
         mState = newState;
         switch (newState) {
             case None:
                 break;
             case PullDownToRefresh:
                 mProgress.showArrow(true);
-                cricleView.setScaleX(1f);
-                cricleView.setScaleY(1f);
+                circleView.setScaleX(1f);
+                circleView.setScaleY(1f);
                 mProgress.setAlpha(0xff);
                 break;
             case PullDownCanceled:
@@ -304,12 +310,12 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
 
     @Override
     public int onFinish(@NonNull RefreshLayout layout, boolean success) {
-        final View cricleView = mCircleView;
+        final View circleView = mCircleView;
         Animation scaleDownAnimation = new Animation() {
             @Override
             public void applyTransformation(float interpolatedTime, Transformation t) {
-                cricleView.setScaleX(1 - interpolatedTime);
-                cricleView.setScaleY(1 - interpolatedTime);
+                circleView.setScaleX(1 - interpolatedTime);
+                circleView.setScaleY(1 - interpolatedTime);
             }
         };
         scaleDownAnimation.setDuration(200);
@@ -322,8 +328,8 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
                 mWaveView.startDisappearCircleAnimation();
             }
         });
-        cricleView.clearAnimation();
-        cricleView.startAnimation(scaleDownAnimation);
+        circleView.clearAnimation();
+        circleView.startAnimation(scaleDownAnimation);
         return 0;
     }
 
@@ -332,7 +338,6 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
      * @deprecated 请使用 {@link RefreshLayout#setPrimaryColorsId(int...)}
      */
     @Override@Deprecated
-    @SuppressWarnings("deprecation")
     public void setPrimaryColors(@ColorInt int ... colors) {
         if (colors.length > 0) {
             mWaveView.setWaveColor(colors[0]);
