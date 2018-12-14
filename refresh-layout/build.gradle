@@ -67,7 +67,7 @@ bintray {
         licenses = ['Apache-2.0']
         vcsUrl = 'https://github.com/scwang90/${rootProject.name}.git'
         version {
-            name = '1.1.0-alpha-17'
+            name = '1.1.0-alpha-18'
             desc = 'An intelligent refresh layout'
             released  = new Date()
             vcsTag = '1.1.0-17'

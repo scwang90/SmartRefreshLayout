@@ -98,4 +98,4 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
 }
 
-apply plugin: 'com.scwang.gradle.plugin'
+//apply plugin: 'com.scwang.gradle.plugin'

@@ -186,7 +186,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/dimenPaddingCommon"
-                        android:focusableInTouchMode="true"
+                        android:tag="fixed"
                         android:orientation="horizontal">
                         <View
                             android:layout_width="2dp"

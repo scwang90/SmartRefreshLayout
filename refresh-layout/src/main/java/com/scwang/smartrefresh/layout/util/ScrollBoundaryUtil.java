@@ -34,6 +34,9 @@ public class ScrollBoundaryUtil {
             for (int i = childCount; i > 0; i--) {
                 View child = viewGroup.getChildAt(i - 1);
                 if (isTransformedTouchPointInView(viewGroup, child, touch.x, touch.y, point)) {
+                    if ("fixed".equals(child.getTag())) {
+                        return false;
+                    }
                     touch.offset(point.x, point.y);
                     boolean can = canRefresh(child, touch);
                     touch.offset(-point.x, -point.y);
@@ -63,7 +66,7 @@ public class ScrollBoundaryUtil {
             for (int i = 0; i < childCount; i++) {
                 View child = viewGroup.getChildAt(i);
                 if (isTransformedTouchPointInView(viewGroup, child, touch.x, touch.y, point)) {
-                    if (child.isFocusableInTouchMode()) {
+                    if ("fixed".equals(child.getTag())) {
                         return false;
                     }
                     touch.offset(point.x, point.y);
