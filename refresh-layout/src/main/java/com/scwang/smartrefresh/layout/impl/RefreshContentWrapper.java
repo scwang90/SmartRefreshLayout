@@ -282,11 +282,10 @@ public class RefreshContentWrapper implements RefreshContent , CoordinatorLayout
     public void onAnimationUpdate(ValueAnimator animation) {
         int value = (int) animation.getAnimatedValue();
         try {
-            int dy = value = mLastSpinner;
             if (mScrollableView instanceof AbsListView) {
-                scrollListBy((AbsListView) mScrollableView, dy);
+                scrollListBy((AbsListView) mScrollableView, value - mLastSpinner);
             } else {
-                mScrollableView.scrollBy(0, dy);
+                mScrollableView.scrollBy(0, value - mLastSpinner);
             }
         } catch (Throwable ignored) {
             //根据用户反馈，此处可能会有BUG

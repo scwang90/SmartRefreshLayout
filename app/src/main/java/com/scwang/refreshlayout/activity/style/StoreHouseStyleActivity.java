@@ -91,7 +91,7 @@ public class StoreHouseStyleActivity extends AppCompatActivity implements Adapte
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        switch (Item.values()[position]) {
+        switch (Item.values()[position % Item.values().length]) {
             case 显示中文: {
                 RefreshHeader refreshHeader = mRefreshLayout.getRefreshHeader();
                 if (refreshHeader instanceof StoreHouseHeader) {

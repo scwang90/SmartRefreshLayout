@@ -87,7 +87,7 @@ public class WaterDropStyleActivity extends AppCompatActivity implements Adapter
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        switch (Item.values()[position]) {
+        switch (Item.values()[position % Item.values().length]) {
             case 内容不偏移:
                 mRefreshLayout.setEnableHeaderTranslationContent(false);
                 break;

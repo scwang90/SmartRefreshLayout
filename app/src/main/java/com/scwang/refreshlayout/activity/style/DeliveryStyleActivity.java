@@ -89,7 +89,7 @@ public class DeliveryStyleActivity extends AppCompatActivity implements AdapterV
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        switch (Item.values()[position]) {
+        switch (Item.values()[position % Item.values().length]) {
             case 默认主题:
                 mToolbar.setBackgroundResource(android.R.color.white);
                 mToolbar.setTitleTextColor(0xffbbbbbb);

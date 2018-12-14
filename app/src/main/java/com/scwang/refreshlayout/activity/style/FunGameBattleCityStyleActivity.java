@@ -86,7 +86,7 @@ public class FunGameBattleCityStyleActivity extends AppCompatActivity implements
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        switch (Item.values()[position]) {
+        switch (Item.values()[position % Item.values().length]) {
             case 默认主题:
                 mRefreshLayout.setPrimaryColorsId(android.R.color.white, android.R.color.black);
                 break;
