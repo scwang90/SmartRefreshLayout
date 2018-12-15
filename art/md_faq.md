@@ -269,3 +269,11 @@ refreshlayout.setNoMoreData(false);
 compile 'com.android.support:design:25.3.1'
 ~~~
 
+## 14.不显示“加载完成”和“刷新完成”，直接因此 Header或者Footer。
+
+Smart 可以修改 “加载完成”和“刷新完成” 的显示时间，所以想不现实它们，直接把显示时间设置为0即可。
+
+```
+header.setFinishDuration(0);//设置Footer 的 “刷新完成” 显示时间为0
+footer.setFinishDuration(0);//设置Footer 的 “加载完成” 显示时间为0
+```
