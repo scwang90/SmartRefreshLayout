@@ -49,7 +49,7 @@
                     android:id="@+id/toolbarLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="@dimen/padding_common"
+                    android:paddingBottom="@dimen/dimenPaddingCommon"
                     android:fitsSystemWindows="true"
                     app:layout_scrollFlags="scroll">
                     <com.youth.banner.Banner
@@ -65,7 +65,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="@dimen/padding_common"
+                    android:paddingBottom="@dimen/dimenPaddingCommon"
                     android:orientation="vertical"
                     android:divider="@android:drawable/divider_horizontal_dark"
                     android:showDividers="beginning|end"
@@ -73,9 +73,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/padding_common"
-                        android:paddingLeft="@dimen/padding_common"
-                        android:paddingRight="@dimen/padding_common"
+                        android:paddingTop="@dimen/dimenPaddingCommon"
+                        android:paddingLeft="@dimen/dimenPaddingCommon"
+                        android:paddingRight="@dimen/dimenPaddingCommon"
                         android:orientation="horizontal"
                         android:background="@android:color/white">
                         <View
@@ -83,7 +83,7 @@
                             android:layout_height="18dp"
                             android:background="@color/colorPrimary"/>
                         <Space
-                            android:layout_width="@dimen/padding_common"
+                            android:layout_width="@dimen/dimenPaddingCommon"
                             android:layout_height="wrap_content" />
                         <TextView style="@style/AppTheme.Label"
                             android:layout_gravity="center_vertical"
@@ -93,7 +93,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:padding="@dimen/padding_common"
+                        android:padding="@dimen/dimenPaddingCommon"
                         android:orientation="vertical"
                         android:background="@android:color/white">
                         <LinearLayout
@@ -115,7 +115,7 @@
                                     android:background="#44000000"/>
                             </FrameLayout>
                             <Space
-                                android:layout_width="@dimen/padding_common_d"
+                                android:layout_width="@dimen/dimenPaddingDiminutive"
                                 android:layout_height="wrap_content" />
                             <FrameLayout
                                 android:id="@+id/cih_homemaking"
@@ -135,7 +135,7 @@
                         </LinearLayout>
                         <Space
                             android:layout_width="wrap_content"
-                            android:layout_height="@dimen/padding_common_d"/>
+                            android:layout_height="@dimen/dimenPaddingDiminutive"/>
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="100dp">
@@ -154,7 +154,7 @@
                                     android:background="#44000000"/>
                             </FrameLayout>
                             <Space
-                                android:layout_width="@dimen/padding_common_d"
+                                android:layout_width="@dimen/dimenPaddingDiminutive"
                                 android:layout_height="wrap_content" />
                             <FrameLayout
                                 android:id="@+id/cih_wiki"
@@ -185,16 +185,18 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/padding_common"
+                        android:padding="@dimen/dimenPaddingCommon"
+                        android:tag="fixed"
                         android:orientation="horizontal">
                         <View
                             android:layout_width="2dp"
                             android:layout_height="18dp"
                             android:background="@color/colorPrimary"/>
                         <Space
-                            android:layout_width="@dimen/padding_common"
+                            android:layout_width="@dimen/dimenPaddingCommon"
                             android:layout_height="wrap_content" />
                         <TextView style="@style/AppTheme.Label"
+                            android:id="@+id/target"
                             android:layout_gravity="center_vertical"
                             android:textColor="@color/colorPrimary"
                             android:text="菜单列表"/>

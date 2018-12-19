@@ -19,6 +19,7 @@ import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.impl.RefreshFooterWrapper;
 import com.scwang.smartrefresh.layout.impl.RefreshHeaderWrapper;
+import com.scwang.smartrefresh.layout.listener.OnStateChangedListener;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
@@ -73,7 +74,7 @@ public abstract class InternalAbstract extends RelativeLayout implements Refresh
         return 0;
     }
 
-    @Override@Deprecated
+    @Override
     public void setPrimaryColors(@ColorInt int ... colors) {
         if (mWrappedInternal != null && mWrappedInternal != this) {
             mWrappedInternal.setPrimaryColors(colors);
@@ -183,7 +184,10 @@ public abstract class InternalAbstract extends RelativeLayout implements Refresh
                     newState = newState.toFooter();
                 }
             }
-            mWrappedInternal.onStateChanged(refreshLayout, oldState, newState);
+            final OnStateChangedListener listener = mWrappedInternal;
+            if (listener != null) {
+                listener.onStateChanged(refreshLayout, oldState, newState);
+            }
         }
     }
 }

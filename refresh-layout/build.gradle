@@ -1,6 +1,7 @@
 apply plugin: 'com.aaron.gradle.bintray-release'//必须写在第一行
 apply plugin: 'com.android.library'
 //apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'com.jfrog.bintray'
 
 android {
 
@@ -50,9 +51,37 @@ publish {
     groupId = 'com.scwang.smartrefresh'
     artifactId = 'SmartRefreshLayout'
 //    version = '1.1.0-alpha-14'
-    publishVersion = '1.1.0-alpha-16'
+    publishVersion = '1.1.0-alpha-18'
     desc = 'An intelligent refresh layout'
     website = "https://github.com/scwang90/${rootProject.name}"
     archivesPath = '../build/outputs' //指定将要上传的压缩包路径，如果不写则默认上传系统生成的jar和aar
 //    archivesName = 'bintray-release'  //指定将要上传的压缩包所含的关键字，如果不写，默认过滤artifactId
+}
+bintray {
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_KEY')
+    pkg {
+        repo = 'generic'
+        name = 'gradle-project'
+        userOrg = 'scwang90'
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/scwang90/${rootProject.name}.git'
+        version {
+            name = '1.1.0-alpha-17'
+            desc = 'An intelligent refresh layout'
+            released  = new Date()
+            vcsTag = '1.1.0-17'
+            attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin']
+        }
+    }
+//    publishing {
+//        publications {
+//            MyPublication(MavenPublication) {
+//                from components.java
+//                groupId 'com.scwang.smartrefresh'
+//                artifactId 'SmartRefreshLayout'
+//                version '1.1.0-alpha-17'
+//            }
+//        }
+//    }
 }

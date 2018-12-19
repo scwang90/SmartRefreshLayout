@@ -9,10 +9,15 @@
 
     <dimen name="division_line">0.5dp</dimen>
 
-    <dimen name="padding_common">10dp</dimen>
-    <dimen name="padding_common_h">15dp</dimen>
-    <dimen name="padding_common_v">10dp</dimen>
-    <dimen name="padding_common_d">5dp</dimen>
+    <dimen name="dimenPaddingMin">2.5dp</dimen>
+    <dimen name="dimenPaddingDiminutive">5dp</dimen>
+    <dimen name="dimenPaddingCommon">10dp</dimen>
+    <dimen name="dimenPaddingVertical">10dp</dimen>
+    <dimen name="dimenPaddingMiddle">12.5dp</dimen>
+    <dimen name="dimenPaddingHorizontal">15dp</dimen>
+    <dimen name="dimenPaddingBig">20dp</dimen>
+    <dimen name="dimenPaddingLarge">25dp</dimen>
+
 
     <dimen name="textsize_small">12sp</dimen>
     <dimen name="textsize_content">14sp</dimen>
@@ -20,5 +25,14 @@
     <dimen name="textsize_title">17sp</dimen>
     <dimen name="textsize_titlelarge">19sp</dimen>
     <dimen name="textsize_titlebar">20sp</dimen>
+
+    <dimen name="dimenTextMin">10sp</dimen>
+    <dimen name="dimenTextSmall">12sp</dimen>
+    <dimen name="dimenTextContent">14sp</dimen>
+    <dimen name="dimenTextTitleSmall">16sp</dimen>
+    <dimen name="dimenTextTitle">17sp</dimen>
+    <dimen name="dimenTextTitleLarge">19sp</dimen>
+    <dimen name="dimenTextTitleBar">20sp</dimen>
+    <dimen name="dimenTextEditText">14sp</dimen>
 
 </resources>

@@ -43,8 +43,8 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
     protected ImageView mProgressView;
     protected LinearLayout mCenterLayout;
     protected RefreshKernel mRefreshKernel;
-    protected ArrowDrawable mArrowDrawable;
-    protected ProgressDrawable mProgressDrawable;
+    protected PaintDrawable mArrowDrawable;
+    protected PaintDrawable mProgressDrawable;
 //    protected SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
     protected Integer mAccentColor;
     protected Integer mPrimaryColor;
@@ -202,7 +202,7 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
         return mFinishDuration;//延迟500毫秒之后再弹回
     }
 
-    @Override@Deprecated
+    @Override
     public void setPrimaryColors(@ColorInt int ... colors) {
         if (colors.length > 0) {
             final View thisView = this;
@@ -286,9 +286,11 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
         mTitleText.setTextColor(accentColor);
         if (mArrowDrawable != null) {
             mArrowDrawable.setColor(accentColor);
+            mArrowView.invalidateDrawable(mArrowDrawable);
         }
         if (mProgressDrawable != null) {
             mProgressDrawable.setColor(accentColor);
+            mProgressView.invalidateDrawable(mProgressDrawable);
         }
         return self();
     }

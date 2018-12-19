@@ -94,7 +94,7 @@ public class DropBoxStyleActivity extends AppCompatActivity implements AdapterVi
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        switch (Item.values()[position]) {
+        switch (Item.values()[position % Item.values().length]) {
             case 默认主题:
                 setThemeColor(R.color.colorPrimary, R.color.colorPrimaryDark);
                 mRefreshLayout.setPrimaryColors(0xff283645, 0xff6ea9ff);

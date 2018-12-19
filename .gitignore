@@ -1,5 +1,10 @@
 *.iml
+*.txt
+.project
+.classpath
 .gradle
+.settings
+release
 /local.properties
 /.idea/caches
 /.idea/codeStyles
@@ -9,5 +14,8 @@
 /.idea/runConfigurations.xml
 /.idea/vcs.xml
 /.idea/workspace.xml
+/.idea/markdown-navigator.xml
+/.idea/assetWizardSettings.xml
 /build
 /bintrayUpload-key.bat
+

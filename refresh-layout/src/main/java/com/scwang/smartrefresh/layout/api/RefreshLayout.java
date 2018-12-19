@@ -333,6 +333,20 @@ public interface RefreshLayout {
      */
     RefreshLayout setEnableNestedScroll(boolean enabled);
 
+//    /**
+//     * Sets whether to enable pure nested scrolling mode
+//     * Smart scrolling supports both [nested scrolling] and [traditional scrolling] modes
+//     * With nested scrolling enabled, traditional mode also works when necessary
+//     * However, sometimes interference and conflict can occur. If you find this conflict, you can try to turn on [pure nested scrolling] mode and [traditional mode] off
+//     * 设置是否开启【纯嵌套滚动】模式
+//     * Smart 的滚动支持 【嵌套滚动】 + 【传统滚动】 两种模式
+//     * 在开启 【嵌套滚动】 的情况下，【传统模式】也会在必要的时候发挥作用
+//     * 但是有时候也会发生干扰和冲突，如果您发现了这个冲突，可以尝试开启 【纯嵌套滚动】模式，【传统模式】关闭
+//     * @param enabled 是否启用
+//     * @return RefreshLayout
+//     */
+//    RefreshLayout setEnableNestedScrollOnly(boolean enabled);
+
     /**
      * Set whether to enable the action content view when refreshing.
      * 设置是否开启在刷新时候禁止操作内容视图
@@ -605,6 +619,7 @@ public interface RefreshLayout {
      * @param delayed 开始延时
      * @param duration 拖拽动画持续时间
      * @param dragRate 拉拽的高度比率（要求 ≥ 1 ）
+     * @param animationOnly 是否只是显示动画，不回调
      * @return true or false, Status non-compliance will fail.
      *         是否成功（状态不符合会失败）
      */

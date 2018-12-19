@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/padding_common">
+    android:padding="@dimen/dimenPaddingCommon">
 
     <ImageView
         android:id="@+id/lmi_avatar"
         android:layout_width="80dp"
         android:layout_height="100dp"
-        android:layout_marginEnd="@dimen/padding_common"
-        android:layout_marginRight="@dimen/padding_common"
+        android:layout_marginEnd="@dimen/dimenPaddingCommon"
+        android:layout_marginRight="@dimen/dimenPaddingCommon"
         android:contentDescription="@string/app_name"
         tools:background="#fff0f0f0"/>
 
@@ -22,23 +22,23 @@
         <TextView style="@style/AppTheme.Label.Title"
             android:id="@+id/lmi_title"
             android:minWidth="200dp"
-            android:layout_marginTop="@dimen/padding_common_d"
+            android:layout_marginTop="@dimen/dimenPaddingDiminutive"
             tools:background="#fff0f0f0"/>
         <TextView style="@style/AppTheme.Label"
             android:id="@+id/lmi_grade"
             android:minWidth="50dp"
-            android:layout_marginTop="@dimen/padding_common_d"
+            android:layout_marginTop="@dimen/dimenPaddingDiminutive"
             android:textColor="@android:color/holo_orange_dark"
             tools:background="#fff0f0f0"/>
         <TextView style="@style/AppTheme.Label"
             android:id="@+id/lmi_describe"
             android:minWidth="100dp"
-            android:layout_marginTop="@dimen/padding_common_d"
+            android:layout_marginTop="@dimen/dimenPaddingDiminutive"
             tools:background="#fff0f0f0"/>
         <TextView style="@style/AppTheme.Label"
             android:id="@+id/lmi_actor"
             android:minWidth="100dp"
-            android:layout_marginTop="@dimen/padding_common_d"
+            android:layout_marginTop="@dimen/dimenPaddingDiminutive"
             tools:background="#fff0f0f0"/>
     </LinearLayout>
 

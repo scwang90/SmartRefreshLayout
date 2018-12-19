@@ -36,6 +36,7 @@ public interface RefreshInternal extends OnStateChangedListener {
      * 设置主题颜色
      * @param colors 对应Xml中配置的 srlPrimaryColor srlAccentColor
      */
+    @RestrictTo({LIBRARY,LIBRARY_GROUP,SUBCLASSES})
     void setPrimaryColors(@ColorInt int... colors);
 
     /**

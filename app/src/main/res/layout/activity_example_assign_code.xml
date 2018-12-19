@@ -20,7 +20,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/padding_common"
+            android:layout_margin="@dimen/dimenPaddingCommon"
             android:text="@string/description_define_in_code"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
