@@ -35,6 +35,8 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
 
 ![支付宝红包](https://github.com/scwang90/MultiWaveHeader/blob/master/art/pay_alipay_red_packet.png?raw=true)
 
+> 你也可以在支付宝中直接搜索 **553866294** 来获取红包。如果你得到的是花呗红包，也不用失望。如果您经常使用信用卡的话那么使用花呗红包非常适合你，它也和信用卡一样先消费后还款，关键是每天都能扫红包省钱！
+
 ## 传送门
 
  - [属性文档](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_property.md)
@@ -243,6 +245,8 @@ SmartRefreshLayout 没有使用到：序列化、反序列化、JNI、反射，�
 你也还可以扫描下面的二维码~ 请作者喝一杯咖啡。
 
 ![](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/pay_alipay.jpg?raw=true) ![](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/pay_wxpay.jpg?raw=true) ![](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/pay_tencent.jpg?raw=true)
+
+> 支付宝打赏的话，还可以先扫上面的红包在打赏哟，红包也能抵掉打赏费噢！
 
 如果在捐赠留言中备注名称，将会被记录到列表中~ 如果你也是github开源作者，捐赠时可以留下github项目地址或者个人主页地址，链接将会被添加到列表中起到互相推广的作用
 [捐赠列表](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_donationlist.md)
