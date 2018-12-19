@@ -56,9 +56,9 @@ dependencies {
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
     testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 
-    implementation project(':refresh-footer')
-    implementation project(':refresh-header')
-    implementation project(':refresh-layout')
+//    implementation project(':refresh-footer')
+//    implementation project(':refresh-header')
+//    implementation project(':refresh-layout')
 
 //    //noinspection GradleDependency,GradleCompatible
 //    implementation ('com.android.support:support-v4:22.1.0') {
@@ -90,8 +90,8 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:2.1.0'
     implementation 'jp.wasabeef:recyclerview-animators:2.2.6'
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
-//    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-16'
-//    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-16'
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-1'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-1'
     testImplementation 'junit:junit:4.12'
 
     implementation 'com.github.bumptech.glide:glide:4.7.1'

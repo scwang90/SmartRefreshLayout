@@ -1,10 +1,13 @@
 apply plugin: 'groovy'
 
 repositories {
+    jcenter()
     mavenCentral()
 }
 
 dependencies {
     compile gradleApi()
     compile localGroovy()
+//    compile 'com.novoda:bintray-release:0.9'
+    compile 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
 }
