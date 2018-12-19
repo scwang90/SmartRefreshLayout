@@ -28,6 +28,7 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
  - 支持设置主题来适配任何场景的App，不会出现炫酷但很尴尬的情况.
  - 支持设多种滑动方式：平移、拉伸、背后固定、顶层固定、全屏
  - 支持所有可滚动视图的越界回弹
+ - 支持AndroidX
 
 ## 每天领红包
 
@@ -115,6 +116,10 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
 compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-18'
 compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-18'//没有使用特殊Header，可以不加这行
 compile 'com.android.support:appcompat-v7:25.3.1'//版本 23以上（必须）
+
+//1.1.0 androidx 版本
+implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-1'
+implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-1'
 
 //1.0.5 当1.1.0出现问题可以回退到1.0.5.1
 compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.5.1'

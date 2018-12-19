@@ -25,6 +25,7 @@ SmartRefreshLayout's goal is to build a strong, stable and mature pull-down refr
  - Support setting a variety of transformations (Translation, stretching, behind fixed, top fixed, full screen view) for Headers and Footers.
  - Support rewrite and extension, internal implementation without private methods and fields.
  - Support automatically cross-border rebound for all rolling Views (Listview、RecyclerView、ScrollView、WebView...View).
+ - Support AndroidX
  
 ## Gateway
 
@@ -100,8 +101,11 @@ Please rest assured that I have divided it into three packages, when used to ref
 ```
 compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-18'
 compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-18'//If you use the special Header
-
 compile 'com.android.support:appcompat-v7:25.3.1'
+
+//androidx version
+implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-1'
+implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-1'
 
 ```
 
