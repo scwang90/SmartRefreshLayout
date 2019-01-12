@@ -75,7 +75,7 @@ dependencies {
 //        exclude group: 'com.android.support'
 //    }
 
-    implementation 'com.google.android.material:material:1.1.0-alpha01'
+    implementation 'com.google.android.material:material:1.1.0-alpha02'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha2'
 
@@ -90,8 +90,8 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:2.1.0'
     implementation 'jp.wasabeef:recyclerview-animators:2.2.6'
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
-    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-1'
-    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-1'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-2'
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-2'
     testImplementation 'junit:junit:4.12'
 
     implementation 'com.github.bumptech.glide:glide:4.7.1'

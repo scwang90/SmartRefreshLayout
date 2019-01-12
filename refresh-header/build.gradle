@@ -1,4 +1,3 @@
-//apply plugin: 'com.aaron.gradle.bintray-release'//必须写在第一行
 apply plugin: 'com.android.library'
 apply plugin: 'com.novoda.bintray-release'
 
