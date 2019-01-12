@@ -9,8 +9,6 @@
 
     <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"
-        android:background="@android:color/white"
-        android:elevation="0dp"
         app:navigationIcon="?attr/homeAsUpIndicator"
         app:title="@string/title_activity_style_material"/>
 

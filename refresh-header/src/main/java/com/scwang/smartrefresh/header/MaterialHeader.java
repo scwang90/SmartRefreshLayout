@@ -207,11 +207,11 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
 
                 float rotation = (-0.25f + .4f * adjustedPercent + tensionPercent * 2) * .5f;
                 mProgress.setProgressRotation(rotation);
-                circleView.setAlpha(Math.min(1f, 4f * offset / mCircleDiameter));
             }
 
             float targetY = offset / 2 + mCircleDiameter / 2;
             circleView.setTranslationY(Math.min(offset, targetY));//setTargetOffsetTopAndBottom(targetY - mCurrentTargetOffsetTop, true /* requires update */);
+            circleView.setAlpha(Math.min(1f, 4f * offset / mCircleDiameter));
         }
     }
 
