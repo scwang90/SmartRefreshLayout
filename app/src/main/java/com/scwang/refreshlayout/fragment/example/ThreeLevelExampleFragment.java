@@ -39,7 +39,7 @@ public class ThreeLevelExampleFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final Toolbar toolbar = (Toolbar)view.findViewById(R.id.toolbar);
+        final Toolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,7 +47,7 @@ public class ThreeLevelExampleFragment extends Fragment {
             }
         });
 
-        RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         if (recyclerView != null) {
             recyclerView.setAdapter(new BaseRecyclerAdapter<Void>(initData(), simple_list_item_2) {
                 @Override
@@ -60,7 +60,7 @@ public class ThreeLevelExampleFragment extends Fragment {
             });
         }
 
-        RefreshLayout refreshLayout1 = (RefreshLayout) view.findViewById(R.id.refreshLayout1);
+        RefreshLayout refreshLayout1 = view.findViewById(R.id.refreshLayout1);
         if (refreshLayout1 != null) {
             refreshLayout1.setOnRefreshListener(new OnRefreshListener() {
                 @Override
@@ -69,8 +69,9 @@ public class ThreeLevelExampleFragment extends Fragment {
                 }
             });
         }
-        RefreshLayout refreshLayout2 = (RefreshLayout) view.findViewById(R.id.refreshLayout2);
+        RefreshLayout refreshLayout2 = view.findViewById(R.id.refreshLayout2);
         if (refreshLayout2 != null) {
+            refreshLayout2.getLayout().setEnabled(false);
             refreshLayout2.setOnRefreshListener(new OnRefreshListener() {
                 @Override
                 public void onRefresh(@NonNull RefreshLayout refreshLayout) {
