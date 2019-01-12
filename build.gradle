@@ -11,7 +11,7 @@ buildscript {
         // in the individual module build.gradle files
 //        classpath 'com.novoda:bintray-release:0.8.1'
         classpath 'com.aaron.gradle:bintray-release:1.3.7'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
+//        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
     }
 }
 
