@@ -5,10 +5,6 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
-import androidx.annotation.ColorInt;
-import androidx.annotation.ColorRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.VisibleForTesting;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -25,6 +21,11 @@ import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 import com.scwang.smartrefresh.layout.util.SmartUtil;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 
 import static android.view.View.MeasureSpec.getSize;
 
@@ -85,6 +86,7 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
         mProgress.setColorSchemeColors(0xff0099cc,0xffff4444,0xff669900,0xffaa66cc,0xffff8800);
         mCircleView = new CircleImageView(context,CIRCLE_BG_LIGHT);
         mCircleView.setImageDrawable(mProgress);
+        mCircleView.setAlpha(0f);
         thisGroup.addView(mCircleView);
 
         final DisplayMetrics metrics = thisView.getResources().getDisplayMetrics();
@@ -206,7 +208,7 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
 
                 float rotation = (-0.25f + .4f * adjustedPercent + tensionPercent * 2) * .5f;
                 mProgress.setProgressRotation(rotation);
-                circleView.setAlpha(Math.min(1f, originalDragPercent * 2));
+                circleView.setAlpha(Math.min(1f, 4 * offset / mCircleDiameter));
             }
 
             float targetY = offset / 2 + mCircleDiameter / 2;
