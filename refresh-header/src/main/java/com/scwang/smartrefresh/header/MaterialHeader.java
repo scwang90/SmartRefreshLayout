@@ -5,6 +5,10 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.support.annotation.ColorInt;
+import android.support.annotation.ColorRes;
+import android.support.annotation.NonNull;
+import android.support.annotation.VisibleForTesting;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -21,11 +25,6 @@ import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 import com.scwang.smartrefresh.layout.util.SmartUtil;
-
-import androidx.annotation.ColorInt;
-import androidx.annotation.ColorRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.VisibleForTesting;
 
 import static android.view.View.MeasureSpec.getSize;
 
@@ -208,11 +207,11 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
 
                 float rotation = (-0.25f + .4f * adjustedPercent + tensionPercent * 2) * .5f;
                 mProgress.setProgressRotation(rotation);
-                circleView.setAlpha(Math.min(1f, 4 * offset / mCircleDiameter));
             }
 
             float targetY = offset / 2 + mCircleDiameter / 2;
             circleView.setTranslationY(Math.min(offset, targetY));//setTargetOffsetTopAndBottom(targetY - mCurrentTargetOffsetTop, true /* requires update */);
+            circleView.setAlpha(Math.min(1f, 4f * offset / mCircleDiameter));
         }
     }
 

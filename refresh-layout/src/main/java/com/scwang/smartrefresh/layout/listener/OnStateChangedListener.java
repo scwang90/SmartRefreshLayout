@@ -18,7 +18,7 @@ import static androidx.annotation.RestrictTo.Scope.SUBCLASSES;
 
 public interface OnStateChangedListener {
     /**
-     * 状态改变事件 {@link RefreshState}
+     * 【仅限框架内调用】状态改变事件 {@link RefreshState}
      * @param refreshLayout RefreshLayout
      * @param oldState 改变之前的状态
      * @param newState 改变之后的状态
