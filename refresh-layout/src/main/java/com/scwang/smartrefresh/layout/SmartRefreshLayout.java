@@ -1559,6 +1559,14 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      */
     protected void moveSpinnerInfinitely(float spinner) {
         final View thisView = this;
+        if (mNestedInProgress && !mEnableLoadMoreWhenContentNotFull && spinner < 0) {
+            if (!mRefreshContent.canLoadMore()) {
+                /*
+                 * 2019-1-22 修复 嵌套滚动模式下 mEnableLoadMoreWhenContentNotFull=false 无效的bug
+                 */
+                spinner = 0;
+            }
+        }
         if (mState == RefreshState.TwoLevel && spinner > 0) {
             mKernel.moveSpinner(Math.min((int) spinner, thisView.getMeasuredHeight()), true);
         } else if (mState == RefreshState.Refreshing && spinner >= 0) {
@@ -2542,7 +2550,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     /**
      * Restore the original state after finishLoadMoreWithNoMoreData.
      * 恢复没有更多数据的原始状态
-     * @deprecated use {@link RefreshLayout#resetNoMoreData()}
+     * @deprecated use {@link RefreshLayout#resetNoMoreData()} and {@link RefreshLayout#finishLoadMoreWithNoMoreData()}
      * @param noMoreData 是否有更多数据
      * @return RefreshLayout
      */
@@ -3266,6 +3274,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         /*
          * 移动滚动 Scroll
          * moveSpinner 的取名来自 谷歌官方的 {@link android.support.v4.widget.SwipeRefreshLayout#moveSpinner(float)}
+         * moveSpinner The name comes from {@link android.support.v4.widget.SwipeRefreshLayout#moveSpinner(float)}
          */
         @SuppressWarnings("ConstantConditions")
         public RefreshKernel moveSpinner(int spinner, boolean isDragging) {
