@@ -56,8 +56,7 @@ public class FlexboxLayoutManagerFragment extends Fragment {
         manager.setAlignItems(AlignItems.STRETCH);
 
         RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
-//        recyclerView.setLayoutManager(manager);
-        recyclerView.setLayoutManager(new LinearLayoutManager(root.getContext()));
+        recyclerView.setLayoutManager(manager);
         recyclerView.setClipToPadding(false);
         recyclerView.setPadding(DensityUtil.dp2px(2.5f),DensityUtil.dp2px(2.5f),DensityUtil.dp2px(2.5f),DensityUtil.dp2px(2.5f));
 
