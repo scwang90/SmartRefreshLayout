@@ -5,6 +5,8 @@
 >添加：srlFooterTranslationViewId 属性，指定上拉Footer时偏移的视图Id  
 >添加：setDefaultRefreshInitializer 方法，采用优先级最低的配置全局设置  
 >添加：closeHeaderOrFooter 方法，可以关闭正在打开的Header或者Footer  
+>添加：autoLoadMoreAnimationOnly 方法，只显示动画不执行加载  
+>添加：autoRefreshAnimationOnly 方法，只显示动画不执行刷新  
 >集成：类似淘宝二楼的二级下拉刷新 TwoLevelHeader  
 >删除：部分冗余的API接口  
 >删除：1.0.5 中标记过时的API接口  
