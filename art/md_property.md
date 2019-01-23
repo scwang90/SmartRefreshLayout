@@ -57,6 +57,8 @@ public class RefreshActivity extends Activity {
 
         refreshLayout.autoRefresh();//自动刷新
         refreshLayout.autoLoadMore();//自动加载
+        refreshLayout.autoRefreshAnimationOnly();//自动刷新，只显示动画不执行刷新
+        refreshLayout.autoLoadMoreAnimationOnly();//自动加载，只显示动画不执行加载
         refreshLayout.autoRefresh(400);//延迟400毫秒后自动刷新
         refreshLayout.autoLoadMore(400);//延迟400毫秒后自动加载
         refreshLayout.finishRefresh();//结束刷新
@@ -238,7 +240,15 @@ xml代码设置
         app:srlDrawableMarginRight="20dp"
         app:srlDrawableArrow="@drawable/ic_arrow"
         app:srlDrawableProgress="@drawable/ic_progress"
-        app:srlClassicsSpinnerStyle="Translate"/>
+        app:srlClassicsSpinnerStyle="Translate"
+        app:srlTextPulling="@string/srl_header_pulling"
+        app:srlTextLoading="@string/srl_header_loading"
+        app:srlTextRelease="@string/srl_header_release"
+        app:srlTextFinish="@string/srl_header_finish"
+        app:srlTextFailed="@string/srl_header_failed"
+        app:srlTextUpdate="@string/srl_header_update"
+        app:srlTextSecondary="@string/srl_header_secondary"
+        app:srlTextRefreshing="@string/srl_header_refreshing"/>
 </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 ~~~
 
@@ -308,7 +318,14 @@ xml代码设置
         app:srlDrawableMarginRight="20dp"
         app:srlDrawableArrow="@drawable/ic_arrow"
         app:srlDrawableProgress="@drawable/ic_progress"
-        app:srlClassicsSpinnerStyle="Translate"/>
+        app:srlClassicsSpinnerStyle="Translate"
+        app:srlTextPulling="@string/srl_footer_pulling"
+        app:srlTextRelease="@string/srl_footer_release"
+        app:srlTextLoading="@string/srl_footer_loading"
+        app:srlTextRefreshing="@string/srl_footer_refreshing"
+        app:srlTextFinish="@string/srl_footer_finish"
+        app:srlTextFailed="@string/srl_footer_failed"
+        app:srlTextNothing="@string/srl_footer_nothing"/>
 </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 ~~~
 
@@ -411,6 +428,8 @@ xml代码设置
 |isLoading|boolean|(V1.1.0删除，版本用 getState==Loading 代替)|
 |autoRefresh|(int delayed)|触发自动刷新|
 |autoLoadMore|(int delayed)|触发自动加载|
+|autoRefreshAnimationOnly| |触发自动刷新，只显示动画不执行刷新 |
+|autoLoadMoreAnimationOnly| |触发自动加载，只显示动画不执行加载  |
 
 ## Header-Attributes
 
