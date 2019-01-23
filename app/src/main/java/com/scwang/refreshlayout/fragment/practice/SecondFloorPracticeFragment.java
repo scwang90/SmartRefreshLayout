@@ -63,12 +63,12 @@ public class SecondFloorPracticeFragment extends Fragment {
 //            @Override
 //            public void onHeaderPulling(@NonNull RefreshHeader header, float percent, int offset, int bottomHeight, int maxDragHeight) {
 //                toolbar.setAlpha(1 - Math.min(percent, 1));
-//                floor.setTranslationY(Math.min(offset - floor.getHeight() + toolbar.getHeight(), refreshLayout.getLayout().getHeight() - floor.getHeight()));
+//                floor.setTranslationY(Math.min(offset - floor.getHeight() + toolbar.getHeight(), mRefreshLayout.getLayout().getHeight() - floor.getHeight()));
 //            }
 //            @Override
 //            public void onHeaderReleasing(@NonNull RefreshHeader header, float percent, int offset, int bottomHeight, int maxDragHeight) {
 //                toolbar.setAlpha(1 - Math.min(percent, 1));
-//                floor.setTranslationY(Math.min(offset - floor.getHeight() + toolbar.getHeight(), refreshLayout.getLayout().getHeight() - floor.getHeight()));
+//                floor.setTranslationY(Math.min(offset - floor.getHeight() + toolbar.getHeight(), mRefreshLayout.getLayout().getHeight() - floor.getHeight()));
 //            }
         });
 
@@ -88,11 +88,11 @@ public class SecondFloorPracticeFragment extends Fragment {
             }
         });
 
-//        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+//        mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
 //            @Override
-//            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+//            public void onRefresh(@NonNull RefreshLayout mRefreshLayout) {
 //                Toast.makeText(getContext(),"触发刷新事件",Toast.LENGTH_SHORT).show();
-//                refreshLayout.finishRefresh(2000);
+//                mRefreshLayout.finishRefresh(2000);
 //            }
 //        });
 

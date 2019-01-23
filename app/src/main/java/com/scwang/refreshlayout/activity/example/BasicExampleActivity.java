@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.scwang.refreshlayout.R;
@@ -20,6 +21,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -46,36 +48,37 @@ public class BasicExampleActivity extends AppCompatActivity {
             }
         });
 
-        AbsListView listView = findViewById(R.id.listView);
+        ListView listView = findViewById(R.id.listView);
         listView.setAdapter(mAdapter = new BaseRecyclerAdapter<Void>(simple_list_item_2) {
             @Override
             protected void onBindViewHolder(SmartViewHolder holder, Void model, int position) {
                 holder.text(android.R.id.text1, getString(R.string.item_example_number_title, position));
                 holder.text(android.R.id.text2, getString(R.string.item_example_number_abstract, position));
                 holder.textColorId(android.R.id.text2, R.color.colorTextAssistant);
+//                holder.itemView.getLayoutParams().width = -2;
             }
         });
-        //todo SCROLL_STATE_IDLE
-        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
-            int SCROLL_STATE_IDLE = 0;
-            int SCROLL_STATE_TOUCH_SCROLL = 1;
-            int SCROLL_STATE_FLING = 2;
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-                if (scrollState == SCROLL_STATE_IDLE) {
-                    System.out.println("SCROLL_STATE_IDLE");
-                } else if (scrollState == SCROLL_STATE_TOUCH_SCROLL) {
-                    System.out.println("SCROLL_STATE_TOUCH_SCROLL");
-                } else if (scrollState == SCROLL_STATE_FLING) {
-                    System.out.println("SCROLL_STATE_FLING");
-                }
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
-            }
-        });
+//        //todo SCROLL_STATE_IDLE
+//        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+//            int SCROLL_STATE_IDLE = 0;
+//            int SCROLL_STATE_TOUCH_SCROLL = 1;
+//            int SCROLL_STATE_FLING = 2;
+//            @Override
+//            public void onScrollStateChanged(AbsListView view, int scrollState) {
+//                if (scrollState == SCROLL_STATE_IDLE) {
+//                    System.out.println("SCROLL_STATE_IDLE");
+//                } else if (scrollState == SCROLL_STATE_TOUCH_SCROLL) {
+//                    System.out.println("SCROLL_STATE_TOUCH_SCROLL");
+//                } else if (scrollState == SCROLL_STATE_FLING) {
+//                    System.out.println("SCROLL_STATE_FLING");
+//                }
+//            }
+//
+//            @Override
+//            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+//
+//            }
+//        });
 
         final RefreshLayout refreshLayout = findViewById(R.id.refreshLayout);
         refreshLayout.setEnableAutoLoadMore(true);//开启自动加载功能（非必须）

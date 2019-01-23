@@ -185,13 +185,6 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
         } else {
             mTextFailed = context.getString(R.string.srl_header_failed);
         }
-        if(ta.hasValue(R.styleable.ClassicsHeader_srlTextUpdate)){
-            mTextUpdate = ta.getString(R.styleable.ClassicsHeader_srlTextUpdate);
-        } else if(REFRESH_HEADER_UPDATE != null) {
-            mTextUpdate = REFRESH_HEADER_UPDATE;
-        } else {
-            mTextUpdate = context.getString(R.string.srl_header_update);
-        }
         if(ta.hasValue(R.styleable.ClassicsHeader_srlTextSecondary)){
             mTextSecondary = ta.getString(R.styleable.ClassicsHeader_srlTextSecondary);
         } else if(REFRESH_HEADER_SECONDARY != null) {
@@ -206,6 +199,14 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
         } else {
             mTextRefreshing = context.getString(R.string.srl_header_refreshing);
         }
+        if(ta.hasValue(R.styleable.ClassicsHeader_srlTextUpdate)){
+            mTextUpdate = ta.getString(R.styleable.ClassicsHeader_srlTextUpdate);
+        } else if(REFRESH_HEADER_UPDATE != null) {
+            mTextUpdate = REFRESH_HEADER_UPDATE;
+        } else {
+            mTextUpdate = context.getString(R.string.srl_header_update);
+        }
+        mLastUpdateFormat = new SimpleDateFormat(mTextUpdate, Locale.getDefault());
 
         ta.recycle();
 
@@ -231,7 +232,6 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
         }
 
         KEY_LAST_UPDATE_TIME += context.getClass().getName();
-        mLastUpdateFormat = new SimpleDateFormat(mTextUpdate, Locale.getDefault());
         mShared = context.getSharedPreferences("ClassicsHeader", Context.MODE_PRIVATE);
         setLastUpdateTime(new Date(mShared.getLong(KEY_LAST_UPDATE_TIME, System.currentTimeMillis())));
 

@@ -540,6 +540,7 @@ public interface RefreshLayout {
      * 获取当前状态
      * @return RefreshLayout
      */
+    @NonNull
     RefreshState getState();
 
     /**
@@ -547,6 +548,7 @@ public interface RefreshLayout {
      * 获取实体布局视图
      * @return ViewGroup
      */
+    @NonNull
     ViewGroup getLayout();
 
     /**

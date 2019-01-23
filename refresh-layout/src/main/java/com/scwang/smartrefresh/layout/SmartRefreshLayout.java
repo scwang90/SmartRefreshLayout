@@ -311,7 +311,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      * 1.智能寻找 Xml 中定义的 Content、Header、Footer
      */
     @Override
-    protected void onFinishInflate() {
+    public void onFinishInflate() {
         super.onFinishInflate();
         final int count = super.getChildCount();
         if (count > 3) {
@@ -2427,6 +2427,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      * 获取当前状态
      * @return RefreshLayout
      */
+    @NonNull
     @Override
     public RefreshState getState() {
         return mState;
@@ -2437,6 +2438,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      * 获取实体布局视图
      * @return ViewGroup
      */
+    @NonNull
     @Override
     public SmartRefreshLayout getLayout() {
         return this;
