@@ -64,10 +64,12 @@ XML属性
 
 
 ## 4.如何修改经典刷新文字？
-
 SmartRefresh的经典文字自带了国际化（中/英），如需自定义文字显示，可以通过以下两种方法设置：
 
-代码设置
+代码设置（APP在运行是，更改系统语言，本方法无效）
+
+ClassicsHeader 和 ClassicsFooter 的描述文字是可以修改的，不要看错成了常量哦~
+
 ~~~java
 public class App extends Application {
     @Override
@@ -114,6 +116,32 @@ public class App extends Application {
     <string name="srl_footer_failed">加载失败</string>
     <string name="srl_footer_nothing">没有更多数据了</string>
 </resources>
+~~~
+
+XML直接指定（1.1.0 最新版）
+~~~xml
+    <com.scwang.smartrefresh.layout.header.ClassicsHeader
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srlTextPulling="@string/srl_header_pulling"
+        app:srlTextLoading="@string/srl_header_loading"
+        app:srlTextRelease="@string/srl_header_release"
+        app:srlTextFinish="@string/srl_header_finish"
+        app:srlTextFailed="@string/srl_header_failed"
+        app:srlTextUpdate="@string/srl_header_update"
+        app:srlTextSecondary="@string/srl_header_secondary"
+        app:srlTextRefreshing="@string/srl_header_refreshing"/>
+
+    <com.scwang.smartrefresh.layout.header.ClassicsFooter
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srlTextPulling="@string/srl_footer_pulling"
+        app:srlTextRelease="@string/srl_footer_release"
+        app:srlTextLoading="@string/srl_footer_loading"
+        app:srlTextRefreshing="@string/srl_footer_refreshing"
+        app:srlTextFinish="@string/srl_footer_finish"
+        app:srlTextFailed="@string/srl_footer_failed"
+        app:srlTextNothing="@string/srl_footer_nothing"/>
 ~~~
 
 #### 注意：上次更新时间的英文格式需要加单引号如： 'Last update' M-d HH:mm
@@ -277,3 +305,9 @@ Smart 可以修改 “加载完成”和“刷新完成” 的显示时间，所
 header.setFinishDuration(0);//设置Footer 的 “刷新完成” 显示时间为0
 footer.setFinishDuration(0);//设置Footer 的 “加载完成” 显示时间为0
 ```
+
+## 15.RecyclerView，ListVIew，ScrollView，NestScrollView，滚动冲突
+
+1. 如果是 RecyclerView 和 NestScrollView 先尝试打开 Smart 的嵌套滚动功能
+2. 如果是 ListVIew，ScrollView，可以尝试 同时打开 ScrollView，ScrollView，Smart 的嵌套滚动功能
+3. 如果 1，2 都无效，这需要自定义滚动边界自己实现 canRefresh 和 canLoadMore，自己用代码告诉Smart 什么时候可以 刷新，什么时候可以加载
