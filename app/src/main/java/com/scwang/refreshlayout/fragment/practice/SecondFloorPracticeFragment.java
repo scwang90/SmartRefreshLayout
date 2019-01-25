@@ -72,6 +72,16 @@ public class SecondFloorPracticeFragment extends Fragment {
 //            }
         });
 
+        /*
+         * 主动打开二楼
+         */
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                header.openTwoLevel(true);
+            }
+        });
+
         header.setOnTwoLevelListener(new OnTwoLevelListener() {
             @Override
             public boolean onTwoLevel(@NonNull RefreshLayout refreshLayout) {
