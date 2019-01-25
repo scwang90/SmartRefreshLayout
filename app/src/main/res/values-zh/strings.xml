@@ -46,6 +46,7 @@
     <string name="title_activity_example_custom">自定义Header</string>
     <string name="title_activity_example_snap_helper">SnapHelper</string>
 
+    <string name="fragment_example_horizontal">水平滚动模式</string>
     <string name="fragment_example_pure_scroll">纯滚动模式</string>
     <string name="fragment_example_pure_scroll_header">纯滚动模式-单独指定Header</string>
     <string name="fragment_example_empty_layout">空页面</string>
@@ -73,6 +74,7 @@
     <string name="index_example_bottom_sheet">BottomSheet内部使用加载更多</string>
     <string name="index_example_level">三级刷新</string>
     <string name="index_example_flexbox">结合 FlexboxLayoutManager 使用</string>
+    <string name="index_example_horizontal">水平滚动刷新</string>
 
     <string name="index_practice_repast">餐饮美食-简单自定义Header-外边距magin</string>
     <string name="index_practice_profile">个人中心-PureScrollMode-纯滚动模式</string>

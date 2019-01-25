@@ -9,34 +9,47 @@ import android.view.ViewGroup;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.refreshlayout.R;
 import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.api.ScrollBoundaryDecider;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
+import com.scwang.smartrefresh.layout.impl.ScrollBoundaryDeciderAdapter;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnMultiPurposeListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
-public class SmartRefreshLayoutHorizontal extends FrameLayout implements RefreshLayout {
+public class SmartRefreshHorizontal extends FrameLayout implements RefreshLayout {
 
-    protected SmartRefreshLayout mRefreshLayout;
+    protected SmartRefreshContent mRefreshLayout;
 
-    public SmartRefreshLayoutHorizontal(Context context) {
+    public SmartRefreshHorizontal(Context context) {
         this(context, null);
     }
 
-    public SmartRefreshLayoutHorizontal(Context context, AttributeSet attrs) {
+    public SmartRefreshHorizontal(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public SmartRefreshLayoutHorizontal(Context context, AttributeSet attrs, int defStyleAttr) {
+    public SmartRefreshHorizontal(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        mRefreshLayout = new SmartRefreshLayout(context, attrs, defStyleAttr);
+        mRefreshLayout = new SmartRefreshContent(context, attrs, defStyleAttr);
+        mRefreshLayout.setEnableAutoLoadMore(false);
+        mRefreshLayout.setScrollBoundaryDecider(new ScrollBoundaryDeciderAdapter(){
+            @Override
+            public boolean canRefresh(View content) {
+                return ScrollBoundaryHorizontal.canRefresh(content, mActionEvent);
+            }
+            @Override
+            public boolean canLoadMore(View content) {
+                return ScrollBoundaryHorizontal.canLoadMore(content, mActionEvent, mEnableLoadMoreWhenContentNotFull);
+            }
+        });
     }
 
+    //<editor-fold desc="重写方法">
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
@@ -47,30 +60,68 @@ public class SmartRefreshLayoutHorizontal extends FrameLayout implements Refresh
         }
         mRefreshLayout.onFinishInflate();
         addView(mRefreshLayout);
+        mRefreshLayout.setRotation(-90);
     }
 
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         if (mRefreshLayout.getParent() == null) {
+            mRefreshLayout.setRotation(-90);
             addView(mRefreshLayout);
         }
-//        ViewGroup layoutLayout = mRefreshLayout.getLayout();
-//        if (layoutLayout.getRotation() == 0) {
-//            if (layoutLayout.getChildCount() == 0) {
-//                while (getChildCount() > 0) {
-//                    View child = getChildAt(0);
-//                    removeViewAt(0);
-//                    layoutLayout.addView(child);
+    }
+
+    @Override
+    @SuppressWarnings("SuspiciousNameCombination")
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        mRefreshLayout.measure(heightMeasureSpec, widthMeasureSpec);
+//        RefreshHeader header = mRefreshLayout.getRefreshHeader();
+//        RefreshFooter footer = mRefreshLayout.getRefreshFooter();
+//
+//        for (int i = 0, len = mRefreshLayout.getChildCount(); i < len; i++) {
+//            View child = mRefreshLayout.getChildAt(i);
+//            if ((header == null || child != header.getView()) && (footer == null || child != footer.getView())) {
+//                if (child.getVisibility() != GONE) {
+//                    child.measure(MeasureSpec.makeMeasureSpec(getMeasuredWidth(), MeasureSpec.EXACTLY),
+//                            MeasureSpec.makeMeasureSpec(getMeasuredHeight(), MeasureSpec.EXACTLY));
 //                }
 //            }
-//            if (getChildCount() > 0) {
-//                removeAllViews();
-//            }
-//            addView(layoutLayout);
 //        }
     }
 
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+//        super.onLayout(changed, left, top, right, bottom);
+
+        int width = right - left;
+        int height = bottom - top;
+        int div = (height - width) / 2;
+        top = div;
+        left = -div;
+
+        RefreshHeader header = mRefreshLayout.getRefreshHeader();
+        RefreshFooter footer = mRefreshLayout.getRefreshFooter();
+
+        for (int i = 0, len = mRefreshLayout.getChildCount(); i < len; i++) {
+            View child = mRefreshLayout.getChildAt(i);
+            if ((header == null || child != header.getView()) && (footer == null || child != footer.getView())) {
+                if (child.getVisibility() != GONE) {
+                    child.setTag(R.string.srl_component_falsify, child);
+                    child.setRotation(90);
+                    child.measure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY));
+                    child.layout(div, -div, width + div, height - div);
+                }
+
+            }
+        }
+
+        mRefreshLayout.layout(left, top, left + height, top + width);
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="委托方法">
     @Override
     public RefreshLayout setFooterHeight(float dp) {
         return mRefreshLayout.setFooterHeight(dp);
@@ -408,4 +459,5 @@ public class SmartRefreshLayoutHorizontal extends FrameLayout implements Refresh
     public boolean autoLoadMore(int delayed, int duration, float dragRate, boolean animationOnly) {
         return mRefreshLayout.autoLoadMore(delayed, duration, dragRate, animationOnly);
     }
+    //</editor-fold>
 }

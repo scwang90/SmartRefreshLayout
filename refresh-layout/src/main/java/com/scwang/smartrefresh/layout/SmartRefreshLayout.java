@@ -503,6 +503,10 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         for (int i = 0, len = super.getChildCount(); i < len; i++) {
             View child = super.getChildAt(i);
 
+            if (child.getVisibility() == GONE || child.getTag(R.string.srl_component_falsify) == child) {
+                continue;
+            }
+
             if (mRefreshHeader != null && mRefreshHeader.getView() == child) {
                 final View headerView = mRefreshHeader.getView();
                 final LayoutParams lp = (LayoutParams) headerView.getLayoutParams();
@@ -638,6 +642,10 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
         for (int i = 0, len = super.getChildCount(); i < len; i++) {
             View child = super.getChildAt(i);
+
+            if (child.getVisibility() == GONE || child.getTag(R.string.srl_component_falsify) == child) {
+                continue;
+            }
 
             if (mRefreshContent != null && mRefreshContent.getView() == child) {
                 boolean isPreviewMode = thisView.isInEditMode() && mEnablePreviewInEditMode && isEnableRefreshOrLoadMore(mEnableRefresh) && mRefreshHeader != null;

@@ -46,6 +46,7 @@
     <string name="title_activity_example_custom">Custom Header</string>
     <string name="title_activity_example_snap_helper">SnapHelper</string>
 
+    <string name="fragment_example_horizontal">Horizontal Scroll Mode</string>
     <string name="fragment_example_pure_scroll">Pure Rolling Mode</string>
     <string name="fragment_example_pure_scroll_header">Pure Rolling Mode - Header Only</string>
     <string name="fragment_example_empty_layout">Empty Layout</string>
@@ -84,6 +85,7 @@
     <string name="index_example_bottom_sheet">The usage of BottomSheet</string>
     <string name="index_example_level">The usage of three level refresh</string>
     <string name="index_example_flexbox">The usage of FlexboxLayoutManager</string>
+    <string name="index_example_horizontal">The usage of Horizontal Scroll</string>
 
     <string name="item_style_theme_orange_abstract">Change theme to orange color</string>
     <string name="item_style_theme_red_abstract">Change theme to red color</string>
@@ -157,5 +159,8 @@
     </string>
     <string name="instant_message_input_hint">输入消息</string>
     <string name="instant_message_send">发送</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
