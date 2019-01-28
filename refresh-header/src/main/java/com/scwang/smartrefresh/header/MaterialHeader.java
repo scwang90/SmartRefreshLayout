@@ -187,11 +187,6 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
             thisView.postInvalidate();
         }
 
-        final View circleView = mCircleView;
-        float targetY = offset / 2 + mCircleDiameter / 2;
-        circleView.setTranslationY(Math.min(offset, targetY));//setTargetOffsetTopAndBottom(targetY - mCurrentTargetOffsetTop, true /* requires update */);
-        circleView.setAlpha(Math.min(1f, 4f * offset / mCircleDiameter));
-
         if (isDragging || (!mProgress.isRunning() && !mFinished)) {
 
             if (mState != RefreshState.Refreshing) {
@@ -213,6 +208,10 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
                 mProgress.setProgressRotation(rotation);
             }
 
+            final View circleView = mCircleView;
+            float targetY = offset / 2 + mCircleDiameter / 2;
+            circleView.setTranslationY(Math.min(offset, targetY));
+            circleView.setAlpha(Math.min(1f, 4f * offset / mCircleDiameter));
         }
     }
 

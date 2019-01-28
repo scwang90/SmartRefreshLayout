@@ -61,9 +61,6 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
         final View progressView = mProgressView;
         final DensityUtil density = new DensityUtil();
 
-        mTitleText.setTextColor(0xff666666);
-        mTitleText.setText(thisView.isInEditMode() ? REFRESH_FOOTER_LOADING : REFRESH_FOOTER_PULLING);
-
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ClassicsFooter);
 
         LayoutParams lpArrow = (LayoutParams) arrowView.getLayoutParams();
@@ -165,6 +162,8 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
 
         ta.recycle();
 
+        mTitleText.setTextColor(0xff666666);
+        mTitleText.setText(thisView.isInEditMode() ? mTextLoading : mTextPulling);
     }
 
 //    @Override
