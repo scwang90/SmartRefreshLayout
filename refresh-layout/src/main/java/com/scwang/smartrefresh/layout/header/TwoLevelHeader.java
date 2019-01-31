@@ -365,5 +365,20 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
         return this;
     }
 
+    /**
+     * Open the second floor voluntarily
+     * 主动打开二楼
+     * @param widthOnTwoLevelListener 是否触发 OnTwoLevelListener 监听器
+     * @return TwoLevelHeader
+     */
+    public TwoLevelHeader openTwoLevel(boolean widthOnTwoLevelListener) {
+        final RefreshKernel refreshKernel = mRefreshKernel;
+        if (refreshKernel != null) {
+            final OnTwoLevelListener twoLevelListener = mTwoLevelListener;
+            refreshKernel.startTwoLevel(!widthOnTwoLevelListener || twoLevelListener == null || twoLevelListener.onTwoLevel(refreshKernel.getRefreshLayout()));
+        }
+        return this;
+    }
+
     //</editor-fold>
 }

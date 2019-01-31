@@ -24,6 +24,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
+import static android.view.View.MeasureSpec.EXACTLY;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static com.scwang.smartrefresh.layout.util.SmartUtil.getColor;
 
@@ -52,6 +53,7 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
     protected int mFinishDuration = 500;
     protected int mPaddingTop = 20;
     protected int mPaddingBottom = 20;
+    protected int mMinHeightOfContent = 0;
 
     //<editor-fold desc="RelativeLayout">
 
@@ -124,12 +126,28 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         final View thisView = this;
-        if (MeasureSpec.getMode(heightMeasureSpec) == MeasureSpec.EXACTLY) {
-            thisView.setPadding(thisView.getPaddingLeft(), 0, thisView.getPaddingRight(), 0);
+        if (MeasureSpec.getMode(heightMeasureSpec) == EXACTLY) {
+            final int parentHeight = MeasureSpec.getSize(heightMeasureSpec);
+            if (parentHeight < mMinHeightOfContent) {
+                final int padding = (parentHeight - mMinHeightOfContent) / 2;
+                thisView.setPadding(thisView.getPaddingLeft(), padding, thisView.getPaddingRight(), padding);
+            } else {
+                thisView.setPadding(thisView.getPaddingLeft(), 0, thisView.getPaddingRight(), 0);
+            }
+
         } else {
             thisView.setPadding(thisView.getPaddingLeft(), mPaddingTop, thisView.getPaddingRight(), mPaddingBottom);
         }
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        if (mMinHeightOfContent == 0) {
+            final ViewGroup thisGroup = this;
+            for (int i = 0; i < thisGroup.getChildCount(); i++) {
+                final int height = thisGroup.getChildAt(i).getMeasuredHeight();
+                if (mMinHeightOfContent < height) {
+                    mMinHeightOfContent = height;
+                }
+            }
+        }
     }
 
     @Override

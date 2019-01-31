@@ -56,41 +56,10 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
     public ClassicsFooter(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        if (REFRESH_FOOTER_PULLING == null) {
-            REFRESH_FOOTER_PULLING = context.getString(R.string.srl_footer_pulling);
-        }
-
-        if (REFRESH_FOOTER_RELEASE == null) {
-            REFRESH_FOOTER_RELEASE = context.getString(R.string.srl_footer_release);
-        }
-
-        if (REFRESH_FOOTER_LOADING == null) {
-            REFRESH_FOOTER_LOADING = context.getString(R.string.srl_footer_loading);
-        }
-
-        if (REFRESH_FOOTER_REFRESHING == null) {
-            REFRESH_FOOTER_REFRESHING = context.getString(R.string.srl_footer_refreshing);
-        }
-
-        if (REFRESH_FOOTER_FINISH == null) {
-            REFRESH_FOOTER_FINISH = context.getString(R.string.srl_footer_finish);
-        }
-
-        if (REFRESH_FOOTER_FAILED == null) {
-            REFRESH_FOOTER_FAILED = context.getString(R.string.srl_footer_failed);
-        }
-
-        if (REFRESH_FOOTER_NOTHING == null) {
-            REFRESH_FOOTER_NOTHING = context.getString(R.string.srl_footer_nothing);
-        }
-
         final View thisView = this;
         final View arrowView = mArrowView;
         final View progressView = mProgressView;
         final DensityUtil density = new DensityUtil();
-
-        mTitleText.setTextColor(0xff666666);
-        mTitleText.setText(thisView.isInEditMode() ? REFRESH_FOOTER_LOADING : REFRESH_FOOTER_PULLING);
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ClassicsFooter);
 
@@ -141,38 +110,60 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
             super.setAccentColor(ta.getColor(R.styleable.ClassicsFooter_srlAccentColor, 0));
         }
 
-        mTextPulling = REFRESH_FOOTER_PULLING;
-        mTextRelease = REFRESH_FOOTER_RELEASE;
-        mTextLoading = REFRESH_FOOTER_LOADING;
-        mTextRefreshing = REFRESH_FOOTER_REFRESHING;
-        mTextFinish = REFRESH_FOOTER_FINISH;
-        mTextFailed = REFRESH_FOOTER_FAILED;
-        mTextNothing = REFRESH_FOOTER_NOTHING;
-
         if(ta.hasValue(R.styleable.ClassicsFooter_srlTextPulling)){
             mTextPulling = ta.getString(R.styleable.ClassicsFooter_srlTextPulling);
+        } else if(REFRESH_FOOTER_PULLING != null) {
+            mTextPulling = REFRESH_FOOTER_PULLING;
+        } else {
+            mTextPulling = context.getString(R.string.srl_footer_pulling);
         }
         if(ta.hasValue(R.styleable.ClassicsFooter_srlTextRelease)){
             mTextRelease = ta.getString(R.styleable.ClassicsFooter_srlTextRelease);
+        } else if(REFRESH_FOOTER_RELEASE != null) {
+            mTextRelease = REFRESH_FOOTER_RELEASE;
+        } else {
+            mTextRelease = context.getString(R.string.srl_footer_release);
         }
         if(ta.hasValue(R.styleable.ClassicsFooter_srlTextLoading)){
             mTextLoading = ta.getString(R.styleable.ClassicsFooter_srlTextLoading);
+        } else if(REFRESH_FOOTER_LOADING != null) {
+            mTextLoading = REFRESH_FOOTER_LOADING;
+        } else {
+            mTextLoading = context.getString(R.string.srl_footer_loading);
         }
         if(ta.hasValue(R.styleable.ClassicsFooter_srlTextRefreshing)){
             mTextRefreshing = ta.getString(R.styleable.ClassicsFooter_srlTextRefreshing);
+        } else if(REFRESH_FOOTER_REFRESHING != null) {
+            mTextRefreshing = REFRESH_FOOTER_REFRESHING;
+        } else {
+            mTextRefreshing = context.getString(R.string.srl_footer_refreshing);
         }
         if(ta.hasValue(R.styleable.ClassicsFooter_srlTextFinish)){
             mTextFinish = ta.getString(R.styleable.ClassicsFooter_srlTextFinish);
+        } else if(REFRESH_FOOTER_FINISH != null) {
+            mTextFinish = REFRESH_FOOTER_FINISH;
+        } else {
+            mTextFinish = context.getString(R.string.srl_footer_finish);
         }
         if(ta.hasValue(R.styleable.ClassicsFooter_srlTextFailed)){
             mTextFailed = ta.getString(R.styleable.ClassicsFooter_srlTextFailed);
+        } else if(REFRESH_FOOTER_FAILED != null) {
+            mTextFailed = REFRESH_FOOTER_FAILED;
+        } else {
+            mTextFailed = context.getString(R.string.srl_footer_failed);
         }
         if(ta.hasValue(R.styleable.ClassicsFooter_srlTextNothing)){
             mTextNothing = ta.getString(R.styleable.ClassicsFooter_srlTextNothing);
+        } else if(REFRESH_FOOTER_NOTHING != null) {
+            mTextNothing = REFRESH_FOOTER_NOTHING;
+        } else {
+            mTextNothing = context.getString(R.string.srl_footer_nothing);
         }
 
         ta.recycle();
 
+        mTitleText.setTextColor(0xff666666);
+        mTitleText.setText(thisView.isInEditMode() ? mTextLoading : mTextPulling);
     }
 
 //    @Override

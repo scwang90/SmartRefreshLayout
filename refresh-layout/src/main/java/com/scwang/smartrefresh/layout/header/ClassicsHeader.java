@@ -82,34 +82,8 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
     public ClassicsHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        if (REFRESH_HEADER_PULLING == null) {
-            REFRESH_HEADER_PULLING = context.getString(R.string.srl_header_pulling);
-        }
-        if (REFRESH_HEADER_REFRESHING == null) {
-            REFRESH_HEADER_REFRESHING = context.getString(R.string.srl_header_refreshing);
-        }
-        if (REFRESH_HEADER_LOADING == null) {
-            REFRESH_HEADER_LOADING = context.getString(R.string.srl_header_loading);
-        }
-        if (REFRESH_HEADER_RELEASE == null) {
-            REFRESH_HEADER_RELEASE = context.getString(R.string.srl_header_release);
-        }
-        if (REFRESH_HEADER_FINISH == null) {
-            REFRESH_HEADER_FINISH = context.getString(R.string.srl_header_finish);
-        }
-        if (REFRESH_HEADER_FAILED == null) {
-            REFRESH_HEADER_FAILED = context.getString(R.string.srl_header_failed);
-        }
-        if (REFRESH_HEADER_UPDATE == null) {
-            REFRESH_HEADER_UPDATE = context.getString(R.string.srl_header_update);
-        }
-        if (REFRESH_HEADER_SECONDARY == null) {
-            REFRESH_HEADER_SECONDARY = context.getString(R.string.srl_header_secondary);
-        }
-
         mLastUpdateText = new TextView(context);
         mLastUpdateText.setTextColor(0xff7c7c7c);
-        mLastUpdateFormat = new SimpleDateFormat(REFRESH_HEADER_UPDATE, Locale.getDefault());
 
         final View thisView = this;
         final View arrowView = mArrowView;
@@ -176,39 +150,63 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
             setAccentColor(ta.getColor(R.styleable.ClassicsHeader_srlAccentColor, 0));
         }
 
-        mTextPulling = REFRESH_HEADER_PULLING;
-        mTextLoading = REFRESH_HEADER_LOADING;
-        mTextRelease = REFRESH_HEADER_RELEASE;
-        mTextFinish = REFRESH_HEADER_FINISH;
-        mTextFailed = REFRESH_HEADER_FAILED;
-        mTextUpdate = REFRESH_HEADER_UPDATE;
-        mTextSecondary = REFRESH_HEADER_SECONDARY;
-        mTextRefreshing = REFRESH_HEADER_REFRESHING;
-
         if(ta.hasValue(R.styleable.ClassicsHeader_srlTextPulling)){
             mTextPulling = ta.getString(R.styleable.ClassicsHeader_srlTextPulling);
+        } else if(REFRESH_HEADER_PULLING != null) {
+            mTextPulling = REFRESH_HEADER_PULLING;
+        } else {
+            mTextPulling = context.getString(R.string.srl_header_pulling);
         }
         if(ta.hasValue(R.styleable.ClassicsHeader_srlTextLoading)){
             mTextLoading = ta.getString(R.styleable.ClassicsHeader_srlTextLoading);
+        } else if(REFRESH_HEADER_LOADING != null) {
+            mTextLoading = REFRESH_HEADER_LOADING;
+        } else {
+            mTextLoading = context.getString(R.string.srl_header_loading);
         }
         if(ta.hasValue(R.styleable.ClassicsHeader_srlTextRelease)){
             mTextRelease = ta.getString(R.styleable.ClassicsHeader_srlTextRelease);
+        } else if(REFRESH_HEADER_RELEASE != null) {
+            mTextRelease = REFRESH_HEADER_RELEASE;
+        } else {
+            mTextRelease = context.getString(R.string.srl_header_release);
         }
         if(ta.hasValue(R.styleable.ClassicsHeader_srlTextFinish)){
             mTextFinish = ta.getString(R.styleable.ClassicsHeader_srlTextFinish);
+        } else if(REFRESH_HEADER_FINISH != null) {
+            mTextFinish = REFRESH_HEADER_FINISH;
+        } else {
+            mTextFinish = context.getString(R.string.srl_header_finish);
         }
         if(ta.hasValue(R.styleable.ClassicsHeader_srlTextFailed)){
             mTextFailed = ta.getString(R.styleable.ClassicsHeader_srlTextFailed);
-        }
-        if(ta.hasValue(R.styleable.ClassicsHeader_srlTextUpdate)){
-            mTextUpdate = ta.getString(R.styleable.ClassicsHeader_srlTextUpdate);
+        } else if(REFRESH_HEADER_FAILED != null) {
+            mTextFailed = REFRESH_HEADER_FAILED;
+        } else {
+            mTextFailed = context.getString(R.string.srl_header_failed);
         }
         if(ta.hasValue(R.styleable.ClassicsHeader_srlTextSecondary)){
             mTextSecondary = ta.getString(R.styleable.ClassicsHeader_srlTextSecondary);
+        } else if(REFRESH_HEADER_SECONDARY != null) {
+            mTextSecondary = REFRESH_HEADER_SECONDARY;
+        } else {
+            mTextSecondary = context.getString(R.string.srl_header_secondary);
         }
         if(ta.hasValue(R.styleable.ClassicsHeader_srlTextRefreshing)){
             mTextRefreshing = ta.getString(R.styleable.ClassicsHeader_srlTextRefreshing);
+        } else if(REFRESH_HEADER_REFRESHING != null) {
+            mTextRefreshing = REFRESH_HEADER_REFRESHING;
+        } else {
+            mTextRefreshing = context.getString(R.string.srl_header_refreshing);
         }
+        if(ta.hasValue(R.styleable.ClassicsHeader_srlTextUpdate)){
+            mTextUpdate = ta.getString(R.styleable.ClassicsHeader_srlTextUpdate);
+        } else if(REFRESH_HEADER_UPDATE != null) {
+            mTextUpdate = REFRESH_HEADER_UPDATE;
+        } else {
+            mTextUpdate = context.getString(R.string.srl_header_update);
+        }
+        mLastUpdateFormat = new SimpleDateFormat(mTextUpdate, Locale.getDefault());
 
         ta.recycle();
 

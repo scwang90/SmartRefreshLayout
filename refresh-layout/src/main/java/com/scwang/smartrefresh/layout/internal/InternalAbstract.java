@@ -43,6 +43,11 @@ public abstract class InternalAbstract extends RelativeLayout implements Refresh
         super(wrappedView.getContext(), null, 0);
         this.mWrappedView = wrappedView;
         this.mWrappedInternal = wrappedInternal;
+        if (this instanceof RefreshFooterWrapper && mWrappedInternal instanceof RefreshHeader && mWrappedInternal.getSpinnerStyle() == SpinnerStyle.MatchLayout) {
+            wrappedInternal.getView().setScaleY(-1);
+        } else if (this instanceof RefreshHeaderWrapper && mWrappedInternal instanceof RefreshFooter && mWrappedInternal.getSpinnerStyle() == SpinnerStyle.MatchLayout) {
+            wrappedInternal.getView().setScaleY(-1);
+        }
     }
 
     protected InternalAbstract(Context context, AttributeSet attrs, int defStyleAttr) {

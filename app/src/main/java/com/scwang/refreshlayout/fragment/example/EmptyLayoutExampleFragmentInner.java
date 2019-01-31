@@ -31,6 +31,7 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import static android.R.layout.simple_list_item_2;
@@ -48,6 +49,7 @@ public class EmptyLayoutExampleFragmentInner extends Fragment implements Adapter
     private RecyclerView mRecyclerView;
     private RefreshLayout mRefreshLayout;
     private static boolean mIsNeedDemo = true;
+    private BaseRecyclerAdapter<Item> mAdapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -74,6 +76,14 @@ public class EmptyLayoutExampleFragmentInner extends Fragment implements Adapter
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), VERTICAL));
+        mRecyclerView.setAdapter(mAdapter = new BaseRecyclerAdapter<Item>(new ArrayList<Item>(), simple_list_item_2,EmptyLayoutExampleFragmentInner.this) {
+            @Override
+            protected void onBindViewHolder(SmartViewHolder holder, Item model, int position) {
+                holder.text(android.R.id.text1, model.name());
+                holder.text(android.R.id.text2, model.name);
+                holder.textColorId(android.R.id.text2, R.color.colorTextAssistant);
+            }
+        });
 
         mEmptyLayout = root.findViewById(R.id.empty);
 
@@ -111,14 +121,7 @@ public class EmptyLayoutExampleFragmentInner extends Fragment implements Adapter
         mRefreshLayout.getLayout().postDelayed(new Runnable() {
             @Override
             public void run() {
-                mRecyclerView.setAdapter(new BaseRecyclerAdapter<Item>(Arrays.asList(Item.values()), simple_list_item_2,EmptyLayoutExampleFragmentInner.this) {
-                    @Override
-                    protected void onBindViewHolder(SmartViewHolder holder, Item model, int position) {
-                        holder.text(android.R.id.text1, model.name());
-                        holder.text(android.R.id.text2, model.name);
-                        holder.textColorId(android.R.id.text2, R.color.colorTextAssistant);
-                    }
-                });
+                mAdapter.refresh(Arrays.asList(Item.values()));
                 mRefreshLayout.finishRefresh();
                 mEmptyLayout.setVisibility(View.GONE);
             }

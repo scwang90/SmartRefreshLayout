@@ -33,14 +33,14 @@ public interface RefreshInternal extends OnStateChangedListener {
     SpinnerStyle getSpinnerStyle();
 
     /**
-     * 设置主题颜色
+     * 【仅限框架内调用】设置主题颜色
      * @param colors 对应Xml中配置的 srlPrimaryColor srlAccentColor
      */
     @RestrictTo({LIBRARY,LIBRARY_GROUP,SUBCLASSES})
     void setPrimaryColors(@ColorInt int... colors);
 
     /**
-     * 尺寸定义完成 （如果高度不改变（代码修改：setHeader），只调用一次, 在RefreshLayout#onMeasure中调用）
+     * 【仅限框架内调用】尺寸定义完成 （如果高度不改变（代码修改：setHeader），只调用一次, 在RefreshLayout#onMeasure中调用）
      * @param kernel RefreshKernel
      * @param height HeaderHeight or FooterHeight
      * @param maxDragHeight 最大拖动高度
@@ -48,7 +48,7 @@ public interface RefreshInternal extends OnStateChangedListener {
     @RestrictTo({LIBRARY,LIBRARY_GROUP,SUBCLASSES})
     void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight);
     /**
-     * 手指拖动下拉（会连续多次调用，添加isDragging并取代之前的onPulling、onReleasing）
+     * 【仅限框架内调用】手指拖动下拉（会连续多次调用，添加isDragging并取代之前的onPulling、onReleasing）
      * @param isDragging true 手指正在拖动 false 回弹动画
      * @param percent 下拉的百分比 值 = offset/footerHeight (0 - percent - (footerHeight+maxDragHeight) / footerHeight )
      * @param offset 下拉的像素偏移量  0 - offset - (footerHeight+maxDragHeight)
@@ -59,7 +59,7 @@ public interface RefreshInternal extends OnStateChangedListener {
     void onMoving(boolean isDragging, float percent, int offset, int height, int maxDragHeight);
 
     /**
-     * 释放时刻（调用一次，将会触发加载）
+     * 【仅限框架内调用】释放时刻（调用一次，将会触发加载）
      * @param refreshLayout RefreshLayout
      * @param height 高度 HeaderHeight or FooterHeight
      * @param maxDragHeight 最大拖动高度
@@ -68,7 +68,7 @@ public interface RefreshInternal extends OnStateChangedListener {
     void onReleased(@NonNull RefreshLayout refreshLayout, int height, int maxDragHeight);
 
     /**
-     * 开始动画
+     * 【仅限框架内调用】开始动画
      * @param refreshLayout RefreshLayout
      * @param height HeaderHeight or FooterHeight
      * @param maxDragHeight 最大拖动高度
@@ -77,7 +77,7 @@ public interface RefreshInternal extends OnStateChangedListener {
     void onStartAnimator(@NonNull RefreshLayout refreshLayout, int height, int maxDragHeight);
 
     /**
-     * 动画结束
+     * 【仅限框架内调用】动画结束
      * @param refreshLayout RefreshLayout
      * @param success 数据是否成功刷新或加载
      * @return 完成动画所需时间 如果返回 Integer.MAX_VALUE 将取消本次完成事件，继续保持原有状态
@@ -86,7 +86,7 @@ public interface RefreshInternal extends OnStateChangedListener {
     int onFinish(@NonNull RefreshLayout refreshLayout, boolean success);
 
     /**
-     * 水平方向的拖动
+     * 【仅限框架内调用】水平方向的拖动
      * @param percentX 下拉时，手指水平坐标对屏幕的占比（0 - percentX - 1）
      * @param offsetX 下拉时，手指水平坐标对屏幕的偏移（0 - offsetX - LayoutWidth）
      * @param offsetMax 最大的偏移量
