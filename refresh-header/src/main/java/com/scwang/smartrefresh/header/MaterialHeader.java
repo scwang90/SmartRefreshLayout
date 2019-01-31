@@ -190,7 +190,6 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
 
         if (isDragging || (!mProgress.isRunning() && !mFinished)) {
 
-            final View circleView = mCircleView;
             if (mState != RefreshState.Refreshing) {
                 float originalDragPercent = 1f * offset / height;
 
@@ -210,8 +209,9 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
                 mProgress.setProgressRotation(rotation);
             }
 
+            final View circleView = mCircleView;
             float targetY = offset / 2 + mCircleDiameter / 2;
-            circleView.setTranslationY(Math.min(offset, targetY));//setTargetOffsetTopAndBottom(targetY - mCurrentTargetOffsetTop, true /* requires update */);
+            circleView.setTranslationY(Math.min(offset, targetY));
             circleView.setAlpha(Math.min(1f, 4f * offset / mCircleDiameter));
         }
     }
@@ -264,10 +264,10 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
     @Override
     public void onReleased(@NonNull RefreshLayout layout, int height, int maxDragHeight) {
         mProgress.start();
-        final View circleView = mCircleView;
-        if ((int) circleView.getTranslationY() != height / 2 + mCircleDiameter / 2) {
-            circleView.animate().translationY(height / 2 + mCircleDiameter / 2);
-        }
+//        final View circleView = mCircleView;
+//        if ((int) circleView.getTranslationY() != height / 2 + mCircleDiameter / 2) {
+//            circleView.animate().translationY(height / 2 + mCircleDiameter / 2);
+//        }
     }
 
     @Override

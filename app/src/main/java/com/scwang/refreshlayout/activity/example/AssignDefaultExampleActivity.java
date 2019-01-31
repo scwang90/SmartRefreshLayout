@@ -51,7 +51,7 @@ public class AssignDefaultExampleActivity extends AppCompatActivity {
         if (isFirstEnter) {
             isFirstEnter = false;
 //            //触发上拉加载
-//            refreshLayout.autoLoadMore();
+//            mRefreshLayout.autoLoadMore();
             //通过多功能监听接口实现 在第一次加载完成之后 自动刷新
             refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener(){
                 @Override

@@ -8,8 +8,6 @@
 
 ## English | [中文](README.md)
 
-As the name says, SmartRefreshLayout is a "smart" or "intelligent" pull-down refresh layout，because of its "smart", it does not just support all the Views , but also support multi-layered nested view structures.  
-It extends from ViewGroup rather than FrameLayout or LinearLayout, this not only improves its performance, but also enables it to absorb the advantages of various refresh layouts in fashion now，Including Google official [SwipeRefreshLayout](https://developer.android.com/reference/android/support/v4/widget/SwipeRefreshLayout.html)、[TwinklingRefreshLayout](https://github.com/lcodecorex/TwinklingRefreshLayout) 、[Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh). Also it integrates various cool Headers and Footers.  
 SmartRefreshLayout's goal is to build a strong, stable and mature pull-down refresh layout framework, and to integrate all kinds of cool, diverse, practical and beautiful Headers and Footers.
 
 ## Features
@@ -25,6 +23,8 @@ SmartRefreshLayout's goal is to build a strong, stable and mature pull-down refr
  - Support setting a variety of transformations (Translation, stretching, behind fixed, top fixed, full screen view) for Headers and Footers.
  - Support rewrite and extension, internal implementation without private methods and fields.
  - Support automatically cross-border rebound for all rolling Views (Listview、RecyclerView、ScrollView、WebView...View).
+ - Support the interchange of Header and Footer
+ - Support AndroidX
  
 ## Gateway
 
@@ -98,14 +98,13 @@ Please rest assured that I have divided it into three packages, when used to ref
 ## Usage
 #### 1.Add a gradle dependency.
 ```
-compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-19'
-compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-19'//If you use the special Header
-
+compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-20'
+compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-20'//If you use the special Header
 compile 'com.android.support:appcompat-v7:25.3.1'
 
-// androidx
-implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-2'
-implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-2'//If you use the special Header
+//androidx version
+implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-3'
+implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-3'
 
 ```
 

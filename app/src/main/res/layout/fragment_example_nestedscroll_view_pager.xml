@@ -39,7 +39,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <!--<com.scwang.smartrefresh.layout.SmartRefreshLayout-->
-        <!--android:id="@+id/refreshLayout"-->
+        <!--android:id="@+id/mRefreshLayout"-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="match_parent"-->
         <!--android:background="@android:color/white"-->

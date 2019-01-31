@@ -10,6 +10,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.scwang.refreshlayout.R;
@@ -46,7 +47,7 @@ public class BasicExampleActivity extends AppCompatActivity {
             }
         });
 
-        AbsListView listView = findViewById(R.id.listView);
+        ListView listView = findViewById(R.id.listView);
         listView.setAdapter(mAdapter = new BaseRecyclerAdapter<Void>(simple_list_item_2) {
             @Override
             protected void onBindViewHolder(SmartViewHolder holder, Void model, int position) {

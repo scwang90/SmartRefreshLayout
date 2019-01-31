@@ -511,7 +511,7 @@ public interface RefreshLayout {
     /**
      * Restore the original state after finishLoadMoreWithNoMoreData.
      * 恢复没有更多数据的原始状态
-     * @deprecated use {@link RefreshLayout#resetNoMoreData()}
+     * @deprecated use {@link RefreshLayout#resetNoMoreData()} and {@link RefreshLayout#finishLoadMoreWithNoMoreData()}
      * @param noMoreData 是否有更多数据
      * @return RefreshLayout
      */
@@ -546,6 +546,7 @@ public interface RefreshLayout {
      * 获取当前状态
      * @return RefreshLayout
      */
+    @NonNull
     RefreshState getState();
 
     /**
@@ -553,6 +554,7 @@ public interface RefreshLayout {
      * 获取实体布局视图
      * @return ViewGroup
      */
+    @NonNull
     ViewGroup getLayout();
 
     /**
