@@ -1,11 +1,12 @@
 package com.scwang.refreshlayout.widget;
 
 import android.animation.ValueAnimator;
-import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.AbsListView;
 
 import com.scwang.smartrefresh.layout.impl.RefreshContentWrapper;
+
+import androidx.annotation.NonNull;
 
 import static com.scwang.refreshlayout.widget.ScrollBoundaryHorizontal.canScrollLeft;
 import static com.scwang.refreshlayout.widget.ScrollBoundaryHorizontal.canScrollRight;
