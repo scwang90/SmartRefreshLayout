@@ -6,7 +6,7 @@
 >添加：setDefaultRefreshInitializer 方法，采用优先级最低的配置全局设置  
 >添加：closeHeaderOrFooter 方法，可以关闭正在打开的Header或者Footer  
 >添加：autoLoadMoreAnimationOnly 方法，只显示动画不执行加载  
->添加：autoRefreshAnimationOnly 方法，只显示动画不执行刷新
+>添加：autoRefreshAnimationOnly 方法，只显示动画不执行刷新  
 >添加：TwoLevelHeader.openTwoLevel 方法，主动打开二楼  
 >添加：水平滚动刷新支持，demo版本  
 >集成：类似淘宝二楼的二级下拉刷新 TwoLevelHeader  
