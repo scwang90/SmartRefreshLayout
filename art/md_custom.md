@@ -10,8 +10,8 @@ app设计师发挥创意设计的好素材。 也是需要我们巧妙植入到�
 
 ## 成功案例
 
-[仿美团下拉刷新](https://www.jianshu.com/p/95225cbcf86b)
-[仿今日头条下拉刷新](https://github.com/ScWen7/TodayNewsHeader)
+[仿美团下拉刷新](https://github.com/cachecats/LikeMeiTuan)  
+[仿今日头条下拉刷新](https://github.com/ScWen7/TodayNewsHeader)  
 [YanXuanRefresh](https://github.com/ChaserSheng/YanXuanRefresh)  
 [SmartRefreshLottie](https://github.com/wapchief/SmartRefreshLottie)  
 [一个Android下拉刷新样式](http://www.jianshu.com/p/8f29c97eefd8)  
