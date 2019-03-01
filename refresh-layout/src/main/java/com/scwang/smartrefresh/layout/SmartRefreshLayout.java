@@ -642,7 +642,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 View.resolveSize(super.getSuggestedMinimumWidth(), widthMeasureSpec),
                 View.resolveSize(minimumHeight, heightMeasureSpec));
 
-        mLastTouchX = thisView.getMeasuredWidth() / 2;
+        mLastTouchX = thisView.getMeasuredWidth() / 2f;
     }
 
     /**
@@ -1232,11 +1232,11 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     /**
      * 设置状态为 Loading 正在加载
      */
-    protected void setStateLoading() {
+    protected void setStateLoading(final boolean notify) {
         AnimatorListenerAdapter listener = new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                setStateDirectLoading(true);
+                setStateDirectLoading(notify);
             }
         };
         notifyStateChanged(RefreshState.LoadReleased);
@@ -1262,14 +1262,16 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     /**
      * 设置状态为 Refreshing 正在刷新
      */
-    protected void setStateRefreshing() {
+    protected void setStateRefreshing(final boolean notify) {
         AnimatorListenerAdapter listener = new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 mLastOpenTime = currentTimeMillis();
                 notifyStateChanged(RefreshState.Refreshing);
                 if (mRefreshListener != null) {
-                    mRefreshListener.onRefresh(SmartRefreshLayout.this);
+                    if(notify) {
+                        mRefreshListener.onRefresh(SmartRefreshLayout.this);
+                    }
                 } else if (mOnMultiPurposeListener == null) {
                     finishRefresh(3000);
                 }
@@ -1277,7 +1279,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     mRefreshHeader.onStartAnimator(SmartRefreshLayout.this, mHeaderHeight,  (int) (mHeaderMaxDragRate * mHeaderHeight));
                 }
                 if (mOnMultiPurposeListener != null && mRefreshHeader instanceof RefreshHeader) {
-                    mOnMultiPurposeListener.onRefresh(SmartRefreshLayout.this);
+                    if (notify) {
+                        mOnMultiPurposeListener.onRefresh(SmartRefreshLayout.this);
+                    }
                     mOnMultiPurposeListener.onHeaderStartAnimator((RefreshHeader) mRefreshHeader, mHeaderHeight,  (int) (mHeaderMaxDragRate * mHeaderHeight));
                 }
             }
@@ -1381,7 +1385,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 int spinner = mSpinner;
                 float velocity = mVelocity;
                 while (spinner * offset > 0) {
-                    velocity *= Math.pow(mDamping, (++frame) * mFrameDelay / 10);
+                    velocity *= Math.pow(mDamping, (++frame) * mFrameDelay / 10f);
                     float velocityFrame = (velocity * (1f * mFrameDelay / 1000));
                     if (Math.abs(velocityFrame) < 1) {
                         if (!mState.isOpening
@@ -1405,7 +1409,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 //                mVelocity *= Math.pow(mDamping, ++mFrame);
                 long now = AnimationUtils.currentAnimationTimeMillis();
                 long span = now - mLastTime;
-                mVelocity *= Math.pow(mDamping, (now - mStartTime) / (1000 / mFrameDelay));
+                mVelocity *= Math.pow(mDamping, (now - mStartTime) / (1000f / mFrameDelay));
                 float velocity = (mVelocity * (1f * span / 1000));
                 if (Math.abs(velocity) > 1) {
                     mLastTime = now;
@@ -1493,7 +1497,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     reboundAnimator = null;
-                    if (mSpinner == 0 && mState != RefreshState.None && !mState.isOpening) {
+                    if (mSpinner == 0 && mState != RefreshState.None && !mState.isOpening && !mState.isDragging) {
                         notifyStateChanged(RefreshState.None);
                     } else if (mState != mViceState) {
                         // 可以帮助在  ViceState 状态模式时，放手执行动画后矫正 mViceState=mState
@@ -2587,12 +2591,10 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     /**
      * Restore the original state after finishLoadMoreWithNoMoreData.
      * 恢复没有更多数据的原始状态
-     * @deprecated use {@link RefreshLayout#resetNoMoreData()} and {@link RefreshLayout#finishLoadMoreWithNoMoreData()}
      * @param noMoreData 是否有更多数据
      * @return RefreshLayout
      */
     @Override
-    @Deprecated
     public SmartRefreshLayout setNoMoreData(boolean noMoreData) {
         if (mState == RefreshState.Loading && noMoreData) {
             finishLoadMore();
@@ -2672,13 +2674,13 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      */
     @Override
     public SmartRefreshLayout finishRefresh(int delayed, final boolean success) {
-        if (mState == RefreshState.Refreshing && success) {
-            resetNoMoreData();
-        }
         postDelayed(new Runnable() {
             @Override
             public void run() {
                 if (mState == RefreshState.Refreshing && mRefreshHeader != null && mRefreshContent != null) {
+                    if (success) {
+                        resetNoMoreData();
+                    }
                     notifyStateChanged(RefreshState.RefreshFinish);
                     int startDelay = mRefreshHeader.onFinish(SmartRefreshLayout.this, success);
                     if (mOnMultiPurposeListener != null && mRefreshHeader instanceof RefreshHeader) {
@@ -2768,16 +2770,20 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                         final int offset = mSpinner - (needHoldFooter ? Math.max(mSpinner,-mFooterHeight) : 0);
                         //如果正在拖动的话，偏移初始点击事件
                         if (mIsBeingDragged || mNestedInProgress) {
+                            final long time = System.currentTimeMillis();
                             if (mIsBeingDragged) {
                                 mTouchY = mLastTouchY;
-                                mIsBeingDragged = false;
                                 mTouchSpinner = mSpinner - offset;
+                                mIsBeingDragged = false;
+                                int offsetY = mEnableFooterTranslationContent ? offset : 0;
+                                SmartRefreshLayout.super.dispatchTouchEvent(obtain(time, time, MotionEvent.ACTION_DOWN, mLastTouchX, mLastTouchY + offsetY + mTouchSlop * 2, 0));
+                                SmartRefreshLayout.super.dispatchTouchEvent(obtain(time, time, MotionEvent.ACTION_MOVE, mLastTouchX, mLastTouchY + offsetY, 0));
                             }
-                            final long time = System.currentTimeMillis();
-                            SmartRefreshLayout.super.dispatchTouchEvent(obtain(time, time, MotionEvent.ACTION_DOWN, mLastTouchX, mLastTouchY + offset + mTouchSlop * 2, 0));
-                            SmartRefreshLayout.super.dispatchTouchEvent(obtain(time, time, MotionEvent.ACTION_MOVE, mLastTouchX, mLastTouchY + offset, 0));
                             if (mNestedInProgress) {
                                 mTotalUnconsumed = 0;
+                                SmartRefreshLayout.super.dispatchTouchEvent(obtain(time, time, MotionEvent.ACTION_UP, mLastTouchX, mLastTouchY, 0));
+                                mNestedInProgress = false;
+                                mTouchSpinner = 0;
                             }
                         }
                         //准备：偏移并结束状态
@@ -2938,22 +2944,16 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                         @Override
                         public void onAnimationStart(Animator animation) {
                             final View thisView = SmartRefreshLayout.this;
-                            mLastTouchX = thisView.getMeasuredWidth() / 2;
+                            mLastTouchX = thisView.getMeasuredWidth() / 2f;
                             mKernel.setState(RefreshState.PullDownToRefresh);
                         }
                         @Override
                         public void onAnimationEnd(Animator animation) {
                             reboundAnimator = null;
-                            if (animationOnly) {
-                                if (mState == RefreshState.ReleaseToRefresh) {
-                                    mKernel.setState(RefreshState.PullDownToRefresh);
-                                }
-                            } else {
-                                if (mState != RefreshState.ReleaseToRefresh) {
-                                    mKernel.setState(RefreshState.ReleaseToRefresh);
-                                }
+                            if (mState != RefreshState.ReleaseToRefresh) {
+                                mKernel.setState(RefreshState.ReleaseToRefresh);
                             }
-                            overSpinner();
+                            setStateRefreshing(!animationOnly);
                         }
                     });
                     reboundAnimator.start();
@@ -3036,29 +3036,17 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                         @Override
                         public void onAnimationStart(Animator animation) {
                             final View thisView = SmartRefreshLayout.this;
-                            mLastTouchX = thisView.getMeasuredWidth() / 2;
+                            mLastTouchX = thisView.getMeasuredWidth() / 2f;
                             mKernel.setState(RefreshState.PullUpToLoad);
                         }
 
                         @Override
                         public void onAnimationEnd(Animator animation) {
                             reboundAnimator = null;
-                            if (animationOnly) {
-                                if (mState == RefreshState.ReleaseToLoad) {
-                                    mKernel.setState(RefreshState.PullUpToLoad);
-                                }
-                            } else {
-                                if (mState != RefreshState.ReleaseToLoad) {
-                                    mKernel.setState(RefreshState.ReleaseToLoad);
-                                }
+                            if (mState != RefreshState.ReleaseToLoad) {
+                                mKernel.setState(RefreshState.ReleaseToLoad);
                             }
-                            if (mEnableAutoLoadMore) {
-                                mEnableAutoLoadMore = false;
-                                overSpinner();
-                                mEnableAutoLoadMore = true;
-                            } else {
-                                overSpinner();
-                            }
+                            setStateLoading(!animationOnly);
                         }
                     });
                     reboundAnimator.start();
@@ -3228,10 +3216,10 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     break;
                 }
                 case Refreshing:
-                    setStateRefreshing();
+                    setStateRefreshing(true);
                     break;
                 case Loading:
-                    setStateLoading();
+                    setStateLoading(true);
                     break;
                 case RefreshFinish: {
                     if (mState == RefreshState.Refreshing) {
