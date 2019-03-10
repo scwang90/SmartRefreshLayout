@@ -511,11 +511,9 @@ public interface RefreshLayout {
     /**
      * Restore the original state after finishLoadMoreWithNoMoreData.
      * 恢复没有更多数据的原始状态
-     * @deprecated use {@link RefreshLayout#resetNoMoreData()} and {@link RefreshLayout#finishLoadMoreWithNoMoreData()}
      * @param noMoreData 是否有更多数据
      * @return RefreshLayout
      */
-    @Deprecated
     RefreshLayout setNoMoreData(boolean noMoreData);
 
     /**
