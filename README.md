@@ -117,7 +117,7 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
 ## 简单用例
 #### 1.在 build.gradle 中添加依赖
 ```
-//1.1.0 API改动过大，老用户升级需谨慎
+//1.1.0 （1.0.5及以前版本的老用户升级需谨慎，API改动过大）
 compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-21'
 compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-21'//没有使用特殊Header，可以不加这行
 compile 'com.android.support:appcompat-v7:25.3.1'//版本 23以上（必须）
@@ -126,11 +126,8 @@ compile 'com.android.support:appcompat-v7:25.3.1'//版本 23以上（必须）
 implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-4'
 implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-4'
 
-//1.0.5 当1.1.0出现问题可以回退到1.0.5.1
-compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.5.1'
-compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.5.1'//没有使用特殊Header，可以不加这行
-compile 'com.android.support:appcompat-v7:25.3.1'//版本 23以上（必须）
-compile 'com.android.support:design:25.3.1'//版本随意（非必须，引用可以解决无法预览问题）
+
+//1.0.5 （重大bug发现，无法兼容 Android P，不推荐使用）
 ```
 
 #### 2.在XML布局文件中添加 SmartRefreshLayout
@@ -262,15 +259,16 @@ SmartRefreshLayout 没有使用到：序列化、反序列化、JNI、反射，�
 [捐赠列表](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_donationlist.md)
 
 #### 友情链接
+[github/TommyLemon/APIJSON](https://github.com/TommyLemon/APIJSON)  
 [github/dengyuhan](https://github.com/dengyuhan)  
 [github/zrp2017](https://github.com/zrp2017)  
 [github/fly803/BaseProject](https://github.com/fly803/BaseProject)  
 [github/razerdp](https://github.com/razerdp)  
 [github/SuperChenC/s-mvp](https://github.com/SuperChenC/s-mvp)  
 [github/KingJA/LoadSir](https://github.com/KingJA/LoadSir)  
-[github/jianshijiuyou](https://github.com/jianshijiuyou)
-[github/zxy198717](https://github.com/zxy198717)
-[github/addappcn](https://github.com/addappcn)
+[github/jianshijiuyou](https://github.com/jianshijiuyou)  
+[github/zxy198717](https://github.com/zxy198717)  
+[github/addappcn](https://github.com/addappcn)  
 [github/RainliFu](https://github.com/RainliFu)  
 [github/sugarya](https://github.com/sugarya)  
 [github/stormzhang](https://github.com/stormzhang)
