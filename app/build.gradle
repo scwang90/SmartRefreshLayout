@@ -59,8 +59,8 @@ dependencies {
     implementation project(':refresh-footer')
     implementation project(':refresh-header')
     implementation project(':refresh-layout')
-//    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-20'
-//    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-20'
+//    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-21'
+//    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-21'
 
 //    //noinspection GradleDependency,GradleCompatible
 //    implementation ('com.android.support:support-v4:22.1.0') {

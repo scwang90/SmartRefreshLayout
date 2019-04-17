@@ -162,7 +162,7 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
 
         ta.recycle();
 
-        mTitleText.setTextColor(0xff666666);
+//        mTitleText.setTextColor(0xff666666);
         mTitleText.setText(thisView.isInEditMode() ? mTextLoading : mTextPulling);
     }
 
