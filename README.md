@@ -259,6 +259,7 @@ SmartRefreshLayout 没有使用到：序列化、反序列化、JNI、反射，�
 [捐赠列表](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_donationlist.md)
 
 #### 友情链接
+[github/Bamboy120315/Freedom](https://github.com/Bamboy120315/Freedom)  
 [github/TommyLemon/APIJSON](https://github.com/TommyLemon/APIJSON)  
 [github/dengyuhan](https://github.com/dengyuhan)  
 [github/zrp2017](https://github.com/zrp2017)  
