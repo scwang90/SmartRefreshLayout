@@ -1221,7 +1221,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             }
             if (mOnMultiPurposeListener != null && mRefreshFooter instanceof RefreshFooter) {
                 final OnLoadMoreListener listener = mOnMultiPurposeListener;
-                if (listener != null && triggerLoadMoreEvent) {
+                if (triggerLoadMoreEvent) {
                     listener.onLoadMore(this);
                 }
                 mOnMultiPurposeListener.onFooterStartAnimator((RefreshFooter) mRefreshFooter, mFooterHeight, (int) (mFooterMaxDragRate * mFooterHeight));
@@ -2723,6 +2723,14 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                             resetStatus();
                         }
                     }
+                } else if (mState == RefreshState.None && mViceState == RefreshState.Refreshing) {
+                    //autoRefresh 即将执行，但未开始
+                    mViceState = RefreshState.None;
+                } else if (reboundAnimator != null && mState.isDragging && mState.isHeader) {
+                    //autoRefresh 正在执行，但未结束
+                    reboundAnimator.cancel();
+                    reboundAnimator = null;
+                    resetStatus();
                 }
             }
         }, delayed <= 0 ? 1 : delayed);
@@ -2846,6 +2854,15 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                         }, mSpinner < 0 ? startDelay : 0);
                     }
                 } else {
+                    if (mState == RefreshState.None && mViceState == RefreshState.Loading) {
+                        //autoLoadMore 即将执行，但未开始
+                        mViceState = RefreshState.None;
+                    } else if (reboundAnimator != null && mState.isDragging && mState.isFooter) {
+                        //autoLoadMore 正在执行，但未结束
+                        reboundAnimator.cancel();
+                        reboundAnimator = null;
+                        resetStatus();
+                    }
                     if (noMoreData) {
                         setNoMoreData(true);
                     }
@@ -2935,9 +2952,15 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             Runnable runnable = new Runnable() {
                 @Override
                 public void run() {
+                    if (mViceState != RefreshState.Refreshing) return;
                     if (reboundAnimator != null) {
                         reboundAnimator.cancel();
                     }
+
+                    final View thisView = SmartRefreshLayout.this;
+                    mLastTouchX = thisView.getMeasuredWidth() / 2f;
+                    mKernel.setState(RefreshState.PullDownToRefresh);
+
                     reboundAnimator = ValueAnimator.ofInt(mSpinner, (int) (mHeaderHeight * dragRate));
                     reboundAnimator.setDuration(duration);
                     reboundAnimator.setInterpolator(new DecelerateInterpolator());
@@ -2948,12 +2971,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                         }
                     });
                     reboundAnimator.addListener(new AnimatorListenerAdapter() {
-                        @Override
-                        public void onAnimationStart(Animator animation) {
-                            final View thisView = SmartRefreshLayout.this;
-                            mLastTouchX = thisView.getMeasuredWidth() / 2f;
-                            mKernel.setState(RefreshState.PullDownToRefresh);
-                        }
+//                        @Override
+//                        public void onAnimationStart(Animator animation) {
+//                        }
                         @Override
                         public void onAnimationEnd(Animator animation) {
                             reboundAnimator = null;
@@ -2966,6 +2986,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     reboundAnimator.start();
                 }
             };
+            setViceState(RefreshState.Refreshing);
             if (delayed > 0) {
                 postDelayed(runnable, delayed);
             } else {
@@ -3027,9 +3048,15 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             Runnable runnable = new Runnable() {
                 @Override
                 public void run() {
+                    if (mViceState != RefreshState.Loading)return;
                     if (reboundAnimator != null) {
                         reboundAnimator.cancel();
                     }
+
+                    final View thisView = SmartRefreshLayout.this;
+                    mLastTouchX = thisView.getMeasuredWidth() / 2f;
+                    mKernel.setState(RefreshState.PullUpToLoad);
+
                     reboundAnimator = ValueAnimator.ofInt(mSpinner, -(int) (mFooterHeight * dragRate));
                     reboundAnimator.setDuration(duration);
                     reboundAnimator.setInterpolator(new DecelerateInterpolator());
@@ -3040,13 +3067,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                         }
                     });
                     reboundAnimator.addListener(new AnimatorListenerAdapter() {
-                        @Override
-                        public void onAnimationStart(Animator animation) {
-                            final View thisView = SmartRefreshLayout.this;
-                            mLastTouchX = thisView.getMeasuredWidth() / 2f;
-                            mKernel.setState(RefreshState.PullUpToLoad);
-                        }
-
                         @Override
                         public void onAnimationEnd(Animator animation) {
                             reboundAnimator = null;
@@ -3059,6 +3079,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     reboundAnimator.start();
                 }
             };
+            setViceState(RefreshState.Loading);
             if (delayed > 0) {
                 postDelayed(runnable, delayed);
             } else {
