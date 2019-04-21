@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp"
+    android:background="#333"
+    tools:parentTag="android.widget.RelativeLayout">
+
+    <ImageView
+        android:id="@+id/srl_classics_arrow"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/srl_classics_center"
+        android:layout_toStartOf="@+id/srl_classics_center"
+        android:contentDescription="@android:string/untitled"
+        />
+
+    <ImageView
+        android:id="@+id/srl_classics_progress"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/srl_classics_center"
+        android:layout_toStartOf="@+id/srl_classics_center"
+        android:contentDescription="@android:string/untitled"
+        tools:src="@android:drawable/stat_notify_sync"/>
+
+    <LinearLayout
+        android:id="@+id/srl_classics_center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_centerInParent="true">
+        <TextView
+            tools:textColor="#FFF"
+            android:id="@+id/srl_classics_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:textColor="#666666"
+            android:textSize="15sp"
+            android:text="@string/srl_header_pulling"/>
+        <TextView
+            tools:textColor="#AFFF"
+            android:id="@+id/srl_classics_update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:textColor="#7c7c7c"
+            android:textSize="12sp"
+            android:text="@string/srl_header_update"/>
+    </LinearLayout>
+
+</merge>
