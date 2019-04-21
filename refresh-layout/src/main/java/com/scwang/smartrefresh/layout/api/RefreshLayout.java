@@ -570,7 +570,7 @@ public interface RefreshLayout {
      * @return true or false, Status non-compliance will fail.
      *         是否成功（状态不符合会失败）
      */
-    @Deprecated
+//    @Deprecated
     boolean autoRefresh(int delayed);
 
     /**
@@ -601,15 +601,15 @@ public interface RefreshLayout {
      */
     boolean autoLoadMore();
 
-    /**
-     * Display load more animation and trigger load more event, Delayed start.
-     * 显示加载动画并且触发刷新事件, 延时启动
-     * @param delayed 开始延时
-     * @return true or false, Status non-compliance will fail.
-     *         是否成功（状态不符合会失败）
-     */
-    @Deprecated
-    boolean autoLoadMore(int delayed);
+//    /**
+//     * Display load more animation and trigger load more event, Delayed start.
+//     * 显示加载动画并且触发刷新事件, 延时启动
+//     * @param delayed 开始延时
+//     * @return true or false, Status non-compliance will fail.
+//     *         是否成功（状态不符合会失败）
+//     */
+//    @Deprecated
+//    boolean autoLoadMore(int delayed);
 
     /**
      * Display load more animation without triggering events.

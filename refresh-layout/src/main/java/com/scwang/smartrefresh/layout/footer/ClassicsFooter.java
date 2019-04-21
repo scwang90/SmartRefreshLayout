@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 
 import com.scwang.smartrefresh.layout.R;
 import com.scwang.smartrefresh.layout.api.RefreshFooter;
@@ -34,13 +35,13 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
     public static String REFRESH_FOOTER_FAILED = null;//"加载失败";
     public static String REFRESH_FOOTER_NOTHING = null;//"没有更多数据了";
 
-    protected String mTextPulling = null;//"上拉加载更多";
-    protected String mTextRelease = null;//"释放立即加载";
-    protected String mTextLoading = null;//"正在加载...";
-    protected String mTextRefreshing = null;//"正在刷新...";
-    protected String mTextFinish = null;//"加载完成";
-    protected String mTextFailed = null;//"加载失败";
-    protected String mTextNothing = null;//"没有更多数据了";
+    protected String mTextPulling;//"上拉加载更多";
+    protected String mTextRelease;//"释放立即加载";
+    protected String mTextLoading;//"正在加载...";
+    protected String mTextRefreshing;//"正在刷新...";
+    protected String mTextFinish;//"加载完成";
+    protected String mTextFailed;//"加载失败";
+    protected String mTextNothing;//"没有更多数据了";
 
     protected boolean mNoMoreData = false;
 
@@ -56,9 +57,13 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
     public ClassicsFooter(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
+        View.inflate(context, R.layout.srl_classics_footer, this);
+
+        mTitleText = findViewById(R.id.srl_classics_title);
+
         final View thisView = this;
-        final View arrowView = mArrowView;
-        final View progressView = mProgressView;
+        final View arrowView = mArrowView = findViewById(R.id.srl_classics_arrow);
+        final View progressView = mProgressView = findViewById(R.id.srl_classics_progress);
         final DensityUtil density = new DensityUtil();
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ClassicsFooter);
@@ -83,7 +88,7 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
 
         if (ta.hasValue(R.styleable.ClassicsFooter_srlDrawableArrow)) {
             mArrowView.setImageDrawable(ta.getDrawable(R.styleable.ClassicsFooter_srlDrawableArrow));
-        } else {
+        } else if (mArrowView.getDrawable() == null) {
             mArrowDrawable = new ArrowDrawable();
             mArrowDrawable.setColor(0xff666666);
             mArrowView.setImageDrawable(mArrowDrawable);
@@ -91,7 +96,7 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
 
         if (ta.hasValue(R.styleable.ClassicsFooter_srlDrawableProgress)) {
             mProgressView.setImageDrawable(ta.getDrawable(R.styleable.ClassicsFooter_srlDrawableProgress));
-        } else {
+        } else if (mProgressView.getDrawable() == null) {
             mProgressDrawable = new ProgressDrawable();
             mProgressDrawable.setColor(0xff666666);
             mProgressView.setImageDrawable(mProgressDrawable);
@@ -99,8 +104,8 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
 
         if (ta.hasValue(R.styleable.ClassicsFooter_srlTextSizeTitle)) {
             mTitleText.setTextSize(TypedValue.COMPLEX_UNIT_PX, ta.getDimensionPixelSize(R.styleable.ClassicsFooter_srlTextSizeTitle, DensityUtil.dp2px(16)));
-        } else {
-            mTitleText.setTextSize(16);
+//        } else {
+//            mTitleText.setTextSize(16);
         }
 
         if (ta.hasValue(R.styleable.ClassicsFooter_srlPrimaryColor)) {
@@ -162,8 +167,15 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
 
         ta.recycle();
 
-        mTitleText.setTextColor(0xff666666);
+//        mTitleText.setTextColor(0xff666666);
+        progressView.animate().setInterpolator(new LinearInterpolator());
         mTitleText.setText(thisView.isInEditMode() ? mTextLoading : mTextPulling);
+
+        if (thisView.isInEditMode()) {
+            arrowView.setVisibility(GONE);
+        } else {
+            progressView.setVisibility(GONE);
+        }
     }
 
 //    @Override
