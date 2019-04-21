@@ -105,6 +105,7 @@ implementation 'com.android.support:appcompat-v7:25.3.1'
 //androidx version
 implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-5'
 implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-5'
+implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
 ```
 

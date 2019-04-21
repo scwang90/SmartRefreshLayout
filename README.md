@@ -125,6 +125,7 @@ compile 'com.android.support:appcompat-v7:25.3.1'//版本 23以上（必须）
 //1.1.0 androidx 版本
 implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-5'
 implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-5'
+implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
 
 //1.0.5 （重大bug发现，无法兼容 Android P，不推荐使用）
