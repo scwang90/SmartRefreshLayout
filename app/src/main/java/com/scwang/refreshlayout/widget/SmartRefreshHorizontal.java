@@ -444,11 +444,11 @@ public class SmartRefreshHorizontal extends FrameLayout implements RefreshLayout
         return mRefreshLayout.autoLoadMore();
     }
 
-    @Override
-    @Deprecated
-    public boolean autoLoadMore(int delayed) {
-        return mRefreshLayout.autoLoadMore(delayed);
-    }
+//    @Override
+//    @Deprecated
+//    public boolean autoLoadMore(int delayed) {
+//        return mRefreshLayout.autoLoadMore(delayed);
+//    }
 
     @Override
     public boolean autoLoadMoreAnimationOnly() {

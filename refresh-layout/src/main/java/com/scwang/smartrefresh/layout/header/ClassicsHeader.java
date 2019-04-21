@@ -13,6 +13,7 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.LinearInterpolator;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -41,7 +42,7 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 @SuppressWarnings({"unused", "UnusedReturnValue"})
 public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements RefreshHeader {
 
-    public static final byte ID_TEXT_UPDATE = 4;
+    public static final int ID_TEXT_UPDATE = R.id.srl_classics_update;
 
     public static String REFRESH_HEADER_PULLING = null;//"下拉可以刷新";
     public static String REFRESH_HEADER_REFRESHING = null;//"正在刷新...";
@@ -61,14 +62,14 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
     protected DateFormat mLastUpdateFormat;
     protected boolean mEnableLastTime = true;
 
-    protected String mTextPulling = null;//"下拉可以刷新";
-    protected String mTextRefreshing = null;//"正在刷新...";
-    protected String mTextLoading = null;//"正在加载...";
-    protected String mTextRelease = null;//"释放立即刷新";
-    protected String mTextFinish = null;//"刷新完成";
-    protected String mTextFailed = null;//"刷新失败";
-    protected String mTextUpdate = null;//"上次更新 M-d HH:mm";
-    protected String mTextSecondary = null;//"释放进入二楼";
+    protected String mTextPulling;//"下拉可以刷新";
+    protected String mTextRefreshing;//"正在刷新...";
+    protected String mTextLoading;//"正在加载...";
+    protected String mTextRelease;//"释放立即刷新";
+    protected String mTextFinish;//"刷新完成";
+    protected String mTextFailed;//"刷新失败";
+    protected String mTextUpdate;//"上次更新 M-d HH:mm";
+    protected String mTextSecondary;//"释放进入二楼";
 
     //<editor-fold desc="RelativeLayout">
     public ClassicsHeader(Context context) {
@@ -82,14 +83,17 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
     public ClassicsHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        mLastUpdateText = new TextView(context);
-        mLastUpdateText.setTextColor(0xff7c7c7c);
+        View.inflate(context, R.layout.srl_classics_header, this);
+
+        mTitleText = findViewById(R.id.srl_classics_title);
+//        mLastUpdateText = new TextView(context);
+//        mLastUpdateText.setTextColor(0xff7c7c7c);
 
         final View thisView = this;
-        final View arrowView = mArrowView;
-        final View updateView = mLastUpdateText;
-        final View progressView = mProgressView;
-        final ViewGroup centerLayout = mCenterLayout;
+        final View arrowView = mArrowView = findViewById(R.id.srl_classics_arrow);
+        final View updateView = mLastUpdateText = findViewById(R.id.srl_classics_update);
+        final View progressView = mProgressView = findViewById(R.id.srl_classics_progress);
+//        final ViewGroup centerLayout = mCenterLayout;
         final DensityUtil density = new DensityUtil();
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ClassicsHeader);
@@ -117,7 +121,7 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
 
         if (ta.hasValue(R.styleable.ClassicsHeader_srlDrawableArrow)) {
             mArrowView.setImageDrawable(ta.getDrawable(R.styleable.ClassicsHeader_srlDrawableArrow));
-        } else {
+        } else if (mArrowView.getDrawable() == null){
             mArrowDrawable = new ArrowDrawable();
             mArrowDrawable.setColor(0xff666666);
             mArrowView.setImageDrawable(mArrowDrawable);
@@ -125,7 +129,7 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
 
         if (ta.hasValue(R.styleable.ClassicsHeader_srlDrawableProgress)) {
             mProgressView.setImageDrawable(ta.getDrawable(R.styleable.ClassicsHeader_srlDrawableProgress));
-        } else {
+        } else if (mProgressView.getDrawable() == null) {
             mProgressDrawable = new ProgressDrawable();
             mProgressDrawable.setColor(0xff666666);
             mProgressView.setImageDrawable(mProgressDrawable);
@@ -133,14 +137,14 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
 
         if (ta.hasValue(R.styleable.ClassicsHeader_srlTextSizeTitle)) {
             mTitleText.setTextSize(TypedValue.COMPLEX_UNIT_PX, ta.getDimensionPixelSize(R.styleable.ClassicsHeader_srlTextSizeTitle, DensityUtil.dp2px(16)));
-        } else {
-            mTitleText.setTextSize(16);
+//        } else {
+//            mTitleText.setTextSize(16);
         }
 
         if (ta.hasValue(R.styleable.ClassicsHeader_srlTextSizeTime)) {
             mLastUpdateText.setTextSize(TypedValue.COMPLEX_UNIT_PX, ta.getDimensionPixelSize(R.styleable.ClassicsHeader_srlTextSizeTime, DensityUtil.dp2px(12)));
-        } else {
-            mLastUpdateText.setTextSize(12);
+//        } else {
+//            mLastUpdateText.setTextSize(12);
         }
 
         if (ta.hasValue(R.styleable.ClassicsHeader_srlPrimaryColor)) {
@@ -210,10 +214,17 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
 
         ta.recycle();
 
-        updateView.setId(ID_TEXT_UPDATE);
+//        updateView.setId(ID_TEXT_UPDATE);
+        progressView.animate().setInterpolator(new LinearInterpolator());
         updateView.setVisibility(mEnableLastTime ? VISIBLE : GONE);
-        centerLayout.addView(updateView, lpUpdateText);
+//        centerLayout.addView(updateView, lpUpdateText);
         mTitleText.setText(thisView.isInEditMode() ? mTextRefreshing : mTextPulling);
+
+        if (thisView.isInEditMode()) {
+            arrowView.setVisibility(GONE);
+        } else {
+            progressView.setVisibility(GONE);
+        }
 
         try {//try 不能删除-否则会出现兼容性问题
             if (context instanceof FragmentActivity) {

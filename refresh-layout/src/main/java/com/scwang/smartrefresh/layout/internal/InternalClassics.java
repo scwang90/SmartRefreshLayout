@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.scwang.smartrefresh.layout.R;
 import com.scwang.smartrefresh.layout.api.RefreshInternal;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -35,14 +36,14 @@ import static com.scwang.smartrefresh.layout.util.SmartUtil.getColor;
 @SuppressWarnings({"unused", "UnusedReturnValue"})
 public abstract class InternalClassics<T extends InternalClassics> extends InternalAbstract implements RefreshInternal {
 
-    public static final byte ID_TEXT_TITLE = 1;
-    public static final byte ID_IMAGE_ARROW = 2;
-    public static final byte ID_IMAGE_PROGRESS = 3;
+    public static final int ID_TEXT_TITLE = R.id.srl_classics_title;
+    public static final int ID_IMAGE_ARROW = R.id.srl_classics_arrow;
+    public static final int ID_IMAGE_PROGRESS = R.id.srl_classics_progress;
 
     protected TextView mTitleText;
     protected ImageView mArrowView;
     protected ImageView mProgressView;
-    protected LinearLayout mCenterLayout;
+//    protected LinearLayout mCenterLayout;
     protected RefreshKernel mRefreshKernel;
     protected PaintDrawable mArrowDrawable;
     protected PaintDrawable mProgressDrawable;
@@ -61,65 +62,81 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
         super(context, attrs, defStyleAttr);
 
         mSpinnerStyle = SpinnerStyle.Translate;
-        mArrowView = new ImageView(context);
-        mProgressView = new ImageView(context);
-        mTitleText = new TextView(context);
-        mTitleText.setTextColor(0xff666666);
-        mCenterLayout = new LinearLayout(context);
-        mCenterLayout.setGravity(Gravity.CENTER_HORIZONTAL);
-        mCenterLayout.setOrientation(LinearLayout.VERTICAL);
-
+//        mArrowView = new ImageView(context);
+//        mProgressView = new ImageView(context);
+//        mTitleText = new TextView(context);
+//        mTitleText.setTextColor(0xff666666);
+//        mCenterLayout = new LinearLayout(context);
+//        mCenterLayout.setGravity(Gravity.CENTER_HORIZONTAL);
+//        mCenterLayout.setOrientation(LinearLayout.VERTICAL);
+//
         final View thisView = this;
-        final ViewGroup thisGroup = this;
-        final View arrowView = mArrowView;
-        final View titleView = mTitleText;
-        final View progressView = mProgressView;
-        final ViewGroup centerLayout = mCenterLayout;
+//        final ViewGroup thisGroup = this;
+//        final View arrowView = mArrowView;
+//        final View titleView = mTitleText;
+//        final View progressView = mProgressView;
+//        final ViewGroup centerLayout = mCenterLayout;
         final DensityUtil density = new DensityUtil();
+//
+//        titleView.setId(ID_TEXT_TITLE);
+//        arrowView.setId(ID_IMAGE_ARROW);
+//        progressView.setId(ID_IMAGE_PROGRESS);
+//        centerLayout.setId(android.R.id.widget_frame);
+//
+//        LinearLayout.LayoutParams lpHeaderText = new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
+//        centerLayout.addView(titleView, lpHeaderText);
+//
+//        LayoutParams lpHeaderLayout = new LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
+//        lpHeaderLayout.addRule(CENTER_IN_PARENT);
+//        thisGroup.addView(centerLayout, lpHeaderLayout);
+//
+//        LayoutParams lpArrow = new LayoutParams(density.dip2px(20), density.dip2px(20));
+//        lpArrow.addRule(CENTER_VERTICAL);
+//        lpArrow.addRule(LEFT_OF, android.R.id.widget_frame);
+//        thisGroup.addView(arrowView, lpArrow);
+//
+//        LayoutParams lpProgress = new LayoutParams((ViewGroup.LayoutParams)lpArrow);
+//        lpProgress.addRule(CENTER_VERTICAL);
+//        lpProgress.addRule(LEFT_OF, android.R.id.widget_frame);
+//        progressView.animate().setInterpolator(new LinearInterpolator());
+//        thisGroup.addView(progressView, lpProgress);
 
-        titleView.setId(ID_TEXT_TITLE);
-        arrowView.setId(ID_IMAGE_ARROW);
-        progressView.setId(ID_IMAGE_PROGRESS);
-        centerLayout.setId(android.R.id.widget_frame);
-
-        LinearLayout.LayoutParams lpHeaderText = new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
-        centerLayout.addView(titleView, lpHeaderText);
-
-        LayoutParams lpHeaderLayout = new LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
-        lpHeaderLayout.addRule(CENTER_IN_PARENT);
-        thisGroup.addView(centerLayout,lpHeaderLayout);
-
-        LayoutParams lpArrow = new LayoutParams(density.dip2px(20), density.dip2px(20));
-        lpArrow.addRule(CENTER_VERTICAL);
-        lpArrow.addRule(LEFT_OF, android.R.id.widget_frame);
-        thisGroup.addView(arrowView, lpArrow);
-
-        LayoutParams lpProgress = new LayoutParams((ViewGroup.LayoutParams)lpArrow);
-        lpProgress.addRule(CENTER_VERTICAL);
-        lpProgress.addRule(LEFT_OF, android.R.id.widget_frame);
-        progressView.animate().setInterpolator(new LinearInterpolator());
-        thisGroup.addView(progressView, lpProgress);
-
-        if (thisView.getPaddingTop() == 0) {
-            if (thisView.getPaddingBottom() == 0) {
-                thisView.setPadding(thisView.getPaddingLeft(), mPaddingTop = density.dip2px(20), thisView.getPaddingRight(), mPaddingBottom = density.dip2px(20));
-            } else {
-                thisView.setPadding(thisView.getPaddingLeft(), mPaddingTop = density.dip2px(20), thisView.getPaddingRight(), mPaddingBottom = thisView.getPaddingBottom());
-            }
-        } else {
-            if (thisView.getPaddingBottom() == 0) {
-                thisView.setPadding(thisView.getPaddingLeft(), mPaddingTop = thisView.getPaddingTop(), thisView.getPaddingRight(), mPaddingBottom = density.dip2px(20));
-            } else {
-                mPaddingTop = thisView.getPaddingTop();
-                mPaddingBottom = thisView.getPaddingBottom();
-            }
+        mPaddingTop = thisView.getPaddingTop();
+        mPaddingBottom = thisView.getPaddingBottom();
+        if (mPaddingTop == 0 || mPaddingBottom == 0) {
+            int paddingLeft = thisView.getPaddingLeft();
+            int paddingRight = thisView.getPaddingRight();
+            mPaddingTop = mPaddingTop == 0 ? density.dip2px(20) : mPaddingTop;
+            mPaddingBottom = mPaddingBottom == 0 ? density.dip2px(20) : mPaddingBottom;
+            thisView.setPadding(paddingLeft, mPaddingTop, paddingRight, mPaddingBottom);
         }
 
-        if (thisView.isInEditMode()) {
-            arrowView.setVisibility(GONE);
-        } else {
-            progressView.setVisibility(GONE);
-        }
+//        if (thisView.getPaddingTop() == 0) {
+//            if (thisView.getPaddingBottom() == 0) {
+//                mPaddingTop = density.dip2px(20);
+//                mPaddingBottom = density.dip2px(20);
+//                thisView.setPadding(thisView.getPaddingLeft(), mPaddingTop, thisView.getPaddingRight(), mPaddingBottom);
+//            } else {
+//                mPaddingTop = density.dip2px(20);
+//                mPaddingBottom = thisView.getPaddingBottom();
+//                thisView.setPadding(thisView.getPaddingLeft(), mPaddingTop, thisView.getPaddingRight(), mPaddingBottom);
+//            }
+//        } else {
+//            if (thisView.getPaddingBottom() == 0) {
+//                mPaddingTop = thisView.getPaddingTop();
+//                mPaddingBottom = density.dip2px(20);
+//                thisView.setPadding(thisView.getPaddingLeft(), mPaddingTop, thisView.getPaddingRight(), mPaddingBottom);
+//            } else {
+//                mPaddingTop = thisView.getPaddingTop();
+//                mPaddingBottom = thisView.getPaddingBottom();
+//            }
+//        }
+
+//        if (thisView.isInEditMode()) {
+//            arrowView.setVisibility(GONE);
+//        } else {
+//            progressView.setVisibility(GONE);
+//        }
 
     }
 
