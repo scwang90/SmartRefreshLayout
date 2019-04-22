@@ -23,6 +23,7 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -49,8 +50,8 @@ public class BallPulseFooter extends InternalAbstract implements RefreshFooter {
 
 
     protected boolean mIsStarted = false;
-    protected ArrayList<ValueAnimator> mAnimators;
-    protected Map<ValueAnimator, ValueAnimator.AnimatorUpdateListener> mUpdateListeners = new HashMap<>();;
+    protected List<ValueAnimator> mAnimators;
+    protected Map<ValueAnimator, ValueAnimator.AnimatorUpdateListener> mUpdateListeners = new HashMap<>();
     //</editor-fold>
 
     //<editor-fold desc="构造方法">

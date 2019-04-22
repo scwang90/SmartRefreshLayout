@@ -10,12 +10,9 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.R;
@@ -26,7 +23,6 @@ import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import static android.view.View.MeasureSpec.EXACTLY;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static com.scwang.smartrefresh.layout.util.SmartUtil.getColor;
 
 /**
@@ -48,8 +44,10 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
     protected PaintDrawable mArrowDrawable;
     protected PaintDrawable mProgressDrawable;
 //    protected SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
-    protected Integer mAccentColor;
-    protected Integer mPrimaryColor;
+//    protected Integer mAccentColor;
+//    protected Integer mPrimaryColor;
+    protected boolean mSetAccentColor;
+    protected boolean mSetPrimaryColor;
     protected int mBackgroundColor;
     protected int mFinishDuration = 500;
     protected int mPaddingTop = 20;
@@ -241,17 +239,19 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
     public void setPrimaryColors(@ColorInt int ... colors) {
         if (colors.length > 0) {
             final View thisView = this;
-            if (!(thisView.getBackground() instanceof BitmapDrawable) && mPrimaryColor == null) {
+//            if (!(thisView.getBackground() instanceof BitmapDrawable) && mPrimaryColor == null) {
+            if (!(thisView.getBackground() instanceof BitmapDrawable) && !mSetPrimaryColor) {
                 setPrimaryColor(colors[0]);
-                mPrimaryColor = null;
+//                mPrimaryColor = null;
             }
-            if (mAccentColor == null) {
+//            if (mAccentColor == null) {
+            if (!mSetAccentColor) {
                 if (colors.length > 1) {
                     setAccentColor(colors[1]);
 //                } else {
 //                    setAccentColor(colors[0] == 0xffffffff ? 0xff666666 : 0xffffffff);
                 }
-                mAccentColor = null;
+//                mAccentColor = null;
             }
         }
     }
@@ -304,9 +304,10 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
     }
 
     public T setPrimaryColor(@ColorInt int primaryColor) {
-        mBackgroundColor = mPrimaryColor = primaryColor;
+        mBackgroundColor = primaryColor;
+//        mBackgroundColor = mPrimaryColor = primaryColor;
         if (mRefreshKernel != null) {
-            mRefreshKernel.requestDrawBackgroundFor(this, mPrimaryColor);
+            mRefreshKernel.requestDrawBackgroundFor(this, primaryColor);
 //            if (this instanceof RefreshHeader) {
 //                mRefreshKernel.requestDrawBackgroundForHeader(mPrimaryColor);
 //            } else if (this instanceof RefreshFooter) {
@@ -317,7 +318,7 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
     }
 
     public T setAccentColor(@ColorInt int accentColor) {
-        mAccentColor = accentColor;
+//        mAccentColor = accentColor;
         mTitleText.setTextColor(accentColor);
         if (mArrowDrawable != null) {
             mArrowDrawable.setColor(accentColor);
