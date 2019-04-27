@@ -40,6 +40,7 @@ public class WeiboPracticeActivity extends AppCompatActivity {
         //状态栏透明和间距处理
         StatusBarUtil.immersive(this);
         StatusBarUtil.setPaddingSmart(this, toolbar);
+        StatusBarUtil.setMargin(this, findViewById(R.id.header));
 
         final View parallax = findViewById(R.id.parallax);
         final View buttonBar = findViewById(R.id.buttonBarLayout);
