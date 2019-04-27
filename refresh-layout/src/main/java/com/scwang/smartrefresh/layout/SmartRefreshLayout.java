@@ -15,6 +15,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.NestedScrollingChildHelper;
 import android.support.v4.view.NestedScrollingParent;
 import android.support.v4.view.NestedScrollingParentHelper;
@@ -73,7 +74,6 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static com.scwang.smartrefresh.layout.util.DensityUtil.dp2px;
 import static com.scwang.smartrefresh.layout.util.SmartUtil.fling;
-import static com.scwang.smartrefresh.layout.util.SmartUtil.getColor;
 import static com.scwang.smartrefresh.layout.util.SmartUtil.isContentView;
 import static java.lang.System.currentTimeMillis;
 
@@ -83,7 +83,7 @@ import static java.lang.System.currentTimeMillis;
  * Created by SCWANG on 2017/5/26.
  */
 @SuppressLint("RestrictedApi")
-@SuppressWarnings({"unused", "WeakerAccess"})
+@SuppressWarnings({"unused"})
 public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, NestedScrollingParent/*, NestedScrollingChild*/ {
 
     //<editor-fold desc="属性变量 property and variable">
@@ -752,7 +752,8 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 //        mManualNestedScrolling = true;
         animationRunnable = null;
         if (reboundAnimator != null) {
-            reboundAnimator.removeAllListeners();
+            Animator animator = reboundAnimator;
+            animator.removeAllListeners();
             reboundAnimator.removeAllUpdateListeners();
             reboundAnimator.cancel();
             reboundAnimator = null;
@@ -2589,7 +2590,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         final View thisView = this;
         final int[] colors = new int[primaryColorId.length];
         for (int i = 0; i < primaryColorId.length; i++) {
-            colors[i] = getColor(thisView.getContext(), primaryColorId[i]);
+            colors[i] = ContextCompat.getColor(thisView.getContext(), primaryColorId[i]);
         }
         setPrimaryColors(colors);
         return this;

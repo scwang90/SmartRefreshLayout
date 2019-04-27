@@ -84,16 +84,17 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
 
         View.inflate(context, R.layout.srl_classics_header, this);
 
-        mTitleText = findViewById(R.id.srl_classics_title);
 //        mLastUpdateText = new TextView(context);
 //        mLastUpdateText.setTextColor(0xff7c7c7c);
 
         final View thisView = this;
-        final View arrowView = mArrowView = findViewById(R.id.srl_classics_arrow);
-        final View updateView = mLastUpdateText = findViewById(R.id.srl_classics_update);
-        final View progressView = mProgressView = findViewById(R.id.srl_classics_progress);
+        final View arrowView = mArrowView = thisView.findViewById(R.id.srl_classics_arrow);
+        final View updateView = mLastUpdateText = thisView.findViewById(R.id.srl_classics_update);
+        final View progressView = mProgressView = thisView.findViewById(R.id.srl_classics_progress);
 //        final ViewGroup centerLayout = mCenterLayout;
         final DensityUtil density = new DensityUtil();
+
+        mTitleText = thisView.findViewById(R.id.srl_classics_title);
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ClassicsHeader);
 
@@ -340,7 +341,6 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
         updateView.setVisibility(enable ? VISIBLE : GONE);
         if (mRefreshKernel != null) {
             mRefreshKernel.requestRemeasureHeightFor(this);
-//            mRefreshKernel.requestRemeasureHeightForHeader();
         }
         return this;
     }
@@ -349,7 +349,6 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
         mLastUpdateText.setTextSize(size);
         if (mRefreshKernel != null) {
             mRefreshKernel.requestRemeasureHeightFor(this);
-//            mRefreshKernel.requestRemeasureHeightForHeader();
         }
         return this;
     }

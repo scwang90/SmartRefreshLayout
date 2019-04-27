@@ -1,8 +1,6 @@
 package com.scwang.smartrefresh.layout.util;
 
-import android.content.Context;
 import android.os.Build;
-import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.v4.view.NestedScrollingChild;
 import android.support.v4.view.NestedScrollingParent;
@@ -26,14 +24,6 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
  */
 
 public abstract class SmartUtil {
-
-    @SuppressWarnings("deprecation")
-    public static int getColor(@NonNull Context context, @ColorRes int colorId) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            return context.getColor(colorId);
-        }
-        return context.getResources().getColor(colorId);
-    }
 
     public static int measureViewHeight(View view) {
         ViewGroup.LayoutParams p = view.getLayoutParams();

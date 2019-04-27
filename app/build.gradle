@@ -56,11 +56,11 @@ dependencies {
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
     testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
 
-    implementation project(':refresh-footer')
-    implementation project(':refresh-header')
-    implementation project(':refresh-layout')
-//    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-22'
-//    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-22'
+//    implementation project(':refresh-footer')
+//    implementation project(':refresh-header')
+//    implementation project(':refresh-layout')
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-23'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-23'
 
 //    //noinspection GradleDependency,GradleCompatible
 //    implementation ('com.android.support:support-v4:22.1.0') {
@@ -88,7 +88,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.google.android:flexbox:1.0.0'
     implementation 'com.wang.avi:library:2.1.3'
-    implementation 'com.youth.banner:banner:1.4.9'  //最新版本
+    implementation 'com.youth.banner:banner:1.4.10'  //最新版本
     implementation 'de.hdodenhof:circleimageview:2.1.0'
     implementation 'jp.wasabeef:recyclerview-animators:2.2.6'
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'

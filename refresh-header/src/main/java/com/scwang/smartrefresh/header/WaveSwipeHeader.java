@@ -10,6 +10,7 @@ import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -140,18 +141,13 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
         mProgress.setColorSchemeColors(colors);
     }
 
-    @SuppressWarnings("deprecation")
     public void setColorSchemeColorIds(@IdRes int... resources) {
         final View thisView = this;
-        final Resources res = thisView.getResources();
+        final Context context = thisView.getContext();
         final int[] colorRes = new int[resources.length];
 
         for (int i = 0; i < resources.length; i++) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                colorRes[i] = res.getColor(resources[i], getContext().getTheme());
-            } else {
-                colorRes[i] = res.getColor(resources[i]);
-            }
+            colorRes[i] = ContextCompat.getColor(context, resources[1]);
         }
 
         mProgress.setColorSchemeColors(colorRes);

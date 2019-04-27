@@ -314,17 +314,15 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
     // Adapted from ArgbEvaluator.java
     @SuppressWarnings("RedundantCast")
     private int evaluateColorChange(float fraction, int startValue, int endValue) {
-        int startInt = (Integer) startValue;
-        int startA = (startInt >> 24) & 0xff;
-        int startR = (startInt >> 16) & 0xff;
-        int startG = (startInt >> 8) & 0xff;
-        int startB = startInt & 0xff;
+        int startA = (startValue >> 24) & 0xff;
+        int startR = (startValue >> 16) & 0xff;
+        int startG = (startValue >> 8) & 0xff;
+        int startB = startValue & 0xff;
 
-        int endInt = (Integer) endValue;
-        int endA = (endInt >> 24) & 0xff;
-        int endR = (endInt >> 16) & 0xff;
-        int endG = (endInt >> 8) & 0xff;
-        int endB = endInt & 0xff;
+        int endA = (endValue >> 24) & 0xff;
+        int endR = (endValue >> 16) & 0xff;
+        int endG = (endValue >> 8) & 0xff;
+        int endB = endValue & 0xff;
 
         return (int) ((startA + (int) (fraction * (endA - startA))) << 24)
                 | (int) ((startR + (int) (fraction * (endR - startR))) << 16)
@@ -511,7 +509,7 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
             if (mAlpha < 255) {
                 mCirclePaint.setColor(mBackgroundColor);
                 mCirclePaint.setAlpha(255 - mAlpha);
-                c.drawCircle(bounds.exactCenterX(), bounds.exactCenterY(), bounds.width() / 2,
+                c.drawCircle(bounds.exactCenterX(), bounds.exactCenterY(), bounds.width() / 2f,
                         mCirclePaint);
             }
         }
@@ -527,7 +525,7 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
 
                 // Adjust the position of the triangle so that it is inset as
                 // much as the arc, but also centered on the arc.
-                float inset = (int) mStrokeInset / 2 * mArrowScale;
+                float inset = (float) ((int) mStrokeInset / 2) * mArrowScale;
                 float x = (float) (mRingCenterRadius * Math.cos(0) + bounds.exactCenterX());
                 float y = (float) (mRingCenterRadius * Math.sin(0) + bounds.exactCenterY());
 
