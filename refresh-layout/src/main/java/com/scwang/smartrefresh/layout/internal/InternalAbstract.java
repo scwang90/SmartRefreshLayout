@@ -143,20 +143,6 @@ public abstract class InternalAbstract extends RelativeLayout implements Refresh
         }
     }
 
-//    @Override
-//    public void onPulling(float percent, int offset, int height, int maxDragHeight) {
-//        if (mWrappedInternal != null && mWrappedInternal != this) {
-//            mWrappedInternal.onPulling(percent, offset, height, maxDragHeight);
-//        }
-//    }
-//
-//    @Override
-//    public void onReleasing(float percent, int offset, int height, int maxDragHeight) {
-//        if (mWrappedInternal != null && mWrappedInternal != this) {
-//            mWrappedInternal.onReleasing(percent, offset, height, maxDragHeight);
-//        }
-//    }
-
     @Override
     public void onReleased(@NonNull RefreshLayout refreshLayout, int height, int maxDragHeight) {
         if (mWrappedInternal != null && mWrappedInternal != this) {

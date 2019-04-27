@@ -21,23 +21,23 @@ public class ArrowDrawable extends PaintDrawable {
     public void draw(@NonNull Canvas canvas) {
         final Drawable drawable = ArrowDrawable.this;
         final Rect bounds = drawable.getBounds();
-        int width = bounds.width();
-        int height = bounds.height();
+        final int width = bounds.width();
+        final int height = bounds.height();
         if (mWidth != width || mHeight != height) {
             int lineWidth = width * 30 / 225;
             mPath.reset();
 
-            float vector1 = (float) (lineWidth * Math.sin(Math.PI/4));
-            float vector2 = (float) (lineWidth / Math.sin(Math.PI/4));
-            mPath.moveTo(width / 2, height);
-            mPath.lineTo(0, height / 2);
-            mPath.lineTo(vector1, height / 2 - vector1);
-            mPath.lineTo(width / 2 - lineWidth / 2, height - vector2 - lineWidth / 2);
-            mPath.lineTo(width / 2 - lineWidth / 2, 0);
-            mPath.lineTo(width / 2 + lineWidth / 2, 0);
-            mPath.lineTo(width / 2 + lineWidth / 2, height - vector2 - lineWidth / 2);
-            mPath.lineTo(width - vector1, height / 2 - vector1);
-            mPath.lineTo(width, height / 2);
+            float vector1 = (lineWidth * 0.70710678118654752440084436210485f);//Math.sin(Math.PI/4));
+            float vector2 = (lineWidth / 0.70710678118654752440084436210485f);//Math.sin(Math.PI/4));
+            mPath.moveTo(width / 2f, height);
+            mPath.lineTo(0, height / 2f);
+            mPath.lineTo(vector1, height / 2f - vector1);
+            mPath.lineTo(width / 2f - lineWidth / 2f, height - vector2 - lineWidth / 2f);
+            mPath.lineTo(width / 2f - lineWidth / 2f, 0);
+            mPath.lineTo(width / 2f + lineWidth / 2f, 0);
+            mPath.lineTo(width / 2f + lineWidth / 2f, height - vector2 - lineWidth / 2f);
+            mPath.lineTo(width - vector1, height / 2f - vector1);
+            mPath.lineTo(width, height / 2f);
             mPath.close();
 
             mWidth = width;

@@ -12,7 +12,7 @@ import android.view.View;
  */
 public class PathsView extends View {
 
-    protected PathsDrawable mPathsDrawable = new PathsDrawable();
+    protected PathsDrawable mPathsDrawable;
 
     public PathsView(Context context) {
         this(context, null);

@@ -316,8 +316,8 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
         final float offsetLeftBottomX = sideLength * (float) Math.sin(Math.PI / 3 + offsetAngle);
         final float offsetLeftBottomY = sideLength * (float) Math.cos(Math.PI / 3 + offsetAngle);
         mPath.moveTo(body.boxLeft, body.boxCenterTop);
-        mPath.lineTo(body.boxCenterX, (body.boxBottom + body.boxTop) / 2);
-        mPath.lineTo(body.boxCenterX - offsetLeftBottomX, (body.boxBottom + body.boxTop) / 2 + offsetLeftBottomY);
+        mPath.lineTo(body.boxCenterX, (body.boxBottom + body.boxTop) / 2f);
+        mPath.lineTo(body.boxCenterX - offsetLeftBottomX, (body.boxBottom + body.boxTop) / 2f + offsetLeftBottomY);
         mPath.lineTo(body.boxLeft - offsetLeftBottomX, body.boxCenterTop + offsetLeftBottomY);
         mPath.close();
 
@@ -338,8 +338,8 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
         final float offsetRightBottomX = sideLength * (float) Math.sin(Math.PI / 3 + offsetAngle);
         final float offsetRightBottomY = sideLength * (float) Math.cos(Math.PI / 3 + offsetAngle);
         mPath.moveTo(body.boxRight, body.boxCenterTop);
-        mPath.lineTo(body.boxCenterX, (body.boxBottom + body.boxTop) / 2);
-        mPath.lineTo(body.boxCenterX + offsetRightBottomX, (body.boxBottom + body.boxTop) / 2 + offsetRightBottomY);
+        mPath.lineTo(body.boxCenterX, (body.boxBottom + body.boxTop) / 2f);
+        mPath.lineTo(body.boxCenterX + offsetRightBottomX, (body.boxBottom + body.boxTop) / 2f + offsetRightBottomY);
         mPath.lineTo(body.boxRight + offsetRightBottomX, body.boxCenterTop + offsetRightBottomY);
         mPath.close();
 
@@ -353,10 +353,10 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
         mPath.moveTo(body.boxLeft, body.boxCenterBottom);
         mPath.lineTo(body.boxCenterX, body.boxBottom);
         mPath.lineTo(body.boxRight, body.boxCenterBottom);
-        mPath.quadTo(body.boxRight + body.boxSideLength / 2 * mReboundPercent, body.boxCenterY, body.boxRight, body.boxCenterTop);
+        mPath.quadTo(body.boxRight + body.boxSideLength / 2f * mReboundPercent, body.boxCenterY, body.boxRight, body.boxCenterTop);
         mPath.lineTo(body.boxCenterX, body.boxTop);
         mPath.lineTo(body.boxLeft, body.boxCenterTop);
-        mPath.quadTo(body.boxLeft - body.boxSideLength / 2 * mReboundPercent, body.boxCenterY, body.boxLeft, body.boxCenterBottom);
+        mPath.quadTo(body.boxLeft - body.boxSideLength / 2f * mReboundPercent, body.boxCenterY, body.boxLeft, body.boxCenterBottom);
 
         mPath.close();
         return mPath;

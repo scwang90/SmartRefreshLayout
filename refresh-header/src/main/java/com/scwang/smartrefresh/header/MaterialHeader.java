@@ -9,6 +9,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -24,7 +25,6 @@ import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
-import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 import static android.view.View.MeasureSpec.getSize;
 
@@ -155,7 +155,7 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
             mBezierPath.lineTo(0, mHeadHeight);
             //绘制贝塞尔曲线
             final View thisView = this;
-            mBezierPath.quadTo(thisView.getMeasuredWidth() / 2, mHeadHeight + mWaveHeight * 1.9f, thisView.getMeasuredWidth(), mHeadHeight);
+            mBezierPath.quadTo(thisView.getMeasuredWidth() / 2f, mHeadHeight + mWaveHeight * 1.9f, thisView.getMeasuredWidth(), mHeadHeight);
             mBezierPath.lineTo(thisView.getMeasuredWidth(), 0);
             canvas.drawPath(mBezierPath, mBezierPaint);
         }
@@ -209,7 +209,7 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
             }
 
             final View circleView = mCircleView;
-            float targetY = offset / 2 + mCircleDiameter / 2;
+            float targetY = offset / 2f + mCircleDiameter / 2f;
             circleView.setTranslationY(Math.min(offset, targetY));
             circleView.setAlpha(Math.min(1f, 4f * offset / mCircleDiameter));
         }
@@ -340,7 +340,7 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
         final Context context = thisView.getContext();
         int[] colors = new int[colorIds.length];
         for (int i = 0; i < colorIds.length; i++) {
-            colors[i] = SmartUtil.getColor(context, colorIds[i]);
+            colors[i] = ContextCompat.getColor(context, colorIds[i]);
         }
         return setColorSchemeColors(colors);
     }

@@ -12,6 +12,7 @@ import java.util.Random;
  *
  * Created by srain on 11/6/14.
  */
+@SuppressWarnings("WeakerAccess")
 public class StoreHouseBarItem extends Animation {
 
     public PointF midPoint;

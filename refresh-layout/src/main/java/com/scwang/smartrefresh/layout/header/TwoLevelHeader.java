@@ -298,7 +298,6 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
         this.mEnablePullToCloseTwoLevel = enabled;
         if (refreshKernel != null) {
             refreshKernel.requestNeedTouchEventFor(this, !enabled);
-//            refreshKernel.requestNeedTouchEventWhenRefreshing(disable);
         }
         return this;
     }

@@ -213,7 +213,7 @@ class PathParser {
         if ((end - start) == 1 && start < pathData.length()) {
             addNode(list, pathData.charAt(start), new float[0]);
         }
-        return list.toArray(new PathDataNode[list.size()]);
+        return list.toArray(new PathDataNode[0]);
     }
 
 //    /**

@@ -156,7 +156,7 @@ public class DeliveryHeader extends InternalAbstract implements RefreshHeader {
             mCloudDrawable.draw(canvas);
             mCloudDrawable.getBounds().offsetTo(mCloudX3, mHeaderHeight * 2 / 3);
             mCloudDrawable.draw(canvas);
-            canvas.rotate(5 * (float) Math.sin(mAppreciation / 2), width / 2 , mHeaderHeight / 2 - mUmbrellaDrawable.getBounds().height());
+            canvas.rotate(5 * (float) Math.sin(mAppreciation / 2), width / 2f , mHeaderHeight / 2f - mUmbrellaDrawable.getBounds().height());
             calculateFrame(width);
         }
 
