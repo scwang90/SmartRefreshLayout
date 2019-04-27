@@ -11,12 +11,13 @@ import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
-import androidx.annotation.ColorInt;
-import androidx.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
 
 import com.scwang.smartrefresh.header.internal.MaterialProgressDrawable;
 import com.scwang.smartrefresh.header.waterdrop.WaterDropView;

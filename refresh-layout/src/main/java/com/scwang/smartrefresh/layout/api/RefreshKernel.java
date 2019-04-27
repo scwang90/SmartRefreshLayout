@@ -1,6 +1,7 @@
 package com.scwang.smartrefresh.layout.api;
 
 import android.animation.ValueAnimator;
+
 import androidx.annotation.NonNull;
 
 import com.scwang.smartrefresh.layout.constant.RefreshState;

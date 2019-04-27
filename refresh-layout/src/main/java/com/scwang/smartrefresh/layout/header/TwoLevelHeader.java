@@ -2,11 +2,12 @@ package com.scwang.smartrefresh.layout.header;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.scwang.smartrefresh.layout.R;
 import com.scwang.smartrefresh.layout.api.OnTwoLevelListener;

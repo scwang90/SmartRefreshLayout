@@ -1,16 +1,17 @@
 package com.scwang.refreshlayout.activity;
 
 import android.os.Bundle;
+import android.view.MenuItem;
+
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.bottomnavigation.BottomNavigationView.OnNavigationItemSelectedListener;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
-import android.view.MenuItem;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomnavigation.BottomNavigationView.OnNavigationItemSelectedListener;
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.fragment.index.RefreshExampleFragment;
 import com.scwang.refreshlayout.fragment.index.RefreshPracticeFragment;

@@ -11,6 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
+import androidx.core.content.ContextCompat;
+
 import com.scwang.smartrefresh.header.internal.MaterialProgressDrawable;
 import com.scwang.smartrefresh.header.material.CircleImageView;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
@@ -20,11 +26,6 @@ import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
-
-import androidx.annotation.ColorInt;
-import androidx.annotation.ColorRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.VisibleForTesting;
 
 import static android.view.View.MeasureSpec.getSize;
 

@@ -7,8 +7,9 @@ import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
-import androidx.annotation.NonNull;
 import android.view.animation.LinearInterpolator;
+
+import androidx.annotation.NonNull;
 
 /**
  * 旋转动画

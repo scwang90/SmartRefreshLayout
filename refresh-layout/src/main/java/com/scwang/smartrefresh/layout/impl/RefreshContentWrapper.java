@@ -3,17 +3,18 @@ package com.scwang.smartrefresh.layout.impl;
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.graphics.PointF;
-import androidx.annotation.NonNull;
-import androidx.core.view.NestedScrollingChild;
-import androidx.core.view.NestedScrollingParent;
-import androidx.legacy.widget.Space;
-import androidx.viewpager.widget.ViewPager;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.FrameLayout;
+
+import androidx.annotation.NonNull;
+import androidx.core.view.NestedScrollingChild;
+import androidx.core.view.NestedScrollingParent;
+import androidx.legacy.widget.Space;
+import androidx.viewpager.widget.ViewPager;
 
 import com.scwang.smartrefresh.layout.api.RefreshContent;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;

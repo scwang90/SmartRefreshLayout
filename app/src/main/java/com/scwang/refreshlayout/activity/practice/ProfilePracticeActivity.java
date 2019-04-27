@@ -1,9 +1,10 @@
 package com.scwang.refreshlayout.activity.practice;
 
 import android.os.Bundle;
+import android.view.View;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import android.view.View;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.util.StatusBarUtil;

@@ -17,6 +17,7 @@ package com.scwang.smartrefresh.header.internal.pathview;
 import android.graphics.Matrix;
 import android.graphics.Path;
 import android.os.Build;
+
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;

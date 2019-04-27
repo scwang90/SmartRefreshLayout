@@ -1,10 +1,11 @@
 package com.scwang.smartrefresh.layout.util;
 
 import android.graphics.PointF;
-import androidx.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+
+import androidx.annotation.NonNull;
 
 /**
  * 滚动边界
