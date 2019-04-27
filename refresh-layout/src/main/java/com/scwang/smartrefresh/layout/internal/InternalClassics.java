@@ -10,12 +10,9 @@ import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.R;
@@ -26,8 +23,6 @@ import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import static android.view.View.MeasureSpec.EXACTLY;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-import static com.scwang.smartrefresh.layout.util.SmartUtil.getColor;
 
 /**
  * 经典组件
@@ -43,13 +38,13 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
     protected TextView mTitleText;
     protected ImageView mArrowView;
     protected ImageView mProgressView;
-//    protected LinearLayout mCenterLayout;
+
     protected RefreshKernel mRefreshKernel;
     protected PaintDrawable mArrowDrawable;
     protected PaintDrawable mProgressDrawable;
-//    protected SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
-    protected Integer mAccentColor;
-    protected Integer mPrimaryColor;
+
+    protected boolean mSetAccentColor;
+    protected boolean mSetPrimaryColor;
     protected int mBackgroundColor;
     protected int mFinishDuration = 500;
     protected int mPaddingTop = 20;
@@ -196,11 +191,6 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
     public void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight) {
         mRefreshKernel = kernel;
         mRefreshKernel.requestDrawBackgroundFor(this, mBackgroundColor);
-//        if (this instanceof RefreshHeader) {
-//            mRefreshKernel.requestDrawBackgroundForHeader(mBackgroundColor);
-//        } else if (this instanceof RefreshFooter) {
-//            mRefreshKernel.requestDrawBackgroundForFooter(mBackgroundColor);
-//        }
     }
 
     @Override
@@ -241,17 +231,17 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
     public void setPrimaryColors(@ColorInt int ... colors) {
         if (colors.length > 0) {
             final View thisView = this;
-            if (!(thisView.getBackground() instanceof BitmapDrawable) && mPrimaryColor == null) {
+            if (!(thisView.getBackground() instanceof BitmapDrawable) && !mSetPrimaryColor) {
                 setPrimaryColor(colors[0]);
-                mPrimaryColor = null;
+                mSetPrimaryColor = false;
             }
-            if (mAccentColor == null) {
+            if (!mSetAccentColor) {
                 if (colors.length > 1) {
                     setAccentColor(colors[1]);
 //                } else {
 //                    setAccentColor(colors[0] == 0xffffffff ? 0xff666666 : 0xffffffff);
                 }
-                mAccentColor = null;
+                mSetAccentColor = false;
             }
         }
     }
@@ -304,20 +294,16 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
     }
 
     public T setPrimaryColor(@ColorInt int primaryColor) {
-        mBackgroundColor = mPrimaryColor = primaryColor;
+        mSetPrimaryColor = true;
+        mBackgroundColor = primaryColor;
         if (mRefreshKernel != null) {
-            mRefreshKernel.requestDrawBackgroundFor(this, mPrimaryColor);
-//            if (this instanceof RefreshHeader) {
-//                mRefreshKernel.requestDrawBackgroundForHeader(mPrimaryColor);
-//            } else if (this instanceof RefreshFooter) {
-//                mRefreshKernel.requestDrawBackgroundForFooter(mPrimaryColor);
-//            }
+            mRefreshKernel.requestDrawBackgroundFor(this, primaryColor);
         }
         return self();
     }
 
     public T setAccentColor(@ColorInt int accentColor) {
-        mAccentColor = accentColor;
+        mSetAccentColor = true;
         mTitleText.setTextColor(accentColor);
         if (mArrowDrawable != null) {
             mArrowDrawable.setColor(accentColor);
@@ -332,13 +318,13 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
 
     public T setPrimaryColorId(@ColorRes int colorId) {
         final View thisView = this;
-        setPrimaryColor(getColor(thisView.getContext(), colorId));
+        setPrimaryColor(ContextCompat.getColor(thisView.getContext(), colorId));
         return self();
     }
 
     public T setAccentColorId(@ColorRes int colorId) {
         final View thisView = this;
-        setAccentColor(getColor(thisView.getContext(), colorId));
+        setAccentColor(ContextCompat.getColor(thisView.getContext(), colorId));
         return self();
     }
 

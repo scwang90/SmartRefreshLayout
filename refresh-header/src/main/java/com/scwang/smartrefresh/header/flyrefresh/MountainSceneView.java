@@ -242,7 +242,7 @@ public class MountainSceneView extends View {
         canvas.drawPath(mMount1, mMountPaint);
 
         canvas.save();
-        canvas.scale(-1, 1, thisView.getWidth() / 2, 0);
+        canvas.scale(-1, 1, thisView.getWidth() / 2f, 0);
         drawTree(canvas, 0.12f * mScaleX, 180 * mScaleX, (93 + 20 * mMoveFactor) * mScaleY,
                 COLOR_TREE_3_BRINK, COLOR_TREE_3_BRANCH);
         drawTree(canvas, 0.1f * mScaleX, 200 * mScaleX, (96 + 20 * mMoveFactor) * mScaleY,

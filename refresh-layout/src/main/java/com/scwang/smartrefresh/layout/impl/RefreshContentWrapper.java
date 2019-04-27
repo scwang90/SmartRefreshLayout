@@ -21,8 +21,8 @@ import com.scwang.smartrefresh.layout.api.ScrollBoundaryDecider;
 import com.scwang.smartrefresh.layout.listener.CoordinatorLayoutListener;
 import com.scwang.smartrefresh.layout.util.DesignUtil;
 
-import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
@@ -83,18 +83,21 @@ public class RefreshContentWrapper implements RefreshContent , CoordinatorLayout
         mEnableLoadMore = enableLoadMore;
     }
 
-    protected View findScrollableViewInternal(View content, boolean selfable) {
+    protected View findScrollableViewInternal(View content, boolean selfAble) {
         View scrollableView = null;
-        Queue<View> views = new LinkedList<>(Collections.singletonList(content));
-        while (!views.isEmpty() && scrollableView == null) {
+        Queue<View> views = new LinkedList<>();
+        //noinspection unchecked
+        List<View> list = (List<View>)views;
+        list.add(content);
+        while (list.size() > 0 && scrollableView == null) {
             View view = views.poll();
             if (view != null) {
-                if ((selfable || view != content) && isContentView(view)) {
+                if ((selfAble || view != content) && isContentView(view)) {
                     scrollableView = view;
                 } else if (view instanceof ViewGroup) {
                     ViewGroup group = (ViewGroup) view;
                     for (int j = 0; j < group.getChildCount(); j++) {
-                        views.add(group.getChildAt(j));
+                        list.add(group.getChildAt(j));
                     }
                 }
             }

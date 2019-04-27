@@ -350,8 +350,13 @@ public class SmartRefreshHorizontal extends FrameLayout implements RefreshLayout
     }
 
     @Override
-    public RefreshLayout finishRefresh(int delayed, boolean success) {
-        return mRefreshLayout.finishRefresh(delayed, success);
+    public RefreshLayout finishRefresh(int delayed, boolean success, Boolean noMoreData) {
+        return mRefreshLayout.finishRefresh(delayed, success, noMoreData);
+    }
+
+    @Override
+    public RefreshLayout finishRefreshWithNoMoreData() {
+        return mRefreshLayout.finishRefreshWithNoMoreData();
     }
 
     @Override

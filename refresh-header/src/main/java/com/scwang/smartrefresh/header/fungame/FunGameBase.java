@@ -69,7 +69,7 @@ public abstract class FunGameBase extends InternalAbstract implements RefreshHea
                     float dy = event.getRawY() - mTouchY;
                     if (dy >= 0) {
                         final double M = mHeaderHeight * 2;
-                        final double H = mScreenHeightPixels * 2 / 3;
+                        final double H = mScreenHeightPixels * 2 / 3f;
                         final double x = Math.max(0, dy * 0.5);
                         final double y = Math.min(M * (1 - Math.pow(100, -x / H)), x);// 公式 y = M(1-40^(-x/H))
                         mRefreshKernel.moveSpinner(Math.max(1, (int) y), false);

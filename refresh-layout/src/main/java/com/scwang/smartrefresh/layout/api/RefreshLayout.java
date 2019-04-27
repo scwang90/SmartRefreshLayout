@@ -454,7 +454,14 @@ public interface RefreshLayout {
      * @param success 数据是否成功刷新 （会影响到上次更新时间的改变）
      * @return RefreshLayout
      */
-    RefreshLayout finishRefresh(int delayed, boolean success);
+    RefreshLayout finishRefresh(int delayed, boolean success, Boolean noMoreData);
+
+    /**
+     * finish load more with no more data.
+     * 完成刷新并标记没有更多数据
+     * @return RefreshLayout
+     */
+    RefreshLayout finishRefreshWithNoMoreData();
 
     /**
      * finish load more.
@@ -508,7 +515,12 @@ public interface RefreshLayout {
      * 恢复没有更多数据的原始状态
      * @param noMoreData 是否有更多数据
      * @return RefreshLayout
+     * @deprecated
+     *      use {@link RefreshLayout#resetNoMoreData()}
+     *      use {@link RefreshLayout#finishRefreshWithNoMoreData()}
+     *      use {@link RefreshLayout#finishLoadMoreWithNoMoreData()}
      */
+    @Deprecated
     RefreshLayout setNoMoreData(boolean noMoreData);
 
     /**

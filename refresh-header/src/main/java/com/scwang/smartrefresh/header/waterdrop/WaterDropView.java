@@ -42,7 +42,7 @@ public class WaterDropView extends View {
         mPaint.setAntiAlias(true);
         mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         mPaint.setStrokeWidth(STROKE_WIDTH = DensityUtil.dp2px(1f));
-        mPaint.setShadowLayer(STROKE_WIDTH, STROKE_WIDTH/2, STROKE_WIDTH, 0x99000000);
+        mPaint.setShadowLayer(STROKE_WIDTH, STROKE_WIDTH/2f, STROKE_WIDTH, 0x99000000);
         thisView.setLayerType(LAYER_TYPE_SOFTWARE, null);
 
         int padding = 4 * STROKE_WIDTH;

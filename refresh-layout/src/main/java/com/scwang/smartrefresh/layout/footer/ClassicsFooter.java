@@ -59,12 +59,13 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
 
         View.inflate(context, R.layout.srl_classics_footer, this);
 
-        mTitleText = findViewById(R.id.srl_classics_title);
 
         final View thisView = this;
-        final View arrowView = mArrowView = findViewById(R.id.srl_classics_arrow);
-        final View progressView = mProgressView = findViewById(R.id.srl_classics_progress);
+        final View arrowView = mArrowView = thisView.findViewById(R.id.srl_classics_arrow);
+        final View progressView = mProgressView = thisView.findViewById(R.id.srl_classics_progress);
         final DensityUtil density = new DensityUtil();
+
+        mTitleText = thisView.findViewById(R.id.srl_classics_title);
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ClassicsFooter);
 

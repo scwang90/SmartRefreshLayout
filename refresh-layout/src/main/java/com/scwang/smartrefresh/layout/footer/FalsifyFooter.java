@@ -49,7 +49,8 @@ public class FalsifyFooter extends InternalAbstract implements RefreshFooter {
         super.dispatchDraw(canvas);
         final View thisView = this;
         if (thisView.isInEditMode()) {//这段代码在运行时不会执行，只会在Studio编辑预览时运行，不用在意性能问题
-            int d = DensityUtil.dp2px(5);
+            final int d = DensityUtil.dp2px(5);
+            final Context context = thisView.getContext();
 
             Paint paint = new Paint();
             paint.setStyle(Paint.Style.STROKE);
@@ -58,8 +59,8 @@ public class FalsifyFooter extends InternalAbstract implements RefreshFooter {
             paint.setPathEffect(new DashPathEffect(new float[]{d, d, d, d}, 1));
             canvas.drawRect(d, d, thisView.getWidth() - d, thisView.getBottom() - d, paint);
 
-            TextView textView = new TextView(thisView.getContext());
-            textView.setText(thisView.getResources().getString(R.string.srl_component_falsify, getClass().getSimpleName(), DensityUtil.px2dp(thisView.getHeight())));
+            TextView textView = new TextView(context);
+            textView.setText(context.getString(R.string.srl_component_falsify, getClass().getSimpleName(), DensityUtil.px2dp(thisView.getHeight())));
             textView.setTextColor(0xcccccccc);
             textView.setGravity(Gravity.CENTER);
             //noinspection UnnecessaryLocalVariable

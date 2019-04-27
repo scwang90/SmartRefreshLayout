@@ -37,11 +37,11 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
     //<editor-fold desc="Field">
     public List<StoreHouseBarItem> mItemList = new ArrayList<>();
 
-    protected int mLineWidth = -1;
     protected float mScale = 1;
+    protected int mLineWidth = -1;
     protected int mDropHeight = -1;
-    protected static final float mInternalAnimationFactor = 0.7f;
     protected int mHorizontalRandomness = -1;
+    protected static final float mInternalAnimationFactor = 0.7f;
 
     protected float mProgress = 0;
 

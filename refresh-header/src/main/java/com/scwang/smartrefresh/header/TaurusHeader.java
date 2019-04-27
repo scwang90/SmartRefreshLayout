@@ -331,14 +331,14 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
         Removing slowing of animation with dividing on {@LINK #SLOW_DOWN_ANIMATION_COEFFICIENT}
         And we should don't forget about distance that should "fly" line that depend on screen of device and x offset
         */
-        float cof = (width + xOffset) / (LOADING_ANIMATION_COEFFICIENT / SLOW_DOWN_ANIMATION_COEFFICIENT);
+        float cof = (width + xOffset) / (1f * LOADING_ANIMATION_COEFFICIENT / SLOW_DOWN_ANIMATION_COEFFICIENT);
         float time = mLoadingAnimationTime;
 
         // HORRIBLE HACK FOR REVERS ANIMATION THAT SHOULD WORK LIKE RESTART ANIMATION
         if (mLastAnimationTime - mLoadingAnimationTime > 0) {
             mInverseDirection = true;
             // take time from 0 to end of animation time
-            time = (LOADING_ANIMATION_COEFFICIENT / SLOW_DOWN_ANIMATION_COEFFICIENT) - mLoadingAnimationTime;
+            time = (1f * LOADING_ANIMATION_COEFFICIENT / SLOW_DOWN_ANIMATION_COEFFICIENT) - mLoadingAnimationTime;
         } else {
             mNewWindSet = true;
             mInverseDirection = false;
@@ -388,12 +388,12 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
 //            needMoveCloudsWithContent = true;
 //        }
 
-        float offsetLeftX = 0 - mCloudLeft.getBounds().width() / 2;
+        float offsetLeftX = 0 - mCloudLeft.getBounds().width() / 2f;
         float offsetLeftY = (//needMoveCloudsWithContent
                 //? mHeaderHeight * dragPercent - mCloudLeftgetBounds().height() :
                 dragYOffset);
 
-        float offsetRightX = width - mCloudRight.getBounds().width() / 2;
+        float offsetRightX = width - mCloudRight.getBounds().width() / 2f;
         float offsetRightY = (//needMoveCloudsWithContent
                 //? mHeaderHeight * dragPercent - mCloudRightgetBounds().height() :
                 dragYOffset);
@@ -425,7 +425,7 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
         final int saveCount = canvas.getSaveCount();
         canvas.save();
         canvas.translate(offsetLeftX, offsetLeftY);
-        matrix.postScale(scale, scale, mCloudLeft.getBounds().width() * 3 / 4, mCloudLeft.getBounds().height());
+        matrix.postScale(scale, scale, mCloudLeft.getBounds().width() * 3 / 4f, mCloudLeft.getBounds().height());
         canvas.concat(matrix);
         mCloudLeft.setAlpha(100);
         mCloudLeft.draw(canvas);
@@ -482,9 +482,9 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
             parallaxPercent = dragYOffset - startParallaxHeight;
         }
 
-        float offsetX = (width / 2) - mCloudCenter.getBounds().width() / 2;
+        float offsetX = (width / 2f) - mCloudCenter.getBounds().width() / 2f;
         float offsetY = dragYOffset
-                - (parallax ? mCloudCenter.getBounds().height()/2 + parallaxPercent : mCloudCenter.getBounds().height()/2);
+                - (parallax ? mCloudCenter.getBounds().height()/2f + parallaxPercent : mCloudCenter.getBounds().height()/2f);
 
         float sx = overDrag ? scale + overDragPercent / 4 : scale;
         float sy = overDrag ? scale + overDragPercent / 2 : scale;
@@ -503,7 +503,7 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
         }
 
 
-        matrix.postScale(sx, sy, mCloudCenter.getBounds().width() / 2, 0);
+        matrix.postScale(sx, sy, mCloudCenter.getBounds().width() / 2f, 0);
 
         if (offsetY + sy * mCloudCenter.getBounds().height() < height + 2) {
             offsetY = height + 2 - sy * mCloudCenter.getBounds().height();
@@ -536,8 +536,8 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
             dragPercent = 1.0f;
         }
 
-        float offsetX = ((width * dragPercent) / 2) - mAirplane.getBounds().width() / 2;
-        float offsetY = mHeaderHeight * (1 - dragPercent/2) - mAirplane.getBounds().height() / 2;
+        float offsetX = ((width * dragPercent) / 2) - mAirplane.getBounds().width() / 2f;
+        float offsetY = mHeaderHeight * (1 - dragPercent/2) - mAirplane.getBounds().height() / 2f;
 
         if (mFinishTransformation > 0) {
             offsetY += (0 - offsetY) * mFinishTransformation;
@@ -558,8 +558,8 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
 
         if (rotateAngle > 0) {
             matrix.postRotate(rotateAngle,
-                    mAirplane.getBounds().width() / 2,
-                    mAirplane.getBounds().height() / 2);
+                    mAirplane.getBounds().width() / 2f,
+                    mAirplane.getBounds().height() / 2f);
         }
 
         final int saveCount = canvas.getSaveCount();
