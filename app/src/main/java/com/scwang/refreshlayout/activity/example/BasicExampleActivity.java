@@ -133,7 +133,7 @@ public class BasicExampleActivity extends AppCompatActivity {
 
         //点击测试
         RefreshFooter footer = refreshLayout.getRefreshFooter();
-        if (footer != null) {
+        if (footer instanceof ClassicsFooter) {
             refreshLayout.getRefreshFooter().getView().findViewById(ClassicsFooter.ID_TEXT_TITLE).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
