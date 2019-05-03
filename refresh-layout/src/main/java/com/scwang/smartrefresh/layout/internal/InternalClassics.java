@@ -67,13 +67,13 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
 //        mCenterLayout.setGravity(Gravity.CENTER_HORIZONTAL);
 //        mCenterLayout.setOrientation(LinearLayout.VERTICAL);
 //
-        final View thisView = this;
+//        final View thisView = this;
 //        final ViewGroup thisGroup = this;
 //        final View arrowView = mArrowView;
 //        final View titleView = mTitleText;
 //        final View progressView = mProgressView;
 //        final ViewGroup centerLayout = mCenterLayout;
-        final DensityUtil density = new DensityUtil();
+//        final DensityUtil density = new DensityUtil();
 //
 //        titleView.setId(ID_TEXT_TITLE);
 //        arrowView.setId(ID_IMAGE_ARROW);
@@ -97,16 +97,16 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
 //        lpProgress.addRule(LEFT_OF, android.R.id.widget_frame);
 //        progressView.animate().setInterpolator(new LinearInterpolator());
 //        thisGroup.addView(progressView, lpProgress);
-
-        mPaddingTop = thisView.getPaddingTop();
-        mPaddingBottom = thisView.getPaddingBottom();
-        if (mPaddingTop == 0 || mPaddingBottom == 0) {
-            int paddingLeft = thisView.getPaddingLeft();
-            int paddingRight = thisView.getPaddingRight();
-            mPaddingTop = mPaddingTop == 0 ? density.dip2px(20) : mPaddingTop;
-            mPaddingBottom = mPaddingBottom == 0 ? density.dip2px(20) : mPaddingBottom;
-            thisView.setPadding(paddingLeft, mPaddingTop, paddingRight, mPaddingBottom);
-        }
+//
+//        mPaddingTop = thisView.getPaddingTop();
+//        mPaddingBottom = thisView.getPaddingBottom();
+//        if (mPaddingTop == 0 || mPaddingBottom == 0) {
+//            int paddingLeft = thisView.getPaddingLeft();
+//            int paddingRight = thisView.getPaddingRight();
+//            mPaddingTop = mPaddingTop == 0 ? density.dip2px(20) : mPaddingTop;
+//            mPaddingBottom = mPaddingBottom == 0 ? density.dip2px(20) : mPaddingBottom;
+//            thisView.setPadding(paddingLeft, mPaddingTop, paddingRight, mPaddingBottom);
+//        }
 
 //        if (thisView.getPaddingTop() == 0) {
 //            if (thisView.getPaddingBottom() == 0) {
@@ -140,6 +140,19 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         final View thisView = this;
+        if (mMinHeightOfContent == 0) {
+            mPaddingTop = thisView.getPaddingTop();
+            mPaddingBottom = thisView.getPaddingBottom();
+            if (mPaddingTop == 0 || mPaddingBottom == 0) {
+                int paddingLeft = thisView.getPaddingLeft();
+                int paddingRight = thisView.getPaddingRight();
+                mPaddingTop = mPaddingTop == 0 ? DensityUtil.dp2px(20) : mPaddingTop;
+                mPaddingBottom = mPaddingBottom == 0 ? DensityUtil.dp2px(20) : mPaddingBottom;
+                thisView.setPadding(paddingLeft, mPaddingTop, paddingRight, mPaddingBottom);
+            }
+            ViewGroup thisGroup = this;
+            thisGroup.setClipToPadding(false);
+        }
         if (MeasureSpec.getMode(heightMeasureSpec) == EXACTLY) {
             final int parentHeight = MeasureSpec.getSize(heightMeasureSpec);
             if (parentHeight < mMinHeightOfContent) {
