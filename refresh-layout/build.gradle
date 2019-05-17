@@ -35,15 +35,15 @@ dependencies {
 
     compileOnly 'androidx.annotation:annotation:1.0.2'
     compileOnly 'androidx.legacy:legacy-support-v4:1.0.0'
-    compileOnly 'androidx.recyclerview:recyclerview:1.1.0-alpha04'
-    compileOnly 'com.google.android.material:material:1.1.0-alpha05'
+    compileOnly 'androidx.recyclerview:recyclerview:1.1.0-alpha05'
+    compileOnly 'com.google.android.material:material:1.1.0-alpha06'
 }
 
 publish {
     userOrg = 'scwang90'
     groupId = 'com.scwang.smartrefresh'
     artifactId = 'SmartRefreshLayout'
-    publishVersion = '1.1.0-andx-8'
+    publishVersion = '1.1.0-andx-9'
     desc = 'An intelligent refresh layout'
     website = "https://github.com/scwang90/${rootProject.name}"
 }

@@ -57,10 +57,10 @@ dependencies {
     testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
 
 //    implementation project(':refresh-footer')
-//    implementation project(':refresh-header')
-//    implementation project(':refresh-layout')
-    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-6'
-    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-6'
+    implementation project(':refresh-header')
+    implementation project(':refresh-layout')
+//    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-6'
+//    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-6'
 
 //    //noinspection GradleDependency,GradleCompatible
 //    implementation ('com.android.support:support-v4:22.1.0') {
@@ -77,9 +77,9 @@ dependencies {
 //        exclude group: 'com.android.support'
 //    }
 
-    implementation 'com.google.android.material:material:1.1.0-alpha05'
+    implementation 'com.google.android.material:material:1.1.0-alpha06'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha4'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta1'
 
     implementation 'com.flyco.roundview:FlycoRoundView_Lib:1.1.4@aar'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.44'
