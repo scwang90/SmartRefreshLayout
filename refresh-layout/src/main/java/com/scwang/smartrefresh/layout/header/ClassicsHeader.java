@@ -238,8 +238,8 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
                     }
                 }
             }
-        } catch (Throwable e) {
-            e.printStackTrace();
+        } catch (Throwable ignored) {
+//            e.printStackTrace();
         }
 
         KEY_LAST_UPDATE_TIME += context.getClass().getName();
