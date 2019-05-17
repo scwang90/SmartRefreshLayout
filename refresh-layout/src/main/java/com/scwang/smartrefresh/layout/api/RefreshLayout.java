@@ -62,15 +62,16 @@ public interface RefreshLayout {
     RefreshLayout setHeaderInsetStart(float dp);
 
 //    /**
-//     * 设置 Header 起始偏移量
-//     * @param insetPx 像素
+//     * Set the Header's start offset（see srlHeaderInsetStart in the RepastPracticeActivity XML in demo-app for the practical application）.
+//     * 设置 Header 起始偏移量（使用方法参考 demo-app 中的 RepastPracticeActivity xml 中的 srlHeaderInsetStart）
+//     * @param px 像素
 //     * @return RefreshLayout
 //     */
-//    RefreshLayout setHeaderInsetStartPx(int insetPx);
+//    RefreshLayout setHeaderInsetStartPx(int px);
 
     /**
-     * Set the Header's start offset.
-     * 设置 Footer 起始偏移量（用户和 setHeaderInsetStart 一样）
+     * Set the Footer's start offset.
+     * 设置 Footer 起始偏移量（用处和 setHeaderInsetStart 一样）
      * @see RefreshLayout#setHeaderInsetStart(float)
      * @param dp Density-independent Pixels 虚拟像素（px需要调用px2dp转换）
      * @return RefreshLayout
@@ -78,11 +79,12 @@ public interface RefreshLayout {
     RefreshLayout setFooterInsetStart(float dp);
 
 //    /**
-//     * 设置 Footer 起始偏移量
-//     * @param insetPx 像素
+//     * Set the Footer's start offset.
+//     * 设置 Footer 起始偏移量（用处和 setFooterInsetStartPx 一样）
+//     * @param px 像素
 //     * @return RefreshLayout
 //     */
-//    RefreshLayout setFooterInsetStartPx(int insetPx);
+//    RefreshLayout setFooterInsetStartPx(int px);
 
     /**
      * Set the damping effect.
@@ -451,6 +453,7 @@ public interface RefreshLayout {
      * 完成刷新
      * @param delayed 开始延时
      * @param success 数据是否成功刷新 （会影响到上次更新时间的改变）
+     * @param noMoreData 是否有更多数据
      * @return RefreshLayout
      */
     RefreshLayout finishRefresh(int delayed, boolean success, Boolean noMoreData);

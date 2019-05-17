@@ -58,12 +58,8 @@ import com.scwang.smartrefresh.layout.listener.OnMultiPurposeListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnStateChangedListener;
-import com.scwang.smartrefresh.layout.util.DelayedRunnable;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 import com.scwang.smartrefresh.layout.util.ViscousFluidInterpolator;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static android.view.MotionEvent.obtain;
 import static android.view.View.MeasureSpec.AT_MOST;
@@ -183,9 +179,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     //</editor-fold>
 
     protected Paint mPaint;
-    protected Handler mHandler;
+//    protected Handler mHandler;
     protected RefreshKernel mKernel = new RefreshKernelImpl();
-    protected List<DelayedRunnable> mListDelayedRunnable;
+//    protected List<DelayedRunnable> mListDelayedRunnable;
 
     /**
      * 【主要状态】
@@ -256,7 +252,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.SmartRefreshLayout);
 
-//        mNestedChild.setNestedScrollingEnabled(ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnableNestedScrolling, mNestedChild.isNestedScrollingEnabled()));
         mDragRate = ta.getFloat(R.styleable.SmartRefreshLayout_srlDragRate, mDragRate);
         mHeaderMaxDragRate = ta.getFloat(R.styleable.SmartRefreshLayout_srlHeaderMaxDragRate, mHeaderMaxDragRate);
         mFooterMaxDragRate = ta.getFloat(R.styleable.SmartRefreshLayout_srlFooterMaxDragRate, mFooterMaxDragRate);
@@ -284,13 +279,14 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         mEnableFooterFollowWhenNoMoreData = ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnableFooterFollowWhenNoMoreData, mEnableFooterFollowWhenNoMoreData);
         mEnableClipHeaderWhenFixedBehind = ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnableClipHeaderWhenFixedBehind, mEnableClipHeaderWhenFixedBehind);
         mEnableClipFooterWhenFixedBehind = ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnableClipFooterWhenFixedBehind, mEnableClipFooterWhenFixedBehind);
-        mEnableNestedScrolling = ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnableNestedScrolling, mEnableNestedScrolling);
         mEnableOverScrollDrag = ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnableOverScrollDrag, mEnableOverScrollDrag);
-//        mEnableNestedScrollingOnly = ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnableNestedScrollingOnly, mEnableNestedScrollingOnly);
         mFixedHeaderViewId = ta.getResourceId(R.styleable.SmartRefreshLayout_srlFixedHeaderViewId, mFixedHeaderViewId);
         mFixedFooterViewId = ta.getResourceId(R.styleable.SmartRefreshLayout_srlFixedFooterViewId, mFixedFooterViewId);
         mHeaderTranslationViewId = ta.getResourceId(R.styleable.SmartRefreshLayout_srlHeaderTranslationViewId, mHeaderTranslationViewId);
         mFooterTranslationViewId = ta.getResourceId(R.styleable.SmartRefreshLayout_srlFooterTranslationViewId, mFooterTranslationViewId);
+        mEnableNestedScrolling = ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnableNestedScrolling, mEnableNestedScrolling);
+//        mEnableNestedScrollingOnly = ta.getBoolean(R.styleable.SmartRefreshLayout_srlEnableNestedScrollingOnly, mEnableNestedScrollingOnly);
+        mNestedChild.setNestedScrollingEnabled(mEnableNestedScrolling);
 
         mManualLoadMore = mManualLoadMore || ta.hasValue(R.styleable.SmartRefreshLayout_srlEnableLoadMore);
         mManualHeaderTranslationContent = mManualHeaderTranslationContent || ta.hasValue(R.styleable.SmartRefreshLayout_srlEnableHeaderTranslationContent);
@@ -398,17 +394,17 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         final View thisView = this;
         if (!thisView.isInEditMode()) {
 
-            if (mHandler == null) {
-                mHandler = new Handler();
-            }
+//            if (mHandler == null) {
+//                mHandler = new Handler();
+//            }
 
-            if (mListDelayedRunnable != null) {
-                for (DelayedRunnable runnable : mListDelayedRunnable) {
-                    mHandler.postDelayed(runnable, runnable.delayMillis);
-                }
-                mListDelayedRunnable.clear();
-                mListDelayedRunnable = null;
-            }
+//            if (mListDelayedRunnable != null) {
+//                for (DelayedRunnable runnable : mListDelayedRunnable) {
+//                    mHandler.postDelayed(runnable, runnable.delayMillis);
+//                }
+//                mListDelayedRunnable.clear();
+//                mListDelayedRunnable = null;
+//            }
 
             if (mRefreshHeader == null) {
                 if (sHeaderCreator != null) {
@@ -749,14 +745,18 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         super.onDetachedFromWindow();
         mKernel.moveSpinner(0, true);
         notifyStateChanged(RefreshState.None);
-        if (mHandler != null) {
-            mHandler.removeCallbacksAndMessages(null);
-            mHandler = null;
+        final Handler handler = getHandler();
+        if (handler != null) {
+            handler.removeCallbacksAndMessages(null);
         }
-        if (mListDelayedRunnable != null) {
-            mListDelayedRunnable.clear();
-            mListDelayedRunnable = null;
-        }
+//        if (mHandler != null) {
+//            mHandler.removeCallbacksAndMessages(null);
+//            mHandler = null;
+//        }
+//        if (mListDelayedRunnable != null) {
+//            mListDelayedRunnable.clear();
+//            mListDelayedRunnable = null;
+//        }
         mManualLoadMore = true;
 //        mManualNestedScrolling = true;
         animationRunnable = null;
@@ -1252,6 +1252,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
     /**
      * 设置状态为 Loading 正在加载
+     * @param notify 是否触发通知事件
      */
     protected void setStateLoading(final boolean notify) {
         AnimatorListenerAdapter listener = new AnimatorListenerAdapter() {
@@ -1282,6 +1283,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
     /**
      * 设置状态为 Refreshing 正在刷新
+     * @param notify 是否触发通知事件
      */
     protected void setStateRefreshing(final boolean notify) {
         AnimatorListenerAdapter listener = new AnimatorListenerAdapter() {
@@ -1877,7 +1879,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     public void setNestedScrollingEnabled(boolean enabled) {
         mEnableNestedScrolling = enabled;
 //        mManualNestedScrolling = true;
-//        mNestedChild.setNestedScrollingEnabled(enabled);
+        mNestedChild.setNestedScrollingEnabled(enabled);
     }
 
     @Override
@@ -2031,7 +2033,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     @Override
     public RefreshLayout setHeaderMaxDragRate(float rate) {
         this.mHeaderMaxDragRate = rate;
-        if (mRefreshHeader != null && mHandler != null) {
+        if (mRefreshHeader != null && getHandler() != null) {
             mRefreshHeader.onInitialized(mKernel, mHeaderHeight,  (int) (mHeaderMaxDragRate * mHeaderHeight));
         } else {
             mHeaderHeightStatus = mHeaderHeightStatus.unNotify();
@@ -2049,7 +2051,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     @Override
     public RefreshLayout setFooterMaxDragRate(float rate) {
         this.mFooterMaxDragRate = rate;
-        if (mRefreshFooter != null && mHandler != null) {
+        if (mRefreshFooter != null && getHandler() != null) {
             mRefreshFooter.onInitialized(mKernel, mFooterHeight, (int)(mFooterHeight * mFooterMaxDragRate));
         } else {
             mFooterHeightStatus = mFooterHeightStatus.unNotify();
@@ -2466,7 +2468,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             }
         }
         mRefreshContent = new RefreshContentWrapper(content);
-        if (mHandler != null) {
+        if (getHandler() != null) {
             View fixedHeaderView = mFixedHeaderViewId > 0 ? thisView.findViewById(mFixedHeaderViewId) : null;
             View fixedFooterView = mFixedFooterViewId > 0 ? thisView.findViewById(mFixedFooterViewId) : null;
 
@@ -2966,7 +2968,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      */
     @Override
     public boolean autoRefresh() {
-        return autoRefresh(mHandler == null ? 400 : 0, mReboundDuration, 1f * ((mHeaderMaxDragRate/2 + 0.5f) * mHeaderHeight) / (mHeaderHeight == 0 ? 1 : mHeaderHeight), false);
+        return autoRefresh(getHandler() == null ? 400 : 0, mReboundDuration, 1f * ((mHeaderMaxDragRate/2 + 0.5f) * mHeaderHeight) / (mHeaderHeight == 0 ? 1 : mHeaderHeight), false);
     }
 
     /**
@@ -2991,7 +2993,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      */
     @Override
     public boolean autoRefreshAnimationOnly() {
-        return autoRefresh(mHandler == null ? 400 : 0, mReboundDuration, 1f * ((mHeaderMaxDragRate/2 + 0.5f) * mHeaderHeight) / (mHeaderHeight == 0 ? 1 : mHeaderHeight), true);
+        return autoRefresh(getHandler() == null ? 400 : 0, mReboundDuration, 1f * ((mHeaderMaxDragRate/2 + 0.5f) * mHeaderHeight) / (mHeaderHeight == 0 ? 1 : mHeaderHeight), true);
     }
 
     /**
@@ -3592,37 +3594,37 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
     //<editor-fold desc="内存泄漏 postDelayed优化">
 
-    /**
-     * 重写 post 和 postDelayed
-     * 自己用 Handler 和 DelayedRunnable 实现 防止内存泄漏
-     */
-    @Override
-    public boolean post(@NonNull Runnable action) {
-        if (mHandler == null) {
-            mListDelayedRunnable = mListDelayedRunnable == null ? new ArrayList<DelayedRunnable>() : mListDelayedRunnable;
-            mListDelayedRunnable.add(new DelayedRunnable(action,0));
-            return false;
-        }
-        return mHandler.post(new DelayedRunnable(action,0));
-    }
+//    /**
+//     * 重写 post 和 postDelayed
+//     * 自己用 Handler 和 DelayedRunnable 实现 防止内存泄漏
+//     */
+//    @Override
+//    public boolean post(@NonNull Runnable action) {
+//        if (mHandler == null) {
+//            mListDelayedRunnable = mListDelayedRunnable == null ? new ArrayList<DelayedRunnable>() : mListDelayedRunnable;
+//            mListDelayedRunnable.add(new DelayedRunnable(action,0));
+//            return false;
+//        }
+//        return mHandler.post(new DelayedRunnable(action,0));
+//    }
 
-    /**
-     * 重写 post 和 postDelayed
-     * 自己用 Handler 和 DelayedRunnable 实现 防止内存泄漏
-     */
-    @Override
-    public boolean postDelayed(@NonNull Runnable action, long delayMillis) {
-        if (delayMillis == 0) {
-            new DelayedRunnable(action,0).run();
-            return true;
-        }
-        if (mHandler == null) {
-            mListDelayedRunnable = mListDelayedRunnable == null ? new ArrayList<DelayedRunnable>() : mListDelayedRunnable;
-            mListDelayedRunnable.add(new DelayedRunnable(action, delayMillis));
-            return false;
-        }
-        return mHandler.postDelayed(new DelayedRunnable(action, 0), delayMillis);
-    }
+//    /**
+//     * 重写 post 和 postDelayed
+//     * 自己用 Handler 和 DelayedRunnable 实现 防止内存泄漏
+//     */
+//    @Override
+//    public boolean postDelayed(@NonNull Runnable action, long delayMillis) {
+//        if (delayMillis == 0) {
+//            new DelayedRunnable(action,0).run();
+//            return true;
+//        }
+//        if (mHandler == null) {
+//            mListDelayedRunnable = mListDelayedRunnable == null ? new ArrayList<DelayedRunnable>() : mListDelayedRunnable;
+//            mListDelayedRunnable.add(new DelayedRunnable(action, delayMillis));
+//            return false;
+//        }
+//        return mHandler.postDelayed(new DelayedRunnable(action, 0), delayMillis);
+//    }
 
     //</editor-fold>
 }
