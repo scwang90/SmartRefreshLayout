@@ -522,7 +522,6 @@ public interface RefreshLayout {
      *      use {@link RefreshLayout#finishRefreshWithNoMoreData()}
      *      use {@link RefreshLayout#finishLoadMoreWithNoMoreData()}
      */
-    @Deprecated
     RefreshLayout setNoMoreData(boolean noMoreData);
 
     /**

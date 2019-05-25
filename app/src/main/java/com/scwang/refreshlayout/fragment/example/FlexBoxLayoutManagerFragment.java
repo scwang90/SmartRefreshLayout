@@ -27,7 +27,7 @@ import java.util.Random;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FlexboxLayoutManagerFragment extends Fragment {
+public class FlexBoxLayoutManagerFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

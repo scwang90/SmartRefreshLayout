@@ -46,6 +46,7 @@
     <string name="title_activity_example_custom">自定义Header</string>
     <string name="title_activity_example_snap_helper">SnapHelper</string>
 
+    <string name="fragment_example_no_more_data">没有更多数据</string>
     <string name="fragment_example_horizontal">水平滚动模式</string>
     <string name="fragment_example_pure_scroll">纯滚动模式</string>
     <string name="fragment_example_pure_scroll_header">纯滚动模式-单独指定Header</string>
@@ -57,11 +58,12 @@
     <string name="fragment_example_viewpager">ViewPager</string>
     <string name="fragment_example_three_level">三级刷新</string>
     <string name="fragment_example_bottom_sheet">Bottom Sheet 对话框</string>
-    <string name="fragment_example_flexbox_layout">Flexbox Layout 管理器</string>
+    <string name="fragment_example_flex_box_layout">Flexbox Layout 管理器</string>
 
     <string name="fragment_practice_instant">即时通讯</string>
 
     <string name="index_example_basic">基本的使用</string>
+    <string name="index_example_no_more_data">没有更多数据的使用</string>
     <string name="index_example_style">使用指定的Header和Footer</string>
     <string name="index_example_empty">整合空页面</string>
     <string name="index_example_layout">嵌套Layout作为内容</string>
@@ -167,4 +169,8 @@
         //设置 Footer 为 三球动画\n
         refreshLayout.setRefreshFooter(new BallPulseFooter(this));\n\n
     </string>
+
+    <string name="instant_message_input_hint">输入消息</string>
+    <string name="instant_message_send">发送</string>
+
 </resources>

@@ -4,12 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.scwang.refreshlayout.fragment.example.FlexboxLayoutManagerFragment">
+    tools:context="com.scwang.refreshlayout.fragment.example.FlexBoxLayoutManagerFragment">
 
     <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"
         app:navigationIcon="?attr/homeAsUpIndicator"
-        app:title="@string/fragment_example_flexbox_layout"/>
+        app:title="@string/fragment_example_flex_box_layout"/>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
