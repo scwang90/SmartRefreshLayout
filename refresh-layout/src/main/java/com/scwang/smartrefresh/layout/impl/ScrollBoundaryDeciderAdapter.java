@@ -4,7 +4,7 @@ import android.graphics.PointF;
 import android.view.View;
 
 import com.scwang.smartrefresh.layout.api.ScrollBoundaryDecider;
-import com.scwang.smartrefresh.layout.util.ScrollBoundaryUtil;
+import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 /**
  * 滚动边界
@@ -40,7 +40,7 @@ public class ScrollBoundaryDeciderAdapter implements ScrollBoundaryDecider {
             return boundary.canRefresh(content);
         }
         //mActionEvent == null 时 canRefresh 不会动态递归搜索
-        return ScrollBoundaryUtil.canRefresh(content, mActionEvent);
+        return SmartUtil.canRefresh(content, mActionEvent);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class ScrollBoundaryDeciderAdapter implements ScrollBoundaryDecider {
 //            return !ScrollBoundaryUtil.canScrollDown(content, mActionEvent);
 //        }
         //mActionEvent == null 时 canLoadMore 不会动态递归搜索
-        return ScrollBoundaryUtil.canLoadMore(content, mActionEvent, mEnableLoadMoreWhenContentNotFull);
+        return SmartUtil.canLoadMore(content, mActionEvent, mEnableLoadMoreWhenContentNotFull);
     }
     //</editor-fold>
 }

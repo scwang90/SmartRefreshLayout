@@ -21,7 +21,7 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.internal.InternalAbstract;
-import com.scwang.smartrefresh.layout.util.DensityUtil;
+import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 /**
  * Phoenix
@@ -120,10 +120,9 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
         super(context, attrs, defStyleAttr);
 
         mMatrix = new Matrix();
-        DensityUtil density = new DensityUtil();
-        mSunSize = density.dip2px(40);
+        mSunSize = SmartUtil.dp2px(40);
         final View thisView = this;
-        thisView.setMinimumHeight(density.dip2px(100));
+        thisView.setMinimumHeight(SmartUtil.dp2px(100));
 
         mSpinnerStyle = SpinnerStyle.Scale;
 

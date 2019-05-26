@@ -39,6 +39,11 @@ android {
     lintOptions {
         abortOnError false
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 
@@ -59,8 +64,8 @@ dependencies {
 //    implementation project(':refresh-footer')
 //    implementation project(':refresh-header')
 //    implementation project(':refresh-layout')
-    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-26'
-    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-26'
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-27'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-27'
 
 //    //noinspection GradleDependency,GradleCompatible
 //    implementation ('com.android.support:support-v4:22.1.0') {

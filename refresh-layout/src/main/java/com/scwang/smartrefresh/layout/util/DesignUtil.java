@@ -21,7 +21,8 @@ public class DesignUtil {
                 kernel.getRefreshLayout().setEnableNestedScroll(false);
                 wrapperCoordinatorLayout(((ViewGroup) content)/*, kernel.getRefreshLayout()*/,listener);
             }
-        } catch (Throwable ignored) {
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
     }
 
