@@ -19,7 +19,7 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.internal.InternalAbstract;
-import com.scwang.smartrefresh.layout.util.DensityUtil;
+import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 /**
  * CircleRefresh
@@ -69,7 +69,7 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
 
         mSpinnerStyle = SpinnerStyle.Scale;
         final View thisView = this;
-        thisView.setMinimumHeight(DensityUtil.dp2px(100));
+        thisView.setMinimumHeight(SmartUtil.dp2px(100));
         mBackPaint = new Paint();
         mBackPaint.setColor(0xff11bbff);
         mBackPaint.setAntiAlias(true);
@@ -80,7 +80,7 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
         mOuterPaint.setAntiAlias(true);
         mOuterPaint.setColor(0xffffffff);
         mOuterPaint.setStyle(Paint.Style.STROKE);
-        mOuterPaint.setStrokeWidth(DensityUtil.dp2px(2f));
+        mOuterPaint.setStrokeWidth(SmartUtil.dp2px(2f));
         mPath = new Path();
     }
 

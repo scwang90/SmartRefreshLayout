@@ -27,10 +27,9 @@ import java.util.List;
 import java.util.Queue;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static com.scwang.smartrefresh.layout.util.ScrollBoundaryUtil.canScrollDown;
-import static com.scwang.smartrefresh.layout.util.ScrollBoundaryUtil.canScrollUp;
-import static com.scwang.smartrefresh.layout.util.ScrollBoundaryUtil.isTransformedTouchPointInView;
+import static com.scwang.smartrefresh.layout.util.SmartUtil.canScrollVertically;
 import static com.scwang.smartrefresh.layout.util.SmartUtil.isContentView;
+import static com.scwang.smartrefresh.layout.util.SmartUtil.isTransformedTouchPointInView;
 import static com.scwang.smartrefresh.layout.util.SmartUtil.measureViewHeight;
 import static com.scwang.smartrefresh.layout.util.SmartUtil.scrollListBy;
 
@@ -275,7 +274,7 @@ public class RefreshContentWrapper implements RefreshContent , CoordinatorLayout
     @Override
     public AnimatorUpdateListener scrollContentWhenFinished(final int spinner) {
         if (mScrollableView != null && spinner != 0) {
-            if ((spinner < 0 && canScrollDown(mScrollableView)) || (spinner > 0 && canScrollUp(mScrollableView))) {
+            if ((spinner < 0 && canScrollVertically(mScrollableView, 1)) || (spinner > 0 && canScrollVertically(mScrollableView, -1))) {
                 mLastSpinner = spinner;
                 return this;
             }
@@ -292,8 +291,9 @@ public class RefreshContentWrapper implements RefreshContent , CoordinatorLayout
             } else {
                 mScrollableView.scrollBy(0, value - mLastSpinner);
             }
-        } catch (Throwable ignored) {
+        } catch (Throwable e) {
             //根据用户反馈，此处可能会有BUG
+            e.printStackTrace();
         }
         mLastSpinner = value;
     }

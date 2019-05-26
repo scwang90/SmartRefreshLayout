@@ -26,7 +26,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.internal.InternalAbstract;
-import com.scwang.smartrefresh.layout.util.DensityUtil;
+import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 /**
  * DropBoxRefresh
@@ -101,7 +101,7 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
         mAccentColor = 0xff6ea9ff;
         final View thisView = this;
         thisView.setBackgroundColor(0xff283645);
-        thisView.setMinimumHeight(DensityUtil.dp2px(150));
+        thisView.setMinimumHeight(SmartUtil.dp2px(150));
 
         mSpinnerStyle = SpinnerStyle.Scale;
 

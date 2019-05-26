@@ -27,7 +27,7 @@ import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 import com.scwang.smartrefresh.layout.internal.ProgressDrawable;
-import com.scwang.smartrefresh.layout.util.DensityUtil;
+import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 import static android.view.View.MeasureSpec.AT_MOST;
 import static android.view.View.MeasureSpec.EXACTLY;
@@ -65,7 +65,6 @@ public class WaterDropHeader extends InternalAbstract implements RefreshHeader {
         super(context, attrs, defStyleAttr);
 
         final ViewGroup thisGroup = this;
-        final DensityUtil density = new DensityUtil();
 
         mSpinnerStyle = SpinnerStyle.Scale;
         mWaterDropView = new WaterDropView(context);
@@ -75,7 +74,7 @@ public class WaterDropHeader extends InternalAbstract implements RefreshHeader {
         mProgressDrawable = new ProgressDrawable();
         final Drawable progressDrawable = mProgressDrawable;
         progressDrawable.setCallback(this);
-        progressDrawable.setBounds(0, 0, density.dip2px(20), density.dip2px(20));
+        progressDrawable.setBounds(0, 0, SmartUtil.dp2px(20), SmartUtil.dp2px(20));
 
         mImageView = new ImageView(context);
         mProgress = new MaterialProgressDrawable(mImageView);
@@ -83,7 +82,7 @@ public class WaterDropHeader extends InternalAbstract implements RefreshHeader {
         mProgress.setAlpha(255);
         mProgress.setColorSchemeColors(0xffffffff,0xff0099cc,0xffff4444,0xff669900,0xffaa66cc,0xffff8800);
         mImageView.setImageDrawable(mProgress);
-        thisGroup.addView(mImageView, density.dip2px(30), density.dip2px(30));
+        thisGroup.addView(mImageView, SmartUtil.dp2px(30), SmartUtil.dp2px(30));
     }
 
     @Override

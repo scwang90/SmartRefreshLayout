@@ -7,7 +7,6 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
-import android.view.animation.LinearInterpolator;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -25,7 +24,7 @@ import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.internal.ArrowDrawable;
 import com.scwang.smartrefresh.layout.internal.InternalClassics;
 import com.scwang.smartrefresh.layout.internal.ProgressDrawable;
-import com.scwang.smartrefresh.layout.util.DensityUtil;
+import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -93,7 +92,6 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
         final View updateView = mLastUpdateText = thisView.findViewById(R.id.srl_classics_update);
         final View progressView = mProgressView = thisView.findViewById(R.id.srl_classics_progress);
 //        final ViewGroup centerLayout = mCenterLayout;
-        final DensityUtil density = new DensityUtil();
 
         mTitleText = thisView.findViewById(R.id.srl_classics_title);
 
@@ -102,8 +100,8 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
         LayoutParams lpArrow = (LayoutParams) arrowView.getLayoutParams();
         LayoutParams lpProgress = (LayoutParams) progressView.getLayoutParams();
         LinearLayout.LayoutParams lpUpdateText = new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
-        lpUpdateText.topMargin = ta.getDimensionPixelSize(R.styleable.ClassicsHeader_srlTextTimeMarginTop, density.dip2px(0));
-        lpProgress.rightMargin = ta.getDimensionPixelSize(R.styleable.ClassicsFooter_srlDrawableMarginRight, density.dip2px(20));
+        lpUpdateText.topMargin = ta.getDimensionPixelSize(R.styleable.ClassicsHeader_srlTextTimeMarginTop, SmartUtil.dp2px(0));
+        lpProgress.rightMargin = ta.getDimensionPixelSize(R.styleable.ClassicsFooter_srlDrawableMarginRight, SmartUtil.dp2px(20));
         lpArrow.rightMargin = lpProgress.rightMargin;
 
         lpArrow.width = ta.getLayoutDimension(R.styleable.ClassicsHeader_srlDrawableArrowSize, lpArrow.width);
@@ -118,7 +116,7 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
 
         mFinishDuration = ta.getInt(R.styleable.ClassicsHeader_srlFinishDuration, mFinishDuration);
         mEnableLastTime = ta.getBoolean(R.styleable.ClassicsHeader_srlEnableLastTime, mEnableLastTime);
-        mSpinnerStyle = SpinnerStyle.values()[ta.getInt(R.styleable.ClassicsHeader_srlClassicsSpinnerStyle,mSpinnerStyle.ordinal())];
+        mSpinnerStyle = SpinnerStyle.values[ta.getInt(R.styleable.ClassicsHeader_srlClassicsSpinnerStyle,mSpinnerStyle.ordinal)];
 
         if (ta.hasValue(R.styleable.ClassicsHeader_srlDrawableArrow)) {
             mArrowView.setImageDrawable(ta.getDrawable(R.styleable.ClassicsHeader_srlDrawableArrow));
@@ -137,13 +135,13 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
         }
 
         if (ta.hasValue(R.styleable.ClassicsHeader_srlTextSizeTitle)) {
-            mTitleText.setTextSize(TypedValue.COMPLEX_UNIT_PX, ta.getDimensionPixelSize(R.styleable.ClassicsHeader_srlTextSizeTitle, DensityUtil.dp2px(16)));
+            mTitleText.setTextSize(TypedValue.COMPLEX_UNIT_PX, ta.getDimensionPixelSize(R.styleable.ClassicsHeader_srlTextSizeTitle, SmartUtil.dp2px(16)));
 //        } else {
 //            mTitleText.setTextSize(16);
         }
 
         if (ta.hasValue(R.styleable.ClassicsHeader_srlTextSizeTime)) {
-            mLastUpdateText.setTextSize(TypedValue.COMPLEX_UNIT_PX, ta.getDimensionPixelSize(R.styleable.ClassicsHeader_srlTextSizeTime, DensityUtil.dp2px(12)));
+            mLastUpdateText.setTextSize(TypedValue.COMPLEX_UNIT_PX, ta.getDimensionPixelSize(R.styleable.ClassicsHeader_srlTextSizeTime, SmartUtil.dp2px(12)));
 //        } else {
 //            mLastUpdateText.setTextSize(12);
         }
@@ -216,7 +214,7 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
         ta.recycle();
 
 //        updateView.setId(ID_TEXT_UPDATE);
-        progressView.animate().setInterpolator(new LinearInterpolator());
+        progressView.animate().setInterpolator(null);
         updateView.setVisibility(mEnableLastTime ? VISIBLE : GONE);
 //        centerLayout.addView(updateView, lpUpdateText);
         mTitleText.setText(thisView.isInEditMode() ? mTextRefreshing : mTextPulling);
@@ -239,8 +237,8 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
                     }
                 }
             }
-        } catch (Throwable ignored) {
-//            e.printStackTrace();
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
 
         KEY_LAST_UPDATE_TIME += context.getClass().getName();
@@ -365,7 +363,7 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
     public ClassicsHeader setTextTimeMarginTop(float dp) {
         final View updateView = mLastUpdateText;
         MarginLayoutParams lp = (MarginLayoutParams)updateView.getLayoutParams();
-        lp.topMargin = DensityUtil.dp2px(dp);
+        lp.topMargin = SmartUtil.dp2px(dp);
         updateView.setLayoutParams(lp);
         return this;
     }

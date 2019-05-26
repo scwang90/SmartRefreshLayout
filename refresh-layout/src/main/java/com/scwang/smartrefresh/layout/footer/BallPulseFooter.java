@@ -21,7 +21,8 @@ import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.internal.InternalAbstract;
-import com.scwang.smartrefresh.layout.util.DensityUtil;
+import com.scwang.smartrefresh.layout.util.SmartUtil;
+
 
 /**
  * 球脉冲底部加载组件
@@ -66,7 +67,7 @@ public class BallPulseFooter extends InternalAbstract implements RefreshFooter {
         super(context, attrs, defStyleAttr);
 
         final View thisView = this;
-        thisView.setMinimumHeight(DensityUtil.dp2px(60));
+        thisView.setMinimumHeight(SmartUtil.dp2px(60));
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.BallPulseFooter);
 
@@ -76,7 +77,7 @@ public class BallPulseFooter extends InternalAbstract implements RefreshFooter {
         mPaint.setAntiAlias(true);
 
         mSpinnerStyle = SpinnerStyle.Translate;
-        mSpinnerStyle = SpinnerStyle.values()[ta.getInt(R.styleable.BallPulseFooter_srlClassicsSpinnerStyle, mSpinnerStyle.ordinal())];
+        mSpinnerStyle = SpinnerStyle.values[ta.getInt(R.styleable.BallPulseFooter_srlClassicsSpinnerStyle, mSpinnerStyle.ordinal)];
 
         if (ta.hasValue(R.styleable.BallPulseFooter_srlNormalColor)) {
             setNormalColor(ta.getColor(R.styleable.BallPulseFooter_srlNormalColor, 0));
@@ -87,7 +88,7 @@ public class BallPulseFooter extends InternalAbstract implements RefreshFooter {
 
         ta.recycle();
 
-        mCircleSpacing = DensityUtil.dp2px(4);
+        mCircleSpacing = SmartUtil.dp2px(4);
 
 //        mAnimators = new ArrayList<>();
 //        final int[] delays = new int[]{120, 240, 360};
@@ -100,7 +101,7 @@ public class BallPulseFooter extends InternalAbstract implements RefreshFooter {
 //            animator.setRepeatCount(ValueAnimator.INFINITE);
 //            animator.setTarget(i);
 //            animator.setStartDelay(delays[i]);
-//            animator.setInterpolator(new LinearInterpolator());
+//            animator.setInterpolator(null);
 //
 //            mUpdateListeners.put(animator, new ValueAnimator.AnimatorUpdateListener() {
 //                @Override
@@ -208,10 +209,10 @@ public class BallPulseFooter extends InternalAbstract implements RefreshFooter {
         return 0;
     }
 
-    @Override
-    public boolean setNoMoreData(boolean noMoreData) {
-        return false;
-    }
+//    @Override
+//    public boolean setNoMoreData(boolean noMoreData) {
+//        return false;
+//    }
 
     @Override@Deprecated
     public void setPrimaryColors(@ColorInt int... colors) {

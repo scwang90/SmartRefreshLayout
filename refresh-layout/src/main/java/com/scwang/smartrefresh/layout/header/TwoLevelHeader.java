@@ -221,15 +221,12 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
         final RefreshInternal refreshHeader = mRefreshHeader;
         if (mSpinner != spinner && refreshHeader != null) {
             mSpinner = spinner;
-            switch (refreshHeader.getSpinnerStyle()) {
-                case Translate:
-                    refreshHeader.getView().setTranslationY(spinner);
-                    break;
-                case Scale:{
-                    View view = refreshHeader.getView();
-                    view.layout(view.getLeft(), view.getTop(), view.getRight(), view.getTop() + Math.max(0, spinner));
-                    break;
-                }
+            SpinnerStyle style = refreshHeader.getSpinnerStyle();
+            if (style == SpinnerStyle.Translate) {
+                refreshHeader.getView().setTranslationY(spinner);
+            } else if (style == SpinnerStyle.Scale) {
+                View view = refreshHeader.getView();
+                view.layout(view.getLeft(), view.getTop(), view.getRight(), view.getTop() + Math.max(0, spinner));
             }
         }
     }

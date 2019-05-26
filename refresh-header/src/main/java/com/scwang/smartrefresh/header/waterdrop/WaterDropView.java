@@ -11,7 +11,7 @@ import android.view.animation.DecelerateInterpolator;
 
 import androidx.annotation.ColorInt;
 
-import com.scwang.smartrefresh.layout.util.DensityUtil;
+import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 
 /**
@@ -42,7 +42,7 @@ public class WaterDropView extends View {
         mPaint.setColor(Color.GRAY);
         mPaint.setAntiAlias(true);
         mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-        mPaint.setStrokeWidth(STROKE_WIDTH = DensityUtil.dp2px(1f));
+        mPaint.setStrokeWidth(STROKE_WIDTH = SmartUtil.dp2px(1f));
         mPaint.setShadowLayer(STROKE_WIDTH, STROKE_WIDTH/2f, STROKE_WIDTH, 0x99000000);
         thisView.setLayerType(LAYER_TYPE_SOFTWARE, null);
 
@@ -50,7 +50,7 @@ public class WaterDropView extends View {
         thisView.setPadding(padding, padding, padding, padding);
 
         mPaint.setColor(Color.GRAY);
-        mMaxCircleRadius = DensityUtil.dp2px(20);
+        mMaxCircleRadius = SmartUtil.dp2px(20);
         mMinCircleRadius = mMaxCircleRadius / 5;
 
         topCircle.radius = (mMaxCircleRadius);
@@ -112,7 +112,7 @@ public class WaterDropView extends View {
     private void makeBezierPath() {
         mPath.reset();
         mPath.addCircle(topCircle.x, topCircle.y, topCircle.radius, Path.Direction.CCW);
-        if (bottomCircle.y > topCircle.y + DensityUtil.dp2px(1)) {
+        if (bottomCircle.y > topCircle.y + SmartUtil.dp2px(1)) {
             mPath.addCircle(bottomCircle.x, bottomCircle.y, bottomCircle.radius, Path.Direction.CCW);
             //获取两圆的两个切线形成的四个切点
             double angle = getAngle();
@@ -217,7 +217,7 @@ public class WaterDropView extends View {
         } else {
             float limit = mMaxCircleRadius - mMinCircleRadius;
             float x = Math.max(0, height - space);
-            float y = (float) (limit * (1 - Math.pow(100, -x / DensityUtil.dp2px(200))));
+            float y = (float) (limit * (1 - Math.pow(100, -x / SmartUtil.dp2px(200))));
             topCircle.radius = mMaxCircleRadius - y / 4;
             bottomCircle.radius = mMaxCircleRadius - y;
             int validHeight = height - paddingTop - paddingBottom;

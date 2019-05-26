@@ -5,7 +5,6 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
-import android.view.animation.LinearInterpolator;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
@@ -18,14 +17,13 @@ import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.internal.ArrowDrawable;
 import com.scwang.smartrefresh.layout.internal.InternalClassics;
 import com.scwang.smartrefresh.layout.internal.ProgressDrawable;
-import com.scwang.smartrefresh.layout.util.DensityUtil;
+import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 /**
  * 经典上拉底部组件
  * Created by SCWANG on 2017/5/28.
  */
-
-@SuppressWarnings({"unused", "UnusedReturnValue", "deprecation"})
+@SuppressWarnings({"unused", "UnusedReturnValue"})
 public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements RefreshFooter {
 
     public static String REFRESH_FOOTER_PULLING = null;//"上拉加载更多";
@@ -64,7 +62,6 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
         final View thisView = this;
         final View arrowView = mArrowView = thisView.findViewById(R.id.srl_classics_arrow);
         final View progressView = mProgressView = thisView.findViewById(R.id.srl_classics_progress);
-        final DensityUtil density = new DensityUtil();
 
         mTitleText = thisView.findViewById(R.id.srl_classics_title);
 
@@ -72,7 +69,7 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
 
         LayoutParams lpArrow = (LayoutParams) arrowView.getLayoutParams();
         LayoutParams lpProgress = (LayoutParams) progressView.getLayoutParams();
-        lpProgress.rightMargin = ta.getDimensionPixelSize(R.styleable.ClassicsFooter_srlDrawableMarginRight, density.dip2px(20));
+        lpProgress.rightMargin = ta.getDimensionPixelSize(R.styleable.ClassicsFooter_srlDrawableMarginRight, SmartUtil.dp2px(20));
         lpArrow.rightMargin = lpProgress.rightMargin;
 
         lpArrow.width = ta.getLayoutDimension(R.styleable.ClassicsFooter_srlDrawableArrowSize, lpArrow.width);
@@ -86,7 +83,7 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
         lpProgress.height = ta.getLayoutDimension(R.styleable.ClassicsFooter_srlDrawableSize, lpProgress.height);
 
         mFinishDuration = ta.getInt(R.styleable.ClassicsFooter_srlFinishDuration, mFinishDuration);
-        mSpinnerStyle = SpinnerStyle.values()[ta.getInt(R.styleable.ClassicsFooter_srlClassicsSpinnerStyle, mSpinnerStyle.ordinal())];
+        mSpinnerStyle = SpinnerStyle.values[ta.getInt(R.styleable.ClassicsFooter_srlClassicsSpinnerStyle, mSpinnerStyle.ordinal)];
 
         if (ta.hasValue(R.styleable.ClassicsFooter_srlDrawableArrow)) {
             mArrowView.setImageDrawable(ta.getDrawable(R.styleable.ClassicsFooter_srlDrawableArrow));
@@ -105,7 +102,7 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
         }
 
         if (ta.hasValue(R.styleable.ClassicsFooter_srlTextSizeTitle)) {
-            mTitleText.setTextSize(TypedValue.COMPLEX_UNIT_PX, ta.getDimensionPixelSize(R.styleable.ClassicsFooter_srlTextSizeTitle, DensityUtil.dp2px(16)));
+            mTitleText.setTextSize(TypedValue.COMPLEX_UNIT_PX, ta.getDimensionPixelSize(R.styleable.ClassicsFooter_srlTextSizeTitle, SmartUtil.dp2px(16)));
 //        } else {
 //            mTitleText.setTextSize(16);
         }
@@ -170,7 +167,7 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
         ta.recycle();
 
 //        mTitleText.setTextColor(0xff666666);
-        progressView.animate().setInterpolator(new LinearInterpolator());
+        progressView.animate().setInterpolator(null);
         mTitleText.setText(thisView.isInEditMode() ? mTextLoading : mTextPulling);
 
         if (thisView.isInEditMode()) {

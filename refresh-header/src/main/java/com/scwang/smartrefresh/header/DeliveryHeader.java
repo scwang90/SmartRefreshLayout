@@ -18,7 +18,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.internal.InternalAbstract;
-import com.scwang.smartrefresh.layout.util.DensityUtil;
+import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 /**
  * Refresh your delivery!
@@ -102,7 +102,7 @@ public class DeliveryHeader extends InternalAbstract implements RefreshHeader {
         mSpinnerStyle = SpinnerStyle.Scale;
 
         final View thisView = this;
-        thisView.setMinimumHeight(DensityUtil.dp2px(150));
+        thisView.setMinimumHeight(SmartUtil.dp2px(150));
 
         PathsDrawable cloudDrawable = new PathsDrawable();
         if (!cloudDrawable.parserPaths(cloudPaths)) {
@@ -110,21 +110,21 @@ public class DeliveryHeader extends InternalAbstract implements RefreshHeader {
         }
 //        cloudDrawable.printOriginal("cloudDrawable");
         cloudDrawable.parserColors(cloudColors);
-        cloudDrawable.setGeometricHeight(DensityUtil.dp2px(20));
+        cloudDrawable.setGeometricHeight(SmartUtil.dp2px(20));
         PathsDrawable umbrellaDrawable = new PathsDrawable();
         if (!umbrellaDrawable.parserPaths(umbrellaPaths)) {
             umbrellaDrawable.declareOriginal(2, 4, 265, 355);
         }
 //        umbrellaDrawable.printOriginal("umbrellaDrawable");
         umbrellaDrawable.parserColors(umbrellaColors);
-        umbrellaDrawable.setGeometricWidth(DensityUtil.dp2px(200));
+        umbrellaDrawable.setGeometricWidth(SmartUtil.dp2px(200));
         PathsDrawable boxDrawable = new PathsDrawable();
         if (!boxDrawable.parserPaths(boxPaths)) {
             boxDrawable.declareOriginal(0, 1, 95, 92);
         }
 //        boxDrawable.printOriginal("boxDrawable");
         boxDrawable.parserColors(boxColors);
-        boxDrawable.setGeometricWidth(DensityUtil.dp2px(50));
+        boxDrawable.setGeometricWidth(SmartUtil.dp2px(50));
         mBoxDrawable = boxDrawable;
         mCloudDrawable = cloudDrawable;
         mUmbrellaDrawable = umbrellaDrawable;
@@ -163,14 +163,14 @@ public class DeliveryHeader extends InternalAbstract implements RefreshHeader {
 
         final int centerY = height - mHeaderHeight / 2 + shake;
         final int centerYBox = centerY + (mHeaderHeight / 2 - mBoxDrawable.getBounds().height())
-                - Math.min(mHeaderHeight / 2 - mBoxDrawable.getBounds().height(), DensityUtil.dp2px(mAppreciation * 100));
+                - Math.min(mHeaderHeight / 2 - mBoxDrawable.getBounds().height(), SmartUtil.dp2px(mAppreciation * 100));
         mBoxDrawable.getBounds().offsetTo(width / 2 - mBoxDrawable.getBounds().width() / 2, centerYBox - mBoxDrawable.getBounds().height() / 4);
         mBoxDrawable.draw(canvas);
 
         if (mState == RefreshState.Refreshing
                 || mState == RefreshState.RefreshFinish) {
             Rect bounds = mUmbrellaDrawable.getBounds();
-            final int centerYUmbrella = centerY - mHeaderHeight + Math.min(mHeaderHeight, DensityUtil.dp2px(mAppreciation * 100));
+            final int centerYUmbrella = centerY - mHeaderHeight + Math.min(mHeaderHeight, SmartUtil.dp2px(mAppreciation * 100));
             mUmbrellaDrawable.getBounds().offsetTo(width / 2 - bounds.width() / 2, centerYUmbrella - bounds.height());
             mUmbrellaDrawable.draw(canvas);
         }
@@ -181,9 +181,9 @@ public class DeliveryHeader extends InternalAbstract implements RefreshHeader {
     }
 
     private void calculateFrame(int width) {
-        mCloudX1 += DensityUtil.dp2px(9);
-        mCloudX2 += DensityUtil.dp2px(5);
-        mCloudX3 += DensityUtil.dp2px(12);
+        mCloudX1 += SmartUtil.dp2px(9);
+        mCloudX2 += SmartUtil.dp2px(5);
+        mCloudX3 += SmartUtil.dp2px(12);
         int cloudWidth = mCloudDrawable.getBounds().width();
         if (mCloudX1 > width + cloudWidth) {
             mCloudX1 = -cloudWidth;

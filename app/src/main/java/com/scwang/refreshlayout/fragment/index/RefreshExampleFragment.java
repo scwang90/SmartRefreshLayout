@@ -29,9 +29,10 @@ import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.refreshlayout.fragment.example.BottomSheetExampleFragment;
 import com.scwang.refreshlayout.fragment.example.EmptyLayoutExampleFragment;
-import com.scwang.refreshlayout.fragment.example.FlexboxLayoutManagerFragment;
+import com.scwang.refreshlayout.fragment.example.FlexBoxLayoutManagerFragment;
 import com.scwang.refreshlayout.fragment.example.HorizontalExampleFragment;
 import com.scwang.refreshlayout.fragment.example.NestedScrollExampleFragment;
+import com.scwang.refreshlayout.fragment.example.NoMoreDataExampleFragment;
 import com.scwang.refreshlayout.fragment.example.PureScrollExampleFragment;
 import com.scwang.refreshlayout.fragment.example.SpecifyStyleExampleFragment;
 import com.scwang.refreshlayout.fragment.example.ViewPagerExampleFragment;
@@ -50,6 +51,7 @@ public class RefreshExampleFragment extends Fragment implements AdapterView.OnIt
 
     private enum Item {
         Basic(R.string.index_example_basic, BasicExampleActivity.class),
+        NoMoreData(R.string.index_example_style, NoMoreDataExampleFragment.class),
         SpecifyStyle(R.string.index_example_style, SpecifyStyleExampleFragment.class),
         EmptyLayout(R.string.index_example_empty, EmptyLayoutExampleFragment.class),
         NestedLayout(R.string.index_example_layout, NestedLayoutExampleActivity.class),
@@ -60,7 +62,7 @@ public class RefreshExampleFragment extends Fragment implements AdapterView.OnIt
         SnapHelper(R.string.index_example_snap_helper, SnapHelperExampleActivity.class),
         ViewPager(R.string.index_example_pager, ViewPagerExampleFragment.class),
         BottomSheet(R.string.index_example_bottom_sheet,BottomSheetExampleFragment.class),
-        FlexboxLayout(R.string.index_example_flexbox, FlexboxLayoutManagerFragment.class),
+        FlexBoxLayout(R.string.index_example_flexbox, FlexBoxLayoutManagerFragment.class),
         Horizontal(R.string.index_example_horizontal, HorizontalExampleFragment.class),
 //        ThreeLevel(R.string.index_example_level, ThreeLevelExampleFragment.class),
         ;

@@ -515,15 +515,14 @@ public interface RefreshLayout {
 
     /**
      * Restore the original state after finishLoadMoreWithNoMoreData.
-     * 恢复没有更多数据的原始状态
+     * 设置没有更多数据的状态
      * @param noMoreData 是否有更多数据
      * @return RefreshLayout
-     * @deprecated
+     * 尽量使用下面三个方法代替，他们可以让状态切换与动画结束合拍
      *      use {@link RefreshLayout#resetNoMoreData()}
      *      use {@link RefreshLayout#finishRefreshWithNoMoreData()}
      *      use {@link RefreshLayout#finishLoadMoreWithNoMoreData()}
      */
-    @Deprecated
     RefreshLayout setNoMoreData(boolean noMoreData);
 
     /**

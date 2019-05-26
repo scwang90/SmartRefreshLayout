@@ -182,4 +182,9 @@ public abstract class InternalAbstract extends RelativeLayout implements Refresh
             }
         }
     }
+
+//    @Override
+    public boolean setNoMoreData(boolean noMoreData) {
+        return mWrappedInternal instanceof RefreshFooter && ((RefreshFooter) mWrappedInternal).setNoMoreData(noMoreData);
+    }
 }

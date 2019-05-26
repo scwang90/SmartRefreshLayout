@@ -40,7 +40,7 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
-import com.scwang.smartrefresh.layout.util.DensityUtil;
+import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -190,7 +190,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
                     misAppbarExpand = true;
                     mActionButton.animate().scaleX(1).scaleY(1);
                     mFlyView.animate().scaleX(1).scaleY(1);
-                    ValueAnimator animator = ValueAnimator.ofInt(mListView.getPaddingTop(), DensityUtil.dp2px(25));
+                    ValueAnimator animator = ValueAnimator.ofInt(mListView.getPaddingTop(), SmartUtil.dp2px(25));
                     animator.setDuration(300);
                     animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                         @Override

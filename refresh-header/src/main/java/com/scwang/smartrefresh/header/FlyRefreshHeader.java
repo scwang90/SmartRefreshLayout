@@ -21,7 +21,7 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.FalsifyHeader;
-import com.scwang.smartrefresh.layout.util.DensityUtil;
+import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 /**
  * 纸飞机和山丘
@@ -226,7 +226,7 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
         mRefreshLayout.finishRefresh(0);
 
         final int offDistX = -mFlyView.getRight();
-        final int offDistY = -DensityUtil.dp2px(10);
+        final int offDistY = -SmartUtil.dp2px(10);
         AnimatorSet flyDownAnim = new AnimatorSet();
         flyDownAnim.setDuration(800);
         ObjectAnimator transX1 = ObjectAnimator.ofFloat(mFlyView, "translationX", mFlyView.getTranslationX(), offDistX);

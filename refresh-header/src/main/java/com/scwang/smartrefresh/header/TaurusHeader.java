@@ -22,7 +22,7 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.internal.InternalAbstract;
-import com.scwang.smartrefresh.layout.util.DensityUtil;
+import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -120,9 +120,8 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
         super(context, attrs, defStyleAttr);
 
         final View thisView = this;
-        final DensityUtil density = new DensityUtil();
 
-        thisView.setMinimumHeight(density.dip2px(100));
+        thisView.setMinimumHeight(SmartUtil.dp2px(100));
 
         mMatrix = new Matrix();
         mWinds = new HashMap<>();
@@ -130,7 +129,7 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
 
         mWindPaint = new Paint();
         mWindPaint.setColor(0xffffffff);
-        mWindPaint.setStrokeWidth(density.dip2px(3));
+        mWindPaint.setStrokeWidth(SmartUtil.dp2px(3));
         mWindPaint.setAlpha(50);
 
         mSpinnerStyle = SpinnerStyle.Scale;
@@ -167,8 +166,8 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
 
         mAirplane = airplane;
         mCloudCenter = cloudCenter;
-        mAirplane.setBounds(0, 0, density.dip2px(65), density.dip2px(20));
-        mCloudCenter.setBounds(0, 0, density.dip2px(260), density.dip2px(45));
+        mAirplane.setBounds(0, 0, SmartUtil.dp2px(65), SmartUtil.dp2px(20));
+        mCloudCenter.setBounds(0, 0, SmartUtil.dp2px(260), SmartUtil.dp2px(45));
         //</editor-fold>
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.TaurusHeader);
