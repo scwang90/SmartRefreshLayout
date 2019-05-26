@@ -2,14 +2,15 @@ package com.scwang.refreshlayout.fragment.example;
 
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
@@ -24,7 +25,7 @@ import java.util.List;
 import java.util.Random;
 
 import static android.R.layout.simple_list_item_2;
-import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
+import static androidx.recyclerview.widget.DividerItemDecoration.VERTICAL;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -66,7 +67,7 @@ public class NoMoreDataExampleFragment extends Fragment {
             refreshLayout.autoRefresh();
             refreshLayout.setOnRefreshListener(new OnRefreshListener() {
                 @Override
-                public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                public void onRefresh(@NonNull final RefreshLayout refreshLayout) {
                     refreshLayout.getLayout().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -83,7 +84,7 @@ public class NoMoreDataExampleFragment extends Fragment {
             });
             refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
                 @Override
-                public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                public void onLoadMore(@NonNull final RefreshLayout refreshLayout) {
                     refreshLayout.getLayout().postDelayed(new Runnable() {
                         @Override
                         public void run() {
