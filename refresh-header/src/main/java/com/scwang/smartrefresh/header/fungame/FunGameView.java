@@ -26,7 +26,7 @@ import com.scwang.smartrefresh.header.R;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
-import com.scwang.smartrefresh.layout.util.DensityUtil;
+import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
@@ -127,7 +127,7 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
         mMaskViewBottom = createMaskView(context, mMaskTextBottom, maskTextSizeBottom, Gravity.TOP);
 
         if (!thisView.isInEditMode()) {
-            int height = DensityUtil.dp2px(100);
+            int height = SmartUtil.dp2px(100);
             LayoutParams maskLp = new LayoutParams(MATCH_PARENT, height);
 //            maskLp.topMargin = (int) FunGameView.DIVIDING_LINE_SIZE;
 //            maskLp.bottomMargin = (int) FunGameView.DIVIDING_LINE_SIZE;
@@ -145,7 +145,7 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
         //</editor-fold>
 
         //<editor-fold desc="init - Arena">
-        DIVIDING_LINE_SIZE = Math.max(1, DensityUtil.dp2px(0.5f));
+        DIVIDING_LINE_SIZE = Math.max(1, SmartUtil.dp2px(0.5f));
 
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStrokeWidth(DIVIDING_LINE_SIZE);
@@ -229,19 +229,19 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
         switch (status) {
             case STATUS_GAME_PREPARE:
             case STATUS_GAME_PLAY:
-                mPaintText.setTextSize(DensityUtil.dp2px(25));
+                mPaintText.setTextSize(SmartUtil.dp2px(25));
                 promptText(canvas, mTextLoading, width, height);
                 break;
             case STATUS_GAME_FINISHED:
-                mPaintText.setTextSize(DensityUtil.dp2px(20));
+                mPaintText.setTextSize(SmartUtil.dp2px(20));
                 promptText(canvas, mTextLoadingFinish, width, height);
                 break;
             case STATUS_GAME_FAIL:
-                mPaintText.setTextSize(DensityUtil.dp2px(20));
+                mPaintText.setTextSize(SmartUtil.dp2px(20));
                 promptText(canvas, mTextLoadingFailed, width, height);
                 break;
             case STATUS_GAME_OVER:
-                mPaintText.setTextSize(DensityUtil.dp2px(25));
+                mPaintText.setTextSize(SmartUtil.dp2px(25));
                 promptText(canvas, mTextGameOver, width, height);
                 break;
         }

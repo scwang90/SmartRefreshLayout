@@ -8,7 +8,6 @@ import android.graphics.Rect;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
-import android.view.animation.LinearInterpolator;
 
 /**
  * 旋转动画
@@ -26,7 +25,7 @@ public class ProgressDrawable extends PaintDrawable implements Animatable , Valu
     public ProgressDrawable() {
         mValueAnimator = ValueAnimator.ofInt(30, 3600);
         mValueAnimator.setDuration(10000);
-        mValueAnimator.setInterpolator(new LinearInterpolator());
+        mValueAnimator.setInterpolator(null);
         mValueAnimator.setRepeatCount(ValueAnimator.INFINITE);
         mValueAnimator.setRepeatMode(ValueAnimator.RESTART);
     }

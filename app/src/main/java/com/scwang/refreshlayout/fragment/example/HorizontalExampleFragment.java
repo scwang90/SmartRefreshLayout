@@ -60,7 +60,7 @@ public class HorizontalExampleFragment extends Fragment {
 
             @Override
             protected void onBindViewHolder(SmartViewHolder holder, Void model, int position) {
-                holder.itemView.getLayoutParams().width = -2;//DensityUtil.dp2px(100);
+                holder.itemView.getLayoutParams().width = -2;//SmartUtil.dp2px(100);
                 holder.itemView.getLayoutParams().height = -1;
                 holder.itemView.setBackgroundResource(colorIds[position%colorIds.length]);
                 holder.text(android.R.id.text1, getString(R.string.item_example_number_title, position));

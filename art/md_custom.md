@@ -262,11 +262,11 @@ public class ClassicsHeader extends LinearLayout implements RefreshHeader {
         mProgressView = new ImageView(context);
         mProgressView.setImageDrawable(mProgressDrawable);
         mArrowView.parserPaths("M20,12l-1.41,-1.41L13,16.17V4h-2v12.17l-5.58,-5.59L4,12l8,8 8,-8z");
-        addView(mProgressView, DensityUtil.dp2px(20), DensityUtil.dp2px(20));
-        addView(mArrowView, DensityUtil.dp2px(20), DensityUtil.dp2px(20));
-        addView(new View(context), DensityUtil.dp2px(20), DensityUtil.dp2px(20));
+        addView(mProgressView, SmartUtil.dp2px(20), SmartUtil.dp2px(20));
+        addView(mArrowView, SmartUtil.dp2px(20), SmartUtil.dp2px(20));
+        addView(new View(context), SmartUtil.dp2px(20), SmartUtil.dp2px(20));
         addView(mHeaderText, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        setMinimumHeight(DensityUtil.dp2px(60));
+        setMinimumHeight(SmartUtil.dp2px(60));
     }
     @NonNull
     public View getView() {

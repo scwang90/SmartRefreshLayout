@@ -25,7 +25,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.internal.InternalAbstract;
-import com.scwang.smartrefresh.layout.util.DensityUtil;
+import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 /**
  * 贝塞尔曲线类雷达风格刷新组件
@@ -78,18 +78,17 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
         mSpinnerStyle = SpinnerStyle.Scale;
 
         final View thisView = this;
-        final DensityUtil density = new DensityUtil();
 
         mPath = new Path();
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
 
-        mDotRadius = density.dip2px(7);
-        mRadarRadius = density.dip2px(20);
-        mRadarCircle = density.dip2px(7);
-        mPaint.setStrokeWidth(density.dip2px(3));
+        mDotRadius = SmartUtil.dp2px(7);
+        mRadarRadius = SmartUtil.dp2px(20);
+        mRadarCircle = SmartUtil.dp2px(7);
+        mPaint.setStrokeWidth(SmartUtil.dp2px(3));
 
-        thisView.setMinimumHeight(density.dip2px(100));
+        thisView.setMinimumHeight(SmartUtil.dp2px(100));
 
         if (thisView.isInEditMode()) {
             mWaveTop = 1000;
@@ -157,7 +156,7 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
         if (mDotAlpha > 0) {
             mPaint.setColor(mAccentColor);
             final int num = 7;
-            float x = DensityUtil.px2dp(height);
+            float x = SmartUtil.px2dp(height);
             float wide = (1f * width / num) * mDotFraction -((mDotFraction >1)?((mDotFraction -1)*(1f * width / num)/ mDotFraction):0);//y1 = t*(w/n)-(t>1)*((t-1)*(w/n)/t)
             float high = height - ((mDotFraction >1)?((mDotFraction -1)*height/2/ mDotFraction):0);//y2 = x - (t>1)*((t-1)*x/t);
             for (int i = 0 ; i < num; i++) {
