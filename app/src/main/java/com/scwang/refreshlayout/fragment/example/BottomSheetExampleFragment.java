@@ -47,6 +47,8 @@ public class BottomSheetExampleFragment extends Fragment {
     public void onViewCreated(@NonNull View root, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(root, savedInstanceState);
 
+        root = onCreateView(LayoutInflater.from(getContext()), null, null);
+
         final Toolbar toolbar = root.findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,12 +72,6 @@ public class BottomSheetExampleFragment extends Fragment {
             }
         });
 
-        /*
-         * 重点：设置 srlEnableNestedScrolling 为 false 才可以兼容 BottomSheet
-         * notice：Set srlEnableNestedScrolling to false to be compatible with BottomSheet
-         */
-        refreshLayout.setEnableNestedScroll(false);
-
         RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -90,15 +86,15 @@ public class BottomSheetExampleFragment extends Fragment {
             }
         });
 
-        ((ViewGroup)refreshLayout.getLayout().getParent()).removeView(refreshLayout.getLayout());
-        BottomSheetDialog dialog=new BottomSheetDialog(getContext());
+        BottomSheetDialog dialog = new BottomSheetDialog(getContext());
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
                 getActivity().finish();
             }
         });
-        dialog.setContentView(refreshLayout.getLayout());
+        dialog.setContentView(root);
+        dialog.setCancelable(false);
         dialog.show();
     }
 

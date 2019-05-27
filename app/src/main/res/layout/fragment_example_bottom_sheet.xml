@@ -14,11 +14,7 @@
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:srlEnableRefresh="false"
-        app:srlEnableNestedScrolling="false">
-        <!--Set srlEnableNestedScrolling to false to be compatible with BottomSheet-->
-        <!--设置 srlEnableNestedScrolling 为 false 才可以兼容 BottomSheet-->
+        android:layout_height="match_parent">
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"

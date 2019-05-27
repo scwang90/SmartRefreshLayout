@@ -952,7 +952,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             }
             return ret;
         } else if (!thisView.isEnabled()
-                || (!mEnableRefresh && !mEnableLoadMore)
+                || (!mEnableRefresh && !mEnableLoadMore && !mEnableOverScrollDrag)
                 || (mHeaderNeedTouchEventWhenRefreshing && ((mState.isOpening || mState.isFinishing) && mState.isHeader))
                 || (mFooterNeedTouchEventWhenLoading && ((mState.isOpening || mState.isFinishing) && mState.isFooter))) {
             return super.dispatchTouchEvent(e);
