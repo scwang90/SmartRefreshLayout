@@ -60,9 +60,9 @@ public class InstantPracticeFragment extends Fragment {
 
         final RefreshLayout refreshLayout = root.findViewById(R.id.refreshLayout);
         refreshLayout.setEnableRefresh(false);//必须关闭
-        refreshLayout.setEnableAutoLoadMore(false);//必须关闭
+        refreshLayout.setEnableAutoLoadMore(true);//必须关闭
         refreshLayout.setEnableNestedScroll(false);//必须关闭
-        refreshLayout.setEnableScrollContentWhenLoaded(false);//必须关闭
+        refreshLayout.setEnableScrollContentWhenLoaded(true);//必须关闭
         refreshLayout.getLayout().setScaleY(-1);//必须设置
         refreshLayout.setScrollBoundaryDecider(new ScrollBoundaryDeciderAdapter() {
             @Override
@@ -182,7 +182,7 @@ public class InstantPracticeFragment extends Fragment {
 
             if (message.Image == 0) {
                 holder.gone(R.id.chatting_liv_img);
-                holder.text(R.id.chatting_ltv_txt, message.Message);
+                holder.text(R.id.chatting_ltv_txt, message.Message).visible(R.id.chatting_ltv_txt);
             } else {
                 holder.gone(R.id.chatting_ltv_txt);
                 holder.image(R.id.chatting_liv_img, message.Image).visible(R.id.chatting_liv_img);
@@ -202,7 +202,7 @@ public class InstantPracticeFragment extends Fragment {
 
             if (message.Image == 0) {
                 holder.gone(R.id.chatting_riv_img);
-                holder.text(R.id.chatting_rtv_txt, message.Message);
+                holder.text(R.id.chatting_rtv_txt, message.Message).visible(R.id.chatting_rtv_txt);
             } else {
                 holder.gone(R.id.chatting_rtv_txt);
                 holder.image(R.id.chatting_riv_img, message.Image).visible(R.id.chatting_riv_img);

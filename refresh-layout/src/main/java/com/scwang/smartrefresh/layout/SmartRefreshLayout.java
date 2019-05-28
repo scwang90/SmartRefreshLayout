@@ -29,7 +29,6 @@ import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.animation.AnimationUtils;
-import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.Scroller;
 import android.widget.TextView;
@@ -3046,7 +3045,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
                     reboundAnimator = ValueAnimator.ofInt(mSpinner, (int) (mHeaderHeight * dragRate));
                     reboundAnimator.setDuration(duration);
-                    reboundAnimator.setInterpolator(new DecelerateInterpolator());
+                    reboundAnimator.setInterpolator(new SmartUtil());
                     reboundAnimator.addUpdateListener(new AnimatorUpdateListener() {
                         @Override
                         public void onAnimationUpdate(ValueAnimator animation) {
@@ -3146,7 +3145,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
                     reboundAnimator = ValueAnimator.ofInt(mSpinner, -(int) (mFooterHeight * dragRate));
                     reboundAnimator.setDuration(duration);
-                    reboundAnimator.setInterpolator(new DecelerateInterpolator());
+                    reboundAnimator.setInterpolator(new SmartUtil());
                     reboundAnimator.addUpdateListener(new AnimatorUpdateListener() {
                         @Override
                         public void onAnimationUpdate(ValueAnimator animation) {
