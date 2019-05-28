@@ -1660,7 +1660,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             }
         }
         if (spinner > mScreenHeightPixels * 3 && thisView.getTag() == null) {
-            String egg = "不要再往下拉了";
+            String egg = "你这么死拉，臣妾做不到啊！";
             Toast.makeText(thisView.getContext(), egg, Toast.LENGTH_SHORT).show();
             thisView.setTag(egg);
         }
