@@ -12,7 +12,6 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 
 import androidx.annotation.ColorInt;
@@ -240,13 +239,7 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
         mWaveTop = height;
         mWavePulling = false;
 
-        ValueAnimator mRadarAnimator = ValueAnimator.ofInt(0,360);
-        mRadarAnimator.setDuration(720);
-        mRadarAnimator.setRepeatCount(ValueAnimator.INFINITE);
-        mRadarAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
-        mRadarAnimator.addUpdateListener(new AnimatorUpdater(PROPERTY_RADAR_ANGLE));
-
-        Interpolator interpolatorDecelerate = new DecelerateInterpolator();
+        Interpolator interpolatorDecelerate = new SmartUtil();//new DecelerateInterpolator();
         //圆点消失动画
         ValueAnimator animatorDotAlpha = ValueAnimator.ofFloat(1, 0);
         animatorDotAlpha.setInterpolator(interpolatorDecelerate);
@@ -255,6 +248,12 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
         ValueAnimator animatorRadarScale = ValueAnimator.ofFloat(0, 1);
         animatorDotAlpha.setInterpolator(interpolatorDecelerate);
         animatorRadarScale.addUpdateListener(new AnimatorUpdater(PROPERTY_RADAR_SCALE));
+        //雷达选装
+        ValueAnimator mRadarAnimator = ValueAnimator.ofInt(0,360);
+        mRadarAnimator.setDuration(720);
+        mRadarAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        mRadarAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+        mRadarAnimator.addUpdateListener(new AnimatorUpdater(PROPERTY_RADAR_ANGLE));
         //连续动画集
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playSequentially(animatorDotAlpha, animatorRadarScale, mRadarAnimator);

@@ -20,7 +20,6 @@ import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.animation.AnimationUtils;
-import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.Scroller;
 import android.widget.TextView;
@@ -136,7 +135,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     protected boolean mDisableContentWhenRefresh = false;//是否开启在刷新时候禁止操作内容视图
     protected boolean mDisableContentWhenLoading = false;//是否开启在刷新时候禁止操作内容视图
     protected boolean mFooterNoMoreData = false;//数据是否全部加载完成，如果完成就不能在触发加载事件
-    protected boolean mFooterNoMoreDataEffective = false;//是否 NoMoreData 生效
+    protected boolean mFooterNoMoreDataEffective = false;//是否 NoMoreData 生效(有的 Footer 可能不支持)
 
     protected boolean mManualLoadMore = false;//是否手动设置过LoadMore，用于智能开启
 //    protected boolean mManualNestedScrolling = false;//是否手动设置过 NestedScrolling，用于智能开启
@@ -722,7 +721,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 final SpinnerStyle style = mRefreshFooter.getSpinnerStyle();
                 int left = mlp.leftMargin;
                 int top = mlp.topMargin + thisView.getMeasuredHeight() - mFooterInsetStart;
-                if (mFooterNoMoreData && mFooterNoMoreDataEffective && mEnableFooterFollowWhenNoMoreData && mRefreshContent != null && isEnableRefreshOrLoadMore(mEnableLoadMore)) {
+                if (mFooterNoMoreData && mFooterNoMoreDataEffective && mEnableFooterFollowWhenNoMoreData && mRefreshContent != null
+                        && mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Translate
+                        && isEnableRefreshOrLoadMore(mEnableLoadMore)) {
                     final View contentView = mRefreshContent.getView();
                     final ViewGroup.LayoutParams clp = contentView.getLayoutParams();
                     final int topMargin = clp instanceof MarginLayoutParams ? ((MarginLayoutParams)clp).topMargin : 0;
@@ -953,7 +954,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             }
             return ret;
         } else if (!thisView.isEnabled()
-                || (!mEnableRefresh && !mEnableLoadMore)
+                || (!mEnableRefresh && !mEnableLoadMore && !mEnableOverScrollDrag)
                 || (mHeaderNeedTouchEventWhenRefreshing && ((mState.isOpening || mState.isFinishing) && mState.isHeader))
                 || (mFooterNeedTouchEventWhenLoading && ((mState.isOpening || mState.isFinishing) && mState.isFooter))) {
             return super.dispatchTouchEvent(e);
@@ -1661,7 +1662,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             }
         }
         if (spinner > mScreenHeightPixels * 3 && thisView.getTag() == null) {
-            String egg = "不要再往下拉了";
+            String egg = "你这么死拉，臣妾做不到啊！";
             Toast.makeText(thisView.getContext(), egg, Toast.LENGTH_SHORT).show();
             thisView.setTag(egg);
         }
@@ -2436,7 +2437,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             super.removeView(mRefreshFooter.getView());
         }
         this.mRefreshFooter = footer;
+        this.mFooterLocked = false;
         this.mFooterBackgroundColor = 0;
+        this.mFooterNoMoreDataEffective = false;
         this.mFooterNeedTouchEventWhenLoading = false;
         this.mFooterHeightStatus = mFooterHeightStatus.unNotify();
         this.mEnableLoadMore = !mManualLoadMore || mEnableLoadMore;
@@ -2660,19 +2663,25 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             finishLoadMoreWithNoMoreData();
             return this;
         }
-        mFooterNoMoreData = noMoreData;
-        if (mRefreshFooter instanceof RefreshFooter && !((RefreshFooter)mRefreshFooter).setNoMoreData(noMoreData)) {
-            mFooterNoMoreDataEffective = false;
-            String msg = "Footer:" + mRefreshFooter + " NoMoreData is not supported.(不支持NoMoreData，请使用ClassicsFooter或者自定义)";
-            Throwable e = new RuntimeException(msg);
-            e.printStackTrace();
-        } else {
-            mFooterNoMoreDataEffective = true;
-            if (mFooterNoMoreData && mEnableFooterFollowWhenNoMoreData
-                    && isEnableRefreshOrLoadMore(mEnableLoadMore)
-                    && isEnableTranslationContent(mEnableRefresh, mRefreshHeader)) {
-                mRefreshFooter.getView().setTranslationY(Math.max(0, mSpinner));
+        if (mFooterNoMoreData != noMoreData) {
+            mFooterNoMoreData = noMoreData;
+            if (mRefreshFooter instanceof RefreshFooter) {
+                if (((RefreshFooter) mRefreshFooter).setNoMoreData(noMoreData)) {
+                    mFooterNoMoreDataEffective = true;
+                    if (mFooterNoMoreData && mEnableFooterFollowWhenNoMoreData && mSpinner > 0
+                            && mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Translate
+                            && isEnableRefreshOrLoadMore(mEnableLoadMore)
+                            && isEnableTranslationContent(mEnableRefresh, mRefreshHeader)) {
+                        mRefreshFooter.getView().setTranslationY(mSpinner);
+                    }
+                } else {
+                    mFooterNoMoreDataEffective = false;
+                    String msg = "Footer:" + mRefreshFooter + " NoMoreData is not supported.(不支持NoMoreData，请使用ClassicsFooter或者自定义)";
+                    Throwable e = new RuntimeException(msg);
+                    e.printStackTrace();
+                }
             }
+
         }
         return this;
     }
@@ -3047,7 +3056,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
                     reboundAnimator = ValueAnimator.ofInt(mSpinner, (int) (mHeaderHeight * dragRate));
                     reboundAnimator.setDuration(duration);
-                    reboundAnimator.setInterpolator(new DecelerateInterpolator());
+                    reboundAnimator.setInterpolator(new SmartUtil());
                     reboundAnimator.addUpdateListener(new AnimatorUpdateListener() {
                         @Override
                         public void onAnimationUpdate(ValueAnimator animation) {
@@ -3147,7 +3156,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
                     reboundAnimator = ValueAnimator.ofInt(mSpinner, -(int) (mFooterHeight * dragRate));
                     reboundAnimator.setDuration(duration);
-                    reboundAnimator.setInterpolator(new DecelerateInterpolator());
+                    reboundAnimator.setInterpolator(new SmartUtil());
                     reboundAnimator.addUpdateListener(new AnimatorUpdateListener() {
                         @Override
                         public void onAnimationUpdate(ValueAnimator animation) {
@@ -3426,6 +3435,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
          *                   dispatchTouchEvent , nestScroll 等都为 true
          *                   autoRefresh，autoLoadMore，需要模拟拖动，也为 true
          */
+        @SuppressWarnings("ConstantConditions")
         public RefreshKernel moveSpinner(int spinner, boolean isDragging) {
             if (mSpinner == spinner
                     && (mRefreshHeader == null || !mRefreshHeader.isSupportHorizontalDrag())
@@ -3474,7 +3484,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 if (changed) {
                     mRefreshContent.moveSpinner(tSpinner, mHeaderTranslationViewId, mFooterTranslationViewId);
                     if (mFooterNoMoreData && mFooterNoMoreDataEffective && mEnableFooterFollowWhenNoMoreData
-                            && isEnableTranslationContent(mEnableHeaderTranslationContent, mRefreshHeader)
+                            && mRefreshFooter instanceof RefreshFooter && mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Translate
                             && isEnableRefreshOrLoadMore(mEnableLoadMore)) {
                         mRefreshFooter.getView().setTranslationY(Math.max(0, tSpinner));
                     }

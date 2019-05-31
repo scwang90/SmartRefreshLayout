@@ -226,7 +226,8 @@ public class RefreshContentWrapper implements RefreshContent , CoordinatorLayout
             kernel.getRefreshLayout().getLayout().addView(frameLayout, layoutParams);
             mContentView = frameLayout;
             if (fixedHeader != null) {
-                fixedHeader.setClickable(true);
+                fixedHeader.setTag("fixed-top");
+//                fixedHeader.setClickable(true);
                 ViewGroup.LayoutParams lp = fixedHeader.getLayoutParams();
                 ViewGroup parent = (ViewGroup) fixedHeader.getParent();
                 int index = parent.indexOfChild(fixedHeader);
@@ -236,7 +237,8 @@ public class RefreshContentWrapper implements RefreshContent , CoordinatorLayout
                 frameLayout.addView(fixedHeader);
             }
             if (fixedFooter != null) {
-                fixedFooter.setClickable(true);
+                fixedFooter.setTag("fixed-bottom");
+//                fixedFooter.setClickable(true);
                 ViewGroup.LayoutParams lp = fixedFooter.getLayoutParams();
                 ViewGroup parent = (ViewGroup) fixedFooter.getParent();
                 int index = parent.indexOfChild(fixedFooter);
@@ -286,10 +288,11 @@ public class RefreshContentWrapper implements RefreshContent , CoordinatorLayout
     public void onAnimationUpdate(ValueAnimator animation) {
         int value = (int) animation.getAnimatedValue();
         try {
+            float dy = (value - mLastSpinner) * mScrollableView.getScaleY();
             if (mScrollableView instanceof AbsListView) {
-                scrollListBy((AbsListView) mScrollableView, value - mLastSpinner);
+                scrollListBy((AbsListView) mScrollableView, (int)dy);
             } else {
-                mScrollableView.scrollBy(0, value - mLastSpinner);
+                mScrollableView.scrollBy(0, (int)dy);
             }
         } catch (Throwable e) {
             //根据用户反馈，此处可能会有BUG

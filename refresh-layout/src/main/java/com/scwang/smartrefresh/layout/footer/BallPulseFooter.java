@@ -1,5 +1,7 @@
 package com.scwang.smartrefresh.layout.footer;
 
+import android.animation.TimeInterpolator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -49,7 +51,7 @@ public class BallPulseFooter extends InternalAbstract implements RefreshFooter {
 
     protected long mStartTime = 0;
     protected boolean mIsStarted = false;
-    protected Interpolator mInterpolator = new AccelerateDecelerateInterpolator();
+    protected TimeInterpolator mInterpolator = new AccelerateDecelerateInterpolator();
 //    protected List<ValueAnimator> mAnimators;
 //    protected Map<ValueAnimator, ValueAnimator.AnimatorUpdateListener> mUpdateListeners = new HashMap<>();
     //</editor-fold>
