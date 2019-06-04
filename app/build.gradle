@@ -77,7 +77,7 @@ dependencies {
 //        exclude group: 'com.android.support'
 //    }
 
-    implementation 'com.google.android.material:material:1.1.0-alpha06'
+    implementation 'com.google.android.material:material:1.1.0-alpha07'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta1'
 
