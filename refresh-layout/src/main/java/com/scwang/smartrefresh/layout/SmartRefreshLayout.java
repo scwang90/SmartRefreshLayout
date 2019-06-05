@@ -1672,10 +1672,10 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
          *         });
          *
          * 2.XML关闭
-         *       <com.scwang.smartrefresh.layout.SmartRefreshLayout
-         *           android:layout_width="match_parent"
-         *           android:layout_height="match_parent"
-         *           android:tag="close egg"/>
+         *          <com.scwang.smartrefresh.layout.SmartRefreshLayout
+         *              android:layout_width="match_parent"
+         *              android:layout_height="match_parent"
+         *              android:tag="close egg"/>
          *
          * 3.修改源码
          *          源码引用，然后删掉下面4行的代码
