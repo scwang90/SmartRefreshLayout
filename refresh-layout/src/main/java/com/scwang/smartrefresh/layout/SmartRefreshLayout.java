@@ -1660,6 +1660,26 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 spinner = 0;
             }
         }
+        /**
+         * 如果彩蛋影响了您的APP，可以通过以下三种方法关闭
+         *
+         * 1.全局关闭（推荐）
+         *          SmartRefreshLayout.setDefaultRefreshInitializer(new DefaultRefreshInitializer() {
+         *             @Override
+         *             public void initialize(@NonNull Context context, @NonNull RefreshLayout layout) {
+         *                 layout.getLayout().setTag("close egg");
+         *             }
+         *         });
+         *
+         * 2.XML关闭
+         *       <com.scwang.smartrefresh.layout.SmartRefreshLayout
+         *           android:layout_width="match_parent"
+         *           android:layout_height="match_parent"
+         *           android:tag="close egg"/>
+         *
+         * 3.修改源码
+         *          源码引用，然后删掉下面4行的代码
+         */
         if (spinner > mScreenHeightPixels * 3 && thisView.getTag() == null) {
             String egg = "你这么死拉，臣妾做不到啊！";
             Toast.makeText(thisView.getContext(), egg, Toast.LENGTH_SHORT).show();
