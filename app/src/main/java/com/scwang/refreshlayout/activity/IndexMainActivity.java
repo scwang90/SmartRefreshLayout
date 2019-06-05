@@ -18,6 +18,8 @@ import com.scwang.refreshlayout.fragment.index.RefreshPracticeFragment;
 import com.scwang.refreshlayout.fragment.index.RefreshStylesFragment;
 import com.scwang.refreshlayout.util.StatusBarUtil;
 
+import static androidx.fragment.app.FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT;
+
 public class IndexMainActivity extends AppCompatActivity implements OnNavigationItemSelectedListener {
 
     private enum TabFragment {
@@ -73,7 +75,7 @@ public class IndexMainActivity extends AppCompatActivity implements OnNavigation
         navigation.setOnNavigationItemSelectedListener(this);
 
         ViewPager viewPager = findViewById(R.id.content);
-        viewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
+        viewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager(), BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
             @Override
             public int getCount() {
                 return TabFragment.values().length;
