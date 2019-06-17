@@ -74,7 +74,7 @@ public class BannerPracticeActivity extends AppCompatActivity {
                     public void run() {
                         if (mAdapter.getItemCount() < 2) {
                             List<Movie> movies = new Gson().fromJson(JSON_MOVIES, new TypeToken<ArrayList<Movie>>() {}.getType());
-                            mAdapter.replaceData(movies);
+                            mAdapter.setNewData(movies);
                         }
                         refreshLayout.finishRefresh();
                     }
