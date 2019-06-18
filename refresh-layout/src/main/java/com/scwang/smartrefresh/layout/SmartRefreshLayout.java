@@ -3516,6 +3516,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     }
                 }
             }
+            boolean layout = false; //标记是否调用 layout ，防止重复调用
             if ((spinner >= 0 || oldSpinner > 0) && mRefreshHeader != null) {
 
                 final int offset = Math.max(spinner, 0);
@@ -3531,7 +3532,15 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                                 thisView.invalidate();
                             }
                         } else if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale){
-                            mRefreshHeader.getView().requestLayout();
+                            layout = true;
+                            /*
+                             * 兼容 MotionLayout 2019-6-18
+                             * 在 MotionLayout 内部 requestLayout 无效
+                             * 该用 直接调用 layout 方式
+                             * https://github.com/scwang90/SmartRefreshLayout/issues/944
+                             */
+//                            mRefreshHeader.getView().requestLayout();
+                            thisView.layout(thisView.getLeft(), thisView.getTop(), thisView.getRight(), thisView.getBottom());
                         }
                         mRefreshHeader.onMoving(isDragging, percent, offset, headerHeight, maxDragHeight);
                     }
@@ -3562,8 +3571,15 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                             if (mFooterBackgroundColor != 0 && mPaint != null && !isEnableTranslationContent(mEnableFooterTranslationContent, mRefreshFooter)) {
                                 thisView.invalidate();
                             }
-                        } else if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Scale){
-                            mRefreshFooter.getView().requestLayout();
+                        } else if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Scale && !layout){
+                            /*
+                             * 兼容 MotionLayout 2019-6-18
+                             * 在 MotionLayout 内部 requestLayout 无效
+                             * 该用 直接调用 layout 方式
+                             * https://github.com/scwang90/SmartRefreshLayout/issues/944
+                             */
+//                            mRefreshFooter.getView().requestLayout();
+                            thisView.layout(thisView.getLeft(), thisView.getTop(), thisView.getRight(), thisView.getBottom());
                         }
                         mRefreshFooter.onMoving(isDragging, percent, offset, footerHeight, maxDragHeight);
                     }
