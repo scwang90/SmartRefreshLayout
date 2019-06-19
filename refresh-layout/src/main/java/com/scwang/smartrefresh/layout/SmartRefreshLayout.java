@@ -3455,7 +3455,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
          *                   autoRefresh，autoLoadMore，需要模拟拖动，也为 true
          */
         @SuppressWarnings("ConstantConditions")
-        public RefreshKernel moveSpinner(int spinner, boolean isDragging) {
+        public RefreshKernel moveSpinner(final int spinner, final boolean isDragging) {
             if (mSpinner == spinner
                     && (mRefreshHeader == null || !mRefreshHeader.isSupportHorizontalDrag())
                     && (mRefreshFooter == null || !mRefreshFooter.isSupportHorizontalDrag())) {
@@ -3540,7 +3540,15 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                              * https://github.com/scwang90/SmartRefreshLayout/issues/944
                              */
 //                            mRefreshHeader.getView().requestLayout();
-                            thisView.layout(thisView.getLeft(), thisView.getTop(), thisView.getRight(), thisView.getBottom());
+//                            thisView.layout(thisView.getLeft(), thisView.getTop(), thisView.getRight(), thisView.getBottom());
+                            View headerView = mRefreshHeader.getView();
+                            final ViewGroup.LayoutParams lp = headerView.getLayoutParams();
+                            final MarginLayoutParams mlp = lp instanceof MarginLayoutParams ? (MarginLayoutParams)lp : sDefaultMarginLP;
+                            final int widthSpec = makeMeasureSpec(headerView.getMeasuredWidth(), EXACTLY);
+                            headerView.measure(widthSpec, makeMeasureSpec(Math.max(mSpinner - mlp.bottomMargin - mlp.topMargin, 0), EXACTLY));
+                            final int left = mlp.leftMargin;
+                            final int top = mlp.topMargin + mHeaderInsetStart;
+                            headerView.layout(left, top, left + headerView.getMeasuredWidth(), top + headerView.getMeasuredHeight());
                         }
                         mRefreshHeader.onMoving(isDragging, percent, offset, headerHeight, maxDragHeight);
                     }
@@ -3579,7 +3587,16 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                              * https://github.com/scwang90/SmartRefreshLayout/issues/944
                              */
 //                            mRefreshFooter.getView().requestLayout();
-                            thisView.layout(thisView.getLeft(), thisView.getTop(), thisView.getRight(), thisView.getBottom());
+//                            thisView.layout(thisView.getLeft(), thisView.getTop(), thisView.getRight(), thisView.getBottom());
+
+                            View footerView = mRefreshFooter.getView();
+                            final ViewGroup.LayoutParams lp = footerView.getLayoutParams();
+                            final MarginLayoutParams mlp = lp instanceof MarginLayoutParams ? (MarginLayoutParams)lp : sDefaultMarginLP;
+                            final int widthSpec = makeMeasureSpec(footerView.getMeasuredWidth(), EXACTLY);
+                            footerView.measure(widthSpec, makeMeasureSpec(Math.max(-mSpinner - mlp.bottomMargin - mlp.topMargin, 0), EXACTLY));
+                            final int left = mlp.leftMargin;
+                            final int bottom = mlp.topMargin + thisView.getMeasuredHeight() - mFooterInsetStart;
+                            footerView.layout(left, bottom - footerView.getMeasuredHeight(), left + footerView.getMeasuredWidth(), bottom);
                         }
                         mRefreshFooter.onMoving(isDragging, percent, offset, footerHeight, maxDragHeight);
                     }
