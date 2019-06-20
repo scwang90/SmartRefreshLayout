@@ -52,8 +52,8 @@ public interface RefreshInternal extends OnStateChangedListener {
      * @param isDragging true 手指正在拖动 false 回弹动画
      * @param percent 下拉的百分比 值 = offset/footerHeight (0 - percent - (footerHeight+maxDragHeight) / footerHeight )
      * @param offset 下拉的像素偏移量  0 - offset - (footerHeight+maxDragHeight)
-     * @param height 高度 HeaderHeight or FooterHeight
-     * @param maxDragHeight 最大拖动高度
+     * @param height 高度 HeaderHeight or FooterHeight (offset 可以超过 height 此时 percent > 1)
+     * @param maxDragHeight 最大拖动高度 offset 可以超过 height 参数 但是不会超过 maxDragHeight
      */
     @RestrictTo({LIBRARY,LIBRARY_GROUP,SUBCLASSES})
     void onMoving(boolean isDragging, float percent, int offset, int height, int maxDragHeight);

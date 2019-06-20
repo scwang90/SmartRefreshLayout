@@ -1990,24 +1990,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     //<editor-fold desc="开放接口 open interface">
 
     /**
-     * Set the Footer's height.
-     * 设置 Footer 的高度
-     * @param heightDp Density-independent Pixels 虚拟像素（px需要调用px2dp转换）
-     * @return RefreshLayout
-     */
-    @Override
-    public RefreshLayout setFooterHeight(float heightDp) {
-        if (mFooterHeightStatus.canReplaceWith(DimensionStatus.CodeExact)) {
-            mFooterHeight = dp2px(heightDp);
-            mFooterHeightStatus = DimensionStatus.CodeExactUnNotify;
-            if (mRefreshFooter != null) {
-                mRefreshFooter.getView().requestLayout();
-            }
-        }
-        return this;
-    }
-
-    /**
      * Set the Header's height.
      * 设置 Header 高度
      * @param heightDp Density-independent Pixels 虚拟像素（px需要调用px2dp转换）
@@ -2015,11 +1997,78 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      */
     @Override
     public RefreshLayout setHeaderHeight(float heightDp) {
+        int height = dp2px(heightDp);
+        if (height == mHeaderHeight) {
+            return this;
+        }
         if (mHeaderHeightStatus.canReplaceWith(DimensionStatus.CodeExact)) {
-            mHeaderHeight = dp2px(heightDp);
-            mHeaderHeightStatus = DimensionStatus.CodeExactUnNotify;
-            if (mRefreshHeader != null) {
-                mRefreshHeader.getView().requestLayout();
+            mHeaderHeight = height;
+            if (mRefreshHeader != null && mAttachedToWindow && mHeaderHeightStatus.notified) {
+                SpinnerStyle style = mRefreshHeader.getSpinnerStyle();
+                if (style != SpinnerStyle.MatchLayout && style != SpinnerStyle.Scale) {
+                    /*
+                     * 兼容 MotionLayout 2019-6-18
+                     * 在 MotionLayout 内部 requestLayout 无效
+                     * 该用 直接调用 layout 方式
+                     * https://github.com/scwang90/SmartRefreshLayout/issues/944
+                     */
+//                  mRefreshHeader.getView().requestLayout();
+                    View headerView = mRefreshHeader.getView();
+                    final ViewGroup.LayoutParams lp = headerView.getLayoutParams();
+                    final MarginLayoutParams mlp = lp instanceof MarginLayoutParams ? (MarginLayoutParams) lp : sDefaultMarginLP;
+                    final int widthSpec = makeMeasureSpec(headerView.getMeasuredWidth(), EXACTLY);
+                    headerView.measure(widthSpec, makeMeasureSpec(Math.max(mHeaderHeight - mlp.bottomMargin - mlp.topMargin, 0), EXACTLY));
+                    final int left = mlp.leftMargin;
+                    int top = mlp.topMargin + mHeaderInsetStart - ((style == SpinnerStyle.Translate) ? mHeaderHeight : 0);
+                    headerView.layout(left, top, left + headerView.getMeasuredWidth(), top + headerView.getMeasuredHeight());
+                }
+                mHeaderHeightStatus = DimensionStatus.CodeExact;
+                mRefreshHeader.onInitialized(mKernel, mHeaderHeight, (int) (mHeaderMaxDragRate * mHeaderHeight));
+            } else {
+                mHeaderHeightStatus = DimensionStatus.CodeExactUnNotify;
+            }
+        }
+        return this;
+    }
+
+    /**
+     * Set the Footer's height.
+     * 设置 Footer 的高度
+     * @param heightDp Density-independent Pixels 虚拟像素（px需要调用px2dp转换）
+     * @return RefreshLayout
+     */
+    @Override
+    public RefreshLayout setFooterHeight(float heightDp) {
+        int height = dp2px(heightDp);
+        if (height == mFooterHeight) {
+            return this;
+        }
+        if (mFooterHeightStatus.canReplaceWith(DimensionStatus.CodeExact)) {
+            mFooterHeight = height;
+            if (mRefreshFooter != null && mAttachedToWindow && mFooterHeightStatus.notified) {
+                SpinnerStyle style = mRefreshFooter.getSpinnerStyle();
+                if (style != SpinnerStyle.MatchLayout && style != SpinnerStyle.Scale) {
+                    /*
+                     * 兼容 MotionLayout 2019-6-18
+                     * 在 MotionLayout 内部 requestLayout 无效
+                     * 该用 直接调用 layout 方式
+                     * https://github.com/scwang90/SmartRefreshLayout/issues/944
+                     */
+//                  mRefreshFooter.getView().requestLayout();
+                    View thisView = this;
+                    View footerView = mRefreshFooter.getView();
+                    final ViewGroup.LayoutParams lp = footerView.getLayoutParams();
+                    final MarginLayoutParams mlp = lp instanceof MarginLayoutParams ? (MarginLayoutParams)lp : sDefaultMarginLP;
+                    final int widthSpec = makeMeasureSpec(footerView.getMeasuredWidth(), EXACTLY);
+                    footerView.measure(widthSpec, makeMeasureSpec(Math.max(mFooterHeight - mlp.bottomMargin - mlp.topMargin, 0), EXACTLY));
+                    final int left = mlp.leftMargin;
+                    final int top = mlp.topMargin + thisView.getMeasuredHeight() - mFooterInsetStart - ((style != SpinnerStyle.Translate) ? mFooterHeight : 0);
+                    footerView.layout(left, top, left + footerView.getMeasuredWidth(), top + footerView.getMeasuredHeight());
+                }
+                mFooterHeightStatus = DimensionStatus.CodeExact;
+                mRefreshFooter.onInitialized(mKernel, mFooterHeight, (int) (mFooterMaxDragRate * mFooterHeight));
+            } else {
+                mFooterHeightStatus = DimensionStatus.CodeExactUnNotify;
             }
         }
         return this;
@@ -3516,7 +3565,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     }
                 }
             }
-            boolean layout = false; //标记是否调用 layout ，防止重复调用
             if ((spinner >= 0 || oldSpinner > 0) && mRefreshHeader != null) {
 
                 final int offset = Math.max(spinner, 0);
@@ -3532,7 +3580,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                                 thisView.invalidate();
                             }
                         } else if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale){
-                            layout = true;
                             /*
                              * 兼容 MotionLayout 2019-6-18
                              * 在 MotionLayout 内部 requestLayout 无效
@@ -3540,7 +3587,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                              * https://github.com/scwang90/SmartRefreshLayout/issues/944
                              */
 //                            mRefreshHeader.getView().requestLayout();
-//                            thisView.layout(thisView.getLeft(), thisView.getTop(), thisView.getRight(), thisView.getBottom());
                             View headerView = mRefreshHeader.getView();
                             final ViewGroup.LayoutParams lp = headerView.getLayoutParams();
                             final MarginLayoutParams mlp = lp instanceof MarginLayoutParams ? (MarginLayoutParams)lp : sDefaultMarginLP;
@@ -3579,7 +3625,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                             if (mFooterBackgroundColor != 0 && mPaint != null && !isEnableTranslationContent(mEnableFooterTranslationContent, mRefreshFooter)) {
                                 thisView.invalidate();
                             }
-                        } else if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Scale && !layout){
+                        } else if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Scale){
                             /*
                              * 兼容 MotionLayout 2019-6-18
                              * 在 MotionLayout 内部 requestLayout 无效
@@ -3587,8 +3633,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                              * https://github.com/scwang90/SmartRefreshLayout/issues/944
                              */
 //                            mRefreshFooter.getView().requestLayout();
-//                            thisView.layout(thisView.getLeft(), thisView.getTop(), thisView.getRight(), thisView.getBottom());
-
                             View footerView = mRefreshFooter.getView();
                             final ViewGroup.LayoutParams lp = footerView.getLayoutParams();
                             final MarginLayoutParams mlp = lp instanceof MarginLayoutParams ? (MarginLayoutParams)lp : sDefaultMarginLP;
