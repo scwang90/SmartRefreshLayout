@@ -118,13 +118,13 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
 #### 1.在 build.gradle 中添加依赖
 ```
 //1.1.0 （1.0.5及以前版本的老用户升级需谨慎，API改动过大）
-compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-28'
-compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-28'//没有使用特殊Header，可以不加这行
+compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-29'
+compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-29'//没有使用特殊Header，可以不加这行
 compile 'com.android.support:appcompat-v7:25.3.1'//版本 23以上（必须）
 
 //1.1.0 androidx 版本
-implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-11'
-implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-11'
+implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-12'
+implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-12'
 implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
 
@@ -260,6 +260,7 @@ SmartRefreshLayout 没有使用到：序列化、反序列化、JNI、反射，�
 [捐赠列表](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_donationlist.md)
 
 #### 友情链接
+[github/faith-hb/WidgetCase](https://github.com/faith-hb/WidgetCase)  
 [github/Bamboy120315/Freedom](https://github.com/Bamboy120315/Freedom)  
 [github/TommyLemon/APIJSON](https://github.com/TommyLemon/APIJSON)  
 [github/dengyuhan](https://github.com/dengyuhan)  
