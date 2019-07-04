@@ -1660,7 +1660,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 spinner = 0;
             }
         }
-        /**
+        /*
          * 如果彩蛋影响了您的APP，可以通过以下三种方法关闭
          *
          * 1.全局关闭（推荐）
