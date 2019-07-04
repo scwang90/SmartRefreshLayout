@@ -28,7 +28,7 @@ import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 /**
  * 贝塞尔曲线类雷达风格刷新组件
- * Created by lcodecore on 2016/10/2.
+ * Created by SCWANG on 2017/5/28.
  */
 
 @SuppressWarnings({"UnusedReturnValue", "unused"})
@@ -140,6 +140,11 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
         super.dispatchDraw(canvas);
     }
 
+    /**
+     * 绘制背景波形
+     * @param canvas 画布
+     * @param width 宽度
+     */
     protected void drawWave(Canvas canvas, int width) {
         //重置画笔
         mPath.reset();
@@ -147,10 +152,16 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
         mPath.lineTo(0, mWaveTop);
         mPath.quadTo(mWaveOffsetX >= 0 ? (mWaveOffsetX) : width / 2f, mWaveTop + mWaveHeight, width, mWaveTop);
         mPath.lineTo(width, 0);
-        mPaint.setColor(mPrimaryColor);
+        mPaint.setColor(0xFFFF0000);
         canvas.drawPath(mPath, mPaint);
     }
 
+    /**
+     * 绘制下拉时的 多个点
+     * @param canvas 画布
+     * @param width 宽度
+     * @param height 高度
+     */
     protected void drawDot(Canvas canvas, int width, int height) {
         if (mDotAlpha > 0) {
             mPaint.setColor(mAccentColor);
@@ -169,6 +180,12 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
         }
     }
 
+    /**
+     * 绘制刷新时的 雷达动画
+     * @param canvas 画布
+     * @param width 宽度
+     * @param height 高度
+     */
     protected void drawRadar(Canvas canvas, int width, int height) {
         final View thisView = this;
         if (/*mRadarAnimator != null*/mAnimatorSet != null || thisView.isInEditMode()) {
@@ -196,7 +213,12 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
         }
     }
 
-
+    /**
+     * 绘制刷新完成 白色扩散动画
+     * @param canvas 画布
+     * @param width 宽度
+     * @param height 高度
+     */
     protected void drawRipple(Canvas canvas, int width, int height) {
         if (mRippleRadius > 0) {
             mPaint.setColor(mAccentColor);
@@ -235,7 +257,7 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
 
     @Override
     public void onReleased(@NonNull final RefreshLayout refreshLayout, int height, int maxDragHeight) {
-        mWaveTop = height;
+        mWaveTop = height - 1;//减1，是为了消除边缘绘制，冒出线条问题
         mWavePulling = false;
 
         Interpolator interpolatorDecelerate = new SmartUtil();//new DecelerateInterpolator();

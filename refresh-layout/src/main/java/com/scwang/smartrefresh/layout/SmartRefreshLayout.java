@@ -134,7 +134,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     protected boolean mDisableContentWhenRefresh = false;//是否开启在刷新时候禁止操作内容视图
     protected boolean mDisableContentWhenLoading = false;//是否开启在刷新时候禁止操作内容视图
     protected boolean mFooterNoMoreData = false;//数据是否全部加载完成，如果完成就不能在触发加载事件
-    protected boolean mFooterNoMoreDataEffective = false;//是否 NoMoreData 生效
+    protected boolean mFooterNoMoreDataEffective = false;//是否 NoMoreData 生效(有的 Footer 可能不支持)
 
     protected boolean mManualLoadMore = false;//是否手动设置过LoadMore，用于智能开启
 //    protected boolean mManualNestedScrolling = false;//是否手动设置过 NestedScrolling，用于智能开启
@@ -720,7 +720,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 final SpinnerStyle style = mRefreshFooter.getSpinnerStyle();
                 int left = mlp.leftMargin;
                 int top = mlp.topMargin + thisView.getMeasuredHeight() - mFooterInsetStart;
-                if (mFooterNoMoreData && mFooterNoMoreDataEffective && mEnableFooterFollowWhenNoMoreData && mRefreshContent != null && isEnableRefreshOrLoadMore(mEnableLoadMore)) {
+                if (mFooterNoMoreData && mFooterNoMoreDataEffective && mEnableFooterFollowWhenNoMoreData && mRefreshContent != null
+                        && mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Translate
+                        && isEnableRefreshOrLoadMore(mEnableLoadMore)) {
                     final View contentView = mRefreshContent.getView();
                     final ViewGroup.LayoutParams clp = contentView.getLayoutParams();
                     final int topMargin = clp instanceof MarginLayoutParams ? ((MarginLayoutParams)clp).topMargin : 0;
@@ -1658,7 +1660,27 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 spinner = 0;
             }
         }
-        if (spinner > mScreenHeightPixels * 3 && thisView.getTag() == null) {
+        /**
+         * 如果彩蛋影响了您的APP，可以通过以下三种方法关闭
+         *
+         * 1.全局关闭（推荐）
+         *          SmartRefreshLayout.setDefaultRefreshInitializer(new DefaultRefreshInitializer() {
+         *             @Override
+         *             public void initialize(@NonNull Context context, @NonNull RefreshLayout layout) {
+         *                 layout.getLayout().setTag("close egg");
+         *             }
+         *         });
+         *
+         * 2.XML关闭
+         *          <com.scwang.smartrefresh.layout.SmartRefreshLayout
+         *              android:layout_width="match_parent"
+         *              android:layout_height="match_parent"
+         *              android:tag="close egg"/>
+         *
+         * 3.修改源码
+         *          源码引用，然后删掉下面4行的代码
+         */
+        if (spinner > mScreenHeightPixels * 5 && thisView.getTag() == null) {
             String egg = "你这么死拉，臣妾做不到啊！";
             Toast.makeText(thisView.getContext(), egg, Toast.LENGTH_SHORT).show();
             thisView.setTag(egg);
@@ -1968,24 +1990,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     //<editor-fold desc="开放接口 open interface">
 
     /**
-     * Set the Footer's height.
-     * 设置 Footer 的高度
-     * @param heightDp Density-independent Pixels 虚拟像素（px需要调用px2dp转换）
-     * @return RefreshLayout
-     */
-    @Override
-    public RefreshLayout setFooterHeight(float heightDp) {
-        if (mFooterHeightStatus.canReplaceWith(DimensionStatus.CodeExact)) {
-            mFooterHeight = dp2px(heightDp);
-            mFooterHeightStatus = DimensionStatus.CodeExactUnNotify;
-            if (mRefreshFooter != null) {
-                mRefreshFooter.getView().requestLayout();
-            }
-        }
-        return this;
-    }
-
-    /**
      * Set the Header's height.
      * 设置 Header 高度
      * @param heightDp Density-independent Pixels 虚拟像素（px需要调用px2dp转换）
@@ -1993,11 +1997,78 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      */
     @Override
     public RefreshLayout setHeaderHeight(float heightDp) {
+        int height = dp2px(heightDp);
+        if (height == mHeaderHeight) {
+            return this;
+        }
         if (mHeaderHeightStatus.canReplaceWith(DimensionStatus.CodeExact)) {
-            mHeaderHeight = dp2px(heightDp);
-            mHeaderHeightStatus = DimensionStatus.CodeExactUnNotify;
-            if (mRefreshHeader != null) {
-                mRefreshHeader.getView().requestLayout();
+            mHeaderHeight = height;
+            if (mRefreshHeader != null && mAttachedToWindow && mHeaderHeightStatus.notified) {
+                SpinnerStyle style = mRefreshHeader.getSpinnerStyle();
+                if (style != SpinnerStyle.MatchLayout && style != SpinnerStyle.Scale) {
+                    /*
+                     * 兼容 MotionLayout 2019-6-18
+                     * 在 MotionLayout 内部 requestLayout 无效
+                     * 该用 直接调用 layout 方式
+                     * https://github.com/scwang90/SmartRefreshLayout/issues/944
+                     */
+//                  mRefreshHeader.getView().requestLayout();
+                    View headerView = mRefreshHeader.getView();
+                    final ViewGroup.LayoutParams lp = headerView.getLayoutParams();
+                    final MarginLayoutParams mlp = lp instanceof MarginLayoutParams ? (MarginLayoutParams) lp : sDefaultMarginLP;
+                    final int widthSpec = makeMeasureSpec(headerView.getMeasuredWidth(), EXACTLY);
+                    headerView.measure(widthSpec, makeMeasureSpec(Math.max(mHeaderHeight - mlp.bottomMargin - mlp.topMargin, 0), EXACTLY));
+                    final int left = mlp.leftMargin;
+                    int top = mlp.topMargin + mHeaderInsetStart - ((style == SpinnerStyle.Translate) ? mHeaderHeight : 0);
+                    headerView.layout(left, top, left + headerView.getMeasuredWidth(), top + headerView.getMeasuredHeight());
+                }
+                mHeaderHeightStatus = DimensionStatus.CodeExact;
+                mRefreshHeader.onInitialized(mKernel, mHeaderHeight, (int) (mHeaderMaxDragRate * mHeaderHeight));
+            } else {
+                mHeaderHeightStatus = DimensionStatus.CodeExactUnNotify;
+            }
+        }
+        return this;
+    }
+
+    /**
+     * Set the Footer's height.
+     * 设置 Footer 的高度
+     * @param heightDp Density-independent Pixels 虚拟像素（px需要调用px2dp转换）
+     * @return RefreshLayout
+     */
+    @Override
+    public RefreshLayout setFooterHeight(float heightDp) {
+        int height = dp2px(heightDp);
+        if (height == mFooterHeight) {
+            return this;
+        }
+        if (mFooterHeightStatus.canReplaceWith(DimensionStatus.CodeExact)) {
+            mFooterHeight = height;
+            if (mRefreshFooter != null && mAttachedToWindow && mFooterHeightStatus.notified) {
+                SpinnerStyle style = mRefreshFooter.getSpinnerStyle();
+                if (style != SpinnerStyle.MatchLayout && style != SpinnerStyle.Scale) {
+                    /*
+                     * 兼容 MotionLayout 2019-6-18
+                     * 在 MotionLayout 内部 requestLayout 无效
+                     * 该用 直接调用 layout 方式
+                     * https://github.com/scwang90/SmartRefreshLayout/issues/944
+                     */
+//                  mRefreshFooter.getView().requestLayout();
+                    View thisView = this;
+                    View footerView = mRefreshFooter.getView();
+                    final ViewGroup.LayoutParams lp = footerView.getLayoutParams();
+                    final MarginLayoutParams mlp = lp instanceof MarginLayoutParams ? (MarginLayoutParams)lp : sDefaultMarginLP;
+                    final int widthSpec = makeMeasureSpec(footerView.getMeasuredWidth(), EXACTLY);
+                    footerView.measure(widthSpec, makeMeasureSpec(Math.max(mFooterHeight - mlp.bottomMargin - mlp.topMargin, 0), EXACTLY));
+                    final int left = mlp.leftMargin;
+                    final int top = mlp.topMargin + thisView.getMeasuredHeight() - mFooterInsetStart - ((style != SpinnerStyle.Translate) ? mFooterHeight : 0);
+                    footerView.layout(left, top, left + footerView.getMeasuredWidth(), top + footerView.getMeasuredHeight());
+                }
+                mFooterHeightStatus = DimensionStatus.CodeExact;
+                mRefreshFooter.onInitialized(mKernel, mFooterHeight, (int) (mFooterMaxDragRate * mFooterHeight));
+            } else {
+                mFooterHeightStatus = DimensionStatus.CodeExactUnNotify;
             }
         }
         return this;
@@ -2434,7 +2505,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             super.removeView(mRefreshFooter.getView());
         }
         this.mRefreshFooter = footer;
+        this.mFooterLocked = false;
         this.mFooterBackgroundColor = 0;
+        this.mFooterNoMoreDataEffective = false;
         this.mFooterNeedTouchEventWhenLoading = false;
         this.mFooterHeightStatus = mFooterHeightStatus.unNotify();
         this.mEnableLoadMore = !mManualLoadMore || mEnableLoadMore;
@@ -2658,19 +2731,25 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             finishLoadMoreWithNoMoreData();
             return this;
         }
-        mFooterNoMoreData = noMoreData;
-        if (mRefreshFooter instanceof RefreshFooter && !((RefreshFooter)mRefreshFooter).setNoMoreData(noMoreData)) {
-            mFooterNoMoreDataEffective = false;
-            String msg = "Footer:" + mRefreshFooter + " NoMoreData is not supported.(不支持NoMoreData，请使用ClassicsFooter或者自定义)";
-            Throwable e = new RuntimeException(msg);
-            e.printStackTrace();
-        } else {
-            mFooterNoMoreDataEffective = true;
-            if (mFooterNoMoreData && mEnableFooterFollowWhenNoMoreData
-                    && isEnableRefreshOrLoadMore(mEnableLoadMore)
-                    && isEnableTranslationContent(mEnableRefresh, mRefreshHeader)) {
-                mRefreshFooter.getView().setTranslationY(Math.max(0, mSpinner));
+        if (mFooterNoMoreData != noMoreData) {
+            mFooterNoMoreData = noMoreData;
+            if (mRefreshFooter instanceof RefreshFooter) {
+                if (((RefreshFooter) mRefreshFooter).setNoMoreData(noMoreData)) {
+                    mFooterNoMoreDataEffective = true;
+                    if (mFooterNoMoreData && mEnableFooterFollowWhenNoMoreData && mSpinner > 0
+                            && mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Translate
+                            && isEnableRefreshOrLoadMore(mEnableLoadMore)
+                            && isEnableTranslationContent(mEnableRefresh, mRefreshHeader)) {
+                        mRefreshFooter.getView().setTranslationY(mSpinner);
+                    }
+                } else {
+                    mFooterNoMoreDataEffective = false;
+                    String msg = "Footer:" + mRefreshFooter + " NoMoreData is not supported.(不支持NoMoreData，请使用ClassicsFooter或者自定义)";
+                    Throwable e = new RuntimeException(msg);
+                    e.printStackTrace();
+                }
             }
+
         }
         return this;
     }
@@ -3424,7 +3503,8 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
          *                   dispatchTouchEvent , nestScroll 等都为 true
          *                   autoRefresh，autoLoadMore，需要模拟拖动，也为 true
          */
-        public RefreshKernel moveSpinner(int spinner, boolean isDragging) {
+        @SuppressWarnings("ConstantConditions")
+        public RefreshKernel moveSpinner(final int spinner, final boolean isDragging) {
             if (mSpinner == spinner
                     && (mRefreshHeader == null || !mRefreshHeader.isSupportHorizontalDrag())
                     && (mRefreshFooter == null || !mRefreshFooter.isSupportHorizontalDrag())) {
@@ -3472,7 +3552,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 if (changed) {
                     mRefreshContent.moveSpinner(tSpinner, mHeaderTranslationViewId, mFooterTranslationViewId);
                     if (mFooterNoMoreData && mFooterNoMoreDataEffective && mEnableFooterFollowWhenNoMoreData
-                            && isEnableTranslationContent(mEnableHeaderTranslationContent, mRefreshHeader)
+                            && mRefreshFooter instanceof RefreshFooter && mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Translate
                             && isEnableRefreshOrLoadMore(mEnableLoadMore)) {
                         mRefreshFooter.getView().setTranslationY(Math.max(0, tSpinner));
                     }
@@ -3500,7 +3580,21 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                                 thisView.invalidate();
                             }
                         } else if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale){
-                            mRefreshHeader.getView().requestLayout();
+                            /*
+                             * 兼容 MotionLayout 2019-6-18
+                             * 在 MotionLayout 内部 requestLayout 无效
+                             * 该用 直接调用 layout 方式
+                             * https://github.com/scwang90/SmartRefreshLayout/issues/944
+                             */
+//                            mRefreshHeader.getView().requestLayout();
+                            View headerView = mRefreshHeader.getView();
+                            final ViewGroup.LayoutParams lp = headerView.getLayoutParams();
+                            final MarginLayoutParams mlp = lp instanceof MarginLayoutParams ? (MarginLayoutParams)lp : sDefaultMarginLP;
+                            final int widthSpec = makeMeasureSpec(headerView.getMeasuredWidth(), EXACTLY);
+                            headerView.measure(widthSpec, makeMeasureSpec(Math.max(mSpinner - mlp.bottomMargin - mlp.topMargin, 0), EXACTLY));
+                            final int left = mlp.leftMargin;
+                            final int top = mlp.topMargin + mHeaderInsetStart;
+                            headerView.layout(left, top, left + headerView.getMeasuredWidth(), top + headerView.getMeasuredHeight());
                         }
                         mRefreshHeader.onMoving(isDragging, percent, offset, headerHeight, maxDragHeight);
                     }
@@ -3532,7 +3626,21 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                                 thisView.invalidate();
                             }
                         } else if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Scale){
-                            mRefreshFooter.getView().requestLayout();
+                            /*
+                             * 兼容 MotionLayout 2019-6-18
+                             * 在 MotionLayout 内部 requestLayout 无效
+                             * 该用 直接调用 layout 方式
+                             * https://github.com/scwang90/SmartRefreshLayout/issues/944
+                             */
+//                            mRefreshFooter.getView().requestLayout();
+                            View footerView = mRefreshFooter.getView();
+                            final ViewGroup.LayoutParams lp = footerView.getLayoutParams();
+                            final MarginLayoutParams mlp = lp instanceof MarginLayoutParams ? (MarginLayoutParams)lp : sDefaultMarginLP;
+                            final int widthSpec = makeMeasureSpec(footerView.getMeasuredWidth(), EXACTLY);
+                            footerView.measure(widthSpec, makeMeasureSpec(Math.max(-mSpinner - mlp.bottomMargin - mlp.topMargin, 0), EXACTLY));
+                            final int left = mlp.leftMargin;
+                            final int bottom = mlp.topMargin + thisView.getMeasuredHeight() - mFooterInsetStart;
+                            footerView.layout(left, bottom - footerView.getMeasuredHeight(), left + footerView.getMeasuredWidth(), bottom);
                         }
                         mRefreshFooter.onMoving(isDragging, percent, offset, footerHeight, maxDragHeight);
                     }
