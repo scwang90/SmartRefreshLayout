@@ -321,6 +321,29 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
     //<editor-fold desc="API">
 
     /**
+     * Set the background color of the progress spinner disc.
+     *
+     * @param colorRes Resource id of the color.
+     */
+    public void setProgressBackgroundColorSchemeResource(@ColorRes int colorRes) {
+        final View thisView = this;
+        final Context context = thisView.getContext();
+        final int color = ContextCompat.getColor(context, colorRes);
+        setProgressBackgroundColorSchemeColor(color);
+    }
+
+    /**
+     * Set the background color of the progress spinner disc.
+     *
+     * @param color 颜色
+     */
+    public void setProgressBackgroundColorSchemeColor(@ColorInt int color) {
+        final View circle = mCircleView;
+        circle.setBackgroundColor(color);
+        mProgress.setBackgroundColor(color);
+    }
+
+    /**
      * 设置 ColorScheme
      * @param colors ColorScheme
      * @return MaterialHeader
