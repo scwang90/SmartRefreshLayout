@@ -1828,15 +1828,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         mNestedParent.onNestedScrollAccepted(child, target, axes);
         // Dispatch up to the nested parent
         mNestedChild.startNestedScroll(axes & ViewCompat.SCROLL_AXIS_VERTICAL);
-//        if (!mNestedChild.startNestedScroll(axes & ViewCompat.SCROLL_AXIS_VERTICAL)) {
-//            final View thisView = this;
-//            final ViewParent parent = thisView.getParent();
-//            if (parent instanceof ViewGroup) {
-//                //修复问题 https://github.com/scwang90/SmartRefreshLayout/issues/580
-//                //noinspection RedundantCast
-//                ((ViewGroup)parent).requestDisallowInterceptTouchEvent(true);//通知父控件不要拦截事件
-//            }
-//        }
 
         mTotalUnconsumed = mSpinner;//0;
         mNestedInProgress = true;
