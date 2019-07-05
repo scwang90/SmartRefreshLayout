@@ -35,6 +35,7 @@ import com.scwang.refreshlayout.fragment.example.NestedScrollExampleFragment;
 import com.scwang.refreshlayout.fragment.example.NoMoreDataExampleFragment;
 import com.scwang.refreshlayout.fragment.example.PureScrollExampleFragment;
 import com.scwang.refreshlayout.fragment.example.SpecifyStyleExampleFragment;
+import com.scwang.refreshlayout.fragment.example.ViewPager2Fragment;
 import com.scwang.refreshlayout.fragment.example.ViewPagerExampleFragment;
 import com.scwang.refreshlayout.util.StatusBarUtil;
 
@@ -64,6 +65,7 @@ public class RefreshExampleFragment extends Fragment implements AdapterView.OnIt
         BottomSheet(R.string.index_example_bottom_sheet,BottomSheetExampleFragment.class),
         FlexBoxLayout(R.string.index_example_flexbox, FlexBoxLayoutManagerFragment.class),
         Horizontal(R.string.index_example_horizontal, HorizontalExampleFragment.class),
+        ThreeLevel(R.string.index_example_level, ViewPager2Fragment.class),
 //        ThreeLevel(R.string.index_example_level, ThreeLevelExampleFragment.class),
         ;
         public int nameId;

@@ -1828,6 +1828,15 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         mNestedParent.onNestedScrollAccepted(child, target, axes);
         // Dispatch up to the nested parent
         mNestedChild.startNestedScroll(axes & ViewCompat.SCROLL_AXIS_VERTICAL);
+//        if (!mNestedChild.startNestedScroll(axes & ViewCompat.SCROLL_AXIS_VERTICAL)) {
+//            final View thisView = this;
+//            final ViewParent parent = thisView.getParent();
+//            if (parent instanceof ViewGroup) {
+//                //修复问题 https://github.com/scwang90/SmartRefreshLayout/issues/580
+//                //noinspection RedundantCast
+//                ((ViewGroup)parent).requestDisallowInterceptTouchEvent(true);//通知父控件不要拦截事件
+//            }
+//        }
 
         mTotalUnconsumed = mSpinner;//0;
         mNestedInProgress = true;
@@ -1867,7 +1876,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     @Override
     public void onNestedScroll(@NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
         // Dispatch up to the nested parent first
-        mNestedChild.dispatchNestedScroll(dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, mParentOffsetInWindow);
+        boolean scrolled = mNestedChild.dispatchNestedScroll(dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, mParentOffsetInWindow);
 
         // This is a bit of a hack. Nested scrolling works from the bottom up, and as we are
         // sometimes between two nested scrolling views, we need a way to be able to know when any
@@ -1882,6 +1891,15 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                  * mViceState.isOpening 时，主要修改的也是 mViceState 本身，而 mState 一直都是 isOpening
                  */
                 mKernel.setState(dy > 0 ? RefreshState.PullUpToLoad : RefreshState.PullDownToRefresh);
+                if (!scrolled) {
+                    final View thisView = this;
+                    final ViewParent parent = thisView.getParent();
+                    if (parent instanceof ViewGroup) {
+                        //修复问题 https://github.com/scwang90/SmartRefreshLayout/issues/580
+                        //noinspection RedundantCast
+                        ((ViewGroup)parent).requestDisallowInterceptTouchEvent(true);//通知父控件不要拦截事件
+                    }
+                }
             }
             moveSpinnerInfinitely(mTotalUnconsumed -= dy);
         }
