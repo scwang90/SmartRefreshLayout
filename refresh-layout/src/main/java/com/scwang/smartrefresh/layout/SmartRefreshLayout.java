@@ -2828,6 +2828,23 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      */
     @Override
     public RefreshLayout finishRefresh(int delayed, final boolean success, final Boolean noMoreData) {
+        if (mState == RefreshState.None && mViceState == RefreshState.Refreshing) {
+            //autoRefresh 即将执行，但未开始
+            mViceState = RefreshState.None;
+            return this;
+        } else if (reboundAnimator != null && mState.isHeader && (mState.isDragging || mState == RefreshState.RefreshReleased)) {
+            //autoRefresh 正在执行，但未结束
+            //mViceState = RefreshState.None;
+            final ValueAnimator animator = reboundAnimator;
+            reboundAnimator = null;
+            animator.cancel();
+//            resetStatus();
+            mKernel.setState(RefreshState.None);
+            return this;
+        } else if (mState != RefreshState.Refreshing) {
+            return this;
+        }
+        notifyStateChanged(RefreshState.RefreshFinish);
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -2835,7 +2852,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     if (noMoreData != null) {
                         setNoMoreData(noMoreData == Boolean.TRUE);
                     }
-                    notifyStateChanged(RefreshState.RefreshFinish);
+//                    notifyStateChanged(RefreshState.RefreshFinish);
                     int startDelay = mRefreshHeader.onFinish(SmartRefreshLayout.this, success);
                     if (mOnMultiPurposeListener != null && mRefreshHeader instanceof RefreshHeader) {
                         mOnMultiPurposeListener.onHeaderFinish((RefreshHeader) mRefreshHeader, success);
@@ -2876,17 +2893,17 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                             mKernel.setState(RefreshState.None);
                         }
                     }
-                } else if (mState == RefreshState.None && mViceState == RefreshState.Refreshing) {
-                    //autoRefresh 即将执行，但未开始
-                    mViceState = RefreshState.None;
-                } else if (reboundAnimator != null && mState.isHeader && (mState.isDragging || mState == RefreshState.RefreshReleased)) {
-                    //autoRefresh 正在执行，但未结束
-                    //mViceState = RefreshState.None;
-                    final ValueAnimator animator = reboundAnimator;
-                    reboundAnimator = null;
-                    animator.cancel();
-//                    resetStatus();
-                    mKernel.setState(RefreshState.None);
+//                } else if (mState == RefreshState.None && mViceState == RefreshState.Refreshing) {
+//                    //autoRefresh 即将执行，但未开始
+//                    mViceState = RefreshState.None;
+//                } else if (reboundAnimator != null && mState.isHeader && (mState.isDragging || mState == RefreshState.RefreshReleased)) {
+//                    //autoRefresh 正在执行，但未结束
+//                    //mViceState = RefreshState.None;
+//                    final ValueAnimator animator = reboundAnimator;
+//                    reboundAnimator = null;
+//                    animator.cancel();
+////                    resetStatus();
+//                    mKernel.setState(RefreshState.None);
                 }
             }
         }, delayed <= 0 ? 1 : delayed);
@@ -2937,11 +2954,27 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      */
     @Override
     public RefreshLayout finishLoadMore(int delayed, final boolean success, final boolean noMoreData) {
+        if (mState == RefreshState.None && mViceState == RefreshState.Loading) {
+            //autoLoadMore 即将执行，但未开始
+            mViceState = RefreshState.None;
+            return this;
+        } else if (reboundAnimator != null && (mState.isDragging || mState == RefreshState.LoadReleased) && mState.isFooter) {
+            //autoLoadMore 正在执行，但未结束
+            final ValueAnimator animator = reboundAnimator;
+            reboundAnimator = null;
+            animator.cancel();
+//            resetStatus();
+            mKernel.setState(RefreshState.None);
+            return this;
+        } else if (mState != RefreshState.Loading) {
+            return this;
+        }
+        notifyStateChanged(RefreshState.LoadFinish);
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 if (mState == RefreshState.Loading && mRefreshFooter != null && mRefreshContent != null) {
-                    notifyStateChanged(RefreshState.LoadFinish);
+//                    notifyStateChanged(RefreshState.LoadFinish);
                     final int startDelay = mRefreshFooter.onFinish(SmartRefreshLayout.this, success);
                     if (mOnMultiPurposeListener != null && mRefreshFooter instanceof RefreshFooter) {
                         mOnMultiPurposeListener.onFooterFinish((RefreshFooter) mRefreshFooter, success);
@@ -3022,17 +3055,17 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                         }, mSpinner < 0 ? startDelay : 0);
                     }
                 } else {
-                    if (mState == RefreshState.None && mViceState == RefreshState.Loading) {
-                        //autoLoadMore 即将执行，但未开始
-                        mViceState = RefreshState.None;
-                    } else if (reboundAnimator != null && (mState.isDragging || mState == RefreshState.LoadReleased) && mState.isFooter) {
-                        //autoLoadMore 正在执行，但未结束
-                        final ValueAnimator animator = reboundAnimator;
-                        reboundAnimator = null;
-                        animator.cancel();
-//                        resetStatus();
-                        mKernel.setState(RefreshState.None);
-                    }
+//                    if (mState == RefreshState.None && mViceState == RefreshState.Loading) {
+//                        //autoLoadMore 即将执行，但未开始
+//                        mViceState = RefreshState.None;
+//                    } else if (reboundAnimator != null && (mState.isDragging || mState == RefreshState.LoadReleased) && mState.isFooter) {
+//                        //autoLoadMore 正在执行，但未结束
+//                        final ValueAnimator animator = reboundAnimator;
+//                        reboundAnimator = null;
+//                        animator.cancel();
+////                        resetStatus();
+//                        mKernel.setState(RefreshState.None);
+//                    }
                     if (noMoreData) {
                         setNoMoreData(true);
                     }

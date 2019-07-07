@@ -28,8 +28,7 @@
             android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="4dp"
-            android:paddingBottom="5dp"
+            app:srlPrimaryColor="@android:color/transparent"
             app:srlAccentColor="@android:color/white"/>
 
         <android.support.v4.widget.NestedScrollView
