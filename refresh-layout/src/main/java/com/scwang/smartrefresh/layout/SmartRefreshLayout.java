@@ -3580,7 +3580,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 final int headerHeight = mHeaderHeight;
                 final int maxDragHeight = (int) (mHeaderHeight * mHeaderMaxDragRate);
                 final float percent = 1f * offset / (mHeaderHeight == 0 ? 1 : mHeaderHeight);
-
+                //因为用户有可能 finish 之后，直接 enable=false 关闭，所以还要加上 state 的状态判断
                 if (isEnableRefreshOrLoadMore(mEnableRefresh) || (mState == RefreshState.RefreshFinish && !isDragging)) {
                     if (oldSpinner != mSpinner) {
                         if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Translate) {
