@@ -1109,7 +1109,18 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      * @return true 可以拦截 嵌套滚动的 Fling
      */
     protected boolean startFlingIfNeed(float flingVelocity) {
-        final float velocity = flingVelocity == 0 ? mCurrentVelocity : flingVelocity;
+        float velocity = flingVelocity == 0 ? mCurrentVelocity : flingVelocity;
+        if (Build.VERSION.SDK_INT > 27 && mRefreshContent != null) {
+            /*
+             * 修复 API 27 以上【上下颠倒模式】没有回弹效果的bug
+             */
+            float scaleY = getScaleY();
+            final View thisView = this;
+            final View contentView = mRefreshContent.getView();
+            if (thisView.getScaleY() == -1 && contentView.getScaleY() == -1) {
+                velocity = -velocity;
+            }
+        }
         if (Math.abs(velocity) > mMinimumVelocity) {
             if (velocity * mSpinner < 0) {
                 /*
@@ -2841,14 +2852,15 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 //            resetStatus();
             mKernel.setState(RefreshState.None);
             return this;
-        } else if (mState != RefreshState.Refreshing) {
+        } else if (mState != RefreshState.Refreshing || mRefreshHeader == null || mRefreshContent == null) {
             return this;
         }
+        //提前设置 状态为 RefreshFinish 防止 postDelayed 导致 finishRefresh 过后，外部判断 state 还是 Refreshing
         notifyStateChanged(RefreshState.RefreshFinish);
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (mState == RefreshState.Refreshing && mRefreshHeader != null && mRefreshContent != null) {
+                if (mState == RefreshState.RefreshFinish && mRefreshHeader != null && mRefreshContent != null) {
                     if (noMoreData != null) {
                         setNoMoreData(noMoreData == Boolean.TRUE);
                     }
@@ -2966,14 +2978,15 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 //            resetStatus();
             mKernel.setState(RefreshState.None);
             return this;
-        } else if (mState != RefreshState.Loading) {
+        } else if (mState != RefreshState.Loading || mRefreshFooter == null || mRefreshContent == null) {
             return this;
         }
+        //提前设置 状态为 LoadFinish 防止 postDelayed 导致 finishLoadMore 过后，外部判断 state 还是 Loading
         notifyStateChanged(RefreshState.LoadFinish);
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (mState == RefreshState.Loading && mRefreshFooter != null && mRefreshContent != null) {
+                if (mState == RefreshState.LoadFinish && mRefreshFooter != null && mRefreshContent != null) {
 //                    notifyStateChanged(RefreshState.LoadFinish);
                     final int startDelay = mRefreshFooter.onFinish(SmartRefreshLayout.this, success);
                     if (mOnMultiPurposeListener != null && mRefreshFooter instanceof RefreshFooter) {

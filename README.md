@@ -123,8 +123,8 @@ compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-30'//没有使�
 compile 'com.android.support:appcompat-v7:25.3.1'//版本 23以上（必须）
 
 //1.1.0 androidx 版本
-implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-13'
-implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-13'
+implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-14'
+implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-14'
 implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
 
