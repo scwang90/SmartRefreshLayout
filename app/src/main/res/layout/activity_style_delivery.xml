@@ -21,7 +21,9 @@
         android:layout_height="match_parent"
         app:srlDragRate="0.7"
         app:srlHeaderMaxDragRate="1.3"
-        app:srlEnableLoadMore="false">
+        app:srlEnableLoadMore="false"
+        app:srlAccentColor="@android:color/white"
+        app:srlPrimaryColor="@android:color/transparent">
         <com.scwang.smartrefresh.header.DeliveryHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
