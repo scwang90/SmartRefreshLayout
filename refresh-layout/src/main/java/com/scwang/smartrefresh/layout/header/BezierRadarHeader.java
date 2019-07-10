@@ -153,7 +153,7 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
         mPath.lineTo(0, mWaveTop);
         mPath.quadTo(mWaveOffsetX >= 0 ? (mWaveOffsetX) : width / 2f, mWaveTop + mWaveHeight, width, mWaveTop);
         mPath.lineTo(width, 0);
-        mPaint.setColor(0xFFFF0000);
+        mPaint.setColor(mPrimaryColor);
         canvas.drawPath(mPath, mPaint);
     }
 
