@@ -47,6 +47,7 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
     protected int mWaveTop;
     protected int mWaveHeight;
     protected int mWaveOffsetX = -1;
+    protected int mWaveOffsetY = 0;
 
     protected float mDotAlpha;
     protected float mDotFraction;
@@ -74,7 +75,7 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
     public BezierRadarHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        mSpinnerStyle = SpinnerStyle.Scale;
+        mSpinnerStyle = SpinnerStyle.FixedBehind;
 
         final View thisView = this;
 
@@ -132,7 +133,7 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
     protected void dispatchDraw(Canvas canvas) {
         final View thisView = this;
         final int width = thisView.getWidth();
-        final int height = thisView.getHeight();
+        final int height = mWaveOffsetY;//thisView.getHeight();
         drawWave(canvas, width);
         drawDot(canvas, width, height);
         drawRadar(canvas, width, height);
@@ -152,7 +153,7 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
         mPath.lineTo(0, mWaveTop);
         mPath.quadTo(mWaveOffsetX >= 0 ? (mWaveOffsetX) : width / 2f, mWaveTop + mWaveHeight, width, mWaveTop);
         mPath.lineTo(width, 0);
-        mPaint.setColor(0xFFFF0000);
+        mPaint.setColor(mPrimaryColor);
         canvas.drawPath(mPath, mPaint);
     }
 
@@ -160,7 +161,6 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
      * 绘制下拉时的 多个点
      * @param canvas 画布
      * @param width 宽度
-     * @param height 高度
      */
     protected void drawDot(Canvas canvas, int width, int height) {
         if (mDotAlpha > 0) {
@@ -168,7 +168,7 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
             final int num = 7;
             float x = SmartUtil.px2dp(height);
             float wide = (1f * width / num) * mDotFraction -((mDotFraction >1)?((mDotFraction -1)*(1f * width / num)/ mDotFraction):0);//y1 = t*(w/n)-(t>1)*((t-1)*(w/n)/t)
-            float high = height - ((mDotFraction >1)?((mDotFraction -1)*height/2/ mDotFraction):0);//y2 = x - (t>1)*((t-1)*x/t);
+            float high = height - ((mDotFraction > 1) ? ((mDotFraction - 1) * height / 2 / mDotFraction) : 0);//y2 = x - (t>1)*((t-1)*x/t);
             for (int i = 0 ; i < num; i++) {
                 float index = 1f + i - (1f + num) / 2;//y3 = (x + 1) - (n + 1)/2; 居中 index 变量：0 1 2 3 4 结果： -2 -1 0 1 2
                 float alpha = 255 * (1 - (2 * (Math.abs(index) / num)));//y4 = m * ( 1 - 2 * abs(y3) / n); 横向 alpha 差
@@ -232,11 +232,15 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
 
     @Override
     public void onMoving(boolean isDragging, float percent, int offset, int height, int maxDragHeight) {
+        mWaveOffsetY = offset;
         if (isDragging || mWavePulling) {
             mWavePulling = true;
             mWaveTop = Math.min(height, offset);
             mWaveHeight = (int) (1.9f * Math.max(0, offset - height));
             mDotFraction = percent;
+
+            final View thisView = this;
+            thisView.invalidate();
         }
     }
 
@@ -307,7 +311,7 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
         final int duration = 400;
         final View thisView = this;
         final int width = thisView.getWidth();
-        final int height = thisView.getHeight();
+        final int height = mWaveOffsetY;//thisView.getHeight();
         final float bigRadius = (float) (Math.sqrt(width * width + height * height));
         ValueAnimator animator = ValueAnimator.ofFloat(0, bigRadius);
         animator.setDuration(duration);

@@ -231,6 +231,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         super(context, attrs, defStyleAttr);
 
         super.setClipToPadding(false);
+        super.setClipChildren(false);
 
         ViewConfiguration configuration = ViewConfiguration.get(context);
 
