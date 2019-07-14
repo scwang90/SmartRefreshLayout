@@ -45,6 +45,8 @@
     </attr>
 
     <declare-styleable name="SmartRefreshLayout">
+        <attr name="android:clipChildren"/>
+        <attr name="android:clipToPadding"/>
         <attr name="srlPrimaryColor"/>
         <attr name="srlAccentColor"/>
         <attr name="srlReboundDuration" format="integer"/>

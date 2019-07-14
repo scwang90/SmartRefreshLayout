@@ -264,7 +264,7 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
         mWaveTop = height - 1;//减1，是为了消除边缘绘制，冒出线条问题
         mWavePulling = false;
 
-        Interpolator interpolatorDecelerate = new SmartUtil();//new DecelerateInterpolator();
+        Interpolator interpolatorDecelerate = new SmartUtil(SmartUtil.INTERPOLATOR_DECELERATE);//new DecelerateInterpolator();
         //圆点消失动画
         ValueAnimator animatorDotAlpha = ValueAnimator.ofFloat(1, 0);
         animatorDotAlpha.setInterpolator(interpolatorDecelerate);
@@ -273,7 +273,7 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
         ValueAnimator animatorRadarScale = ValueAnimator.ofFloat(0, 1);
         animatorDotAlpha.setInterpolator(interpolatorDecelerate);
         animatorRadarScale.addUpdateListener(new AnimatorUpdater(PROPERTY_RADAR_SCALE));
-        //雷达选装
+        //雷达旋转
         ValueAnimator mRadarAnimator = ValueAnimator.ofInt(0,360);
         mRadarAnimator.setDuration(720);
         mRadarAnimator.setRepeatCount(ValueAnimator.INFINITE);
@@ -289,7 +289,7 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
                 -(int)(mWaveHeight *0.8f),0,
                 -(int)(mWaveHeight *0.4f),0);
         animatorWave.addUpdateListener(new AnimatorUpdater(PROPERTY_WAVE_HEIGHT));
-        animatorWave.setInterpolator(interpolatorDecelerate);
+        animatorWave.setInterpolator(new SmartUtil(SmartUtil.INTERPOLATOR_DECELERATE));
         animatorWave.setDuration(800);
         animatorWave.start();
 
@@ -313,7 +313,7 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
         final int width = thisView.getWidth();
         final int height = mWaveOffsetY;//thisView.getHeight();
         final float bigRadius = (float) (Math.sqrt(width * width + height * height));
-        ValueAnimator animator = ValueAnimator.ofFloat(0, bigRadius);
+        ValueAnimator animator = ValueAnimator.ofFloat(mRadarRadius, bigRadius);
         animator.setDuration(duration);
         animator.addUpdateListener(new AnimatorUpdater(PROPERTY_RIPPLE_RADIUS));
         animator.start();
