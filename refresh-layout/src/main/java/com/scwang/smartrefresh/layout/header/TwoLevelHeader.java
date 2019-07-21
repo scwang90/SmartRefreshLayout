@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.view.NestedScrollingParent;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,7 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
  * Created by SCWANG on 2017/5/26.
  */
 @SuppressWarnings({"unused", "UnusedReturnValue"})
-public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*, InvocationHandler*/ {
+public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*, NestedScrollingParent*/ {
 
     //<editor-fold desc="属性字段">
     protected int mSpinner;
@@ -229,6 +230,12 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
             }
         }
     }
+
+//    @Override
+//    public boolean onStartNestedScroll(View child, View target, int nestedScrollAxes) {
+//        return true;
+//    }
+
     //</editor-fold>
 
     //<editor-fold desc="开放接口 - API">
