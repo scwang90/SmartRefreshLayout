@@ -35,7 +35,7 @@ public class SmartRefreshHorizontal extends FrameLayout implements RefreshLayout
 
     public SmartRefreshHorizontal(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        mRefreshLayout = new SmartRefreshContent(context, attrs, defStyleAttr);
+        mRefreshLayout = new SmartRefreshContent(context, attrs);
         mRefreshLayout.setEnableAutoLoadMore(false);
         mRefreshLayout.setScrollBoundaryDecider(new ScrollBoundaryDeciderAdapter(){
             @Override

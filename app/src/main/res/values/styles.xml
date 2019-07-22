@@ -10,6 +10,13 @@
         <item name="android:listDivider">@drawable/ic_list_divider</item>
         <item name="android:homeAsUpIndicator">@drawable/ic_arrow_back_white_24dp</item>
         <item name="styleLoadingLayout">@style/LoadingLayoutStyle</item>
+        <item name="srlStyle">@style/SmartStyle</item>
+    </style>
+
+    <style name="SmartStyle" parent="SmartRefreshStyle">
+        <item name="srlPrimaryColor">@color/colorAccent</item>
+        <item name="srlAccentColor">@android:color/white</item>
+        <item name="srlEnableOverScrollBounce">false</item>
     </style>
 
     <style name="LoadingLayoutStyle" parent="LoadingLayout.Style">

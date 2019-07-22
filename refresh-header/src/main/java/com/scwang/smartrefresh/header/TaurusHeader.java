@@ -112,11 +112,7 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
     }
 
     public TaurusHeader(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public TaurusHeader(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(context, attrs, 0);
 
         final View thisView = this;
 

@@ -87,11 +87,7 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
     }
 
     public DropBoxHeader(Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public DropBoxHeader(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(context, attrs, 0);
 
         mPath = new Path();
         mPaint = new Paint();

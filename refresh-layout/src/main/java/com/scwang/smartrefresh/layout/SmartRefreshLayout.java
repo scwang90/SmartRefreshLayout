@@ -224,7 +224,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     }
 
     public SmartRefreshLayout(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        this(context, attrs, R.attr.srlStyle);
     }
 
     public SmartRefreshLayout(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -246,17 +246,17 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
 //        mNestedChild.setNestedScrollingEnabled(true);//默认开启嵌套滚动
 
-        if (sRefreshInitializer != null) {
-            sRefreshInitializer.initialize(context, this);//调用全局初始化
-        }
-
-        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.SmartRefreshLayout);
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.SmartRefreshLayout, R.attr.srlStyle, 0);
 
         if (!ta.hasValue(R.styleable.SmartRefreshLayout_android_clipToPadding)) {
             super.setClipToPadding(false);
         }
         if (!ta.hasValue(R.styleable.SmartRefreshLayout_android_clipChildren)) {
             super.setClipChildren(false);
+        }
+
+        if (sRefreshInitializer != null) {
+            sRefreshInitializer.initialize(context, this);//调用全局初始化
         }
 
         mDragRate = ta.getFloat(R.styleable.SmartRefreshLayout_srlDragRate, mDragRate);
@@ -2764,7 +2764,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     }
                 } else {
                     mFooterNoMoreDataEffective = false;
-                    String msg = "Footer:" + mRefreshFooter + " NoMoreData is not supported.(不支持NoMoreData，请使用ClassicsFooter或者自定义)";
+                    String msg = "Footer:" + mRefreshFooter + " NoMoreData is not supported.(不支持NoMoreData，请使用[ClassicsFooter]或者[自定义Footer并实现setNoMoreData方法且返回true])";
                     Throwable e = new RuntimeException(msg);
                     e.printStackTrace();
                 }

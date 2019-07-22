@@ -39,11 +39,7 @@ public class FalsifyHeader extends InternalAbstract implements RefreshHeader {
     }
 
     public FalsifyHeader(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public FalsifyHeader(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(context, attrs, 0);
     }
 
     @Override

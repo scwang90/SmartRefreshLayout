@@ -134,7 +134,7 @@
                         android:layout_height="match_parent"
                         android:layout_margin="@dimen/dimenPaddingCommon"
                         android:contentDescription="@string/app_name"
-                        app:srcCompat="@drawable/ic_fly_refresh_smartphone"/>
+                        app:srcCompat="@drawable/ic_fly_refresh_phone"/>
                 </com.flyco.roundview.RoundFrameLayout>
                 <TextView style="@style/AppTheme.Label.Title"
                     android:layout_gravity="center_vertical"

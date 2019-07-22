@@ -68,11 +68,7 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
     }
 
     public MaterialHeader(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public MaterialHeader(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(context, attrs, 0);
 
         mSpinnerStyle = SpinnerStyle.MatchLayout;
         final View thisView = this;

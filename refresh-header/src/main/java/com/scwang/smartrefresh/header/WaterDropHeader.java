@@ -57,11 +57,7 @@ public class WaterDropHeader extends InternalAbstract implements RefreshHeader {
     }
 
     public WaterDropHeader(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public WaterDropHeader(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(context, attrs, 0);
 
         final ViewGroup thisGroup = this;
 

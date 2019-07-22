@@ -102,6 +102,7 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
     protected Matrix mMatrix;
     protected float mPercent;
     protected float mRotate;
+    protected int mHeight;
     protected int mHeaderHeight;
     protected int mSunSize;
     protected boolean isRefreshing;
@@ -124,7 +125,7 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
         final View thisView = this;
         thisView.setMinimumHeight(SmartUtil.dp2px(100));
 
-        mSpinnerStyle = SpinnerStyle.Scale;
+        mSpinnerStyle = SpinnerStyle.FixedBehind;
 
 
         //<editor-fold desc="setupAnimation">
@@ -198,8 +199,11 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
 
     @Override
     public void onMoving(boolean isDragging, float percent, int offset, int height, int maxDragHeight) {
+        mHeight = offset;
         mHeaderHeight = height;
         mRotate = mPercent = 1f * offset / height;
+        final View thisView = this;
+        thisView.invalidate();
     }
 
 //    @Override
@@ -272,7 +276,7 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
 
         final View thisView = this;
         final int width = thisView.getWidth();
-        final int height = thisView.getHeight();
+        final int height = mHeight;//thisView.getHeight();
         drawSky(canvas, width, height);
         drawSun(canvas, width);
         drawTown(canvas, width, height);

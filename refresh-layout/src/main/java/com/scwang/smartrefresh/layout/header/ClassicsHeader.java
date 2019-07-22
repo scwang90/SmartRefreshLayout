@@ -75,11 +75,7 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
     }
 
     public ClassicsHeader(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public ClassicsHeader(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(context, attrs, 0);
 
         View.inflate(context, R.layout.srl_classics_header, this);
 

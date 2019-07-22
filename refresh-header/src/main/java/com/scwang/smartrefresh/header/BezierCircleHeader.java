@@ -60,11 +60,7 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
     }
 
     public BezierCircleHeader(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public BezierCircleHeader(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(context, attrs, 0);
 
         mSpinnerStyle = SpinnerStyle.Scale;
         final View thisView = this;

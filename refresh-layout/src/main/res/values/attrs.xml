@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <attr name="srlStyle" format="reference"/><!--样式-->
+
     <attr name="srlDrawableSize" format="dimension"/><!--图片尺寸-->
     <attr name="srlDrawableArrowSize" format="dimension"/><!--箭头图片尺寸-->
     <attr name="srlDrawableProgressSize" format="dimension"/><!--箭头图片尺寸-->
@@ -160,5 +163,43 @@
         <attr name="srlEnableTwoLevel" format="boolean"/>
         <attr name="srlEnablePullToCloseTwoLevel" format="boolean"/>
     </declare-styleable>
+
+    <style name="SmartRefreshStyle">
+        <item name="srlPrimaryColor"/>
+        <item name="srlAccentColor"/>
+        <item name="srlReboundDuration" format="integer"/>
+        <item name="srlHeaderHeight" format="dimension"/>
+        <item name="srlFooterHeight" format="dimension"/>
+        <item name="srlHeaderInsetStart" format="dimension"/>
+        <item name="srlFooterInsetStart" format="dimension"/>
+        <item name="srlDragRate" format="float"/>
+        <item name="srlHeaderMaxDragRate" format="float"/>
+        <item name="srlFooterMaxDragRate" format="float"/>
+        <item name="srlHeaderTriggerRate" format="float"/>
+        <item name="srlFooterTriggerRate" format="float"/>
+        <item name="srlEnableRefresh" format="boolean"/>
+        <item name="srlEnableLoadMore" format="boolean"/>
+        <item name="srlEnableHeaderTranslationContent" format="boolean"/>
+        <item name="srlEnableFooterTranslationContent" format="boolean"/>
+        <item name="srlHeaderTranslationViewId" format="reference"/>
+        <item name="srlFooterTranslationViewId" format="reference"/>
+        <item name="srlEnablePreviewInEditMode" format="boolean"/>
+        <item name="srlEnableAutoLoadMore" format="boolean"/>
+        <item name="srlEnableOverScrollBounce" format="boolean"/>
+        <item name="srlEnablePureScrollMode" format="boolean"/>
+        <item name="srlEnableNestedScrolling" format="boolean"/>
+        <item name="srlEnableScrollContentWhenLoaded" format="boolean"/>
+        <item name="srlEnableScrollContentWhenRefreshed" format="boolean"/>
+        <item name="srlEnableLoadMoreWhenContentNotFull" format="boolean"/>
+        <item name="srlEnableFooterFollowWhenLoadFinished" format="boolean"/>
+        <item name="srlEnableFooterFollowWhenNoMoreData" format="boolean"/>
+        <item name="srlEnableClipHeaderWhenFixedBehind" format="boolean"/>
+        <item name="srlEnableClipFooterWhenFixedBehind" format="boolean"/>
+        <item name="srlEnableOverScrollDrag" format="boolean"/>
+        <item name="srlDisableContentWhenRefresh" format="boolean"/>
+        <item name="srlDisableContentWhenLoading" format="boolean"/>
+        <item name="srlFixedHeaderViewId" format="reference"/>
+        <item name="srlFixedFooterViewId" format="reference"/>
+    </style>
 
 </resources>

@@ -5,8 +5,12 @@ import android.content.res.TypedArray;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.NestedScrollingParent;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.view.VelocityTracker;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 
 import com.scwang.smartrefresh.layout.R;
@@ -55,11 +59,8 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
     }
 
     public TwoLevelHeader(@NonNull Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
+        super(context, attrs, 0);
 
-    public TwoLevelHeader(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
         mSpinnerStyle = SpinnerStyle.FixedBehind;
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.TwoLevelHeader);
@@ -231,12 +232,22 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
         }
     }
 
+    //</editor-fold>
+
+//    private int mNestedScrollAxes = 0;
 //    @Override
 //    public boolean onStartNestedScroll(View child, View target, int nestedScrollAxes) {
 //        return true;
 //    }
-
-    //</editor-fold>
+//    public void onNestedScrollAccepted(View child, View target, int nestedScrollAxes) {
+//        mNestedScrollAxes = nestedScrollAxes;
+//    }
+//    public void onStopNestedScroll(View target) {}
+//    public void onNestedScroll(View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {}
+//    public void onNestedPreScroll(View target, int dx, int dy, int[] consumed){}
+//    public boolean onNestedFling(View target, float velocityX, float velocityY, boolean consumed){return false;}
+//    public boolean onNestedPreFling(View target, float velocityX, float velocityY) {return false;}
+//    public int getNestedScrollAxes() {return mNestedScrollAxes;}
 
     //<editor-fold desc="开放接口 - API">
 

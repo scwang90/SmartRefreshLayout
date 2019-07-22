@@ -1,6 +1,7 @@
 # 更新日志
 
 ## V 1.1.0 (开发中)
+>添加：srlStyle 主题支持
 >添加：srlHeaderTranslationViewId 属性，指定下拉Header时偏移的视图Id  
 >添加：srlFooterTranslationViewId 属性，指定上拉Footer时偏移的视图Id  
 >添加：setDefaultRefreshInitializer 方法，采用优先级最低的配置全局设置  
@@ -13,7 +14,7 @@
 >删除：部分冗余的API接口  
 >删除：1.0.5 中标记过时的API接口  
 >优化：淘宝二楼展开中途可以被拦截的问题  
->优化：极度优化算法，使得dex-method从1366降低到907  
+>优化：极度优化算法，使得dex-method从1366降低到788
 >精简：极度精简代码，是的dex-size从139kb降低到121kb  
 >兼容：修改算法使得可以在BottomSheetDialog内部使用  
 >修改：把仿苹果越界拖动功能默认为关闭，需要手动打开  
