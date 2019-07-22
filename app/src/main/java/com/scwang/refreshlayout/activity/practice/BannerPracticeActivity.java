@@ -22,9 +22,11 @@ import com.google.gson.reflect.TypeToken;
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.util.StatusBarUtil;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
+import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
@@ -86,9 +88,12 @@ public class BannerPracticeActivity extends AppCompatActivity {
 //                refreshLayout.finishLoadMoreWithNoMoreData();
 //            }
 //        });
-        refreshLayout.setOnLoadMoreListener(rl -> {
-            mAdapter.addData(movies);
-            rl.finishLoadMoreWithNoMoreData();
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout rl) {
+                mAdapter.addData(movies);
+                rl.finishLoadMoreWithNoMoreData();
+            }
         });
 
 
@@ -97,8 +102,11 @@ public class BannerPracticeActivity extends AppCompatActivity {
         Banner banner = (Banner) header;
         banner.setImageLoader(new GlideImageLoader());
         banner.setImages(BANNER_ITEMS);
-        banner.setOnBannerListener(i -> {
-            Toast.makeText(this, "点击了第"+i+"页", Toast.LENGTH_SHORT).show();
+        banner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int i) {
+                Toast.makeText(BannerPracticeActivity.this, "点击了第" + i + "页", Toast.LENGTH_SHORT).show();
+            }
         });
         if (Build.VERSION.SDK_INT > 26) {
             List titles = BANNER_ITEMS.stream().map(new Function<BannerItem, String>() {

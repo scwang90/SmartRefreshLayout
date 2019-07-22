@@ -24,6 +24,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static android.R.layout.simple_list_item_2;
 
@@ -117,7 +118,8 @@ public class SecondFloorPracticeFragment extends Fragment {
         RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
         if (recyclerView != null) {
 //            recyclerView.setNestedScrollingEnabled(false);
-            recyclerView.setAdapter(new BaseRecyclerAdapter<Void>(Arrays.asList(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null),simple_list_item_2) {
+            List<Void> voids = Arrays.asList(null, null, null, null, null, null, null, null, null, null);
+            recyclerView.setAdapter(new BaseRecyclerAdapter<Void>(voids, simple_list_item_2) {
                 @Override
                 protected void onBindViewHolder(SmartViewHolder holder, Void model, int position) {
                     holder.text(android.R.id.text1, getString(R.string.item_example_number_title, position));

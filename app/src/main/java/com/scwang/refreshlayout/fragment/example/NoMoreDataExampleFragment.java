@@ -66,7 +66,7 @@ public class NoMoreDataExampleFragment extends Fragment {
             refreshLayout.autoRefresh();
             refreshLayout.setOnRefreshListener(new OnRefreshListener() {
                 @Override
-                public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                public void onRefresh(@NonNull final RefreshLayout refreshLayout) {
                     refreshLayout.getLayout().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -83,7 +83,7 @@ public class NoMoreDataExampleFragment extends Fragment {
             });
             refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
                 @Override
-                public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                public void onLoadMore(@NonNull final RefreshLayout refreshLayout) {
                     refreshLayout.getLayout().postDelayed(new Runnable() {
                         @Override
                         public void run() {
