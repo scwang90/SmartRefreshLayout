@@ -9,6 +9,7 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         style="@style/AppTheme.Toolbar"
+        app:navigationIcon="?attr/homeAsUpIndicator"
         app:title="@string/fragment_example_no_more_data" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
