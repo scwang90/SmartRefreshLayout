@@ -278,7 +278,7 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
             if (refreshHeader.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
                 thisGroup.addView(refreshHeader.getView(), 0, new LayoutParams(width, height));
             } else {
-                thisGroup.addView(refreshHeader.getView(), width, height);
+                thisGroup.addView(refreshHeader.getView(), thisGroup.getChildCount(), new LayoutParams(width, height));
             }
             this.mRefreshHeader = header;
             this.mWrappedInternal = header;

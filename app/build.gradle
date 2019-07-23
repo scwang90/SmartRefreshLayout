@@ -6,7 +6,7 @@ android {
     buildToolsVersion '27.0.3'
 
     defaultConfig {
-        applicationId "com.scwang.refreshlayout.app.test"
+        applicationId "com.scwang.refreshlayout.app"
         minSdkVersion 16
         targetSdkVersion 27
         versionCode 1

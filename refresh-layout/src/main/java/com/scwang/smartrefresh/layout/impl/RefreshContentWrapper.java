@@ -220,6 +220,7 @@ public class RefreshContentWrapper implements RefreshContent , CoordinatorLayout
             ViewGroup frameLayout = new FrameLayout(mContentView.getContext());
             int index = kernel.getRefreshLayout().getLayout().indexOfChild(mContentView);
             kernel.getRefreshLayout().getLayout().removeView(mContentView);
+            frameLayout.addView(mContentView, 0, new ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT));
             ViewGroup.LayoutParams layoutParams = mContentView.getLayoutParams();
             kernel.getRefreshLayout().getLayout().addView(frameLayout, index, layoutParams);
             mContentView = frameLayout;
@@ -232,7 +233,7 @@ public class RefreshContentWrapper implements RefreshContent , CoordinatorLayout
                 parent.removeView(fixedHeader);
                 lp.height = measureViewHeight(fixedHeader);
                 parent.addView(new Space(mContentView.getContext()), index, lp);
-                frameLayout.addView(fixedHeader, 0, lp);
+                frameLayout.addView(fixedHeader, 1, lp);
             }
             if (fixedFooter != null) {
                 fixedFooter.setTag("fixed-bottom");
@@ -245,9 +246,8 @@ public class RefreshContentWrapper implements RefreshContent , CoordinatorLayout
                 lp.height = measureViewHeight(fixedFooter);
                 parent.addView(new Space(mContentView.getContext()), index, lp);
                 flp.gravity = Gravity.BOTTOM;
-                frameLayout.addView(fixedFooter, 0, flp);
+                frameLayout.addView(fixedFooter, 1, flp);
             }
-            frameLayout.addView(mContentView, MATCH_PARENT, MATCH_PARENT);
         }
     }
 
