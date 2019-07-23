@@ -11,6 +11,8 @@
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clipChildren="true"
+        android:clipToPadding="true"
         app:srlDragRate="0.7"
         app:srlHeaderMaxDragRate="1.3"
         app:srlHeaderHeight="150dp"

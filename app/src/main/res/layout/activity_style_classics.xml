@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackgroundDark"
     tools:context="com.scwang.refreshlayout.activity.style.ClassicsStyleActivity"
     android:orientation="vertical">
 
@@ -16,6 +17,8 @@
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:srlAccentColor="@color/colorTextContent"
+        app:srlPrimaryColor="@android:color/transparent"
         app:srlEnableLoadMore="true"
         app:srlEnableAutoLoadMore="false">
         <com.scwang.smartrefresh.layout.header.ClassicsHeader

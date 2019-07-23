@@ -28,6 +28,15 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 public class SmartUtil implements Interpolator {
 
+    public static int INTERPOLATOR_VISCOUS_FLUID = 0;
+    public static int INTERPOLATOR_DECELERATE = 1;
+
+    private int type = INTERPOLATOR_VISCOUS_FLUID;
+
+    public SmartUtil(int type) {
+        this.type = type;
+    }
+
     //<editor-fold desc="内容工具">
     public static int measureViewHeight(View view) {
         ViewGroup.LayoutParams p = view.getLayoutParams();
@@ -267,6 +276,9 @@ public class SmartUtil implements Interpolator {
 
     @Override
     public float getInterpolation(float input) {
+        if (type == INTERPOLATOR_DECELERATE) {
+            return (1.0f - (1.0f - input) * (1.0f - input));
+        }
         final float interpolated = VISCOUS_FLUID_NORMALIZE * viscousFluid(input);
         if (interpolated > 0) {
             return interpolated + VISCOUS_FLUID_OFFSET;

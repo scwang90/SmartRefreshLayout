@@ -98,11 +98,7 @@ public class FunGameHitBlockHeader extends FunGameView {
     }
 
     public FunGameHitBlockHeader(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public FunGameHitBlockHeader(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
+        super(context, attrs, 0);
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.FunGameHitBlockHeader);
         speed = ta.getInt(R.styleable.FunGameHitBlockHeader_fghBallSpeed, SmartUtil.dp2px(SPEED));

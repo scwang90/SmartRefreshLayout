@@ -92,11 +92,7 @@ public class DeliveryHeader extends InternalAbstract implements RefreshHeader {
     }
 
     public DeliveryHeader(Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public DeliveryHeader(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(context, attrs, 0);
 
         mSpinnerStyle = SpinnerStyle.Scale;
 

@@ -49,14 +49,9 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
     }
 
     public ClassicsFooter(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public ClassicsFooter(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(context, attrs, 0);
 
         View.inflate(context, R.layout.srl_classics_footer, this);
-
 
         final View thisView = this;
         final View arrowView = mArrowView = thisView.findViewById(R.id.srl_classics_arrow);

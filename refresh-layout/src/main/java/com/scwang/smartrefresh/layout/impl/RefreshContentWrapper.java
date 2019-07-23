@@ -218,34 +218,35 @@ public class RefreshContentWrapper implements RefreshContent , CoordinatorLayout
             mFixedHeader = fixedHeader;
             mFixedFooter = fixedFooter;
             ViewGroup frameLayout = new FrameLayout(mContentView.getContext());
+            int index = kernel.getRefreshLayout().getLayout().indexOfChild(mContentView);
             kernel.getRefreshLayout().getLayout().removeView(mContentView);
+            frameLayout.addView(mContentView, 0, new ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT));
             ViewGroup.LayoutParams layoutParams = mContentView.getLayoutParams();
-            frameLayout.addView(mContentView, MATCH_PARENT, MATCH_PARENT);
-            kernel.getRefreshLayout().getLayout().addView(frameLayout, layoutParams);
+            kernel.getRefreshLayout().getLayout().addView(frameLayout, index, layoutParams);
             mContentView = frameLayout;
             if (fixedHeader != null) {
                 fixedHeader.setTag("fixed-top");
 //                fixedHeader.setClickable(true);
                 ViewGroup.LayoutParams lp = fixedHeader.getLayoutParams();
                 ViewGroup parent = (ViewGroup) fixedHeader.getParent();
-                int index = parent.indexOfChild(fixedHeader);
+                index = parent.indexOfChild(fixedHeader);
                 parent.removeView(fixedHeader);
                 lp.height = measureViewHeight(fixedHeader);
                 parent.addView(new Space(mContentView.getContext()), index, lp);
-                frameLayout.addView(fixedHeader);
+                frameLayout.addView(fixedHeader, 1, lp);
             }
             if (fixedFooter != null) {
                 fixedFooter.setTag("fixed-bottom");
 //                fixedFooter.setClickable(true);
                 ViewGroup.LayoutParams lp = fixedFooter.getLayoutParams();
                 ViewGroup parent = (ViewGroup) fixedFooter.getParent();
-                int index = parent.indexOfChild(fixedFooter);
+                index = parent.indexOfChild(fixedFooter);
                 parent.removeView(fixedFooter);
                 FrameLayout.LayoutParams flp = new FrameLayout.LayoutParams(lp);
                 lp.height = measureViewHeight(fixedFooter);
                 parent.addView(new Space(mContentView.getContext()), index, lp);
                 flp.gravity = Gravity.BOTTOM;
-                frameLayout.addView(fixedFooter, flp);
+                frameLayout.addView(fixedFooter, 1, flp);
             }
         }
     }

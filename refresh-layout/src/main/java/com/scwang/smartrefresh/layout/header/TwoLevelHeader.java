@@ -4,8 +4,13 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.view.NestedScrollingParent;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.view.VelocityTracker;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 
 import com.scwang.smartrefresh.layout.R;
@@ -27,7 +32,7 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
  * Created by SCWANG on 2017/5/26.
  */
 @SuppressWarnings({"unused", "UnusedReturnValue"})
-public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*, InvocationHandler*/ {
+public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*, NestedScrollingParent*/ {
 
     //<editor-fold desc="属性字段">
     protected int mSpinner;
@@ -54,11 +59,8 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
     }
 
     public TwoLevelHeader(@NonNull Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
+        super(context, attrs, 0);
 
-    public TwoLevelHeader(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
         mSpinnerStyle = SpinnerStyle.FixedBehind;
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.TwoLevelHeader);
@@ -229,7 +231,23 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
             }
         }
     }
+
     //</editor-fold>
+
+//    private int mNestedScrollAxes = 0;
+//    @Override
+//    public boolean onStartNestedScroll(View child, View target, int nestedScrollAxes) {
+//        return true;
+//    }
+//    public void onNestedScrollAccepted(View child, View target, int nestedScrollAxes) {
+//        mNestedScrollAxes = nestedScrollAxes;
+//    }
+//    public void onStopNestedScroll(View target) {}
+//    public void onNestedScroll(View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {}
+//    public void onNestedPreScroll(View target, int dx, int dy, int[] consumed){}
+//    public boolean onNestedFling(View target, float velocityX, float velocityY, boolean consumed){return false;}
+//    public boolean onNestedPreFling(View target, float velocityX, float velocityY) {return false;}
+//    public int getNestedScrollAxes() {return mNestedScrollAxes;}
 
     //<editor-fold desc="开放接口 - API">
 
@@ -260,7 +278,7 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
             if (refreshHeader.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
                 thisGroup.addView(refreshHeader.getView(), 0, new LayoutParams(width, height));
             } else {
-                thisGroup.addView(refreshHeader.getView(), width, height);
+                thisGroup.addView(refreshHeader.getView(), thisGroup.getChildCount(), new LayoutParams(width, height));
             }
             this.mRefreshHeader = header;
             this.mWrappedInternal = header;

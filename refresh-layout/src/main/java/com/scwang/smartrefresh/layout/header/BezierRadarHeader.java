@@ -47,6 +47,7 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
     protected int mWaveTop;
     protected int mWaveHeight;
     protected int mWaveOffsetX = -1;
+    protected int mWaveOffsetY = 0;
 
     protected float mDotAlpha;
     protected float mDotFraction;
@@ -68,13 +69,9 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
     }
 
     public BezierRadarHeader(Context context, AttributeSet attrs) {
-        this(context, attrs,0);
-    }
+        super(context, attrs,0);
 
-    public BezierRadarHeader(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-
-        mSpinnerStyle = SpinnerStyle.Scale;
+        mSpinnerStyle = SpinnerStyle.FixedBehind;
 
         final View thisView = this;
 
@@ -112,12 +109,6 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-//        if (mRadarAnimator != null) {
-//            mRadarAnimator.removeAllListeners();
-//            mRadarAnimator.removeAllUpdateListeners();
-//            mRadarAnimator.end();
-//            mRadarAnimator = null;
-//        }
         if (mAnimatorSet != null) {
             mAnimatorSet.removeAllListeners();
             mAnimatorSet.end();
@@ -132,7 +123,7 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
     protected void dispatchDraw(Canvas canvas) {
         final View thisView = this;
         final int width = thisView.getWidth();
-        final int height = thisView.getHeight();
+        final int height = thisView.isInEditMode() ? thisView.getHeight() : mWaveOffsetY;
         drawWave(canvas, width);
         drawDot(canvas, width, height);
         drawRadar(canvas, width, height);
@@ -152,7 +143,7 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
         mPath.lineTo(0, mWaveTop);
         mPath.quadTo(mWaveOffsetX >= 0 ? (mWaveOffsetX) : width / 2f, mWaveTop + mWaveHeight, width, mWaveTop);
         mPath.lineTo(width, 0);
-        mPaint.setColor(0xFFFF0000);
+        mPaint.setColor(mPrimaryColor);
         canvas.drawPath(mPath, mPaint);
     }
 
@@ -160,7 +151,6 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
      * 绘制下拉时的 多个点
      * @param canvas 画布
      * @param width 宽度
-     * @param height 高度
      */
     protected void drawDot(Canvas canvas, int width, int height) {
         if (mDotAlpha > 0) {
@@ -168,7 +158,7 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
             final int num = 7;
             float x = SmartUtil.px2dp(height);
             float wide = (1f * width / num) * mDotFraction -((mDotFraction >1)?((mDotFraction -1)*(1f * width / num)/ mDotFraction):0);//y1 = t*(w/n)-(t>1)*((t-1)*(w/n)/t)
-            float high = height - ((mDotFraction >1)?((mDotFraction -1)*height/2/ mDotFraction):0);//y2 = x - (t>1)*((t-1)*x/t);
+            float high = height - ((mDotFraction > 1) ? ((mDotFraction - 1) * height / 2 / mDotFraction) : 0);//y2 = x - (t>1)*((t-1)*x/t);
             for (int i = 0 ; i < num; i++) {
                 float index = 1f + i - (1f + num) / 2;//y3 = (x + 1) - (n + 1)/2; 居中 index 变量：0 1 2 3 4 结果： -2 -1 0 1 2
                 float alpha = 255 * (1 - (2 * (Math.abs(index) / num)));//y4 = m * ( 1 - 2 * abs(y3) / n); 横向 alpha 差
@@ -232,35 +222,24 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
 
     @Override
     public void onMoving(boolean isDragging, float percent, int offset, int height, int maxDragHeight) {
+        mWaveOffsetY = offset;
         if (isDragging || mWavePulling) {
             mWavePulling = true;
             mWaveTop = Math.min(height, offset);
             mWaveHeight = (int) (1.9f * Math.max(0, offset - height));
             mDotFraction = percent;
+
+            final View thisView = this;
+            thisView.invalidate();
         }
     }
-
-//    @Override
-//    public void onPulling(float percent, int offset, int height, int maxDragHeight) {
-//        mWavePulling = true;
-//        mWaveTop = Math.min(height, offset);
-//        mWaveHeight = (int) (1.9f * Math.max(0, offset - height));
-//        mDotFraction = percent;
-//    }
-//
-//    @Override
-//    public void onReleasing(float percent, int offset, int height, int maxDragHeight) {
-//        if (mWavePulling) {
-//            onPulling(percent, offset, height, maxDragHeight);
-//        }
-//    }
 
     @Override
     public void onReleased(@NonNull final RefreshLayout refreshLayout, int height, int maxDragHeight) {
         mWaveTop = height - 1;//减1，是为了消除边缘绘制，冒出线条问题
         mWavePulling = false;
 
-        Interpolator interpolatorDecelerate = new SmartUtil();//new DecelerateInterpolator();
+        Interpolator interpolatorDecelerate = new SmartUtil(SmartUtil.INTERPOLATOR_DECELERATE);//new DecelerateInterpolator();
         //圆点消失动画
         ValueAnimator animatorDotAlpha = ValueAnimator.ofFloat(1, 0);
         animatorDotAlpha.setInterpolator(interpolatorDecelerate);
@@ -269,7 +248,7 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
         ValueAnimator animatorRadarScale = ValueAnimator.ofFloat(0, 1);
         animatorDotAlpha.setInterpolator(interpolatorDecelerate);
         animatorRadarScale.addUpdateListener(new AnimatorUpdater(PROPERTY_RADAR_SCALE));
-        //雷达选装
+        //雷达旋转
         ValueAnimator mRadarAnimator = ValueAnimator.ofInt(0,360);
         mRadarAnimator.setDuration(720);
         mRadarAnimator.setRepeatCount(ValueAnimator.INFINITE);
@@ -285,7 +264,7 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
                 -(int)(mWaveHeight *0.8f),0,
                 -(int)(mWaveHeight *0.4f),0);
         animatorWave.addUpdateListener(new AnimatorUpdater(PROPERTY_WAVE_HEIGHT));
-        animatorWave.setInterpolator(interpolatorDecelerate);
+        animatorWave.setInterpolator(new SmartUtil(SmartUtil.INTERPOLATOR_DECELERATE));
         animatorWave.setDuration(800);
         animatorWave.start();
 
@@ -294,10 +273,6 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
 
     @Override
     public int onFinish(@NonNull RefreshLayout layout, boolean success) {
-//        if (mRadarAnimator != null) {
-//            mRadarAnimator.end();
-//            mRadarAnimator = null;
-//        }
         if (mAnimatorSet != null) {
             mAnimatorSet.removeAllListeners();
             mAnimatorSet.end();
@@ -307,9 +282,9 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
         final int duration = 400;
         final View thisView = this;
         final int width = thisView.getWidth();
-        final int height = thisView.getHeight();
+        final int height = mWaveOffsetY;//thisView.getHeight();
         final float bigRadius = (float) (Math.sqrt(width * width + height * height));
-        ValueAnimator animator = ValueAnimator.ofFloat(0, bigRadius);
+        ValueAnimator animator = ValueAnimator.ofFloat(mRadarRadius, bigRadius);
         animator.setDuration(duration);
         animator.addUpdateListener(new AnimatorUpdater(PROPERTY_RIPPLE_RADIUS));
         animator.start();
@@ -340,12 +315,6 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
         }
     }
 
-//    @NonNull
-//    @Override
-//    public SpinnerStyle getSpinnerStyle() {
-//        return SpinnerStyle.Scale;
-//    }
-
     @Override
     public boolean isSupportHorizontalDrag() {
         return mEnableHorizontalDrag;
@@ -355,11 +324,7 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
     public void onHorizontalDrag(float percentX, int offsetX, int offsetMax) {
         mWaveOffsetX = offsetX;
         final View thisView = this;
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-//            thisView.postInvalidateOnAnimation();
-//        } else {
-            thisView.invalidate();
-//        }
+        thisView.invalidate();
     }
     //</editor-fold>
 
