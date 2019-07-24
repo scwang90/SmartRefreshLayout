@@ -98,13 +98,13 @@ Please rest assured that I have divided it into three packages, when used to ref
 ## Usage
 #### 1.Add a gradle dependency.
 ```
-implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-31'
-implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-31'//If you use the special Header
+implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-32'
+implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-32'//If you use the special Header
 implementation 'com.android.support:appcompat-v7:25.3.1'
 
 //androidx version
-implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-14'
-implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-14'
+implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-15'
+implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-15'
 implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
 ```

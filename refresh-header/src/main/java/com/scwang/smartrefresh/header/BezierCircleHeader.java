@@ -15,6 +15,7 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.internal.InternalAbstract;
@@ -33,16 +34,17 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
     protected Paint mBackPaint;
     protected Paint mFrontPaint;
     protected Paint mOuterPaint;
+    protected int mHeight;
     protected float mWaveHeight;
     protected float mHeadHeight;
     protected float mSpringRatio;
     protected float mFinishRatio;
 
     protected float mBollY;//弹出球体的Y坐标
+    protected float mBollRadius;//球体半径
+    protected boolean mShowOuter;
     protected boolean mShowBoll;//是否显示中心球体
     protected boolean mShowBollTail;//是否显示球体拖拽的尾巴
-    protected boolean mShowOuter;
-    protected float mBollRadius;//球体半径
 
     protected int mRefreshStop = 90;
     protected int mRefreshStart = 90;
@@ -50,6 +52,7 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
 
     protected static final int TARGET_DEGREE = 270;
     protected boolean mWavePulling = false;
+    protected RefreshKernel mKernel;
 
     //</editor-fold>
 
@@ -62,7 +65,7 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
     public BezierCircleHeader(Context context, AttributeSet attrs) {
         super(context, attrs, 0);
 
-        mSpinnerStyle = SpinnerStyle.Scale;
+        mSpinnerStyle = SpinnerStyle.FixedBehind;
         final View thisView = this;
         thisView.setMinimumHeight(SmartUtil.dp2px(100));
         mBackPaint = new Paint();
@@ -87,7 +90,16 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
     protected void dispatchDraw(Canvas canvas) {
         final View thisView = this;
         final int viewWidth = thisView.getWidth();
-        final int viewHeight = thisView.getHeight();
+        final int viewHeight = mHeight;//thisView.getHeight();
+        //noinspection EqualsBetweenInconvertibleTypes
+        final boolean footer = mKernel != null && (this.equals(mKernel.getRefreshLayout().getRefreshFooter()));
+
+        if (footer) {
+            canvas.save();
+            canvas.translate(0, thisView.getHeight());
+            canvas.scale(1, -1);
+        }
+
         if (thisView.isInEditMode()) {
             mShowBoll = true;
             mShowOuter = true;
@@ -102,6 +114,10 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
         drawBoll(canvas, viewWidth);
         drawOuter(canvas, viewWidth);
         drawFinish(canvas, viewWidth);
+
+        if (footer) {
+            canvas.restore();
+        }
 
         super.dispatchDraw(canvas);
     }
@@ -227,27 +243,20 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
 
 
     @Override
+    public void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight) {
+        mKernel = kernel;
+    }
+
+    @Override
     public void onMoving(boolean isDragging, float percent, int offset, int height, int maxDragHeight) {
+        mHeight = offset;
         if (isDragging || mWavePulling) {
             mWavePulling = true;
             mHeadHeight = height;
             mWaveHeight = Math.max(offset - height, 0) * .8f;
         }
+        this.invalidate();
     }
-
-//    @Override
-//    public void onPulling(float percent, int offset, int height, int maxDragHeight) {
-//        mWavePulling = true;
-//        mHeadHeight = height;
-//        mWaveHeight = Math.max(offset - height, 0) * .8f;
-//    }
-//
-//    @Override
-//    public void onReleasing(float percent, int offset, int height, int maxDragHeight) {
-//        if (mWavePulling) {
-//            onPulling(percent, offset, height, maxDragHeight);
-//        }
-//    }
 
     @Override
     public void onReleased(@NonNull RefreshLayout refreshLayout, int height, int maxDragHeight) {

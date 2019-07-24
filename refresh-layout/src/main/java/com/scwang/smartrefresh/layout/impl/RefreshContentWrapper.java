@@ -20,6 +20,7 @@ import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.ScrollBoundaryDecider;
 import com.scwang.smartrefresh.layout.listener.CoordinatorLayoutListener;
 import com.scwang.smartrefresh.layout.util.DesignUtil;
+import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -37,7 +38,7 @@ import static com.scwang.smartrefresh.layout.util.SmartUtil.scrollListBy;
  * Created by SCWANG on 2017/5/26.
  */
 @SuppressWarnings("WeakerAccess")
-public class RefreshContentWrapper implements RefreshContent , CoordinatorLayoutListener, AnimatorUpdateListener {
+public class RefreshContentWrapper implements RefreshContent, CoordinatorLayoutListener, AnimatorUpdateListener {
 
 //    protected int mHeaderHeight = Integer.MAX_VALUE;
 //    protected int mFooterHeight = mHeaderHeight - 1;

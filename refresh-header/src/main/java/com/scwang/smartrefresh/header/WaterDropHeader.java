@@ -186,36 +186,6 @@ public class WaterDropHeader extends InternalAbstract implements RefreshHeader {
         }
     }
 
-//    @Override
-//    public void onPulling(float percent, int offset, int height, int maxDragHeight) {
-//        mWaterDropView.updateCompleteState((offset), height + maxDragHeight);
-//        mWaterDropView.postInvalidate();
-//
-//        float originalDragPercent = 1f * offset / height;
-//
-//        float dragPercent = Math.min(1f, Math.abs(originalDragPercent));
-//        float adjustedPercent = (float) Math.max(dragPercent - .4, 0) * 5 / 3;
-//        float extraOS = Math.abs(offset) - height;
-//        float tensionSlingshotPercent = Math.max(0, Math.min(extraOS, (float) height * 2)
-//                / (float) height);
-//        float tensionPercent = (float) ((tensionSlingshotPercent / 4) - Math.pow(
-//                (tensionSlingshotPercent / 4), 2)) * 2f;
-//        float strokeStart = adjustedPercent * .8f;
-//        float rotation = (-0.25f + .4f * adjustedPercent + tensionPercent * 2) * .5f;
-//        mProgress.showArrow(true);
-//        mProgress.setStartEndTrim(0f, Math.min(MAX_PROGRESS_ANGLE, strokeStart));
-//        mProgress.setArrowScale(Math.min(1f, adjustedPercent));
-//        mProgress.setProgressRotation(rotation);
-//    }
-//
-//    @Override
-//    public void onReleasing(float percent, int offset, int height, int maxDragHeight) {
-//        if (mState != RefreshState.Refreshing && mState != RefreshState.RefreshReleased) {
-//            mWaterDropView.updateCompleteState(Math.max(offset, 0), height + maxDragHeight);
-//            mWaterDropView.postInvalidate();
-//        }
-//    }
-
     @Override
     public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
         final View dropView = mWaterDropView;
@@ -276,11 +246,5 @@ public class WaterDropHeader extends InternalAbstract implements RefreshHeader {
             mWaterDropView.setIndicatorColor(colors[0]);
         }
     }
-//
-//    @NonNull
-//    @Override
-//    public SpinnerStyle getSpinnerStyle() {
-//        return SpinnerStyle.Scale;
-//    }
     //</editor-fold>
 }

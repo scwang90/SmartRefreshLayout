@@ -1,5 +1,6 @@
 package com.scwang.smartrefresh.layout.internal;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
@@ -182,7 +183,7 @@ public abstract class InternalAbstract extends RelativeLayout implements Refresh
         }
     }
 
-//    @Override
+    @SuppressLint("RestrictedApi")
     public boolean setNoMoreData(boolean noMoreData) {
         return mWrappedInternal instanceof RefreshFooter && ((RefreshFooter) mWrappedInternal).setNoMoreData(noMoreData);
     }
