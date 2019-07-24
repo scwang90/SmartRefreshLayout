@@ -29,14 +29,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
+            <!--<android.support.v7.widget.RecyclerView-->
+                <!--android:id="@+id/recyclerView"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:background="@color/colorBackgroundDark"-->
+                <!--android:overScrollMode="never"-->
+                <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+                <!--tools:listitem="@android:layout/simple_list_item_2"/>-->
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewPager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/colorBackgroundDark"
-                android:overScrollMode="never"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                tools:listitem="@android:layout/simple_list_item_2"/>
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
 
             <android.support.design.widget.AppBarLayout
                 android:id="@+id/appbar"

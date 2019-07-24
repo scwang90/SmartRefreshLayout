@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,8 +49,17 @@ public class NoMoreDataExampleFragment extends Fragment {
     public void onViewCreated(@NonNull View root, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(root, savedInstanceState);
 
+        final Toolbar toolbar = root.findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
+
         RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
         if (recyclerView != null) {
+            recyclerView.setNestedScrollingEnabled(false);
             recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), VERTICAL));
             recyclerView.setAdapter(mAdapter = new BaseRecyclerAdapter<Void>(simple_list_item_2) {
                 @Override
@@ -64,6 +74,7 @@ public class NoMoreDataExampleFragment extends Fragment {
         RefreshLayout refreshLayout = root.findViewById(R.id.refreshLayout);
         if (refreshLayout != null) {
             refreshLayout.autoRefresh();
+            refreshLayout.setEnableLoadMoreWhenContentNotFull(false);
             refreshLayout.setOnRefreshListener(new OnRefreshListener() {
                 @Override
                 public void onRefresh(@NonNull final RefreshLayout refreshLayout) {
@@ -91,7 +102,6 @@ public class NoMoreDataExampleFragment extends Fragment {
                             mAdapter.loadMore(list);
                             if (list.size() < 10) {
                                 refreshLayout.finishLoadMoreWithNoMoreData();
-                                refreshLayout.setEnableRefresh(false);
                             } else {
                                 refreshLayout.finishLoadMore();
                             }
