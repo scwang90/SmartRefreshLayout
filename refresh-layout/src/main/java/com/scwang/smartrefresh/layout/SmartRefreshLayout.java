@@ -181,6 +181,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     protected Handler mHandler;
     protected RefreshKernel mKernel = new RefreshKernelImpl();
 //    protected List<DelayedRunnable> mListDelayedRunnable;
+    protected Runnable mStartRefreshDelayRunnable = null;
 
     /**
      * 【主要状态】
@@ -2847,6 +2848,10 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      */
     @Override
     public RefreshLayout finishRefresh(int delayed, final boolean success, final Boolean noMoreData) {
+        if (mStartRefreshDelayRunnable != null) {
+            mHandler.removeCallbacks(mStartRefreshDelayRunnable);
+        }
+
         final int more = delayed >> 16;
         int delay = delayed << 16 >> 16;
         Runnable runnable = new Runnable() {
@@ -3209,6 +3214,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             setViceState(RefreshState.Refreshing);
             if (delayed > 0) {
                 mHandler.postDelayed(runnable, delayed);
+                mStartRefreshDelayRunnable = runnable;
             } else {
                 runnable.run();
             }
