@@ -1802,7 +1802,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
     @Override
     public boolean onStartNestedScroll(@NonNull View child, @NonNull View target, int nestedScrollAxes) {
-
         final View thisView = this;
         boolean accepted = thisView.isEnabled() && isNestedScrollingEnabled() && (nestedScrollAxes & ViewCompat.SCROLL_AXIS_VERTICAL) != 0;
         accepted = accepted && (mEnableOverScrollDrag || mEnableRefresh || mEnableLoadMore);

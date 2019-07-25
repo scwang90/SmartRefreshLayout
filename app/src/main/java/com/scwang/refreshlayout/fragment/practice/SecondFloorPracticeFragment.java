@@ -70,6 +70,12 @@ public class SecondFloorPracticeFragment extends Fragment {
                 toolbar.setAlpha(1 - Math.min(percent, 1));
                 floor.setTranslationY(Math.min(offset - floor.getHeight() + toolbar.getHeight(), refreshLayout.getLayout().getHeight() - floor.getHeight()));
             }
+            @Override
+            public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
+                if (oldState == RefreshState.TwoLevel) {
+                    root.findViewById(R.id.second_floor_content).animate().alpha(0).setDuration(1000);
+                }
+            }
         });
 
         /*
@@ -106,19 +112,10 @@ public class SecondFloorPracticeFragment extends Fragment {
             }
         });
 
-        refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
-            @Override
-            public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
-                if (oldState == RefreshState.TwoLevel) {
-                    root.findViewById(R.id.second_floor_content).animate().alpha(0).setDuration(1000);
-                }
-            }
-        });
-
         RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
         if (recyclerView != null) {
-//            recyclerView.setNestedScrollingEnabled(false);
-            List<Void> voids = Arrays.asList(null, null, null, null, null, null, null, null, null, null);
+            recyclerView.setNestedScrollingEnabled(false);
+            List<Void> voids = Arrays.asList(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
             recyclerView.setAdapter(new BaseRecyclerAdapter<Void>(voids, simple_list_item_2) {
                 @Override
                 protected void onBindViewHolder(SmartViewHolder holder, Void model, int position) {
