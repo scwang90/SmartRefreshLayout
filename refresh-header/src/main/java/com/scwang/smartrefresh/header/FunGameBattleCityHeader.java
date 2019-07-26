@@ -130,12 +130,7 @@ public class FunGameBattleCityHeader extends FunGameView {
     }
 
     public FunGameBattleCityHeader(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public FunGameBattleCityHeader(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-
+        super(context, attrs, 0);
         random = new Random();
     }
 

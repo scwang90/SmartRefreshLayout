@@ -35,15 +35,24 @@ import com.scwang.refreshlayout.activity.style.WaveSwipeStyleActivity;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.refreshlayout.util.StatusBarUtil;
+import com.scwang.smartrefresh.header.BezierCircleHeader;
+import com.scwang.smartrefresh.header.DeliveryHeader;
 import com.scwang.smartrefresh.header.DropBoxHeader;
 import com.scwang.smartrefresh.header.FunGameHitBlockHeader;
 import com.scwang.smartrefresh.header.PhoenixHeader;
+import com.scwang.smartrefresh.header.TaurusHeader;
+import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.scwang.smartrefresh.layout.impl.RefreshFooterWrapper;
 import com.scwang.smartrefresh.layout.impl.RefreshHeaderWrapper;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 
 import java.util.Arrays;
 
@@ -133,13 +142,33 @@ public class RefreshStylesFragment extends Fragment implements AdapterView.OnIte
 
         RefreshLayout refreshLayout = root.findViewById(R.id.refreshLayout);
         if (refreshLayout != null) {
-            refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
                 @Override
                 public void onRefresh(@NonNull final RefreshLayout refreshLayout) {
                     refreshLayout.finishRefresh(3000);
-                    refreshLayout.getLayout().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
+                }
+                @Override
+                public void onLoadMore(@NonNull final RefreshLayout refreshLayout) {
+                    refreshLayout.finishLoadMore(2000);
+                }
+                @Override
+                public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
+                    if (newState == RefreshState.None) {
+                        if (oldState == RefreshState.LoadFinish) {
+                            RefreshFooter refreshFooter = refreshLayout.getRefreshFooter();
+                            if (refreshFooter instanceof RefreshFooterWrapper) {
+                                View footerView = refreshFooter.getView();
+                                if (footerView instanceof TaurusHeader) {
+                                    refreshLayout.setRefreshFooter(new RefreshFooterWrapper(new DropBoxHeader(getContext())));
+                                } else if (footerView instanceof DropBoxHeader) {
+                                    refreshLayout.setRefreshFooter(new RefreshFooterWrapper(new DeliveryHeader(getContext())));
+                                } else if (footerView instanceof DeliveryHeader) {
+                                    refreshLayout.setRefreshFooter(new RefreshFooterWrapper(new BezierCircleHeader(getContext())));
+                                } else {
+                                    refreshLayout.setRefreshFooter(new BallPulseFooter(getContext()));
+                                }
+                            }
+                        } else if (oldState == RefreshState.RefreshFinish) {
                             RefreshHeader refreshHeader = refreshLayout.getRefreshHeader();
                             if (refreshHeader instanceof RefreshHeaderWrapper) {
                                 refreshLayout.setRefreshHeader(new PhoenixHeader(getContext()));
@@ -152,9 +181,8 @@ public class RefreshStylesFragment extends Fragment implements AdapterView.OnIte
                             } else {
                                 refreshLayout.setRefreshHeader(new RefreshHeaderWrapper(new BallPulseFooter(getContext())));
                             }
-                            refreshLayout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);
                         }
-                    },4000);
+                    }
                 }
             });
         }

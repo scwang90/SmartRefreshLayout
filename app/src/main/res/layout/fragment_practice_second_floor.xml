@@ -17,20 +17,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
-                android:id="@+id/secondfloor"
+                android:id="@+id/second_floor"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:contentDescription="@string/app_name"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/image_secondfloor"/>
-            <ImageView
-                android:id="@+id/secondfloor_content"
+                android:src="@mipmap/image_second_floor"/>
+            <FrameLayout
+                android:id="@+id/second_floor_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:contentDescription="@string/app_name"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/image_secondfloor_content"
-                android:alpha="0"/>
+                android:alpha="0">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/image_second_floor_content"/>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+            </FrameLayout>
             <com.scwang.smartrefresh.layout.header.ClassicsHeader
                 android:id="@+id/classics"
                 android:layout_width="match_parent"

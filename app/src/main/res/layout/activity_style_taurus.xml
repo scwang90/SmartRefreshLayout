@@ -57,7 +57,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/ic_fly_refresh_smartphone"
+        app:srcCompat="@drawable/ic_fly_refresh_phone"
         app:layout_anchor="@id/recyclerView"
         app:layout_anchorGravity="top|end"
         app:fabSize="normal"

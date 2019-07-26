@@ -74,11 +74,7 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
     }
 
     public StoreHouseHeader(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public StoreHouseHeader(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(context, attrs, 0);
 
         mLineWidth = SmartUtil.dp2px(1);
         mDropHeight = SmartUtil.dp2px(40);

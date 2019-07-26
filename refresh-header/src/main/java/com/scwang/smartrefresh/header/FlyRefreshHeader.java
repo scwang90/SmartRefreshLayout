@@ -49,10 +49,6 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
         super(context, attrs);
     }
 
-    public FlyRefreshHeader(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-    }
-
     //</editor-fold>
 
     //<editor-fold desc="RefreshHeader">

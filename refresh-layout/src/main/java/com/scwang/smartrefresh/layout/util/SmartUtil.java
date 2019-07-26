@@ -19,6 +19,9 @@ import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.scwang.smartrefresh.layout.api.RefreshKernel;
+import com.scwang.smartrefresh.layout.listener.CoordinatorLayoutListener;
+
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
@@ -28,6 +31,15 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
  */
 
 public class SmartUtil implements Interpolator {
+
+    public static int INTERPOLATOR_VISCOUS_FLUID = 0;
+    public static int INTERPOLATOR_DECELERATE = 1;
+
+    private int type;
+
+    public SmartUtil(int type) {
+        this.type = type;
+    }
 
     //<editor-fold desc="内容工具">
     public static int measureViewHeight(View view) {
@@ -268,6 +280,9 @@ public class SmartUtil implements Interpolator {
 
     @Override
     public float getInterpolation(float input) {
+        if (type == INTERPOLATOR_DECELERATE) {
+            return (1.0f - (1.0f - input) * (1.0f - input));
+        }
         final float interpolated = VISCOUS_FLUID_NORMALIZE * viscousFluid(input);
         if (interpolated > 0) {
             return interpolated + VISCOUS_FLUID_OFFSET;
@@ -275,4 +290,5 @@ public class SmartUtil implements Interpolator {
         return interpolated;
     }
     //</editor-fold>
+
 }

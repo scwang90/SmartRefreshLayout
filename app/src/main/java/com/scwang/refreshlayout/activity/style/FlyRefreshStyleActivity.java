@@ -246,7 +246,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
     }
 
     private void addItemData() {
-        ItemData itemData = new ItemData(0xFFFFC970, R.drawable.ic_fly_refresh_smartphone, "Magic Cube Show", new Date());
+        ItemData itemData = new ItemData(0xFFFFC970, R.drawable.ic_fly_refresh_phone, "Magic Cube Show", new Date());
         mDataSet.add(0, itemData);
         mAdapter.notifyItemInserted(0);
         mLayoutManager.scrollToPosition(0);

@@ -38,11 +38,7 @@ public class FalsifyFooter extends InternalAbstract implements RefreshFooter {
     }
 
     public FalsifyFooter(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public FalsifyFooter(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(context, attrs, 0);
     }
 
     @Override

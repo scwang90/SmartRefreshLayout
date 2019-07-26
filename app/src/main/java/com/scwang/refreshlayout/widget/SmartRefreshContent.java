@@ -8,8 +8,8 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 public class SmartRefreshContent extends SmartRefreshLayout {
 
-    public SmartRefreshContent(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+    public SmartRefreshContent(Context context, AttributeSet attrs) {
+        super(context, attrs);
     }
 
     @Override

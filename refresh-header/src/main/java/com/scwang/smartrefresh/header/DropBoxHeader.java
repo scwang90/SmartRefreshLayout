@@ -69,8 +69,10 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
     protected Path mPath;
     protected Paint mPaint;
     protected BoxBody mBoxBody;
+    protected int mHeight;
     protected int mAccentColor;
     protected int mHeaderHeight;
+    protected int mBackgroundColor;
     protected boolean mDropOutOverFlow;
     protected Drawable mDrawable1;
     protected Drawable mDrawable2;
@@ -80,6 +82,7 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
     protected ValueAnimator mReboundAnimator;
     protected ValueAnimator mDropOutAnimator;
     protected RefreshState mState;
+    protected RefreshKernel mKernel;
     //</editor-fold>
 
     //<editor-fold desc="View">
@@ -88,22 +91,18 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
     }
 
     public DropBoxHeader(Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public DropBoxHeader(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(context, attrs, 0);
 
         mPath = new Path();
         mPaint = new Paint();
         mBoxBody = new BoxBody();
         mPaint.setAntiAlias(true);
         mAccentColor = 0xff6ea9ff;
+        mBackgroundColor = 0xff283645;
         final View thisView = this;
-        thisView.setBackgroundColor(0xff283645);
         thisView.setMinimumHeight(SmartUtil.dp2px(150));
 
-        mSpinnerStyle = SpinnerStyle.Scale;
+        mSpinnerStyle = SpinnerStyle.FixedBehind;
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.DropBoxHeader);
         if (ta.hasValue(R.styleable.DropBoxHeader_dhDrawable1)) {
@@ -220,9 +219,16 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
 
         final View thisView = this;
         final int width = thisView.getWidth();
-        final int height = thisView.getHeight();
-
+        final int height = mHeight;//thisView.getHeight();
         final int sideLength = generateSideLength();
+        //noinspection EqualsBetweenInconvertibleTypes
+        final boolean footer = mKernel != null && (this.equals(mKernel.getRefreshLayout().getRefreshFooter()));
+
+        if (footer) {
+            canvas.save();
+            canvas.translate(0, thisView.getHeight() - mHeight);
+        }
+
         BoxBody body = generateBoxBody(width, height, sideLength);
 
         mPaint.setColor(ColorUtils.setAlphaComponent(mAccentColor, 150));
@@ -262,6 +268,10 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
                 bounds3.offsetTo(width / 2 - bounds3.width() / 2, ((body.boxCenterY - bounds3.height() / 2)));
                 mDrawable3.draw(canvas);
             }
+        }
+
+        if (footer) {
+            canvas.restore();
         }
 
         super.dispatchDraw(canvas);
@@ -366,25 +376,25 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
 
     //<editor-fold desc="RefreshHeader">
 
+    @Override
+    public void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight) {
+        mKernel = kernel;
+        mHeaderHeight = height;
+        kernel.requestDrawBackgroundFor(this, mBackgroundColor);
+        final int sideLength = generateSideLength();
+        mDrawable1.setBounds(0, 0, sideLength, sideLength);
+        mDrawable2.setBounds(0, 0, sideLength, sideLength);
+        mDrawable3.setBounds(0, 0, sideLength, sideLength);
+    }
 
     @Override
     public void onMoving(boolean isDragging, float percent, int offset, int height, int maxDragHeight) {
+        mHeight = offset;
         if (!isDragging || mState != RefreshState.Refreshing) {
             mReboundPercent = 1f * Math.max(0, offset - height) / maxDragHeight;
         }
+        this.invalidate();
     }
-
-//    @Override
-//    public void onPulling(float percent, int offset, int height, int maxDragHeight) {
-//        if (mState != RefreshState.Refreshing) {
-//            mReboundPercent = 1f * Math.max(0, offset - height) / maxDragHeight;
-//        }
-//    }
-//
-//    @Override
-//    public void onReleasing(float percent, int offset, int height, int maxDragHeight) {
-//        mReboundPercent = 1f * Math.max(0, offset - height) / maxDragHeight;
-//    }
 
     @Override
     public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
@@ -394,12 +404,6 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
         }
     }
 
-//    @NonNull
-//    @Override
-//    public SpinnerStyle getSpinnerStyle() {
-//        return SpinnerStyle.Scale;
-//    }
-
     /**
      * @param colors 对应Xml中配置的 srlPrimaryColor srlAccentColor
      * @deprecated 请使用 {@link RefreshLayout#setPrimaryColorsId(int...)}
@@ -407,21 +411,14 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
     @Override@Deprecated
     public void setPrimaryColors(@ColorInt int ... colors) {
         if (colors.length > 0) {
-            final View thisView = this;
-            thisView.setBackgroundColor(colors[0]);
+            mBackgroundColor = colors[0];
+            if (mKernel != null) {
+                mKernel.requestDrawBackgroundFor(this, mBackgroundColor);
+            }
             if (colors.length > 1) {
                 mAccentColor = colors[1];
             }
         }
-    }
-
-    @Override
-    public void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight) {
-        mHeaderHeight = height;
-        final int sideLength = generateSideLength();
-        mDrawable1.setBounds(0, 0, sideLength, sideLength);
-        mDrawable2.setBounds(0, 0, sideLength, sideLength);
-        mDrawable3.setBounds(0, 0, sideLength, sideLength);
     }
 
     @Override

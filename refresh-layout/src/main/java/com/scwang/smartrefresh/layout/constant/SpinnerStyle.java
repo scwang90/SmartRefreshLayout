@@ -7,11 +7,11 @@ package com.scwang.smartrefresh.layout.constant;
 
 public class SpinnerStyle {
 
-    public static final SpinnerStyle Translate = new SpinnerStyle(0);
-    public static final SpinnerStyle Scale = new SpinnerStyle(1);
-    public static final SpinnerStyle FixedBehind = new SpinnerStyle(2);
-    public static final SpinnerStyle FixedFront = new SpinnerStyle(3);
-    public static final SpinnerStyle MatchLayout = new SpinnerStyle(4);
+    public static final SpinnerStyle Translate = new SpinnerStyle(0, false);
+    public static final SpinnerStyle Scale = new SpinnerStyle(1, false);
+    public static final SpinnerStyle FixedBehind = new SpinnerStyle(2, false);
+    public static final SpinnerStyle FixedFront = new SpinnerStyle(3, true);
+    public static final SpinnerStyle MatchLayout = new SpinnerStyle(4, true);
 
     public static final SpinnerStyle[] values = new SpinnerStyle[]{
             Translate, //平行移动        特点: HeaderView高度不会改变，
@@ -22,8 +22,10 @@ public class SpinnerStyle {
     };
 
     public final int ordinal;
+    public final boolean front;
 
-    private SpinnerStyle(int ordinal) {
+    private SpinnerStyle(int ordinal, boolean front) {
         this.ordinal = ordinal;
+        this.front = front;
     }
 }

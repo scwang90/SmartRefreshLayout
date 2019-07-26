@@ -55,7 +55,7 @@ public class NestedScrollExampleFragmentViewPager extends Fragment {
         });
 
         ViewPager viewPager = root.findViewById(R.id.viewPager);
-        viewPager.setAdapter(new SmartPagerAdapter());
+        viewPager.setAdapter(new SmartPagerAdapter(getChildFragmentManager()));
 
         /*
          * 监听 AppBarLayout 的关闭和开启 ActionButton 设置关闭隐藏动画
@@ -81,12 +81,12 @@ public class NestedScrollExampleFragmentViewPager extends Fragment {
 
     }
 
-    private class SmartPagerAdapter extends FragmentStatePagerAdapter {
+    public static class SmartPagerAdapter extends FragmentStatePagerAdapter {
 
         private final SmartFragment[] fragments;
 
-        SmartPagerAdapter() {
-            super(getChildFragmentManager());
+        SmartPagerAdapter(FragmentManager fm) {
+            super(fm);
             this.fragments = new SmartFragment[]{
                     new SmartFragment(),new SmartFragment()
             };

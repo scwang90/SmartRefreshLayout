@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 
 import com.scwang.smartrefresh.header.internal.pathview.PathsDrawable;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.internal.InternalAbstract;
@@ -103,10 +104,13 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
     protected Matrix mMatrix;
     protected float mPercent;
     protected float mRotate;
+    protected int mHeight;
     protected int mHeaderHeight;
+    protected int mBackgroundColor;
     protected int mSunSize;
     protected boolean isRefreshing;
     protected Animation mAnimation;
+    protected RefreshKernel mKernel;
 
     //<editor-fold desc="View">
     public PhoenixHeader(Context context) {
@@ -122,10 +126,11 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
 
         mMatrix = new Matrix();
         mSunSize = SmartUtil.dp2px(40);
+        mBackgroundColor = skyColors[0];
         final View thisView = this;
         thisView.setMinimumHeight(SmartUtil.dp2px(100));
 
-        mSpinnerStyle = SpinnerStyle.Scale;
+        mSpinnerStyle = SpinnerStyle.FixedBehind;
 
 
         //<editor-fold desc="setupAnimation">
@@ -176,13 +181,12 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
 
         //</editor-fold>
 
-
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.PhoenixHeader);
 
         int primaryColor = ta.getColor(R.styleable.PhoenixHeader_phPrimaryColor, 0);
         int accentColor = ta.getColor(R.styleable.PhoenixHeader_phAccentColor, 0);
         if (primaryColor != 0) {
-            thisView.setBackgroundColor(primaryColor);
+            mBackgroundColor = primaryColor;
             if (accentColor != 0) {
                 skyDrawable.parserColors(primaryColor, accentColor);
             } else {
@@ -198,22 +202,19 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
     //<editor-fold desc="RefreshHeader">
 
     @Override
-    public void onMoving(boolean isDragging, float percent, int offset, int height, int maxDragHeight) {
-        mHeaderHeight = height;
-        mRotate = mPercent = 1f * offset / height;
+    public void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight) {
+        mKernel = kernel;
+        kernel.requestDrawBackgroundFor(this, mBackgroundColor);
     }
 
-//    @Override
-//    public void onPulling(float percent, int offset, int height, int maxDragHeight) {
-//        mRotate = mPercent = 1f * offset / height;
-//        mHeaderHeight = height;
-//    }
-//
-//    @Override
-//    public void onReleasing(float percent, int offset, int height, int maxDragHeight) {
-//        mRotate = mPercent = 1f * offset / height;
-//        mHeaderHeight = height;
-//    }
+    @Override
+    public void onMoving(boolean isDragging, float percent, int offset, int height, int maxDragHeight) {
+        mHeight = offset;
+        mHeaderHeight = height;
+        mRotate = mPercent = 1f * offset / height;
+        final View thisView = this;
+        thisView.invalidate();
+    }
 
     @Override
     public void onReleased(@NonNull RefreshLayout layout, int height, int maxDragHeight) {
@@ -237,47 +238,42 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
     @Override@Deprecated
     public void setPrimaryColors(@ColorInt int ... colors) {
         if (mDrawableSky instanceof PathsDrawable) {
-            final View thisView = this;
             if (colors.length > 1) {
-                thisView.setBackgroundColor(colors[0]);
+                mBackgroundColor = colors[0];
                 ((PathsDrawable) mDrawableSky).parserColors(colors);
             } else if (colors.length > 0) {
-                thisView.setBackgroundColor(colors[0]);
+                mBackgroundColor = colors[0];
                 ((PathsDrawable) mDrawableSky).parserColors(colors[0], skyColors[1]);
+            }
+            if (mKernel != null) {
+                mKernel.requestDrawBackgroundFor(this, mBackgroundColor);
             }
         }
     }
-//
-//    @NonNull
-//    @Override
-//    public SpinnerStyle getSpinnerStyle() {
-//        return SpinnerStyle.Scale;
-//    }
-    //</editor-fold>
-
-//    @Override
-//    public int defineHeight() {
-//        return (int)(Resources.getSystem().getDisplayMetrics().widthPixels * 0.27);
-//    }
-//
-//    @Override
-//    public int definemaxDragHeight() {
-//        return (int) (defineHeight() * 0.3f);
-//    }
 
     //<editor-fold desc="draw">
-
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
 
         final View thisView = this;
         final int width = thisView.getWidth();
-        final int height = thisView.getHeight();
+        final int height = mHeight;//thisView.getHeight();
+        //noinspection EqualsBetweenInconvertibleTypes
+        final boolean footer = mKernel != null && (this.equals(mKernel.getRefreshLayout().getRefreshFooter()));
+
+        if (footer) {
+            canvas.save();
+            canvas.translate(0, thisView.getHeight() - mHeight);
+        }
+
         drawSky(canvas, width, height);
         drawSun(canvas, width);
         drawTown(canvas, width, height);
 
+        if (footer) {
+            canvas.restore();
+        }
         super.dispatchDraw(canvas);
     }
 
@@ -291,11 +287,6 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
         float townScale = 1f * width / bWidth;
         float offsetX = 0;
         float offsetY = height / 2f - bHeight / 2f;
-
-//        matrix.postScale(townScale, townScale);
-//        matrix.postTranslate(offsetX, offsetY);
-//
-//        canvas.drawBitmap(mSky, matrix, null);
 
         final int saveCount = canvas.getSaveCount();
         canvas.save();
@@ -320,10 +311,6 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
         if (offsetY + bHeight * townScale < height) {
             offsetY = height - bHeight * townScale;
         }
-
-//        matrix.postScale(townScale, townScale, mDrawableTown.getBounds().width() / 2, mDrawableTown.getBounds().height() / 2);
-//        matrix.postTranslate(offsetX, offsetY);
-//        canvas.drawBitmap(mTown, matrix, null);
 
         final int saveCount = canvas.getSaveCount();
         canvas.save();
@@ -357,11 +344,6 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
         matrix.postRotate((isRefreshing ? -360 : 360) * mRotate * (isRefreshing ? 1 : SUN_INITIAL_ROTATE_GROWTH),
                 sunRadius,
                 sunRadius);
-
-//        canvas.save();
-//        canvas.translate(offsetX, offsetY);
-//        canvas.drawBitmap(mSun, matrix, null);
-//        canvas.restore();
 
         final int saveCount = canvas.getSaveCount();
         canvas.save();

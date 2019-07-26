@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 
 import com.scwang.smartrefresh.header.internal.pathview.PathsDrawable;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.internal.InternalAbstract;
@@ -81,6 +82,7 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
     protected Drawable mCloudCenter;
     protected Matrix mMatrix;
     protected float mPercent;
+    protected int mHeight;
     protected int mHeaderHeight;
     protected Animation mAnimation;
 
@@ -98,6 +100,8 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
     protected boolean mNewWindSet;
     protected boolean mInverseDirection;
     protected float mFinishTransformation;
+    protected int mBackgroundColor;
+    protected RefreshKernel mKernel;
 
     protected enum AnimationPart {
         FIRST,
@@ -113,11 +117,7 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
     }
 
     public TaurusHeader(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public TaurusHeader(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(context, attrs, 0);
 
         final View thisView = this;
 
@@ -132,7 +132,7 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
         mWindPaint.setStrokeWidth(SmartUtil.dp2px(3));
         mWindPaint.setAlpha(50);
 
-        mSpinnerStyle = SpinnerStyle.Scale;
+        mSpinnerStyle = SpinnerStyle.FixedBehind;
 
         //<editor-fold desc="setupAnimations">
         mAnimation = new Animation() {
@@ -174,9 +174,11 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
 
         int primaryColor = ta.getColor(R.styleable.TaurusHeader_thPrimaryColor, 0);
         if (primaryColor != 0) {
-            thisView.setBackgroundColor(primaryColor);
+            mBackgroundColor = primaryColor;
+//            thisView.setBackgroundColor(primaryColor);
         } else {
-            thisView.setBackgroundColor(0xff11bbff);
+            mBackgroundColor = 0xff11bbff;
+//            thisView.setBackgroundColor(0xff11bbff);
         }
 
         ta.recycle();
@@ -187,27 +189,23 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
 
     //<editor-fold desc="RefreshHeader">
 
+
+    @Override
+    public void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight) {
+        mKernel = kernel;
+        kernel.requestDrawBackgroundFor(this, mBackgroundColor);
+    }
+
     @Override
     public void onMoving(boolean isDragging, float percent, int offset, int height, int maxDragHeight) {
+        mHeight = offset;
         mPercent = percent;
         mHeaderHeight = height;
         if (isDragging) {
             mFinishTransformation = 0;
         }
+        this.invalidate();
     }
-
-//    @Override
-//    public void onPulling(float percent, int offset, int height, int maxDragHeight) {
-//        mPercent = percent;
-//        mHeaderHeight = height;
-//        mFinishTransformation = 0;
-//    }
-//
-//    @Override
-//    public void onReleasing(float percent, int offset, int height, int maxDragHeight) {
-//        mPercent = percent;
-//        mHeaderHeight = height;
-//    }
 
     @Override
     public void onStartAnimator(@NonNull RefreshLayout layout, int height, int maxDragHeight) {
@@ -248,15 +246,13 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
      */
     @Override@Deprecated
     public void setPrimaryColors(@ColorInt int ... colors) {
-        final View thisView = this;
-        thisView.setBackgroundColor(colors[0]);
+//        final View thisView = this;
+//        thisView.setBackgroundColor(colors[0]);
+        mBackgroundColor = colors[0];
+        if (mKernel != null) {
+            mKernel.requestDrawBackgroundFor(this, mBackgroundColor);
+        }
     }
-//
-//    @NonNull
-//    @Override
-//    public SpinnerStyle getSpinnerStyle() {
-//        return SpinnerStyle.Scale;
-//    }
     //</editor-fold>
 
     //<editor-fold desc="draw">
@@ -266,7 +262,28 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
 
         final View thisView = this;
         final int width = thisView.getWidth();
-        final int height = thisView.getHeight();
+        final int height = mHeight;//thisView.getHeight();
+        //noinspection EqualsBetweenInconvertibleTypes
+        final boolean footer = mKernel != null && (this.equals(mKernel.getRefreshLayout().getRefreshFooter()));
+
+        if (footer) {
+            canvas.save();
+            canvas.translate(0, thisView.getHeight() - mHeight);
+        }
+
+        drawWinds(canvas, width);
+        drawAirplane(canvas, width, height);
+        drawSideClouds(canvas, width, height);
+        drawCenterClouds(canvas, width, height);
+
+        if (footer) {
+            canvas.restore();
+        }
+
+        super.dispatchDraw(canvas);
+    }
+
+    private void drawWinds(Canvas canvas, int width) {
         if (isRefreshing) {
             // Set up new set of wind
             while (mWinds.size() < WIND_SET_AMOUNT) {
@@ -312,11 +329,6 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
             // needed for checking direction
             mLastAnimationTime = mLoadingAnimationTime;
         }
-        drawAirplane(canvas, width, height);
-        drawSideClouds(canvas, width, height);
-        drawCenterClouds(canvas, width, height);
-
-        super.dispatchDraw(canvas);
     }
 
     /**

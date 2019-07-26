@@ -57,16 +57,12 @@ public class BallPulseFooter extends InternalAbstract implements RefreshFooter {
     //</editor-fold>
 
     //<editor-fold desc="构造方法">
-    public BallPulseFooter(@NonNull Context context) {
+    public BallPulseFooter(Context context) {
         this(context, null);
     }
 
-    public BallPulseFooter(@NonNull Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public BallPulseFooter(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+    public BallPulseFooter(Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs, 0);
 
         final View thisView = this;
         thisView.setMinimumHeight(SmartUtil.dp2px(60));
