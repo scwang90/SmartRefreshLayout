@@ -54,11 +54,11 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
     //</editor-fold>
 
     //<editor-fold desc="构造方法">
-    public TwoLevelHeader(@NonNull Context context) {
+    public TwoLevelHeader(Context context) {
         this(context, null);
     }
 
-    public TwoLevelHeader(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public TwoLevelHeader(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs, 0);
 
         mSpinnerStyle = SpinnerStyle.FixedBehind;

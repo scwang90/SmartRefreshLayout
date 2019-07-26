@@ -35,8 +35,6 @@ set OUTPUT=methods-apk.txt
 set PATH_TOOL=%SDK%\build-tools\%TOOL%\dx.bat
 set PATH_JAR=%MODULE%/build/intermediates/intermediate-jars/debug/classes.jar
 set PATH_DEX=%PATH_JAR%.dex
-REM echo PATH_JAR=%PATH_JAR%
-REM echo PATH_DEX=%PATH_DEX%
 
 echo 正在构建。。。
 
@@ -50,6 +48,10 @@ if "%ERRORLEVEL%" == "0" (
     goto end
 )
 
+:dex
+
+echo 正在生成DEX。。。
+
 call %PATH_TOOL% --dex --verbose --no-strict --output=%PATH_DEX% %PATH_JAR% >NUL
 if "%ERRORLEVEL%" == "0" (
     echo.
@@ -60,9 +62,6 @@ if "%ERRORLEVEL%" == "0" (
     goto end
 )
 
-
-REM set PATH_DEX=%~dp0art/app-debug.apk
-REM --package-filter=android
 call java -jar ./art/dex-method-counts.jar --filter=all --include-classes --include-detail --output-style=tree   %PATH_DEX% > %OUTPUT%
 
 call ./method-count-words.bat %OUTPUT% %OUTPUT:.txt=-count.txt%

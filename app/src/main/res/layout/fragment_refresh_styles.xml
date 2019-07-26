@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:srlPrimaryColor="@color/colorPrimary"
-        app:srlAccentColor="@color/colorBackgroundDark"
+        app:srlAccentColor="@android:color/white"
         app:srlEnableLoadMore="true"
         app:srlEnableAutoLoadMore="false"
         app:srlEnablePreviewInEditMode="true">

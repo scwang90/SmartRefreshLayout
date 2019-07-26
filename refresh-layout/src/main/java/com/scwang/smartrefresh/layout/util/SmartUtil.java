@@ -4,6 +4,8 @@ import android.content.res.Resources;
 import android.graphics.PointF;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.NestedScrollingChild;
 import android.support.v4.view.NestedScrollingParent;
 import android.support.v4.view.ScrollingView;
@@ -18,6 +20,9 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.ScrollView;
 
+import com.scwang.smartrefresh.layout.api.RefreshKernel;
+import com.scwang.smartrefresh.layout.listener.CoordinatorLayoutListener;
+
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
@@ -31,7 +36,7 @@ public class SmartUtil implements Interpolator {
     public static int INTERPOLATOR_VISCOUS_FLUID = 0;
     public static int INTERPOLATOR_DECELERATE = 1;
 
-    private int type = INTERPOLATOR_VISCOUS_FLUID;
+    private int type;
 
     public SmartUtil(int type) {
         this.type = type;
@@ -286,4 +291,5 @@ public class SmartUtil implements Interpolator {
         return interpolated;
     }
     //</editor-fold>
+
 }
