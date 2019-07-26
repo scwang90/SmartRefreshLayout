@@ -105,7 +105,7 @@ public class ViewPagerExampleFragment extends Fragment implements OnRefreshListe
         private final SmartFragment[] fragments;
 
         SmartPagerAdapter(Item... items) {
-            super(getChildFragmentManager());
+            super(getChildFragmentManager(), BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
             this.items = items;
             this.fragments = new SmartFragment[items.length];
         }

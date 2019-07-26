@@ -15,19 +15,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.refreshlayout.fragment.example.NestedScrollExampleFragment.Item;
-import com.scwang.smartrefresh.header.PhoenixHeader;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
@@ -38,7 +38,6 @@ import java.util.Collection;
 import java.util.List;
 
 import static android.R.layout.simple_list_item_2;
-import static androidx.recyclerview.widget.DividerItemDecoration.VERTICAL;
 import static com.scwang.refreshlayout.R.mipmap.gif_header_repast;
 import static com.scwang.refreshlayout.R.mipmap.image_weibo_home_2;
 
@@ -142,7 +141,7 @@ public class NestedScrollExampleFragmentIntegral extends Fragment implements Ada
         private final SmartFragment[] fragments;
 
         SmartPagerAdapter(FragmentManager fm) {
-            super(fm);
+            super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
             this.fragments = new SmartFragment[]{
                     new SmartFragment(),new SmartFragment()
             };
