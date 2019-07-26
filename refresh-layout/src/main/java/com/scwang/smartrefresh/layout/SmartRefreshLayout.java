@@ -2823,7 +2823,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      * @return RefreshLayout
      */
     @Override
-    public RefreshLayout finishRefresh(int delayed, final boolean success, final Boolean noMoreData) {
+    public RefreshLayout finishRefresh(final int delayed, final boolean success, final Boolean noMoreData) {
         final int more = delayed >> 16;
         int delay = delayed << 16 >> 16;
         Runnable runnable = new Runnable() {
@@ -2946,7 +2946,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      * @return RefreshLayout
      */
     @Override
-    public RefreshLayout finishLoadMore(int delayed, final boolean success, final boolean noMoreData) {
+    public RefreshLayout finishLoadMore(final int delayed, final boolean success, final boolean noMoreData) {
         final int more = delayed >> 16;
         int delay = delayed << 16 >> 16;
         Runnable runnable = new Runnable() {
