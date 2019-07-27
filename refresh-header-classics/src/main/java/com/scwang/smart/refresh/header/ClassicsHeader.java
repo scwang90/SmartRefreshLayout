@@ -39,7 +39,7 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
  * 经典下拉头部
  * Created by SCWANG on 2017/5/28.
  */
-@SuppressWarnings({"unused", "UnusedReturnValue"})
+//@SuppressWarnings({"unused", "UnusedReturnValue"})
 public class ClassicsHeader extends ClassicsAbstract<ClassicsHeader> implements RefreshHeader {
 
     public static final int ID_TEXT_UPDATE = R.id.srl_classics_update;

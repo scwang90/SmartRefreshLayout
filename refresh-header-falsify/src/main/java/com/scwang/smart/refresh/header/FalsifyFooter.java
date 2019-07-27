@@ -15,7 +15,7 @@ import com.scwang.smart.refresh.layout.constant.RefreshState;
  * 用于 正真的 Footer 在 RefreshLayout 外部时，
  * Created by SCWANG on 2017/6/14.
  */
-@SuppressWarnings("unused")
+//@SuppressWarnings("unused")
 public class FalsifyFooter extends FalsifyAbstract implements RefreshFooter {
 
     //<editor-fold desc="FalsifyHeader">

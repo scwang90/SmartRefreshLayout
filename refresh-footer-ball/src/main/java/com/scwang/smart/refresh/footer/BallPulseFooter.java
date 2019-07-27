@@ -26,7 +26,7 @@ import com.scwang.smart.refresh.layout.util.SmartUtil;
  * 球脉冲底部加载组件
  * Created by SCWANG on 2017/5/30.
  */
-@SuppressWarnings({"unused", "UnusedReturnValue"})
+//@SuppressWarnings({"unused", "UnusedReturnValue"})
 public class BallPulseFooter extends SimpleComponent implements RefreshFooter {
 
     //<editor-fold desc="属性变量">

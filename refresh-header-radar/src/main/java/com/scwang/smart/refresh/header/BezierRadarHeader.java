@@ -31,7 +31,7 @@ import com.scwang.smart.refresh.layout.util.SmartUtil;
  * Created by SCWANG on 2017/5/28.
  */
 
-@SuppressWarnings({"UnusedReturnValue", "unused"})
+//@SuppressWarnings({"UnusedReturnValue", "unused"})
 public class BezierRadarHeader extends SimpleComponent implements RefreshHeader {
 
     //<editor-fold desc="属性字段">

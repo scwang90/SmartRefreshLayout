@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 28
@@ -33,4 +34,13 @@ dependencies {
     api project(':refresh-footer-classics')
     compileOnly project(':refresh-layout-kernel')
 
+}
+
+publish {
+    userOrg = 'scwang90'
+    groupId = 'com.scwang.smart'
+    artifactId = 'refresh-header-classics'
+    publishVersion = '0.0.1'
+    desc = 'the header ClassicsHeader of SmartRefreshLayout'
+    website = 'https://github.com/scwang90/${rootProject.name}'
 }
