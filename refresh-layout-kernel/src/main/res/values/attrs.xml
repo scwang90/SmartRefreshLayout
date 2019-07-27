@@ -85,18 +85,6 @@
         <attr name="layout_srlBackgroundColor" format="color"/>
     </declare-styleable>
 
-    <declare-styleable name="BezierRadarHeader">
-        <attr name="srlPrimaryColor"/>
-        <attr name="srlAccentColor"/>
-        <attr name="srlEnableHorizontalDrag"/>
-    </declare-styleable>
-
-    <declare-styleable name="BallPulseFooter">
-        <attr name="srlClassicsSpinnerStyle"/>
-        <attr name="srlAnimatingColor" format="color"/>
-        <attr name="srlNormalColor" format="color"/>
-    </declare-styleable>
-
     <style name="SmartRefreshStyle">
         <item name="srlPrimaryColor">@android:color/holo_blue_dark</item>
         <item name="srlAccentColor">@android:color/white</item>

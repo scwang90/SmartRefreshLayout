@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
 
@@ -24,6 +25,10 @@ android {
     }
 }
 
+repositories {
+    maven { url "https://jitpack.io" }
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -31,7 +36,30 @@ dependencies {
     })
     testImplementation 'junit:junit:4.12'
 
+    compileOnly 'com.flyco.roundview:FlycoRoundView_Lib:1.1.4@aar'
+    compileOnly 'com.github.czy1121:loadinglayout:1.0.1'
+    compileOnly 'com.github.mmin18:realtimeblurview:1.0.6'
+    compileOnly 'com.google.code.gson:gson:2.8.5'
+    compileOnly 'com.google.android:flexbox:1.0.0'
+    compileOnly 'com.wang.avi:library:2.1.3'
+    compileOnly 'com.youth.banner:banner:1.4.10'  //最新版本
+    compileOnly 'de.hdodenhof:circleimageview:2.1.0'
+    compileOnly 'jp.wasabeef:recyclerview-animators:2.2.6'
+    compileOnly 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
+    compileOnly 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46'
+
+    compileOnly 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-32'
+    compileOnly 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-32'
+
     compileOnly 'com.android.support:support-annotations:28.0.0'
 
 }
 
+publish {
+    userOrg = 'scwang90'
+    groupId = 'com.scwang.smart.refresh'
+    artifactId = 'drawable-paint'
+    publishVersion = '0.0.1'
+    desc = 'common drawables for refresh animations'
+    website = 'https://github.com/scwang90/${rootProject.name}'
+}

@@ -1,4 +1,4 @@
-package com.scwang.smartrefresh.layout;
+package com.scwang.smart.drawable;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
