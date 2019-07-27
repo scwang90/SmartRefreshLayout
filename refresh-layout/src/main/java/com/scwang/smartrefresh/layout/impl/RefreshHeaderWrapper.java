@@ -11,7 +11,7 @@ import com.scwang.smartrefresh.layout.internal.InternalAbstract;
  * Created by SCWANG on 2017/5/26.
  */
 @SuppressLint("ViewConstructor")
-public class RefreshHeaderWrapper extends InternalAbstract implements RefreshHeader/*, InvocationHandler*/ {
+public class RefreshHeaderWrapper extends InternalAbstract implements RefreshHeader {
 
     public RefreshHeaderWrapper(View wrapper) {
         super(wrapper);

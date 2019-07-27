@@ -4,12 +4,11 @@ apply plugin: 'com.android.library'
 
 android {
 
-    compileSdkVersion 27
-    buildToolsVersion '27.0.3'
+    compileSdkVersion 28
 
     defaultConfig {
-        minSdkVersion 12
-        targetSdkVersion 27
+        minSdkVersion 16
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
 
@@ -34,14 +33,12 @@ dependencies {
     })
     testImplementation 'junit:junit:4.12'
 
-    //noinspection GradleDependency
-    compileOnly 'com.android.support:support-annotations:25.1.0'
-    //noinspection GradleDependency,GradleCompatible
-//    compileOnly 'com.android.support:support-v4:22.1.0'
-    //noinspection GradleDependency,GradleCompatible
-    compileOnly 'com.android.support:recyclerview-v7:21.0.0'
-    //noinspection GradleDependency,GradleCompatible
-    compileOnly 'com.android.support:design:23.0.0'
+    compileOnly 'com.android.support:design:28.0.0'
+    api project(':refresh-layout-kernel')
+    api project(':refresh-footer-ball')
+    api project(':refresh-header-falsify')
+    api project(':refresh-header-radar')
+    api project(':refresh-header-two-level')
 
 }
 
@@ -49,10 +46,8 @@ publish {
     userOrg = 'scwang90'
     groupId = 'com.scwang.smartrefresh'
     artifactId = 'SmartRefreshLayout'
-//    version = '1.1.0-alpha-14'
-    publishVersion = '1.1.0-alpha-32'
+    publishVersion = '2.0.0-alpha-01'
     desc = 'An intelligent refresh layout'
     website = "https://github.com/scwang90/${rootProject.name}"
     archivesPath = '../build/outputs' //指定将要上传的压缩包路径，如果不写则默认上传系统生成的jar和aar
-//    archivesName = 'bintray-release'  //指定将要上传的压缩包所含的关键字，如果不写，默认过滤artifactId
 }

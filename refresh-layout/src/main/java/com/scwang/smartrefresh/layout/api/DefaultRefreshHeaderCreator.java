@@ -9,5 +9,5 @@ import android.support.annotation.NonNull;
  */
 public interface DefaultRefreshHeaderCreator {
     @NonNull
-    RefreshHeader createRefreshHeader(@NonNull Context context,@NonNull RefreshLayout layout);
+    RefreshHeader createRefreshHeader(@NonNull Context context, @NonNull RefreshLayout layout);
 }

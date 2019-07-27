@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.AbsListView;
 
-import com.scwang.smartrefresh.layout.impl.RefreshContentWrapper;
+import com.scwang.smart.refresh.layout.wrapper.RefreshContentWrapper;
 
 import static com.scwang.refreshlayout.widget.ScrollBoundaryHorizontal.canScrollLeft;
 import static com.scwang.refreshlayout.widget.ScrollBoundaryHorizontal.canScrollRight;

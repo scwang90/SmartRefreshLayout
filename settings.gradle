@@ -1,2 +1,12 @@
 include ':app'//, ':app-design'
 include ':refresh-layout', ':refresh-header', ':refresh-footer'
+
+include ':refresh-drawable-paint'
+include ':refresh-layout-kernel'
+include ':refresh-footer-ball'
+include ':refresh-footer-classics'
+include ':refresh-footer-radar'
+include ':refresh-header-classics'
+include ':refresh-header-falsify'
+include ':refresh-header-radar'
+include ':refresh-header-two-level'

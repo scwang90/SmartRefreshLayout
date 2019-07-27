@@ -11,15 +11,10 @@ import com.scwang.smartrefresh.layout.internal.InternalAbstract;
  * Created by SCWANG on 2017/5/26.
  */
 @SuppressLint("ViewConstructor")
-public class RefreshFooterWrapper extends InternalAbstract implements RefreshFooter/*, InvocationHandler */{
+public class RefreshFooterWrapper extends InternalAbstract implements RefreshFooter {
 
     public RefreshFooterWrapper(View wrapper) {
         super(wrapper);
     }
-
-//    @Override
-//    public boolean setNoMoreData(boolean noMoreData) {
-//        return mWrappedInternal instanceof RefreshFooter && ((RefreshFooter) mWrappedInternal).setNoMoreData(noMoreData);
-//    }
 
 }

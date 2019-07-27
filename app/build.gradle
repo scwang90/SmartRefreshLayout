@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 
 android {
 
-    compileSdkVersion 27
+    compileSdkVersion 28
     buildToolsVersion '27.0.3'
 
     defaultConfig {
         applicationId "com.scwang.refreshlayout.app"
         minSdkVersion 16
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -40,10 +40,6 @@ android {
         abortOnError false
     }
 
-//    compileOptions {
-//        sourceCompatibility JavaVersion.VERSION_1_8
-//        targetCompatibility JavaVersion.VERSION_1_8
-//    }
 }
 
 
@@ -52,7 +48,7 @@ repositories {
 }
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:support-v4:27.1.1'
+    implementation 'com.android.support:support-v4:28.0.0'
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -63,6 +59,8 @@ dependencies {
 
 //    implementation project(':refresh-footer')
     implementation project(':refresh-header')
+//    implementation project(':refresh-header-classics')
+    implementation project(':refresh-header-two-level')
     implementation project(':refresh-layout')
 //    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-32'
 //    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-32'
@@ -82,12 +80,12 @@ dependencies {
 //        exclude group: 'com.android.support'
 //    }
 
-    implementation 'com.android.support:design:27.1.1'
-    implementation 'com.android.support:cardview-v7:27.1.1'
+    implementation 'com.android.support:design:28.0.0'
+    implementation 'com.android.support:cardview-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 
     implementation 'com.flyco.roundview:FlycoRoundView_Lib:1.1.4@aar'
-    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.44'
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46'
     implementation 'com.github.czy1121:loadinglayout:1.0.1'
     implementation 'com.github.mmin18:realtimeblurview:1.0.6'
     implementation 'com.google.code.gson:gson:2.8.5'

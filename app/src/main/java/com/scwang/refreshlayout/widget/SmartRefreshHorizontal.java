@@ -10,16 +10,16 @@ import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 
 import com.scwang.refreshlayout.R;
-import com.scwang.smartrefresh.layout.api.RefreshFooter;
-import com.scwang.smartrefresh.layout.api.RefreshHeader;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.api.ScrollBoundaryDecider;
-import com.scwang.smartrefresh.layout.constant.RefreshState;
+import com.scwang.smart.refresh.layout.api.RefreshFooter;
+import com.scwang.smart.refresh.layout.api.RefreshHeader;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.constant.RefreshState;
+import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smart.refresh.layout.listener.OnMultiListener;
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
+import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
+import com.scwang.smart.refresh.layout.listener.ScrollBoundaryDecider;
 import com.scwang.smartrefresh.layout.impl.ScrollBoundaryDeciderAdapter;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
-import com.scwang.smartrefresh.layout.listener.OnMultiPurposeListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 public class SmartRefreshHorizontal extends FrameLayout implements RefreshLayout {
 
@@ -128,8 +128,18 @@ public class SmartRefreshHorizontal extends FrameLayout implements RefreshLayout
     }
 
     @Override
+    public RefreshLayout setFooterHeightPx(int px) {
+        return mRefreshLayout.setFooterHeightPx(px);
+    }
+
+    @Override
     public RefreshLayout setHeaderHeight(float dp) {
         return mRefreshLayout.setHeaderHeight(dp);
+    }
+
+    @Override
+    public RefreshLayout setHeaderHeightPx(int px) {
+        return mRefreshLayout.setHeaderHeightPx(px);
     }
 
     @Override
@@ -138,8 +148,18 @@ public class SmartRefreshHorizontal extends FrameLayout implements RefreshLayout
     }
 
     @Override
+    public RefreshLayout setHeaderInsetStartPx(int px) {
+        return mRefreshLayout.setHeaderInsetStartPx(px);
+    }
+
+    @Override
     public RefreshLayout setFooterInsetStart(float dp) {
         return mRefreshLayout.setFooterInsetStart(dp);
+    }
+
+    @Override
+    public RefreshLayout setFooterInsetStartPx(int px) {
+        return mRefreshLayout.setFooterInsetStartPx(px);
     }
 
     @Override
@@ -314,8 +334,8 @@ public class SmartRefreshHorizontal extends FrameLayout implements RefreshLayout
     }
 
     @Override
-    public RefreshLayout setOnMultiPurposeListener(OnMultiPurposeListener listener) {
-        return mRefreshLayout.setOnMultiPurposeListener(listener);
+    public RefreshLayout setOnMultiListener(OnMultiListener listener) {
+        return mRefreshLayout.setOnMultiListener(listener);
     }
 
     @Override
@@ -449,6 +469,11 @@ public class SmartRefreshHorizontal extends FrameLayout implements RefreshLayout
         return mRefreshLayout.autoLoadMore();
     }
 
+    @Override
+    public boolean autoLoadMore(int delayed) {
+        return false;
+    }
+
 //    @Override
 //    @Deprecated
 //    public boolean autoLoadMore(int delayed) {
@@ -463,6 +488,16 @@ public class SmartRefreshHorizontal extends FrameLayout implements RefreshLayout
     @Override
     public boolean autoLoadMore(int delayed, int duration, float dragRate, boolean animationOnly) {
         return mRefreshLayout.autoLoadMore(delayed, duration, dragRate, animationOnly);
+    }
+
+    @Override
+    public boolean isRefreshing() {
+        return false;
+    }
+
+    @Override
+    public boolean isLoading() {
+        return false;
     }
     //</editor-fold>
 }

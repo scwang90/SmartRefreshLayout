@@ -11,7 +11,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.scwang.smartrefresh.header.fungame.FunGameView;
-import com.scwang.smartrefresh.layout.api.RefreshKernel;
+import com.scwang.smart.refresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 import java.util.ArrayList;

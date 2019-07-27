@@ -1,0 +1,12 @@
+<resources>
+
+    <string name="srl_header_pulling">Pull Down To Refresh</string>
+    <string name="srl_header_release">Release To Refresh</string>
+    <string name="srl_header_refreshing">Refreshing…</string>
+    <string name="srl_header_loading">Wait For Loading…</string>
+    <string name="srl_header_finish">Refresh Success</string>
+    <string name="srl_header_failed">Refresh Failed</string>
+    <string name="srl_header_update">\'Last Update\' M-d HH:mm</string>
+    <string name="srl_header_secondary">Release To Second Floor</string>
+
+</resources>

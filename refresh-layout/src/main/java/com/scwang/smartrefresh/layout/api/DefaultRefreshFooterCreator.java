@@ -9,5 +9,5 @@ import android.support.annotation.NonNull;
  */
 public interface DefaultRefreshFooterCreator {
     @NonNull
-    RefreshFooter createRefreshFooter(@NonNull Context context,@NonNull RefreshLayout layout);
+    RefreshFooter createRefreshFooter(@NonNull Context context, @NonNull RefreshLayout layout);
 }

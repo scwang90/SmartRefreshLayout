@@ -29,7 +29,7 @@ if "%TOOL%" == "" (
 set SDK=%SDK:\\=\%
 set SDK=%SDK:\:=:%
 
-set MODULE=refresh-layout
+set MODULE=refresh-layout-kernel
 set OUTPUT=methods-apk.txt
 
 set PATH_TOOL=%SDK%\build-tools\%TOOL%\dx.bat

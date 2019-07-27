@@ -32,6 +32,15 @@ public enum RefreshState {
         this.isReleaseToOpening = releaseToOpening;
     }
 
+    public static RefreshState from(com.scwang.smart.refresh.layout.constant.RefreshState newState) {
+        for (RefreshState state : values()) {
+            if (state.ordinal() == newState.ordinal()) {
+                return state;
+            }
+        }
+        return None;
+    }
+
     public RefreshState toFooter() {
         if (isHeader && !isTwoLevel) {
             return values()[ordinal() + 1];
