@@ -33,7 +33,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 
     compileOnly 'com.android.support:design:28.0.0'
-
+    implementation 'me.dkzwm.widget.srl:ext-two-level:1.6.6.7'
 }
 
 publish {
@@ -44,3 +44,25 @@ publish {
     desc = 'the kernel of SmartRefreshLayout'
     website = 'https://github.com/scwang90/${rootProject.name}'
 }
+
+//publishing {
+//    publications {
+//        MyPublication(MavenPublication) {
+//            from components.java
+//            artifact sourcesJar
+//            artifact javadocJar
+//            groupId 'org.jfrog.gradle.sample'
+//            artifactId 'gradle-project'
+//            version '1.1'
+//            pom.withXml {
+//                // Iterate over the compile dependencies (we don't want the test ones), adding a <dependency> node for each
+//                configurations.compile.allDependencies.each {
+//                    def dependencyNode = dependenciesNode.appendNode('dependency')
+//                    dependencyNode.appendNode('groupId', it.group)
+//                    dependencyNode.appendNode('artifactId', it.name)
+//                    dependencyNode.appendNode('version', it.version)
+//                }
+//            }
+//        }
+//    }
+//}
