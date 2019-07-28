@@ -18,7 +18,7 @@ import java.util.List;
  * 路径
  * Created by SCWANG on 2017/6/1.
  */
-//@SuppressWarnings({"unused", "WeakerAccess"})
+@SuppressWarnings({"unused", "WeakerAccess"})
 public class PathsDrawable extends PaintDrawable {
 
     protected int mWidth = 1,mHeight = 1;

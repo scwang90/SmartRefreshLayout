@@ -22,7 +22,7 @@ import com.scwang.smart.refresh.layout.util.SmartUtil;
  * 经典上拉底部
  * Created by SCWANG on 2017/5/28.
  */
-//@SuppressWarnings({"unused", "UnusedReturnValue"})
+@SuppressWarnings({"unused", "UnusedReturnValue"})
 public class ClassicsFooter extends ClassicsAbstract<ClassicsFooter> implements RefreshFooter {
 
     public static String REFRESH_FOOTER_PULLING = null;//"上拉加载更多";
