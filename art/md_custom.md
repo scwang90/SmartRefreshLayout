@@ -16,6 +16,7 @@ app设计师发挥创意设计的好素材。 也是需要我们巧妙植入到�
 [YanXuanRefresh](https://github.com/ChaserSheng/YanXuanRefresh)  
 [SmartRefreshLottie](https://github.com/wapchief/SmartRefreshLottie)  
 [一个Android下拉刷新样式](http://www.jianshu.com/p/8f29c97eefd8)  
+[官网方法的实践](https://blog.csdn.net/cpcpcp123/article/details/84554872)  
 [838514984](https://github.com/838514984/smartrefreshlayout-statusUtils)
 
 
