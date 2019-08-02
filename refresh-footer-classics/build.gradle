@@ -32,9 +32,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     api project(':refresh-drawable-paint')
-//    api 'com.scwang.smart.refresh:drawable-paint:0.0.1'
-//    compileOnly project(':refresh-layout-kernel')
-    compileOnly 'com.scwang.smart:refresh-layout-kernel:0.0.1'
+    compileOnly project(':refresh-layout-kernel')
 }
 
 publish {

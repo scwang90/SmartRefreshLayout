@@ -39,7 +39,24 @@ allprojects {
             options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
         }
     }
+
+    if (name.startsWith("refresh-")) {
+        def artifact = name
+        apply plugin: 'maven'
+        group = SMART_GROUP
+        version = SMART_VERSION
+        uploadArchives {
+            repositories.mavenDeployer {
+                repository(url: uri('../repo'))
+                pom.groupId = SMART_GROUP
+                pom.artifactId = artifact
+                pom.version = SMART_VERSION
+            }
+        }
+    }
+
 }
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
