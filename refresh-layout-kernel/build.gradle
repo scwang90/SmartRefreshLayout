@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
+
+description = 'the kernel of SmartRefreshLayout'
 
 android {
 
@@ -33,13 +34,4 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 
     compileOnly 'com.android.support:design:28.0.0'
-}
-
-publish {
-    userOrg = 'scwang90'
-    groupId = 'com.scwang.smart'
-    artifactId = 'refresh-layout-kernel'
-    publishVersion = '0.0.1-1'
-    desc = 'the kernel of SmartRefreshLayout'
-    website = 'https://github.com/scwang90/${rootProject.name}'
 }

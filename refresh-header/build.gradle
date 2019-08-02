@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-//apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
 
@@ -8,10 +8,9 @@ android {
         minSdkVersion 16
         targetSdkVersion 28
         versionCode 1
-        versionName "1.0"
+        versionName SMART_VERSION
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
     buildTypes {
         release {
@@ -37,12 +36,12 @@ dependencies {
     compileOnly project(':refresh-layout')
 }
 
-//publish {
-//    userOrg = 'scwang90'
-//    groupId = 'com.scwang.smartrefresh'
-//    artifactId = 'SmartRefreshLayout'
-//    publishVersion = '2.0.0-alpha-01'
-//    desc = 'Some delicate headers of SmartRefreshLayout'
-//    website = "https://github.com/scwang90/${rootProject.name}"
-//}
+publish {
+    userOrg = 'scwang90'
+    groupId = 'com.scwang.smartrefresh'
+    artifactId = 'SmartRefreshLayout'
+    publishVersion = SMART_VERSION
+    desc = 'Some delicate headers of SmartRefreshLayout'
+    website = "https://github.com/scwang90/${rootProject.name}"
+}
 

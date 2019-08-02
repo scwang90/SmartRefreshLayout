@@ -41,10 +41,14 @@ allprojects {
     }
 
     if (name.startsWith("refresh-")) {
-        def artifact = name
+
         apply plugin: 'maven'
+
         group = SMART_GROUP
         version = SMART_VERSION
+
+        def artifact = name
+
         uploadArchives {
             repositories.mavenDeployer {
                 repository(url: uri('../repo'))
@@ -53,6 +57,21 @@ allprojects {
                 pom.version = SMART_VERSION
             }
         }
+
+        afterEvaluate {
+            if (description != null) {
+                apply plugin: 'com.novoda.bintray-release'
+                publish {
+                    userOrg = 'scwang90'
+                    groupId = SMART_GROUP
+                    artifactId = artifact
+                    publishVersion = SMART_VERSION
+                    desc = description
+                    website = "https://github.com/scwang90/${rootProject.name}"
+                }
+            }
+        }
+
     }
 
 }

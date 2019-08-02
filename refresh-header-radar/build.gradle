@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
+
+description = 'the header BezierRadarHeader of SmartRefreshLayout'
 
 android {
     compileSdkVersion 28
@@ -33,13 +34,4 @@ dependencies {
 
     compileOnly project(':refresh-layout-kernel')
 
-}
-
-publish {
-    userOrg = 'scwang90'
-    groupId = 'com.scwang.smart'
-    artifactId = 'refresh-header-radar'
-    publishVersion = '0.0.1'
-    desc = 'the header BezierRadarHeader of SmartRefreshLayout'
-    website = 'https://github.com/scwang90/${rootProject.name}'
 }
