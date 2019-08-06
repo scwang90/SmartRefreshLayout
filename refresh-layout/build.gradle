@@ -41,11 +41,11 @@ dependencies {
 
 }
 
-//publish {
-//    userOrg = 'scwang90'
-//    groupId = 'com.scwang.smartrefresh'
-//    artifactId = 'SmartRefreshLayout'
-//    publishVersion = '2.0.0-alpha-01'
-//    desc = 'An intelligent refresh layout'
-//    website = "https://github.com/scwang90/${rootProject.name}"
-//}
+publish {
+    userOrg = SMART_USER
+    groupId = 'com.scwang.smartrefresh'
+    artifactId = 'SmartRefreshLayout'
+    publishVersion = SMART_VERSION
+    desc = 'An intelligent refresh layout'
+    website = "https://github.com/scwang90/${rootProject.name}"
+}

@@ -62,7 +62,7 @@ allprojects {
             if (description != null) {
                 apply plugin: 'com.novoda.bintray-release'
                 publish {
-                    userOrg = 'scwang90'
+                    userOrg = SMART_USER
                     groupId = SMART_GROUP
                     artifactId = artifact
                     publishVersion = SMART_VERSION

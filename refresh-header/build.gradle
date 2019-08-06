@@ -37,11 +37,10 @@ dependencies {
 }
 
 publish {
-    userOrg = 'scwang90'
+    userOrg = SMART_USER
     groupId = 'com.scwang.smartrefresh'
-    artifactId = 'SmartRefreshLayout'
+    artifactId = 'SmartRefreshHeader'
     publishVersion = SMART_VERSION
     desc = 'Some delicate headers of SmartRefreshLayout'
     website = "https://github.com/scwang90/${rootProject.name}"
 }
-
