@@ -2001,7 +2001,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             mHeaderHeight = height;
             if (mRefreshHeader != null && mAttachedToWindow && mHeaderHeightStatus.notified) {
                 SpinnerStyle style = mRefreshHeader.getSpinnerStyle();
-                if (style != SpinnerStyle.MatchLayout && style != SpinnerStyle.Scale) {
+                if (style != SpinnerStyle.MatchLayout && !style.scale) {
                     /*
                      * 兼容 MotionLayout 2019-6-18
                      * 在 MotionLayout 内部 requestLayout 无效
@@ -2043,7 +2043,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             mFooterHeight = height;
             if (mRefreshFooter != null && mAttachedToWindow && mFooterHeightStatus.notified) {
                 SpinnerStyle style = mRefreshFooter.getSpinnerStyle();
-                if (style != SpinnerStyle.MatchLayout && style != SpinnerStyle.Scale) {
+                if (style != SpinnerStyle.MatchLayout && !style.scale) {
                     /*
                      * 兼容 MotionLayout 2019-6-18
                      * 在 MotionLayout 内部 requestLayout 无效
