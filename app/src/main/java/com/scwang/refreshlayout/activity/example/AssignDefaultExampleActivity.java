@@ -103,7 +103,7 @@ public class AssignDefaultExampleActivity extends AppCompatActivity {
                 layout.setEnableLoadMoreWhenContentNotFull(true);//内容不满一页时候启用加载更多
                 ClassicsFooter footer = new ClassicsFooter(context);
                 footer.setBackgroundResource(android.R.color.white);
-                footer.setSpinnerStyle(SpinnerStyle.Scale);//设置为拉伸模式
+                footer.setSpinnerStyle(SpinnerStyle.FixedBehind);//设置为拉伸模式
                 return footer;//指定为经典Footer，默认是 BallPulseFooter
             }
         });

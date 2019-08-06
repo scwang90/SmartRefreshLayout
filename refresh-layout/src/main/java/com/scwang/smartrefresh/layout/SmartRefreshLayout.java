@@ -547,7 +547,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
                 if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.MatchLayout) {
                     height = getSize(heightMeasureSpec);
-                } else if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale && !needPreview) {
+                } else if (mRefreshHeader.getSpinnerStyle().scale && !needPreview) {
                     height = Math.max(0, isEnableRefreshOrLoadMore(mEnableRefresh) ? mSpinner : 0);
                 }
 
@@ -595,7 +595,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
                 if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.MatchLayout) {
                     height = getSize(heightMeasureSpec);
-                } else if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Scale && !needPreview) {
+                } else if (mRefreshFooter.getSpinnerStyle().scale && !needPreview) {
                     height = Math.max(0, isEnableRefreshOrLoadMore(mEnableLoadMore) ? -mSpinner : 0);
                 }
 
@@ -692,7 +692,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                         /*
                          * SpinnerStyle.Scale  headerView.getMeasuredHeight() 已经重复处理
                          **/
-//                    } else if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale && mSpinner > 0) {
+//                    } else if (mRefreshHeader.getSpinnerStyle().scale && mSpinner > 0) {
 //                        bottom = top + Math.max(Math.max(0, isEnableRefreshOrLoadMore(mEnableRefresh) ? mSpinner : 0) - lp.bottomMargin - lp.topMargin, 0);
                     }
                 }
@@ -721,7 +721,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                         || style == SpinnerStyle.FixedFront
                         || style == SpinnerStyle.FixedBehind) {
                     top = top - mFooterHeight;
-                } else if (style == SpinnerStyle.Scale && mSpinner < 0) {
+                } else if (style.scale && mSpinner < 0) {
                     top = top - Math.max(isEnableRefreshOrLoadMore(mEnableLoadMore) ? -mSpinner : 0, 0);
                 }
 
@@ -786,7 +786,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 int bottom = Math.max(contentView.getTop() + contentView.getPaddingTop() + mSpinner, child.getTop());
                 if (mHeaderBackgroundColor != 0 && mPaint != null) {
                     mPaint.setColor(mHeaderBackgroundColor);
-                    if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale) {
+                    if (mRefreshHeader.getSpinnerStyle().scale) {
                         bottom = child.getBottom();
                     } else if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Translate) {
                         bottom = child.getBottom() + mSpinner;
@@ -810,7 +810,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 int top = Math.min(contentView.getBottom() - contentView.getPaddingBottom() + mSpinner, child.getBottom());
                 if (mFooterBackgroundColor != 0 && mPaint != null) {
                     mPaint.setColor(mFooterBackgroundColor);
-                    if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Scale) {
+                    if (mRefreshFooter.getSpinnerStyle().scale) {
                         top = child.getTop();
                     } else if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Translate) {
                         top = child.getTop() + mSpinner;
@@ -3535,7 +3535,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
          *                   dispatchTouchEvent , nestScroll 等都为 true
          *                   autoRefresh，autoLoadMore，需要模拟拖动，也为 true
          */
-        @SuppressWarnings("ConstantConditions")
         public RefreshKernel moveSpinner(final int spinner, final boolean isDragging) {
             if (mSpinner == spinner
                     && (mRefreshHeader == null || !mRefreshHeader.isSupportHorizontalDrag())
@@ -3611,7 +3610,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                             if (mHeaderBackgroundColor != 0 && mPaint != null && !isEnableTranslationContent(mEnableHeaderTranslationContent,mRefreshHeader)) {
                                 thisView.invalidate();
                             }
-                        } else if (mRefreshHeader.getSpinnerStyle() == SpinnerStyle.Scale){
+                        } else if (mRefreshHeader.getSpinnerStyle().scale){
                             /*
                              * 兼容 MotionLayout 2019-6-18
                              * 在 MotionLayout 内部 requestLayout 无效
@@ -3657,7 +3656,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                             if (mFooterBackgroundColor != 0 && mPaint != null && !isEnableTranslationContent(mEnableFooterTranslationContent, mRefreshFooter)) {
                                 thisView.invalidate();
                             }
-                        } else if (mRefreshFooter.getSpinnerStyle() == SpinnerStyle.Scale){
+                        } else if (mRefreshFooter.getSpinnerStyle().scale){
                             /*
                              * 兼容 MotionLayout 2019-6-18
                              * 在 MotionLayout 内部 requestLayout 无效

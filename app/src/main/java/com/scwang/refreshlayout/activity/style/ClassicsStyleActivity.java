@@ -139,6 +139,7 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
                 mRefreshLayout.getLayout().bringChildToFront(mRecyclerView);
                 break;
             case 尺寸拉伸:
+                //noinspection deprecation
                 mClassicsHeader.setSpinnerStyle(SpinnerStyle.Scale);
                 break;
             case 位置平移:

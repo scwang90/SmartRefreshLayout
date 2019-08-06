@@ -220,7 +220,7 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
             SpinnerStyle style = refreshHeader.getSpinnerStyle();
             if (style == SpinnerStyle.Translate) {
                 refreshHeader.getView().setTranslationY(spinner);
-            } else if (style == SpinnerStyle.Scale) {
+            } else if (style.scale) {
                 View view = refreshHeader.getView();
                 view.layout(view.getLeft(), view.getTop(), view.getRight(), view.getTop() + Math.max(0, spinner));
             }
