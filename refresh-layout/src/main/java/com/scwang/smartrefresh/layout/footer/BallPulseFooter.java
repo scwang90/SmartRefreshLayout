@@ -1,7 +1,6 @@
 package com.scwang.smartrefresh.layout.footer;
 
 import android.animation.TimeInterpolator;
-import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -10,7 +9,6 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.Interpolator;
 
 import androidx.annotation.AttrRes;
 import androidx.annotation.ColorInt;

@@ -3,10 +3,7 @@ package com.scwang.smartrefresh.layout.header;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
-import android.view.VelocityTracker;
 import android.view.View;
-import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -224,7 +221,7 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
             SpinnerStyle style = refreshHeader.getSpinnerStyle();
             if (style == SpinnerStyle.Translate) {
                 refreshHeader.getView().setTranslationY(spinner);
-            } else if (style == SpinnerStyle.Scale) {
+            } else if (style.scale) {
                 View view = refreshHeader.getView();
                 view.layout(view.getLeft(), view.getTop(), view.getRight(), view.getTop() + Math.max(0, spinner));
             }

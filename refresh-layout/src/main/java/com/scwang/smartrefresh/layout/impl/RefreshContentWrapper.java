@@ -21,7 +21,6 @@ import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.ScrollBoundaryDecider;
 import com.scwang.smartrefresh.layout.listener.CoordinatorLayoutListener;
 import com.scwang.smartrefresh.layout.util.DesignUtil;
-import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 import java.util.LinkedList;
 import java.util.List;

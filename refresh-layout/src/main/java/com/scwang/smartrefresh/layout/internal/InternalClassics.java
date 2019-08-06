@@ -252,8 +252,8 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
             if (!mSetAccentColor) {
                 if (colors.length > 1) {
                     setAccentColor(colors[1]);
-//                } else {
-//                    setAccentColor(colors[0] == 0xffffffff ? 0xff666666 : 0xffffffff);
+                } else {
+                    setAccentColor(colors[0] == 0xffffffff ? 0xff666666 : 0xffffffff);
                 }
                 mSetAccentColor = false;
             }
