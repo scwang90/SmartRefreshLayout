@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
 
@@ -33,14 +33,14 @@ dependencies {
     })
     testImplementation 'junit:junit:4.12'
 
-    compileOnly 'com.google.android.material:material:1.1.0-alpha08'
+    compileOnly 'com.google.android.material:material:1.1.0-alpha09'
 }
 
 publish {
     userOrg = 'scwang90'
     groupId = 'com.scwang.smartrefresh'
     artifactId = 'SmartRefreshLayout'
-    publishVersion = '1.1.0-andx-15'
+    publishVersion = '1.1.0-andx-16'
     desc = 'An intelligent refresh layout'
     website = "https://github.com/scwang90/${rootProject.name}"
 }

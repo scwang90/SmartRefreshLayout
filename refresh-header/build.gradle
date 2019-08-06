@@ -43,8 +43,7 @@ publish {
     userOrg = 'scwang90'
     groupId = 'com.scwang.smartrefresh'
     artifactId = 'SmartRefreshHeader'
-//    version = '1.1.0-alpha-14'
-    publishVersion = '1.1.0-andx-15'
+    publishVersion = '1.1.0-andx-16'
     desc = 'Some delicate headers of SmartRefreshLayout'
     website = "https://github.com/scwang90/${rootProject.name}"
 }

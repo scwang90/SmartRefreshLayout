@@ -9,11 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.FrameLayout;
+import android.widget.Space;
 
 import androidx.annotation.NonNull;
 import androidx.core.view.NestedScrollingChild;
 import androidx.core.view.NestedScrollingParent;
-import androidx.legacy.widget.Space;
 import androidx.viewpager.widget.ViewPager;
 
 import com.scwang.smartrefresh.layout.api.RefreshContent;
@@ -212,7 +212,6 @@ public class RefreshContentWrapper implements RefreshContent, CoordinatorLayoutL
 //    }
 
     @Override
-    @SuppressWarnings("deprecation")
     public void setUpComponent(RefreshKernel kernel, View fixedHeader, View fixedFooter) {
         findScrollableView(mContentView, kernel);
 

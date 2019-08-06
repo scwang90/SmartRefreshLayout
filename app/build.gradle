@@ -77,10 +77,10 @@ dependencies {
 //        exclude group: 'com.android.support'
 //    }
 
-    implementation 'com.google.android.material:material:1.1.0-alpha07'
+    implementation 'com.google.android.material:material:1.1.0-alpha09'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta2'
-    implementation 'androidx.viewpager2:viewpager2:1.0.0-alpha06'
+    implementation 'androidx.viewpager2:viewpager2:1.0.0-beta02'
 
     implementation 'com.flyco.roundview:FlycoRoundView_Lib:1.1.4@aar'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46'
