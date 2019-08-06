@@ -1,15 +1,14 @@
-apply plugin: 'com.aaron.gradle.bintray-release'//必须写在第一行
 apply plugin: 'com.android.library'
-//apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
 
-    compileSdkVersion 27
-    buildToolsVersion '27.0.3'
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
         minSdkVersion 12
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
 
@@ -49,10 +48,7 @@ publish {
     userOrg = 'scwang90'
     groupId = 'com.scwang.smartrefresh'
     artifactId = 'SmartRefreshLayout'
-//    version = '1.1.0-alpha-14'
-    publishVersion = '1.1.0-alpha-32'
+    publishVersion = '1.1.0-bata-1'
     desc = 'An intelligent refresh layout'
     website = "https://github.com/scwang90/${rootProject.name}"
-    archivesPath = '../build/outputs' //指定将要上传的压缩包路径，如果不写则默认上传系统生成的jar和aar
-//    archivesName = 'bintray-release'  //指定将要上传的压缩包所含的关键字，如果不写，默认过滤artifactId
 }

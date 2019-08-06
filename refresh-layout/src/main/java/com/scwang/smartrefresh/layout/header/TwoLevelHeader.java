@@ -4,13 +4,8 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.view.NestedScrollingParent;
-import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
-import android.view.VelocityTracker;
 import android.view.View;
-import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 
 import com.scwang.smartrefresh.layout.R;
@@ -31,7 +26,7 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
  * 二级刷新
  * Created by SCWANG on 2017/5/26.
  */
-@SuppressWarnings({"unused", "UnusedReturnValue"})
+@SuppressWarnings({"unused", "UnusedReturnValue", "deprecation"})
 public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*, NestedScrollingParent*/ {
 
     //<editor-fold desc="属性字段">

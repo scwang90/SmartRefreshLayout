@@ -4,8 +4,6 @@ import android.content.res.Resources;
 import android.graphics.PointF;
 import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.NestedScrollingChild;
 import android.support.v4.view.NestedScrollingParent;
 import android.support.v4.view.ScrollingView;
@@ -19,9 +17,6 @@ import android.webkit.WebView;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.ScrollView;
-
-import com.scwang.smartrefresh.layout.api.RefreshKernel;
-import com.scwang.smartrefresh.layout.listener.CoordinatorLayoutListener;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;

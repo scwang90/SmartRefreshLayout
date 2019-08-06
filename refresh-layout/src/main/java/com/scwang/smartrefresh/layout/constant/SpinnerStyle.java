@@ -4,11 +4,18 @@ package com.scwang.smartrefresh.layout.constant;
  * 顶部和底部的组件在拖动时候的变换方式
  * Created by SCWANG on 2017/5/26.
  */
-
+@SuppressWarnings("DeprecatedIsStillUsed")
 public class SpinnerStyle {
 
-    public static final SpinnerStyle Translate = new SpinnerStyle(0, false);
-    public static final SpinnerStyle Scale = new SpinnerStyle(1, false);
+    public static final SpinnerStyle Translate = new SpinnerStyle(0, true);
+    /**
+     * Scale 下拉过程中会动态 【测量】（header）和 【布局】（layout）降低app 性能，
+     * 官方再带的 Header 都已经从【Scale】转向【FixedBehind】来提高性能
+     * 自定义可以参考官方的 【飞机】【贝塞尔】【快递】等 Header
+     * @deprecated use {@link SpinnerStyle#FixedBehind}
+     */
+    @Deprecated
+    public static final SpinnerStyle Scale = new SpinnerStyle(1, true);
     public static final SpinnerStyle FixedBehind = new SpinnerStyle(2, false);
     public static final SpinnerStyle FixedFront = new SpinnerStyle(3, true);
     public static final SpinnerStyle MatchLayout = new SpinnerStyle(4, true);
