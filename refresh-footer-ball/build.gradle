@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
 
 description = 'the footer BallPulseFooter of SmartRefreshLayout'
 

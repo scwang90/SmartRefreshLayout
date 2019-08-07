@@ -73,11 +73,7 @@ public class CircleImageView extends ImageView {
             thisView.setPadding(padding, padding, padding, padding);
         }
         circle.getPaint().setColor(color);
-        if (Build.VERSION.SDK_INT >= 16) {
-            thisView.setBackground(circle);
-        } else {
-            thisView.setBackgroundDrawable(circle);
-        }
+        thisView.setBackground(circle);
     }
 
     @Override

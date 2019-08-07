@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
+//apply plugin: 'com.novoda.bintray-release'
 
 android {
 
@@ -36,11 +36,11 @@ dependencies {
     compileOnly project(':refresh-layout')
 }
 
-publish {
-    userOrg = SMART_USER
-    groupId = 'com.scwang.smartrefresh'
-    artifactId = 'SmartRefreshHeader'
-    publishVersion = SMART_VERSION
-    desc = 'Some delicate headers of SmartRefreshLayout'
-    website = "https://github.com/scwang90/${rootProject.name}"
-}
+//publish {
+//    userOrg = SMART_USER
+//    groupId = 'com.scwang.smartrefresh'
+//    artifactId = 'SmartRefreshHeader'
+//    publishVersion = SMART_VERSION
+//    desc = 'Some delicate headers of SmartRefreshLayout'
+//    website = "https://github.com/scwang90/${rootProject.name}"
+//}

@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
+
+description = 'path drawables for refresh animations'
 
 android {
 
@@ -37,16 +38,6 @@ dependencies {
     })
     testImplementation 'junit:junit:4.12'
 
-//    compileOnly project(':refresh-drawable-paint')
-    compileOnly 'com.scwang.smart.refresh:drawable-paint:0.0.1'
+    api project(':refresh-drawable-paint')
     compileOnly 'com.android.support:support-v4:28.0.0'
-}
-
-publish {
-    userOrg = 'scwang90'
-    groupId = 'com.scwang.smart.refresh'
-    artifactId = 'drawable-path'
-    publishVersion = '0.0.1'
-    desc = 'path drawables for refresh animations'
-    website = 'https://github.com/scwang90/${rootProject.name}'
 }

@@ -40,12 +40,12 @@ dependencies {
     api project(':refresh-header-two-level')
 
 }
-
-publish {
-    userOrg = SMART_USER
-    groupId = 'com.scwang.smartrefresh'
-    artifactId = 'SmartRefreshLayout'
-    publishVersion = SMART_VERSION
-    desc = 'An intelligent refresh layout'
-    website = "https://github.com/scwang90/${rootProject.name}"
-}
+//
+//publish {
+//    userOrg = SMART_USER
+//    groupId = 'com.scwang.smartrefresh'
+//    artifactId = 'SmartRefreshLayout'
+//    publishVersion = SMART_VERSION
+//    desc = 'An intelligent refresh layout'
+//    website = "https://github.com/scwang90/${rootProject.name}"
+//}
