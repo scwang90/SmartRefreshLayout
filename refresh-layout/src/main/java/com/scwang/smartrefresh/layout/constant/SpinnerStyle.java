@@ -7,7 +7,8 @@ package com.scwang.smartrefresh.layout.constant;
 
 public class SpinnerStyle extends com.scwang.smart.refresh.layout.constant.SpinnerStyle {
 
-    protected SpinnerStyle(int ordinal, boolean front) {
-        super(ordinal, front);
+    private SpinnerStyle() {
+        super(-1, false, false);
     }
+
 }

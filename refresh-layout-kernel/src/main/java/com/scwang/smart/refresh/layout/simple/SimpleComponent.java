@@ -104,7 +104,11 @@ public abstract class SimpleComponent extends RelativeLayout implements RefreshC
             }
             if (params != null) {
                 if (params.height == 0 || params.height == MATCH_PARENT) {
-                    return mSpinnerStyle = SpinnerStyle.Scale;
+                    for (SpinnerStyle style : SpinnerStyle.values) {
+                        if (style.scale) {
+                            return mSpinnerStyle = style;
+                        }
+                    }
                 }
             }
         }

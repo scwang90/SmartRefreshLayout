@@ -19,11 +19,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.scwang.smart.refresh.layout.constant.RefreshState;
+import com.scwang.smart.refresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.header.internal.MaterialProgressDrawable;
 import com.scwang.smartrefresh.header.waterdrop.WaterDropView;
 import com.scwang.smart.refresh.layout.api.RefreshHeader;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 import com.scwang.smartrefresh.layout.internal.ProgressDrawable;
 import com.scwang.smartrefresh.layout.util.SmartUtil;
@@ -61,7 +61,12 @@ public class WaterDropHeader extends InternalAbstract implements RefreshHeader {
 
         final ViewGroup thisGroup = this;
 
-        mSpinnerStyle = SpinnerStyle.Scale;
+        for (SpinnerStyle style : SpinnerStyle.values) {
+            if (style.scale) {
+                mSpinnerStyle = style;
+                break;
+            }
+        }
         mWaterDropView = new WaterDropView(context);
         mWaterDropView.updateCompleteState(0);
         thisGroup.addView(mWaterDropView, MATCH_PARENT, MATCH_PARENT);
