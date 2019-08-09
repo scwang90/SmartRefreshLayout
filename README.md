@@ -34,6 +34,7 @@ SmartRefreshLayout的目标是打造一个强大，稳定，成熟的下拉刷�
  - 支持所有可滚动视图的越界回弹
  - 支持 Header 和 Footer 交换混用
  - 支持AndroidX
+ - 支持[横向刷新](https://github.com/scwang90/SmartRefreshHorizontal)
 
 ## 每天领红包
 

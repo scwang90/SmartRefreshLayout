@@ -26,4 +26,8 @@ public class SmartRefreshContent extends SmartRefreshLayout {
         }
     }
 
+    @Override
+    public void onFinishInflate() {
+        super.onFinishInflate();
+    }
 }

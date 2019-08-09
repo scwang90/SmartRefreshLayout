@@ -17,6 +17,7 @@ import android.widget.Space;
 
 import com.scwang.smart.refresh.layout.api.RefreshContent;
 import com.scwang.smart.refresh.layout.api.RefreshKernel;
+import com.scwang.smart.refresh.layout.kernel.R;
 import com.scwang.smart.refresh.layout.listener.CoordinatorLayoutListener;
 import com.scwang.smart.refresh.layout.listener.ScrollBoundaryDecider;
 import com.scwang.smart.refresh.layout.simple.SimpleBoundaryDecider;
@@ -27,7 +28,6 @@ import java.util.List;
 import java.util.Queue;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static com.scwang.smart.refresh.layout.util.SmartUtil.canScrollVertically;
 import static com.scwang.smart.refresh.layout.util.SmartUtil.isContentView;
 import static com.scwang.smart.refresh.layout.util.SmartUtil.isTransformedTouchPointInView;
 import static com.scwang.smart.refresh.layout.util.SmartUtil.measureViewHeight;
@@ -216,7 +216,7 @@ public class RefreshContentWrapper implements RefreshContent, CoordinatorLayoutL
             kernel.getRefreshLayout().getLayout().addView(frameLayout, index, layoutParams);
             mContentView = frameLayout;
             if (fixedHeader != null) {
-                fixedHeader.setTag("fixed-top");
+                fixedHeader.setTag(R.id.srl_tag, "fixed-top");
                 ViewGroup.LayoutParams lp = fixedHeader.getLayoutParams();
                 ViewGroup parent = (ViewGroup) fixedHeader.getParent();
                 index = parent.indexOfChild(fixedHeader);
@@ -226,7 +226,7 @@ public class RefreshContentWrapper implements RefreshContent, CoordinatorLayoutL
                 frameLayout.addView(fixedHeader, 1, lp);
             }
             if (fixedFooter != null) {
-                fixedFooter.setTag("fixed-bottom");
+                fixedFooter.setTag(R.id.srl_tag,"fixed-bottom");
                 ViewGroup.LayoutParams lp = fixedFooter.getLayoutParams();
                 ViewGroup parent = (ViewGroup) fixedFooter.getParent();
                 index = parent.indexOfChild(fixedFooter);
@@ -257,7 +257,7 @@ public class RefreshContentWrapper implements RefreshContent, CoordinatorLayoutL
     @Override
     public AnimatorUpdateListener scrollContentWhenFinished(final int spinner) {
         if (mScrollableView != null && spinner != 0) {
-            if ((spinner < 0 && canScrollVertically(mScrollableView, 1)) || (spinner > 0 && canScrollVertically(mScrollableView, -1))) {
+            if ((spinner < 0 && mScrollableView.canScrollVertically(1)) || (spinner > 0 && mScrollableView.canScrollVertically(-1))) {
                 mLastSpinner = spinner;
                 return this;
             }

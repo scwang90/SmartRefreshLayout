@@ -108,7 +108,7 @@ public class SmartRefreshHorizontal extends FrameLayout implements RefreshLayout
             View child = mRefreshLayout.getChildAt(i);
             if ((header == null || child != header.getView()) && (footer == null || child != footer.getView())) {
                 if (child.getVisibility() != GONE) {
-                    child.setTag(R.string.srl_component_falsify, child);
+                    child.setTag(R.id.srl_tag, "GONE");
                     child.setRotation(90);
                     child.measure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY));
                     child.layout(div, -div, width + div, height - div);

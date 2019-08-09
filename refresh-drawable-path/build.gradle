@@ -26,11 +26,6 @@ android {
     }
 }
 
-repositories {
-    maven { url "https://jitpack.io" }
-    maven { url 'https://dl.bintray.com/scwang90/maven' }
-}
-
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {

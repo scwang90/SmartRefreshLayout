@@ -22,9 +22,10 @@ SmartRefreshLayout's goal is to build a strong, stable and mature pull-down refr
  - Support setting a theme to fit any scene of App, it won't appear a cool but very awkward situation.
  - Support setting a variety of transformations (Translation, stretching, behind fixed, top fixed, full screen view) for Headers and Footers.
  - Support rewrite and extension, internal implementation without private methods and fields.
- - Support automatically cross-border rebound for all rolling Views (Listview、RecyclerView、ScrollView、WebView...View).
+ - Support automatically cross-border rebound for all rolling Views (ListView、RecyclerView、ScrollView、WebView...View).
  - Support the interchange of Header and Footer
  - Support AndroidX
+ - Support [HorizontalRefresh](https://github.com/scwang90/SmartRefreshHorizontal)
  
 ## Gateway
 

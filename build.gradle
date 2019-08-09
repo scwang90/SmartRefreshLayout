@@ -18,71 +18,44 @@ allprojects {
         google()
         jcenter()
     }
+
+    tasks.withType(Javadoc) {
+        options {
+            encoding "UTF-8"
+            charSet 'UTF-8'
+            links "http://docs.oracle.com/javase/7/docs/api"
+        }
+        options.addStringOption('Xdoclint:none', '-quiet')
+    }
+
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile) {
+            options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+        }
+    }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-
 def file = 'local.properties'
 if (new File(file).exists()) {
     Properties properties = new Properties()
     properties.load(new FileInputStream(file))
     if ('true' == properties['SMART_PUBLISH']) {
-
         subprojects {
-
-            println 'name = ' + name
             if (name.startsWith("refresh-")) {
-
-                apply plugin: 'maven'
-
                 group = SMART_GROUP
                 version = SMART_VERSION
-
-                def artifact = name
-
-                uploadArchives {
-                    repositories.mavenDeployer {
-                        repository(url: uri('../repo'))
-                        pom.groupId = SMART_GROUP
-                        pom.artifactId = artifact
-                        pom.version = SMART_VERSION
-                    }
-                }
-
-                tasks.withType(Javadoc) {
-                    options {
-                        encoding "UTF-8"
-                        charSet 'UTF-8'
-                        links "http://docs.oracle.com/javase/7/docs/api"
-                    }
-                    //exclude(
-                    //        "**/ClassicsAbstract.java",
-                    //        "**/ClassicsHeader.java",
-                    //        "**/PathsDrawable.java",
-                    //        "**/BallPulseFooter.java",
-                    //        "**/BezierRadarHeader.java",
-                    //        "**/TwoLevelHeader.java"
-                    //)
-                    options.addStringOption('Xdoclint:none', '-quiet')
-                }
-
-                gradle.projectsEvaluated {
-                    tasks.withType(JavaCompile) {
-                        options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
-                    }
-                }
-
                 if (name.split('-').length > 2) {
                     afterEvaluate {
                         publish {
                             userOrg = SMART_USER
-                            groupId = SMART_GROUP
-                            artifactId = artifact
-                            publishVersion = SMART_VERSION
+                            groupId = group
+                            artifactId = name
                             desc = description
+                            publishVersion = version
                             website = "https://github.com/scwang90/${rootProject.name}"
                         }
                     }
@@ -91,6 +64,5 @@ if (new File(file).exists()) {
 
             }
         }
-
     }
 }
