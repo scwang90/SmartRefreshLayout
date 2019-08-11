@@ -251,7 +251,8 @@ Contact me: scwang90@hotmail.com
 [BeautifulRefreshLayout](https://github.com/android-cjj/BeautifulRefreshLayout)
 
 ## Other Works
-[MultiWaveHeader](https://github.com/scwang90/MultiWaveHeader)
+[MultiWaveHeader](https://github.com/scwang90/MultiWaveHeader)  
+[SmartRefreshHorizontal](https://github.com/scwang90/SmartRefreshHorizontal)  
 
 License
 -------
