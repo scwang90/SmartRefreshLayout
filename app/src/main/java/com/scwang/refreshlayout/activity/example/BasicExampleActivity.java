@@ -83,14 +83,14 @@ public class BasicExampleActivity extends AppCompatActivity {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull final RefreshLayout refreshLayout) {
-//                refreshLayout.getLayout().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
+                refreshLayout.getLayout().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
                         mAdapter.refresh(initData());
                         refreshLayout.finishRefresh();
                         refreshLayout.resetNoMoreData();//setNoMoreData(false);
-//                    }
-//                }, 2000);
+                    }
+                }, 2000);
             }
         });
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
