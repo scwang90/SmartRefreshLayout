@@ -62,7 +62,11 @@ public class WaterDropHeader extends InternalAbstract implements RefreshHeader {
 
         final ViewGroup thisGroup = this;
 
-        mSpinnerStyle = SpinnerStyle.Scale;
+        for (SpinnerStyle style : SpinnerStyle.values) {
+            if (style.scale) {
+                mSpinnerStyle = style;
+            }
+        }
         mWaterDropView = new WaterDropView(context);
         mWaterDropView.updateCompleteState(0);
         thisGroup.addView(mWaterDropView, MATCH_PARENT, MATCH_PARENT);
