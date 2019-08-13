@@ -121,12 +121,11 @@ implementation  'com.scwang.smart:refresh-header-two-level:2.0.0-alpha-1'   //Tw
 implementation  'com.scwang.smart:refresh-footer-ball:2.0.0-alpha-1'        //BallPulseFooter
 implementation  'com.scwang.smart:refresh-footer-classics:2.0.0-alpha-1'    //ClassicsFooter
 
-// The package name of `com.scwang.smartrefresh` is retained, but not subcontracted.
-implementation 'com.scwang.smartrefresh:SmartRefreshHeader:2.0.0-alpha-1'   //Headers
-implementation 'com.scwang.smartrefresh:SmartRefreshFooter:2.0.0-alpha-1'   //Footers
-implementation 'com.scwang.smartrefresh:SmartRefreshLayout:2.0.0-alpha-1'   //core、 default Header and Footer
-
 ```
+<!-- // The package name of `com.scwang.smartrefresh` is retained, but not subcontracted. -->
+<!-- implementation 'com.scwang.smartrefresh:SmartRefreshHeader:2.0.0-alpha-1'   //Headers -->
+<!-- implementation 'com.scwang.smartrefresh:SmartRefreshFooter:2.0.0-alpha-1'   //Footers -->
+<!-- implementation 'com.scwang.smartrefresh:SmartRefreshLayout:2.0.0-alpha-1'   //core、 default Header and Footer -->
 
 If you use AndroidX, add it to gradle.properties
 

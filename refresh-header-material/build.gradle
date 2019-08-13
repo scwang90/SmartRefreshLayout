@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 
-description = 'the header BezierRadarHeader of SmartRefreshLayout'
+description = 'the header MaterialHeader of SmartRefreshLayout'
 
 android {
     compileSdkVersion 28
