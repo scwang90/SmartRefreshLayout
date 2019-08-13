@@ -4,11 +4,9 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
-import com.scwang.smartrefresh.layout.api.RefreshHeader;
-
 /**
  * DropBoxRefresh
- * Created by SCWANG on 2017/6/24.
+ * Created by scwang on 2017/6/24.
  * design https://dribbble.com/shots/3470499-DropBox-Refresh
  */
 public class DropBoxHeader extends com.scwang.smart.refresh.header.DropBoxHeader {

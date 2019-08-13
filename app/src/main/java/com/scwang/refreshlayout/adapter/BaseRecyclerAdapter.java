@@ -16,9 +16,8 @@ import java.util.List;
 
 /**
  *
- * Created by SCWANG on 2017/6/11.
+ * Created by scwang on 2017/6/11.
  */
-
 @SuppressWarnings({"UnusedReturnValue", "unused"})
 public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<SmartViewHolder> implements ListAdapter {
 

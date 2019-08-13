@@ -30,9 +30,8 @@ import static android.R.layout.simple_list_item_2;
 
 /**
  * 淘宝二楼
- * Created by SCWANG on 2017/12/4.
+ * Created by scwang on 2017/12/4.
  */
-
 public class SecondFloorPracticeFragment extends Fragment {
 
     @Override

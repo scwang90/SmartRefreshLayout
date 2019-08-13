@@ -7,9 +7,8 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 
 /**
  * 贝塞尔曲线类雷达风格刷新组件
- * Created by SCWANG on 2017/5/28.
+ * Created by scwang on 2017/5/28.
  */
-
 @SuppressWarnings({"UnusedReturnValue", "unused"})
 public class BezierRadarHeader extends com.scwang.smart.refresh.header.BezierRadarHeader implements RefreshHeader {
 

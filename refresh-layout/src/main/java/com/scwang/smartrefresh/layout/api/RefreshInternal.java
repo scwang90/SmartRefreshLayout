@@ -8,7 +8,7 @@ import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 
 /**
  * 刷新内部组件
- * Created by SCWANG on 2017/5/26.
+ * Created by scwang on 2017/5/26.
  */
 public interface RefreshInternal extends RefreshComponent {
 

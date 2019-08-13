@@ -20,7 +20,7 @@ import com.scwang.smart.refresh.layout.util.SmartUtil;
 
 /**
  * 经典上拉底部
- * Created by SCWANG on 2017/5/28.
+ * Created by scwang on 2017/5/28.
  */
 @SuppressWarnings({"unused", "UnusedReturnValue"})
 public class ClassicsFooter extends ClassicsAbstract<ClassicsFooter> implements RefreshFooter {

@@ -35,7 +35,7 @@ import static android.view.View.MeasureSpec.makeMeasureSpec;
 
 /**
  * 全屏水滴下拉头
- * Created by SCWANG on 2017/6/4.
+ * Created by scwang on 2017/6/4.
  * from https://github.com/recruit-lifestyle/WaveSwipeRefreshLayout
  */
 @SuppressWarnings("unused")

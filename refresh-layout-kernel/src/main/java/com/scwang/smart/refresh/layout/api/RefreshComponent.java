@@ -15,7 +15,7 @@ import static android.support.annotation.RestrictTo.Scope.SUBCLASSES;
 
 /**
  * 刷新内部组件
- * Created by SCWANG on 2017/5/26.
+ * Created by scwang on 2017/5/26.
  */
 public interface RefreshComponent extends OnStateChangedListener {
     /**

@@ -21,7 +21,7 @@ import static android.view.MotionEvent.ACTION_MASK;
 
 /**
  * 游戏 header
- * Created by SCWANG on 2017/6/17.
+ * Created by scwang on 2017/6/17.
  */
 @SuppressLint("RestrictedApi")
 public abstract class FunGameBase extends InternalAbstract implements RefreshHeader {

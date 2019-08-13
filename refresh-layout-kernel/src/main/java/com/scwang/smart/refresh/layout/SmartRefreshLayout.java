@@ -74,7 +74,7 @@ import static java.lang.System.currentTimeMillis;
 /**
  * 智能刷新布局
  * Intelligent RefreshLayout
- * Created by SCWANG on 2017/5/26.
+ * Created by scwang on 2017/5/26.
  */
 @SuppressLint("RestrictedApi")
 @SuppressWarnings({"unused"})

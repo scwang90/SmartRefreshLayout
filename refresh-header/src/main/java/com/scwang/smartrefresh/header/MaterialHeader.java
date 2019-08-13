@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 
 /**
  * Material 主题下拉头
- * Created by SCWANG on 2017/6/2.
+ * Created by scwang on 2017/6/2.
  */
 public class MaterialHeader extends com.scwang.smart.refresh.header.MaterialHeader {
 

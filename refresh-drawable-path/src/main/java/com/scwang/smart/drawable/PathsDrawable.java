@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * 路径
- * Created by SCWANG on 2017/6/1.
+ * Created by scwang on 2017/6/1.
  */
 @SuppressWarnings({"unused", "WeakerAccess"})
 public class PathsDrawable extends PaintDrawable {

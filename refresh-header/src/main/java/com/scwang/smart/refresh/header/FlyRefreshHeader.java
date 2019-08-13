@@ -24,10 +24,9 @@ import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 /**
  * 纸飞机和山丘
- * Created by SCWANG on 2017/6/6.
+ * Created by scwang on 2017/6/6.
  * from https://github.com/race604/FlyRefresh
  */
-
 public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
 
     //<editor-fold desc="field">

@@ -98,47 +98,75 @@ Please rest assured that I have divided it into three packages, when used to ref
 
 ## Usage
 #### 1.Add a gradle dependency.
+
+V 2.x changed the package name relative to 1.x, such as `com.scwang.smartrefresh` to `com.scwang.smart.refresh`.
+But the main change is to subcontract SmartRefreshLayout to reduce unnecessary dependencies and avoid code redundancy.
+However, there is no subcontracting to SmartRefreshHeader.
+There are more than ten headers in it.
+It is recommended that you copy the source code into the project whenever you need to use it.
+
 ```
-implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-beta-1'
-implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-beta-1'//If you use the special Header
-implementation 'com.android.support:appcompat-v7:25.3.1'
+// Note: There will be no default Header and Footer after subcontracting. It needs to be added manually!
+implementation  'com.scwang.smart.refresh-layout-kernel:2.0.0-alpha-1'      //core
+implementation  'com.scwang.smart.refresh-header-classics:2.0.0-alpha-1'    //ClassicsHeader
+implementation  'com.scwang.smart.refresh-header-radar:2.0.0-alpha-1'       //BezierRadarHeader
+implementation  'com.scwang.smart.refresh-header-falsify:2.0.0-alpha-1'     //FalsifyHeader
+implementation  'com.scwang.smart.refresh-header-material:2.0.0-alpha-1'    //MaterialHeader
+implementation  'com.scwang.smart.refresh-header-two-level:2.0.0-alpha-1'   //TwoLevelHeader
+implementation  'com.scwang.smart.refresh-footer-ball:2.0.0-alpha-1'        //BallPulseFooter
+implementation  'com.scwang.smart.refresh-footer-classics:2.0.0-alpha-1'    //ClassicsFooter
 
-//androidx version
-implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-16'
-implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-16'
-implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+// The package name of `com.scwang.smartrefresh` is retained, but not subcontracted.
+implementation 'com.scwang.smartrefresh:SmartRefreshHeader:2.0.0-alpha-1'   //Headers
+implementation 'com.scwang.smartrefresh:SmartRefreshFooter:2.0.0-alpha-1'   //Footers
+implementation 'com.scwang.smartrefresh:SmartRefreshLayout:2.0.0-alpha-1'   //core、 default Header and Footer
 
+```
+
+If you use AndroidX, add it to gradle.properties
+
+```
+android.useAndroidX=true
+android.enableJetifier=true
 ```
 
 #### 2.Add SmartRefreshLayout in the layout xml.
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.scwang.smart.refresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/refreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <com.scwang.smart.refresh.header.ClassicsHeader
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:overScrollMode="never"
         android:background="#fff" />
-</com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    <com.scwang.smart.refresh.footer.ClassicsFooter
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</com.scwang.smart.refresh.layout.SmartRefreshLayout>
 ```
 
 #### 3.Coding in the Activity or Fragment.
 ```java
 RefreshLayout refreshLayout = (RefreshLayout)findViewById(R.id.refreshLayout);
+refreshLayout.setRefreshHeader(new ClassicsHeader(this));
+refreshLayout.setRefreshFooter(new ClassicsFooter(this));
 refreshLayout.setOnRefreshListener(new OnRefreshListener() {
     @Override
     public void onRefresh(RefreshLayout refreshlayout) {
-        refreshlayout.finishRefresh(2000);
+        refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
     }
 });
 refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
     @Override
     public void onLoadMore(RefreshLayout refreshlayout) {
-        refreshlayout.finishLoadMore(2000);
+        refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
     }
 });
 ```
@@ -171,7 +199,7 @@ Note: this method is the lowest priority.
 
 #### 2.Specified in the XML layout file
 ```xml
-<com.scwang.smartrefresh.layout.SmartRefreshLayout
+<com.scwang.smart.refresh.layout.SmartRefreshLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/refreshLayout"
     android:layout_width="match_parent"
@@ -182,7 +210,7 @@ Note: this method is the lowest priority.
     app:srlEnablePreviewInEditMode="true">
     <!--srlAccentColor and srlPrimaryColor, Will change the Header and Footer theme colors-->
     <!--srlEnablePreviewInEditMode, Can open and close the preview function-->
-    <com.scwang.smartrefresh.layout.header.ClassicsHeader
+    <com.scwang.smart.refresh.header.ClassicsHeader
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <TextView
@@ -191,10 +219,10 @@ Note: this method is the lowest priority.
         android:padding="@dimen/dimenPaddingCommon"
         android:background="@android:color/white"
         android:text="@string/description_define_in_xml"/>
-    <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+    <com.scwang.smart.refresh.footer.ClassicsFooter
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-</com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</com.scwang.smart.refresh.layout.SmartRefreshLayout>
 ```
 
 Note: this method of priority is medium。When using this method, the Android Studio will have preview effect, the following figure:

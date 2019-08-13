@@ -29,7 +29,7 @@ import java.util.List;
 
 /**
  * StoreHouseHeader
- * Created by SCWANG on 2017/5/31.
+ * Created by scwang on 2017/5/31.
  * from https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh
  */
 @SuppressWarnings({"unused", "UnusedReturnValue", "SameParameterValue"})
@@ -347,7 +347,7 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
     }
     //</editor-fold>
 
-    private class AniController implements Runnable {
+    protected class AniController implements Runnable {
 
         int mTick = 0;
         int mCountPerSeg = 0;
@@ -355,7 +355,7 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
         int mInterval = 0;
         boolean mRunning = true;
 
-        private void start() {
+        protected void start() {
             mRunning = true;
             mTick = 0;
 
@@ -393,7 +393,7 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
             }
         }
 
-        private void stop() {
+        protected void stop() {
             mRunning = false;
             final View thisView = StoreHouseHeader.this;
             thisView.removeCallbacks(this);

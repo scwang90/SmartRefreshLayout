@@ -11,7 +11,7 @@ import android.support.annotation.NonNull;
 
 /**
  * 旋转动画
- * Created by SCWANG on 2017/6/16.
+ * Created by scwang on 2017/6/16.
  */
 @SuppressWarnings("WeakerAccess")
 public class ProgressDrawable extends PaintDrawable implements Animatable , ValueAnimator.AnimatorUpdateListener{

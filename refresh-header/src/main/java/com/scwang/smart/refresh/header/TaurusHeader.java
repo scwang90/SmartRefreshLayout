@@ -31,7 +31,7 @@ import java.util.Random;
 
 /**
  * Taurus
- * Created by SCWANG on 2017/5/31.
+ * Created by scwang on 2017/5/31.
  * from https://github.com/Yalantis/Taurus
  */
 public class TaurusHeader extends InternalAbstract implements RefreshHeader {
@@ -91,7 +91,7 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
     protected float mLastAnimationTime;
 
     protected Random mRandom;
-//    private boolean mEndOfRefreshing;
+//    protected boolean mEndOfRefreshing;
 
     //KEY: Y position, Value: X offset of wind
     protected Map<Float, Float> mWinds;
@@ -279,7 +279,7 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
         super.dispatchDraw(canvas);
     }
 
-    private void drawWinds(Canvas canvas, int width) {
+    protected void drawWinds(Canvas canvas, int width) {
         if (isRefreshing) {
             // Set up new set of wind
             while (mWinds.size() < WIND_SET_AMOUNT) {
@@ -335,7 +335,7 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
      * @param y       - y position fot one of lines
      * @param xOffset - x offset for on of lines
      */
-    private void drawWind(Canvas canvas, float y, float xOffset, int width) {
+    protected void drawWind(Canvas canvas, float y, float xOffset, int width) {
         /* We should multiply current animation time with this coefficient for taking all screen width in time
         Removing slowing of animation with dividing on {@LINK #SLOW_DOWN_ANIMATION_COEFFICIENT}
         And we should don't forget about distance that should "fly" line that depend on screen of device and x offset
@@ -361,7 +361,7 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
         canvas.drawLine(x, y, xEnd, y, mWindPaint);
     }
 
-    private void drawSideClouds(Canvas canvas, int width, int height) {
+    protected void drawSideClouds(Canvas canvas, int width, int height) {
         Matrix matrix = mMatrix;
         matrix.reset();
 
@@ -450,7 +450,7 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
         canvas.restoreToCount(saveCount);
     }
 
-    private void drawCenterClouds(Canvas canvas, int width, int height) {
+    protected void drawCenterClouds(Canvas canvas, int width, int height) {
         Matrix matrix = mMatrix;
         matrix.reset();
         float dragPercent = Math.min(1f, Math.abs(mPercent));
@@ -526,7 +526,7 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
         canvas.restoreToCount(saveCount);
     }
 
-    private void drawAirplane(Canvas canvas, int width, int height) {
+    protected void drawAirplane(Canvas canvas, int width, int height) {
         Matrix matrix = mMatrix;
         matrix.reset();
 
@@ -580,7 +580,7 @@ public class TaurusHeader extends InternalAbstract implements RefreshHeader {
     }
     //</editor-fold>
 
-    //<editor-fold desc="private">
+    //<editor-fold desc="protected">
     protected float random(int min, int max) {
         // nextInt is normally exclusive of the top value,
         // so add 1 to make it inclusive

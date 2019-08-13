@@ -13,7 +13,7 @@ import java.util.Date;
 
 /**
  * 经典下拉头部-兼容【1.x】版本-包名位置
- * Created by SCWANG on 2017/5/28.
+ * Created by scwang on 2017/5/28.
  */
 @SuppressWarnings({"unused", "UnusedReturnValue"})
 public class ClassicsHeader extends com.scwang.smart.refresh.header.ClassicsHeader implements RefreshHeader {

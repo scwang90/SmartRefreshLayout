@@ -18,7 +18,7 @@ import java.util.Queue;
 import java.util.Random;
 
 /**
- * Created by SCWANG on 2018/3/09.
+ * Created by scwang on 2018/3/09.
  * email:196425254@qq.com
  * from https://github.com/Hitomis/FunGameRefresh
  */
@@ -143,7 +143,6 @@ public class FunGameBattleCityHeader extends FunGameView {
     //</editor-fold>
 
     //<editor-fold desc="游戏控制">
-
     protected void resetConfigParams() {
         status = FunGameView.STATUS_GAME_PREPARE;
         controllerPosition = DIVIDING_LINE_SIZE;
@@ -252,7 +251,6 @@ public class FunGameBattleCityHeader extends FunGameView {
     //</editor-fold>
 
     //<editor-fold desc="绘制方法">
-
     @Override
     protected void drawGame(Canvas canvas, int width, int height) {
         drawSelfTank(canvas,width);

@@ -10,9 +10,8 @@ import com.scwang.smart.drawable.PaintDrawable;
 
 /**
  * 箭头图像
- * Created by SCWANG on 2018/2/5.
+ * Created by scwang on 2018/2/5.
  */
-
 public class ArrowDrawable extends PaintDrawable {
 
     private int mWidth = 0;

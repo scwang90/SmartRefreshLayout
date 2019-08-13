@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 
 /**
  * Phoenix
- * Created by SCWANG on 2017/5/31.
+ * Created by scwang on 2017/5/31.
  * from https://github.com/Yalantis/Phoenix
  */
 public class PhoenixHeader extends com.scwang.smart.refresh.header.PhoenixHeader {

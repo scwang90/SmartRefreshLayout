@@ -13,7 +13,7 @@ import com.scwang.smart.refresh.layout.constant.RefreshState;
 /**
  * 虚假的 Footer
  * 用于 正真的 Footer 在 RefreshLayout 外部时，
- * Created by SCWANG on 2017/6/14.
+ * Created by scwang on 2017/6/14.
  */
 @SuppressWarnings("unused")
 public class FalsifyFooter extends FalsifyAbstract implements RefreshFooter {

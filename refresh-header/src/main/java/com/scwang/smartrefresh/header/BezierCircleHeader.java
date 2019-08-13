@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 
 /**
  * CircleRefresh
- * Created by SCWANG on 2018/7/18.
+ * Created by scwang on 2018/7/18.
  * from https://github.com/tuesda/CircleRefreshLayout
  */
 public class BezierCircleHeader extends com.scwang.smart.refresh.header.BezierCircleHeader {

@@ -8,7 +8,7 @@ import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 
 /**
  * 刷新底部包装
- * Created by SCWANG on 2017/5/26.
+ * Created by scwang on 2017/5/26.
  */
 @SuppressLint("ViewConstructor")
 public class RefreshFooterWrapper extends InternalAbstract implements RefreshFooter {

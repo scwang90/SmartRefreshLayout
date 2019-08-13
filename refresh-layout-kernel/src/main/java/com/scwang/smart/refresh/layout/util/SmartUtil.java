@@ -25,9 +25,8 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 /**
  * SmartUtil
- * Created by SCWANG on 2018/3/5.
+ * Created by scwang on 2018/3/5.
  */
-
 public class SmartUtil implements Interpolator {
 
     public static int INTERPOLATOR_VISCOUS_FLUID = 0;

@@ -12,7 +12,6 @@ import java.util.Random;
 public class FunGameBattleCityHeader extends com.scwang.smart.refresh.header.FunGameBattleCityHeader {
 
     //<editor-fold desc="初始方法">
-
     public FunGameBattleCityHeader(Context context) {
         this(context, null);
     }

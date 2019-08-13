@@ -10,9 +10,8 @@ import com.scwang.smart.refresh.layout.listener.CoordinatorLayoutListener;
 
 /**
  * Design 兼容包缺省尝试
- * Created by SCWANG on 2018/1/29.
+ * Created by scwang on 2018/1/29.
  */
-
 public class DesignUtil {
 
     public static void checkCoordinatorLayout(View content, RefreshKernel kernel, final CoordinatorLayoutListener listener) {

@@ -4,9 +4,8 @@ import android.view.View;
 
 /**
  * 滚动边界
- * Created by SCWANG on 2017/7/8.
+ * Created by scwang on 2017/7/8.
  */
-
 public interface ScrollBoundaryDecider {
     /**
      * 根据内容视图状态判断是否可以开始下拉刷新

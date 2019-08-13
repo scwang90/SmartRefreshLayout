@@ -1,7 +1,7 @@
 package com.scwang.smart.refresh.header.waterdrop;
 
 /**
- * Created by SCWANG on 2018/6/25.
+ * Created by scwang on 2018/6/25.
  * 实心圆
  */
 public class Circle {

@@ -10,9 +10,8 @@ import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 /**
  * 滚动边界
- * Created by SCWANG on 2017/7/8.
+ * Created by scwang on 2017/7/8.
  */
-
 @SuppressWarnings("WeakerAccess")
 public class ScrollBoundaryHorizontal {
 

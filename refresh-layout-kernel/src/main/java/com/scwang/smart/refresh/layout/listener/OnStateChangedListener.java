@@ -13,9 +13,8 @@ import static android.support.annotation.RestrictTo.Scope.SUBCLASSES;
 
 /**
  * 刷新状态改变监听器
- * Created by SCWANG on 2017/5/26.
+ * Created by scwang on 2017/5/26.
  */
-
 public interface OnStateChangedListener {
     /**
      * 【仅限框架内调用】状态改变事件 {@link RefreshState}

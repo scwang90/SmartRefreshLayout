@@ -10,9 +10,8 @@ import com.scwang.smart.refresh.layout.listener.OnMultiListener;
 
 /**
  * 多功能监听器
- * Created by SCWANG on 2017/5/26.
+ * Created by scwang on 2017/5/26.
  */
-
 public class SimpleMultiListener implements OnMultiListener {
 
     @Override

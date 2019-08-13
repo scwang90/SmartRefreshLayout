@@ -36,7 +36,7 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 /**
  * WaterDropHeader
- * Created by SCWANG on 2017/5/31.
+ * Created by scwang on 2017/5/31.
  * from https://github.com/THEONE10211024/WaterDropListView
  */
 public class WaterDropHeader extends InternalAbstract implements RefreshHeader {

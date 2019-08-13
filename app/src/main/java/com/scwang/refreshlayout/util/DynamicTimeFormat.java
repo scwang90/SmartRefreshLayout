@@ -10,9 +10,8 @@ import java.util.Locale;
 
 /**
  * 动态时间格式化
- * Created by SCWANG on 2017/6/17.
+ * Created by scwang on 2017/6/17.
  */
-
 public class DynamicTimeFormat extends SimpleDateFormat {
 
     private static Locale locale = Locale.CHINA;

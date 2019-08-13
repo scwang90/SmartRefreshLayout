@@ -10,7 +10,7 @@ import com.scwang.smartrefresh.layout.api.RefreshFooter;
 
 /**
  * 球脉冲底部加载组件
- * Created by SCWANG on 2017/5/30.
+ * Created by scwang on 2017/5/30.
  */
 @SuppressWarnings({"unused", "UnusedReturnValue"})
 public class BallPulseFooter extends com.scwang.smart.refresh.footer.BallPulseFooter implements RefreshFooter {

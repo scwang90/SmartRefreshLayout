@@ -5,7 +5,7 @@ import com.scwang.smartrefresh.layout.api.ScrollBoundaryDecider;
 
 /**
  * 滚动边界
- * Created by SCWANG on 2017/7/8.
+ * Created by scwang on 2017/7/8.
  */
 public class ScrollBoundaryDeciderAdapter extends SimpleBoundaryDecider implements ScrollBoundaryDecider {
 

@@ -15,7 +15,7 @@ import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 /**
  * 下拉头中间的 “水滴”
- * Created by SCWANG on 2018/6/23.
+ * Created by scwang on 2018/6/23.
  * from https://github.com/THEONE10211024/WaterDropListView
  */
 @SuppressWarnings("unused")
@@ -108,7 +108,7 @@ public class WaterDropView extends View {
     }
 
 
-    private void makeBezierPath() {
+    protected void makeBezierPath() {
         mPath.reset();
         mPath.addCircle(topCircle.x, topCircle.y, topCircle.radius, Path.Direction.CCW);
         if (bottomCircle.y > topCircle.y + SmartUtil.dp2px(1)) {
@@ -147,7 +147,7 @@ public class WaterDropView extends View {
      * 获得两个圆切线与圆心连线的夹角
      * @return 夹角
      */
-    private double getAngle() {
+    protected double getAngle() {
         if (bottomCircle.radius > topCircle.radius) {
 //            throw new IllegalStateException("bottomCircle's radius must be less than the topCircle's");
             return 0;

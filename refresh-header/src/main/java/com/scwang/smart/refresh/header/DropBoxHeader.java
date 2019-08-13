@@ -30,10 +30,9 @@ import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 /**
  * DropBoxRefresh
- * Created by SCWANG on 2017/6/24.
+ * Created by scwang on 2017/6/24.
  * design https://dribbble.com/shots/3470499-DropBox-Refresh
  */
-
 public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
 
     //<editor-fold desc="static">
@@ -280,13 +279,12 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
     //</editor-fold>
 
     //<editor-fold desc="路径绘制">
-
-    private int generateSideLength() {
+    protected int generateSideLength() {
         return mHeaderHeight / 5;
     }
 
     @NonNull
-    private Path generateClipPath(BoxBody body, int width) {
+    protected Path generateClipPath(BoxBody body, int width) {
         mPath.reset();
         mPath.lineTo(0, body.boxCenterTop);
         mPath.lineTo(body.boxLeft, body.boxCenterTop);
@@ -299,13 +297,13 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
     }
 
     @NonNull
-    private BoxBody generateBoxBody(int width, int height, int sideLength) {
+    protected BoxBody generateBoxBody(int width, int height, int sideLength) {
         final int margin = sideLength / 2;
         return mBoxBody.measure(width, height, sideLength, margin);
     }
 
     @NonNull
-    private Path generateBoxCoverPath(BoxBody body) {
+    protected Path generateBoxCoverPath(BoxBody body) {
         mPath.reset();
         final int sideLength = (body.boxCenterX - body.boxLeft) * 4 / 5;
 
@@ -359,7 +357,7 @@ public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
     }
 
     @NonNull
-    private Path generateBoxBodyPath(BoxBody body) {
+    protected Path generateBoxBodyPath(BoxBody body) {
         mPath.reset();
 
         mPath.moveTo(body.boxLeft, body.boxCenterBottom);

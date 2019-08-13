@@ -31,7 +31,7 @@ import static android.view.View.MeasureSpec.getSize;
 
 /**
  * Material 主题下拉头
- * Created by SCWANG on 2017/6/2.
+ * Created by scwang on 2017/6/2.
  */
 @SuppressWarnings("unused")
 public class MaterialHeader extends SimpleComponent implements RefreshHeader {

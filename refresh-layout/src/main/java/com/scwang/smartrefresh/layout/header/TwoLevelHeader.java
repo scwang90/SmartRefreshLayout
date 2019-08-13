@@ -11,7 +11,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 
 /**
  * 二级刷新
- * Created by SCWANG on 2017/5/26.
+ * Created by scwang on 2017/5/26.
  */
 @SuppressWarnings("UnusedReturnValue")
 public class TwoLevelHeader extends com.scwang.smart.refresh.header.TwoLevelHeader implements RefreshHeader {

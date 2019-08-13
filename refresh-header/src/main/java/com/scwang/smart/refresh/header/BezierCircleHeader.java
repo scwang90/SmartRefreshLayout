@@ -23,7 +23,7 @@ import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 /**
  * CircleRefresh
- * Created by SCWANG on 2018/7/18.
+ * Created by scwang on 2018/7/18.
  * from https://github.com/tuesda/CircleRefreshLayout
  */
 public class BezierCircleHeader extends InternalAbstract implements RefreshHeader {
@@ -117,7 +117,7 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
         super.dispatchDraw(canvas);
     }
 
-    private void drawWave(Canvas canvas, int viewWidth, int viewHeight) {
+    protected void drawWave(Canvas canvas, int viewWidth, int viewHeight) {
         float baseHeight = Math.min(mHeadHeight, viewHeight);
         if (mWaveHeight != 0) {
             mPath.reset();
@@ -131,7 +131,7 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
         }
     }
 
-    private void drawSpringUp(Canvas canvas, int viewWidth) {
+    protected void drawSpringUp(Canvas canvas, int viewWidth) {
         if (mSpringRatio > 0) {
             float leftX = (viewWidth / 2f - 4 * mBollRadius + mSpringRatio * 3 * mBollRadius);
             if (mSpringRatio < 0.9) {
@@ -146,7 +146,7 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
         }
     }
 
-    private void drawBoll(Canvas canvas, int viewWidth) {
+    protected void drawBoll(Canvas canvas, int viewWidth) {
         if (mShowBoll) {
             canvas.drawCircle(viewWidth / 2f, mBollY, mBollRadius, mFrontPaint);
 
@@ -154,7 +154,7 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
         }
     }
 
-    private void drawBollTail(Canvas canvas, int viewWidth, float fraction) {
+    protected void drawBollTail(Canvas canvas, int viewWidth, float fraction) {
         if (mShowBollTail) {
             final float bottom = mHeadHeight + mWaveHeight;
             final float startY = mBollY + mBollRadius * fraction / 2;
@@ -171,7 +171,7 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
         }
     }
 
-    private void drawOuter(Canvas canvas, int viewWidth) {
+    protected void drawOuter(Canvas canvas, int viewWidth) {
         if (mShowOuter) {
             float outerR = mBollRadius + mOuterPaint.getStrokeWidth() * 2;
 
@@ -196,7 +196,7 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
 
     }
 
-    private void drawFinish(Canvas canvas, int viewWidth) {
+    protected void drawFinish(Canvas canvas, int viewWidth) {
         if (mFinishRatio > 0) {
             int beforeColor = mOuterPaint.getColor();
             if (mFinishRatio < 0.3) {

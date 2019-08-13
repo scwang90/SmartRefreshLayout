@@ -8,7 +8,7 @@ import com.scwang.smartrefresh.layout.api.RefreshFooter;
 
 /**
  * 经典上拉底部-兼容【1.x】版本-包名位置
- * Created by SCWANG on 2017/5/28.
+ * Created by scwang on 2017/5/28.
  */
 @SuppressWarnings({"unused", "UnusedReturnValue"})
 public class ClassicsFooter extends com.scwang.smart.refresh.footer.ClassicsFooter implements RefreshFooter {

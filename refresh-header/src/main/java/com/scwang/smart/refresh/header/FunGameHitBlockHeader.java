@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by SCWANG on 2018/2/29.
+ * Created by scwang on 2018/2/29.
  * from https://github.com/Hitomis/FunGameRefresh
  */
 public class FunGameHitBlockHeader extends FunGameView {

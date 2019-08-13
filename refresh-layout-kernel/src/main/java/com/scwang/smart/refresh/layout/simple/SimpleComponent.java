@@ -25,9 +25,8 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 /**
  * Component 初步实现
  * 实现 Header 和 Footer 时，继承 ComponentAbstract 的话可以少写很多接口方法
- * Created by SCWANG on 2018/2/6.
+ * Created by scwang on 2018/2/6.
  */
-
 public abstract class SimpleComponent extends RelativeLayout implements RefreshComponent {
 
     protected View mWrappedView;

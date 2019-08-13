@@ -35,7 +35,7 @@ import static com.scwang.smart.refresh.layout.util.SmartUtil.scrollListBy;
 
 /**
  * 刷新内容包装
- * Created by SCWANG on 2017/5/26.
+ * Created by scwang on 2017/5/26.
  */
 @SuppressWarnings("WeakerAccess")
 public class RefreshContentWrapper implements RefreshContent, CoordinatorLayoutListener, AnimatorUpdateListener {

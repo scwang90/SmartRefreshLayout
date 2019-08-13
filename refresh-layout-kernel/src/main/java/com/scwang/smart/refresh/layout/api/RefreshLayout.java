@@ -19,7 +19,7 @@ import com.scwang.smart.refresh.layout.listener.ScrollBoundaryDecider;
 /**
  * 刷新布局
  * interface of the refresh layout
- * Created by SCWANG on 2017/5/26.
+ * Created by scwang on 2017/5/26.
  */
 @SuppressWarnings({"UnusedReturnValue", "SameParameterValue", "unused"})
 public interface RefreshLayout {
