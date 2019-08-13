@@ -90,11 +90,16 @@ The two above headers are implemented by myself, The following headers are colle
 
 
 See so many cool headers, is not it feel great? At this point you may be worried that so many headers together, but usually only use one, is not to introduce a lot of useless code and resources?    
-Please rest assured that I have divided it into three packages, when used to reference their own it!
+Please rest assured that I have divided it into eight packages, when used to reference their own it!
 
- - **SmartRefreshLayout:** The core to realize，Bring ClassicsHeader and BezierRadarHeader.
- - **SmartRefreshHeader:** Integration of various kinds of the Header.
- - **SmartRefreshFooter:** Integration of various kinds of the Footer.
+ - refresh-layout-kernel        core
+ - refresh-header-classics      ClassicsHeader
+ - refresh-header-radar         BezierRadarHeader
+ - refresh-header-falsify       FalsifyHeader
+ - refresh-header-material      MaterialHeader
+ - refresh-header-two-level     TwoLevelHeader
+ - refresh-footer-ball          BallPulseFooter
+ - refresh-footer-classics      ClassicsFooter
 
 ## Usage
 #### 1.Add a gradle dependency.
@@ -107,14 +112,14 @@ It is recommended that you copy the source code into the project whenever you ne
 
 ```
 // Note: There will be no default Header and Footer after subcontracting. It needs to be added manually!
-implementation  'com.scwang.smart.refresh-layout-kernel:2.0.0-alpha-1'      //core
-implementation  'com.scwang.smart.refresh-header-classics:2.0.0-alpha-1'    //ClassicsHeader
-implementation  'com.scwang.smart.refresh-header-radar:2.0.0-alpha-1'       //BezierRadarHeader
-implementation  'com.scwang.smart.refresh-header-falsify:2.0.0-alpha-1'     //FalsifyHeader
-implementation  'com.scwang.smart.refresh-header-material:2.0.0-alpha-1'    //MaterialHeader
-implementation  'com.scwang.smart.refresh-header-two-level:2.0.0-alpha-1'   //TwoLevelHeader
-implementation  'com.scwang.smart.refresh-footer-ball:2.0.0-alpha-1'        //BallPulseFooter
-implementation  'com.scwang.smart.refresh-footer-classics:2.0.0-alpha-1'    //ClassicsFooter
+implementation  'com.scwang.smart:refresh-layout-kernel:2.0.0-alpha-1'      //core
+implementation  'com.scwang.smart:refresh-header-classics:2.0.0-alpha-1'    //ClassicsHeader
+implementation  'com.scwang.smart:refresh-header-radar:2.0.0-alpha-1'       //BezierRadarHeader
+implementation  'com.scwang.smart:refresh-header-falsify:2.0.0-alpha-1'     //FalsifyHeader
+implementation  'com.scwang.smart:refresh-header-material:2.0.0-alpha-1'    //MaterialHeader
+implementation  'com.scwang.smart:refresh-header-two-level:2.0.0-alpha-1'   //TwoLevelHeader
+implementation  'com.scwang.smart:refresh-footer-ball:2.0.0-alpha-1'        //BallPulseFooter
+implementation  'com.scwang.smart:refresh-footer-classics:2.0.0-alpha-1'    //ClassicsFooter
 
 // The package name of `com.scwang.smartrefresh` is retained, but not subcontracted.
 implementation 'com.scwang.smartrefresh:SmartRefreshHeader:2.0.0-alpha-1'   //Headers

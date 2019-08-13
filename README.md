@@ -109,7 +109,18 @@ SmartRefreshLayout以打造一个强大，稳定，成熟的下拉刷新框架�
 
 
 看到这么多炫酷的Header，是不是觉得很棒？这时你或许会担心这么多的Header集成在一起，但是平时只会用到一个，是不是要引入很多无用的代码和资源？
-请放心，我已经把刷新布局分成三个包啦，用到的时候自行引用就可以啦！
+V2.x 版本已经把依赖库拆分成8个包啦，用到的时候自行引用就可以啦！
+
+ - refresh-layout-kernel        核心必须依赖
+ - refresh-header-classics      经典刷新头
+ - refresh-header-radar         雷达刷新头
+ - refresh-header-falsify       虚拟刷新头
+ - refresh-header-material      谷歌刷新头
+ - refresh-header-two-level     二级刷新头
+ - refresh-footer-ball          球脉冲加载
+ - refresh-footer-classics      经典加载
+
+V2.x 中对包名进行迁移，为了兼容 1.x 下面三个包依然保留，可以自行选择使用
 
  - SmartRefreshLayout 刷新布局核心实现，自带ClassicsHeader（经典）、BezierRadarHeader（贝塞尔雷达）两个 Header.
  - SmartRefreshHeader 各种Header的集成，除了Layout自带的Header，其它都在这个包中.
@@ -125,14 +136,14 @@ SmartRefreshLayout以打造一个强大，稳定，成熟的下拉刷新框架�
 
 ```
 // 注意：分包之后不会有默认的Header和Footer需要手动添加！还是原来的三种方法！
-implementation  'com.scwang.smart.refresh-layout-kernel:2.0.0-alpha-1'      //核心必须依赖
-implementation  'com.scwang.smart.refresh-header-classics:2.0.0-alpha-1'    //经典刷新头
-implementation  'com.scwang.smart.refresh-header-radar:2.0.0-alpha-1'       //雷达刷新头
-implementation  'com.scwang.smart.refresh-header-falsify:2.0.0-alpha-1'     //虚拟刷新头
-implementation  'com.scwang.smart.refresh-header-material:2.0.0-alpha-1'    //谷歌刷新头
-implementation  'com.scwang.smart.refresh-header-two-level:2.0.0-alpha-1'   //二级刷新头
-implementation  'com.scwang.smart.refresh-footer-ball:2.0.0-alpha-1'        //球脉冲加载
-implementation  'com.scwang.smart.refresh-footer-classics:2.0.0-alpha-1'    //经典加载
+implementation  'com.scwang.smart:refresh-layout-kernel:2.0.0-alpha-1'      //核心必须依赖
+implementation  'com.scwang.smart:refresh-header-classics:2.0.0-alpha-1'    //经典刷新头
+implementation  'com.scwang.smart:refresh-header-radar:2.0.0-alpha-1'       //雷达刷新头
+implementation  'com.scwang.smart:refresh-header-falsify:2.0.0-alpha-1'     //虚拟刷新头
+implementation  'com.scwang.smart:refresh-header-material:2.0.0-alpha-1'    //谷歌刷新头
+implementation  'com.scwang.smart:refresh-header-two-level:2.0.0-alpha-1'   //二级刷新头
+implementation  'com.scwang.smart:refresh-footer-ball:2.0.0-alpha-1'        //球脉冲加载
+implementation  'com.scwang.smart:refresh-footer-classics:2.0.0-alpha-1'    //经典加载
 
 // 保留了 com.scwang.smartrefresh 的包名，但不分包
 implementation 'com.scwang.smartrefresh:SmartRefreshHeader:2.0.0-alpha-1'   //各种Header集合
