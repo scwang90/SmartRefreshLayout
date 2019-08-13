@@ -21,7 +21,7 @@ import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 /**
  * Refresh your delivery!
- * Created by SCWANG on 2017/6/25.
+ * Created by scwang on 2017/6/25.
  * design https://dribbble.com/shots/2753803-Refresh-your-delivery
  */
 public class DeliveryHeader extends InternalAbstract implements RefreshHeader {
@@ -135,12 +135,9 @@ public class DeliveryHeader extends InternalAbstract implements RefreshHeader {
             mCloudX3 = (int)(mCloudDrawable.getBounds().width()*2.0f);
         }
     }
-
-
     //</editor-fold>
 
     //<editor-fold desc="draw">
-
     @Override
     protected void dispatchDraw(Canvas canvas) {
         final View thisView = this;
@@ -167,7 +164,7 @@ public class DeliveryHeader extends InternalAbstract implements RefreshHeader {
         super.dispatchDraw(canvas);
     }
 
-    private void drawBox(Canvas canvas, int width, int height, int shake) {
+    protected void drawBox(Canvas canvas, int width, int height, int shake) {
         final int centerY = height - mHeaderHeight / 2 + shake;
         final int centerYBox = centerY + (mHeaderHeight / 2 - mBoxDrawable.getBounds().height())
                 - Math.min(mHeaderHeight / 2 - mBoxDrawable.getBounds().height(), SmartUtil.dp2px(mAppreciation * 100));
@@ -175,7 +172,7 @@ public class DeliveryHeader extends InternalAbstract implements RefreshHeader {
         mBoxDrawable.draw(canvas);
     }
 
-    private void drawUmbrella(Canvas canvas, int width, int height, int shake) {
+    protected void drawUmbrella(Canvas canvas, int width, int height, int shake) {
         if (mState == RefreshState.Refreshing
                 || mState == RefreshState.RefreshFinish) {
             Rect bounds = mUmbrellaDrawable.getBounds();
@@ -186,7 +183,7 @@ public class DeliveryHeader extends InternalAbstract implements RefreshHeader {
         }
     }
 
-    private void drawCloud(Canvas canvas, int width) {
+    protected void drawCloud(Canvas canvas, int width) {
         if (mState == RefreshState.Refreshing
                 || mState == RefreshState.RefreshFinish) {
             mCloudDrawable.getBounds().offsetTo(mCloudX1, mHeaderHeight / 3);
@@ -200,7 +197,7 @@ public class DeliveryHeader extends InternalAbstract implements RefreshHeader {
         }
     }
 
-    private void calculateFrame(int width) {
+    protected void calculateFrame(int width) {
         mCloudX1 += SmartUtil.dp2px(9);
         mCloudX2 += SmartUtil.dp2px(5);
         mCloudX3 += SmartUtil.dp2px(12);
@@ -221,7 +218,6 @@ public class DeliveryHeader extends InternalAbstract implements RefreshHeader {
     //</editor-fold>
 
     //<editor-fold desc="RefreshHeader">
-
     @Override
     public void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight) {
         mKernel = kernel;
@@ -278,6 +274,5 @@ public class DeliveryHeader extends InternalAbstract implements RefreshHeader {
         final View thisView = this;
         thisView.invalidate();
     }
-
     //</editor-fold>
 }

@@ -8,7 +8,7 @@ import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 /**
  * 纸飞机视图
- * Created by SCWANG on 2017/6/6.
+ * Created by scwang on 2017/6/6.
  */
 public class FlyView extends PathsView {
 

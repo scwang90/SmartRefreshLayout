@@ -27,7 +27,7 @@ import static android.view.View.MeasureSpec.EXACTLY;
 
 /**
  * 经典组件
- * Created by SCWANG on 2017/5/28.
+ * Created by scwang on 2017/5/28.
  */
 @SuppressWarnings({"unused", "UnusedReturnValue"})
 public abstract class InternalClassics<T extends InternalClassics> extends InternalAbstract implements RefreshInternal {
@@ -53,7 +53,6 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
     protected int mMinHeightOfContent = 0;
 
     //<editor-fold desc="RelativeLayout">
-
     public InternalClassics(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
@@ -196,7 +195,6 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
     protected T self() {
         return (T) this;
     }
-
     //</editor-fold>
 
     //<editor-fold desc="RefreshHeader">
@@ -264,11 +262,9 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
 //    public SpinnerStyle getSpinnerStyle() {
 //        return mSpinnerStyle;
 //    }
-
     //</editor-fold>
 
     //<editor-fold desc="API">
-
 //    public T setProgressBitmap(Bitmap bitmap) {
 //        mProgressDrawable = null;
 //        mProgressView.setImageBitmap(bitmap);
@@ -463,7 +459,6 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
 //    public TextView getTitleText() {
 //        return mTitleText;
 //    }
-
     //</editor-fold>
 
 }

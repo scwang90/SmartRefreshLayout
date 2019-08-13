@@ -10,14 +10,12 @@ import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 /**
  * 滚动边界
- * Created by SCWANG on 2017/7/8.
+ * Created by scwang on 2017/7/8.
  */
-
 @SuppressWarnings("WeakerAccess")
 public class ScrollBoundaryHorizontal {
 
     //<editor-fold desc="滚动判断">
-
     /**
      * 判断内容是否可以刷新
      * @param targetView 内容视图
@@ -133,11 +131,9 @@ public class ScrollBoundaryHorizontal {
             return targetView.canScrollHorizontally(1);
         }
     }
-
     //</editor-fold>
 
     //<editor-fold desc="transform Point">
-
     public static boolean isTransformedTouchPointInView(@NonNull View group,@NonNull View child, float x, float y,PointF outLocalPoint) {
         if (child.getVisibility() != View.VISIBLE) {
             return false;

@@ -24,7 +24,7 @@ import static android.view.View.MeasureSpec.makeMeasureSpec;
 /**
  * 虚假的 Footer
  * 用于 正真的 Footer 在 RefreshLayout 外部时，
- * Created by SCWANG on 2017/6/14.
+ * Created by scwang on 2017/6/14.
  */
 @SuppressWarnings("unused")
 public class FalsifyFooter extends InternalAbstract implements RefreshFooter {
@@ -69,7 +69,6 @@ public class FalsifyFooter extends InternalAbstract implements RefreshFooter {
     //</editor-fold>
 
     //<editor-fold desc="RefreshFooter">
-
     @Override
     public void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight) {
         mRefreshKernel = kernel;
@@ -91,7 +90,6 @@ public class FalsifyFooter extends InternalAbstract implements RefreshFooter {
 //    public boolean setNoMoreData(boolean noMoreData) {
 //        return false;
 //    }
-
     //</editor-fold>
 
 }

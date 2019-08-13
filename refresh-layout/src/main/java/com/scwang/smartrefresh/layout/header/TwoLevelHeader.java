@@ -24,9 +24,9 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 /**
  * 二级刷新
- * Created by SCWANG on 2017/5/26.
+ * Created by scwang on 2017/5/26.
  */
-@SuppressWarnings({"unused", "UnusedReturnValue", "deprecation"})
+@SuppressWarnings({"unused", "UnusedReturnValue"})
 public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*, NestedScrollingParent*/ {
 
     //<editor-fold desc="属性字段">
@@ -69,7 +69,6 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
 
         ta.recycle();
     }
-
     //</editor-fold>
 
     //<editor-fold desc="生命周期">
@@ -226,7 +225,6 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
             }
         }
     }
-
     //</editor-fold>
 
 //    private int mNestedScrollAxes = 0;
@@ -245,7 +243,6 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
 //    public int getNestedScrollAxes() {return mNestedScrollAxes;}
 
     //<editor-fold desc="开放接口 - API">
-
     /**
      * 设置指定的 Header
      * @param header RefreshHeader
@@ -388,6 +385,5 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
         }
         return this;
     }
-
     //</editor-fold>
 }

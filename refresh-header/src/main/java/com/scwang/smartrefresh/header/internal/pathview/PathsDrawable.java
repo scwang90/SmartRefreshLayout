@@ -16,9 +16,8 @@ import java.util.List;
 
 /**
  * 路径
- * Created by SCWANG on 2017/6/1.
+ * Created by scwang on 2017/6/1.
  */
-
 @SuppressWarnings("WeakerAccess")
 public class PathsDrawable extends PaintDrawable {
 
@@ -194,7 +193,6 @@ public class PathsDrawable extends PaintDrawable {
     //</editor-fold>
 
     //<editor-fold desc="API">
-
     public void setGeometricWidth(int width) {
         final Drawable drawable = PathsDrawable.this;
         final Rect bounds = drawable.getBounds();
@@ -219,11 +217,9 @@ public class PathsDrawable extends PaintDrawable {
                 (int) (bounds.bottom * rate)
         );
     }
-
     //</editor-fold>
 
     //<editor-fold desc="CachedBitmap">
-
     private Bitmap mCachedBitmap;
     private boolean mCacheDirty;
 
@@ -247,6 +243,5 @@ public class PathsDrawable extends PaintDrawable {
         }
 
     }
-
     //</editor-fold>
 }

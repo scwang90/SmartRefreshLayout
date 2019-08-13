@@ -19,9 +19,8 @@ import java.util.Collection;
 
 /**
  * 结合 SnapHelper 使用
- * Created by SCWANG on 2017/8/4.
+ * Created by scwang on 2017/8/4.
  */
-
 public class SnapHelperExampleActivity extends AppCompatActivity {
 
     @Override

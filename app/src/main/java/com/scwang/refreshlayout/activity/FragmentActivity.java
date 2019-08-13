@@ -18,9 +18,8 @@ import static android.R.id.widget_frame;
 
 /**
  * Fragment 容器页面
- * Created by SCWANG on 2017/10/10.
+ * Created by scwang on 2017/10/10.
  */
-
 @SuppressWarnings({"UnusedParameters", "unused"})
 public class FragmentActivity extends AppCompatActivity {
 
@@ -93,7 +92,6 @@ public class FragmentActivity extends AppCompatActivity {
     public Fragment getFragment() {
         return mFragment;
     }
-
     //</editor-fold>
 
 

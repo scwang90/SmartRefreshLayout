@@ -19,9 +19,8 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 /**
  * 二级刷新
- * Created by SCWANG on 2018/1/7.
+ * Created by scwang on 2018/1/7.
  */
-
 public class TwoLevelPracticeFragment extends Fragment {
 
     @Override

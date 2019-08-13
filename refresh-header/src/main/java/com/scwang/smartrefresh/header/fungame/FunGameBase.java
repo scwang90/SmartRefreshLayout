@@ -21,7 +21,7 @@ import static android.view.MotionEvent.ACTION_MASK;
 
 /**
  * 游戏 header
- * Created by SCWANG on 2017/6/17.
+ * Created by scwang on 2017/6/17.
  */
 @SuppressLint("RestrictedApi")
 public abstract class FunGameBase extends InternalAbstract implements RefreshHeader {
@@ -40,7 +40,6 @@ public abstract class FunGameBase extends InternalAbstract implements RefreshHea
     //</editor-fold>
 
     //<editor-fold desc="View">
-
     public FunGameBase(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         final View thisView = this;
@@ -95,7 +94,6 @@ public abstract class FunGameBase extends InternalAbstract implements RefreshHea
         }
         return super.onTouchEvent(event);
     }
-
     //</editor-fold>
 
     //<editor-fold desc="abstract">
@@ -143,8 +141,6 @@ public abstract class FunGameBase extends InternalAbstract implements RefreshHea
     //</editor-fold>
 
     //<editor-fold desc="RefreshHeader">
-
-
     @Override
     public void onMoving(boolean isDragging, float percent, int offset, int height, int maxDragHeight) {
         if (mManualOperation) onManualOperationMove(percent, offset, height, maxDragHeight);
@@ -154,20 +150,6 @@ public abstract class FunGameBase extends InternalAbstract implements RefreshHea
             thisView.setTranslationY(mOffset - mHeaderHeight);
         }
     }
-
-//    @Override
-//    public void onPulling(float percent, int offset, int height, int maxDragHeight) {
-//        if (mManualOperation) onManualOperationMove(percent, offset, height, maxDragHeight);
-//        else {
-//            mOffset = offset;
-//            setTranslationY(mOffset - mHeaderHeight);
-//        }
-//    }
-//
-//    @Override
-//    public void onReleasing(float percent, int offset, int height, int maxDragHeight) {
-//        onPulling(percent, offset, height, maxDragHeight);
-//    }
 
     @Override
     public void onStartAnimator(@NonNull RefreshLayout refreshLayout, int height, int maxDragHeight) {
@@ -210,11 +192,6 @@ public abstract class FunGameBase extends InternalAbstract implements RefreshHea
         }
         return 0;
     }
-//
-//    @NonNull
-//    @Override
-//    public SpinnerStyle getSpinnerStyle() {
-//        return SpinnerStyle.MatchLayout;
-//    }
+
     //</editor-fold>
 }

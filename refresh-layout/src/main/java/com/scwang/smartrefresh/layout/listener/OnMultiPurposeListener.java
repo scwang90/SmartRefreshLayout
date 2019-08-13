@@ -5,9 +5,8 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 
 /**
  * 多功能监听器
- * Created by SCWANG on 2017/5/26.
+ * Created by scwang on 2017/5/26.
  */
-
 public interface OnMultiPurposeListener extends OnRefreshLoadMoreListener, OnStateChangedListener {
     /**
      * 手指拖动下拉（会连续多次调用，添加isDragging并取代之前的onPulling、onReleasing）

@@ -10,7 +10,7 @@ import java.util.Random;
 
 /**
  *
- * Created by srain on 11/6/14.
+ * Created by scwang on 20186/14.
  */
 @SuppressWarnings("WeakerAccess")
 public class StoreHouseBarItem extends Animation {

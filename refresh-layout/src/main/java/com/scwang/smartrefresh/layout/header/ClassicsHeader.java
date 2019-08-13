@@ -35,7 +35,7 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 /**
  * 经典下拉头部
- * Created by SCWANG on 2017/5/28.
+ * Created by scwang on 2017/5/28.
  */
 @SuppressWarnings({"unused", "UnusedReturnValue"})
 public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements RefreshHeader {
@@ -79,14 +79,10 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
 
         View.inflate(context, R.layout.srl_classics_header, this);
 
-//        mLastUpdateText = new TextView(context);
-//        mLastUpdateText.setTextColor(0xff7c7c7c);
-
         final View thisView = this;
         final View arrowView = mArrowView = thisView.findViewById(R.id.srl_classics_arrow);
         final View updateView = mLastUpdateText = thisView.findViewById(R.id.srl_classics_update);
         final View progressView = mProgressView = thisView.findViewById(R.id.srl_classics_progress);
-//        final ViewGroup centerLayout = mCenterLayout;
 
         mTitleText = thisView.findViewById(R.id.srl_classics_title);
 
@@ -131,14 +127,10 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
 
         if (ta.hasValue(R.styleable.ClassicsHeader_srlTextSizeTitle)) {
             mTitleText.setTextSize(TypedValue.COMPLEX_UNIT_PX, ta.getDimensionPixelSize(R.styleable.ClassicsHeader_srlTextSizeTitle, SmartUtil.dp2px(16)));
-//        } else {
-//            mTitleText.setTextSize(16);
         }
 
         if (ta.hasValue(R.styleable.ClassicsHeader_srlTextSizeTime)) {
             mLastUpdateText.setTextSize(TypedValue.COMPLEX_UNIT_PX, ta.getDimensionPixelSize(R.styleable.ClassicsHeader_srlTextSizeTime, SmartUtil.dp2px(12)));
-//        } else {
-//            mLastUpdateText.setTextSize(12);
         }
 
         if (ta.hasValue(R.styleable.ClassicsHeader_srlPrimaryColor)) {
@@ -208,10 +200,8 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
 
         ta.recycle();
 
-//        updateView.setId(ID_TEXT_UPDATE);
         progressView.animate().setInterpolator(null);
         updateView.setVisibility(mEnableLastTime ? VISIBLE : GONE);
-//        centerLayout.addView(updateView, lpUpdateText);
         mTitleText.setText(thisView.isInEditMode() ? mTextRefreshing : mTextPulling);
 
         if (thisView.isInEditMode()) {
@@ -226,7 +216,7 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
                 if (manager != null) {
                     @SuppressLint("RestrictedApi")
                     List<Fragment> fragments = manager.getFragments();
-                    if (fragments != null && fragments.size() > 0) {
+                    if (fragments.size() > 0) {
                         setLastUpdateTime(new Date());
                         return;
                     }
@@ -242,15 +232,9 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
 
     }
 
-//    @Override
-//    protected ClassicsHeader self() {
-//        return this;
-//    }
-
     //</editor-fold>
 
     //<editor-fold desc="RefreshHeader">
-
     @Override
     public int onFinish(@NonNull RefreshLayout layout, boolean success) {
         if (success) {
@@ -299,7 +283,6 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
     //</editor-fold>
 
     //<editor-fold desc="API">
-
     public ClassicsHeader setLastUpdateTime(Date time) {
         final View thisView = this;
         mLastTime = time;
@@ -377,7 +360,6 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
 //    public TextView getLastUpdateText() {
 //        return mLastUpdateText;
 //    }
-
     //</editor-fold>
 
 }

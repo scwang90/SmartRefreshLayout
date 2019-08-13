@@ -19,9 +19,8 @@ import java.util.regex.Pattern;
 
 /**
  * 状态栏透明
- * Created by SCWANG on 2016/10/26.
+ * Created by scwang on 2016/10/26.
  */
-
 @SuppressWarnings("unused")
 public class StatusBarUtil {
 

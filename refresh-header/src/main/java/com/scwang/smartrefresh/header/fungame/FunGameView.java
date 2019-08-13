@@ -32,8 +32,7 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 
 /**
- * Created by Hitomis on 2016/3/9.
- * email:196425254@qq.com
+ * Created by scwang on 2016/3/9.
  * https://github.com/Hitomis/FunGameRefresh
  */
 @SuppressWarnings("unused")
@@ -54,7 +53,6 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
     public String mMaskTextTopRelease;
 
     protected int mHalfHeaderHeight;
-
     //</editor-fold>
 
     //<editor-fold desc="Field - Arena">
@@ -95,7 +93,6 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
         final TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.FunGameView);
 
         //<editor-fold desc="init - Curtain">
-
         mMaskTextBottom = thisView.getResources().getString(R.string.fgh_mask_bottom);//"拖动控制游戏";//"Scroll to move handle";
         mMaskTextTopPull = thisView.getResources().getString(R.string.fgh_mask_top_pull);//"下拉即将展开";//"Pull To Break Out!";
         mMaskTextTopRelease = thisView.getResources().getString(R.string.fgh_mask_top_release);//"放手即将展开";//"Release To Break Out!";
@@ -141,8 +138,7 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
             curtainLayout.addView(mMaskViewTop, lpTop);
             curtainLayout.addView(mMaskViewBottom, lpBottom);
         }
-
-        //</editor-fold>
+    //</editor-fold>
 
         //<editor-fold desc="init - Arena">
         DIVIDING_LINE_SIZE = Math.max(1, SmartUtil.dp2px(0.5f));
@@ -176,7 +172,7 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
         if (ta.hasValue(R.styleable.FunGameView_fghTextLoadingFailed)) {
             mTextLoadingFailed = ta.getString(R.styleable.FunGameView_fghTextLoadingFailed);
         }
-        //</editor-fold>
+    //</editor-fold>
 
         ta.recycle();
     }
@@ -194,7 +190,6 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
     }
 
     //<editor-fold desc="绘制方法">
-
     protected abstract void drawGame(Canvas canvas, int width, int height);
 
     @Override
@@ -212,7 +207,7 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
      * 绘制分割线
      * @param canvas 默认画布
      */
-    private void drawBoundary(Canvas canvas,int width,int height) {
+    protected void drawBoundary(Canvas canvas,int width,int height) {
         mPaint.setColor(mBackColor);
         canvas.drawRect(0, 0, width, height, mPaint);
         mPaint.setColor(mBoundaryColor);
@@ -225,7 +220,7 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
      * 绘制文字内容
      * @param canvas 默认画布
      */
-    private void drawText(Canvas canvas, int width, int height) {
+    protected void drawText(Canvas canvas, int width, int height) {
         switch (status) {
             case STATUS_GAME_PREPARE:
             case STATUS_GAME_PLAY:
@@ -252,7 +247,7 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
      * @param canvas 默认画布
      * @param text 相关文字字符串
      */
-    private void promptText(Canvas canvas, String text, int width, int height) {
+    protected void promptText(Canvas canvas, String text, int width, int height) {
         float textX = (width - mPaintText.measureText(text)) * .5f;
         float textY = height  * .5f - (mPaintText.ascent() + mPaintText.descent()) * .5f;
         canvas.drawText(text, textX, textY, mPaintText);
@@ -260,7 +255,6 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
     //</editor-fold>
 
     //<editor-fold desc="控制方法">
-
     protected abstract void resetConfigParams();
 
     /**
@@ -291,11 +285,9 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
         controllerPosition = distance;
         thisView.postInvalidate();
     }
-
     //</editor-fold>
 
     //<editor-fold desc="生命周期">
-
     @Override
     public void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight) {
         final View thisView = this;
@@ -403,7 +395,6 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
 
         return super.onFinish(layout, success);
     }
-
     //</editor-fold>
 
 }

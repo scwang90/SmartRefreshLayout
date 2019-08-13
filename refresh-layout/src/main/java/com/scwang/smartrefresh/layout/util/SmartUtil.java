@@ -23,9 +23,8 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 /**
  * SmartUtil
- * Created by SCWANG on 2018/3/5.
+ * Created by scwang on 2018/3/5.
  */
-
 public class SmartUtil implements Interpolator {
 
     public static int INTERPOLATOR_VISCOUS_FLUID = 0;
@@ -111,7 +110,6 @@ public class SmartUtil implements Interpolator {
     //</editor-fold>
 
     //<editor-fold desc="滚动判断">
-
     /**
      * 判断内容是否可以刷新
      * @param targetView 内容视图
@@ -199,11 +197,9 @@ public class SmartUtil implements Interpolator {
             return targetView.canScrollVertically(direction);
         }
     }
-
     //</editor-fold>
 
     //<editor-fold desc="transform Point">
-
     public static boolean isTransformedTouchPointInView(@NonNull View group,@NonNull View child, float x, float y,PointF outLocalPoint) {
         if (child.getVisibility() != View.VISIBLE) {
             return false;
@@ -223,7 +219,6 @@ public class SmartUtil implements Interpolator {
         }
         return isInView;
     }
-
     //</editor-fold>
 
     //<editor-fold desc="像素密度">

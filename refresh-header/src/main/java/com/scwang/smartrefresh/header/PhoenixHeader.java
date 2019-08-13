@@ -26,7 +26,7 @@ import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 /**
  * Phoenix
- * Created by SCWANG on 2017/5/31.
+ * Created by scwang on 2017/5/31.
  * from https://github.com/Yalantis/Phoenix
  */
 public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, SizeDefinition*/ {
@@ -97,6 +97,7 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
     };
     //</editor-fold>
 
+    //<editor-fold desc="field">
     protected Drawable mDrawableSun;
     protected Drawable mDrawableSky;
     protected Drawable mDrawableTown;
@@ -110,6 +111,7 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
     protected boolean isRefreshing;
     protected Animation mAnimation;
     protected RefreshKernel mKernel;
+    //</editor-fold>
 
     //<editor-fold desc="View">
     public PhoenixHeader(Context context) {
@@ -117,12 +119,7 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
     }
 
     public PhoenixHeader(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public PhoenixHeader(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-
+        super(context, attrs, 0);
         mMatrix = new Matrix();
         mSunSize = SmartUtil.dp2px(40);
         mBackgroundColor = skyColors[0];
@@ -145,7 +142,7 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
         mAnimation.setRepeatMode(Animation.RESTART);
         mAnimation.setInterpolator(LINEAR_INTERPOLATOR);
         mAnimation.setDuration(ANIMATION_DURATION);
-        //</editor-fold>
+    //</editor-fold>
 
         //<editor-fold desc="setupPathsDrawable">
         int widthPixels = Resources.getSystem().getDisplayMetrics().widthPixels;
@@ -177,8 +174,7 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
 //        sunDrawable.printOriginal("sunDrawable");
         mDrawableSun = sunDrawable;
         mDrawableSun.setBounds(0, 0, mSunSize, mSunSize);
-
-        //</editor-fold>
+    //</editor-fold>
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.PhoenixHeader);
 
@@ -195,11 +191,9 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
 
         ta.recycle();
     }
-
     //</editor-fold>
 
     //<editor-fold desc="RefreshHeader">
-
     @Override
     public void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight) {
         mKernel = kernel;
@@ -249,9 +243,9 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
             }
         }
     }
+    //</editor-fold>
 
     //<editor-fold desc="draw">
-
     @Override
     protected void dispatchDraw(Canvas canvas) {
 
@@ -277,7 +271,7 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
     }
 
 
-    private void drawSky(Canvas canvas, int width, int height) {
+    protected void drawSky(Canvas canvas, int width, int height) {
         Matrix matrix = mMatrix;
         matrix.reset();
 
@@ -295,7 +289,7 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
         canvas.restoreToCount(saveCount);
     }
 
-    private void drawTown(Canvas canvas, int width, int height) {
+    protected void drawTown(Canvas canvas, int width, int height) {
         Matrix matrix = mMatrix;
         matrix.reset();
 
@@ -319,7 +313,7 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
         canvas.restoreToCount(saveCount);
     }
 
-    private void drawSun(Canvas canvas, int width) {
+    protected void drawSun(Canvas canvas, int width) {
         Matrix matrix = mMatrix;
         matrix.reset();
 

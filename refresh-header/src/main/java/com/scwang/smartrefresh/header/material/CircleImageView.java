@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.scwang.smartrefresh.header.material;
 
 import android.annotation.SuppressLint;
@@ -46,7 +45,7 @@ public class CircleImageView extends ImageView {
     protected static final float SHADOW_RADIUS = 3.5f;
     protected static final int SHADOW_ELEVATION = 4;
 
-//    private Animation.AnimationListener mListener;
+//    protected Animation.AnimationListener mListener;
     int mShadowRadius;
 
     public CircleImageView(Context context, int color) {
@@ -134,11 +133,11 @@ public class CircleImageView extends ImageView {
 //        }
 //    }
 
-    private class OvalShadow extends OvalShape {
-        private RadialGradient mRadialGradient;
-        private Paint mShadowPaint;
+    protected class OvalShadow extends OvalShape {
+        protected RadialGradient mRadialGradient;
+        protected Paint mShadowPaint;
 
-        OvalShadow(int shadowRadius) {
+        protected OvalShadow(int shadowRadius) {
             super();
             mShadowPaint = new Paint();
             mShadowRadius = shadowRadius;
@@ -160,7 +159,7 @@ public class CircleImageView extends ImageView {
             canvas.drawCircle(viewWidth / 2f, viewHeight / 2f, viewWidth / 2f - mShadowRadius, paint);
         }
 
-        private void updateRadialGradient(int diameter) {
+        protected void updateRadialGradient(int diameter) {
             mRadialGradient = new RadialGradient(diameter / 2f, diameter / 2f,
                     mShadowRadius, new int[] { FILL_SHADOW_COLOR, Color.TRANSPARENT },
                     null, Shader.TileMode.CLAMP);

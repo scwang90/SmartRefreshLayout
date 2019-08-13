@@ -20,7 +20,7 @@ import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 /**
  * 经典上拉底部组件
- * Created by SCWANG on 2017/5/28.
+ * Created by scwang on 2017/5/28.
  */
 @SuppressWarnings({"unused", "UnusedReturnValue"})
 public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements RefreshFooter {
@@ -97,8 +97,6 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
 
         if (ta.hasValue(R.styleable.ClassicsFooter_srlTextSizeTitle)) {
             mTitleText.setTextSize(TypedValue.COMPLEX_UNIT_PX, ta.getDimensionPixelSize(R.styleable.ClassicsFooter_srlTextSizeTitle, SmartUtil.dp2px(16)));
-//        } else {
-//            mTitleText.setTextSize(16);
         }
 
         if (ta.hasValue(R.styleable.ClassicsFooter_srlPrimaryColor)) {
@@ -160,7 +158,6 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
 
         ta.recycle();
 
-//        mTitleText.setTextColor(0xff666666);
         progressView.animate().setInterpolator(null);
         mTitleText.setText(thisView.isInEditMode() ? mTextLoading : mTextPulling);
 
@@ -171,15 +168,9 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
         }
     }
 
-//    @Override
-//    protected ClassicsFooter self() {
-//        return this;
-//    }
-
     //</editor-fold>
 
     //<editor-fold desc="RefreshFooter">
-
     @Override
     public void onStartAnimator(@NonNull RefreshLayout refreshLayout, int height, int maxDragHeight) {
         if (!mNoMoreData) {

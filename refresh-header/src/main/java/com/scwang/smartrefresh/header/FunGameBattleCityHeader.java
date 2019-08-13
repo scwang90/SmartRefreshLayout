@@ -18,8 +18,7 @@ import java.util.Queue;
 import java.util.Random;
 
 /**
- * Created by Hitomis on 2016/3/09.
- * email:196425254@qq.com
+ * Created by scwang on 2016/3/09.
  * from https://github.com/Hitomis/FunGameRefresh
  */
 public class FunGameBattleCityHeader extends FunGameView {
@@ -140,11 +139,9 @@ public class FunGameBattleCityHeader extends FunGameView {
         bulletRadius = (barrelSize - 2 * DIVIDING_LINE_SIZE) * .5f;
         super.onInitialized(kernel, height, maxDragHeight);
     }
-
     //</editor-fold>
 
     //<editor-fold desc="游戏控制">
-
     protected void resetConfigParams() {
         status = FunGameView.STATUS_GAME_PREPARE;
         controllerPosition = DIVIDING_LINE_SIZE;
@@ -253,7 +250,6 @@ public class FunGameBattleCityHeader extends FunGameView {
     //</editor-fold>
 
     //<editor-fold desc="绘制方法">
-
     @Override
     protected void drawGame(Canvas canvas, int width, int height) {
         drawSelfTank(canvas,width);
@@ -402,7 +398,6 @@ public class FunGameBattleCityHeader extends FunGameView {
         canvas.drawRect(rectF.right, barrelTop, rectF.right + barrelSize, barrelTop + barrelSize, mPaint);
 
     }
-
     //</editor-fold>
 
 }

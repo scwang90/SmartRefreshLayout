@@ -23,13 +23,12 @@ import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 /**
  * CircleRefresh
- * Created by zhanglei on 15/7/18.
+ * Created by scwang on 20187/18.
  * from https://github.com/tuesda/CircleRefreshLayout
  */
 public class BezierCircleHeader extends InternalAbstract implements RefreshHeader {
 
     //<editor-fold desc="Field">
-
     protected Path mPath;
     protected Paint mBackPaint;
     protected Paint mFrontPaint;
@@ -53,11 +52,9 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
     protected static final int TARGET_DEGREE = 270;
     protected boolean mWavePulling = false;
     protected RefreshKernel mKernel;
-
     //</editor-fold>
 
     //<editor-fold desc="View">
-
     public BezierCircleHeader(Context context) {
         this(context, null);
     }
@@ -81,11 +78,9 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
         mOuterPaint.setStrokeWidth(SmartUtil.dp2px(2f));
         mPath = new Path();
     }
-
     //</editor-fold>
 
     //<editor-fold desc="Draw">
-
     @Override
     protected void dispatchDraw(Canvas canvas) {
         final View thisView = this;
@@ -122,7 +117,7 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
         super.dispatchDraw(canvas);
     }
 
-    private void drawWave(Canvas canvas, int viewWidth, int viewHeight) {
+    protected void drawWave(Canvas canvas, int viewWidth, int viewHeight) {
         float baseHeight = Math.min(mHeadHeight, viewHeight);
         if (mWaveHeight != 0) {
             mPath.reset();
@@ -136,7 +131,7 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
         }
     }
 
-    private void drawSpringUp(Canvas canvas, int viewWidth) {
+    protected void drawSpringUp(Canvas canvas, int viewWidth) {
         if (mSpringRatio > 0) {
             float leftX = (viewWidth / 2f - 4 * mBollRadius + mSpringRatio * 3 * mBollRadius);
             if (mSpringRatio < 0.9) {
@@ -151,7 +146,7 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
         }
     }
 
-    private void drawBoll(Canvas canvas, int viewWidth) {
+    protected void drawBoll(Canvas canvas, int viewWidth) {
         if (mShowBoll) {
             canvas.drawCircle(viewWidth / 2f, mBollY, mBollRadius, mFrontPaint);
 
@@ -159,7 +154,7 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
         }
     }
 
-    private void drawBollTail(Canvas canvas, int viewWidth, float fraction) {
+    protected void drawBollTail(Canvas canvas, int viewWidth, float fraction) {
         if (mShowBollTail) {
             final float bottom = mHeadHeight + mWaveHeight;
             final float startY = mBollY + mBollRadius * fraction / 2;
@@ -176,7 +171,7 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
         }
     }
 
-    private void drawOuter(Canvas canvas, int viewWidth) {
+    protected void drawOuter(Canvas canvas, int viewWidth) {
         if (mShowOuter) {
             float outerR = mBollRadius + mOuterPaint.getStrokeWidth() * 2;
 
@@ -201,7 +196,7 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
 
     }
 
-    private void drawFinish(Canvas canvas, int viewWidth) {
+    protected void drawFinish(Canvas canvas, int viewWidth) {
         if (mFinishRatio > 0) {
             int beforeColor = mOuterPaint.getColor();
             if (mFinishRatio < 0.3) {
@@ -236,12 +231,9 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
             }
         }
     }
-
     //</editor-fold>
 
     //<editor-fold desc="RefreshHeader">
-
-
     @Override
     public void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight) {
         mKernel = kernel;
@@ -359,10 +351,5 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
         }
     }
 
-//    @NonNull
-//    @Override
-//    public SpinnerStyle getSpinnerStyle() {
-//        return SpinnerStyle.Scale;
-//    }
     //</editor-fold>
 }

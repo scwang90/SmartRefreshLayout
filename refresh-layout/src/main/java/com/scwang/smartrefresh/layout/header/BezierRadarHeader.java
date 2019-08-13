@@ -28,9 +28,8 @@ import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 /**
  * 贝塞尔曲线类雷达风格刷新组件
- * Created by SCWANG on 2017/5/28.
+ * Created by scwang on 2017/5/28.
  */
-
 @SuppressWarnings({"UnusedReturnValue", "unused"})
 public class BezierRadarHeader extends InternalAbstract implements RefreshHeader {
 
@@ -115,7 +114,6 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
             mAnimatorSet = null;
         }
     }
-
     //</editor-fold>
 
     //<editor-fold desc="绘制方法 - draw">
@@ -218,8 +216,6 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
     //</editor-fold>
 
     //<editor-fold desc="刷新接口 - RefreshHeader">
-
-
     @Override
     public void onMoving(boolean isDragging, float percent, int offset, int height, int maxDragHeight) {
         mWaveOffsetY = offset;
@@ -360,7 +356,6 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
         }
         return this;
     }
-
     //</editor-fold>
 
     //<editor-fold desc="动画更新">

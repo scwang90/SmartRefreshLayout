@@ -24,12 +24,12 @@ import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 /**
  * 纸飞机和山丘
- * Created by SCWANG on 2017/6/6.
+ * Created by scwang on 2017/6/6.
  * from https://github.com/race604/FlyRefresh
  */
-
 public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
 
+    //<editor-fold desc="field">
     protected View mFlyView;
     protected AnimatorSet mFlyAnimator;
     protected RefreshLayout mRefreshLayout;
@@ -38,6 +38,7 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
     protected int mOffset = 0;
     protected float mCurrentPercent;
     protected boolean mIsRefreshing = false;
+    //</editor-fold>
 
     //<editor-fold desc="View">
     public FlyRefreshHeader(Context context) {
@@ -47,12 +48,9 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
     public FlyRefreshHeader(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
-
     //</editor-fold>
 
     //<editor-fold desc="RefreshHeader">
-
-
     @Override
     public void onMoving(boolean isDragging, float percent, int offset, int height, int maxDragHeight) {
         if (isDragging || !mIsRefreshing) {
@@ -81,38 +79,6 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
         }
     }
 
-//    @Override
-//    public void onReleasing(float percent, int offset, int height, int maxDragHeight) {
-//        if (!mIsRefreshing) {
-//            onPulling(percent, offset, height, maxDragHeight);
-//        }
-//    }
-//
-//    @Override
-//    public void onPulling(float percent, int offset, int height, int maxDragHeight) {
-//        if (offset < 0) {
-//            if (mOffset > 0) {
-//                offset = 0;
-//                percent = 0;
-//            } else {
-//                return;
-//            }
-//        }
-//        mOffset = offset;
-//        mCurrentPercent = percent;
-//        if (mSceneView != null) {
-//            mSceneView.updatePercent(percent);
-//            mSceneView.postInvalidate();
-//        }
-//        if (mFlyView != null) {
-//            if (height + maxDragHeight > 0) {
-//                mFlyView.setRotation((-45f) * offset / (height + maxDragHeight));
-//            } else {
-//                mFlyView.setRotation((-45f) * percent);
-//            }
-//        }
-//    }
-
     @Override
     public void onReleased(@NonNull RefreshLayout layout, int height, int maxDragHeight) {
         /*
@@ -127,7 +93,6 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
                     onMoving(true,(float) animation.getAnimatedValue(), 0, 0, 0);
-//                    onPulling((float) animation.getAnimatedValue(), 0, 0, 0);
                 }
             });
             valueAnimator.start();
@@ -194,11 +159,9 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
         }
         return super.onFinish(layout, success);
     }
-
     //</editor-fold>
 
     //<editor-fold desc="API">
-
     public void setUp(@Nullable MountainSceneView sceneView,@Nullable View flyView) {
         mFlyView = flyView;
         mSceneView = sceneView;

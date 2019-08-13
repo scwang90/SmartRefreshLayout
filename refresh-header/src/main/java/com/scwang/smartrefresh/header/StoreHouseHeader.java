@@ -28,7 +28,7 @@ import java.util.List;
 
 /**
  * StoreHouseHeader
- * Created by SCWANG on 2017/5/31.
+ * Created by scwang on 2017/5/31.
  * from https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh
  */
 @SuppressWarnings({"unused", "UnusedReturnValue", "SameParameterValue"})
@@ -99,8 +99,6 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         final View thisView = this;
-//        int height = getTopOffset() + mDrawZoneHeight + getBottomOffset();
-//        heightMeasureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY);
         super.setMeasuredDimension(
                 View.resolveSize(super.getSuggestedMinimumWidth(), widthMeasureSpec),
                 View.resolveSize(super.getSuggestedMinimumHeight(), heightMeasureSpec));
@@ -169,11 +167,9 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
 
         super.dispatchDraw(canvas);
     }
-
     //</editor-fold>
 
     //<editor-fold desc="API">
-
     public StoreHouseHeader setLoadingAniDuration(int duration) {
         mLoadingAniDuration = duration;
         mLoadingAniSegDuration = duration;
@@ -265,10 +261,8 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
     //</editor-fold>
 
     //<editor-fold desc="RefreshHeader">
-
     @Override
     public void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight) {
-//        kernel.requestDrawBackgroundForHeader(mBackgroundColor);
         mRefreshKernel = kernel;
         mRefreshKernel.requestDrawBackgroundFor(this, mBackgroundColor);
     }
@@ -279,17 +273,6 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
         final View thisView = this;
         thisView.invalidate();
     }
-
-//    @Override
-//    public void onPulling(float percent, int offset, int height, int maxDragHeight) {
-//        mProgress = (percent * .8f);
-//        invalidate();
-//    }
-//
-//    @Override
-//    public void onReleasing(float percent, int offset, int height, int maxDragHeight) {
-//        onPulling(percent, offset, height, maxDragHeight);
-//    }
 
     @Override
     public void onReleased(@NonNull RefreshLayout layout, int height, int maxDragHeight) {
@@ -339,7 +322,6 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
         if (colors.length > 0) {
             mBackgroundColor = colors[0];
             if (mRefreshKernel != null) {
-//                mRefreshKernel.requestDrawBackgroundForHeader(colors[0]);
                 mRefreshKernel.requestDrawBackgroundFor(this, mBackgroundColor);
             }
             if (colors.length > 1) {
@@ -347,10 +329,9 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
             }
         }
     }
-
     //</editor-fold>
 
-    private class AniController implements Runnable {
+    protected class AniController implements Runnable {
 
         int mTick = 0;
         int mCountPerSeg = 0;
@@ -358,7 +339,7 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
         int mInterval = 0;
         boolean mRunning = true;
 
-        private void start() {
+        protected void start() {
             mRunning = true;
             mTick = 0;
 
@@ -396,7 +377,7 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
             }
         }
 
-        private void stop() {
+        protected void stop() {
             mRunning = false;
             final View thisView = StoreHouseHeader.this;
             thisView.removeCallbacks(this);

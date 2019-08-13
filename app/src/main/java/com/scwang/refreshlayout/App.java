@@ -16,9 +16,8 @@ import com.squareup.leakcanary.LeakCanary;
 
 /**
  *
- * Created by SCWANG on 2017/6/11.
+ * Created by scwang on 2017/6/11.
  */
-
 public class App extends Application {
 
     static {
