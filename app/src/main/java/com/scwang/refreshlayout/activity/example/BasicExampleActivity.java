@@ -100,7 +100,6 @@ public class BasicExampleActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         if (mAdapter.getItemCount() > 30) {
-                            Toast.makeText(getApplication(), "数据全部加载完毕", Toast.LENGTH_SHORT).show();
                             refreshLayout.finishLoadMoreWithNoMoreData();//将不会再次触发加载更多事件
                         } else {
                             mAdapter.loadMore(initData());

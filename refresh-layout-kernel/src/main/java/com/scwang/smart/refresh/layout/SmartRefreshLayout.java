@@ -2715,11 +2715,11 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      */
     @Override
     public RefreshLayout setNoMoreData(boolean noMoreData) {
-        if (mState == RefreshState.Loading && noMoreData) {
+        if (mState == RefreshState.Refreshing && noMoreData) {
+            finishRefreshWithNoMoreData();
+        } else if (mState == RefreshState.Loading && noMoreData) {
             finishLoadMoreWithNoMoreData();
-            return this;
-        }
-        if (mFooterNoMoreData != noMoreData) {
+        } else if (mFooterNoMoreData != noMoreData) {
             mFooterNoMoreData = noMoreData;
             if (mRefreshFooter instanceof RefreshFooter) {
                 if (((RefreshFooter) mRefreshFooter).setNoMoreData(noMoreData)) {
@@ -2810,8 +2810,8 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      */
     @Override
     public RefreshLayout finishRefresh(final int delayed, final boolean success, final Boolean noMoreData) {
-        final int more = delayed >> 16;
-        int delay = delayed << 16 >> 16;
+        final int more = delayed >> 16;//动画剩余延时
+        int delay = delayed << 16 >> 16;//用户指定延时
         Runnable runnable = new Runnable() {
             int count = 0;
             @Override
@@ -2833,9 +2833,12 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                         mHandler.postDelayed(this, more);
                         //提前设置 状态为 RefreshFinish 防止 postDelayed 导致 finishRefresh 过后，外部判断 state 还是 Refreshing
                         notifyStateChanged(RefreshState.RefreshFinish);
-                        if (noMoreData != null) {
-                            setNoMoreData(noMoreData == Boolean.TRUE);
+                        if (noMoreData == Boolean.FALSE) {
+                            setNoMoreData(false);//真正有刷新状态的时候才可以重置 noMoreData
                         }
+                    }
+                    if (noMoreData == Boolean.TRUE) {
+                        setNoMoreData(true);
                     }
                 } else {
                     int startDelay = mRefreshHeader.onFinish(SmartRefreshLayout.this, success);
@@ -2933,8 +2936,8 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      */
     @Override
     public RefreshLayout finishLoadMore(final int delayed, final boolean success, final boolean noMoreData) {
-        final int more = delayed >> 16;
-        int delay = delayed << 16 >> 16;
+        final int more = delayed >> 16;//动画剩余延时
+        int delay = delayed << 16 >> 16;//用户指定延时
         Runnable runnable = new Runnable() {
             int count = 0;
             @Override
@@ -3119,7 +3122,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      * 显示刷新动画并且触发刷新事件
      * @param delayed 开始延时
      * @param duration 拖拽动画持续时间
-     * @param dragRate 拉拽的高度比率（要求 ≥ 1 ）
+     * @param dragRate 拉拽的高度比率
      * @param animationOnly animation only 只有动画
      * @return true or false, Status non-compliance will fail.
      *         是否成功（状态不符合会失败）
@@ -3220,7 +3223,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      * 显示加载动画, 多功能选项
      * @param delayed 开始延时
      * @param duration 拖拽动画持续时间
-     * @param dragRate 拉拽的高度比率（要求 ≥ 1 ）
+     * @param dragRate 拉拽的高度比率
      * @return true or false, Status non-compliance will fail.
      *         是否成功（状态不符合会失败）
      */
