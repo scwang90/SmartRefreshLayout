@@ -3,7 +3,7 @@
 ## V 2.0.0 (开发中)
 >添加：srlStyle 主题支持  
 >分包：layout = kernel + two-level + header-classics + header-radar + header-falsify + footer-classics + footer-ball  
->修改：报名 com.scwang.smartrefresh -> com.scwang.smart.refresh  
+>修改：包名 com.scwang.smartrefresh -> com.scwang.smart.refresh  
 
 ## V 1.1.0
 

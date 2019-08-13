@@ -117,27 +117,32 @@ SmartRefreshLayout以打造一个强大，稳定，成熟的下拉刷新框架�
 
 ## 简单用例
 #### 1.在 build.gradle 中添加依赖
-```
 
+2.0.0 相对于 1.x 主要是对Smart进行分包，减小不必要的依赖，比如不适用二级化学就不依赖，避免代码冗余。
+但是未对 SmartRefreshHeader 分包，里面有十多个Header，建议需要使用哪个 Header 就复制哪个的源码到项目中。
+当然：大家也可以在讨论区讨论投票，选出里面使用频率比较高的Header，然后单独分离出来
+
+```
 //2.0.0 （对Smart进行分包，减小不必要的依赖，也对包名和类目进行重构，需要改代码，不能无缝升级）
 
 implementation  'com.scwang.smart.refresh-layout-kernel:2.0.0-alpha-1'      //核心必须依赖
 implementation  'com.scwang.smart.refresh-header-classics:2.0.0-alpha-1'    //经典刷新头
 implementation  'com.scwang.smart.refresh-header-radar:2.0.0-alpha-1'       //雷达刷新头
 implementation  'com.scwang.smart.refresh-header-falsify:2.0.0-alpha-1'     //虚拟刷新头
+implementation  'com.scwang.smart.refresh-header-two-level:2.0.0-alpha-1'   //二级刷新头
 implementation  'com.scwang.smart.refresh-footer-ball:2.0.0-alpha-1'        //球脉冲加载
 implementation  'com.scwang.smart.refresh-footer-classics:2.0.0-alpha-1'    //经典加载
 
-//其他的 Header 效果，再分包就过于庞大了，建议需要使用哪个 Header 就复制哪个的源码到项目中
-//大家也可以在讨论区讨论投票，选出里面使用频率比较高的Header，然后单独分离出来
 
 implementation 'com.scwang.smartrefresh:SmartRefreshHeader:2.0.0-alpha-1'   //各种刷新头集合
 
-//如果使用 AndroidX 在 gradle.properties 中添加
+```
 
+如果使用 AndroidX 在 gradle.properties 中添加
+
+```
 android.useAndroidX=true
 android.enableJetifier=true
-
 
 ```
 
