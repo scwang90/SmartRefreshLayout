@@ -97,16 +97,20 @@ Please rest assured that I have divided it into three packages, when used to ref
 
 ## Usage
 #### 1.Add a gradle dependency.
+
+[【V2.0.0】](https://github.com/scwang90/SmartRefreshLayout/tree/master#%E7%AE%80%E5%8D%95%E7%94%A8%E4%BE%8B)
+main change is to subcontract SmartRefreshLayout to reduce unnecessary dependencies and avoid code redundancy.
+welcome to experience.
+
 ```
-implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0'
-implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0'//If you use the special Header
-implementation 'com.android.support:appcompat-v7:25.3.1'
+compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0'
+compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0'  //If you use the special Header
+```
+If you use AndroidX, add it to gradle.properties
 
-//androidx version
-implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-1'
-implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-1'
-implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-
+```
+android.useAndroidX=true
+android.enableJetifier=true
 ```
 
 #### 2.Add SmartRefreshLayout in the layout xml.
