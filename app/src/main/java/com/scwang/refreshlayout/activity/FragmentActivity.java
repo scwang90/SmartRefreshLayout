@@ -93,7 +93,6 @@ public class FragmentActivity extends AppCompatActivity {
     public Fragment getFragment() {
         return mFragment;
     }
-
     //</editor-fold>
 
 

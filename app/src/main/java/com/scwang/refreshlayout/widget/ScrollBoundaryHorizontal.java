@@ -133,7 +133,6 @@ public class ScrollBoundaryHorizontal {
             return targetView.canScrollHorizontally(1);
         }
     }
-
     //</editor-fold>
 
     //<editor-fold desc="transform Point">

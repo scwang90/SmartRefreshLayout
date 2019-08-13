@@ -109,7 +109,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     protected Scroller mScroller;
     protected VelocityTracker mVelocityTracker;
     protected Interpolator mReboundInterpolator;
-
     //</editor-fold>
 
     //<editor-fold desc="功能属性">
@@ -211,7 +210,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     protected static DefaultRefreshHeaderCreator sHeaderCreator = null;
     protected static DefaultRefreshInitializer sRefreshInitializer = null;
     protected static MarginLayoutParams sDefaultMarginLP = new MarginLayoutParams(-1,-1);
-
     //</editor-fold>
 
     //<editor-fold desc="构造方法 construction methods">
@@ -308,7 +306,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
         ta.recycle();
     }
-
     //</editor-fold>
 
     //<editor-fold desc="生命周期 life cycle">
@@ -813,7 +810,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         }
     }
     //</editor-fold>
-
     //</editor-fold>
 
     //<editor-fold desc="滑动判断 judgement of slide">
@@ -854,7 +850,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         mLastTouchX = touchX;
         mLastTouchY = touchY;
         //---------------------------------------------------------------------------
-        //</editor-fold>
+    //</editor-fold>
 
 
 
@@ -1129,7 +1125,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 //            // Nope.
 //        }
 //    }
-
     //</editor-fold>
 
     //<editor-fold desc="状态更改 state changes">
@@ -1332,7 +1327,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     protected boolean isEnableRefreshOrLoadMore(boolean enable) {
         return enable && !mEnablePureScrollMode;
     }
-
     //</editor-fold>
 
     //<editor-fold desc="视图位移 displacement">
@@ -1687,7 +1681,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             }, mReboundDuration);
         }
     }
-
     //</editor-fold>
 
     //<editor-fold desc="布局参数 LayoutParams">
@@ -1743,7 +1736,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     //<editor-fold desc="嵌套滚动 NestedScrolling">
 
     //<editor-fold desc="NestedScrollingParent">
-
     @Override
     public int getNestedScrollAxes() {
         return mNestedParent.getNestedScrollAxes();
@@ -1933,7 +1925,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 //        return mNestedChild.dispatchNestedPreFling(velocityX, velocityY);
 //    }
     //</editor-fold>
-
     //</editor-fold>
 
     //<editor-fold desc="开放接口 open interface">
@@ -3329,9 +3320,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     public boolean isLoading() {
         return mState == RefreshState.Loading;
     }
-
     //</editor-fold>
-
     //</editor-fold>
 
     //<editor-fold desc="核心接口 RefreshKernel">
@@ -3504,8 +3493,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             return this;
         }
         //<editor-fold desc="状态更改 state changes">
-
-        //</editor-fold>
+    //</editor-fold>
 
         //<editor-fold desc="视图位移 Spinner">
 
@@ -3677,8 +3665,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         public ValueAnimator animSpinner(int endSpinner) {
             return SmartRefreshLayout.this.animSpinner(endSpinner, 0, mReboundInterpolator, mReboundDuration);
         }
-
-        //</editor-fold>
+    //</editor-fold>
 
         //<editor-fold desc="请求事件">
 
@@ -3738,7 +3725,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             mFloorDuration = duration;
             return this;
         }
-        //</editor-fold>
+    //</editor-fold>
     }
     //</editor-fold>
 

@@ -25,7 +25,6 @@ public abstract class FalsifyAbstract extends SimpleComponent implements Refresh
     protected RefreshKernel mRefreshKernel;
 
     //<editor-fold desc="FalsifyAbstract">
-
     protected FalsifyAbstract(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
@@ -56,11 +55,9 @@ public abstract class FalsifyAbstract extends SimpleComponent implements Refresh
             view.draw(canvas);
         }
     }
-
     //</editor-fold>
 
     //<editor-fold desc="RefreshHeader">
-
     @Override
     public void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight) {
         mRefreshKernel = kernel;
@@ -76,7 +73,6 @@ public abstract class FalsifyAbstract extends SimpleComponent implements Refresh
             mRefreshKernel.setState(RefreshState.RefreshFinish);
         }
     }
-
     //</editor-fold>
 
 }

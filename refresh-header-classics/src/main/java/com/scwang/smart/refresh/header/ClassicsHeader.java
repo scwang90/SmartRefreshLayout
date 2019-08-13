@@ -237,11 +237,9 @@ public class ClassicsHeader extends ClassicsAbstract<ClassicsHeader> implements 
         setLastUpdateTime(new Date(mShared.getLong(KEY_LAST_UPDATE_TIME, System.currentTimeMillis())));
 
     }
-
     //</editor-fold>
 
     //<editor-fold desc="RefreshHeader">
-
     @Override
     public int onFinish(@NonNull RefreshLayout layout, boolean success) {
         if (success) {
@@ -290,7 +288,6 @@ public class ClassicsHeader extends ClassicsAbstract<ClassicsHeader> implements 
     //</editor-fold>
 
     //<editor-fold desc="API">
-
     public ClassicsHeader setLastUpdateTime(Date time) {
         final View thisView = this;
         mLastTime = time;
@@ -368,7 +365,6 @@ public class ClassicsHeader extends ClassicsAbstract<ClassicsHeader> implements 
 //    public TextView getLastUpdateText() {
 //        return mLastUpdateText;
 //    }
-
     //</editor-fold>
 
 }

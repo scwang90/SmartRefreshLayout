@@ -23,6 +23,5 @@ public class FalsifyHeader extends com.scwang.smart.refresh.header.FalsifyHeader
     public FalsifyHeader(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
-
     //</editor-fold>
 }

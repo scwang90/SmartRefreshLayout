@@ -1,12 +1,8 @@
 *.iml
 *.txt
-.project
-.classpath
-.gradle
-.settings
+.*
 release
+build
 /local.properties
-/.idea
-/build
 /bintrayUpload-key.bat
 

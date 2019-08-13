@@ -51,7 +51,6 @@ public interface RefreshKernel {
      * @return ValueAnimator 如果没有执行动画 null
      */
     ValueAnimator animSpinner(int endSpinner);
-
     //</editor-fold>
 
     //<editor-fold desc="请求事件">

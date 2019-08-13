@@ -80,7 +80,6 @@ public class BallPulseFooter extends SimpleComponent implements RefreshFooter {
         mCircleSpacing = SmartUtil.dp2px(4);
 
     }
-
     //</editor-fold>
 
     @Override
@@ -160,7 +159,6 @@ public class BallPulseFooter extends SimpleComponent implements RefreshFooter {
             mManualNormalColor = false;
         }
     }
-
     //</editor-fold>
 
     //<editor-fold desc="开放接口 - API">
@@ -187,6 +185,5 @@ public class BallPulseFooter extends SimpleComponent implements RefreshFooter {
         }
         return this;
     }
-
     //</editor-fold>
 }

@@ -26,11 +26,9 @@ public class FalsifyHeader extends FalsifyAbstract implements RefreshHeader {
     public FalsifyHeader(Context context, AttributeSet attrs) {
         super(context, attrs, 0);
     }
-
     //</editor-fold>
 
     //<editor-fold desc="RefreshHeader">
-
     @Override
     public void onReleased(@NonNull RefreshLayout layout, int height, int maxDragHeight) {
         if (mRefreshKernel != null) {
@@ -41,7 +39,6 @@ public class FalsifyHeader extends FalsifyAbstract implements RefreshHeader {
             mRefreshKernel.setState(RefreshState.RefreshFinish);
         }
     }
-
     //</editor-fold>
 
 }

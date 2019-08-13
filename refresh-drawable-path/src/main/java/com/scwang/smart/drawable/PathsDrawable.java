@@ -162,11 +162,9 @@ public class PathsDrawable extends PaintDrawable {
             canvas.drawBitmap(mCachedBitmap, bounds.left, bounds.top, mPaint);
         }
     }
-
     //</editor-fold>
 
     //<editor-fold desc="API">
-
     public void setGeometricWidth(int width) {
         final Drawable drawable = PathsDrawable.this;
         final Rect bounds = drawable.getBounds();
@@ -191,11 +189,9 @@ public class PathsDrawable extends PaintDrawable {
                 (int) (bounds.bottom * rate)
         );
     }
-
     //</editor-fold>
 
     //<editor-fold desc="CachedBitmap">
-
     private Bitmap mCachedBitmap;
     private boolean mCacheDirty;
 
@@ -218,6 +214,5 @@ public class PathsDrawable extends PaintDrawable {
         }
 
     }
-
     //</editor-fold>
 }

@@ -18,7 +18,6 @@ public class SimpleBoundaryDecider implements ScrollBoundaryDecider {
     public PointF mActionEvent;
     public ScrollBoundaryDecider boundary;
     public boolean mEnableLoadMoreWhenContentNotFull = true;
-
     //</editor-fold>
 
     //<editor-fold desc="ScrollBoundaryDecider">

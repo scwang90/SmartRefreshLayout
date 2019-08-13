@@ -14,7 +14,6 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 public class BezierRadarHeader extends com.scwang.smart.refresh.header.BezierRadarHeader implements RefreshHeader {
 
     //<editor-fold desc="FrameLayout">
-
     public BezierRadarHeader(Context context) {
         this(context,null);
     }
@@ -22,7 +21,6 @@ public class BezierRadarHeader extends com.scwang.smart.refresh.header.BezierRad
     public BezierRadarHeader(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
-
     //</editor-fold>
 
     @Override

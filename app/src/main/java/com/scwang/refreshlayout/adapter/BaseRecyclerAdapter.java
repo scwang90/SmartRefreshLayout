@@ -24,7 +24,6 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<SmartV
 
 
     //<editor-fold desc="BaseRecyclerAdapter">
-
     private final int mLayoutId;
     private final List<T> mList;
     private int mLastPosition = -1;
@@ -86,7 +85,6 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<SmartV
     public void setOpenAnimationEnable(boolean enabled) {
         this.mOpenAnimationEnable = enabled;
     }
-
     //</editor-fold>
 
     //<editor-fold desc="ListAdapter">
@@ -166,11 +164,9 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<SmartV
     public int getCount() {
         return mList.size();
     }
-
     //</editor-fold>
 
     //<editor-fold desc="API">
-
     public T get(int index) {
         return mList.get(index);
     }
@@ -202,8 +198,6 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<SmartV
         notifyListDataSetChanged();
         return this;
     }
-
-
     //</editor-fold>
 
 }

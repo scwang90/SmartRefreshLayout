@@ -7,7 +7,7 @@
     android:clipChildren="false"
     tools:context="com.scwang.refreshlayout.activity.style.FlyRefreshStyleActivity">
 
-    <com.scwang.smartrefresh.header.flyrefresh.MountainSceneView
+    <com.scwang.smart.refresh.header.flyrefresh.MountainSceneView
         android:id="@+id/mountain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -81,7 +81,7 @@
         app:layout_anchorGravity="top"
         app:elevation="0dp"  />
 
-    <com.scwang.smartrefresh.header.flyrefresh.FlyView
+    <com.scwang.smart.refresh.header.flyrefresh.FlyView
         android:id="@+id/flyView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

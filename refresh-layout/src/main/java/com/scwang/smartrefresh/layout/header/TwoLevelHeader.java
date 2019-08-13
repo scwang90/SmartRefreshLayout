@@ -25,7 +25,6 @@ public class TwoLevelHeader extends com.scwang.smart.refresh.header.TwoLevelHead
     public TwoLevelHeader(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
-
     //</editor-fold>
 
     public TwoLevelHeader setOnTwoLevelListener(final OnTwoLevelListener listener) {

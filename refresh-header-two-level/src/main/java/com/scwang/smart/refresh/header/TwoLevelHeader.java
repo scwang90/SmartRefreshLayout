@@ -44,7 +44,6 @@ public class TwoLevelHeader extends SimpleComponent implements RefreshHeader, Ne
     protected RefreshComponent mRefreshHeader;
     protected RefreshKernel mRefreshKernel;
     protected OnTwoLevelListener mTwoLevelListener;
-
     //</editor-fold>
 
     //<editor-fold desc="构造方法">
@@ -68,7 +67,6 @@ public class TwoLevelHeader extends SimpleComponent implements RefreshHeader, Ne
 
         ta.recycle();
     }
-
     //</editor-fold>
 
     //<editor-fold desc="生命周期">
@@ -225,7 +223,6 @@ public class TwoLevelHeader extends SimpleComponent implements RefreshHeader, Ne
             }
         }
     }
-
     //</editor-fold>
 
     //<editor-fold desc="NestedScrollingParent2">
@@ -268,7 +265,6 @@ public class TwoLevelHeader extends SimpleComponent implements RefreshHeader, Ne
     public void onNestedPreScroll(@NonNull View target, int dx, int dy, @NonNull int[] consumed, int i2) {
 
     }
-
     //</editor-fold>
 
     //<editor-fold desc="开放接口 - API">
@@ -415,6 +411,5 @@ public class TwoLevelHeader extends SimpleComponent implements RefreshHeader, Ne
         }
         return this;
     }
-
     //</editor-fold>
 }

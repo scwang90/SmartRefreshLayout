@@ -26,11 +26,9 @@ public class FalsifyFooter extends FalsifyAbstract implements RefreshFooter {
     public FalsifyFooter(Context context, AttributeSet attrs) {
         super(context, attrs, 0);
     }
-
     //</editor-fold>
 
     //<editor-fold desc="RefreshFooter">
-
     @Override
     public void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight) {
         mRefreshKernel = kernel;
@@ -47,7 +45,6 @@ public class FalsifyFooter extends FalsifyAbstract implements RefreshFooter {
             mRefreshKernel.setState(RefreshState.LoadFinish);
         }
     }
-
     //</editor-fold>
 
 }

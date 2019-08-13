@@ -167,12 +167,9 @@ public class ClassicsFooter extends ClassicsAbstract<ClassicsFooter> implements 
             progressView.setVisibility(GONE);
         }
     }
-
-
     //</editor-fold>
 
     //<editor-fold desc="RefreshFooter">
-
     @Override
     public void onStartAnimator(@NonNull RefreshLayout refreshLayout, int height, int maxDragHeight) {
         if (!mNoMoreData) {

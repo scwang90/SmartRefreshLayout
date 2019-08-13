@@ -65,7 +65,6 @@ public class ProgressDrawable extends PaintDrawable implements Animatable , Valu
         }
         canvas.restore();
     }
-
     //</editor-fold>
 
     @Override

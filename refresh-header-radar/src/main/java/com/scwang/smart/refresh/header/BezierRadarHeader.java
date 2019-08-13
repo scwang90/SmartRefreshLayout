@@ -115,7 +115,6 @@ public class BezierRadarHeader extends SimpleComponent implements RefreshHeader 
             mAnimatorSet = null;
         }
     }
-
     //</editor-fold>
 
     //<editor-fold desc="绘制方法 - draw">
@@ -360,7 +359,6 @@ public class BezierRadarHeader extends SimpleComponent implements RefreshHeader 
         }
         return this;
     }
-
     //</editor-fold>
 
     //<editor-fold desc="动画更新">

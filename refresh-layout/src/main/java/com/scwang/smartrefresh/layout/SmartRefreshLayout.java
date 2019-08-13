@@ -40,7 +40,6 @@ public class SmartRefreshLayout extends com.scwang.smart.refresh.layout.SmartRef
     public SmartRefreshLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
-
     //</editor-fold>
 
     //<editor-fold desc="开放接口 open interface">
@@ -267,7 +266,6 @@ public class SmartRefreshLayout extends com.scwang.smart.refresh.layout.SmartRef
             }
         });
     }
-
     //</editor-fold>
 
 }

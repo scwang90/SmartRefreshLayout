@@ -178,7 +178,6 @@ public class SmartUtil implements Interpolator {
         }
         return (contentFull || targetView.canScrollVertically(-1));
     }
-
     //</editor-fold>
 
     //<editor-fold desc="transform Point">
@@ -202,7 +201,6 @@ public class SmartUtil implements Interpolator {
         }
         return isInView;
     }
-
     //</editor-fold>
 
     //<editor-fold desc="像素密度">

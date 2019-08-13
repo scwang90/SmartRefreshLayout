@@ -51,7 +51,6 @@ public abstract class ClassicsAbstract<T extends ClassicsAbstract> extends Simpl
     protected int mMinHeightOfContent = 0;
 
     //<editor-fold desc="RelativeLayout">
-
     public ClassicsAbstract(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
@@ -118,7 +117,6 @@ public abstract class ClassicsAbstract<T extends ClassicsAbstract> extends Simpl
     protected T self() {
         return (T) this;
     }
-
     //</editor-fold>
 
     //<editor-fold desc="RefreshHeader">
@@ -178,12 +176,9 @@ public abstract class ClassicsAbstract<T extends ClassicsAbstract> extends Simpl
             }
         }
     }
-
-
     //</editor-fold>
 
     //<editor-fold desc="API">
-
     public T setProgressBitmap(Bitmap bitmap) {
         mProgressDrawable = null;
         mProgressView.setImageBitmap(bitmap);
@@ -378,6 +373,5 @@ public abstract class ClassicsAbstract<T extends ClassicsAbstract> extends Simpl
 //    public TextView getTitleText() {
 //        return mTitleText;
 //    }
-
     //</editor-fold>
 }
