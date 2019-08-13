@@ -128,7 +128,13 @@ implementation  'com.scwang.smart.refresh-header-falsify:2.0.0-alpha-1'     //�
 implementation  'com.scwang.smart.refresh-footer-ball:2.0.0-alpha-1'        //球脉冲加载
 implementation  'com.scwang.smart.refresh-footer-classics:2.0.0-alpha-1'    //经典加载
 
+//其他的 Header 效果，再分包就过于庞大了，建议需要使用哪个 Header 就复制哪个的源码到项目中
+//大家也可以在讨论区讨论投票，选出里面使用频率比较高的Header，然后单独分离出来
+
+implementation 'com.scwang.smartrefresh:SmartRefreshHeader:2.0.0-alpha-1'   //各种刷新头集合
+
 //如果使用 AndroidX 在 gradle.properties 中添加
+
 android.useAndroidX=true
 android.enableJetifier=true
 
