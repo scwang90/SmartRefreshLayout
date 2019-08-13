@@ -118,24 +118,27 @@ SmartRefreshLayout以打造一个强大，稳定，成熟的下拉刷新框架�
 ## 简单用例
 #### 1.在 build.gradle 中添加依赖
 ```
-//1.1.0 （1.0.5及以前版本的老用户升级需谨慎，API改动过大）
-compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-beta-1'
-compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-beta-1'//没有使用特殊Header，可以不加这行
-compile 'com.android.support:appcompat-v7:25.3.1'//版本 23以上（必须）
 
-//1.1.0 androidx 版本
-implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-16'
-implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-16'
-implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+//2.0.0 （对Smart进行分包，减小不必要的依赖，也对包名和类目进行重构，需要改代码，不能无缝升级）
+
+implementation  'com.scwang.smart.refresh-layout-kernel:2.0.0-alpha-1'      //核心必须依赖
+implementation  'com.scwang.smart.refresh-header-classics:2.0.0-alpha-1'    //经典刷新头
+implementation  'com.scwang.smart.refresh-header-radar:2.0.0-alpha-1'       //雷达刷新头
+implementation  'com.scwang.smart.refresh-header-falsify:2.0.0-alpha-1'     //虚拟刷新头
+implementation  'com.scwang.smart.refresh-footer-ball:2.0.0-alpha-1'        //球脉冲加载
+implementation  'com.scwang.smart.refresh-footer-classics:2.0.0-alpha-1'    //经典加载
+
+//如果使用 AndroidX 在 gradle.properties 中添加
+android.useAndroidX=true
+android.enableJetifier=true
 
 
-//1.0.5 （重大bug发现，无法兼容 Android P，不推荐使用）
 ```
 
 #### 2.在XML布局文件中添加 SmartRefreshLayout
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.scwang.smart.refresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/refreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -145,7 +148,7 @@ implementation 'androidx.legacy:legacy-support-v4:1.0.0'
         android:layout_height="match_parent"
         android:overScrollMode="never"
         android:background="#fff" />
-</com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</com.scwang.smart.refresh.layout.SmartRefreshLayout>
 ```
 
 #### 3.在 Activity 或者 Fragment 中添加代码
@@ -197,7 +200,7 @@ public class App extends Application {
 
 #### 2.方法二 XML布局文件指定
 ```xml
-<com.scwang.smartrefresh.layout.SmartRefreshLayout
+<com.scwang.smart.refresh.layout.SmartRefreshLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/refreshLayout"
     android:layout_width="match_parent"
@@ -208,7 +211,7 @@ public class App extends Application {
     app:srlEnablePreviewInEditMode="true">
     <!--srlAccentColor srlPrimaryColor 将会改变 Header 和 Footer 的主题颜色-->
     <!--srlEnablePreviewInEditMode 可以开启和关闭预览功能-->
-    <com.scwang.smartrefresh.layout.header.ClassicsHeader
+    <com.scwang.smart.refresh.header.ClassicsHeader
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <TextView
@@ -217,10 +220,10 @@ public class App extends Application {
         android:padding="@dimen/dimenPaddingCommon"
         android:background="@android:color/white"
         android:text="@string/description_define_in_xml"/>
-    <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+    <com.scwang.smart.refresh.footer.ClassicsFooter
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-</com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</com.scwang.smart.refresh.layout.SmartRefreshLayout>
 ```
 
 注意：方法二 XML设置的Header和Footer的优先级是中等的，会被方法三覆盖。而且使用本方法的时候，Android Studio 会有预览效果，如下图：
@@ -246,7 +249,7 @@ refreshLayout.setRefreshFooter(new BallPulseFooter(this).setSpinnerStyle(Spinner
 
 ## 混淆
 
-SmartRefreshLayout 没有使用到：序列化、反序列化、JNI、反射，所以并不需要添加混淆过滤代码，并且已经混淆测试通过，如果你在项目的使用中混淆之后出现问题，请及时通知我。
+SmartRefreshLayout 不需要添加混淆过滤代码，并且已经混淆测试通过，如果你在项目的使用中混淆之后出现问题，请及时通知我。
 
 ## 赞赏
 
