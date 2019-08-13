@@ -59,8 +59,9 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
     protected int mHeadHeight;
     protected Path mBezierPath;
     protected Paint mBezierPaint;
-    protected boolean mShowBezierWave = false;
     protected RefreshState mState;
+    protected boolean mShowBezierWave = false;
+    protected boolean mScrollableWhenRefreshing = true;
 
     //<editor-fold desc="MaterialHeader">
     public MaterialHeader(Context context) {
@@ -94,6 +95,7 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.MaterialHeader);
         mShowBezierWave = ta.getBoolean(R.styleable.MaterialHeader_mhShowBezierWave, mShowBezierWave);
+        mScrollableWhenRefreshing = ta.getBoolean(R.styleable.MaterialHeader_mhScrollableWhenRefreshing, mScrollableWhenRefreshing);
         mBezierPaint.setColor(ta.getColor(R.styleable.MaterialHeader_mhPrimaryColor, 0xff11bbff));
         if (ta.hasValue(R.styleable.MaterialHeader_mhShadowRadius)) {
             int radius = ta.getDimensionPixelOffset(R.styleable.MaterialHeader_mhShadowRadius, 0);
@@ -175,6 +177,10 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
 
     @Override
     public void onMoving(boolean isDragging, float percent, int offset, int height, int maxDragHeight) {
+        if (mState == RefreshState.Refreshing) {
+            return;
+        }
+
         if (mShowBezierWave) {
             mHeadHeight = Math.min(offset, height);
             mWaveHeight = Math.max(0, offset - height);
@@ -396,6 +402,15 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
      */
     public MaterialHeader setShowBezierWave(boolean show) {
         this.mShowBezierWave = show;
+        return this;
+    }
+
+    /**
+     * 设置实在正在刷新的时候可以 上下滚动 Header
+     * @param scrollable 是否支持滚动
+     */
+    public MaterialHeader setScrollableWhenRefreshing(boolean scrollable) {
+        this.mScrollableWhenRefreshing = scrollable;
         return this;
     }
 

@@ -1,7 +1,14 @@
 # 更新日志
 
-## V 1.1.0 (开发中)
->添加：srlStyle 主题支持
+## V 2.0.0 (开发中)
+>添加：srlStyle 主题支持  
+>分包：layout = kernel + two-level + header-classics + header-radar + header-falsify + footer-classics + footer-ball  
+>修改：报名 com.scwang.smartrefresh -> com.scwang.smart.refresh  
+
+## V 1.1.0
+
+>添加：finishRefreshWithNoMoreData 方法  
+>添加：DefaultRefreshInitializer 全局初始化  
 >添加：srlHeaderTranslationViewId 属性，指定下拉Header时偏移的视图Id  
 >添加：srlFooterTranslationViewId 属性，指定上拉Footer时偏移的视图Id  
 >添加：setDefaultRefreshInitializer 方法，采用优先级最低的配置全局设置  
@@ -10,15 +17,20 @@
 >添加：autoRefreshAnimationOnly 方法，只显示动画不执行刷新  
 >添加：TwoLevelHeader.openTwoLevel 方法，主动打开二楼  
 >添加：水平滚动刷新支持，demo版本  
->集成：类似淘宝二楼的二级下拉刷新 TwoLevelHeader  
+>添加：对 ViewPager2，MotionLayout，BottomSheet，AndroidX 的兼容支持  
+>添加：MaterialHeader 添加圆盘背景颜色修改支持  
+>集成：类似淘宝二楼的二级下拉刷新 TwoLevelHeader    
 >删除：部分冗余的API接口  
 >删除：1.0.5 中标记过时的API接口  
 >优化：淘宝二楼展开中途可以被拦截的问题  
->优化：极度优化算法，使得dex-method从1366降低到788
+>优化：极度优化算法，使得dex-method从1366降低到788  
 >精简：极度精简代码，是的dex-size从139kb降低到121kb  
 >兼容：修改算法使得可以在BottomSheetDialog内部使用  
 >修改：把仿苹果越界拖动功能默认为关闭，需要手动打开  
 >修改：部分Header的命名修改为严格骆驼峰  
+>修改：标记 Scale 样式过时，原因是 Scale 再拖动是会不停【测量】（header）和 【布局】（layout）性能低下  
+>修改：将之前自带Header中 Scale 样式全部采用 FixedBehind 代替，用户如需替换可以参考这些demo  
+>修复：修复聊天下拉加载没有惯性问题自动加载问题  
 >修复：BallPulseFooter在Xml初始化颜色无效问题  
 >修复：EnableLoadMoreWhenContentNotFull=false导致无法加载的问题  
 >修复：onDetachedFromWindow 报NPE错误问题  
