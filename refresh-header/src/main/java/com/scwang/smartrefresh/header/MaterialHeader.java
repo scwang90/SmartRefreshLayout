@@ -410,8 +410,9 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
      * 设置实在正在刷新的时候可以 上下滚动 Header
      * @param scrollable 是否支持滚动
      */
-    public void sethScrollableWhenRefreshing(boolean scrollable) {
+    public MaterialHeader setScrollableWhenRefreshing(boolean scrollable) {
         this.mScrollableWhenRefreshing = scrollable;
+        return this;
     }
 
     //</editor-fold>

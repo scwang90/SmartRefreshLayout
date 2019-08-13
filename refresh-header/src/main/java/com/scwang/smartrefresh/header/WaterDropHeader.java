@@ -65,6 +65,7 @@ public class WaterDropHeader extends InternalAbstract implements RefreshHeader {
         for (SpinnerStyle style : SpinnerStyle.values) {
             if (style.scale) {
                 mSpinnerStyle = style;
+                break;
             }
         }
         mWaterDropView = new WaterDropView(context);
