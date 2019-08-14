@@ -120,11 +120,11 @@ V2.x 版本已经把依赖库拆分成8个包啦，用到的时候自行引用�
  - refresh-footer-ball          球脉冲加载
  - refresh-footer-classics      经典加载
 
-V2.x 中对包名进行迁移，为了兼容 1.x 下面三个包依然保留，可以自行选择使用
+<!-- V2.x 中对包名进行迁移，为了兼容 1.x 下面三个包依然保留，可以自行选择使用 -->
 
- - SmartRefreshLayout 刷新布局核心实现，自带ClassicsHeader（经典）、BezierRadarHeader（贝塞尔雷达）两个 Header.
- - SmartRefreshHeader 各种Header的集成，除了Layout自带的Header，其它都在这个包中.
- - SmartRefreshFooter 各种Footer的集成，除了Layout自带的Footer，其它都在这个包中.
+ <!-- - SmartRefreshLayout 刷新布局核心实现，自带ClassicsHeader（经典）、BezierRadarHeader（贝塞尔雷达）两个 Header. -->
+ <!-- - SmartRefreshHeader 各种Header的集成，除了Layout自带的Header，其它都在这个包中. -->
+ <!-- - SmartRefreshFooter 各种Footer的集成，除了Layout自带的Footer，其它都在这个包中. -->
 
 ## 简单用例
 #### 1.在 build.gradle 中添加依赖
@@ -145,12 +145,12 @@ implementation  'com.scwang.smart:refresh-header-two-level:2.0.0-alpha-1'   //�
 implementation  'com.scwang.smart:refresh-footer-ball:2.0.0-alpha-1'        //球脉冲加载
 implementation  'com.scwang.smart:refresh-footer-classics:2.0.0-alpha-1'    //经典加载
 
-// 保留了 com.scwang.smartrefresh 的包名，但不分包
-implementation 'com.scwang.smartrefresh:SmartRefreshHeader:2.0.0-alpha-1'   //各种Header集合
-implementation 'com.scwang.smartrefresh:SmartRefreshFooter:2.0.0-alpha-1'   //各种Footer集合
-implementation 'com.scwang.smartrefresh:SmartRefreshLayout:2.0.0-alpha-1'   //核心、默认Header、默认Footer
-
 ```
+
+<!-- // 保留了 com.scwang.smartrefresh 的包名，但不分包 -->
+<!-- implementation 'com.scwang.smartrefresh:SmartRefreshHeader:2.0.0-alpha-1'   //各种Header集合 -->
+<!-- implementation 'com.scwang.smartrefresh:SmartRefreshFooter:2.0.0-alpha-1'   //各种Footer集合 -->
+<!-- implementation 'com.scwang.smartrefresh:SmartRefreshLayout:2.0.0-alpha-1'   //核心、默认Header、默认Footer -->
 
 如果使用 AndroidX 在 gradle.properties 中添加
 
