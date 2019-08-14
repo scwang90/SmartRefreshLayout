@@ -98,7 +98,7 @@ Please rest assured that I have divided it into three packages, when used to ref
 ## Usage
 #### 1.Add a gradle dependency.
 
-[【V2.0.0】](https://github.com/scwang90/SmartRefreshLayout/tree/master#%E7%AE%80%E5%8D%95%E7%94%A8%E4%BE%8B)
+[【V2.0.0】](https://github.com/scwang90/SmartRefreshLayout/blob/master/README_EN.md#1add-a-gradle-dependency)
 main change is to subcontract SmartRefreshLayout to reduce unnecessary dependencies and avoid code redundancy.
 welcome to experience.
 
