@@ -80,63 +80,18 @@ public class ScrollBoundaryHorizontal {
         return (contentFull || canScrollLeft(targetView));
     }
 
-//    public static boolean canScrollRight(View targetView, MotionEvent event) {
-//        if (canScrollRight(targetView) && targetView.getVisibility() == View.VISIBLE) {
-//            return true;
-//        }
-//        //event == null 时 canScrollRight 不会动态递归搜索
-//        if (targetView instanceof ViewGroup && event != null) {
-//            ViewGroup viewGroup = (ViewGroup) targetView;
-//            final int childCount = viewGroup.getChildCount();
-//            PointF point = new PointF();
-//            for (int i = 0; i < childCount; i++) {
-//                View child = viewGroup.getChildAt(i);
-//                if (isTransformedTouchPointInView(viewGroup, child, event.getX(), event.getY(), point)) {
-//                    event = MotionEvent.obtain(event);
-//                    event.offsetLocation(point.x, point.y);
-//                    return canScrollRight(child, event);
-//                }
-//            }
-//        }
-//        return false;
-//    }
-
     public static boolean canScrollLeft(@NonNull View targetView) {
-        if (android.os.Build.VERSION.SDK_INT < 14) {
-            if (targetView instanceof AbsListView) {
-                final ViewGroup viewGroup = (ViewGroup) targetView;
-                final AbsListView absListView = (AbsListView) targetView;
-                return viewGroup.getChildCount() > 0
-                        && (absListView.getFirstVisiblePosition() > 0
-                        || viewGroup.getChildAt(0).getTop() < targetView.getPaddingTop());
-            } else {
-                return targetView.getScrollY() > 0;
-            }
-        } else {
-            return targetView.canScrollHorizontally(-1);
-        }
+        return targetView.canScrollHorizontally(-1);
     }
 
     public static boolean canScrollRight(@NonNull View targetView) {
-        if (android.os.Build.VERSION.SDK_INT < 14) {
-            if (targetView instanceof AbsListView) {
-                final ViewGroup viewGroup = (ViewGroup) targetView;
-                final AbsListView absListView = (AbsListView) targetView;
-                final int childCount = viewGroup.getChildCount();
-                return childCount > 0 && (absListView.getLastVisiblePosition() < childCount - 1
-                        || viewGroup.getChildAt(childCount - 1).getBottom() > targetView.getPaddingBottom());
-            } else {
-                return targetView.getScrollY() < 0;
-            }
-        } else {
-            return targetView.canScrollHorizontally(1);
-        }
+        return targetView.canScrollHorizontally(1);
     }
     //</editor-fold>
 
     //<editor-fold desc="transform Point">
 
-    public static boolean isTransformedTouchPointInView(@NonNull View group,@NonNull View child, float x, float y,PointF outLocalPoint) {
+    public static boolean isTransformedTouchPointInView(@NonNull View group, @NonNull View child, float x, float y,PointF outLocalPoint) {
         if (child.getVisibility() != View.VISIBLE) {
             return false;
         }

@@ -8,6 +8,8 @@
 
     <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"
+        android:fitsSystemWindows="true"
+        android:layout_height="wrap_content"
         app:navigationIcon="?attr/homeAsUpIndicator"
         app:title="@string/fragment_example_horizontal"/>
 
@@ -15,6 +17,8 @@
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@android:color/holo_purple"
+        app:srlEnablePreviewInEditMode="true"
         app:srlEnableHeaderTranslationContent="true"
         app:srlEnableFooterTranslationContent="true">
         <android.support.v7.widget.RecyclerView

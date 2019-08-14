@@ -1,6 +1,7 @@
 package com.scwang.refreshlayout.fragment.example;
 
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,6 +20,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Objects;
 
 import static android.R.layout.simple_list_item_2;
 
@@ -38,6 +40,11 @@ public class HorizontalExampleFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View root, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(root, savedInstanceState);
+
+        root.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Objects.requireNonNull(getActivity()).getWindow().setStatusBarColor(0);
+        }
 
         final Toolbar toolbar = root.findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -69,7 +76,7 @@ public class HorizontalExampleFragment extends Fragment {
             }
         });
 
-        mAdapter.refresh(initData());
+//        mAdapter.refresh(initData());
 
         RefreshLayout refreshLayout = root.findViewById(R.id.refreshLayout);
 ////        refreshLayout.setRefreshHeader(new MaterialHeader(root.getContext()));

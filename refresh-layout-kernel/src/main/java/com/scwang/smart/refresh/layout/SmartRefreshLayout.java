@@ -2318,20 +2318,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     /**
      * Set whether or not Footer follows the content after there is no more data.
      * 设置是否在没有更多数据之后 Footer 跟随内容
-     * @deprecated use {@link RefreshLayout#setEnableFooterFollowWhenNoMoreData(boolean)}
-     * @param enabled 是否启用
-     * @return RefreshLayout
-     */
-    @Override
-    @Deprecated
-    public RefreshLayout setEnableFooterFollowWhenLoadFinished(boolean enabled) {
-        this.mEnableFooterFollowWhenNoMoreData = enabled;
-        return this;
-    }
-
-    /**
-     * Set whether or not Footer follows the content after there is no more data.
-     * 设置是否在没有更多数据之后 Footer 跟随内容
      * @param enabled 是否启用
      * @return RefreshLayout
      */
@@ -3202,7 +3188,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      *         是否成功（状态不符合会失败）
      */
     @Override
-    @Deprecated
     public boolean autoLoadMore(int delayed) {
         return autoLoadMore(delayed, mReboundDuration, 1f * (mFooterHeight * (mFooterMaxDragRate / 2 + 0.5f)) / (mFooterHeight == 0 ? 1 : mFooterHeight), false);
     }

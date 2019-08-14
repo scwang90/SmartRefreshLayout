@@ -297,16 +297,6 @@ public interface RefreshLayout {
     /**
      * Set whether or not Footer follows the content after there is no more data.
      * 设置是否在没有更多数据之后 Footer 跟随内容
-     * @deprecated use {@link RefreshLayout#setEnableFooterFollowWhenNoMoreData(boolean)}
-     * @param enabled 是否启用
-     * @return RefreshLayout
-     */
-    @Deprecated
-    RefreshLayout setEnableFooterFollowWhenLoadFinished(boolean enabled);
-
-    /**
-     * Set whether or not Footer follows the content after there is no more data.
-     * 设置是否在没有更多数据之后 Footer 跟随内容
      * @param enabled 是否启用
      * @return RefreshLayout
      */
@@ -335,20 +325,6 @@ public interface RefreshLayout {
      * @return RefreshLayout
      */
     RefreshLayout setEnableNestedScroll(boolean enabled);
-
-//    /**
-//     * Sets whether to enable pure nested scrolling mode
-//     * Smart scrolling supports both [nested scrolling] and [traditional scrolling] modes
-//     * With nested scrolling enabled, traditional mode also works when necessary
-//     * However, sometimes interference and conflict can occur. If you find this conflict, you can try to turn on [pure nested scrolling] mode and [traditional mode] off
-//     * 设置是否开启【纯嵌套滚动】模式
-//     * Smart 的滚动支持 【嵌套滚动】 + 【传统滚动】 两种模式
-//     * 在开启 【嵌套滚动】 的情况下，【传统模式】也会在必要的时候发挥作用
-//     * 但是有时候也会发生干扰和冲突，如果您发现了这个冲突，可以尝试开启 【纯嵌套滚动】模式，【传统模式】关闭
-//     * @param enabled 是否启用
-//     * @return RefreshLayout
-//     */
-//    RefreshLayout setEnableNestedScrollOnly(boolean enabled);
 
     /**
      * Set whether to enable the action content view when refreshing.
@@ -579,7 +555,6 @@ public interface RefreshLayout {
      * @return true or false, Status non-compliance will fail.
      *         是否成功（状态不符合会失败）
      */
-//    @Deprecated
     boolean autoRefresh(int delayed);
 
     /**
@@ -638,7 +613,6 @@ public interface RefreshLayout {
      *         是否成功（状态不符合会失败）
      */
     boolean autoLoadMore(int delayed, int duration, float dragRate, boolean animationOnly);
-
 
     /**
      * 是否正在刷新

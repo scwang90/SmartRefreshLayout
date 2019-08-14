@@ -10,6 +10,7 @@ import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 
 import com.scwang.refreshlayout.R;
+import com.scwang.smart.refresh.layout.api.RefreshComponent;
 import com.scwang.smart.refresh.layout.api.RefreshFooter;
 import com.scwang.smart.refresh.layout.api.RefreshHeader;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
@@ -19,25 +20,22 @@ import com.scwang.smart.refresh.layout.listener.OnMultiListener;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
 import com.scwang.smart.refresh.layout.listener.ScrollBoundaryDecider;
+import com.scwang.smart.refresh.layout.util.SmartUtil;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.impl.ScrollBoundaryDeciderAdapter;
 
-public class SmartRefreshHorizontal extends FrameLayout implements RefreshLayout {
+public class SmartRefreshHorizontal extends SmartRefreshLayout {
 
-    protected SmartRefreshContent mRefreshLayout;
+    protected boolean isInLayout = false;
 
     public SmartRefreshHorizontal(Context context) {
         this(context, null);
     }
 
     public SmartRefreshHorizontal(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public SmartRefreshHorizontal(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        mRefreshLayout = new SmartRefreshContent(context, attrs);
-        mRefreshLayout.setEnableAutoLoadMore(false);
-        mRefreshLayout.setScrollBoundaryDecider(new ScrollBoundaryDeciderAdapter(){
+        super(context, attrs);
+        setEnableAutoLoadMore(false);
+        setScrollBoundaryDecider(new ScrollBoundaryDeciderAdapter(){
             @Override
             public boolean canRefresh(View content) {
                 return ScrollBoundaryHorizontal.canRefresh(content, mActionEvent);
@@ -51,453 +49,84 @@ public class SmartRefreshHorizontal extends FrameLayout implements RefreshLayout
 
     //<editor-fold desc="重写方法">
     @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
-        while (getChildCount() > 0) {
-            View child = getChildAt(0);
-            removeViewAt(0);
-            mRefreshLayout.addView(child);
-        }
-        mRefreshLayout.onFinishInflate();
-        addView(mRefreshLayout);
-        mRefreshLayout.setRotation(-90);
-    }
-
-    @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        if (mRefreshLayout.getParent() == null) {
-            mRefreshLayout.setRotation(-90);
-            addView(mRefreshLayout);
+        if (mRefreshContent != null && !(mRefreshContent instanceof RefreshContentHorizontal)) {
+            mRefreshContent = new RefreshContentHorizontal(mRefreshContent.getView());
+            View fixedHeaderView = mFixedHeaderViewId > 0 ? findViewById(mFixedHeaderViewId) : null;
+            View fixedFooterView = mFixedFooterViewId > 0 ? findViewById(mFixedFooterViewId) : null;
+
+            mRefreshContent.setScrollBoundaryDecider(mScrollBoundaryDecider);
+            mRefreshContent.setEnableLoadMoreWhenContentNotFull(mEnableLoadMoreWhenContentNotFull);
+            mRefreshContent.setUpComponent(mKernel, fixedHeaderView, fixedFooterView);
         }
+
+        setRotation(-90);
     }
 
     @Override
     @SuppressWarnings("SuspiciousNameCombination")
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        mRefreshLayout.measure(heightMeasureSpec, widthMeasureSpec);
-//        RefreshHeader header = mRefreshLayout.getRefreshHeader();
-//        RefreshFooter footer = mRefreshLayout.getRefreshFooter();
-//
-//        for (int i = 0, len = mRefreshLayout.getChildCount(); i < len; i++) {
-//            View child = mRefreshLayout.getChildAt(i);
-//            if ((header == null || child != header.getView()) && (footer == null || child != footer.getView())) {
-//                if (child.getVisibility() != GONE) {
-//                    child.measure(MeasureSpec.makeMeasureSpec(getMeasuredWidth(), MeasureSpec.EXACTLY),
-//                            MeasureSpec.makeMeasureSpec(getMeasuredHeight(), MeasureSpec.EXACTLY));
-//                }
-//            }
-//        }
+        super.onMeasure(heightMeasureSpec, widthMeasureSpec);
     }
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-//        super.onLayout(changed, left, top, right, bottom);
-
         int width = right - left;
         int height = bottom - top;
         int div = (height - width) / 2;
-        top = div;
-        left = -div;
+        if (isInLayout) {
+            RefreshComponent header = mRefreshHeader;
+            RefreshComponent footer = mRefreshFooter;
 
-        RefreshHeader header = mRefreshLayout.getRefreshHeader();
-        RefreshFooter footer = mRefreshLayout.getRefreshFooter();
+            final View thisView = this;
+            int paddingLeft = thisView.getPaddingLeft();
+            int paddingRight = thisView.getPaddingRight();
+            int paddingTop = thisView.getPaddingTop();
+            int paddingBottom = thisView.getPaddingBottom();
 
-        for (int i = 0, len = mRefreshLayout.getChildCount(); i < len; i++) {
-            View child = mRefreshLayout.getChildAt(i);
-            if ((header == null || child != header.getView()) && (footer == null || child != footer.getView())) {
-                if (child.getVisibility() != GONE) {
-                    child.setTag(R.id.srl_tag, "GONE");
-                    child.setRotation(90);
-                    child.measure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY));
-                    child.layout(div, -div, width + div, height - div);
+            for (int i = 0, len = getChildCount(); i < len; i++) {
+                View child = getChildAt(i);
+                if ((header == null || child != header.getView()) && (footer == null || child != footer.getView())) {
+                    if (child.getVisibility() != GONE) {
+
+                        int w = height;
+                        int h = width;
+                        int l = paddingBottom;
+                        int t = paddingLeft;
+
+                        h -= paddingTop + paddingBottom;
+                        w -= paddingLeft + paddingRight;
+
+                        ViewGroup.LayoutParams params = child.getLayoutParams();
+                        if (params instanceof MarginLayoutParams) {
+                            MarginLayoutParams lp = (MarginLayoutParams) params;
+                            h -= lp.topMargin + lp.bottomMargin;
+                            w -= lp.leftMargin + lp.rightMargin;
+                            l += lp.bottomMargin;
+                            t += lp.leftMargin;
+                        }
+
+                        div = (h - w) / 2;
+                        l += div;
+                        t -= div;
+
+                        child.setRotation(90);
+                        child.setTag(R.id.srl_tag, "GONE");
+                        child.measure(MeasureSpec.makeMeasureSpec(w, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(h, MeasureSpec.EXACTLY));
+                        child.layout(l, t, l + w, t + h);
+                    }
                 }
-
             }
+            super.onLayout(changed, left, top, right, bottom);
+        } else {
+            top -= div;
+            left += div;
+            isInLayout = true;
+            super.layout(left, top, left + width, top + height);
+            isInLayout = false;
         }
 
-        mRefreshLayout.layout(left, top, left + height, top + width);
-    }
-    //</editor-fold>
-
-    //<editor-fold desc="委托方法">
-    @Override
-    public RefreshLayout setFooterHeight(float dp) {
-        return mRefreshLayout.setFooterHeight(dp);
-    }
-
-    @Override
-    public RefreshLayout setFooterHeightPx(int px) {
-        return mRefreshLayout.setFooterHeightPx(px);
-    }
-
-    @Override
-    public RefreshLayout setHeaderHeight(float dp) {
-        return mRefreshLayout.setHeaderHeight(dp);
-    }
-
-    @Override
-    public RefreshLayout setHeaderHeightPx(int px) {
-        return mRefreshLayout.setHeaderHeightPx(px);
-    }
-
-    @Override
-    public RefreshLayout setHeaderInsetStart(float dp) {
-        return mRefreshLayout.setHeaderInsetStart(dp);
-    }
-
-    @Override
-    public RefreshLayout setHeaderInsetStartPx(int px) {
-        return mRefreshLayout.setHeaderInsetStartPx(px);
-    }
-
-    @Override
-    public RefreshLayout setFooterInsetStart(float dp) {
-        return mRefreshLayout.setFooterInsetStart(dp);
-    }
-
-    @Override
-    public RefreshLayout setFooterInsetStartPx(int px) {
-        return mRefreshLayout.setFooterInsetStartPx(px);
-    }
-
-    @Override
-    public RefreshLayout setDragRate(float rate) {
-        return mRefreshLayout.setDragRate(rate);
-    }
-
-    @Override
-    public RefreshLayout setHeaderMaxDragRate(float rate) {
-        return mRefreshLayout.setHeaderMaxDragRate(rate);
-    }
-
-    @Override
-    public RefreshLayout setFooterMaxDragRate(float rate) {
-        return mRefreshLayout.setFooterMaxDragRate(rate);
-    }
-
-    @Override
-    public RefreshLayout setHeaderTriggerRate(float rate) {
-        return mRefreshLayout.setHeaderTriggerRate(rate);
-    }
-
-    @Override
-    public RefreshLayout setFooterTriggerRate(float rate) {
-        return mRefreshLayout.setFooterTriggerRate(rate);
-    }
-
-    @Override
-    public RefreshLayout setReboundInterpolator(@NonNull Interpolator interpolator) {
-        return mRefreshLayout.setReboundInterpolator(interpolator);
-    }
-
-    @Override
-    public RefreshLayout setReboundDuration(int duration) {
-        return mRefreshLayout.setReboundDuration(duration);
-    }
-
-    @Override
-    public RefreshLayout setRefreshFooter(@NonNull RefreshFooter footer) {
-        return mRefreshLayout.setRefreshFooter(footer);
-    }
-
-    @Override
-    public RefreshLayout setRefreshFooter(@NonNull RefreshFooter footer, int width, int height) {
-        return mRefreshLayout.setRefreshFooter(footer, width, height);
-    }
-
-    @Override
-    public RefreshLayout setRefreshHeader(@NonNull RefreshHeader header) {
-        return mRefreshLayout.setRefreshHeader(header);
-    }
-
-    @Override
-    public RefreshLayout setRefreshHeader(@NonNull RefreshHeader header, int width, int height) {
-        return mRefreshLayout.setRefreshHeader(header, width, height);
-    }
-
-    @Override
-    public RefreshLayout setRefreshContent(@NonNull View content) {
-        return mRefreshLayout.setRefreshContent(content);
-    }
-
-    @Override
-    public RefreshLayout setRefreshContent(@NonNull View content, int width, int height) {
-        return mRefreshLayout.setRefreshContent(content, width, height);
-    }
-
-    @Override
-    public RefreshLayout setEnableRefresh(boolean enabled) {
-        return mRefreshLayout.setEnableRefresh(enabled);
-    }
-
-    @Override
-    public RefreshLayout setEnableLoadMore(boolean enabled) {
-        return mRefreshLayout.setEnableLoadMore(enabled);
-    }
-
-    @Override
-    public RefreshLayout setEnableAutoLoadMore(boolean enabled) {
-        return mRefreshLayout.setEnableAutoLoadMore(enabled);
-    }
-
-    @Override
-    public RefreshLayout setEnableHeaderTranslationContent(boolean enabled) {
-        return mRefreshLayout.setEnableHeaderTranslationContent(enabled);
-    }
-
-    @Override
-    public RefreshLayout setEnableFooterTranslationContent(boolean enabled) {
-        return mRefreshLayout.setEnableFooterTranslationContent(enabled);
-    }
-
-    @Override
-    public RefreshLayout setEnableOverScrollBounce(boolean enabled) {
-        return mRefreshLayout.setEnableOverScrollBounce(enabled);
-    }
-
-    @Override
-    public RefreshLayout setEnablePureScrollMode(boolean enabled) {
-        return mRefreshLayout.setEnablePureScrollMode(enabled);
-    }
-
-    @Override
-    public RefreshLayout setEnableScrollContentWhenLoaded(boolean enabled) {
-        return mRefreshLayout.setEnableScrollContentWhenLoaded(enabled);
-    }
-
-    @Override
-    public RefreshLayout setEnableScrollContentWhenRefreshed(boolean enabled) {
-        return mRefreshLayout.setEnableScrollContentWhenRefreshed(enabled);
-    }
-
-    @Override
-    public RefreshLayout setEnableLoadMoreWhenContentNotFull(boolean enabled) {
-        return mRefreshLayout.setEnableLoadMoreWhenContentNotFull(enabled);
-    }
-
-    @Override
-    public RefreshLayout setEnableOverScrollDrag(boolean enabled) {
-        return mRefreshLayout.setEnableOverScrollDrag(enabled);
-    }
-
-    @Override
-    @Deprecated
-    public RefreshLayout setEnableFooterFollowWhenLoadFinished(boolean enabled) {
-        return mRefreshLayout.setEnableFooterFollowWhenLoadFinished(enabled);
-    }
-
-    @Override
-    public RefreshLayout setEnableFooterFollowWhenNoMoreData(boolean enabled) {
-        return mRefreshLayout.setEnableFooterFollowWhenNoMoreData(enabled);
-    }
-
-    @Override
-    public RefreshLayout setEnableClipHeaderWhenFixedBehind(boolean enabled) {
-        return mRefreshLayout.setEnableClipHeaderWhenFixedBehind(enabled);
-    }
-
-    @Override
-    public RefreshLayout setEnableClipFooterWhenFixedBehind(boolean enabled) {
-        return mRefreshLayout.setEnableClipFooterWhenFixedBehind(enabled);
-    }
-
-    @Override
-    public RefreshLayout setEnableNestedScroll(boolean enabled) {
-        return mRefreshLayout.setEnableNestedScroll(enabled);
-    }
-
-    @Override
-    public RefreshLayout setDisableContentWhenRefresh(boolean disable) {
-        return mRefreshLayout.setDisableContentWhenRefresh(disable);
-    }
-
-    @Override
-    public RefreshLayout setDisableContentWhenLoading(boolean disable) {
-        return mRefreshLayout.setDisableContentWhenLoading(disable);
-    }
-
-    @Override
-    public RefreshLayout setOnRefreshListener(OnRefreshListener listener) {
-        return mRefreshLayout.setOnRefreshListener(listener);
-    }
-
-    @Override
-    public RefreshLayout setOnLoadMoreListener(OnLoadMoreListener listener) {
-        return mRefreshLayout.setOnLoadMoreListener(listener);
-    }
-
-    @Override
-    public RefreshLayout setOnRefreshLoadMoreListener(OnRefreshLoadMoreListener listener) {
-        return mRefreshLayout.setOnRefreshLoadMoreListener(listener);
-    }
-
-    @Override
-    public RefreshLayout setOnMultiListener(OnMultiListener listener) {
-        return mRefreshLayout.setOnMultiListener(listener);
-    }
-
-    @Override
-    public RefreshLayout setScrollBoundaryDecider(ScrollBoundaryDecider boundary) {
-        return mRefreshLayout.setScrollBoundaryDecider(boundary);
-    }
-
-    @Override
-    public RefreshLayout setPrimaryColors(int... primaryColors) {
-        return mRefreshLayout.setPrimaryColors(primaryColors);
-    }
-
-    @Override
-    public RefreshLayout setPrimaryColorsId(int... primaryColorId) {
-        return mRefreshLayout.setPrimaryColorsId(primaryColorId);
-    }
-
-    @Override
-    public RefreshLayout finishRefresh() {
-        return mRefreshLayout.finishRefresh();
-    }
-
-    @Override
-    public RefreshLayout finishRefresh(int delayed) {
-        return mRefreshLayout.finishRefresh(delayed);
-    }
-
-    @Override
-    public RefreshLayout finishRefresh(boolean success) {
-        return mRefreshLayout.finishRefresh(success);
-    }
-
-    @Override
-    public RefreshLayout finishRefresh(int delayed, boolean success, Boolean noMoreData) {
-        return mRefreshLayout.finishRefresh(delayed, success, noMoreData);
-    }
-
-    @Override
-    public RefreshLayout finishRefreshWithNoMoreData() {
-        return mRefreshLayout.finishRefreshWithNoMoreData();
-    }
-
-    @Override
-    public RefreshLayout finishLoadMore() {
-        return mRefreshLayout.finishLoadMore();
-    }
-
-    @Override
-    public RefreshLayout finishLoadMore(int delayed) {
-        return mRefreshLayout.finishLoadMore(delayed);
-    }
-
-    @Override
-    public RefreshLayout finishLoadMore(boolean success) {
-        return mRefreshLayout.finishLoadMore(success);
-    }
-
-    @Override
-    public RefreshLayout finishLoadMore(int delayed, boolean success, boolean noMoreData) {
-        return mRefreshLayout.finishLoadMore(delayed, success, noMoreData);
-    }
-
-    @Override
-    public RefreshLayout finishLoadMoreWithNoMoreData() {
-        return mRefreshLayout.finishLoadMoreWithNoMoreData();
-    }
-
-    @Override
-    public RefreshLayout closeHeaderOrFooter() {
-        return mRefreshLayout.closeHeaderOrFooter();
-    }
-
-    @Override
-    @Deprecated
-    public RefreshLayout setNoMoreData(boolean noMoreData) {
-        return mRefreshLayout.setNoMoreData(noMoreData);
-    }
-
-    @Override
-    public RefreshLayout resetNoMoreData() {
-        return mRefreshLayout.resetNoMoreData();
-    }
-
-    @Override
-    @Nullable
-    public RefreshHeader getRefreshHeader() {
-        return mRefreshLayout.getRefreshHeader();
-    }
-
-    @Override
-    @Nullable
-    public RefreshFooter getRefreshFooter() {
-        return mRefreshLayout.getRefreshFooter();
-    }
-
-    @NonNull
-    @Override
-    public RefreshState getState() {
-        return mRefreshLayout.getState();
-    }
-
-    @NonNull
-    @Override
-    public ViewGroup getLayout() {
-        return mRefreshLayout.getLayout();
-    }
-
-    @Override
-    public boolean autoRefresh() {
-        return mRefreshLayout.autoRefresh();
-    }
-
-    @Override
-    @Deprecated
-    public boolean autoRefresh(int delayed) {
-        return mRefreshLayout.autoRefresh(delayed);
-    }
-
-    @Override
-    public boolean autoRefreshAnimationOnly() {
-        return mRefreshLayout.autoRefreshAnimationOnly();
-    }
-
-    @Override
-    public boolean autoRefresh(int delayed, int duration, float dragRate, boolean animationOnly) {
-        return mRefreshLayout.autoRefresh(delayed, duration, dragRate, animationOnly);
-    }
-
-    @Override
-    public boolean autoLoadMore() {
-        return mRefreshLayout.autoLoadMore();
-    }
-
-    @Override
-    public boolean autoLoadMore(int delayed) {
-        return false;
-    }
-
-//    @Override
-//    @Deprecated
-//    public boolean autoLoadMore(int delayed) {
-//        return mRefreshLayout.autoLoadMore(delayed);
-//    }
-
-    @Override
-    public boolean autoLoadMoreAnimationOnly() {
-        return mRefreshLayout.autoLoadMoreAnimationOnly();
-    }
-
-    @Override
-    public boolean autoLoadMore(int delayed, int duration, float dragRate, boolean animationOnly) {
-        return mRefreshLayout.autoLoadMore(delayed, duration, dragRate, animationOnly);
-    }
-
-    @Override
-    public boolean isRefreshing() {
-        return false;
-    }
-
-    @Override
-    public boolean isLoading() {
-        return false;
     }
     //</editor-fold>
 }
