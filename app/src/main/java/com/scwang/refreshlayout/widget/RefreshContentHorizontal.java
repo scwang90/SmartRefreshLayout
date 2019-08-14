@@ -7,8 +7,6 @@ import android.widget.AbsListView;
 
 import com.scwang.smart.refresh.layout.wrapper.RefreshContentWrapper;
 
-import static com.scwang.refreshlayout.widget.ScrollBoundaryHorizontal.canScrollLeft;
-import static com.scwang.refreshlayout.widget.ScrollBoundaryHorizontal.canScrollRight;
 import static com.scwang.smartrefresh.layout.util.SmartUtil.scrollListBy;
 
 public class RefreshContentHorizontal extends RefreshContentWrapper {
@@ -20,7 +18,7 @@ public class RefreshContentHorizontal extends RefreshContentWrapper {
     @Override
     public ValueAnimator.AnimatorUpdateListener scrollContentWhenFinished(final int spinner) {
         if (mScrollableView != null && spinner != 0) {
-            if ((spinner < 0 && canScrollRight(mScrollableView)) || (spinner > 0 && canScrollLeft(mScrollableView))) {
+            if ((spinner < 0 && mScrollableView.canScrollHorizontally(1)) || (spinner > 0 && mScrollableView.canScrollHorizontally(-1))) {
                 mLastSpinner = spinner;
                 return this;
             }

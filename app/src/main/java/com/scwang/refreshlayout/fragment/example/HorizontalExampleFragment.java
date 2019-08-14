@@ -76,7 +76,7 @@ public class HorizontalExampleFragment extends Fragment {
             }
         });
 
-//        mAdapter.refresh(initData());
+        mAdapter.refresh(initData());
 
         RefreshLayout refreshLayout = root.findViewById(R.id.refreshLayout);
 ////        refreshLayout.setRefreshHeader(new MaterialHeader(root.getContext()));

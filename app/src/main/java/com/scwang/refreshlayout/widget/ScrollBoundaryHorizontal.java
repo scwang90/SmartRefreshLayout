@@ -24,7 +24,7 @@ public class ScrollBoundaryHorizontal {
      * @return 是否可以刷新
      */
     public static boolean canRefresh(@NonNull View targetView, PointF touch) {
-        if (canScrollLeft(targetView) && targetView.getVisibility() == View.VISIBLE) {
+        if (targetView.canScrollHorizontally(-1) && targetView.getVisibility() == View.VISIBLE) {
             return false;
         }
         //touch == null 时 canRefresh 不会动态递归搜索
@@ -34,7 +34,7 @@ public class ScrollBoundaryHorizontal {
             PointF point = new PointF();
             for (int i = childCount; i > 0; i--) {
                 View child = viewGroup.getChildAt(i - 1);
-                if (isTransformedTouchPointInView(viewGroup, child, touch.x, touch.y, point)) {
+                if (SmartUtil.isTransformedTouchPointInView(viewGroup, child, touch.x, touch.y, point)) {
                     if ("fixed".equals(child.getTag())) {
                         return false;
                     }
@@ -56,7 +56,7 @@ public class ScrollBoundaryHorizontal {
      * @return 是否可以刷新
      */
     public static boolean canLoadMore(@NonNull View targetView, PointF touch, boolean contentFull) {
-        if (canScrollRight(targetView) && targetView.getVisibility() == View.VISIBLE) {
+        if (targetView.canScrollHorizontally(1) && targetView.getVisibility() == View.VISIBLE) {
             return false;
         }
         //touch == null 时 canLoadMore 不会动态递归搜索
@@ -66,7 +66,7 @@ public class ScrollBoundaryHorizontal {
             PointF point = new PointF();
             for (int i = 0; i < childCount; i++) {
                 View child = viewGroup.getChildAt(i);
-                if (isTransformedTouchPointInView(viewGroup, child, touch.x, touch.y, point)) {
+                if (SmartUtil.isTransformedTouchPointInView(viewGroup, child, touch.x, touch.y, point)) {
                     if ("fixed".equals(child.getTag())) {
                         return false;
                     }
@@ -77,53 +77,9 @@ public class ScrollBoundaryHorizontal {
                 }
             }
         }
-        return (contentFull || canScrollLeft(targetView));
+        return (contentFull || targetView.canScrollHorizontally(-1));
     }
 
-    public static boolean canScrollLeft(@NonNull View targetView) {
-        return targetView.canScrollHorizontally(-1);
-    }
-
-    public static boolean canScrollRight(@NonNull View targetView) {
-        return targetView.canScrollHorizontally(1);
-    }
-    //</editor-fold>
-
-    //<editor-fold desc="transform Point">
-
-    public static boolean isTransformedTouchPointInView(@NonNull View group, @NonNull View child, float x, float y,PointF outLocalPoint) {
-        if (child.getVisibility() != View.VISIBLE) {
-            return false;
-        }
-        final float[] point = new float[2];
-        point[0] = x;
-        point[1] = y;
-//        transformPointToViewLocal(group, child, point);
-        point[0] += group.getScrollX() - child.getLeft();
-        point[1] += group.getScrollY() - child.getTop();
-//        final boolean isInView = pointInView(child, point[0], point[1], 0);
-        final boolean isInView = point[0] >= 0 && point[1] >= 0
-                && point[0] < (child.getWidth())
-                && point[1] < ((child.getHeight()));
-        if (isInView && outLocalPoint != null) {
-            outLocalPoint.set(point[0]-x, point[1]-y);
-        }
-        return isInView;
-    }
-
-//    public static boolean pointInView(View view, float localX, float localY, float slop) {
-//        final float left = /*Math.max(view.getPaddingLeft(), 0)*/ - slop;
-//        final float top = /*Math.max(view.getPaddingTop(), 0)*/ - slop;
-//        final float width = view.getWidth()/* - Math.max(view.getPaddingLeft(), 0) - Math.max(view.getPaddingRight(), 0)*/;
-//        final float height = view.getHeight()/* - Math.max(view.getPaddingTop(), 0) - Math.max(view.getPaddingBottom(), 0)*/;
-//        return localX >= left && localY >= top && localX < ((width) + slop) &&
-//                localY < ((height) + slop);
-//    }
-
-//    public static void transformPointToViewLocal(ViewGroup group, View child, float[] point) {
-//        point[0] += group.getScrollX() - child.getLeft();
-//        point[1] += group.getScrollY() - child.getTop();
-//    }
     //</editor-fold>
 
 }
