@@ -19,6 +19,10 @@ app设计师发挥创意设计的好素材。 也是需要我们巧妙植入到�
 [官网方法的实践](https://blog.csdn.net/cpcpcp123/article/details/84554872)  
 [838514984](https://github.com/838514984/smartrefreshlayout-statusUtils)
 
+本文内容都为基础和原理，真正实现起来还要写很多代码，这是本文的不足。
+不过后来发现有第三方的自定义Header文档写的很好，
+建议大家阅读本文之后再阅读一下[第三方文档](https://www.jianshu.com/p/df6964cd745c)。
+
 
 ## 安卓下拉刷新框架
 SmartRefreshLayout被设计为一个刷新框架，具有非常高的自定性和可扩展性，可以应付

@@ -22,7 +22,7 @@ XML属性
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 ~~~
 
-## 1.获取当前状态？isRefreshing(),isLoading() 不见了？（1.1.0以上版本）
+## 1.获取当前状态？isRefreshing(),isLoading() 不见了？（1.1.0以上版本，2.x 回归）
 
 版本的迭代，刷新的状态越来越多，仅仅 isRefreshing(),isLoading() 已经无法满足要求，在1.0.5版本之后本库直接将
 内部 State 开放出来，并在1.0.5版本标记 isRefreshing(),isLoading() 过期，鼓励大家使用 getState 来代替。将在
@@ -42,7 +42,9 @@ getState 比前两个方法更有用，具体参考下面代码。
 
 ## 2.嵌套WebView，还没滚动到顶部就开始下拉刷新了？
 
-> WebView 的问题多由内部Html中采用了绝对坐标导致的，所以问题很难从java层面解决这个问题，我建议直接再Html内部实现下拉刷新，或者采用自定义滚动边界，参考 [#394](https://github.com/scwang90/SmartRefreshLayout/issues/394)。
+> WebView 的问题多由内部Html中采用了绝对坐标导致的，所以问题很难从java层面解决这个问题。
+我建议直接再Html内部实现下拉刷新，或者采用自定义滚动边界，参考 [#394](https://github.com/scwang90/SmartRefreshLayout/issues/394)。
+另外 [SCDN](https://blog.csdn.net/niuzhijun66/article/details/86290182) 博客中有人给出解决方案
 
 ## 3.列表内容才几条，却可以上拉加载？
 
