@@ -23,10 +23,10 @@ import com.scwang.smart.refresh.header.material.MaterialProgressDrawable;
 import com.scwang.smart.refresh.header.waveswipe.WaveView;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.constant.RefreshState;
+import com.scwang.smart.refresh.layout.simple.SimpleComponent;
 import com.scwang.smartrefresh.header.R;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
-import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 import static android.view.View.MeasureSpec.EXACTLY;
@@ -39,7 +39,7 @@ import static android.view.View.MeasureSpec.makeMeasureSpec;
  * from https://github.com/recruit-lifestyle/WaveSwipeRefreshLayout
  */
 @SuppressWarnings("unused")
-public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
+public class WaveSwipeHeader extends SimpleComponent implements RefreshHeader {
 
     /**
      * 落ちる前の回転の最大のAngle値

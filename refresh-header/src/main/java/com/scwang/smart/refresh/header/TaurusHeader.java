@@ -19,10 +19,10 @@ import android.view.animation.Transformation;
 import com.scwang.smart.drawable.PathsDrawable;
 import com.scwang.smart.refresh.layout.api.RefreshKernel;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.simple.SimpleComponent;
 import com.scwang.smartrefresh.header.R;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
-import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 import java.util.HashMap;
@@ -34,7 +34,7 @@ import java.util.Random;
  * Created by scwang on 2017/5/31.
  * from https://github.com/Yalantis/Taurus
  */
-public class TaurusHeader extends InternalAbstract implements RefreshHeader {
+public class TaurusHeader extends SimpleComponent implements RefreshHeader {
 
     //<editor-fold desc="static">
     protected static String[] airplanePaths = new String[]{

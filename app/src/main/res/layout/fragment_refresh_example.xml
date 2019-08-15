@@ -10,7 +10,7 @@
         android:id="@+id/toolbar"
         app:title="@string/fragment_refresh_example"/>
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -18,7 +18,7 @@
         app:srlPrimaryColor="@color/colorPrimary"
         app:srlAccentColor="@android:color/white"
         app:srlEnableAutoLoadMore="false">
-        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+        <com.scwang.smart.refresh.header.ClassicsHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srlAccentColor="#aaa"
@@ -32,9 +32,9 @@
             android:background="@android:color/white"
             android:overScrollMode="never"
             tools:listitem="@android:layout/simple_list_item_2"/>
-        <com.scwang.smartrefresh.header.PhoenixHeader
+        <com.scwang.smart.refresh.header.PhoenixHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

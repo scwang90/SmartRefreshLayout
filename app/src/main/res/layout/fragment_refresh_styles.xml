@@ -10,7 +10,7 @@
         android:id="@+id/toolbar"
         app:title="@string/fragment_refresh_styles"/>
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,7 +19,7 @@
         app:srlEnableLoadMore="true"
         app:srlEnableAutoLoadMore="false"
         app:srlEnablePreviewInEditMode="true">
-        <com.scwang.smartrefresh.layout.footer.BallPulseFooter
+        <com.scwang.smart.refresh.footer.BallPulseFooter
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <android.support.v7.widget.RecyclerView
@@ -29,9 +29,9 @@
             android:background="@android:color/white"
             android:overScrollMode="never"
             tools:listitem="@android:layout/simple_list_item_2"/>
-        <com.scwang.smartrefresh.header.TaurusHeader
+        <com.scwang.smart.refresh.header.TaurusHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

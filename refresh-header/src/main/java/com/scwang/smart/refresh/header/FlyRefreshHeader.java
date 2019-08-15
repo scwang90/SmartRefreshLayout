@@ -19,7 +19,6 @@ import com.scwang.smart.refresh.header.flyrefresh.MountainSceneView;
 import com.scwang.smart.refresh.layout.api.RefreshKernel;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
-import com.scwang.smartrefresh.layout.header.FalsifyHeader;
 import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 /**
@@ -79,38 +78,6 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
         }
     }
 
-//    @Override
-//    public void onReleasing(float percent, int offset, int height, int maxDragHeight) {
-//        if (!mIsRefreshing) {
-//            onPulling(percent, offset, height, maxDragHeight);
-//        }
-//    }
-//
-//    @Override
-//    public void onPulling(float percent, int offset, int height, int maxDragHeight) {
-//        if (offset < 0) {
-//            if (mOffset > 0) {
-//                offset = 0;
-//                percent = 0;
-//            } else {
-//                return;
-//            }
-//        }
-//        mOffset = offset;
-//        mCurrentPercent = percent;
-//        if (mSceneView != null) {
-//            mSceneView.updatePercent(percent);
-//            mSceneView.postInvalidate();
-//        }
-//        if (mFlyView != null) {
-//            if (height + maxDragHeight > 0) {
-//                mFlyView.setRotation((-45f) * offset / (height + maxDragHeight));
-//            } else {
-//                mFlyView.setRotation((-45f) * percent);
-//            }
-//        }
-//    }
-
     @Override
     public void onReleased(@NonNull RefreshLayout layout, int height, int maxDragHeight) {
         /*
@@ -125,7 +92,6 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
                     onMoving(true,(float) animation.getAnimatedValue(), 0, 0, 0);
-//                    onPulling((float) animation.getAnimatedValue(), 0, 0, 0);
                 }
             });
             valueAnimator.start();

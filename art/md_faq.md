@@ -12,14 +12,14 @@ SmartRefresh默认使用了比较新的功能，如：越界回弹、越界拖�
 ~~~
 XML属性
 ~~~xml
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:srlEnableOverScrollDrag="false"
         app:srlEnableAutoLoadMore="false"
         app:srlEnableOverScrollBounce="false">
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 ~~~
 
 ## 1.获取当前状态？isRefreshing(),isLoading() 不见了？（1.1.0以上版本，2.x 回归）
@@ -56,12 +56,12 @@ SmartRefresh提供了对数据不满一页判断处理，可以通过EnableLoadM
 ~~~
 XML属性
 ~~~xml
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:srlEnableLoadMoreWhenContentNotFull="false">
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 ~~~
 
 
@@ -236,12 +236,12 @@ refreshlayout.setEnableAutoLoadMore(false);
 ~~~
 XML属性
 ~~~xml
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:srlEnableAutoLoadMore="false">
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 ~~~
 
 ## 8.还没调用 finishRefresh ，刷新就自动结束了？

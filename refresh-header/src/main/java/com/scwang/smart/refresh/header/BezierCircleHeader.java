@@ -16,9 +16,9 @@ import android.view.animation.DecelerateInterpolator;
 
 import com.scwang.smart.refresh.layout.api.RefreshKernel;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.simple.SimpleComponent;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
-import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 /**
@@ -26,7 +26,7 @@ import com.scwang.smartrefresh.layout.util.SmartUtil;
  * Created by scwang on 2018/7/18.
  * from https://github.com/tuesda/CircleRefreshLayout
  */
-public class BezierCircleHeader extends InternalAbstract implements RefreshHeader {
+public class BezierCircleHeader extends SimpleComponent implements RefreshHeader {
 
     //<editor-fold desc="Field">
     protected Path mPath;

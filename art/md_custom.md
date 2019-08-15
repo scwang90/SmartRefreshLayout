@@ -44,6 +44,8 @@ Header ，不用去关心滑动事件处理，不用关心子控件的回弹和�
 
 ![](jpg_uml.jpg)
 
+这里还有一份更完整的[类图](https://sourcespy.com/xxxx-00gh03zz)，所有的类都在里面。
+
 ### 优势特点
 网上其他的开源下拉控件一样的可以自定义 Header 和 Footer ，SmartRefreshLayout 和它们
 比起来有什么优势？

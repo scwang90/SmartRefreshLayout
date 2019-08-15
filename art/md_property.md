@@ -107,7 +107,7 @@ public class App extends Application {
 xml代码设置
 ~~~xml
 <!-- 下面示例中的值等于默认值 -->
-<com.scwang.smartrefresh.layout.SmartRefreshLayout
+<com.scwang.smart.refresh.layout.SmartRefreshLayout
     android:id="@+id/refreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -223,7 +223,7 @@ public class RefreshActivity extends Activity {
 xml代码设置
 ~~~xml
 <!-- 下面示例中的值等于默认值 -->
-<com.scwang.smartrefresh.layout.SmartRefreshLayout>
+<com.scwang.smart.refresh.layout.SmartRefreshLayout>
     <com.scwang.smartrefresh.layout.header.ClassicsHeader
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -249,7 +249,7 @@ xml代码设置
         app:srlTextUpdate="@string/srl_header_update"
         app:srlTextSecondary="@string/srl_header_secondary"
         app:srlTextRefreshing="@string/srl_header_refreshing"/>
-</com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</com.scwang.smart.refresh.layout.SmartRefreshLayout>
 ~~~
 
 
@@ -304,7 +304,7 @@ public class RefreshActivity extends Activity {
 xml代码设置
 ~~~xml
 <!-- 下面示例中的值等于默认值 -->
-<com.scwang.smartrefresh.layout.SmartRefreshLayout>
+<com.scwang.smart.refresh.layout.SmartRefreshLayout>
     <com.scwang.smartrefresh.layout.header.ClassicsFooter
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -326,7 +326,7 @@ xml代码设置
         app:srlTextFinish="@string/srl_footer_finish"
         app:srlTextFailed="@string/srl_footer_failed"
         app:srlTextNothing="@string/srl_footer_nothing"/>
-</com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</com.scwang.smart.refresh.layout.SmartRefreshLayout>
 ~~~
 
 

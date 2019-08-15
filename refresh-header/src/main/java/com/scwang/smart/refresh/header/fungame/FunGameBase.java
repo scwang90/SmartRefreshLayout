@@ -12,9 +12,9 @@ import com.scwang.smart.refresh.layout.api.RefreshContent;
 import com.scwang.smart.refresh.layout.api.RefreshKernel;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.constant.RefreshState;
+import com.scwang.smart.refresh.layout.simple.SimpleComponent;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
-import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 import static android.view.MotionEvent.ACTION_MASK;
@@ -24,7 +24,7 @@ import static android.view.MotionEvent.ACTION_MASK;
  * Created by scwang on 2017/6/17.
  */
 @SuppressLint("RestrictedApi")
-public abstract class FunGameBase extends InternalAbstract implements RefreshHeader {
+public abstract class FunGameBase extends SimpleComponent implements RefreshHeader {
 
     //<editor-fold desc="Field">
     protected int mOffset;

@@ -19,9 +19,9 @@ import com.scwang.smart.refresh.header.storehouse.StoreHouseBarItem;
 import com.scwang.smart.refresh.header.storehouse.StoreHousePath;
 import com.scwang.smart.refresh.layout.api.RefreshKernel;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.simple.SimpleComponent;
 import com.scwang.smartrefresh.header.R;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
-import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ import java.util.List;
  * from https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh
  */
 @SuppressWarnings({"unused", "UnusedReturnValue", "SameParameterValue"})
-public class StoreHouseHeader extends InternalAbstract implements RefreshHeader {
+public class StoreHouseHeader extends SimpleComponent implements RefreshHeader {
 
     //<editor-fold desc="Field">
     public List<StoreHouseBarItem> mItemList = new ArrayList<>();

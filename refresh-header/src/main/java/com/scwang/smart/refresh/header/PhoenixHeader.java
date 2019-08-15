@@ -19,10 +19,10 @@ import android.view.animation.Transformation;
 import com.scwang.smart.drawable.PathsDrawable;
 import com.scwang.smart.refresh.layout.api.RefreshKernel;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.simple.SimpleComponent;
 import com.scwang.smartrefresh.header.R;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
-import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 /**
@@ -30,7 +30,7 @@ import com.scwang.smartrefresh.layout.util.SmartUtil;
  * Created by scwang on 2017/5/31.
  * from https://github.com/Yalantis/Phoenix
  */
-public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, SizeDefinition*/ {
+public class PhoenixHeader extends SimpleComponent implements RefreshHeader {
 
     //<editor-fold desc="static">
     protected static final int ANIMATION_DURATION = 1000;

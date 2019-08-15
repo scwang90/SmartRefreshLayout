@@ -33,7 +33,7 @@ SmartRefreshLayout以打造一个强大，稳定，成熟的下拉刷新框架�
  - 支持设多种滑动方式：平移、拉伸、背后固定、顶层固定、全屏
  - 支持所有可滚动视图的越界回弹
  - 支持 Header 和 Footer 交换混用
- - 支持AndroidX
+ - 支持 AndroidX
  - 支持[横向刷新](https://github.com/scwang90/SmartRefreshHorizontal)
 
 ## 每天领红包
@@ -129,7 +129,8 @@ V2.x 版本已经把依赖库拆分成8个包啦，用到的时候自行引用�
 ## 简单用例
 #### 1.在 build.gradle 中添加依赖
 
-2.0.0 相对于 1.x 对包名做了修改如：com.scwang.smartrefresh 改为 com.scwang.smart.refresh。
+V2.x 相对于 V1.x 对包名做了修改如：com.scwang.smartrefresh 改为 com.scwang.smart.refresh。
+建议在新项目中使用，如果项目升级，java，xml 中都需要做包名替换，比较麻烦。
 但主要改动还是对 Smart 进行分包，减小不必要的依赖，比如不使用二级刷新就不依赖，避免代码冗余。
 但是未对 SmartRefreshHeader 分包，里面有十多个Header，建议需要使用哪个就复制哪个的源码到项目中。
 当然：大家也可以在讨论区讨论投票，选出里面使用频率比较高的Header，然后单独分离出来。

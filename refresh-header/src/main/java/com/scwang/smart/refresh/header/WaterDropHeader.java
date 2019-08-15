@@ -1,9 +1,3 @@
-/**
- * @file XListViewHeader.java
- * @create Apr 18, 2012 5:22:27 PM
- * @author Maxwin
- * @description XListView's header
- */
 package com.scwang.smart.refresh.header;
 
 import android.animation.Animator;
@@ -24,7 +18,7 @@ import com.scwang.smart.refresh.layout.api.RefreshHeader;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.constant.RefreshState;
 import com.scwang.smart.refresh.layout.constant.SpinnerStyle;
-import com.scwang.smartrefresh.layout.internal.InternalAbstract;
+import com.scwang.smart.refresh.layout.simple.SimpleComponent;
 import com.scwang.smartrefresh.layout.internal.ProgressDrawable;
 import com.scwang.smartrefresh.layout.util.SmartUtil;
 
@@ -39,7 +33,7 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
  * Created by scwang on 2017/5/31.
  * from https://github.com/THEONE10211024/WaterDropListView
  */
-public class WaterDropHeader extends InternalAbstract implements RefreshHeader {
+public class WaterDropHeader extends SimpleComponent implements RefreshHeader {
 
     //<editor-fold desc="Field">
     protected static final float MAX_PROGRESS_ANGLE = 0.8f;

@@ -22,10 +22,10 @@ import com.scwang.smart.drawable.PathsDrawable;
 import com.scwang.smart.refresh.layout.api.RefreshKernel;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.constant.RefreshState;
+import com.scwang.smart.refresh.layout.simple.SimpleComponent;
 import com.scwang.smartrefresh.header.R;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
-import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 /**
@@ -33,7 +33,7 @@ import com.scwang.smartrefresh.layout.util.SmartUtil;
  * Created by scwang on 2017/6/24.
  * design https://dribbble.com/shots/3470499-DropBox-Refresh
  */
-public class DropBoxHeader extends InternalAbstract implements RefreshHeader {
+public class DropBoxHeader extends SimpleComponent implements RefreshHeader {
 
     //<editor-fold desc="static">
     protected static String[] drawable1Paths = new String[]{

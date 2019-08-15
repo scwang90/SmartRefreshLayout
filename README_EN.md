@@ -105,6 +105,8 @@ Please rest assured that I have divided it into eight packages, when used to ref
 #### 1.Add a gradle dependency.
 
 V 2.x changed the package name relative to 1.x, such as `com.scwang.smartrefresh` to `com.scwang.smart.refresh`.
+It is suggested that in the new project, if the old project is upgraded,
+the package name should be replaced, which is more troublesome.
 But the main change is to subcontract SmartRefreshLayout to reduce unnecessary dependencies and avoid code redundancy.
 However, there is no subcontracting to SmartRefreshHeader.
 There are more than ten headers in it.

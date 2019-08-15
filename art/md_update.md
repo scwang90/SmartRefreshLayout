@@ -3,8 +3,11 @@
 ## V 2.0.0 (开发中)
 >添加：srlStyle 主题支持  
 >分包：layout = kernel + two-level + header-classics + header-radar + header-falsify + footer-classics + footer-ball  
->修改：包名 com.scwang.smartrefresh -> com.scwang.smart.refresh
->回归：回归部分被去掉的API如：isRefreshing isLoading
+>修改：方法 OnMultiPurposeListener -> setOnMultiListener
+>修改：包名 com.scwang.smartrefresh -> com.scwang.smart.refresh  
+>修改：类名 smartrefresh.layout.listener.OnMultiPurposeListener -> smart.refresh.layout.listener.OnMultiListener  
+>修改：类名 smartrefresh.layout.listener.SimpleMultiPurposeListener -> smart.refresh.layout.simple.SimpleMultiListener  
+>回归：回归部分被去掉的API如：isRefreshing isLoading  
 
 ## V 1.1.0
 
