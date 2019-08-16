@@ -1,7 +1,7 @@
 ---
 name: 提交BUG报告
 about: 创建一个bug详情报告，以方便我们更好地改进
-title: ''
+title: 不是bug或者不确定是bug，请使用错误报告模板
 labels: bug
 assignees: ''
 
@@ -12,8 +12,8 @@ assignees: ''
 
 **使用版本**
 ```gradle
-implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0' 
-implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0' 
+implementation 'com.scwang.smartrefresh:SmartRefreshLayout:x.x.x' 
+implementation 'com.scwang.smartrefresh:SmartRefreshHeader:x.x.x' 
 ```
 **使用代码**
 ```java
