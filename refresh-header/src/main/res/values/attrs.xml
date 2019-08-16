@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--<attr name="srlPrimaryColor" format="color"/>-->
-    <!--<attr name="srlAccentColor" format="color"/>-->
+    <attr name="srlPrimaryColor" format="color"/>
+    <attr name="srlAccentColor" format="color"/>
 
-    <!--<attr name="srlShadowColor" format="color"/>-->
-    <!--<attr name="srlShadowRadius" format="dimension"/>-->
+    <attr name="srlShadowColor" format="color"/>
+    <attr name="srlShadowRadius" format="dimension"/>
 
     <declare-styleable name="PhoenixHeader">
         <attr name="phPrimaryColor" format="color" />
         <attr name="phAccentColor" format="color" />
+        <attr name="srlPrimaryColor" />
+        <attr name="srlAccentColor"/>
     </declare-styleable>
 
     <declare-styleable name="TaurusHeader">
         <attr name="thPrimaryColor" format="color" />
+        <attr name="srlPrimaryColor"/>
     </declare-styleable>
 
     <declare-styleable name="WaveSwipeHeader">
@@ -20,6 +23,10 @@
         <attr name="wshAccentColor" format="color" />
         <attr name="wshShadowColor" format="color" />
         <attr name="wshShadowRadius" format="dimension"/>
+        <attr name="srlPrimaryColor"  />
+        <attr name="srlAccentColor" />
+        <attr name="srlShadowColor" />
+        <attr name="srlShadowRadius" />
     </declare-styleable>
 
     <declare-styleable name="MaterialHeader">
@@ -28,11 +35,18 @@
         <attr name="mhShadowRadius" format="dimension"/>
         <attr name="mhShowBezierWave" format="boolean"/>
         <attr name="mhScrollableWhenRefreshing" format="boolean"/>
+        <attr name="srlPrimaryColor" />
+        <attr name="srlShadowColor" />
+        <attr name="srlShadowRadius" />
+        <attr name="srlShowBezierWave" format="boolean"/>
+        <attr name="srlScrollableWhenRefreshing" format="boolean"/>
     </declare-styleable>
 
     <declare-styleable name="MountainSceneView">
         <attr name="msvPrimaryColor" format="color" />
         <attr name="msvViewportHeight" format="dimension"/>
+        <attr name="srlPrimaryColor" />
+        <attr name="srlViewportHeight" format="dimension"/>
     </declare-styleable>
 
     <declare-styleable name="FunGameView">
@@ -52,11 +66,33 @@
         <attr name="fghTextLoadingFinished" format="string" />
         <attr name="fghTextLoadingFailed" format="string" />
         <attr name="fghTextGameOver" format="string" />
+
+        <attr name="srlMaskTextTop" format="string" />
+        <attr name="srlMaskTextTopPull" format="string" />
+        <attr name="srlMaskTextTopRelease" format="string" />
+        <attr name="srlMaskTextBottom" format="string" />
+        <attr name="srlMaskTextSizeTop" format="dimension" />
+        <attr name="srlMaskTextSizeBottom" format="dimension" />
+
+        <attr name="srlBackColor" format="color" />
+        <attr name="srlLeftColor" format="color" />
+        <attr name="srlMiddleColor" format="color" />
+        <attr name="srlRightColor" format="color" />
+        <attr name="srlTextLoading" format="string" />
+        <attr name="srlTextLoadingFinished" format="string" />
+        <attr name="srlTextLoadingFailed" format="string" />
+        <attr name="srlTextGameOver" format="string" />
     </declare-styleable>
 
     <declare-styleable name="FunGameHitBlockHeader">
         <attr name="fghBlockHorizontalNum" format="integer" />
         <attr name="fghBallSpeed" format="dimension">
+            <!--<enum name="low" value="1.5dp" />-->
+            <!--<enum name="medium" value="3dp" />-->
+            <!--<enum name="fast" value="4.5dp" />-->
+        </attr>
+        <attr name="srlBlockHorizontalNum" format="integer" />
+        <attr name="srlBallSpeed" format="dimension">
             <!--<enum name="low" value="1.5dp" />-->
             <!--<enum name="medium" value="3dp" />-->
             <!--<enum name="fast" value="4.5dp" />-->
@@ -68,6 +104,10 @@
         <attr name="shhLineWidth" format="dimension" />
         <attr name="shhDropHeight" format="dimension" />
         <attr name="shhEnableFadeAnimation" format="boolean" />
+        <attr name="srlText" format="string" />
+        <attr name="srlLineWidth" format="dimension" />
+        <attr name="srlDropHeight" format="dimension" />
+        <attr name="srlEnableFadeAnimation" format="boolean" />
     </declare-styleable>
 
 
@@ -75,6 +115,9 @@
         <attr name="dhDrawable1" format="reference" />
         <attr name="dhDrawable2" format="reference" />
         <attr name="dhDrawable3" format="reference" />
+        <attr name="srlDrawable1" format="reference" />
+        <attr name="srlDrawable2" format="reference" />
+        <attr name="srlDrawable3" format="reference" />
     </declare-styleable>
 
 </resources>

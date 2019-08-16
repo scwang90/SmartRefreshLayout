@@ -95,15 +95,29 @@ public class MaterialHeader extends SimpleComponent implements RefreshHeader {
         mBezierPaint.setStyle(Paint.Style.FILL);
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.MaterialHeader);
+
+        mShowBezierWave = ta.getBoolean(R.styleable.MaterialHeader_srlShowBezierWave, mShowBezierWave);
+        mScrollableWhenRefreshing = ta.getBoolean(R.styleable.MaterialHeader_srlScrollableWhenRefreshing, mScrollableWhenRefreshing);
+        mBezierPaint.setColor(ta.getColor(R.styleable.MaterialHeader_srlPrimaryColor, 0xff11bbff));
+        if (ta.hasValue(R.styleable.MaterialHeader_srlShadowRadius)) {
+            int radius = ta.getDimensionPixelOffset(R.styleable.MaterialHeader_srlShadowRadius, 0);
+            int color = ta.getColor(R.styleable.MaterialHeader_mhShadowColor, 0xff000000);
+            mBezierPaint.setShadowLayer(radius, 0, 0, color);
+            thisView.setLayerType(LAYER_TYPE_SOFTWARE, null);
+        }
+
         mShowBezierWave = ta.getBoolean(R.styleable.MaterialHeader_mhShowBezierWave, mShowBezierWave);
         mScrollableWhenRefreshing = ta.getBoolean(R.styleable.MaterialHeader_mhScrollableWhenRefreshing, mScrollableWhenRefreshing);
-        mBezierPaint.setColor(ta.getColor(R.styleable.MaterialHeader_mhPrimaryColor, 0xff11bbff));
+        if (ta.hasValue(R.styleable.MaterialHeader_mhPrimaryColor)) {
+            mBezierPaint.setColor(ta.getColor(R.styleable.MaterialHeader_mhPrimaryColor, 0xff11bbff));
+        }
         if (ta.hasValue(R.styleable.MaterialHeader_mhShadowRadius)) {
             int radius = ta.getDimensionPixelOffset(R.styleable.MaterialHeader_mhShadowRadius, 0);
             int color = ta.getColor(R.styleable.MaterialHeader_mhShadowColor, 0xff000000);
             mBezierPaint.setShadowLayer(radius, 0, 0, color);
             thisView.setLayerType(LAYER_TYPE_SOFTWARE, null);
         }
+
         ta.recycle();
 
     }

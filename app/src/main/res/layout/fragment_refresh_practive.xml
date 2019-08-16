@@ -4,25 +4,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.scwang.refreshlayout.fragment.index.RefreshStylesFragment">
+    tools:context="com.scwang.refreshlayout.fragment.index.RefreshPracticeFragment">
 
     <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
         android:id="@id/toolbar"
         app:title="@string/fragment_refresh_practice"/>
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:srlEnableFooterTranslationContent="true"
         app:srlPrimaryColor="@color/colorTextContent"
         app:srlEnableAutoLoadMore="false">
-        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+        <com.scwang.smart.refresh.header.BezierCircleHeader
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srlPrimaryColor="@color/colorPrimary"
-            app:srlAccentColor="@android:color/white"
-            app:srlDrawableProgress="@drawable/animation_loading_frame"/>
+            android:layout_height="wrap_content"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
@@ -30,9 +27,9 @@
             android:background="@android:color/white"
             android:overScrollMode="never"
             tools:listitem="@android:layout/simple_list_item_2"/>
-        <com.scwang.smartrefresh.header.MaterialHeader
+        <com.scwang.smart.refresh.header.MaterialHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

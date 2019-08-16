@@ -107,6 +107,8 @@ public class DropBoxHeader extends SimpleComponent implements RefreshHeader {
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.DropBoxHeader);
         if (ta.hasValue(R.styleable.DropBoxHeader_dhDrawable1)) {
             mDrawable1 = ta.getDrawable(R.styleable.DropBoxHeader_dhDrawable1);
+        } else if (ta.hasValue(R.styleable.DropBoxHeader_srlDrawable1)) {
+            mDrawable1 = ta.getDrawable(R.styleable.DropBoxHeader_srlDrawable1);
         } else {
             PathsDrawable drawable1 = new PathsDrawable();
             drawable1.parserColors(drawable1Colors);
@@ -118,6 +120,8 @@ public class DropBoxHeader extends SimpleComponent implements RefreshHeader {
         }
         if (ta.hasValue(R.styleable.DropBoxHeader_dhDrawable2)) {
             mDrawable2 = ta.getDrawable(R.styleable.DropBoxHeader_dhDrawable2);
+        } else if (ta.hasValue(R.styleable.DropBoxHeader_srlDrawable2)) {
+            mDrawable2 = ta.getDrawable(R.styleable.DropBoxHeader_srlDrawable2);
         } else {
             PathsDrawable drawable2 = new PathsDrawable();
             drawable2.parserColors(drawable2Colors);
@@ -129,6 +133,8 @@ public class DropBoxHeader extends SimpleComponent implements RefreshHeader {
         }
         if (ta.hasValue(R.styleable.DropBoxHeader_dhDrawable3)) {
             mDrawable3 = ta.getDrawable(R.styleable.DropBoxHeader_dhDrawable3);
+        } else if (ta.hasValue(R.styleable.DropBoxHeader_srlDrawable3)) {
+            mDrawable3 = ta.getDrawable(R.styleable.DropBoxHeader_srlDrawable3);
         } else {
             PathsDrawable drawable3 = new PathsDrawable();
             drawable3.parserColors(drawable3Colors);

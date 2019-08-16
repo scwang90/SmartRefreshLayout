@@ -180,8 +180,16 @@ public class PhoenixHeader extends SimpleComponent implements RefreshHeader {
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.PhoenixHeader);
 
-        int primaryColor = ta.getColor(R.styleable.PhoenixHeader_phPrimaryColor, 0);
-        int accentColor = ta.getColor(R.styleable.PhoenixHeader_phAccentColor, 0);
+        int primaryColor = ta.getColor(R.styleable.PhoenixHeader_srlPrimaryColor, 0);
+        int accentColor = ta.getColor(R.styleable.PhoenixHeader_srlAccentColor, 0);
+
+        if (ta.hasValue(R.styleable.PhoenixHeader_phPrimaryColor)) {
+            primaryColor = ta.getColor(R.styleable.PhoenixHeader_phPrimaryColor, 0);
+        }
+        if (ta.hasValue(R.styleable.PhoenixHeader_phAccentColor)) {
+            accentColor = ta.getColor(R.styleable.PhoenixHeader_phAccentColor, 0);
+        }
+
         if (primaryColor != 0) {
             mBackgroundColor = primaryColor;
             if (accentColor != 0) {

@@ -99,10 +99,17 @@ public class FunGameHitBlockHeader extends FunGameView {
 
     public FunGameHitBlockHeader(Context context, AttributeSet attrs) {
         super(context, attrs, 0);
-
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.FunGameHitBlockHeader);
-        speed = ta.getInt(R.styleable.FunGameHitBlockHeader_fghBallSpeed, SmartUtil.dp2px(SPEED));
-        blockHorizontalNum = ta.getInt(R.styleable.FunGameHitBlockHeader_fghBlockHorizontalNum, BLOCK_HORIZONTAL_NUM);
+
+        speed = ta.getInt(R.styleable.FunGameHitBlockHeader_srlBallSpeed, SmartUtil.dp2px(SPEED));
+        blockHorizontalNum = ta.getInt(R.styleable.FunGameHitBlockHeader_srlBlockHorizontalNum, BLOCK_HORIZONTAL_NUM);
+
+        if (ta.hasValue(R.styleable.FunGameHitBlockHeader_fghBallSpeed)) {
+            speed = ta.getInt(R.styleable.FunGameHitBlockHeader_fghBallSpeed, SmartUtil.dp2px(SPEED));
+        }
+        if (ta.hasValue(R.styleable.FunGameHitBlockHeader_fghBlockHorizontalNum)) {
+            blockHorizontalNum = ta.getInt(R.styleable.FunGameHitBlockHeader_fghBlockHorizontalNum, BLOCK_HORIZONTAL_NUM);
+        }
         ta.recycle();
 
         blockPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
