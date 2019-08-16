@@ -1,7 +1,7 @@
 ---
 name: 提交BUG报告
 about: 创建一个bug详情报告，以方便我们更好地改进
-title: 不是bug或者不确定是bug，请使用错误报告模板
+title: "[不是bug或者不确定是bug，请使用错误报告模板]"
 labels: bug
 assignees: ''
 
