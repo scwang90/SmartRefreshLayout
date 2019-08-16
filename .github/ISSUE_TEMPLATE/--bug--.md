@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-**报告详细秒杀**
+**报告详细描述**
 对问题进行清晰而简明的描述，把握问题的关键点。
 
 **使用版本**
@@ -15,10 +15,33 @@ assignees: ''
 implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0' 
 implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0' 
 ```
-**使用版本**
-```gradle
-implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0' 
-implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0' 
+**使用代码**
+```java
+SmartRefreshLayout.setDefaultRefreshHeaderCreator(new DefaultRefreshHeaderCreator() {
+                @Override
+                public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
+                    return new ClassicsHeader(context).setSpinnerStyle(SpinnerStyle.Translate);
+                }
+            });
+        SmartRefreshLayout.setDefaultRefreshFooterCreator(new DefaultRefreshFooterCreator() {
+                @Override
+                public RefreshFooter createRefreshFooter(Context context, RefreshLayout layout) {
+                    return new ClassicsFooter(context).setSpinnerStyle(SpinnerStyle.Translate);
+                }
+            });
+RefreshLayout refreshLayout = (RefreshLayout)findViewById(R.id.refreshLayout);
+refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+    @Override
+    public void onRefresh(RefreshLayout refreshlayout) {
+        refreshlayout.finishRefresh(2000);
+    }
+});
+refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+    @Override
+    public void onLoadMore(RefreshLayout refreshlayout) {
+        refreshlayout.finishLoadMore(2000);
+    }
+});
 ```
 
 **布局代码**
