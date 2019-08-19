@@ -908,7 +908,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 mLastSpinner = 0;
                 mTouchSpinner = mSpinner;
                 mIsBeingDragged = false;
-//                mEnableDisallowIntercept = false;
+                mEnableDisallowIntercept = false;
                 /*----------------------------------------------------*/
                 mSuperDispatchTouchEvent = super.dispatchTouchEvent(e);
                 if (mState == RefreshState.TwoLevel && mTouchY < 5 * thisView.getMeasuredHeight() / 6) {
@@ -924,7 +924,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 float dx = touchX - mTouchX;
                 float dy = touchY - mTouchY;
                 mVelocityTracker.addMovement(e);//速度追踪
-                if (!mIsBeingDragged /*&& !mEnableDisallowIntercept*/ && mDragDirection != 'h' && mRefreshContent != null) {//没有拖动之前，检测  canRefresh canLoadMore 来开启拖动
+                if (!mIsBeingDragged && !mEnableDisallowIntercept && mDragDirection != 'h' && mRefreshContent != null) {//没有拖动之前，检测  canRefresh canLoadMore 来开启拖动
                     if (mDragDirection == 'v' || (Math.abs(dy) >= mTouchSlop && Math.abs(dx) < Math.abs(dy))) {//滑动允许最大角度为45度
                         mDragDirection = 'v';
                         if (dy > 0 && (mSpinner < 0 || ((mEnableOverScrollDrag || mEnableRefresh) && mRefreshContent.canRefresh()))) {
@@ -1020,13 +1020,23 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         return super.dispatchTouchEvent(e);
     }
 
-//    @Override
-//    public void requestDisallowInterceptTouchEvent(boolean b) {
-//        View target = mRefreshContent.getScrollableView();
-//        if ((Build.VERSION.SDK_INT >= 21 || !(target instanceof AbsListView)) && (/*target == null || */ViewCompat.isNestedScrollingEnabled(target))) {
-//            super.requestDisallowInterceptTouchEvent(b);
-//        }
-//    }
+    /**
+     * 这段代码来自谷歌官方的 SwipeRefreshLayout
+     * 主要是为了让老版本的 ListView 能平滑的下拉 而选择性的屏蔽 requestDisallowInterceptTouchEvent
+     * 应用场景已经在英文注释中解释清楚，大部分第三方下拉刷新库都保留了这段代码，本库也不例外
+     */
+    @Override
+    public void requestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+        // if this is a List < L or another view that doesn't support nested
+        // scrolling, ignore this request so that the vertical scroll event
+        // isn't stolen
+        View target = mRefreshContent.getScrollableView();
+        if ((android.os.Build.VERSION.SDK_INT >= 21 || !(target instanceof AbsListView))
+                && (/*target == null || */ViewCompat.isNestedScrollingEnabled(target))) {
+            mEnableDisallowIntercept = disallowIntercept;
+            super.requestDisallowInterceptTouchEvent(disallowIntercept);
+        }
+    }
 
     /**
      * 在必要的时候 开始 Fling 模式
@@ -1102,24 +1112,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             animationRunnable = null;
         }
         return reboundAnimator != null;
-    }
-
-    /*
-     * 这段代码来自谷歌官方的 SwipeRefreshLayout
-     * 应用场景已经在英文注释中解释清楚
-     * 大部分第三方下拉刷新库都保留了这段代码，本库也不例外
-     */
-    @Override
-    public void requestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-        // if this is a List < L or another view that doesn't support nested
-        // scrolling, ignore this request so that the vertical scroll event
-        // isn't stolen
-        View target = mRefreshContent.getScrollableView();
-        if ((android.os.Build.VERSION.SDK_INT >= 21 || !(target instanceof AbsListView))
-                && (/*target == null || */ViewCompat.isNestedScrollingEnabled(target))) {
-            mEnableDisallowIntercept = disallowIntercept;
-            super.requestDisallowInterceptTouchEvent(disallowIntercept);
-        }
     }
     //</editor-fold>
 

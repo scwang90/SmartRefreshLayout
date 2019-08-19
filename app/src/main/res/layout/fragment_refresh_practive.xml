@@ -26,7 +26,6 @@
             android:layout_height="match_parent"
             android:background="@android:color/white"
             android:overScrollMode="never"
-            android:nestedScrollingEnabled="false"
             tools:listitem="@android:layout/simple_list_item_2"/>
         <com.scwang.smart.refresh.header.MaterialHeader
             android:layout_width="match_parent"
