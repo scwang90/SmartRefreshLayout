@@ -30,6 +30,7 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
+import android.widget.AbsListView;
 import android.widget.Scroller;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -97,6 +98,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     protected char mDragDirection = 'n';//拖动的方向 none-n horizontal-h vertical-v
     protected boolean mIsBeingDragged;//是否正在拖动
     protected boolean mSuperDispatchTouchEvent;//父类是否处理触摸事件
+    protected boolean mEnableDisallowIntercept;//是否允许拦截事件
     protected int mFixedHeaderViewId = View.NO_ID;//固定在头部的视图Id
     protected int mFixedFooterViewId = View.NO_ID;//固定在底部的视图Id
     protected int mHeaderTranslationViewId = View.NO_ID;//下拉Header偏移的视图Id
@@ -128,7 +130,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     protected boolean mEnableScrollContentWhenRefreshed = true;//是否在刷新完成之后滚动内容显示新数据
     protected boolean mEnableLoadMoreWhenContentNotFull = true;//在内容不满一页的时候，是否可以上拉加载更多
     protected boolean mEnableNestedScrolling = true;//是否启用潜逃滚动功能
-//    protected boolean mEnableNestedScrollingOnly = false;//是否只启用嵌套滚动模式，关闭传功滚动模式（启用之后，嵌套滚动也自动被开启，默认如果开启嵌套滚动的话，传功滚动模式必要时也辅助滚动）
     protected boolean mDisableContentWhenRefresh = false;//是否开启在刷新时候禁止操作内容视图
     protected boolean mDisableContentWhenLoading = false;//是否开启在刷新时候禁止操作内容视图
     protected boolean mFooterNoMoreData = false;//数据是否全部加载完成，如果完成就不能在触发加载事件
@@ -171,7 +172,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
     protected RefreshInternal mRefreshHeader;     //下拉头部视图
     protected RefreshInternal mRefreshFooter;     //上拉底部视图
-    protected RefreshContent mRefreshContent;   //显示内容视图
+    protected RefreshContent mRefreshContent;     //显示内容视图
     //</editor-fold>
 
     protected Paint mPaint;
@@ -202,7 +203,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     protected boolean mFooterNeedTouchEventWhenLoading;
 
     protected boolean mAttachedToWindow;                        //是否添加到Window
-//    protected boolean mEnableDisallowIntercept;                 //是否关闭打断
 
     protected boolean mFooterLocked = false;//Footer 正在loading 的时候是否锁住 列表不能向上滚动
 
@@ -961,7 +961,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 mLastSpinner = 0;
                 mTouchSpinner = mSpinner;
                 mIsBeingDragged = false;
-//                mEnableDisallowIntercept = false;
+                mEnableDisallowIntercept = false;
                 /*----------------------------------------------------*/
                 mSuperDispatchTouchEvent = super.dispatchTouchEvent(e);
                 if (mState == RefreshState.TwoLevel && mTouchY < 5 * thisView.getMeasuredHeight() / 6) {
@@ -977,7 +977,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 float dx = touchX - mTouchX;
                 float dy = touchY - mTouchY;
                 mVelocityTracker.addMovement(e);//速度追踪
-                if (!mIsBeingDragged /*&& !mEnableDisallowIntercept*/ && mDragDirection != 'h' && mRefreshContent != null) {//没有拖动之前，检测  canRefresh canLoadMore 来开启拖动
+                if (!mIsBeingDragged && !mEnableDisallowIntercept && mDragDirection != 'h' && mRefreshContent != null) {//没有拖动之前，检测  canRefresh canLoadMore 来开启拖动
                     if (mDragDirection == 'v' || (Math.abs(dy) >= mTouchSlop && Math.abs(dx) < Math.abs(dy))) {//滑动允许最大角度为45度
                         mDragDirection = 'v';
                         if (dy > 0 && (mSpinner < 0 || ((mEnableOverScrollDrag || mEnableRefresh) && mRefreshContent.canRefresh()))) {
@@ -1074,6 +1074,24 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     }
 
     /**
+     * 这段代码来自谷歌官方的 SwipeRefreshLayout
+     * 主要是为了让老版本的 ListView 能平滑的下拉 而选择性的屏蔽 requestDisallowInterceptTouchEvent
+     * 应用场景已经在英文注释中解释清楚，大部分第三方下拉刷新库都保留了这段代码，本库也不例外
+     */
+    @Override
+    public void requestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+        // if this is a List < L or another view that doesn't support nested
+        // scrolling, ignore this request so that the vertical scroll event
+        // isn't stolen
+        View target = mRefreshContent.getScrollableView();
+        if ((android.os.Build.VERSION.SDK_INT >= 21 || !(target instanceof AbsListView))
+                && (/*target == null || */ViewCompat.isNestedScrollingEnabled(target))) {
+            mEnableDisallowIntercept = disallowIntercept;
+            super.requestDisallowInterceptTouchEvent(disallowIntercept);
+        }
+    }
+
+    /**
      * 在必要的时候 开始 Fling 模式
      * @param flingVelocity 速度
      * @return true 可以拦截 嵌套滚动的 Fling
@@ -1149,30 +1167,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         return reboundAnimator != null;
     }
 
-//    @Override
-//    public void requestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-//        mEnableDisallowIntercept = disallowIntercept;
-//        super.requestDisallowInterceptTouchEvent(disallowIntercept);
-//    }
-
-    //    /*
-//     * 这段代码来自谷歌官方的 SwipeRefreshLayout
-//     * 应用场景已经在英文注释中解释清楚
-//     * 大部分第三方下拉刷新库都保留了这段代码，本库也不例外
-//     */
-//    @Override
-//    public void requestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-//        // if this is a List < L or another view that doesn't support nested
-//        // scrolling, ignore this request so that the vertical scroll event
-//        // isn't stolen
-//        View target = mRefreshContent.getScrollableView();
-//        if ((android.os.Build.VERSION.SDK_INT >= 21 || !(target instanceof AbsListView))
-//                && (target == null || ViewCompat.isNestedScrollingEnabled(target))) {
-//            super.requestDisallowInterceptTouchEvent(disallowIntercept);
-//            //} else {
-//            // Nope.
-//        }
-//    }
     //</editor-fold>
 
     //<editor-fold desc="状态更改 state changes">
