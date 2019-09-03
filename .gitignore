@@ -1,8 +1,8 @@
 *.iml
 *.txt
 .*
+repo
 release
 build
 /local.properties
 /bintrayUpload-key.bat
-
