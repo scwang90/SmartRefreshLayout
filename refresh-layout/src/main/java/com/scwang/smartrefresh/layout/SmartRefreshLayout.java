@@ -1727,16 +1727,31 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 //    protected boolean checkLayoutParams(ViewGroup.LayoutParams p) {
 //        return p instanceof LayoutParams;
 //    }
-//
-//    @Override
-//    protected LayoutParams generateDefaultLayoutParams() {
-//        return new LayoutParams(MATCH_PARENT, MATCH_PARENT);
-//    }
-//
-//    @Override
-//    protected LayoutParams generateLayoutParams(ViewGroup.LayoutParams p) {
-//        return new LayoutParams(p);
-//    }
+
+    @Override
+    protected LayoutParams generateDefaultLayoutParams() {
+        return new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+    }
+
+    @Override
+    protected LayoutParams generateLayoutParams(ViewGroup.LayoutParams p) {
+        if (p == null) {
+            return generateDefaultLayoutParams();
+        }
+        if (p instanceof LayoutParams) {
+            return (LayoutParams) p;
+        }
+        LayoutParams params = new LayoutParams(p.width, p.height);
+        if (p instanceof MarginLayoutParams) {
+            MarginLayoutParams mlp = (MarginLayoutParams) p;
+            params.setMargins(mlp.leftMargin, mlp.topMargin, mlp.rightMargin, mlp.bottomMargin);
+            if (Build.VERSION.SDK_INT > 16) {
+                params.setMarginStart(mlp.getMarginStart());
+                params.setMarginEnd(mlp.getMarginEnd());
+            }
+        }
+        return params;
+    }
 
     @Override
     public ViewGroup.LayoutParams generateLayoutParams(AttributeSet attrs) {
@@ -2421,26 +2436,29 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     /**
      * Set the header of RefreshLayout.
      * 设置指定的 Header
+     *
      * @param header RefreshHeader 刷新头
-     * @return RefreshLayout
+     * @return 自己
      */
     @Override
-    public RefreshLayout setRefreshHeader(@NonNull RefreshHeader header) {
-        return setRefreshHeader(header, MATCH_PARENT, WRAP_CONTENT);
+    public SmartRefreshLayout setRefreshHeader(@NonNull RefreshHeader header) {
+        return setRefreshHeader(header, generateLayoutParams(header.getView().getLayoutParams()));
+    }
+
+    @Override
+    public SmartRefreshLayout setRefreshHeader(@NonNull RefreshHeader header, int width, int height) {
+        return setRefreshHeader(header, new LayoutParams(width, height));
     }
 
     /**
      * Set the header of RefreshLayout.
      * 设置指定的 Header
+     *
      * @param header RefreshHeader 刷新头
-     * @param width the width in px, can use MATCH_PARENT and WRAP_CONTENT.
-     *              宽度 可以使用 MATCH_PARENT, WRAP_CONTENT
-     * @param height the height in px, can use MATCH_PARENT and WRAP_CONTENT.
-     *               高度 可以使用 MATCH_PARENT, WRAP_CONTENT
-     * @return RefreshLayout
+     * @param params header的params
+     * @return 自己
      */
-    @Override
-    public RefreshLayout setRefreshHeader(@NonNull RefreshHeader header, int width, int height) {
+    public SmartRefreshLayout setRefreshHeader(@NonNull RefreshHeader header, @NonNull LayoutParams params) {
         if (mRefreshHeader != null) {
             super.removeView(mRefreshHeader.getView());
         }
@@ -2450,9 +2468,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         this.mHeaderHeightStatus = mHeaderHeightStatus.unNotify();
         if (mRefreshHeader.getSpinnerStyle().front) {
             final ViewGroup thisGroup = this;
-            super.addView(mRefreshHeader.getView(), thisGroup.getChildCount(), new LayoutParams(width, height));
+            super.addView(mRefreshHeader.getView(), thisGroup.getChildCount(), params);
         } else {
-            super.addView(mRefreshHeader.getView(), 0, new LayoutParams(width, height));
+            super.addView(mRefreshHeader.getView(), 0, params);
         }
         if (mPrimaryColors != null && mRefreshHeader != null) {
             mRefreshHeader.setPrimaryColors(mPrimaryColors);
@@ -2463,26 +2481,29 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     /**
      * Set the footer of RefreshLayout.
      * 设置指定的 Footer
+     *
      * @param footer RefreshFooter 刷新尾巴
-     * @return RefreshLayout
+     * @return 自己
      */
     @Override
-    public RefreshLayout setRefreshFooter(@NonNull RefreshFooter footer) {
-        return setRefreshFooter(footer, MATCH_PARENT, WRAP_CONTENT);
+    public SmartRefreshLayout setRefreshFooter(@NonNull RefreshFooter footer) {
+        return setRefreshFooter(footer, generateLayoutParams(footer.getView().getLayoutParams()));
+    }
+
+    @Override
+    public SmartRefreshLayout setRefreshFooter(@NonNull RefreshFooter footer, int width, int height) {
+        return setRefreshFooter(footer, new LayoutParams(width, height));
     }
 
     /**
      * Set the footer of RefreshLayout.
      * 设置指定的 Footer
+     *
      * @param footer RefreshFooter 刷新尾巴
-     * @param width the width in px, can use MATCH_PARENT and WRAP_CONTENT.
-     *              宽度 可以使用 MATCH_PARENT, WRAP_CONTENT
-     * @param height the height in px, can use MATCH_PARENT and WRAP_CONTENT.
-     *               高度 可以使用 MATCH_PARENT, WRAP_CONTENT
-     * @return RefreshLayout
+     * @param params footer的params
+     * @return 自己
      */
-    @Override
-    public RefreshLayout setRefreshFooter(@NonNull RefreshFooter footer, int width, int height) {
+    public SmartRefreshLayout setRefreshFooter(@NonNull RefreshFooter footer, @NonNull LayoutParams params) {
         if (mRefreshFooter != null) {
             super.removeView(mRefreshFooter.getView());
         }
@@ -2495,9 +2516,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         this.mEnableLoadMore = !mManualLoadMore || mEnableLoadMore;
         if (mRefreshFooter.getSpinnerStyle().front) {
             final ViewGroup thisGroup = this;
-            super.addView(mRefreshFooter.getView(), thisGroup.getChildCount(), new LayoutParams(width, height));
+            super.addView(mRefreshFooter.getView(), thisGroup.getChildCount(), params);
         } else {
-            super.addView(mRefreshFooter.getView(), 0, new LayoutParams(width, height));
+            super.addView(mRefreshFooter.getView(), 0, params);
         }
         if (mPrimaryColors != null && mRefreshFooter != null) {
             mRefreshFooter.setPrimaryColors(mPrimaryColors);
