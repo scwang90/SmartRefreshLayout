@@ -2,9 +2,9 @@
 <resources>
 
     <declare-styleable name="TwoLevelHeader">
-        <attr name="srlMaxRage" format="float"/>
-        <attr name="srlFloorRage" format="float"/>
-        <attr name="srlRefreshRage" format="float"/>
+        <attr name="srlMaxRate" format="float"/>
+        <attr name="srlFloorRate" format="float"/>
+        <attr name="srlRefreshRate" format="float"/>
         <attr name="srlFloorDuration" format="integer"/>
         <attr name="srlEnableTwoLevel" format="boolean"/>
         <attr name="srlEnablePullToCloseTwoLevel" format="boolean"/>

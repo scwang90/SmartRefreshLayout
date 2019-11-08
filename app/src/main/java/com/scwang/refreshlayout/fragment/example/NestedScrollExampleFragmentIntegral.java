@@ -26,10 +26,7 @@ import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.refreshlayout.fragment.example.NestedScrollExampleFragment.Item;
-import com.scwang.smartrefresh.header.PhoenixHeader;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
@@ -40,7 +37,7 @@ import java.util.Collection;
 import java.util.List;
 
 import static android.R.layout.simple_list_item_2;
-import static com.scwang.refreshlayout.R.mipmap.gif_header_repast;
+import static com.scwang.refreshlayout.R.mipmap.image_weibo_home_1;
 import static com.scwang.refreshlayout.R.mipmap.image_weibo_home_2;
 
 /**
@@ -73,7 +70,7 @@ public class NestedScrollExampleFragmentIntegral extends Fragment implements Ada
 
         Banner banner = root.findViewById(R.id.banner);
         banner.setImageLoader(new BannerImageLoader());
-        banner.setImages(Arrays.asList(image_weibo_home_2,gif_header_repast));
+        banner.setImages(Arrays.asList(image_weibo_home_1, image_weibo_home_2));
         banner.start();
 
         mViewPager = root.findViewById(R.id.viewPager);

@@ -50,8 +50,8 @@ public class TwoLevelHeader extends com.scwang.smart.refresh.header.TwoLevelHead
     }
 
     @Override
-    public TwoLevelHeader setMaxRage(float rate) {
-        super.setMaxRage(rate);
+    public TwoLevelHeader setMaxRate(float rate) {
+        super.setMaxRate(rate);
         return this;
     }
 
@@ -62,14 +62,14 @@ public class TwoLevelHeader extends com.scwang.smart.refresh.header.TwoLevelHead
     }
 
     @Override
-    public TwoLevelHeader setFloorRage(float rate) {
-        super.setFloorRage(rate);
+    public TwoLevelHeader setFloorRate(float rate) {
+        super.setFloorRate(rate);
         return this;
     }
 
     @Override
-    public TwoLevelHeader setRefreshRage(float rate) {
-        super.setRefreshRage(rate);
+    public TwoLevelHeader setRefreshRate(float rate) {
+        super.setRefreshRate(rate);
         return this;
     }
 

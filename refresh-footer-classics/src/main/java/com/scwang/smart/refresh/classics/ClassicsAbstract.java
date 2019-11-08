@@ -37,6 +37,7 @@ public abstract class ClassicsAbstract<T extends ClassicsAbstract> extends Simpl
     protected TextView mTitleText;
     protected ImageView mArrowView;
     protected ImageView mProgressView;
+    protected ViewGroup mClassicsLayout;
 
     protected RefreshKernel mRefreshKernel;
     protected PaintDrawable mArrowDrawable;
@@ -53,42 +54,39 @@ public abstract class ClassicsAbstract<T extends ClassicsAbstract> extends Simpl
     //<editor-fold desc="RelativeLayout">
     public ClassicsAbstract(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-
         mSpinnerStyle = SpinnerStyle.Translate;
-
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        final View thisView = this;
+        final View layout = mClassicsLayout == null ? this : mClassicsLayout;
         if (mMinHeightOfContent == 0) {
-            mPaddingTop = thisView.getPaddingTop();
-            mPaddingBottom = thisView.getPaddingBottom();
+            mPaddingTop = layout.getPaddingTop();
+            mPaddingBottom = layout.getPaddingBottom();
             if (mPaddingTop == 0 || mPaddingBottom == 0) {
-                int paddingLeft = thisView.getPaddingLeft();
-                int paddingRight = thisView.getPaddingRight();
+                int paddingLeft = layout.getPaddingLeft();
+                int paddingRight = layout.getPaddingRight();
                 mPaddingTop = mPaddingTop == 0 ? SmartUtil.dp2px(20) : mPaddingTop;
                 mPaddingBottom = mPaddingBottom == 0 ? SmartUtil.dp2px(20) : mPaddingBottom;
-                thisView.setPadding(paddingLeft, mPaddingTop, paddingRight, mPaddingBottom);
+                layout.setPadding(paddingLeft, mPaddingTop, paddingRight, mPaddingBottom);
             }
-            ViewGroup thisGroup = this;
+            ViewGroup thisGroup = mClassicsLayout == null ? this : mClassicsLayout;
             thisGroup.setClipToPadding(false);
         }
         if (MeasureSpec.getMode(heightMeasureSpec) == EXACTLY) {
             final int parentHeight = MeasureSpec.getSize(heightMeasureSpec);
             if (parentHeight < mMinHeightOfContent) {
                 final int padding = (parentHeight - mMinHeightOfContent) / 2;
-                thisView.setPadding(thisView.getPaddingLeft(), padding, thisView.getPaddingRight(), padding);
+                layout.setPadding(layout.getPaddingLeft(), padding, layout.getPaddingRight(), padding);
             } else {
-                thisView.setPadding(thisView.getPaddingLeft(), 0, thisView.getPaddingRight(), 0);
+                layout.setPadding(layout.getPaddingLeft(), 0, layout.getPaddingRight(), 0);
             }
-
         } else {
-            thisView.setPadding(thisView.getPaddingLeft(), mPaddingTop, thisView.getPaddingRight(), mPaddingBottom);
+            layout.setPadding(layout.getPaddingLeft(), mPaddingTop, layout.getPaddingRight(), mPaddingBottom);
         }
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         if (mMinHeightOfContent == 0) {
-            final ViewGroup thisGroup = this;
+            ViewGroup thisGroup = mClassicsLayout == null ? this : mClassicsLayout;
             for (int i = 0; i < thisGroup.getChildCount(); i++) {
                 final int height = thisGroup.getChildAt(i).getMeasuredHeight();
                 if (mMinHeightOfContent < height) {

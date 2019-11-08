@@ -14,8 +14,8 @@ import com.scwang.smartrefresh.layout.constant.RefreshState;
  */
 public class SimpleMultiPurposeListener implements OnMultiPurposeListener, OnMultiListener {
 
-    protected RefreshLayout refreshLayout;
-    protected OnMultiPurposeListener listener;
+    private RefreshLayout refreshLayout;
+    private OnMultiPurposeListener listener;
 
     public SimpleMultiPurposeListener() {
 
