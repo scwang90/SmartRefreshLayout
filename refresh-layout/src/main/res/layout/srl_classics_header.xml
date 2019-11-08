@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/srl_classics_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_centerVertical="true"
     tools:paddingTop="20dp"
     tools:paddingBottom="20dp"
     tools:background="#eee"
@@ -58,4 +60,4 @@
             android:text="@string/srl_header_update"/>
     </LinearLayout>
 
-</merge>
+</RelativeLayout>

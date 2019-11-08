@@ -22,7 +22,7 @@
         <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:srlClassicsSpinnerStyle="FixedBehind"
+            app:srlClassicsSpinnerStyle="Scale"
             app:srlPrimaryColor="#444"
             app:srlAccentColor="@android:color/white"/>
         <android.support.design.widget.CoordinatorLayout

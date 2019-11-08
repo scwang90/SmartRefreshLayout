@@ -440,32 +440,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 notifyStateChanged(RefreshState.None);
                 mRefreshContent.moveSpinner(mSpinner = 0, mHeaderTranslationViewId, mFooterTranslationViewId);
             }
-
-//            if (!mManualNestedScrolling && !isNestedScrollingEnabled()) {
-//                post(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        final View thisView = SmartRefreshLayout.this;
-//                        for (ViewParent parent = thisView.getParent() ; parent != null ; ) {
-//                            if (parent instanceof NestedScrollingParent) {
-//                                View target = SmartRefreshLayout.this;
-//                                //noinspection RedundantCast
-//                                if (((NestedScrollingParent)parent).onStartNestedScroll(target,target,ViewCompat.SCROLL_AXIS_VERTICAL)) {
-//                                    setNestedScrollingEnabled(true);
-//                                    mManualNestedScrolling = false;
-//                                    break;
-//                                }
-//                            }
-//                            if (parent instanceof View) {
-//                                View thisParent = (View) parent;
-//                                parent = thisParent.getParent();
-//                            } else {
-//                                break;
-//                            }
-//                        }
-//                    }
-//                });
-//            }
         }
 
         if (mPrimaryColors != null) {

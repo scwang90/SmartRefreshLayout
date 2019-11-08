@@ -85,6 +85,7 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
         final View progressView = mProgressView = thisView.findViewById(R.id.srl_classics_progress);
 
         mTitleText = thisView.findViewById(R.id.srl_classics_title);
+        mClassicsLayout = thisView.findViewById(R.id.srl_classics_layout);
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ClassicsHeader);
 

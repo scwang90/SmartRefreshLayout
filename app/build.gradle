@@ -40,10 +40,10 @@ android {
         abortOnError false
     }
 
-//    compileOptions {
-//        sourceCompatibility JavaVersion.VERSION_1_8
-//        targetCompatibility JavaVersion.VERSION_1_8
-//    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 
 }
 
@@ -62,11 +62,11 @@ dependencies {
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
     testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
 
-//    implementation project(':refresh-footer')
-//    implementation project(':refresh-header')
-//    implementation project(':refresh-layout')
-    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0'
-    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0'
+    implementation project(':refresh-footer')
+    implementation project(':refresh-header')
+    implementation project(':refresh-layout')
+//    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0'
+//    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0'
 
 //    //noinspection GradleDependency,GradleCompatible
 //    implementation ('com.android.support:support-v4:22.1.0') {
