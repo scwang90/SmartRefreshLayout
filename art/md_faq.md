@@ -44,7 +44,7 @@ getState 比前两个方法更有用，具体参考下面代码。
 
 > WebView 的问题多由内部Html中采用了绝对坐标导致的，所以问题很难从java层面解决这个问题。
 我建议直接再Html内部实现下拉刷新，或者采用自定义滚动边界，参考 [#394](https://github.com/scwang90/SmartRefreshLayout/issues/394)。
-另外 [SCDN](https://blog.csdn.net/niuzhijun66/article/details/86290182) 博客中有人给出解决方案
+另外 [CSDN](https://blog.csdn.net/niuzhijun66/article/details/86290182) 博客中有人给出解决方案
 
 ## 3.列表内容才几条，却可以上拉加载？
 
