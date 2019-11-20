@@ -3045,6 +3045,10 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      */
     @Override
     public RefreshLayout closeHeaderOrFooter() {
+        if (mState == RefreshState.None && (mViceState == RefreshState.Refreshing || mViceState == RefreshState.Loading)) {
+            //autoRefresh autoLoadMore 即将执行，但未开始
+            mViceState = RefreshState.None;
+        }
         if (mState == RefreshState.Refreshing) {
             finishRefresh();
         } else if (mState == RefreshState.Loading) {
