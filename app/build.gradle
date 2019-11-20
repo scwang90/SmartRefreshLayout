@@ -95,7 +95,7 @@ dependencies {
     implementation 'com.google.android:flexbox:1.0.0'
     implementation 'com.wang.avi:library:2.1.3'
     implementation 'com.youth.banner:banner:1.4.10'  //最新版本
-    implementation 'de.hdodenhof:circleimageview:2.1.0'
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'jp.wasabeef:recyclerview-animators:2.2.6'
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
     testImplementation 'junit:junit:4.12'
