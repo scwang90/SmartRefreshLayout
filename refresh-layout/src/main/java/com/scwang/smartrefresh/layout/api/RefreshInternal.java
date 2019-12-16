@@ -39,6 +39,13 @@ public interface RefreshInternal extends OnStateChangedListener {
     @RestrictTo({LIBRARY,LIBRARY_GROUP,SUBCLASSES})
     void setPrimaryColors(@ColorInt int... colors);
 
+	/**
+	 * 【仅限框架内调用】自动刷新 （如果通过autoRefreshXxx或autoLoadMoreXxx方法触发才调用，在RefreshLayout#autoXxx中调用）
+	 * @param isAutoRefresh 当触发autoRefreshXxx或autoLoadMoreXxx方法时候才进行回调且为true，当刷新完成时必定回调且为false
+	 */
+	@RestrictTo({LIBRARY, LIBRARY_GROUP, SUBCLASSES})
+	void onAutoRefresh(boolean isAutoRefresh);
+
     /**
      * 【仅限框架内调用】尺寸定义完成 （如果高度不改变（代码修改：setHeader），只调用一次, 在RefreshLayout#onMeasure中调用）
      * @param kernel RefreshKernel

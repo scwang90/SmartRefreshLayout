@@ -175,6 +175,11 @@ public class CustomExampleActivity extends AppCompatActivity {
         }
 
         @Override
+        public void onAutoRefresh(boolean isAutoRefresh) {
+
+        }
+
+        @Override
         public void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight) {
 
         }
