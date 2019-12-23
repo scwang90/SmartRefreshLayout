@@ -2,6 +2,7 @@ package com.scwang.smart.refresh.classics;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -37,7 +38,6 @@ public abstract class ClassicsAbstract<T extends ClassicsAbstract> extends Simpl
     protected TextView mTitleText;
     protected ImageView mArrowView;
     protected ImageView mProgressView;
-    protected ViewGroup mClassicsLayout;
 
     protected RefreshKernel mRefreshKernel;
     protected PaintDrawable mArrowDrawable;
@@ -59,34 +59,34 @@ public abstract class ClassicsAbstract<T extends ClassicsAbstract> extends Simpl
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        final View layout = mClassicsLayout == null ? this : mClassicsLayout;
+        final View thisView = this;
         if (mMinHeightOfContent == 0) {
-            mPaddingTop = layout.getPaddingTop();
-            mPaddingBottom = layout.getPaddingBottom();
+            mPaddingTop = thisView.getPaddingTop();
+            mPaddingBottom = thisView.getPaddingBottom();
             if (mPaddingTop == 0 || mPaddingBottom == 0) {
-                int paddingLeft = layout.getPaddingLeft();
-                int paddingRight = layout.getPaddingRight();
+                int paddingLeft = thisView.getPaddingLeft();
+                int paddingRight = thisView.getPaddingRight();
                 mPaddingTop = mPaddingTop == 0 ? SmartUtil.dp2px(20) : mPaddingTop;
                 mPaddingBottom = mPaddingBottom == 0 ? SmartUtil.dp2px(20) : mPaddingBottom;
-                layout.setPadding(paddingLeft, mPaddingTop, paddingRight, mPaddingBottom);
+                thisView.setPadding(paddingLeft, mPaddingTop, paddingRight, mPaddingBottom);
             }
-            ViewGroup thisGroup = mClassicsLayout == null ? this : mClassicsLayout;
+            final ViewGroup thisGroup = this;
             thisGroup.setClipToPadding(false);
         }
         if (MeasureSpec.getMode(heightMeasureSpec) == EXACTLY) {
             final int parentHeight = MeasureSpec.getSize(heightMeasureSpec);
             if (parentHeight < mMinHeightOfContent) {
                 final int padding = (parentHeight - mMinHeightOfContent) / 2;
-                layout.setPadding(layout.getPaddingLeft(), padding, layout.getPaddingRight(), padding);
+                thisView.setPadding(thisView.getPaddingLeft(), padding, thisView.getPaddingRight(), padding);
             } else {
-                layout.setPadding(layout.getPaddingLeft(), 0, layout.getPaddingRight(), 0);
+                thisView.setPadding(thisView.getPaddingLeft(), 0, thisView.getPaddingRight(), 0);
             }
         } else {
-            layout.setPadding(layout.getPaddingLeft(), mPaddingTop, layout.getPaddingRight(), mPaddingBottom);
+            thisView.setPadding(thisView.getPaddingLeft(), mPaddingTop, thisView.getPaddingRight(), mPaddingBottom);
         }
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         if (mMinHeightOfContent == 0) {
-            ViewGroup thisGroup = mClassicsLayout == null ? this : mClassicsLayout;
+            final ViewGroup thisGroup = this;
             for (int i = 0; i < thisGroup.getChildCount(); i++) {
                 final int height = thisGroup.getChildAt(i).getMeasuredHeight();
                 if (mMinHeightOfContent < height) {
@@ -114,6 +114,20 @@ public abstract class ClassicsAbstract<T extends ClassicsAbstract> extends Simpl
     @SuppressWarnings("unchecked")
     protected T self() {
         return (T) this;
+    }
+
+    /**
+     * 修复 经典头拉伸状态下显示异常的问题
+     * 导致的原因 1.1.0 版本之后 Smart 不推荐 Scale 模式，主推 FixedBehind 模式
+     * 并且取消了对 child 的绘制裁剪，所以经典组件需要重写 dispatchDraw 自行裁剪
+     */
+    @Override
+    protected void dispatchDraw(Canvas canvas) {
+        final View rect = this;
+        canvas.save();
+        canvas.clipRect(rect.getLeft(), rect.getTop(), rect.getRight(), rect.getBottom());
+        super.dispatchDraw(canvas);
+        canvas.restore();
     }
     //</editor-fold>
 
