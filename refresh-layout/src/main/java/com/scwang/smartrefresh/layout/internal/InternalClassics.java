@@ -1,7 +1,6 @@
 package com.scwang.smartrefresh.layout.internal;
 
 import android.content.Context;
-import android.graphics.Canvas;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -113,21 +112,6 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
                 ((Animatable) drawable).stop();
             }
         }
-    }
-
-    /**
-     * 修复 经典头拉伸状态下显示异常的问题
-     * 导致的原因 1.1.0 版本之后 Smart 不推荐 Scale 模式，主推 FixedBehind 模式
-     * 并且取消了对 child 的绘制裁剪，所以经典组件需要重写 dispatchDraw 自行裁剪
-     */
-    @Override
-    protected void dispatchDraw(Canvas canvas) {
-        final View rect = this;
-        final float translationY = rect.getTranslationY();
-        canvas.save();
-        canvas.clipRect(rect.getLeft(), rect.getTop() + translationY, rect.getRight(), rect.getBottom() + translationY);
-        super.dispatchDraw(canvas);
-        canvas.restore();
     }
 
     @SuppressWarnings("unchecked")

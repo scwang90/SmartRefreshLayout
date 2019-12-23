@@ -761,7 +761,13 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     }
                     canvas.drawRect(0, child.getTop(), thisView.getWidth(), bottom, mPaint);
                 }
-                if (mEnableClipHeaderWhenFixedBehind && mRefreshHeader.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
+                /*
+                 * 2019-12-24
+                 * 修复 经典头拉伸状态下显示异常的问题
+                 * 导致的原因 1.1.0 版本之后 Smart 不推荐 Scale 模式，主推 FixedBehind 模式
+                 * 并且取消了对 child 的绘制裁剪，所以经典组件需要重写 dispatchDraw 自行裁剪
+                 */
+                if ((mEnableClipHeaderWhenFixedBehind && mRefreshHeader.getSpinnerStyle() == SpinnerStyle.FixedBehind) || mRefreshHeader.getSpinnerStyle().scale) {
                     canvas.save();
                     canvas.clipRect(child.getLeft(), child.getTop(), child.getRight(), bottom);
                     boolean ret = super.drawChild(canvas, child, drawingTime);
@@ -785,7 +791,13 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     }
                     canvas.drawRect(0, top, thisView.getWidth(), child.getBottom(), mPaint);
                 }
-                if (mEnableClipFooterWhenFixedBehind && mRefreshFooter.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
+                /*
+                 * 2019-12-24
+                 * 修复 经典头拉伸状态下显示异常的问题
+                 * 导致的原因 1.1.0 版本之后 Smart 不推荐 Scale 模式，主推 FixedBehind 模式
+                 * 并且取消了对 child 的绘制裁剪，所以经典组件需要重写 dispatchDraw 自行裁剪
+                 */
+                if ((mEnableClipFooterWhenFixedBehind && mRefreshFooter.getSpinnerStyle() == SpinnerStyle.FixedBehind) || mRefreshFooter.getSpinnerStyle().scale) {
                     canvas.save();
                     canvas.clipRect(child.getLeft(), top, child.getRight(), child.getBottom());
                     boolean ret = super.drawChild(canvas, child, drawingTime);
