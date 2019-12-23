@@ -123,8 +123,9 @@ public abstract class InternalClassics<T extends InternalClassics> extends Inter
     @Override
     protected void dispatchDraw(Canvas canvas) {
         final View rect = this;
+        final float translationY = rect.getTranslationY();
         canvas.save();
-        canvas.clipRect(rect.getLeft(), rect.getTop(), rect.getRight(), rect.getBottom());
+        canvas.clipRect(rect.getLeft(), rect.getTop() + translationY, rect.getRight(), rect.getBottom() + translationY);
         super.dispatchDraw(canvas);
         canvas.restore();
     }
