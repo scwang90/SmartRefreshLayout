@@ -34,6 +34,8 @@ set OUTPUT=methods-apk.txt
 
 set PATH_TOOL=%SDK%\build-tools\%TOOL%\dx.bat
 set PATH_JAR=%MODULE%/build/intermediates/intermediate-jars/debug/classes.jar
+set PATH_JAR=%MODULE%/build/intermediates/compile_library_classes/release/classes.jar
+
 set PATH_DEX=%PATH_JAR%.dex
 
 echo 正在构建。。。
