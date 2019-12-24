@@ -45,7 +45,7 @@
     <string name="title_activity_example_listener">多功能监听器</string>
     <string name="title_activity_example_custom">自定义Header</string>
     <string name="title_activity_example_snap_helper">SnapHelper</string>
-    <string name="title_activity_example_i18n">I18N</string>
+    <string name="title_activity_example_i18n">国际化</string>
 
     <string name="fragment_example_no_more_data">没有更多数据</string>
     <string name="fragment_example_horizontal">水平滚动模式</string>
