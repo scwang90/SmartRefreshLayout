@@ -45,6 +45,7 @@
     <string name="title_activity_example_listener">Multifunction monitor</string>
     <string name="title_activity_example_custom">Custom Header</string>
     <string name="title_activity_example_snap_helper">SnapHelper</string>
+    <string name="title_activity_example_i18n">I18N</string>
 
     <string name="fragment_example_no_more_data">No More Data</string>
     <string name="fragment_example_horizontal">Horizontal Scroll Mode</string>
@@ -82,6 +83,7 @@
     <string name="index_example_scroll">The usage of pure rolling mode</string>
     <string name="index_example_listener">The usage of multifunction listener</string>
     <string name="index_example_custom">The usage of custom Header</string>
+    <string name="index_example_i18n">The usage of I18n</string>
     <string name="index_example_snap_helper">The usage of SnapHelper</string>
     <string name="index_example_pager">The usage of ViewPager</string>
     <string name="index_example_bottom_sheet">The usage of BottomSheet</string>
@@ -117,6 +119,11 @@
     <string name="item_example_number_abstract">This is the abstract item %02d</string>
     <string name="item_example_pager_left">Left Pager</string>
     <string name="item_example_pager_right">Right Pager</string>
+
+    <string name="item_example_i18n_system">System</string>
+    <string name="item_example_i18n_chinese">Chinese</string>
+    <string name="item_example_i18n_english">English</string>
+    <string name="item_example_i18n_click">Click to switch the language to %s</string>
 
     <string name="github_qq_browser_kernel">The web page is provided by github.com.\nThe QQ browser X5 kernel has been enabled.</string>
 
