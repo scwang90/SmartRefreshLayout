@@ -45,6 +45,7 @@
     <string name="title_activity_example_listener">多功能监听器</string>
     <string name="title_activity_example_custom">自定义Header</string>
     <string name="title_activity_example_snap_helper">SnapHelper</string>
+    <string name="title_activity_example_i18n">国际化</string>
 
     <string name="fragment_example_no_more_data">没有更多数据</string>
     <string name="fragment_example_horizontal">水平滚动模式</string>
@@ -71,6 +72,7 @@
     <string name="index_example_scroll">纯滚动模式</string>
     <string name="index_example_listener">多功能监听器</string>
     <string name="index_example_custom">自定义Header</string>
+    <string name="index_example_i18n">国际化支持</string>
     <string name="index_example_snap_helper">结合 SnapHelper 使用</string>
     <string name="index_example_pager">ViewPager 多页面共用一个 RefreshLayout</string>
     <string name="index_example_bottom_sheet">BottomSheet内部使用加载更多</string>
@@ -116,6 +118,11 @@
     <string name="item_example_number_abstract">这是测试的第%02d条数据</string>
     <string name="item_example_pager_left">左边</string>
     <string name="item_example_pager_right">右边</string>
+
+    <string name="item_example_i18n_system">跟随系统</string>
+    <string name="item_example_i18n_chinese">中文</string>
+    <string name="item_example_i18n_english">英语</string>
+    <string name="item_example_i18n_click">点击切换语言为 %s</string>
 
     <string name="github_qq_browser_kernel">网页由 github.com 提供\n已启用QQ浏览器X5内核</string>
 

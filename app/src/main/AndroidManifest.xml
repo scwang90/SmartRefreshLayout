@@ -150,6 +150,9 @@
         <activity android:name=".activity.example.SnapHelperExampleActivity"
             android:label="@string/title_activity_example_snap_helper"
             android:screenOrientation="portrait"/>
+        <activity android:name=".activity.example.I18nExampleActivity"
+            android:label="@string/title_activity_example_i18n"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
