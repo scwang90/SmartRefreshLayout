@@ -2434,14 +2434,20 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         this.mHeaderBackgroundColor = 0;
         this.mHeaderNeedTouchEventWhenRefreshing = false;
         this.mHeaderHeightStatus = mHeaderHeightStatus.unNotify();
-        if (mRefreshHeader.getSpinnerStyle().front) {
-            final ViewGroup thisGroup = this;
-            super.addView(mRefreshHeader.getView(), thisGroup.getChildCount(), new LayoutParams(width, height));
-        } else {
-            super.addView(mRefreshHeader.getView(), 0, new LayoutParams(width, height));
-        }
-        if (mPrimaryColors != null && mRefreshHeader != null) {
-            mRefreshHeader.setPrimaryColors(mPrimaryColors);
+        if (mRefreshHeader != null) {
+            /*
+             * 2019-12-24 修复 DefaultRefreshHeaderCreator 返回 null 时出现空指针
+             * 不过 DefaultRefreshHeaderCreator 是定义为不允许返回空的
+             */
+            if (mRefreshHeader.getSpinnerStyle().front) {
+                final ViewGroup thisGroup = this;
+                super.addView(mRefreshHeader.getView(), thisGroup.getChildCount(), new LayoutParams(width, height));
+            } else {
+                super.addView(mRefreshHeader.getView(), 0, new LayoutParams(width, height));
+            }
+            if (mPrimaryColors != null && mRefreshHeader != null) {
+                mRefreshHeader.setPrimaryColors(mPrimaryColors);
+            }
         }
         return this;
     }
@@ -2479,14 +2485,20 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         this.mFooterNeedTouchEventWhenLoading = false;
         this.mFooterHeightStatus = mFooterHeightStatus.unNotify();
         this.mEnableLoadMore = !mManualLoadMore || mEnableLoadMore;
-        if (mRefreshFooter.getSpinnerStyle().front) {
-            final ViewGroup thisGroup = this;
-            super.addView(mRefreshFooter.getView(), thisGroup.getChildCount(), new LayoutParams(width, height));
-        } else {
-            super.addView(mRefreshFooter.getView(), 0, new LayoutParams(width, height));
-        }
-        if (mPrimaryColors != null && mRefreshFooter != null) {
-            mRefreshFooter.setPrimaryColors(mPrimaryColors);
+        if (mRefreshFooter != null) {
+            /*
+             * 2019-12-24 修复 DefaultRefreshFooterCreator 返回 null 时出现空指针
+             * 不过 DefaultRefreshFooterCreator 是定义为不允许返回空的
+             */
+            if (mRefreshFooter.getSpinnerStyle().front) {
+                final ViewGroup thisGroup = this;
+                super.addView(mRefreshFooter.getView(), thisGroup.getChildCount(), new LayoutParams(width, height));
+            } else {
+                super.addView(mRefreshFooter.getView(), 0, new LayoutParams(width, height));
+            }
+            if (mPrimaryColors != null && mRefreshFooter != null) {
+                mRefreshFooter.setPrimaryColors(mPrimaryColors);
+            }
         }
         return this;
     }
@@ -3135,7 +3147,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     reboundAnimator.addUpdateListener(new AnimatorUpdateListener() {
                         @Override
                         public void onAnimationUpdate(ValueAnimator animation) {
-                            if (reboundAnimator != null) {
+                            if (reboundAnimator != null && mRefreshHeader != null) {
                                 mKernel.moveSpinner((int) animation.getAnimatedValue(), true);
                             }
                         }
@@ -3148,10 +3160,17 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                         public void onAnimationEnd(Animator animation) {
                             if (reboundAnimator != null) {
                                 reboundAnimator = null;
-                                if (mState != RefreshState.ReleaseToRefresh) {
-                                    mKernel.setState(RefreshState.ReleaseToRefresh);
+                                if (mRefreshHeader != null) {
+                                    if (mState != RefreshState.ReleaseToRefresh) {
+                                        mKernel.setState(RefreshState.ReleaseToRefresh);
+                                    }
+                                    setStateRefreshing(!animationOnly);
+                                } else {
+                                    /*
+                                     * 2019-12-24 修复 mRefreshHeader=null 时状态错乱问题
+                                     */
+                                    mKernel.setState(RefreshState.None);
                                 }
-                                setStateRefreshing(!animationOnly);
                             }
                         }
                     });
@@ -3235,7 +3254,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     reboundAnimator.addUpdateListener(new AnimatorUpdateListener() {
                         @Override
                         public void onAnimationUpdate(ValueAnimator animation) {
-                            if (reboundAnimator != null) {
+                            if (reboundAnimator != null && mRefreshFooter != null) {
                                 mKernel.moveSpinner((int) animation.getAnimatedValue(), true);
                             }
                         }
@@ -3245,10 +3264,17 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                         public void onAnimationEnd(Animator animation) {
                             if (reboundAnimator != null) {
                                 reboundAnimator = null;
-                                if (mState != RefreshState.ReleaseToLoad) {
-                                    mKernel.setState(RefreshState.ReleaseToLoad);
+                                if (mRefreshFooter != null) {
+                                    if (mState != RefreshState.ReleaseToLoad) {
+                                        mKernel.setState(RefreshState.ReleaseToLoad);
+                                    }
+                                    setStateLoading(!animationOnly);
+                                } else {
+                                    /*
+                                     * 2019-12-24 修复 mRefreshFooter=null 时状态错乱问题
+                                     */
+                                    mKernel.setState(RefreshState.None);
                                 }
-                                setStateLoading(!animationOnly);
                             }
                         }
                     });
