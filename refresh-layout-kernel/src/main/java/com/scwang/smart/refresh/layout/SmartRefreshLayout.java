@@ -781,7 +781,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                  * 导致的原因 1.1.0 版本之后 Smart 不推荐 Scale 模式，主推 FixedBehind 模式
                  * 并且取消了对 child 的绘制裁剪，所以经典组件需要重写 dispatchDraw 自行裁剪
                  */
-                if ((mEnableClipFooterWhenFixedBehind && mRefreshFooter.getSpinnerStyle() == SpinnerStyle.FixedBehind) || mRefreshHeader.getSpinnerStyle().scale) {
+                if ((mEnableClipFooterWhenFixedBehind && mRefreshFooter.getSpinnerStyle() == SpinnerStyle.FixedBehind) || mRefreshFooter.getSpinnerStyle().scale) {
                     canvas.save();
                     canvas.clipRect(child.getLeft(), top, child.getRight(), child.getBottom());
                     boolean ret = super.drawChild(canvas, child, drawingTime);
@@ -2437,14 +2437,20 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         this.mHeaderBackgroundColor = 0;
         this.mHeaderNeedTouchEventWhenRefreshing = false;
         this.mHeaderHeightStatus = mHeaderHeightStatus.unNotify();
-        if (mRefreshHeader.getSpinnerStyle().front) {
-            final ViewGroup thisGroup = this;
-            super.addView(mRefreshHeader.getView(), thisGroup.getChildCount(), new LayoutParams(width, height));
-        } else {
-            super.addView(mRefreshHeader.getView(), 0, new LayoutParams(width, height));
-        }
-        if (mPrimaryColors != null && mRefreshHeader != null) {
-            mRefreshHeader.setPrimaryColors(mPrimaryColors);
+        /*
+         * 2019-12-24 修复 DefaultRefreshHeaderCreator 返回 null 时出现空指针
+         * 不过 DefaultRefreshHeaderCreator 是定义为不允许返回空的
+         */
+        if (mRefreshHeader != null) {
+            if (mRefreshHeader.getSpinnerStyle().front) {
+                final ViewGroup thisGroup = this;
+                super.addView(mRefreshHeader.getView(), thisGroup.getChildCount(), new LayoutParams(width, height));
+            } else {
+                super.addView(mRefreshHeader.getView(), 0, new LayoutParams(width, height));
+            }
+            if (mPrimaryColors != null && mRefreshHeader != null) {
+                mRefreshHeader.setPrimaryColors(mPrimaryColors);
+            }
         }
         return this;
     }
@@ -2482,14 +2488,20 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         this.mFooterNeedTouchEventWhenLoading = false;
         this.mFooterHeightStatus = mFooterHeightStatus.unNotify();
         this.mEnableLoadMore = !mManualLoadMore || mEnableLoadMore;
-        if (mRefreshFooter.getSpinnerStyle().front) {
-            final ViewGroup thisGroup = this;
-            super.addView(mRefreshFooter.getView(), thisGroup.getChildCount(), new LayoutParams(width, height));
-        } else {
-            super.addView(mRefreshFooter.getView(), 0, new LayoutParams(width, height));
-        }
-        if (mPrimaryColors != null && mRefreshFooter != null) {
-            mRefreshFooter.setPrimaryColors(mPrimaryColors);
+        /*
+         * 2019-12-24 修复 DefaultRefreshFooterCreator 返回 null 时出现空指针
+         * 不过 DefaultRefreshFooterCreator 是定义为不允许返回空的
+         */
+        if (mRefreshFooter != null) {
+            if (mRefreshFooter.getSpinnerStyle().front) {
+                final ViewGroup thisGroup = this;
+                super.addView(mRefreshFooter.getView(), thisGroup.getChildCount(), new LayoutParams(width, height));
+            } else {
+                super.addView(mRefreshFooter.getView(), 0, new LayoutParams(width, height));
+            }
+            if (mPrimaryColors != null && mRefreshFooter != null) {
+                mRefreshFooter.setPrimaryColors(mPrimaryColors);
+            }
         }
         return this;
     }
@@ -3137,23 +3149,27 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     reboundAnimator.addUpdateListener(new AnimatorUpdateListener() {
                         @Override
                         public void onAnimationUpdate(ValueAnimator animation) {
-                            if (reboundAnimator != null) {
+                            if (reboundAnimator != null && mRefreshHeader != null) {
                                 mKernel.moveSpinner((int) animation.getAnimatedValue(), true);
                             }
                         }
                     });
                     reboundAnimator.addListener(new AnimatorListenerAdapter() {
-//                        @Override
-//                        public void onAnimationStart(Animator animation) {
-//                        }
                         @Override
                         public void onAnimationEnd(Animator animation) {
                             if (reboundAnimator != null) {
                                 reboundAnimator = null;
-                                if (mState != RefreshState.ReleaseToRefresh) {
-                                    mKernel.setState(RefreshState.ReleaseToRefresh);
+                                if (mRefreshHeader != null) {
+                                    if (mState != RefreshState.ReleaseToRefresh) {
+                                        mKernel.setState(RefreshState.ReleaseToRefresh);
+                                    }
+                                    setStateRefreshing(!animationOnly);
+                                } else {
+                                    /*
+                                     * 2019-12-24 修复 mRefreshHeader=null 时状态错乱问题
+                                     */
+                                    mKernel.setState(RefreshState.None);
                                 }
-                                setStateRefreshing(!animationOnly);
                             }
                         }
                     });
@@ -3236,7 +3252,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     reboundAnimator.addUpdateListener(new AnimatorUpdateListener() {
                         @Override
                         public void onAnimationUpdate(ValueAnimator animation) {
-                            if (reboundAnimator != null) {
+                            if (reboundAnimator != null && mRefreshFooter != null) {
                                 mKernel.moveSpinner((int) animation.getAnimatedValue(), true);
                             }
                         }
@@ -3246,10 +3262,17 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                         public void onAnimationEnd(Animator animation) {
                             if (reboundAnimator != null) {
                                 reboundAnimator = null;
-                                if (mState != RefreshState.ReleaseToLoad) {
-                                    mKernel.setState(RefreshState.ReleaseToLoad);
+                                if (mRefreshFooter != null) {
+                                    if (mState != RefreshState.ReleaseToLoad) {
+                                        mKernel.setState(RefreshState.ReleaseToLoad);
+                                    }
+                                    setStateLoading(!animationOnly);
+                                } else {
+                                    /*
+                                     * 2019-12-24 修复 mRefreshFooter=null 时状态错乱问题
+                                     */
+                                    mKernel.setState(RefreshState.None);
                                 }
-                                setStateLoading(!animationOnly);
                             }
                         }
                     });
