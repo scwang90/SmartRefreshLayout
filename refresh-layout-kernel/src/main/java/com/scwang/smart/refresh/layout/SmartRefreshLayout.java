@@ -1314,7 +1314,10 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      * @param internal mRefreshHeader or mRefreshFooter
      * @return enable
      */
-    protected boolean isEnableTranslationContent(boolean enable, RefreshComponent internal) {
+    protected boolean isEnableTranslationContent(boolean enable, @Nullable RefreshComponent internal) {
+        /*
+         * 2019-12-25 修复 2.0 版本之后无默认 Header Footer 导致的纯滚动模式无效 添加 @Nullable
+         */
         return enable || mEnablePureScrollMode || internal == null || internal.getSpinnerStyle() == SpinnerStyle.FixedBehind;
     }
 
@@ -1603,7 +1606,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
          *         });
          *
          * 2.XML关闭
-         *          <com.scwang.smartrefresh.layout.SmartRefreshLayout
+         *          <com.scwang.smart.refresh.layout.SmartRefreshLayout
          *              android:layout_width="match_parent"
          *              android:layout_height="match_parent"
          *              android:tag="close egg"/>
@@ -2361,8 +2364,48 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         setNestedScrollingEnabled(enabled);
         return this;
     }
+    /**
+     * 设置固定在 Header 下方的视图Id，可以在 Footer 上下滚动的时候保持不跟谁滚动
+     * @param id 固定在头部的视图Id
+     * @return RefreshLayout
+     */
+    @Override
+    public RefreshLayout setFixedHeaderViewId(int id) {
+        this.mFixedHeaderViewId = id;
+        return this;
+    }
+    /**
+     * 设置固定在 Footer 上方的视图Id，可以在 Header 上下滚动的时候保持不跟谁滚动
+     * @param id 固定在底部的视图Id
+     * @return RefreshLayout
+     */
+    @Override
+    public RefreshLayout setFixedFooterViewId(int id) {
+        this.mFixedFooterViewId = id;
+        return this;
+    }
+    /**
+     * 设置在 Header 上下滚动时，需要跟随滚动的视图Id，默认整个内容视图
+     * @param id 固定在头部的视图Id
+     * @return RefreshLayout
+     */
+    @Override
+    public RefreshLayout setHeaderTranslationViewId(int id) {
+        this.mHeaderTranslationViewId = id;
+        return this;
+    }
+    /**
+     * 设置在 Footer 上下滚动时，需要跟随滚动的视图Id，默认整个内容视图
+     * @param id 固定在头部的视图Id
+     * @return RefreshLayout
+     */
+    @Override
+    public RefreshLayout setFooterTranslationViewId(int id) {
+        this.mFooterTranslationViewId = id;
+        return this;
+    }
 
-//    /**
+    //    /**
 //     * Sets whether to enable pure nested scrolling mode
 //     * Smart scrolling supports both [nested scrolling] and [traditional scrolling] modes
 //     * With nested scrolling enabled, traditional mode also works when necessary
@@ -3548,7 +3591,10 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             if (mRefreshContent != null) {
                 int tSpinner = 0;
                 boolean changed = false;
-                if (spinner >= 0 && mRefreshHeader != null) {
+                /*
+                 * 2019-12-25 修复 2.0 版本之后无默认 Header Footer 导致的纯滚动模式无效
+                 */
+                if (spinner >= 0 /*&& mRefreshHeader != null*/) {
                     if (isEnableTranslationContent(mEnableHeaderTranslationContent, mRefreshHeader)) {
                         changed = true;
                         tSpinner = spinner;
@@ -3557,7 +3603,10 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                         tSpinner = 0;
                     }
                 }
-                if (spinner <= 0 && mRefreshFooter != null) {
+                /*
+                 * 2019-12-25 修复 2.0 版本之后无默认 Header Footer 导致的纯滚动模式无效
+                 */
+                if (spinner <= 0 /*&& mRefreshFooter != null*/) {
                     if (isEnableTranslationContent(mEnableFooterTranslationContent, mRefreshFooter)) {
                         changed = true;
                         tSpinner = spinner;
