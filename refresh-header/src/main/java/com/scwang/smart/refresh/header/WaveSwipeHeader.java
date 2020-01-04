@@ -4,7 +4,6 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.IdRes;
@@ -21,13 +20,13 @@ import android.widget.ImageView;
 
 import com.scwang.smart.refresh.header.material.MaterialProgressDrawable;
 import com.scwang.smart.refresh.header.waveswipe.WaveView;
+import com.scwang.smart.refresh.layout.api.RefreshHeader;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.constant.RefreshState;
 import com.scwang.smart.refresh.layout.simple.SimpleComponent;
+import com.scwang.smart.refresh.layout.constant.SpinnerStyle;
+import com.scwang.smart.refresh.layout.util.SmartUtil;
 import com.scwang.smartrefresh.header.R;
-import com.scwang.smartrefresh.layout.api.RefreshHeader;
-import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
-import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 import static android.view.View.MeasureSpec.EXACTLY;
 import static android.view.View.MeasureSpec.getSize;
@@ -289,6 +288,8 @@ public class WaveSwipeHeader extends SimpleComponent implements RefreshHeader {
         mState = newState;
         switch (newState) {
             case None:
+            case ReleaseToRefresh:
+            case Refreshing:
                 break;
             case PullDownToRefresh:
                 mProgress.showArrow(true);
@@ -302,10 +303,6 @@ public class WaveSwipeHeader extends SimpleComponent implements RefreshHeader {
                 mProgress.setStartEndTrim(0f, 0f);
                 mWaveView.startWaveAnimation(mLastFirstBounds);
                 mLastFirstBounds = 0;
-                break;
-            case ReleaseToRefresh:
-                break;
-            case Refreshing:
                 break;
         }
     }
@@ -415,7 +412,7 @@ public class WaveSwipeHeader extends SimpleComponent implements RefreshHeader {
         public ProgressAnimationImageView(Context context) {
             super(context);
             mProgress = new MaterialProgressDrawable(WaveSwipeHeader.this);
-            mProgress.setBackgroundColor(Color.TRANSPARENT);
+//            mProgress.setBackgroundColor(Color.TRANSPARENT);
             if (isOver600dp()) { // Make the progress be big
                 mProgress.updateSizes(MaterialProgressDrawable.LARGE);
             }

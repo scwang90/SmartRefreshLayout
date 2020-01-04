@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.scwang.smart.drawable.ProgressDrawable;
 import com.scwang.smart.refresh.header.material.MaterialProgressDrawable;
 import com.scwang.smart.refresh.header.waterdrop.WaterDropView;
 import com.scwang.smart.refresh.layout.api.RefreshHeader;
@@ -19,8 +20,7 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.constant.RefreshState;
 import com.scwang.smart.refresh.layout.constant.SpinnerStyle;
 import com.scwang.smart.refresh.layout.simple.SimpleComponent;
-import com.scwang.smartrefresh.layout.internal.ProgressDrawable;
-import com.scwang.smartrefresh.layout.util.SmartUtil;
+import com.scwang.smart.refresh.layout.util.SmartUtil;
 
 import static android.view.View.MeasureSpec.AT_MOST;
 import static android.view.View.MeasureSpec.EXACTLY;
@@ -72,8 +72,8 @@ public class WaterDropHeader extends SimpleComponent implements RefreshHeader {
 
         mImageView = new ImageView(context);
         mProgress = new MaterialProgressDrawable(mImageView);
-        mProgress.setBackgroundColor(0xffffffff);
-        mProgress.setAlpha(255);
+//        mProgress.setBackgroundColor(0xffffffff);
+//        mProgress.setAlpha(255);
         mProgress.setColorSchemeColors(0xffffffff,0xff0099cc,0xffff4444,0xff669900,0xffaa66cc,0xffff8800);
         mImageView.setImageDrawable(mProgress);
         thisGroup.addView(mImageView, SmartUtil.dp2px(30), SmartUtil.dp2px(30));

@@ -25,8 +25,8 @@ import android.widget.TextView;
 import com.scwang.smart.refresh.layout.api.RefreshKernel;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.constant.RefreshState;
+import com.scwang.smart.refresh.layout.util.SmartUtil;
 import com.scwang.smartrefresh.header.R;
-import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 

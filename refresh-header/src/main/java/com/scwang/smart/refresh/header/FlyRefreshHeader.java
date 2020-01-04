@@ -18,8 +18,8 @@ import android.view.animation.DecelerateInterpolator;
 import com.scwang.smart.refresh.header.flyrefresh.MountainSceneView;
 import com.scwang.smart.refresh.layout.api.RefreshKernel;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshHeader;
-import com.scwang.smartrefresh.layout.util.SmartUtil;
+import com.scwang.smart.refresh.layout.api.RefreshHeader;
+import com.scwang.smart.refresh.layout.util.SmartUtil;
 
 /**
  * 纸飞机和山丘

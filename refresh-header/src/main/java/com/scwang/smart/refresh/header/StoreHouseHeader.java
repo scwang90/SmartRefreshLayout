@@ -17,12 +17,12 @@ import android.view.animation.Transformation;
 
 import com.scwang.smart.refresh.header.storehouse.StoreHouseBarItem;
 import com.scwang.smart.refresh.header.storehouse.StoreHousePath;
+import com.scwang.smart.refresh.layout.api.RefreshHeader;
 import com.scwang.smart.refresh.layout.api.RefreshKernel;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.simple.SimpleComponent;
+import com.scwang.smart.refresh.layout.util.SmartUtil;
 import com.scwang.smartrefresh.header.R;
-import com.scwang.smartrefresh.layout.api.RefreshHeader;
-import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 import java.util.ArrayList;
 import java.util.List;

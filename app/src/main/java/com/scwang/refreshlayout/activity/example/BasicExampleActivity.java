@@ -1,7 +1,6 @@
 package com.scwang.refreshlayout.activity.example;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,21 +8,19 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
-import com.scwang.smartrefresh.layout.api.RefreshFooter;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.scwang.smart.refresh.footer.ClassicsFooter;
+import com.scwang.smart.refresh.layout.api.RefreshFooter;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Random;
 
 import static android.R.layout.simple_list_item_2;
 
@@ -32,6 +29,7 @@ import static android.R.layout.simple_list_item_2;
  */
 public class BasicExampleActivity extends AppCompatActivity {
 
+    private Random random = new Random();
     private BaseRecyclerAdapter<Void> mAdapter;
 
     @Override
@@ -40,12 +38,7 @@ public class BasicExampleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_example_basic);
 
         final Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> finish());
 
         ListView listView = findViewById(R.id.listView);
         listView.setAdapter(mAdapter = new BaseRecyclerAdapter<Void>(simple_list_item_2) {
@@ -80,54 +73,55 @@ public class BasicExampleActivity extends AppCompatActivity {
 
         final RefreshLayout refreshLayout = findViewById(R.id.refreshLayout);
         refreshLayout.setEnableAutoLoadMore(true);//开启自动加载功能（非必须）
-        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(@NonNull final RefreshLayout refreshLayout) {
-//                refreshLayout.getLayout().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-                        mAdapter.refresh(initData());
-                        refreshLayout.finishRefresh();
-                        refreshLayout.resetNoMoreData();//setNoMoreData(false);
-//                    }
-//                }, 2000);
+        refreshLayout.setOnRefreshListener(refresh -> refresh.getLayout().postDelayed(() -> {
+            if (random.nextBoolean()) {
+                //如果刷新成功
+                mAdapter.refresh(initData(40));
+                if (mAdapter.getItemCount() <= 30) {
+                    //还有多的数据
+                    refresh.finishRefresh();
+                } else {
+                    //没有更多数据（上拉加载功能将显示没有更多数据）
+                    refresh.finishRefreshWithNoMoreData();
+                }
+            } else {
+                //刷新失败
+                refresh.finishRefresh(false);
             }
-        });
-        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull final RefreshLayout refreshLayout) {
-                refreshLayout.getLayout().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (mAdapter.getItemCount() > 30) {
-                            refreshLayout.finishLoadMoreWithNoMoreData();//将不会再次触发加载更多事件
-                        } else {
-                            mAdapter.loadMore(initData());
-                            refreshLayout.finishLoadMore();
-                        }
-                    }
-                }, 2000);
+        }, 2000));
+        refreshLayout.setOnLoadMoreListener(layout -> layout.getLayout().postDelayed(() -> {
+            if (random.nextBoolean()) {
+                //如果刷新成功
+                mAdapter.loadMore(initData(10));
+                if (mAdapter.getItemCount() <= 30) {
+                    //还有多的数据
+                    layout.finishLoadMore();
+                } else {
+                    //没有更多数据（上拉加载功能将显示没有更多数据）
+                    Toast.makeText(getApplication(), "数据全部加载完毕", Toast.LENGTH_SHORT).show();
+                    layout.finishLoadMoreWithNoMoreData();//将不会再次触发加载更多事件
+                }
+            } else {
+                //刷新失败
+                layout.finishLoadMore(false);
             }
-        });
+        }, 2000));
 
         //触发自动刷新
         refreshLayout.autoRefresh();
         //item 点击测试
-        mAdapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                BottomSheetDialog dialog=new BottomSheetDialog(BasicExampleActivity.this);
-                View dialogView = View.inflate(getBaseContext(), R.layout.activity_example_basic, null);
-                RefreshLayout refreshLayout = dialogView.findViewById(R.id.refreshLayout);
-                RecyclerView recyclerView = new RecyclerView(getBaseContext());
-                recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext()));
-                recyclerView.setAdapter(mAdapter);
-                refreshLayout.setEnableRefresh(false);
-                refreshLayout.setEnableNestedScroll(false);
-                refreshLayout.setRefreshContent(recyclerView);
-                dialog.setContentView(dialogView);
-                dialog.show();
-            }
+        mAdapter.setOnItemClickListener((parent, view, position, id) -> {
+            BottomSheetDialog dialog=new BottomSheetDialog(BasicExampleActivity.this);
+            View dialogView = View.inflate(getBaseContext(), R.layout.activity_example_basic, null);
+            RefreshLayout refreshLayout1 = dialogView.findViewById(R.id.refreshLayout);
+            RecyclerView recyclerView = new RecyclerView(getBaseContext());
+            recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext()));
+            recyclerView.setAdapter(mAdapter);
+            refreshLayout1.setEnableRefresh(false);
+            refreshLayout1.setEnableNestedScroll(false);
+            refreshLayout1.setRefreshContent(recyclerView);
+            dialog.setContentView(dialogView);
+            dialog.show();
         });
 
         //点击测试
@@ -142,7 +136,9 @@ public class BasicExampleActivity extends AppCompatActivity {
         }
     }
 
-    private Collection<Void> initData() {
-        return Arrays.asList(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
+    private Collection<Void> initData(int max) {
+        max = Math.max(0, max);
+        int min = Math.min(10, max);
+        return Arrays.asList(new Void[min + random.nextInt(max - min)]);
     }
 }

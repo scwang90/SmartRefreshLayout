@@ -11,7 +11,7 @@ import android.view.View;
 
 import com.scwang.smart.refresh.header.fungame.FunGameView;
 import com.scwang.smart.refresh.layout.api.RefreshKernel;
-import com.scwang.smartrefresh.layout.util.SmartUtil;
+import com.scwang.smart.refresh.layout.util.SmartUtil;
 
 import java.util.LinkedList;
 import java.util.Queue;

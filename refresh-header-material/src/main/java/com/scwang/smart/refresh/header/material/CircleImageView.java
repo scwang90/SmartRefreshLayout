@@ -25,6 +25,7 @@ import android.graphics.Shader;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Build;
+import android.support.annotation.ColorInt;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -121,13 +122,13 @@ public class CircleImageView extends ImageView {
 //        }
 //    }
 //
-//    @Override
-//    public void setBackgroundColor(@ColorInt int color) {
-//        final View thisView = this;
-//        if (thisView.getBackground() instanceof ShapeDrawable) {
-//            ((ShapeDrawable) thisView.getBackground()).getPaint().setColor(color);
-//        }
-//    }
+    @Override
+    public void setBackgroundColor(@ColorInt int color) {
+        final View thisView = this;
+        if (thisView.getBackground() instanceof ShapeDrawable) {
+            ((ShapeDrawable) thisView.getBackground()).getPaint().setColor(color);
+        }
+    }
 
     private class OvalShadow extends OvalShape {
         private RadialGradient mRadialGradient;
