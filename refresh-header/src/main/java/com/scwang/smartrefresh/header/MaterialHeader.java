@@ -79,10 +79,10 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
         thisView.setMinimumHeight(SmartUtil.dp2px(100));
 
         mProgress = new MaterialProgressDrawable(this);
-        mProgress.setBackgroundColor(CIRCLE_BG_LIGHT);
-        mProgress.setAlpha(255);
+//        mProgress.setBackgroundColor(CIRCLE_BG_LIGHT);
+//        mProgress.setAlpha(255);
         mProgress.setColorSchemeColors(0xff0099cc,0xffff4444,0xff669900,0xffaa66cc,0xffff8800);
-        mCircleView = new CircleImageView(context,CIRCLE_BG_LIGHT);
+        mCircleView = new CircleImageView(context, CIRCLE_BG_LIGHT);
         mCircleView.setImageDrawable(mProgress);
         mCircleView.setAlpha(0f);
         thisGroup.addView(mCircleView);
@@ -227,6 +227,8 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
         mState = newState;
         switch (newState) {
             case None:
+            case Refreshing:
+            case ReleaseToRefresh:
                 break;
             case PullDownToRefresh:
                 mFinished = false;
@@ -234,10 +236,6 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
                 circleView.setTranslationY(0);
                 circleView.setScaleX(1);
                 circleView.setScaleY(1);
-                break;
-            case ReleaseToRefresh:
-                break;
-            case Refreshing:
                 break;
         }
     }
@@ -285,7 +283,7 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
     public MaterialHeader setProgressBackgroundColorSchemeColor(@ColorInt int color) {
         final View circle = mCircleView;
         circle.setBackgroundColor(color);
-        mProgress.setBackgroundColor(color);
+//        mProgress.setBackgroundColor(color);
         return this;
     }
 

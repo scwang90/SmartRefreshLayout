@@ -200,12 +200,12 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
         thisDrawable.invalidateSelf();
     }
 
-    /*
-     * Update the background color of the circle image view.
-     */
-    public void setBackgroundColor(@ColorInt int color) {
-        mRing.mBackgroundColor = (color);
-    }
+//    /*
+//     * Update the background color of the circle image view.
+//     */
+//    public void setBackgroundColor(@ColorInt int color) {
+//        mRing.mBackgroundColor = (color);
+//    }
 
     /*
      * Set the colors used in the progress animation from color resources.
@@ -241,12 +241,12 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
 
     @Override
     public void setAlpha(int alpha) {
-        mRing.mAlpha = (alpha);
+//        mRing.mAlpha = (alpha);
     }
 
-    public int getAlpha() {
-        return mRing.mAlpha;
-    }
+//    public int getAlpha() {
+//        return mRing.mAlpha;
+//    }
 
     @Override
     public void setColorFilter(ColorFilter colorFilter) {
@@ -472,9 +472,9 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
         double mRingCenterRadius;
         int mArrowWidth;
         int mArrowHeight;
-        int mAlpha;
-        final Paint mCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        int mBackgroundColor;
+//        int mAlpha;
+//        final Paint mCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+//        int mBackgroundColor;
         int mCurrentColor;
 
         Ring() {
@@ -505,12 +505,12 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
 
             drawTriangle(c, startAngle, sweepAngle, bounds);
 
-            if (mAlpha < 255) {
-                mCirclePaint.setColor(mBackgroundColor);
-                mCirclePaint.setAlpha(255 - mAlpha);
-                c.drawCircle(bounds.exactCenterX(), bounds.exactCenterY(), bounds.width() / 2f,
-                        mCirclePaint);
-            }
+//            if (mAlpha < 255) {
+//                mCirclePaint.setColor(mBackgroundColor);
+//                mCirclePaint.setAlpha(255 - mAlpha);
+//                c.drawCircle(bounds.exactCenterX(), bounds.exactCenterY(), bounds.width() / 2f,
+//                        mCirclePaint);
+//            }
         }
 
         private void drawTriangle(Canvas c, float startAngle, float sweepAngle, Rect bounds) {
