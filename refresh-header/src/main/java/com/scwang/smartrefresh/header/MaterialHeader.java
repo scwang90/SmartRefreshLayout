@@ -59,6 +59,7 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
      */
     protected int mWaveHeight;
     protected int mHeadHeight;
+    protected int mHeadDefaultHeight;
     protected Path mBezierPath;
     protected Paint mBezierPaint;
     protected RefreshState mState;
@@ -77,7 +78,8 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
         mSpinnerStyle = SpinnerStyle.MatchLayout;
         final View thisView = this;
         final ViewGroup thisGroup = this;
-        thisView.setMinimumHeight(SmartUtil.dp2px(100));
+        mHeadDefaultHeight = SmartUtil.dp2px(100);
+        thisView.setMinimumHeight(mHeadDefaultHeight);
 
         mProgress = new MaterialProgressDrawable(this);
         mProgress.setBackgroundColor(CIRCLE_BG_LIGHT);
@@ -112,7 +114,8 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
 
     @Override
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.setMeasuredDimension(getSize(widthMeasureSpec), getSize(heightMeasureSpec));
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        super.setMeasuredDimension(getSize(widthMeasureSpec), mHeadDefaultHeight);
         final View circleView = mCircleView;
         circleView.measure(MeasureSpec.makeMeasureSpec(mCircleDiameter, MeasureSpec.EXACTLY),
                 MeasureSpec.makeMeasureSpec(mCircleDiameter, MeasureSpec.EXACTLY));
