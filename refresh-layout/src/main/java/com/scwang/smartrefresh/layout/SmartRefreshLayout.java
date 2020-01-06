@@ -1184,9 +1184,17 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             final OnStateChangedListener refreshListener = mOnMultiPurposeListener;
             if (refreshHeader != null) {
                 refreshHeader.onStateChanged(this, oldState, state);
+                //重置Header刷新标记
+                if (state == RefreshState.None && oldState == RefreshState.RefreshFinish) {
+                    mRefreshHeader.onAutoRefresh(false);
+                }
             }
             if (refreshFooter != null) {
                 refreshFooter.onStateChanged(this, oldState, state);
+                //重置Footer刷新标记
+                if (state == RefreshState.None && oldState == RefreshState.LoadFinish) {
+                    mRefreshFooter.onAutoRefresh(false);
+                }
             }
             if (refreshListener != null) {
                 refreshListener.onStateChanged(this, oldState, state);
@@ -3169,6 +3177,11 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 }
             };
             setViceState(RefreshState.Refreshing);
+            //触发Header自动刷新回调
+            if (mRefreshHeader != null) {
+                mRefreshHeader.onAutoRefresh(true);
+            }
+
             if (delayed > 0) {
                 mHandler.postDelayed(runnable, delayed);
             } else {
@@ -3266,6 +3279,12 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 }
             };
             setViceState(RefreshState.Loading);
+            //触发Footer自动刷新回调
+            if (mRefreshFooter != null)
+            {
+                mRefreshFooter.onAutoRefresh(true);
+            }
+
             if (delayed > 0) {
                 mHandler.postDelayed(runnable, delayed);
             } else {

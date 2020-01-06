@@ -498,19 +498,19 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
             final float endAngle = (mEndTrim + mRotation) * 360;
             float sweepAngle = endAngle - startAngle;
 
+			if (mAlpha < 255) {
+				mCirclePaint.setColor(mBackgroundColor);
+				mCirclePaint.setAlpha(255 - mAlpha);
+				c.drawCircle(bounds.exactCenterX(), bounds.exactCenterY(), (bounds.width() + 1f) / 2f,
+							 mCirclePaint);
+			}
+
             if (sweepAngle != 0) {
                 mPaint.setColor(mCurrentColor);
                 c.drawArc(arcBounds, startAngle, sweepAngle, false, mPaint);
             }
 
             drawTriangle(c, startAngle, sweepAngle, bounds);
-
-            if (mAlpha < 255) {
-                mCirclePaint.setColor(mBackgroundColor);
-                mCirclePaint.setAlpha(255 - mAlpha);
-                c.drawCircle(bounds.exactCenterX(), bounds.exactCenterY(), bounds.width() / 2f,
-                        mCirclePaint);
-            }
         }
 
         private void drawTriangle(Canvas c, float startAngle, float sweepAngle, Rect bounds) {

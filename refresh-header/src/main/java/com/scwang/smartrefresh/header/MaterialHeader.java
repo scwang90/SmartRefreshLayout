@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
+import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 import android.support.v4.content.ContextCompat;
@@ -58,6 +59,7 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
      */
     protected int mWaveHeight;
     protected int mHeadHeight;
+    protected int mHeadDefaultHeight;
     protected Path mBezierPath;
     protected Paint mBezierPaint;
     protected RefreshState mState;
@@ -76,11 +78,12 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
         mSpinnerStyle = SpinnerStyle.MatchLayout;
         final View thisView = this;
         final ViewGroup thisGroup = this;
-        thisView.setMinimumHeight(SmartUtil.dp2px(100));
+        mHeadDefaultHeight = SmartUtil.dp2px(100);
+        thisView.setMinimumHeight(mHeadDefaultHeight);
 
         mProgress = new MaterialProgressDrawable(this);
         mProgress.setBackgroundColor(CIRCLE_BG_LIGHT);
-        mProgress.setAlpha(255);
+//        mProgress.setAlpha(255);
         mProgress.setColorSchemeColors(0xff0099cc,0xffff4444,0xff669900,0xffaa66cc,0xffff8800);
         mCircleView = new CircleImageView(context,CIRCLE_BG_LIGHT);
         mCircleView.setImageDrawable(mProgress);
@@ -111,7 +114,8 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
 
     @Override
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.setMeasuredDimension(getSize(widthMeasureSpec), getSize(heightMeasureSpec));
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        super.setMeasuredDimension(getSize(widthMeasureSpec), mHeadDefaultHeight);
         final View circleView = mCircleView;
         circleView.measure(MeasureSpec.makeMeasureSpec(mCircleDiameter, MeasureSpec.EXACTLY),
                 MeasureSpec.makeMeasureSpec(mCircleDiameter, MeasureSpec.EXACTLY));
@@ -165,10 +169,13 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
     @Override
     public void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight) {
         final View thisView = this;
-        if (!mShowBezierWave) {
-            kernel.requestDefaultTranslationContentFor(this, false);
-//            kernel.requestDefaultHeaderTranslationContent(false);
-        }
+        //不改变布局移动的默认设置因为会影响后续设置的刷新头部的效果
+//        if (!mShowBezierWave) {
+//            kernel.requestDefaultTranslationContentFor(this, false);
+////            kernel.requestDefaultHeaderTranslationContent(false);
+//        }
+        //只改变自身是否移动布局内容
+        kernel.getRefreshLayout().setEnableHeaderTranslationContent(mShowBezierWave);
         if (thisView.isInEditMode()) {
             mWaveHeight = mHeadHeight = height / 2;
         }
@@ -277,14 +284,23 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
         return setProgressBackgroundColorSchemeColor(color);
     }
 
-    /**
+	/**
+	 * Set the alpha of the progress spinner disc.
+	 *
+	 * @param alpha 透明度
+	 */
+	public MaterialHeader setProgressAlpha(@IntRange(from = 0, to = 1) int alpha) {
+		mProgress.setAlpha(alpha);
+		return this;
+	}
+
+
+	/**
      * Set the background color of the progress spinner disc.
      *
      * @param color 颜色
      */
     public MaterialHeader setProgressBackgroundColorSchemeColor(@ColorInt int color) {
-        final View circle = mCircleView;
-        circle.setBackgroundColor(color);
         mProgress.setBackgroundColor(color);
         return this;
     }

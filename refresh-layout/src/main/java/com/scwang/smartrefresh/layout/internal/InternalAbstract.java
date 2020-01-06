@@ -34,6 +34,7 @@ public abstract class InternalAbstract extends RelativeLayout implements Refresh
     protected View mWrappedView;
     protected SpinnerStyle mSpinnerStyle;
     protected RefreshInternal mWrappedInternal;
+    protected boolean mIsAutoRefresh;
 
     protected InternalAbstract(@NonNull View wrapped) {
         this(wrapped, wrapped instanceof RefreshInternal ? (RefreshInternal) wrapped : null);
@@ -114,6 +115,11 @@ public abstract class InternalAbstract extends RelativeLayout implements Refresh
             }
         }
         return mSpinnerStyle = SpinnerStyle.Translate;
+    }
+
+    @Override
+    public void onAutoRefresh(boolean isAutoRefresh) {
+        mIsAutoRefresh = isAutoRefresh;
     }
 
     @Override
