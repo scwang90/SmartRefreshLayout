@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
+import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 import android.support.v4.content.ContextCompat;
@@ -80,7 +81,7 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
 
         mProgress = new MaterialProgressDrawable(this);
         mProgress.setBackgroundColor(CIRCLE_BG_LIGHT);
-        mProgress.setAlpha(255);
+//        mProgress.setAlpha(255);
         mProgress.setColorSchemeColors(0xff0099cc,0xffff4444,0xff669900,0xffaa66cc,0xffff8800);
         mCircleView = new CircleImageView(context,CIRCLE_BG_LIGHT);
         mCircleView.setImageDrawable(mProgress);
@@ -280,14 +281,23 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
         return setProgressBackgroundColorSchemeColor(color);
     }
 
-    /**
+	/**
+	 * Set the alpha of the progress spinner disc.
+	 *
+	 * @param alpha 透明度
+	 */
+	public MaterialHeader setProgressAlpha(@IntRange(from = 0, to = 1) int alpha) {
+		mProgress.setAlpha(alpha);
+		return this;
+	}
+
+
+	/**
      * Set the background color of the progress spinner disc.
      *
      * @param color 颜色
      */
     public MaterialHeader setProgressBackgroundColorSchemeColor(@ColorInt int color) {
-        final View circle = mCircleView;
-        circle.setBackgroundColor(color);
         mProgress.setBackgroundColor(color);
         return this;
     }
