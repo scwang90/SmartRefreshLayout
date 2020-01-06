@@ -124,6 +124,7 @@ public class MaterialStyleActivity extends AppCompatActivity implements AdapterV
     private void setThemeColor(int colorPrimary, int colorPrimaryDark) {
         mToolbar.setBackgroundResource(colorPrimary);
         mRefreshLayout.setPrimaryColorsId(colorPrimary, android.R.color.white);
+		mMaterialHeader.setColorSchemeResources(colorPrimary);
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setStatusBarColor(ContextCompat.getColor(this, colorPrimaryDark));
         }
