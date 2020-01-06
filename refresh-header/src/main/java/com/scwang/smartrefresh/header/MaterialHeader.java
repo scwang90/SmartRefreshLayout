@@ -165,10 +165,13 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
     @Override
     public void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight) {
         final View thisView = this;
-        if (!mShowBezierWave) {
-            kernel.requestDefaultTranslationContentFor(this, false);
-//            kernel.requestDefaultHeaderTranslationContent(false);
-        }
+        //不改变布局移动的默认设置因为会影响后续设置的刷新头部的效果
+//        if (!mShowBezierWave) {
+//            kernel.requestDefaultTranslationContentFor(this, false);
+////            kernel.requestDefaultHeaderTranslationContent(false);
+//        }
+        //只改变自身是否移动布局内容
+        kernel.getRefreshLayout().setEnableHeaderTranslationContent(mShowBezierWave);
         if (thisView.isInEditMode()) {
             mWaveHeight = mHeadHeight = height / 2;
         }
