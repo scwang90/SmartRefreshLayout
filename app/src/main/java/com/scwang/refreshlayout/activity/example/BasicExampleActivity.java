@@ -22,6 +22,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Random;
 
+import ezy.ui.layout.LoadingLayout;
+
 import static android.R.layout.simple_list_item_2;
 
 /**
@@ -31,6 +33,8 @@ public class BasicExampleActivity extends AppCompatActivity {
 
     private Random random = new Random();
     private BaseRecyclerAdapter<Void> mAdapter;
+    private LoadingLayout mLoadingLayout;
+    private RefreshLayout mRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +42,7 @@ public class BasicExampleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_example_basic);
 
         final Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> finish());
 
         ListView listView = findViewById(R.id.listView);
         listView.setAdapter(mAdapter = new BaseRecyclerAdapter<Void>(simple_list_item_2) {
@@ -69,51 +68,25 @@ public class BasicExampleActivity extends AppCompatActivity {
                     System.out.println("SCROLL_STATE_FLING");
                 }
             }
-
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 
             }
         });
 
-        final RefreshLayout refreshLayout = findViewById(R.id.refreshLayout);
-        refreshLayout.setEnableAutoLoadMore(true);//开启自动加载功能（非必须）
-        refreshLayout.setOnRefreshListener(refresh -> refresh.getLayout().postDelayed(() -> {
-            if (random.nextBoolean()) {
-                //如果刷新成功
-                mAdapter.refresh(initData(40));
-                if (mAdapter.getItemCount() <= 30) {
-                    //还有多的数据
-                    refresh.finishRefresh();
-                } else {
-                    //没有更多数据（上拉加载功能将显示没有更多数据）
-                    refresh.finishRefreshWithNoMoreData();
-                }
-            } else {
-                //刷新失败
-                refresh.finishRefresh(false);
-            }
-        }, 2000));
-        refreshLayout.setOnLoadMoreListener(layout -> layout.getLayout().postDelayed(() -> {
-            if (random.nextBoolean()) {
-                //如果刷新成功
-                mAdapter.loadMore(initData(10));
-                if (mAdapter.getItemCount() <= 30) {
-                    //还有多的数据
-                    layout.finishLoadMore();
-                } else {
-                    //没有更多数据（上拉加载功能将显示没有更多数据）
-                    Toast.makeText(getApplication(), "数据全部加载完毕", Toast.LENGTH_SHORT).show();
-                    layout.finishLoadMoreWithNoMoreData();//将不会再次触发加载更多事件
-                }
-            } else {
-                //刷新失败
-                layout.finishLoadMore(false);
-            }
-        }, 2000));
+        mLoadingLayout = findViewById(R.id.loading);
+        mRefreshLayout = findViewById(R.id.refreshLayout);
+        mRefreshLayout.setEnableAutoLoadMore(true);//开启自动加载功能（非必须）
+        mRefreshLayout.setOnRefreshListener(this::refresh);
+        mRefreshLayout.setOnLoadMoreListener(this::loadMore);
+        mLoadingLayout.setRetryListener(v -> {
+            mLoadingLayout.showContent();
+            mRefreshLayout.autoRefresh();
+        });
 
         //触发自动刷新
-        refreshLayout.autoRefresh();
+        mLoadingLayout.showContent();
+        mRefreshLayout.autoRefresh();
         //item 点击测试
         mAdapter.setOnItemClickListener((parent, view, position, id) -> {
             BottomSheetDialog dialog=new BottomSheetDialog(BasicExampleActivity.this);
@@ -130,9 +103,9 @@ public class BasicExampleActivity extends AppCompatActivity {
         });
 
         //点击测试
-        RefreshFooter footer = refreshLayout.getRefreshFooter();
+        RefreshFooter footer = mRefreshLayout.getRefreshFooter();
         if (footer instanceof ClassicsFooter) {
-            refreshLayout.getRefreshFooter().getView().findViewById(ClassicsFooter.ID_TEXT_TITLE).setOnClickListener(new View.OnClickListener() {
+            mRefreshLayout.getRefreshFooter().getView().findViewById(ClassicsFooter.ID_TEXT_TITLE).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(getBaseContext(), "点击测试", Toast.LENGTH_SHORT).show();
@@ -141,9 +114,56 @@ public class BasicExampleActivity extends AppCompatActivity {
         }
     }
 
+    private void loadMore(RefreshLayout layout) {
+        layout.getLayout().postDelayed(() -> {
+            if (random.nextBoolean()) {
+                //如果刷新成功
+                mAdapter.loadMore(initData(10));
+                if (mAdapter.getItemCount() <= 30) {
+                    //还有多的数据
+                    layout.finishLoadMore();
+                } else {
+                    //没有更多数据（上拉加载功能将显示没有更多数据）
+                    Toast.makeText(getApplication(), "数据全部加载完毕", Toast.LENGTH_SHORT).show();
+                    layout.finishLoadMoreWithNoMoreData();//将不会再次触发加载更多事件
+                }
+            } else {
+                //刷新失败
+                layout.finishLoadMore(false);
+            }
+        }, 2000);
+    }
+
+    private void refresh(RefreshLayout refresh) {
+        refresh.getLayout().postDelayed(() -> {
+            if (random.nextBoolean()) {
+                //如果刷新成功
+                mAdapter.refresh(initData(40));
+                if (mAdapter.getItemCount() <= 30) {
+                    //还有多的数据
+                    refresh.finishRefresh();
+                } else {
+                    //没有更多数据（上拉加载功能将显示没有更多数据）
+                    refresh.finishRefreshWithNoMoreData();
+                }
+            } else {
+                //刷新失败
+                refresh.finishRefresh(false);
+                if (mAdapter.isEmpty()) {
+                    mLoadingLayout.showError();
+                    mLoadingLayout.setErrorText("随机触发刷新失败演示！");
+                }
+            }
+        }, 2000);
+    }
+
     private Collection<Void> initData(int max) {
-        max = Math.max(0, max);
         int min = Math.min(10, max);
-        return Arrays.asList(new Void[min + random.nextInt(max - min)]);
+        max = Math.max(0, max);
+        if (max > min) {
+            return Arrays.asList(new Void[min + random.nextInt(max - min)]);
+        } else {
+            return Arrays.asList(new Void[min]);
+        }
     }
 }

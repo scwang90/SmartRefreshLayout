@@ -1,6 +1,7 @@
 package com.scwang.refreshlayout.activity.example;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,10 +10,13 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Switch;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -23,18 +27,15 @@ import java.util.Collection;
  */
 public class SnapHelperExampleActivity extends AppCompatActivity {
 
+    private BaseRecyclerAdapter<Integer> mAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_example_snaphelper);
 
         final Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> finish());
 
         //初始化列表和监听
         View view = findViewById(R.id.recyclerView);
@@ -42,7 +43,7 @@ public class SnapHelperExampleActivity extends AppCompatActivity {
             RecyclerView recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
             recyclerView.setItemAnimator(new DefaultItemAnimator());
-            recyclerView.setAdapter(new BaseRecyclerAdapter<Integer>(loadModels(), R.layout.item_example_snaphelper) {
+            recyclerView.setAdapter(mAdapter = new BaseRecyclerAdapter<Integer>(loadModels(), R.layout.item_example_snaphelper) {
                 @Override
                 protected void onBindViewHolder(SmartViewHolder holder, Integer model, int position) {
                     holder.image(R.id.imageView, model);
@@ -52,16 +53,34 @@ public class SnapHelperExampleActivity extends AppCompatActivity {
             snapHelper.attachToRecyclerView(recyclerView);
         }
 
+        RefreshLayout refreshLayout = findViewById(R.id.refreshLayout);
+        refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                refreshLayout.getLayout().postDelayed(() -> {
+                    mAdapter.refresh(loadModels());
+                    refreshLayout.finishRefresh();
+                }, 2000);
+            }
+
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                refreshLayout.getLayout().postDelayed(() -> {
+                    mAdapter.loadMore(loadModels());
+                    refreshLayout.finishLoadMore();
+                }, 2000);
+            }
+        });
+
+        Switch switcher = findViewById(R.id.switch_scroll_content);
+        if (switcher != null) {
+            refreshLayout.setEnableScrollContentWhenLoaded(switcher.isChecked());
+            switcher.setOnCheckedChangeListener((buttonView, isChecked) -> refreshLayout.setEnableScrollContentWhenLoaded(isChecked));
+        }
     }
 
     private Collection<Integer> loadModels() {
-        return Arrays.asList(
-                R.mipmap.image_weibo_home_1,
-                R.mipmap.image_weibo_home_2,
-                R.mipmap.image_weibo_home_1,
-                R.mipmap.image_weibo_home_2,
-                R.mipmap.image_weibo_home_1,
-                R.mipmap.image_weibo_home_2);
+        return Arrays.asList( R.mipmap.image_weibo_home_1, R.mipmap.image_weibo_home_2);
     }
 
 }

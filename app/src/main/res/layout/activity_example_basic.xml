@@ -12,23 +12,29 @@
         app:navigationIcon="?attr/homeAsUpIndicator"
         app:title="@string/title_activity_example_basic"/>
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/refreshLayout"
+    <ezy.ui.layout.LoadingLayout
+        android:id="@+id/loading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srlEnableScrollContentWhenLoaded="true"
-        app:srlEnableFooterFollowWhenLoadFinished="true">
-        <ListView
-            android:id="@+id/listView"
+        android:background="@android:color/white">
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/refreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/white"
-            android:overScrollMode="never"
-            tools:listitem="@android:layout/simple_list_item_2"/>
-        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srlClassicsSpinnerStyle="Translate"/>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+            app:srlEnableScrollContentWhenLoaded="true"
+            app:srlEnableFooterFollowWhenLoadFinished="true">
+            <ListView
+                android:id="@+id/listView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/white"
+                android:overScrollMode="never"
+                tools:listitem="@android:layout/simple_list_item_2"/>
+            <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srlClassicsSpinnerStyle="Translate"/>
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    </ezy.ui.layout.LoadingLayout>
 
 </LinearLayout>

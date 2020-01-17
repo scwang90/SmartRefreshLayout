@@ -9,8 +9,20 @@
 
     <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"
+        app:contentInsetStart="0dp"
+        app:titleMarginStart="0dp"
+        app:contentInsetStartWithNavigation="0dp"
         app:navigationIcon="?attr/homeAsUpIndicator"
-        app:title="@string/title_activity_example_snap_helper"/>
+        app:subtitle="@string/title_activity_example_snap_helper">
+        <Switch
+            android:id="@+id/switch_scroll_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:textSize="12sp"
+            android:text="@string/switch_scroll_content_when_loaded"
+            android:checked="true"/>
+    </android.support.v7.widget.Toolbar>
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
