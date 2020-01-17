@@ -179,5 +179,6 @@
 
     <string name="instant_message_input_hint">输入消息</string>
     <string name="instant_message_send">发送</string>
+    <string name="switch_scroll_content_when_loaded">加载更多时显示新内容</string>
 
 </resources>

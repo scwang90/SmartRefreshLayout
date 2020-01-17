@@ -14,13 +14,15 @@ import android.widget.Toast;
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
-import com.scwang.smart.refresh.footer.ClassicsFooter;
-import com.scwang.smart.refresh.layout.api.RefreshFooter;
-import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshFooter;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Random;
+
+import ezy.ui.layout.LoadingLayout;
 
 import static android.R.layout.simple_list_item_2;
 
@@ -29,8 +31,11 @@ import static android.R.layout.simple_list_item_2;
  */
 public class BasicExampleActivity extends AppCompatActivity {
 
+
     private Random random = new Random();
     private BaseRecyclerAdapter<Void> mAdapter;
+    private LoadingLayout mLoadingLayout;
+    private com.scwang.smartrefresh.layout.api.RefreshLayout mRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,32 +69,54 @@ public class BasicExampleActivity extends AppCompatActivity {
                     System.out.println("SCROLL_STATE_FLING");
                 }
             }
-
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 
             }
         });
 
-        final RefreshLayout refreshLayout = findViewById(R.id.refreshLayout);
-        refreshLayout.setEnableAutoLoadMore(true);//开启自动加载功能（非必须）
-        refreshLayout.setOnRefreshListener(refresh -> refresh.getLayout().postDelayed(() -> {
-            if (random.nextBoolean()) {
-                //如果刷新成功
-                mAdapter.refresh(initData(40));
-                if (mAdapter.getItemCount() <= 30) {
-                    //还有多的数据
-                    refresh.finishRefresh();
-                } else {
-                    //没有更多数据（上拉加载功能将显示没有更多数据）
-                    refresh.finishRefreshWithNoMoreData();
+        mLoadingLayout = findViewById(R.id.loading);
+        mRefreshLayout = findViewById(R.id.refreshLayout);
+        mRefreshLayout.setEnableAutoLoadMore(true);//开启自动加载功能（非必须）
+        mRefreshLayout.setOnRefreshListener(this::refresh);
+        mRefreshLayout.setOnLoadMoreListener(this::loadMore);
+        mLoadingLayout.setRetryListener(v -> {
+            mLoadingLayout.showContent();
+            mRefreshLayout.autoRefresh();
+        });
+
+        //触发自动刷新
+        mLoadingLayout.showContent();
+        mRefreshLayout.autoRefresh();
+        //item 点击测试
+        mAdapter.setOnItemClickListener((parent, view, position, id) -> {
+            BottomSheetDialog dialog=new BottomSheetDialog(BasicExampleActivity.this);
+            View dialogView = View.inflate(getBaseContext(), R.layout.activity_example_basic, null);
+            com.scwang.smartrefresh.layout.api.RefreshLayout refreshLayout1 = dialogView.findViewById(R.id.refreshLayout);
+            RecyclerView recyclerView = new RecyclerView(getBaseContext());
+            recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext()));
+            recyclerView.setAdapter(mAdapter);
+            refreshLayout1.setEnableRefresh(false);
+            refreshLayout1.setEnableNestedScroll(false);
+            refreshLayout1.setRefreshContent(recyclerView);
+            dialog.setContentView(dialogView);
+            dialog.show();
+        });
+
+        //点击测试
+        RefreshFooter footer = mRefreshLayout.getRefreshFooter();
+        if (footer instanceof com.scwang.smartrefresh.layout.footer.ClassicsFooter) {
+            mRefreshLayout.getRefreshFooter().getView().findViewById(ClassicsFooter.ID_TEXT_TITLE).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getBaseContext(), "点击测试", Toast.LENGTH_SHORT).show();
                 }
-            } else {
-                //刷新失败
-                refresh.finishRefresh(false);
-            }
-        }, 2000));
-        refreshLayout.setOnLoadMoreListener(layout -> layout.getLayout().postDelayed(() -> {
+            });
+        }
+    }
+
+    private void loadMore(com.scwang.smartrefresh.layout.api.RefreshLayout layout) {
+        layout.getLayout().postDelayed(() -> {
             if (random.nextBoolean()) {
                 //如果刷新成功
                 mAdapter.loadMore(initData(10));
@@ -105,40 +132,39 @@ public class BasicExampleActivity extends AppCompatActivity {
                 //刷新失败
                 layout.finishLoadMore(false);
             }
-        }, 2000));
+        }, 2000);
+    }
 
-        //触发自动刷新
-        refreshLayout.autoRefresh();
-        //item 点击测试
-        mAdapter.setOnItemClickListener((parent, view, position, id) -> {
-            BottomSheetDialog dialog=new BottomSheetDialog(BasicExampleActivity.this);
-            View dialogView = View.inflate(getBaseContext(), R.layout.activity_example_basic, null);
-            RefreshLayout refreshLayout1 = dialogView.findViewById(R.id.refreshLayout);
-            RecyclerView recyclerView = new RecyclerView(getBaseContext());
-            recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext()));
-            recyclerView.setAdapter(mAdapter);
-            refreshLayout1.setEnableRefresh(false);
-            refreshLayout1.setEnableNestedScroll(false);
-            refreshLayout1.setRefreshContent(recyclerView);
-            dialog.setContentView(dialogView);
-            dialog.show();
-        });
-
-        //点击测试
-        RefreshFooter footer = refreshLayout.getRefreshFooter();
-        if (footer instanceof ClassicsFooter) {
-            refreshLayout.getRefreshFooter().getView().findViewById(ClassicsFooter.ID_TEXT_TITLE).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(getBaseContext(), "点击测试", Toast.LENGTH_SHORT).show();
+    private void refresh(RefreshLayout refresh) {
+        refresh.getLayout().postDelayed(() -> {
+            if (random.nextBoolean()) {
+                //如果刷新成功
+                mAdapter.refresh(initData(40));
+                if (mAdapter.getItemCount() <= 30) {
+                    //还有多的数据
+                    refresh.finishRefresh();
+                } else {
+                    //没有更多数据（上拉加载功能将显示没有更多数据）
+                    refresh.finishRefreshWithNoMoreData();
                 }
-            });
-        }
+            } else {
+                //刷新失败
+                refresh.finishRefresh(false);
+                if (mAdapter.isEmpty()) {
+                    mLoadingLayout.showError();
+                    mLoadingLayout.setErrorText("随机触发刷新失败演示！");
+                }
+            }
+        }, 2000);
     }
 
     private Collection<Void> initData(int max) {
-        max = Math.max(0, max);
         int min = Math.min(10, max);
-        return Arrays.asList(new Void[min + random.nextInt(max - min)]);
+        max = Math.max(0, max);
+        if (max > min) {
+            return Arrays.asList(new Void[min + random.nextInt(max - min)]);
+        } else {
+            return Arrays.asList(new Void[min]);
+        }
     }
 }

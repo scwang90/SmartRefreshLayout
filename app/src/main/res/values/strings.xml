@@ -169,6 +169,7 @@
 
     <string name="instant_message_input_hint">input message</string>
     <string name="instant_message_send">Send</string>
+    <string name="switch_scroll_content_when_loaded">Scroll Content</string>
 
 
 </resources>
