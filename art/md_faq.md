@@ -122,7 +122,7 @@ public class App extends Application {
 
 XML直接指定（1.1.0 最新版）
 ~~~xml
-    <com.scwang.smartrefresh.layout.header.ClassicsHeader
+    <com.scwang.smart.refresh.footer.ClassicsFooter
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:srlTextPulling="@string/srl_header_pulling"
@@ -134,7 +134,7 @@ XML直接指定（1.1.0 最新版）
         app:srlTextSecondary="@string/srl_header_secondary"
         app:srlTextRefreshing="@string/srl_header_refreshing"/>
 
-    <com.scwang.smartrefresh.layout.header.ClassicsFooter
+    <com.scwang.smart.refresh.footer.ClassicsFooter
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:srlTextPulling="@string/srl_footer_pulling"

@@ -2405,7 +2405,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         return this;
     }
 
-    //    /**
+//    /**
 //     * Sets whether to enable pure nested scrolling mode
 //     * Smart scrolling supports both [nested scrolling] and [traditional scrolling] modes
 //     * With nested scrolling enabled, traditional mode also works when necessary

@@ -224,7 +224,7 @@ xml代码设置
 ~~~xml
 <!-- 下面示例中的值等于默认值 -->
 <com.scwang.smart.refresh.layout.SmartRefreshLayout>
-    <com.scwang.smartrefresh.layout.header.ClassicsHeader
+    <com.scwang.smart.refresh.footer.ClassicsFooter
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:srlAccentColor="@android:color/white"
@@ -305,7 +305,7 @@ xml代码设置
 ~~~xml
 <!-- 下面示例中的值等于默认值 -->
 <com.scwang.smart.refresh.layout.SmartRefreshLayout>
-    <com.scwang.smartrefresh.layout.header.ClassicsFooter
+    <com.scwang.smart.refresh.footer.ClassicsFooter
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:srlAccentColor="@android:color/white"
