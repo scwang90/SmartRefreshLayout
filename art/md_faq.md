@@ -320,19 +320,19 @@ footer.setFinishDuration(0);//设置Footer 的 “加载完成” 显示时间�
 他们都有关闭 Footer 的功能，所以 finishLoadMore 会导致 finishLoadMoreWithNoMoreData 功能异常。
 这样解释会比较清楚 finishLoadMoreWithNoMoreData = finishLoadMore + setNoMoreData(true)
 所以解决办法是去掉 finishLoadMoreWithNoMoreData 前面的 finishLoadMore 如下：
-···java
+```java
     //refreshLayout.finishLoadMore(); //前面的 finishLoadMore 要删除
     if(true/*没有更多数据*/) {
         refreshLayout.finishLoadMoreWithNoMoreData();
     } else {
         refreshLayout.finishLoadMore(); //在 else 中添加 finishLoadMore
     }
-···
+```
 
 2.少见原因（1.1.0版本以前） 只调用了 setNoMoreData(true) 未调用 finishLoadMore
 setNoMoreData 的关闭 Footer 功能是 1.1.0 后面添加的，所以之前的版本
 setNoMoreData 必须和 finishLoadMore 一起使用如：
-···java
+```java
     if(true/*没有更多数据*/) {
         refreshLayout.setNoMoreData(true);
         refreshLayout.finishLoadMore()// setNoMoreData 后面必须加finishLoadMore（1.1.0版本以前）
@@ -340,4 +340,4 @@ setNoMoreData 必须和 finishLoadMore 一起使用如：
     } else {
         refreshLayout.finishLoadMore();
     }
-···
+```
