@@ -171,18 +171,24 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
     //</editor-fold>
 
     //<editor-fold desc="RefreshFooter">
-    @Override
-    public void onStartAnimator(@NonNull RefreshLayout refreshLayout, int height, int maxDragHeight) {
-        if (!mNoMoreData) {
-            super.onStartAnimator(refreshLayout, height, maxDragHeight);
-        }
-    }
+//    @Override
+//    public void onStartAnimator(@NonNull RefreshLayout refreshLayout, int height, int maxDragHeight) {
+//        if (!mNoMoreData) {
+//            super.onStartAnimator(refreshLayout, height, maxDragHeight);
+//        }
+//    }
 
     @Override
     public int onFinish(@NonNull RefreshLayout layout, boolean success) {
+        /*
+         * 2020-5-15 修复BUG
+         * https://github.com/scwang90/SmartRefreshLayout/issues/1003
+         * 修复 没有更多数据之后 loading 还在显示问题
+         */
+        super.onFinish(layout, success);
         if (!mNoMoreData) {
             mTitleText.setText(success ? mTextFinish : mTextFailed);
-            return super.onFinish(layout, success);
+            return mFinishDuration;
         }
         return 0;
     }

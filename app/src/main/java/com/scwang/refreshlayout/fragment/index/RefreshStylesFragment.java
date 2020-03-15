@@ -38,6 +38,7 @@ import com.scwang.smartrefresh.header.BezierCircleHeader;
 import com.scwang.smartrefresh.header.DeliveryHeader;
 import com.scwang.smartrefresh.header.DropBoxHeader;
 import com.scwang.smartrefresh.header.FunGameHitBlockHeader;
+import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.header.PhoenixHeader;
 import com.scwang.smartrefresh.header.TaurusHeader;
 import com.scwang.smartrefresh.layout.api.RefreshFooter;
@@ -45,12 +46,9 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
-import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.impl.RefreshFooterWrapper;
 import com.scwang.smartrefresh.layout.impl.RefreshHeaderWrapper;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 
 import java.util.Arrays;
@@ -170,6 +168,10 @@ public class RefreshStylesFragment extends Fragment implements AdapterView.OnIte
                         } else if (oldState == RefreshState.RefreshFinish) {
                             RefreshHeader refreshHeader = refreshLayout.getRefreshHeader();
                             if (refreshHeader instanceof RefreshHeaderWrapper) {
+                                refreshLayout.setEnableHeaderTranslationContent(false);
+                                refreshLayout.setRefreshHeader(new MaterialHeader(getContext()));
+                            } else if (refreshHeader instanceof MaterialHeader) {
+                                refreshLayout.setEnableHeaderTranslationContent(true);
                                 refreshLayout.setRefreshHeader(new PhoenixHeader(getContext()));
                             } else if (refreshHeader instanceof PhoenixHeader) {
                                 refreshLayout.setRefreshHeader(new DropBoxHeader(getContext()));

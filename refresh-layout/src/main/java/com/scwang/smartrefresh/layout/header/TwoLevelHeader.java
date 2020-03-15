@@ -37,6 +37,7 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
     protected float mRefreshRate = 1f;
     protected boolean mEnableTwoLevel = true;
     protected boolean mEnablePullToCloseTwoLevel = true;
+    protected boolean mEnableRefresh = true;
     protected int mFloorDuration = 1000;
     protected int mHeaderHeight;
 //    protected int mPaintAlpha;
@@ -68,6 +69,7 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
         mRefreshRate = ta.getFloat(R.styleable.TwoLevelHeader_srlRefreshRate, mRefreshRate);
         mFloorDuration = ta.getInt(R.styleable.TwoLevelHeader_srlFloorDuration, mFloorDuration);
         mEnableTwoLevel = ta.getBoolean(R.styleable.TwoLevelHeader_srlEnableTwoLevel, mEnableTwoLevel);
+        mEnableRefresh = ta.getBoolean(R.styleable.TwoLevelHeader_srlEnableRefresh, mEnableRefresh);
         mEnablePullToCloseTwoLevel = ta.getBoolean(R.styleable.TwoLevelHeader_srlEnablePullToCloseTwoLevel, mEnablePullToCloseTwoLevel);
 
         ta.recycle();
@@ -163,6 +165,9 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
         final RefreshInternal refreshHeader = mRefreshHeader;
         if (refreshHeader != null) {
             final OnStateChangedListener listener = mRefreshHeader;
+            if (newState == RefreshState.ReleaseToRefresh && !mEnableRefresh) {
+                newState = RefreshState.PullDownToRefresh;
+            }
             listener.onStateChanged(refreshLayout, oldState, newState);
             switch (newState) {
                 case TwoLevelReleased:
@@ -204,8 +209,10 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
                 refreshKernel.setState(RefreshState.ReleaseToTwoLevel);
             } else if (mPercent >= mFloorRate && percent < mRefreshRate) {
                 refreshKernel.setState(RefreshState.PullDownToRefresh);
-            } else if (mPercent >= mFloorRate && percent < mFloorRate) {
+            } else if (mPercent >= mFloorRate && percent < mFloorRate && mEnableRefresh) {
                 refreshKernel.setState(RefreshState.ReleaseToRefresh);
+            } else if (!mEnableRefresh && refreshKernel.getRefreshLayout().getState() != RefreshState.ReleaseToTwoLevel) {
+                refreshKernel.setState(RefreshState.PullDownToRefresh);
             }
             mPercent = percent;
         }

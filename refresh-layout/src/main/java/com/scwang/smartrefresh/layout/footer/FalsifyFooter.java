@@ -14,7 +14,6 @@ import com.scwang.smartrefresh.layout.R;
 import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 import com.scwang.smartrefresh.layout.util.SmartUtil;
 
@@ -78,11 +77,18 @@ public class FalsifyFooter extends InternalAbstract implements RefreshFooter {
     @Override
     public void onReleased(@NonNull RefreshLayout layout, int height, int maxDragHeight) {
         if (mRefreshKernel != null) {
-            mRefreshKernel.setState(RefreshState.None);
-            //onReleased 的时候 调用 setState(RefreshState.None); 并不会立刻改变成 None
-            //而是先执行一个回弹动画，LoadFinish 是介于 Refreshing 和 None 之间的状态
-            //LoadFinish 用于在回弹动画结束时候能顺利改变为 None
-            mRefreshKernel.setState(RefreshState.LoadFinish);
+            /*
+             * 2020-3-15 BUG修复
+             * https://github.com/scwang90/SmartRefreshLayout/issues/1018
+             * 强化了 closeHeaderOrFooter 的关闭逻辑，帮助 Footer 取消刷新
+             * FalsifyFooter 是不能触发加载的
+             */
+            layout.closeHeaderOrFooter();
+//            mRefreshKernel.setState(RefreshState.None);
+//            //onReleased 的时候 调用 setState(RefreshState.None); 并不会立刻改变成 None
+//            //而是先执行一个回弹动画，LoadFinish 是介于 Refreshing 和 None 之间的状态
+//            //LoadFinish 用于在回弹动画结束时候能顺利改变为 None
+//            mRefreshKernel.setState(RefreshState.LoadFinish);
         }
     }
 

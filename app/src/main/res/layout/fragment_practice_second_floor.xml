@@ -14,6 +14,7 @@
         app:srlAccentColor="@android:color/white">
         <com.scwang.smartrefresh.layout.header.TwoLevelHeader
             android:id="@+id/header"
+            app:srlEnableRefresh="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView

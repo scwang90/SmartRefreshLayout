@@ -84,6 +84,16 @@ public class BasicExampleActivity extends AppCompatActivity {
             mRefreshLayout.autoRefresh();
         });
 
+        toolbar.setOnClickListener(v->{
+            boolean ret = mRefreshLayout.autoRefresh();
+            System.out.println("auto-autoRefresh="+ret);
+            mRefreshLayout.getLayout().postDelayed(()->{
+                System.out.println("auto-1-finishRefresh-"+mRefreshLayout.getState());
+                mRefreshLayout.finishRefresh();
+                System.out.println("auto-2-finishRefresh-"+mRefreshLayout.getState());
+            },600);
+        });
+
         //触发自动刷新
         mLoadingLayout.showContent();
         mRefreshLayout.autoRefresh();
@@ -136,7 +146,7 @@ public class BasicExampleActivity extends AppCompatActivity {
 
     private void refresh(RefreshLayout refresh) {
         refresh.getLayout().postDelayed(() -> {
-            if (random.nextBoolean()) {
+//            if (random.nextBoolean()) {
                 //如果刷新成功
                 mAdapter.refresh(initData(40));
                 if (mAdapter.getItemCount() <= 30) {
@@ -146,14 +156,14 @@ public class BasicExampleActivity extends AppCompatActivity {
                     //没有更多数据（上拉加载功能将显示没有更多数据）
                     refresh.finishRefreshWithNoMoreData();
                 }
-            } else {
-                //刷新失败
-                refresh.finishRefresh(false);
-                if (mAdapter.isEmpty()) {
-                    mLoadingLayout.showError();
-                    mLoadingLayout.setErrorText("随机触发刷新失败演示！");
-                }
-            }
+//            } else {
+//                //刷新失败
+//                refresh.finishRefresh(false);
+//                if (mAdapter.isEmpty()) {
+//                    mLoadingLayout.showError();
+//                    mLoadingLayout.setErrorText("随机触发刷新失败演示！");
+//                }
+//            }
         }, 2000);
     }
 
