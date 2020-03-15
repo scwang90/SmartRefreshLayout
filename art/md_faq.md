@@ -261,7 +261,7 @@ XML属性
 
 注意：是**固定**的头布局，如果是想添加可以滚动的头布局，请使用开源的Adapter实现
 
-## 11.显示全部加载完成，并不再触发加载更事件
+## 11.显示没有更多数据，并不再触发加载更事件
 
 ~~~java
 //加载结束之后的逻辑
@@ -313,3 +313,31 @@ footer.setFinishDuration(0);//设置Footer 的 “加载完成” 显示时间�
 1. 如果是 RecyclerView 和 NestScrollView 先尝试打开 Smart 的嵌套滚动功能
 2. 如果是 ListVIew，ScrollView，可以尝试 同时打开 ScrollView，ScrollView，Smart 的嵌套滚动功能
 3. 如果 1，2 都无效，这需要自定义滚动边界自己实现 canRefresh 和 canLoadMore，自己用代码告诉Smart 什么时候可以 刷新，什么时候可以加载
+
+## 16.finishLoadMoreWithNoMoreData /没有更多数据 账号，Footer 还显示了loading/转圈
+
+1.最常见的原因是 finishLoadMore 和 finishLoadMoreWithNoMoreData 同时调用导致的。
+他们都有关闭 Footer 的功能，所以 finishLoadMore 会导致 finishLoadMoreWithNoMoreData 功能异常。
+这样解释会比较清楚 finishLoadMoreWithNoMoreData = finishLoadMore + setNoMoreData(true)
+所以解决办法是去掉 finishLoadMoreWithNoMoreData 前面的 finishLoadMore 如下：
+···java
+    //refreshLayout.finishLoadMore(); //前面的 finishLoadMore 要删除
+    if(true/*没有更多数据*/) {
+        refreshLayout.finishLoadMoreWithNoMoreData();
+    } else {
+        refreshLayout.finishLoadMore(); //在 else 中添加 finishLoadMore
+    }
+···
+
+2.少见原因（1.1.0版本以前） 只调用了 setNoMoreData(true) 未调用 finishLoadMore
+setNoMoreData 的关闭 Footer 功能是 1.1.0 后面添加的，所以之前的版本
+setNoMoreData 必须和 finishLoadMore 一起使用如：
+···java
+    if(true/*没有更多数据*/) {
+        refreshLayout.setNoMoreData(true);
+        refreshLayout.finishLoadMore()// setNoMoreData 后面必须加finishLoadMore（1.1.0版本以前）
+        //refreshLayout.finishLoadMoreWithNoMoreData(); 也可以用 finishLoadMoreWithNoMoreData 代替上面两行
+    } else {
+        refreshLayout.finishLoadMore();
+    }
+···
