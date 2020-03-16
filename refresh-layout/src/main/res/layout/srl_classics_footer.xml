@@ -41,6 +41,6 @@
         android:maxLines="1"
         android:textColor="#666666"
         android:textSize="15sp"
-        android:text="@string/srl_header_pulling"/>
+        android:text="@string/srl_footer_pulling"/>
 
 </merge>

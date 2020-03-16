@@ -72,7 +72,7 @@ public class WaterDropHeader extends InternalAbstract implements RefreshHeader {
 
         mImageView = new ImageView(context);
         mProgress = new MaterialProgressDrawable(mImageView);
-        mProgress.setBackgroundColor(0xffffffff);
+//        mProgress.setBackgroundColor(0xffffffff);
         mProgress.setAlpha(255);
         mProgress.setColorSchemeColors(0xffffffff,0xff0099cc,0xffff4444,0xff669900,0xffaa66cc,0xffff8800);
         mImageView.setImageDrawable(mProgress);

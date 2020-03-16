@@ -5,37 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.scwang.refreshlayout.activity.example.SnapHelperExampleActivity">
+    tools:context="com.scwang.refreshlayout.activity.example.I18nExampleActivity">
 
     <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"
-        app:contentInsetStart="0dp"
-        app:titleMarginStart="0dp"
-        app:contentInsetStartWithNavigation="0dp"
         app:navigationIcon="?attr/homeAsUpIndicator"
-        app:subtitle="@string/title_activity_example_snap_helper">
-        <Switch
-            android:id="@+id/switch_scroll_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:textSize="12sp"
-            android:text="@string/switch_scroll_content_when_loaded"
-            android:checked="true"/>
-    </android.support.v7.widget.Toolbar>
+        app:title="@string/title_activity_example_i18n"/>
+
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <ListView
+            android:id="@+id/listView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@android:color/white"
             android:overScrollMode="never"
             tools:listitem="@android:layout/simple_list_item_2"/>
-        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

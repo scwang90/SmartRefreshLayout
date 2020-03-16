@@ -21,6 +21,7 @@ import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.activity.FragmentActivity;
 import com.scwang.refreshlayout.activity.example.BasicExampleActivity;
 import com.scwang.refreshlayout.activity.example.CustomExampleActivity;
+import com.scwang.refreshlayout.activity.example.I18nExampleActivity;
 import com.scwang.refreshlayout.activity.example.ListenerExampleActivity;
 import com.scwang.refreshlayout.activity.example.NestedLayoutExampleActivity;
 import com.scwang.refreshlayout.activity.example.SnapHelperExampleActivity;
@@ -58,6 +59,7 @@ public class RefreshExampleFragment extends Fragment implements AdapterView.OnIt
         PureScroll(R.string.index_example_scroll, PureScrollExampleFragment.class),
         Listener(R.string.index_example_listener, ListenerExampleActivity.class),
         Custom(R.string.index_example_custom, CustomExampleActivity.class),
+        I18N(R.string.index_example_custom, I18nExampleActivity.class),
         SnapHelper(R.string.index_example_snap_helper, SnapHelperExampleActivity.class),
         ViewPager(R.string.index_example_pager, ViewPagerExampleFragment.class),
         BottomSheet(R.string.index_example_bottom_sheet,BottomSheetExampleFragment.class),

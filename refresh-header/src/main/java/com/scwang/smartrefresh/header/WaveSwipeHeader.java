@@ -4,7 +4,6 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.IdRes;
@@ -228,6 +227,8 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
         mState = newState;
         switch (newState) {
             case None:
+            case ReleaseToRefresh:
+            case Refreshing:
                 break;
             case PullDownToRefresh:
                 mProgress.showArrow(true);
@@ -241,10 +242,6 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
                 mProgress.setStartEndTrim(0f, 0f);
                 mWaveView.startWaveAnimation(mLastFirstBounds);
                 mLastFirstBounds = 0;
-                break;
-            case ReleaseToRefresh:
-                break;
-            case Refreshing:
                 break;
         }
     }
@@ -349,7 +346,7 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
         public ProgressAnimationImageView(Context context) {
             super(context);
             mProgress = new MaterialProgressDrawable(WaveSwipeHeader.this);
-            mProgress.setBackgroundColor(Color.TRANSPARENT);
+//            mProgress.setBackgroundColor(Color.TRANSPARENT);
             if (isOver600dp()) { // Make the progress be big
                 mProgress.updateSizes(MaterialProgressDrawable.LARGE);
             }

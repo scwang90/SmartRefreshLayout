@@ -30,9 +30,12 @@
             android:background="@android:color/white"
             android:overScrollMode="never"
             tools:listitem="@android:layout/simple_list_item_2"/>
-        <com.scwang.smartrefresh.header.MaterialHeader
+        <com.scwang.smartrefresh.layout.footer.FalsifyFooter
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+<!--        <com.scwang.smartrefresh.header.MaterialHeader-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"/>-->
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

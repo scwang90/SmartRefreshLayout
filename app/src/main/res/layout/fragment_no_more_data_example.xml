@@ -21,11 +21,14 @@
         app:srlAccentColor="@android:color/white"
         app:srlPrimaryColor="@color/colorPrimary"
         app:srlEnableFooterFollowWhenNoMoreData="true">
-        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+        <com.scwang.smartrefresh.header.MaterialHeader
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srlAccentColor="#aaa"
-            app:srlPrimaryColor="@color/colorBackgroundDark" />
+            android:layout_height="wrap_content"/>
+<!--        <com.scwang.smartrefresh.layout.header.ClassicsHeader-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:srlAccentColor="#aaa"-->
+<!--            app:srlPrimaryColor="@color/colorBackgroundDark" />-->
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"

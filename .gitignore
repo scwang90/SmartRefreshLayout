@@ -3,6 +3,7 @@
 .*
 build
 release
+/art
 /local.properties
 /bintrayUpload-key.bat
 
