@@ -268,15 +268,26 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
     public TwoLevelHeader setRefreshHeader(RefreshHeader header, int width, int height) {
         final ViewGroup thisGroup = this;
         if (header != null) {
+            /*
+             * 2020-3-16 修复 header 中自带 LayoutParams 丢失问题
+             */
+            width = width == 0 ? MATCH_PARENT : width;
+            height = height == 0 ? WRAP_CONTENT : height;
+            LayoutParams lp = new LayoutParams(width, height);
+            Object olp = header.getView().getLayoutParams();
+            if (olp instanceof LayoutParams) {
+                lp = ((LayoutParams) olp);
+            }
+
             RefreshInternal refreshHeader = mRefreshHeader;
             if (refreshHeader != null) {
                 thisGroup.removeView(refreshHeader.getView());
             }
             refreshHeader = header;
             if (refreshHeader.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
-                thisGroup.addView(refreshHeader.getView(), 0, new LayoutParams(width, height));
+                thisGroup.addView(refreshHeader.getView(), 0, lp);
             } else {
-                thisGroup.addView(refreshHeader.getView(), thisGroup.getChildCount(), new LayoutParams(width, height));
+                thisGroup.addView(refreshHeader.getView(), thisGroup.getChildCount(), lp);
             }
             this.mRefreshHeader = header;
             this.mWrappedInternal = header;

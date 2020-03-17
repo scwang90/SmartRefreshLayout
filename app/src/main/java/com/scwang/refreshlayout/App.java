@@ -26,6 +26,7 @@ public class App extends Application {
             layout.setEnableLoadMoreWhenContentNotFull(true);
             layout.setEnableScrollContentWhenRefreshed(true);
             layout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);
+            layout.getLayout().setTag("close egg");
         });
         SmartRefreshLayout.setDefaultRefreshHeaderCreator((context, layout) -> {
             //全局设置主题颜色（优先级第二低，可以覆盖 DefaultRefreshInitializer 的配置，与下面的ClassicsHeader绑定）
