@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/badge/License%20-Apache%202-337ab7.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Arsenal](https://img.shields.io/badge/Arsenal%20-%20SmartRefresh-4cae4c.svg)](https://android-arsenal.com/details/1/6001)
-[![JCenter](https://img.shields.io/badge/%20JCenter%20-1.1.0-5bc0de.svg)](https://bintray.com/scwang90/maven/SmartRefreshLayout/_latestVersion)
+[![JCenter](https://img.shields.io/badge/%20JCenter%20-2.0.0-5bc0de.svg)](https://bintray.com/scwang90/maven/refresh-layout-kernel/_latestVersion)
 [![MinSdk](https://img.shields.io/badge/%20MinSdk%20-%2012%2B%20-f0ad4e.svg)](https://android-arsenal.com/api?level=12)
 [![Methods](https://img.shields.io/badge/Methods%20%7C%20Size%20-%20784%20%7C%20121%20KB-d9534f.svg)](http://www.methodscount.com/?lib=com.scwang.smartrefresh%3ASmartRefreshLayout%3A1.0.4)
 
@@ -129,6 +129,8 @@ V2.x 版本已经把依赖库拆分成8个包啦，用到的时候自行引用�
 ## 简单用例
 #### 1.在 build.gradle 中添加依赖
 
+[【V1.1.0】](https://github.com/scwang90/SmartRefreshLayout/tree/1.x#%E7%AE%80%E5%8D%95%E7%94%A8%E4%BE%8B) 如果正在使用1.x 版本请调转，当前2.0 版本已经重定制，不支持升级，请在新项目中使用。
+
 V2.x 相对于 V1.x 对包名做了修改如：com.scwang.smartrefresh 改为 com.scwang.smart.refresh。
 建议在新项目中使用，如果项目升级，java，xml 中都需要做包名替换，比较麻烦。
 但主要改动还是对 Smart 进行分包，减小不必要的依赖，比如不使用二级刷新就不依赖，避免代码冗余。
@@ -137,21 +139,21 @@ V2.x 相对于 V1.x 对包名做了修改如：com.scwang.smartrefresh 改为 co
 
 ```
 // 注意：分包之后不会有默认的Header和Footer需要手动添加！还是原来的三种方法！
-implementation  'com.scwang.smart:refresh-layout-kernel:2.0.0-alpha-1'      //核心必须依赖
-implementation  'com.scwang.smart:refresh-header-classics:2.0.0-alpha-1'    //经典刷新头
-implementation  'com.scwang.smart:refresh-header-radar:2.0.0-alpha-1'       //雷达刷新头
-implementation  'com.scwang.smart:refresh-header-falsify:2.0.0-alpha-1'     //虚拟刷新头
-implementation  'com.scwang.smart:refresh-header-material:2.0.0-alpha-1'    //谷歌刷新头
-implementation  'com.scwang.smart:refresh-header-two-level:2.0.0-alpha-1'   //二级刷新头
-implementation  'com.scwang.smart:refresh-footer-ball:2.0.0-alpha-1'        //球脉冲加载
-implementation  'com.scwang.smart:refresh-footer-classics:2.0.0-alpha-1'    //经典加载
+implementation  'com.scwang.smart:refresh-layout-kernel:2.0.0'      //核心必须依赖
+implementation  'com.scwang.smart:refresh-header-classics:2.0.0'    //经典刷新头
+implementation  'com.scwang.smart:refresh-header-radar:2.0.0'       //雷达刷新头
+implementation  'com.scwang.smart:refresh-header-falsify:2.0.0'     //虚拟刷新头
+implementation  'com.scwang.smart:refresh-header-material:2.0.0'    //谷歌刷新头
+implementation  'com.scwang.smart:refresh-header-two-level:2.0.0'   //二级刷新头
+implementation  'com.scwang.smart:refresh-footer-ball:2.0.0'        //球脉冲加载
+implementation  'com.scwang.smart:refresh-footer-classics:2.0.0'    //经典加载
 
 ```
 
 <!-- // 保留了 com.scwang.smartrefresh 的包名，但不分包 -->
-<!-- implementation 'com.scwang.smartrefresh:SmartRefreshHeader:2.0.0-alpha-1'   //各种Header集合 -->
-<!-- implementation 'com.scwang.smartrefresh:SmartRefreshFooter:2.0.0-alpha-1'   //各种Footer集合 -->
-<!-- implementation 'com.scwang.smartrefresh:SmartRefreshLayout:2.0.0-alpha-1'   //核心、默认Header、默认Footer -->
+<!-- implementation 'com.scwang.smartrefresh:SmartRefreshHeader:2.0.0'   //各种Header集合 -->
+<!-- implementation 'com.scwang.smartrefresh:SmartRefreshFooter:2.0.0'   //各种Footer集合 -->
+<!-- implementation 'com.scwang.smartrefresh:SmartRefreshLayout:2.0.0'   //核心、默认Header、默认Footer -->
 
 如果使用 AndroidX 在 gradle.properties 中添加
 

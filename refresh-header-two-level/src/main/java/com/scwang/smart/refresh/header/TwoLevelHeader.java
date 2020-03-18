@@ -36,6 +36,7 @@ public class TwoLevelHeader extends SimpleComponent implements RefreshHeader, Ne
     protected float mMaxRate = 2.5f;
     protected float mFloorRate = 1.9f;
     protected float mRefreshRate = 1f;
+    protected boolean mEnableRefresh = true;
     protected boolean mEnableTwoLevel = true;
     protected boolean mEnablePullToCloseTwoLevel = true;
     protected int mFloorDuration = 1000;
@@ -62,6 +63,7 @@ public class TwoLevelHeader extends SimpleComponent implements RefreshHeader, Ne
         mFloorRate = ta.getFloat(R.styleable.TwoLevelHeader_srlFloorRate, mFloorRate);
         mRefreshRate = ta.getFloat(R.styleable.TwoLevelHeader_srlRefreshRate, mRefreshRate);
         mFloorDuration = ta.getInt(R.styleable.TwoLevelHeader_srlFloorDuration, mFloorDuration);
+        mEnableRefresh = ta.getBoolean(R.styleable.TwoLevelHeader_srlEnableRefresh, mEnableRefresh);
         mEnableTwoLevel = ta.getBoolean(R.styleable.TwoLevelHeader_srlEnableTwoLevel, mEnableTwoLevel);
         mEnablePullToCloseTwoLevel = ta.getBoolean(R.styleable.TwoLevelHeader_srlEnablePullToCloseTwoLevel, mEnablePullToCloseTwoLevel);
 
@@ -162,6 +164,9 @@ public class TwoLevelHeader extends SimpleComponent implements RefreshHeader, Ne
         final RefreshComponent refreshHeader = mRefreshHeader;
         if (refreshHeader != null) {
             final OnStateChangedListener listener = mRefreshHeader;
+            if (newState == RefreshState.ReleaseToRefresh && !mEnableRefresh) {
+                newState = RefreshState.PullDownToRefresh;
+            }
             listener.onStateChanged(refreshLayout, oldState, newState);
             switch (newState) {
                 case TwoLevelReleased:
@@ -203,8 +208,10 @@ public class TwoLevelHeader extends SimpleComponent implements RefreshHeader, Ne
                 refreshKernel.setState(RefreshState.ReleaseToTwoLevel);
             } else if (mPercent >= mFloorRate && percent < mRefreshRate) {
                 refreshKernel.setState(RefreshState.PullDownToRefresh);
-            } else if (mPercent >= mFloorRate && percent < mFloorRate) {
+            } else if (mPercent >= mFloorRate && percent < mFloorRate && mEnableRefresh) {
                 refreshKernel.setState(RefreshState.ReleaseToRefresh);
+            } else if (!mEnableRefresh && refreshKernel.getRefreshLayout().getState() != RefreshState.ReleaseToTwoLevel) {
+                refreshKernel.setState(RefreshState.PullDownToRefresh);
             }
             mPercent = percent;
         }
@@ -275,7 +282,7 @@ public class TwoLevelHeader extends SimpleComponent implements RefreshHeader, Ne
      * @return TwoLevelHeader
      */
     public TwoLevelHeader setRefreshHeader(RefreshHeader header) {
-        return setRefreshHeader(header, MATCH_PARENT, WRAP_CONTENT);
+        return setRefreshHeader(header, 0, 0);
     }
 
     /**
@@ -288,15 +295,26 @@ public class TwoLevelHeader extends SimpleComponent implements RefreshHeader, Ne
     public TwoLevelHeader setRefreshHeader(RefreshHeader header, int width, int height) {
         final ViewGroup thisGroup = this;
         if (header != null) {
+            /*
+             * 2020-3-16 修复 header 中自带 LayoutParams 丢失问题
+             */
+            width = width == 0 ? MATCH_PARENT : width;
+            height = height == 0 ? WRAP_CONTENT : height;
+            LayoutParams lp = new LayoutParams(width, height);
+            Object olp = header.getView().getLayoutParams();
+            if (olp instanceof LayoutParams) {
+                lp = ((LayoutParams) olp);
+            }
+
             RefreshComponent refreshHeader = mRefreshHeader;
             if (refreshHeader != null) {
                 thisGroup.removeView(refreshHeader.getView());
             }
             refreshHeader = header;
             if (refreshHeader.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
-                thisGroup.addView(refreshHeader.getView(), 0, new LayoutParams(width, height));
+                thisGroup.addView(refreshHeader.getView(), 0, lp);
             } else {
-                thisGroup.addView(refreshHeader.getView(), thisGroup.getChildCount(), new LayoutParams(width, height));
+                thisGroup.addView(refreshHeader.getView(), thisGroup.getChildCount(), lp);
             }
             this.mRefreshHeader = header;
             this.mWrappedInternal = header;
@@ -332,6 +350,16 @@ public class TwoLevelHeader extends SimpleComponent implements RefreshHeader, Ne
         if (refreshKernel != null) {
             refreshKernel.requestNeedTouchEventFor(this, !enabled);
         }
+        return this;
+    }
+
+    /**
+     * 设置是否开启
+     * @param enabled 刷新功能
+     * @return TwoLevelHeader
+     */
+    public TwoLevelHeader setEnableRefresh(boolean enabled) {
+        this.mEnableRefresh = enabled;
         return this;
     }
 

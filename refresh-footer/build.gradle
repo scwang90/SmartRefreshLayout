@@ -32,8 +32,8 @@ dependencies {
     })
     testImplementation 'junit:junit:4.12'
 
-    api project(':refresh-footer-ball')
-    api project(':refresh-footer-classics')
+    compileOnly project(':refresh-footer-ball')
+    compileOnly project(':refresh-footer-classics')
     compileOnly project(':refresh-layout')
 }
 

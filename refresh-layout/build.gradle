@@ -33,11 +33,11 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 
     compileOnly 'com.android.support:design:28.0.0'
-    api project(':refresh-layout-kernel')
-    api project(':refresh-footer-ball')
-    api project(':refresh-header-falsify')
-    api project(':refresh-header-radar')
-    api project(':refresh-header-two-level')
+    compileOnly project(':refresh-layout-kernel')
+    compileOnly project(':refresh-footer-ball')
+    compileOnly project(':refresh-header-falsify')
+    compileOnly project(':refresh-header-radar')
+    compileOnly project(':refresh-header-two-level')
 
 }
 //

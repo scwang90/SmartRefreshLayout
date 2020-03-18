@@ -63,9 +63,18 @@ dependencies {
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
     testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
 
-//    implementation project(':refresh-footer')
+    implementation project(':refresh-footer')
     implementation project(':refresh-header')
     implementation project(':refresh-layout')
+    implementation project(':refresh-drawable-path')
+
+    implementation project(':refresh-layout-kernel')
+    implementation project(':refresh-header-classics')
+    implementation project(':refresh-header-radar')
+    implementation project(':refresh-header-falsify')
+    implementation project(':refresh-header-material')
+    implementation project(':refresh-header-two-level')
+    implementation project(':refresh-footer-ball')
 
 //    implementation  'com.scwang.smart:refresh-layout-kernel:2.0.0-alpha-1'      //核心必须依赖
 //    implementation  'com.scwang.smart:refresh-header-classics:2.0.0-alpha-1'    //经典刷新头

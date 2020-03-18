@@ -33,8 +33,11 @@ dependencies {
     compileOnly 'com.android.support:support-annotations:28.0.0'
     compileOnly 'com.android.support:support-v4:28.0.0'
     compileOnly project(':refresh-layout')
-    api project(':refresh-drawable-path')
-    api project(':refresh-header-material')
+    compileOnly project(':refresh-drawable-path')
+    compileOnly project(':refresh-header-material')
+
+    compileOnly project(':refresh-layout-kernel')
+    compileOnly project(':refresh-header-falsify')
 }
 
 //publish {
