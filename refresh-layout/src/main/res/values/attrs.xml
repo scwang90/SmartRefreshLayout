@@ -15,7 +15,6 @@
     <attr name="srlDrawableArrow" format="reference"/><!--箭头图片-->
     <attr name="srlDrawableProgress" format="reference"/><!--转动图片-->
     <attr name="srlEnableHorizontalDrag" format="boolean"/><!--支持水平拖动-->
-    <attr name="srlEnableRefresh" format="boolean"/><!--开启刷新功能-->
 
     <attr name="srlTextPulling" format="string"/>
     <attr name="srlTextLoading" format="string"/>
@@ -63,7 +62,7 @@
         <attr name="srlFooterMaxDragRate" format="float"/>
         <attr name="srlHeaderTriggerRate" format="float"/>
         <attr name="srlFooterTriggerRate" format="float"/>
-        <attr name="srlEnableRefresh"/>
+        <attr name="srlEnableRefresh" format="boolean"/>
         <attr name="srlEnableLoadMore" format="boolean"/>
         <attr name="srlEnableHeaderTranslationContent" format="boolean"/>
         <attr name="srlEnableFooterTranslationContent" format="boolean"/>
@@ -164,7 +163,9 @@
         <attr name="srlRefreshRate" format="float"/>
         <attr name="srlFloorDuration" format="integer"/>
         <attr name="srlEnableTwoLevel" format="boolean"/>
-        <attr name="srlEnableRefresh"/>
+        <attr name="srlEnableFloorRefresh" format="boolean"/>
+        <attr name="srlFloorOpenLayoutRate" format="float"/>
+        <attr name="srlFloorBottomDragLayoutRate" format="float"/>
         <attr name="srlEnablePullToCloseTwoLevel" format="boolean"/>
     </declare-styleable>
 

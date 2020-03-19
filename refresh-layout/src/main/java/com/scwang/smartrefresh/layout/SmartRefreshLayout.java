@@ -94,6 +94,8 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     protected float mTouchY;
     protected float mLastTouchX;//用于实现Header的左右拖动效果
     protected float mLastTouchY;//用于实现多点触摸
+    protected float mFloorOpenLayoutRate = 1f;//二楼打开时，二楼所占高度比
+    protected float mFloorBottomDragLayoutRate = 1f/6;//二楼打开时，底部上划关闭二楼，所占高度比
     protected float mDragRate = .5f;
     protected char mDragDirection = 'n';//拖动的方向 none-n horizontal-h vertical-v
     protected boolean mIsBeingDragged;//是否正在拖动
@@ -661,7 +663,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                          * SpinnerStyle.Scale  headerView.getMeasuredHeight() 已经重复处理
                          **/
 //                    } else if (mRefreshHeader.getSpinnerStyle().scale && mSpinner > 0) {
-//                        bottom = top + Math.max(Math.max(0, isEnableRefreshOrLoadMore(mEnableRefresh) ? mSpinner : 0) - lp.bottomMargin - lp.topMargin, 0);
+//                        bottom = top + Math.max(Math.max(0, isEnableRefreshOrLoadMore(mEnableFloorRefresh) ? mSpinner : 0) - lp.bottomMargin - lp.topMargin, 0);
                     }
                 }
                 headerView.layout(left, top, right, bottom);
@@ -951,9 +953,15 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 mEnableDisallowIntercept = false;
                 /*----------------------------------------------------*/
                 mSuperDispatchTouchEvent = super.dispatchTouchEvent(e);
-                if (mState == RefreshState.TwoLevel && mTouchY < 5f * thisView.getMeasuredHeight() / 6f) {
-                    mDragDirection = 'h';//二级刷新标记水平滚动来禁止拖动
-                    return mSuperDispatchTouchEvent;
+                if (mState == RefreshState.TwoLevel) {
+                    final int height = thisView.getMeasuredHeight();
+                    if (mFloorBottomDragLayoutRate <= 1 && mTouchY < height * (1- mFloorBottomDragLayoutRate)) {
+                        mDragDirection = 'h';//二级刷新标记水平滚动来禁止拖动
+                        return mSuperDispatchTouchEvent;
+                    } else if (mFloorBottomDragLayoutRate > 1 && mTouchY < (height - mFloorBottomDragLayoutRate)) {
+                        mDragDirection = 'h';//二级刷新标记水平滚动来禁止拖动
+                        return mSuperDispatchTouchEvent;
+                    }
                 }
                 if (mRefreshContent != null) {
                     //为 RefreshContent 传递当前触摸事件的坐标，用于智能判断对应坐标位置View的滚动边界和相关信息
@@ -1356,7 +1364,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     /**
      * 是否真正的 可以刷新或者加载（与 越界拖动 纯滚动模式区分开来）
      * 判断时候可以 刷新 或者 加载（直接影响，Header，Footer 是否显示）
-     * @param enable mEnableRefresh or mEnableLoadMore
+     * @param enable mEnableFloorRefresh or mEnableLoadMore
      * @return enable
      */
     protected boolean isEnableRefreshOrLoadMore(boolean enable) {
@@ -1579,8 +1587,10 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     protected void overSpinner() {
         if (mState == RefreshState.TwoLevel) {
             final View thisView = this;
-            if (mCurrentVelocity > -1000 && mSpinner > thisView.getMeasuredHeight() / 2) {
-                ValueAnimator animator = mKernel.animSpinner(thisView.getMeasuredHeight());
+            final int height = thisView.getMeasuredHeight();
+            final int floorHeight = mFloorOpenLayoutRate > 1 ? (int)mFloorOpenLayoutRate : (int)(height*mFloorOpenLayoutRate);
+            if (mCurrentVelocity > -1000 && mSpinner > floorHeight / 2) {
+                ValueAnimator animator = mKernel.animSpinner(floorHeight);
                 if (animator != null) {
                     animator.setDuration(mFloorDuration);
                 }
@@ -1662,16 +1672,18 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             Toast.makeText(thisView.getContext(), egg, Toast.LENGTH_SHORT).show();
             thisView.setTag(egg);
         }
-        if (mState == RefreshState.TwoLevel && spinner > 0) {
-            mKernel.moveSpinner(Math.min((int) spinner, thisView.getMeasuredHeight()), true);
+        if (mState == RefreshState.TwoLevel && spinner > 0 && mRefreshContent != null) {
+            final int height = thisView.getMeasuredHeight();
+            final int floorHeight = mFloorOpenLayoutRate > 1 ? (int)mFloorOpenLayoutRate : (int)(height*mFloorOpenLayoutRate);
+            mKernel.moveSpinner(Math.min((int) spinner, floorHeight), true);
         } else if (mState == RefreshState.Refreshing && spinner >= 0) {
             if (spinner < mHeaderHeight) {
                 mKernel.moveSpinner((int) spinner, true);
             } else {
-                final double M = (mHeaderMaxDragRate - 1) * mHeaderHeight;
-                final double H = Math.max(mScreenHeightPixels * 4 / 3, thisView.getHeight()) - mHeaderHeight;
-                final double x = Math.max(0, (spinner - mHeaderHeight) * mDragRate);
-                final double y = Math.min(M * (1 - Math.pow(100, -x / (H == 0 ? 1 : H))), x);// 公式 y = M(1-100^(-x/H))
+                final float M = (mHeaderMaxDragRate - 1) * mHeaderHeight;
+                final float H = Math.max(mScreenHeightPixels * 4 / 3, thisView.getHeight()) - mHeaderHeight;
+                final float x = Math.max(0, (spinner - mHeaderHeight) * mDragRate);
+                final float y = Math.min(M * (1 - (float)Math.pow(100, -x / (H == 0 ? 1 : H))), x);// 公式 y = M(1-100^(-x/H))
                 mKernel.moveSpinner((int) y + mHeaderHeight, true);
             }
         } else if (spinner < 0 && (mState == RefreshState.Loading
@@ -1680,23 +1692,23 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             if (spinner > -mFooterHeight) {
                 mKernel.moveSpinner((int) spinner, true);
             } else {
-                final double M = (mFooterMaxDragRate - 1) * mFooterHeight;
-                final double H = Math.max(mScreenHeightPixels * 4 / 3, thisView.getHeight()) - mFooterHeight;
-                final double x = -Math.min(0, (spinner + mFooterHeight) * mDragRate);
-                final double y = -Math.min(M * (1 - Math.pow(100, -x / (H == 0 ? 1 : H))), x);// 公式 y = M(1-100^(-x/H))
+                final float M = (mFooterMaxDragRate - 1) * mFooterHeight;
+                final float H = Math.max(mScreenHeightPixels * 4 / 3, thisView.getHeight()) - mFooterHeight;
+                final float x = -Math.min(0, (spinner + mFooterHeight) * mDragRate);
+                final float y = -Math.min(M * (1 - (float)Math.pow(100, -x / (H == 0 ? 1 : H))), x);// 公式 y = M(1-100^(-x/H))
                 mKernel.moveSpinner((int) y - mFooterHeight, true);
             }
         } else if (spinner >= 0) {
-            final double M = mHeaderMaxDragRate * mHeaderHeight;
-            final double H = Math.max(mScreenHeightPixels / 2, thisView.getHeight());
-            final double x = Math.max(0, spinner * mDragRate);
-            final double y = Math.min(M * (1 - Math.pow(100, -x / (H == 0 ? 1 : H))), x);// 公式 y = M(1-100^(-x/H))
+            final float M = mHeaderMaxDragRate * mHeaderHeight;
+            final float H = Math.max(mScreenHeightPixels / 2, thisView.getHeight());
+            final float x = Math.max(0, spinner * mDragRate);
+            final float y = Math.min(M * (1 - (float)Math.pow(100, -x / (H == 0 ? 1 : H))), x);// 公式 y = M(1-100^(-x/H))
             mKernel.moveSpinner((int) y, true);
         } else {
-            final double M = mFooterMaxDragRate * mFooterHeight;
-            final double H = Math.max(mScreenHeightPixels / 2, thisView.getHeight());
-            final double x = -Math.min(0, spinner * mDragRate);
-            final double y = -Math.min(M * (1 - Math.pow(100, -x / (H == 0 ? 1 : H))), x);// 公式 y = M(1-100^(-x/H))
+            final float M = mFooterMaxDragRate * mFooterHeight;
+            final float H = Math.max(mScreenHeightPixels / 2, thisView.getHeight());
+            final float x = -Math.min(0, spinner * mDragRate);
+            final float y = -Math.min(M * (1 - (float)Math.pow(100, -x / (H == 0 ? 1 : H))), x);// 公式 y = M(1-100^(-x/H))
             mKernel.moveSpinner((int) y, true);
         }
         if (mEnableAutoLoadMore && !mFooterNoMoreData && isEnableRefreshOrLoadMore(mEnableLoadMore) && spinner < 0
@@ -1918,7 +1930,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 //    public boolean canScrollVertically(int direction) {
 //        View target = mRefreshContent.getScrollableView();
 //        if (direction < 0) {
-//            return mEnableRefresh || ScrollBoundaryUtil.canScrollUp(target);
+//            return mEnableFloorRefresh || ScrollBoundaryUtil.canScrollUp(target);
 //        } else if (direction > 0) {
 //            return mEnableLoadMore || ScrollBoundaryUtil.canScrollDown(target);
 //        }
@@ -2465,7 +2477,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             width = width == 0 ? MATCH_PARENT : width;
             height = height == 0 ? WRAP_CONTENT : height;
             LayoutParams lp = new LayoutParams(width, height);
-            Object olp = header.getView().getLayoutParams();
+            Object olp = mRefreshHeader.getView().getLayoutParams();
             if (olp instanceof LayoutParams) {
                 lp = ((LayoutParams) olp);
             }
@@ -2526,7 +2538,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             width = width == 0 ? MATCH_PARENT : width;
             height = height == 0 ? WRAP_CONTENT : height;
             LayoutParams lp = new LayoutParams(width, height);
-            Object olp = footer.getView().getLayoutParams();
+            Object olp = mRefreshFooter.getView().getLayoutParams();
             if (olp instanceof LayoutParams) {
                 lp = ((LayoutParams) olp);
             }
@@ -3601,7 +3613,9 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     }
                 };
                 final View thisView = SmartRefreshLayout.this;
-                ValueAnimator animator = animSpinner(thisView.getMeasuredHeight());
+                final int height = thisView.getMeasuredHeight();
+                final int floorHeight = mFloorOpenLayoutRate > 1 ? (int)mFloorOpenLayoutRate : (int)(height*mFloorOpenLayoutRate);
+                ValueAnimator animator = animSpinner(floorHeight);
                 if (animator != null && animator == reboundAnimator) {
                     animator.setDuration(mFloorDuration);
                     animator.addListener(listener);
@@ -3800,7 +3814,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         public ValueAnimator animSpinner(int endSpinner) {
             return SmartRefreshLayout.this.animSpinner(endSpinner, 0, mReboundInterpolator, mReboundDuration);
         }
-    //</editor-fold>
+        //</editor-fold>
 
         //<editor-fold desc="请求事件">
         @Override
@@ -3855,11 +3869,13 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             return this;
         }
         @Override
-        public RefreshKernel requestFloorDuration(int duration) {
+        public RefreshKernel requestFloorParams(int duration, float openLayoutRate, float dragLayoutRate) {
             mFloorDuration = duration;
+            mFloorOpenLayoutRate = openLayoutRate;
+            mFloorBottomDragLayoutRate = dragLayoutRate;
             return this;
         }
-    //</editor-fold>
+        //</editor-fold>
     }
     //</editor-fold>
 

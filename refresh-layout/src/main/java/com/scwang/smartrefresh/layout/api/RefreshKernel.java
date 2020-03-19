@@ -81,10 +81,10 @@ public interface RefreshKernel {
      */
     RefreshKernel requestRemeasureHeightFor(@NonNull RefreshInternal internal);
     /**
-     * 设置二楼回弹时长
+     * 设置二楼参数
      * @param duration 二楼回弹时长
      * @return RefreshKernel
      */
-    RefreshKernel requestFloorDuration(int duration);
+    RefreshKernel requestFloorParams(int duration, float openLayoutRate, float dragLayoutRate);
     //</editor-fold>
 }

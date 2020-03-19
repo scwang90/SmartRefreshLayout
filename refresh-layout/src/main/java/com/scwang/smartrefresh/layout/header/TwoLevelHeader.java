@@ -37,10 +37,12 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
     protected float mRefreshRate = 1f;
     protected boolean mEnableTwoLevel = true;
     protected boolean mEnablePullToCloseTwoLevel = true;
-    protected boolean mEnableRefresh = true;
-    protected int mFloorDuration = 1000;
+    protected boolean mEnableFloorRefresh = true;
     protected int mHeaderHeight;
-//    protected int mPaintAlpha;
+    protected int mFloorDuration = 1000;
+    protected float mFloorOpenLayoutRate = 1f;//二楼打开时，二楼所占高度比
+    protected float mFloorBottomDragLayoutRate = 1f/6;//二楼打开时，底部上划关闭二楼，所占高度比
+    //    protected int mPaintAlpha;
 //    protected Paint mPaint;
     protected RefreshInternal mRefreshHeader;
     protected RefreshKernel mRefreshKernel;
@@ -69,7 +71,9 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
         mRefreshRate = ta.getFloat(R.styleable.TwoLevelHeader_srlRefreshRate, mRefreshRate);
         mFloorDuration = ta.getInt(R.styleable.TwoLevelHeader_srlFloorDuration, mFloorDuration);
         mEnableTwoLevel = ta.getBoolean(R.styleable.TwoLevelHeader_srlEnableTwoLevel, mEnableTwoLevel);
-        mEnableRefresh = ta.getBoolean(R.styleable.TwoLevelHeader_srlEnableRefresh, mEnableRefresh);
+        mEnableFloorRefresh = ta.getBoolean(R.styleable.TwoLevelHeader_srlEnableFloorRefresh, mEnableFloorRefresh);
+        mFloorOpenLayoutRate = ta.getFloat(R.styleable.TwoLevelHeader_srlFloorOpenLayoutRate, mFloorOpenLayoutRate);
+        mFloorBottomDragLayoutRate = ta.getFloat(R.styleable.TwoLevelHeader_srlFloorBottomDragLayoutRate, mFloorBottomDragLayoutRate);
         mEnablePullToCloseTwoLevel = ta.getBoolean(R.styleable.TwoLevelHeader_srlEnablePullToCloseTwoLevel, mEnablePullToCloseTwoLevel);
 
         ta.recycle();
@@ -154,7 +158,7 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
 
         mHeaderHeight = height;
         mRefreshKernel = kernel;
-        kernel.requestFloorDuration(mFloorDuration);
+        kernel.requestFloorParams(mFloorDuration, mFloorOpenLayoutRate, mFloorBottomDragLayoutRate);
         kernel.requestNeedTouchEventFor(this, !mEnablePullToCloseTwoLevel);
         refreshHeader.onInitialized(kernel, height, maxDragHeight);
 
@@ -165,7 +169,7 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
         final RefreshInternal refreshHeader = mRefreshHeader;
         if (refreshHeader != null) {
             final OnStateChangedListener listener = mRefreshHeader;
-            if (newState == RefreshState.ReleaseToRefresh && !mEnableRefresh) {
+            if (newState == RefreshState.ReleaseToRefresh && !mEnableFloorRefresh) {
                 newState = RefreshState.PullDownToRefresh;
             }
             listener.onStateChanged(refreshLayout, oldState, newState);
@@ -209,9 +213,9 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
                 refreshKernel.setState(RefreshState.ReleaseToTwoLevel);
             } else if (mPercent >= mFloorRate && percent < mRefreshRate) {
                 refreshKernel.setState(RefreshState.PullDownToRefresh);
-            } else if (mPercent >= mFloorRate && percent < mFloorRate && mEnableRefresh) {
+            } else if (mPercent >= mFloorRate && percent < mFloorRate && mEnableFloorRefresh) {
                 refreshKernel.setState(RefreshState.ReleaseToRefresh);
-            } else if (!mEnableRefresh && refreshKernel.getRefreshLayout().getState() != RefreshState.ReleaseToTwoLevel) {
+            } else if (!mEnableFloorRefresh && refreshKernel.getRefreshLayout().getState() != RefreshState.ReleaseToTwoLevel) {
                 refreshKernel.setState(RefreshState.PullDownToRefresh);
             }
             mPercent = percent;
@@ -268,22 +272,21 @@ public class TwoLevelHeader extends InternalAbstract implements RefreshHeader/*,
     public TwoLevelHeader setRefreshHeader(RefreshHeader header, int width, int height) {
         final ViewGroup thisGroup = this;
         if (header != null) {
+            RefreshInternal refreshHeader = mRefreshHeader;
+            if (refreshHeader != null) {
+                thisGroup.removeView(refreshHeader.getView());
+            }
+            refreshHeader = header;
             /*
              * 2020-3-16 修复 header 中自带 LayoutParams 丢失问题
              */
             width = width == 0 ? MATCH_PARENT : width;
             height = height == 0 ? WRAP_CONTENT : height;
             LayoutParams lp = new LayoutParams(width, height);
-            Object olp = header.getView().getLayoutParams();
+            Object olp = refreshHeader.getView().getLayoutParams();
             if (olp instanceof LayoutParams) {
                 lp = ((LayoutParams) olp);
             }
-
-            RefreshInternal refreshHeader = mRefreshHeader;
-            if (refreshHeader != null) {
-                thisGroup.removeView(refreshHeader.getView());
-            }
-            refreshHeader = header;
             if (refreshHeader.getSpinnerStyle() == SpinnerStyle.FixedBehind) {
                 thisGroup.addView(refreshHeader.getView(), 0, lp);
             } else {
