@@ -138,6 +138,8 @@ V2.x 相对于 V1.x 对包名做了修改如：com.scwang.smartrefresh 改为 co
 当然：大家也可以在讨论区讨论投票，选出里面使用频率比较高的Header，然后单独分离出来。
 
 ```
+compile 'com.android.support:appcompat-v7:25.3.1'                   //必须 25.3.1 以上
+
 // 注意：分包之后不会有默认的Header和Footer需要手动添加！还是原来的三种方法！
 implementation  'com.scwang.smart:refresh-layout-kernel:2.0.0'      //核心必须依赖
 implementation  'com.scwang.smart:refresh-header-classics:2.0.0'    //经典刷新头
@@ -148,20 +150,34 @@ implementation  'com.scwang.smart:refresh-header-two-level:2.0.0'   //二级刷�
 implementation  'com.scwang.smart:refresh-footer-ball:2.0.0'        //球脉冲加载
 implementation  'com.scwang.smart:refresh-footer-classics:2.0.0'    //经典加载
 
+
 ```
 
-<!-- // 保留了 com.scwang.smartrefresh 的包名，但不分包 -->
-<!-- implementation 'com.scwang.smartrefresh:SmartRefreshHeader:2.0.0'   //各种Header集合 -->
-<!-- implementation 'com.scwang.smartrefresh:SmartRefreshFooter:2.0.0'   //各种Footer集合 -->
-<!-- implementation 'com.scwang.smartrefresh:SmartRefreshLayout:2.0.0'   //核心、默认Header、默认Footer -->
+如果使用 AndroidX 需要依赖 androidx.appcompat
 
-如果使用 AndroidX 在 gradle.properties 中添加
+```
+    implementation 'androidx.appcompat:appcompat:1.0.0'                 //必须 1.0.0 以上
+
+    implementation  'com.scwang.smart:refresh-layout-kernel:2.0.0'      //核心必须依赖
+    implementation  'com.scwang.smart:refresh-header-classics:2.0.0'    //经典刷新头
+    implementation  'com.scwang.smart:refresh-header-radar:2.0.0'       //雷达刷新头
+    implementation  'com.scwang.smart:refresh-header-falsify:2.0.0'     //虚拟刷新头
+    implementation  'com.scwang.smart:refresh-header-material:2.0.0'    //谷歌刷新头
+    implementation  'com.scwang.smart:refresh-header-two-level:2.0.0'   //二级刷新头
+    implementation  'com.scwang.smart:refresh-footer-ball:2.0.0'        //球脉冲加载
+    implementation  'com.scwang.smart:refresh-footer-classics:2.0.0'    //经典加载
+
+```
+
+并在 gradle.properties 中添加
 
 ```
 android.useAndroidX=true
 android.enableJetifier=true
 
 ```
+
+
 
 #### 2.在XML布局文件中添加 SmartRefreshLayout
 ```xml

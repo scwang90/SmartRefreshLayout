@@ -2077,7 +2077,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     }
 
     /**
-     * Set the Header's start offset.
+     * Set the Footer's start offset.
      * 设置 Footer 起始偏移量（用户和 setHeaderInsetStart 一样）
      * @see RefreshLayout#setHeaderInsetStart(float)
      * @param insetDp Density-independent Pixels 虚拟像素（px需要调用px2dp转换）
@@ -2091,13 +2091,13 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
     /**
      * Set the Footer's start offset.
-     * 设置 Footer 起始偏移量（用处和 setFooterInsetStartPx 一样）
+     * 设置 Footer 起始偏移量（用处和 setHeaderInsetStartPx 一样）
      * @param insetPx 像素
      * @return RefreshLayout
      */
     @Override
     public RefreshLayout setFooterInsetStartPx(int insetPx) {
-        mHeaderInsetStart = insetPx;
+        mFooterInsetStart = insetPx;
         return this;
     }
 
