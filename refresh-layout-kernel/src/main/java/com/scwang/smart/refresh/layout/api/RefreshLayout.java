@@ -509,6 +509,9 @@ public interface RefreshLayout {
     /**
      * Close the Header or Footer, can't replace finishRefresh and finishLoadMore.
      * 关闭 Header 或者 Footer
+     * 注意：
+     * 1.closeHeaderOrFooter 任何时候任何状态都能关闭  header 和 footer
+     * 2.finishRefresh 和 finishLoadMore 只能在 刷新 或者 加载 的时候关闭
      * @return RefreshLayout
      */
     RefreshLayout closeHeaderOrFooter();
