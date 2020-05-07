@@ -4,6 +4,7 @@
 build
 release
 /art
+/repo
 /local.properties
 /bintrayUpload-key.bat
 
