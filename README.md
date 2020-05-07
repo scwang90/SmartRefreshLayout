@@ -316,6 +316,7 @@ SmartRefreshLayout 不需要添加混淆过滤代码，并且已经混淆测试�
 [捐赠列表](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_donationlist.md)
 
 #### 友情链接
+[github/Loror](https://github.com/Loror)  
 [github/faith-hb/WidgetCase](https://github.com/faith-hb/WidgetCase)  
 [github/Bamboy120315/Freedom](https://github.com/Bamboy120315/Freedom)  
 [github/TommyLemon/APIJSON](https://github.com/TommyLemon/APIJSON)  
@@ -330,7 +331,7 @@ SmartRefreshLayout 不需要添加混淆过滤代码，并且已经混淆测试�
 [github/addappcn](https://github.com/addappcn)  
 [github/RainliFu](https://github.com/RainliFu)  
 [github/sugarya](https://github.com/sugarya)  
-[github/stormzhang](https://github.com/stormzhang)
+[github/stormzhang](https://github.com/stormzhang)  
 
 ## 讨论
 
