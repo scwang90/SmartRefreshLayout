@@ -11,6 +11,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Build;
 import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
@@ -224,7 +225,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
         ViewConfiguration configuration = ViewConfiguration.get(context);
 
-        mHandler = new Handler();
+        mHandler = new Handler(Looper.getMainLooper());
         mScroller = new Scroller(context);
         mVelocityTracker = VelocityTracker.obtain();
         mScreenHeightPixels = context.getResources().getDisplayMetrics().heightPixels;
