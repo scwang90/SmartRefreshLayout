@@ -393,14 +393,22 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
             if (mRefreshHeader == null) {
                 if (sHeaderCreator != null) {
-                    setRefreshHeader(sHeaderCreator.createRefreshHeader(thisView.getContext(), this));
+                    RefreshHeader header = sHeaderCreator.createRefreshHeader(thisView.getContext(), this);
+                    if (header == null) {
+                        throw new RuntimeException("DefaultRefreshHeaderCreator can not return null");
+                    }
+                    setRefreshHeader(header);
                 } else {
                     setRefreshHeader(new BezierRadarHeader(thisView.getContext()));
                 }
             }
             if (mRefreshFooter == null) {
                 if (sFooterCreator != null) {
-                    setRefreshFooter(sFooterCreator.createRefreshFooter(thisView.getContext(), this));
+                    RefreshFooter footer = sFooterCreator.createRefreshFooter(thisView.getContext(), this);
+                    if (footer == null) {
+                        throw new RuntimeException("DefaultRefreshFooterCreator can not return null");
+                    }
+                    setRefreshFooter(footer);
                 } else {
                     boolean old = mEnableLoadMore;
                     setRefreshFooter(new BallPulseFooter(thisView.getContext()));
@@ -2465,31 +2473,25 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         this.mRefreshHeader = header;
         this.mHeaderBackgroundColor = 0;
         this.mHeaderNeedTouchEventWhenRefreshing = false;
-        this.mHeaderHeightStatus = mHeaderHeightStatus.unNotify();
+        this.mHeaderHeightStatus = DimensionStatus.DefaultUnNotify;//2020-5-23 修复动态切换时，不能及时测量新的高度
         /*
-         * 2019-12-24 修复 DefaultRefreshHeaderCreator 返回 null 时出现空指针
-         * 不过 DefaultRefreshHeaderCreator 是定义为不允许返回空的
+         * 2020-3-16 修复 header 中自带 LayoutParams 丢失问题
          */
-        if (mRefreshHeader != null) {
-            /*
-             * 2020-3-16 修复 header 中自带 LayoutParams 丢失问题
-             */
-            width = width == 0 ? MATCH_PARENT : width;
-            height = height == 0 ? WRAP_CONTENT : height;
-            LayoutParams lp = new LayoutParams(width, height);
-            Object olp = mRefreshHeader.getView().getLayoutParams();
-            if (olp instanceof LayoutParams) {
-                lp = ((LayoutParams) olp);
-            }
-            if (mRefreshHeader.getSpinnerStyle().front) {
-                final ViewGroup thisGroup = this;
-                super.addView(mRefreshHeader.getView(), thisGroup.getChildCount(), lp);
-            } else {
-                super.addView(mRefreshHeader.getView(), 0, lp);
-            }
-            if (mPrimaryColors != null && mRefreshHeader != null) {
-                mRefreshHeader.setPrimaryColors(mPrimaryColors);
-            }
+        width = width == 0 ? MATCH_PARENT : width;
+        height = height == 0 ? WRAP_CONTENT : height;
+        LayoutParams lp = new LayoutParams(width, height);
+        Object olp = mRefreshHeader.getView().getLayoutParams();
+        if (olp instanceof LayoutParams) {
+            lp = ((LayoutParams) olp);
+        }
+        if (mRefreshHeader.getSpinnerStyle().front) {
+            final ViewGroup thisGroup = this;
+            super.addView(mRefreshHeader.getView(), thisGroup.getChildCount(), lp);
+        } else {
+            super.addView(mRefreshHeader.getView(), 0, lp);
+        }
+        if (mPrimaryColors != null && mRefreshHeader != null) {
+            mRefreshHeader.setPrimaryColors(mPrimaryColors);
         }
         return this;
     }
@@ -2525,32 +2527,26 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         this.mFooterBackgroundColor = 0;
         this.mFooterNoMoreDataEffective = false;
         this.mFooterNeedTouchEventWhenLoading = false;
-        this.mFooterHeightStatus = mFooterHeightStatus.unNotify();
+        this.mFooterHeightStatus = DimensionStatus.DefaultUnNotify;//2020-5-23 修复动态切换时，不能及时测量新的高度
         this.mEnableLoadMore = !mManualLoadMore || mEnableLoadMore;
         /*
-         * 2019-12-24 修复 DefaultRefreshFooterCreator 返回 null 时出现空指针
-         * 不过 DefaultRefreshFooterCreator 是定义为不允许返回空的
+         * 2020-3-16 修复 header 中自带 LayoutParams 丢失问题
          */
-        if (mRefreshFooter != null) {
-            /*
-             * 2020-3-16 修复 header 中自带 LayoutParams 丢失问题
-             */
-            width = width == 0 ? MATCH_PARENT : width;
-            height = height == 0 ? WRAP_CONTENT : height;
-            LayoutParams lp = new LayoutParams(width, height);
-            Object olp = mRefreshFooter.getView().getLayoutParams();
-            if (olp instanceof LayoutParams) {
-                lp = ((LayoutParams) olp);
-            }
-            if (mRefreshFooter.getSpinnerStyle().front) {
-                final ViewGroup thisGroup = this;
-                super.addView(mRefreshFooter.getView(), thisGroup.getChildCount(), lp);
-            } else {
-                super.addView(mRefreshFooter.getView(), 0, lp);
-            }
-            if (mPrimaryColors != null && mRefreshFooter != null) {
-                mRefreshFooter.setPrimaryColors(mPrimaryColors);
-            }
+        width = width == 0 ? MATCH_PARENT : width;
+        height = height == 0 ? WRAP_CONTENT : height;
+        LayoutParams lp = new LayoutParams(width, height);
+        Object olp = mRefreshFooter.getView().getLayoutParams();
+        if (olp instanceof LayoutParams) {
+            lp = ((LayoutParams) olp);
+        }
+        if (mRefreshFooter.getSpinnerStyle().front) {
+            final ViewGroup thisGroup = this;
+            super.addView(mRefreshFooter.getView(), thisGroup.getChildCount(), lp);
+        } else {
+            super.addView(mRefreshFooter.getView(), 0, lp);
+        }
+        if (mPrimaryColors != null && mRefreshFooter != null) {
+            mRefreshFooter.setPrimaryColors(mPrimaryColors);
         }
         return this;
     }

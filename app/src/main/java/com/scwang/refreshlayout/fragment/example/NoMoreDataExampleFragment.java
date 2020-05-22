@@ -100,11 +100,10 @@ public class NoMoreDataExampleFragment extends Fragment {
                         public void run() {
                             Collection<Void> list = loadData();
                             mAdapter.loadMore(list);
-                            refreshLayout.finishLoadMore();
                             if (list.size() < 10) {
                                 refreshLayout.finishLoadMoreWithNoMoreData();
-//                            } else {
-//                                refreshLayout.finishLoadMore();
+                            } else {
+                                refreshLayout.finishLoadMore();
                             }
                         }
                     }, 1000);
