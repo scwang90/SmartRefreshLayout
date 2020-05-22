@@ -229,6 +229,8 @@ If in the donation message note name, it will be record to the list
 [Donation list](art/md_donationlist.md)
 
 #### blogroll
+[github/Loror](https://github.com/Loror)  
+[github/faith-hb/WidgetCase](https://github.com/faith-hb/WidgetCase)  
 [github/Bamboy120315/Freedom](https://github.com/Bamboy120315/Freedom)  
 [github/TommyLemon/APIJSON](https://github.com/TommyLemon/APIJSON)  
 [github/dengyuhan](https://github.com/dengyuhan)  
