@@ -1636,6 +1636,12 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             if (reboundAnimator == null) {
                 mKernel.animSpinner(-mFooterHeight);
             }
+        } else if (mState == RefreshState.LoadFinish) {
+            /*
+             * 2020-5-26 修复 finishLoadMore 中途
+             * 拖拽导致 状态重置 最终导致 显示 NoMoreData Footer 菊花却任然在转的情况
+             * overSpinner 时 LoadFinish 状态无任何操作即可
+             */
         } else if (mSpinner != 0) {
             mKernel.animSpinner(0);
         }
