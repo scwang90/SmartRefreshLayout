@@ -8,6 +8,7 @@
         <attr name="srlFloorDuration" format="integer"/>
         <attr name="srlEnableRefresh" format="boolean"/>
         <attr name="srlEnableTwoLevel" format="boolean"/>
+        <attr name="srlBottomPullUpToCloseRate" format="float"/>
         <attr name="srlEnablePullToCloseTwoLevel" format="boolean"/>
     </declare-styleable>
 

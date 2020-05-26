@@ -6,7 +6,8 @@
 >修改：方法 OnMultiPurposeListener -> setOnMultiListener
 >修改：包名 com.scwang.smartrefresh -> com.scwang.smart.refresh  
 >修改：类名 smartrefresh.layout.listener.OnMultiPurposeListener -> smart.refresh.layout.listener.OnMultiListener  
->修改：类名 smartrefresh.layout.listener.SimpleMultiPurposeListener -> smart.refresh.layout.simple.SimpleMultiListener  
+>修改：类名 smartrefresh.layout.listener.SimpleMultiPurposeListener -> smart.refresh.layout.simple.SimpleMultiListener
+>添加：属性 srlBottomPullUpToCloseRate setBottomPullUpToCloseRate
 >回归：回归部分被去掉的API如：isRefreshing isLoading  
 
 ## V 1.1.0

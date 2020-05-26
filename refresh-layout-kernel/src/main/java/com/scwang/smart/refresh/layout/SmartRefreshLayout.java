@@ -172,6 +172,8 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     protected float mHeaderTriggerRate = 1.0f;  //触发刷新距离 与 HeaderHeight 的比率
     protected float mFooterTriggerRate = 1.0f;  //触发加载距离 与 FooterHeight 的比率
 
+    protected float mTwoLevelBottomPullUpToCloseRate = 1/6f;//二级刷新打开时，再底部上划关闭区域所占的比率
+
     protected RefreshComponent mRefreshHeader;     //下拉头部视图
     protected RefreshComponent mRefreshFooter;     //上拉底部视图
     protected RefreshContent mRefreshContent;   //显示内容视图
@@ -933,7 +935,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 mEnableDisallowIntercept = false;
                 /*----------------------------------------------------*/
                 mSuperDispatchTouchEvent = super.dispatchTouchEvent(e);
-                if (mState == RefreshState.TwoLevel && mTouchY < 5f * thisView.getMeasuredHeight() / 6f) {
+                if (mState == RefreshState.TwoLevel && mTouchY < thisView.getMeasuredHeight() * (1 - mTwoLevelBottomPullUpToCloseRate)) {
                     mDragDirection = 'h';//二级刷新标记水平滚动来禁止拖动
                     return mSuperDispatchTouchEvent;
                 }
@@ -1602,6 +1604,12 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             if (reboundAnimator == null) {
                 mKernel.animSpinner(-mFooterHeight);
             }
+        } else if (mState == RefreshState.LoadFinish) {
+            /*
+             * 2020-5-26 修复 finishLoadMore 中途
+             * 拖拽导致 状态重置 最终导致 显示 NoMoreData Footer 菊花却任然在转的情况
+             * overSpinner 时 LoadFinish 状态无任何操作即可
+             */
         } else if (mSpinner != 0) {
             mKernel.animSpinner(0);
         }
@@ -3901,7 +3909,13 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             mFloorDuration = duration;
             return this;
         }
-    //</editor-fold>
+
+        @Override
+        public RefreshKernel requestFloorBottomPullUpToCloseRate(float rate) {
+            mTwoLevelBottomPullUpToCloseRate = rate;
+            return this;
+        }
+        //</editor-fold>
     }
     //</editor-fold>
 

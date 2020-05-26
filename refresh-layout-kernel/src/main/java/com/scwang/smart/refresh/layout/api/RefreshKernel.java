@@ -88,5 +88,10 @@ public interface RefreshKernel {
      * @return RefreshKernel
      */
     RefreshKernel requestFloorDuration(int duration);
+    /**
+     * 设置二楼底部上划关闭所占高度的比率
+     * @return RefreshKernel
+     */
+    RefreshKernel requestFloorBottomPullUpToCloseRate(float rate);
     //</editor-fold>
 }

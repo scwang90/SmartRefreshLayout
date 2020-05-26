@@ -36,6 +36,7 @@ public class TwoLevelHeader extends SimpleComponent implements RefreshHeader, Ne
     protected float mMaxRate = 2.5f;
     protected float mFloorRate = 1.9f;
     protected float mRefreshRate = 1f;
+    protected float mBottomPullUpToCloseRate = 1/6f;
     protected boolean mEnableRefresh = true;
     protected boolean mEnableTwoLevel = true;
     protected boolean mEnablePullToCloseTwoLevel = true;
@@ -65,6 +66,7 @@ public class TwoLevelHeader extends SimpleComponent implements RefreshHeader, Ne
         mFloorDuration = ta.getInt(R.styleable.TwoLevelHeader_srlFloorDuration, mFloorDuration);
         mEnableRefresh = ta.getBoolean(R.styleable.TwoLevelHeader_srlEnableRefresh, mEnableRefresh);
         mEnableTwoLevel = ta.getBoolean(R.styleable.TwoLevelHeader_srlEnableTwoLevel, mEnableTwoLevel);
+        mBottomPullUpToCloseRate = ta.getFloat(R.styleable.TwoLevelHeader_srlBottomPullUpToCloseRate, mBottomPullUpToCloseRate);
         mEnablePullToCloseTwoLevel = ta.getBoolean(R.styleable.TwoLevelHeader_srlEnablePullToCloseTwoLevel, mEnablePullToCloseTwoLevel);
 
         ta.recycle();
@@ -154,6 +156,7 @@ public class TwoLevelHeader extends SimpleComponent implements RefreshHeader, Ne
         mHeaderHeight = height;
         mRefreshKernel = kernel;
         kernel.requestFloorDuration(mFloorDuration);
+        kernel.requestFloorBottomPullUpToCloseRate(mBottomPullUpToCloseRate);
         kernel.requestNeedTouchEventFor(this, !mEnablePullToCloseTwoLevel);
         refreshHeader.onInitialized(kernel, height, maxDragHeight);
 
@@ -400,6 +403,15 @@ public class TwoLevelHeader extends SimpleComponent implements RefreshHeader, Ne
      */
     public TwoLevelHeader setFloorDuration(int duration) {
         this.mFloorDuration = duration;
+        return this;
+    }
+
+    /**
+     * 设置二路底部上划关闭所占高度比率
+     * @param rate 底部占高度比率
+     */
+    public TwoLevelHeader setBottomPullUpToCloseRate(float rate) {
+        this.mBottomPullUpToCloseRate = rate;
         return this;
     }
 
