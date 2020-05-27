@@ -63,6 +63,13 @@ public class MaterialStyleActivity extends AppCompatActivity implements AdapterV
             mRefreshLayout.autoRefresh();//第一次进入触发自动刷新，演示效果
         }
 
+        mToolbar.setOnLongClickListener(v -> {
+            mRefreshLayout.autoRefreshAnimationOnly();
+            mRefreshLayout.autoRefreshAnimationOnly();
+            mRefreshLayout.autoRefreshAnimationOnly();
+            return true;
+        });
+
         mMaterialHeader = (MaterialHeader)mRefreshLayout.getRefreshHeader();
 
         View view = findViewById(R.id.recyclerView);

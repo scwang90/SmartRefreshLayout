@@ -719,13 +719,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         mAttachedToWindow = false;
-        mKernel.moveSpinner(0, true);
-        notifyStateChanged(RefreshState.None);
-        if (mHandler != null) {
-            mHandler.removeCallbacksAndMessages(null);
-        }
         mManualLoadMore = true;
-//        mManualNestedScrolling = true;
         animationRunnable = null;
         if (reboundAnimator != null) {
             Animator animator = reboundAnimator;
@@ -734,6 +728,27 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             reboundAnimator.setDuration(0);//cancel会触发End调用，可以判断0来确定是否被cancel
             reboundAnimator.cancel();//会触发 cancel 和 end 调用
             reboundAnimator = null;
+        }
+        /*
+         * 2020-5-27
+         * https://github.com/scwang90/SmartRefreshLayout/issues/1166
+         * 修复 Fragment 脱离屏幕再回到时，菊花转圈，无法关闭的问题。
+         * Smart 脱离屏幕时，必须重置状态，清空mHandler，否则动画等效果会导致 APP 内存泄露
+         */
+        if (mRefreshHeader != null && mState == RefreshState.Refreshing) {
+            mRefreshHeader.onFinish(this, false);
+        }
+        if (mRefreshFooter != null && mState == RefreshState.Loading) {
+            mRefreshFooter.onFinish(this, false);
+        }
+        if (mSpinner != 0) {
+            mKernel.moveSpinner(0, true);
+        }
+        if (mState != RefreshState.None) {
+            notifyStateChanged(RefreshState.None);
+        }
+        if (mHandler != null) {
+            mHandler.removeCallbacksAndMessages(null);
         }
         /*
          * https://github.com/scwang90/SmartRefreshLayout/issues/716

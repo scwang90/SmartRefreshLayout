@@ -60,6 +60,7 @@
     <string name="fragment_example_three_level">Three Level Refresh</string>
     <string name="fragment_example_bottom_sheet">Bottom Sheet</string>
     <string name="fragment_example_flex_box_layout">FlexBox Layout Manager</string>
+    <string name="fragment_example_disallow_intercept">Disallow Intercept</string>
 
     <string name="fragment_practice_instant">Instant</string>
 
@@ -90,6 +91,7 @@
     <string name="index_example_level">The usage of three level refresh</string>
     <string name="index_example_flexbox">The usage of FlexboxLayoutManager</string>
     <string name="index_example_horizontal">The usage of Horizontal Scroll</string>
+    <string name="index_example_disallow_intercept">The usage of requestDisallowInterceptTouchEvent</string>
 
     <string name="item_style_theme_orange_abstract">Change theme to orange color</string>
     <string name="item_style_theme_red_abstract">Change theme to red color</string>
@@ -170,6 +172,9 @@
     <string name="instant_message_input_hint">input message</string>
     <string name="instant_message_send">Send</string>
     <string name="switch_scroll_content_when_loaded">Scroll Content</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>
