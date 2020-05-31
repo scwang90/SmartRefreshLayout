@@ -104,8 +104,8 @@ main change is to subcontract SmartRefreshLayout to reduce unnecessary dependenc
 welcome to experience.
 
 ```
-implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.2'
-implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.2'  //If you use the special Header
+implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.3'
+implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.3'  //If you use the special Header
 ```
 If you use AndroidX, add it to gradle.properties
 

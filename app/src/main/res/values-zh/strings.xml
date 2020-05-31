@@ -61,6 +61,7 @@
     <string name="fragment_example_bottom_sheet">Bottom Sheet 对话框</string>
     <string name="fragment_example_flex_box_layout">Flexbox Layout 管理器</string>
     <string name="fragment_example_disallow_intercept">禁止拦截</string>
+    <string name="fragment_example_staggered_grid">瀑布流</string>
 
     <string name="fragment_practice_instant">即时通讯</string>
 
@@ -78,9 +79,10 @@
     <string name="index_example_pager">ViewPager 多页面共用一个 RefreshLayout</string>
     <string name="index_example_bottom_sheet">BottomSheet内部使用加载更多</string>
     <string name="index_example_level">三级刷新</string>
-    <string name="index_example_flexbox">结合 FlexboxLayoutManager 使用</string>
+    <string name="index_example_flex_box">结合 FlexboxLayoutManager 使用</string>
     <string name="index_example_horizontal">水平滚动刷新</string>
-    <string name="index_example_disallow_intercept">requestDisallowInterceptTouchEvent</string>
+    <string name="index_example_disallow_intercept">requestDisallowInterceptTouchEvent 的使用</string>
+    <string name="index_example_staggered_grid">StaggeredGridLayoutManager 的使用</string>
 
     <string name="index_practice_repast">餐饮美食-简单自定义Header-外边距magin</string>
     <string name="index_practice_profile">个人中心-PureScrollMode-纯滚动模式</string>

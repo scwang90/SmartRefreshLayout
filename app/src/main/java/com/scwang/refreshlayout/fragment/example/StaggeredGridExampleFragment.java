@@ -1,16 +1,14 @@
-package com.scwang.refreshlayout.activity.example;
+package com.scwang.refreshlayout.fragment.example;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
-import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Switch;
+import android.view.ViewGroup;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
@@ -22,26 +20,25 @@ import java.util.Arrays;
 import java.util.Collection;
 
 /**
- * 结合 SnapHelper 使用
- * Created by scwang on 2017/8/4.
+ * A simple {@link Fragment} subclass.
  */
-public class SnapHelperExampleActivity extends AppCompatActivity {
+public class StaggeredGridExampleFragment extends Fragment {
 
     private BaseRecyclerAdapter<Integer> mAdapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_example_snaphelper);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_example_staggered_grid, container, false);
+    }
 
-        final Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(v -> finish());
-
-        //初始化列表和监听
-        View view = findViewById(R.id.recyclerView);
-        if (view instanceof RecyclerView) {
-            RecyclerView recyclerView = (RecyclerView) view;
-            recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);//初始化列表和监听
+        View recycler = view.findViewById(R.id.recyclerView);
+        if (recycler instanceof RecyclerView) {
+            RecyclerView recyclerView = (RecyclerView) recycler;
             recyclerView.setItemAnimator(new DefaultItemAnimator());
             recyclerView.setAdapter(mAdapter = new BaseRecyclerAdapter<Integer>(loadModels(), R.layout.item_example_snap_helper) {
                 @Override
@@ -49,11 +46,9 @@ public class SnapHelperExampleActivity extends AppCompatActivity {
                     holder.image(R.id.imageView, model);
                 }
             });
-            SnapHelper snapHelper = new PagerSnapHelper();
-            snapHelper.attachToRecyclerView(recyclerView);
         }
 
-        RefreshLayout refreshLayout = findViewById(R.id.refreshLayout);
+        RefreshLayout refreshLayout = view.findViewById(R.id.refreshLayout);
         refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
@@ -72,15 +67,11 @@ public class SnapHelperExampleActivity extends AppCompatActivity {
             }
         });
 
-        Switch switcher = findViewById(R.id.switch_scroll_content);
-        if (switcher != null) {
-            refreshLayout.setEnableScrollContentWhenLoaded(switcher.isChecked());
-            switcher.setOnCheckedChangeListener((buttonView, isChecked) -> refreshLayout.setEnableScrollContentWhenLoaded(isChecked));
-        }
     }
 
     private Collection<Integer> loadModels() {
-        return Arrays.asList( R.mipmap.image_weibo_home_1, R.mipmap.image_weibo_home_2);
+        return Arrays.asList(R.mipmap.image_weibo_home_1, R.mipmap.image_weibo_home_2, R.mipmap.image_weibo_home_1, R.mipmap.image_weibo_home_2, R.mipmap.image_weibo_home_1, R.mipmap.image_weibo_home_2, R.mipmap.image_weibo_home_1, R.mipmap.image_weibo_home_2, R.mipmap.image_weibo_home_1, R.mipmap.image_weibo_home_2, R.mipmap.image_weibo_home_1, R.mipmap.image_weibo_home_2, R.mipmap.image_weibo_home_1, R.mipmap.image_weibo_home_2, R.mipmap.image_weibo_home_1, R.mipmap.image_weibo_home_2, R.mipmap.image_weibo_home_1, R.mipmap.image_weibo_home_2, R.mipmap.image_weibo_home_1, R.mipmap.image_weibo_home_2);
     }
+
 
 }

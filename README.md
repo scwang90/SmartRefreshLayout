@@ -122,8 +122,8 @@ SmartRefreshLayout以打造一个强大，稳定，成熟的下拉刷新框架�
 [【V2.0.0】](https://github.com/scwang90/SmartRefreshLayout/tree/master#%E7%AE%80%E5%8D%95%E7%94%A8%E4%BE%8B) 版本已经在开发，主要是对各个功能类进行分包，比如不用二级刷新就不依赖，避免代码冗余，欢迎大家来体验
 
 ```
-implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.2'  //1.0.5及以前版本的老用户升级需谨慎，API改动过大
-implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.2'  //没有使用特殊Header，可以不加这行
+implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.3'  //1.0.5及以前版本的老用户升级需谨慎，API改动过大
+implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.3'  //没有使用特殊Header，可以不加这行
 
 ```
 如果使用 AndroidX 在 gradle.properties 中添加
