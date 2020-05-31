@@ -37,6 +37,8 @@ public class App extends Application {
                 layout.setEnableLoadMoreWhenContentNotFull(true);
                 layout.setEnableScrollContentWhenRefreshed(true);
                 layout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);
+                layout.setFooterMaxDragRate(4.0F);
+                layout.setFooterHeight(45);
             }
         });
         SmartRefreshLayout.setDefaultRefreshHeaderCreator(new DefaultRefreshHeaderCreator() {

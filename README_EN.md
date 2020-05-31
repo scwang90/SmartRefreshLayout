@@ -114,20 +114,20 @@ It is recommended that you copy the source code into the project whenever you ne
 
 ```
 // Note: There will be no default Header and Footer after subcontracting. It needs to be added manually!
-implementation  'com.scwang.smart:refresh-layout-kernel:2.0.0'      //core
-implementation  'com.scwang.smart:refresh-header-classics:2.0.0'    //ClassicsHeader
-implementation  'com.scwang.smart:refresh-header-radar:2.0.0'       //BezierRadarHeader
-implementation  'com.scwang.smart:refresh-header-falsify:2.0.0'     //FalsifyHeader
-implementation  'com.scwang.smart:refresh-header-material:2.0.0'    //MaterialHeader
-implementation  'com.scwang.smart:refresh-header-two-level:2.0.0'   //TwoLevelHeader
-implementation  'com.scwang.smart:refresh-footer-ball:2.0.0'        //BallPulseFooter
-implementation  'com.scwang.smart:refresh-footer-classics:2.0.0'    //ClassicsFooter
+implementation  'com.scwang.smart:refresh-layout-kernel:2.0.1'      //core
+implementation  'com.scwang.smart:refresh-header-classics:2.0.1'    //ClassicsHeader
+implementation  'com.scwang.smart:refresh-header-radar:2.0.1'       //BezierRadarHeader
+implementation  'com.scwang.smart:refresh-header-falsify:2.0.1'     //FalsifyHeader
+implementation  'com.scwang.smart:refresh-header-material:2.0.1'    //MaterialHeader
+implementation  'com.scwang.smart:refresh-header-two-level:2.0.1'   //TwoLevelHeader
+implementation  'com.scwang.smart:refresh-footer-ball:2.0.1'        //BallPulseFooter
+implementation  'com.scwang.smart:refresh-footer-classics:2.0.1'    //ClassicsFooter
 
 ```
 <!-- // The package name of `com.scwang.smartrefresh` is retained, but not subcontracted. -->
-<!-- implementation 'com.scwang.smartrefresh:SmartRefreshHeader:2.0.0'   //Headers -->
-<!-- implementation 'com.scwang.smartrefresh:SmartRefreshFooter:2.0.0'   //Footers -->
-<!-- implementation 'com.scwang.smartrefresh:SmartRefreshLayout:2.0.0'   //core、 default Header and Footer -->
+<!-- implementation 'com.scwang.smartrefresh:SmartRefreshHeader:2.0.1'   //Headers -->
+<!-- implementation 'com.scwang.smartrefresh:SmartRefreshFooter:2.0.1'   //Footers -->
+<!-- implementation 'com.scwang.smartrefresh:SmartRefreshLayout:2.0.1'   //core、 default Header and Footer -->
 
 If you use AndroidX, add it to gradle.properties
 

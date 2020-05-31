@@ -141,14 +141,14 @@ V2.x 相对于 V1.x 对包名做了修改如：com.scwang.smartrefresh 改为 co
 compile 'com.android.support:appcompat-v7:25.3.1'                   //必须 25.3.1 以上
 
 // 注意：分包之后不会有默认的Header和Footer需要手动添加！还是原来的三种方法！
-implementation  'com.scwang.smart:refresh-layout-kernel:2.0.0'      //核心必须依赖
-implementation  'com.scwang.smart:refresh-header-classics:2.0.0'    //经典刷新头
-implementation  'com.scwang.smart:refresh-header-radar:2.0.0'       //雷达刷新头
-implementation  'com.scwang.smart:refresh-header-falsify:2.0.0'     //虚拟刷新头
-implementation  'com.scwang.smart:refresh-header-material:2.0.0'    //谷歌刷新头
-implementation  'com.scwang.smart:refresh-header-two-level:2.0.0'   //二级刷新头
-implementation  'com.scwang.smart:refresh-footer-ball:2.0.0'        //球脉冲加载
-implementation  'com.scwang.smart:refresh-footer-classics:2.0.0'    //经典加载
+implementation  'com.scwang.smart:refresh-layout-kernel:2.0.1'      //核心必须依赖
+implementation  'com.scwang.smart:refresh-header-classics:2.0.1'    //经典刷新头
+implementation  'com.scwang.smart:refresh-header-radar:2.0.1'       //雷达刷新头
+implementation  'com.scwang.smart:refresh-header-falsify:2.0.1'     //虚拟刷新头
+implementation  'com.scwang.smart:refresh-header-material:2.0.1'    //谷歌刷新头
+implementation  'com.scwang.smart:refresh-header-two-level:2.0.1'   //二级刷新头
+implementation  'com.scwang.smart:refresh-footer-ball:2.0.1'        //球脉冲加载
+implementation  'com.scwang.smart:refresh-footer-classics:2.0.1'    //经典加载
 
 
 ```
@@ -158,14 +158,14 @@ implementation  'com.scwang.smart:refresh-footer-classics:2.0.0'    //经典加�
 ```
     implementation 'androidx.appcompat:appcompat:1.0.0'                 //必须 1.0.0 以上
 
-    implementation  'com.scwang.smart:refresh-layout-kernel:2.0.0'      //核心必须依赖
-    implementation  'com.scwang.smart:refresh-header-classics:2.0.0'    //经典刷新头
-    implementation  'com.scwang.smart:refresh-header-radar:2.0.0'       //雷达刷新头
-    implementation  'com.scwang.smart:refresh-header-falsify:2.0.0'     //虚拟刷新头
-    implementation  'com.scwang.smart:refresh-header-material:2.0.0'    //谷歌刷新头
-    implementation  'com.scwang.smart:refresh-header-two-level:2.0.0'   //二级刷新头
-    implementation  'com.scwang.smart:refresh-footer-ball:2.0.0'        //球脉冲加载
-    implementation  'com.scwang.smart:refresh-footer-classics:2.0.0'    //经典加载
+    implementation  'com.scwang.smart:refresh-layout-kernel:2.0.1'      //核心必须依赖
+    implementation  'com.scwang.smart:refresh-header-classics:2.0.1'    //经典刷新头
+    implementation  'com.scwang.smart:refresh-header-radar:2.0.1'       //雷达刷新头
+    implementation  'com.scwang.smart:refresh-header-falsify:2.0.1'     //虚拟刷新头
+    implementation  'com.scwang.smart:refresh-header-material:2.0.1'    //谷歌刷新头
+    implementation  'com.scwang.smart:refresh-header-two-level:2.0.1'   //二级刷新头
+    implementation  'com.scwang.smart:refresh-footer-ball:2.0.1'        //球脉冲加载
+    implementation  'com.scwang.smart:refresh-footer-classics:2.0.1'    //经典加载
 
 ```
 

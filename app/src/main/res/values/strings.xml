@@ -61,6 +61,7 @@
     <string name="fragment_example_bottom_sheet">Bottom Sheet</string>
     <string name="fragment_example_flex_box_layout">FlexBox Layout Manager</string>
     <string name="fragment_example_disallow_intercept">Disallow Intercept</string>
+    <string name="fragment_example_staggered_grid">Staggered Grid</string>
 
 
     <string name="fragment_practice_instant">Instant</string>
@@ -90,9 +91,10 @@
     <string name="index_example_pager">The usage of ViewPager</string>
     <string name="index_example_bottom_sheet">The usage of BottomSheet</string>
     <string name="index_example_level">The usage of three level refresh</string>
-    <string name="index_example_flexbox">The usage of FlexboxLayoutManager</string>
+    <string name="index_example_flex_box">The usage of FlexboxLayoutManager</string>
     <string name="index_example_horizontal">The usage of Horizontal Scroll</string>
     <string name="index_example_disallow_intercept">The usage of requestDisallowInterceptTouchEvent</string>
+    <string name="index_example_staggered_grid">The usage of StaggeredGridLayoutManager</string>
 
     <string name="item_style_theme_orange_abstract">Change theme to orange color</string>
     <string name="item_style_theme_red_abstract">Change theme to red color</string>

@@ -2944,7 +2944,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                         reboundAnimator.cancel();//会触发 cancel 和 end 调用
                         reboundAnimator = null;
                         /*
-                         * 2019-1-4 BUG修复
+                         * 2020-1-4 BUG修复
                          * https://github.com/scwang90/SmartRefreshLayout/issues/1104
                          * 如果当前状态为 PullDownToRefresh 并且 mSpinner != 0
                          * mKernel.setState(RefreshState.None); 内部会调用 animSpinner(0); 动画关闭
@@ -3086,7 +3086,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                         reboundAnimator.cancel();//会触发 cancel 和 end 调用
                         reboundAnimator = null;
                         /*
-                         * 2019-1-4 BUG修复
+                         * 2020-1-4 BUG修复
                          * https://github.com/scwang90/SmartRefreshLayout/issues/1104
                          * 如果当前状态为 PullDownToRefresh 并且 mSpinner != 0
                          * mKernel.setState(RefreshState.None); 内部会调用 animSpinner(0); 动画关闭
