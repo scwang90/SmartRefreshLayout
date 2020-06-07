@@ -609,11 +609,12 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                                 ((needPreview && showHeader) ? mHeaderHeight : 0) +
                                 ((needPreview && showFooter) ? mFooterHeight : 0), lp.height);
                 contentView.measure(widthSpec, heightSpec);
-                minimumWidth += contentView.getMeasuredWidth();
-                minimumHeight += contentView.getMeasuredHeight();
+                minimumWidth += contentView.getMeasuredWidth() + mlp.leftMargin + mlp.rightMargin;
+                minimumHeight += contentView.getMeasuredHeight() + mlp.topMargin + mlp.bottomMargin;
             }
         }
-
+        minimumWidth += thisView.getPaddingLeft() + thisView.getPaddingRight();
+        minimumHeight += thisView.getPaddingTop() + thisView.getPaddingBottom();
         super.setMeasuredDimension(
                 View.resolveSize(minimumWidth, widthMeasureSpec),
                 View.resolveSize(minimumHeight, heightMeasureSpec));
