@@ -394,6 +394,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             if (mRefreshHeader == null) {
                 if (sHeaderCreator != null) {
                     RefreshHeader header = sHeaderCreator.createRefreshHeader(thisView.getContext(), this);
+                    //noinspection ConstantConditions
                     if (header == null) {
                         throw new RuntimeException("DefaultRefreshHeaderCreator can not return null");
                     }
@@ -405,6 +406,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             if (mRefreshFooter == null) {
                 if (sFooterCreator != null) {
                     RefreshFooter footer = sFooterCreator.createRefreshFooter(thisView.getContext(), this);
+                    //noinspection ConstantConditions
                     if (footer == null) {
                         throw new RuntimeException("DefaultRefreshFooterCreator can not return null");
                     }
@@ -484,6 +486,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      */
     @Override
     protected void onMeasure(final int widthMeasureSpec,final int heightMeasureSpec) {
+        int minimumWidth = 0;
         int minimumHeight = 0;
         final View thisView = this;
         final boolean needPreview = thisView.isInEditMode() && mEnablePreviewInEditMode;
@@ -539,6 +542,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 }
 
                 if (needPreview && isEnableRefreshOrLoadMore(mEnableRefresh)) {
+                    minimumWidth += headerView.getMeasuredWidth();
                     minimumHeight += headerView.getMeasuredHeight();
                 }
             }
@@ -587,6 +591,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 }
 
                 if (needPreview && isEnableRefreshOrLoadMore(mEnableLoadMore)) {
+                    minimumWidth += footerView.getMeasuredWidth();
                     minimumHeight += footerView.getMeasuredHeight();
                 }
             }
@@ -604,12 +609,13 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                                 ((needPreview && showHeader) ? mHeaderHeight : 0) +
                                 ((needPreview && showFooter) ? mFooterHeight : 0), lp.height);
                 contentView.measure(widthSpec, heightSpec);
+                minimumWidth += contentView.getMeasuredWidth();
                 minimumHeight += contentView.getMeasuredHeight();
             }
         }
 
         super.setMeasuredDimension(
-                View.resolveSize(super.getSuggestedMinimumWidth(), widthMeasureSpec),
+                View.resolveSize(minimumWidth, widthMeasureSpec),
                 View.resolveSize(minimumHeight, heightMeasureSpec));
 
         mLastTouchX = thisView.getMeasuredWidth() / 2f;
@@ -1657,6 +1663,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
              * 拖拽导致 状态重置 最终导致 显示 NoMoreData Footer 菊花却任然在转的情况
              * overSpinner 时 LoadFinish 状态无任何操作即可
              */
+            mViceState = RefreshState.LoadFinish;
         } else if (mSpinner != 0) {
             mKernel.animSpinner(0);
         }
