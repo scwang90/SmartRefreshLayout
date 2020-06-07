@@ -471,6 +471,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      */
     @Override
     protected void onMeasure(final int widthMeasureSpec,final int heightMeasureSpec) {
+        int minimumWidth = 0;
         int minimumHeight = 0;
         final View thisView = this;
         final boolean needPreview = thisView.isInEditMode() && mEnablePreviewInEditMode;
@@ -526,6 +527,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 }
 
                 if (needPreview && isEnableRefreshOrLoadMore(mEnableRefresh)) {
+                    minimumWidth += headerView.getMeasuredWidth();
                     minimumHeight += headerView.getMeasuredHeight();
                 }
             }
@@ -574,6 +576,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 }
 
                 if (needPreview && isEnableRefreshOrLoadMore(mEnableLoadMore)) {
+                    minimumWidth += footerView.getMeasuredWidth();
                     minimumHeight += footerView.getMeasuredHeight();
                 }
             }
@@ -591,13 +594,14 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                                 ((needPreview && showHeader) ? mHeaderHeight : 0) +
                                 ((needPreview && showFooter) ? mFooterHeight : 0), lp.height);
                 contentView.measure(widthSpec, heightSpec);
+                minimumWidth += contentView.getMeasuredWidth();
                 minimumHeight += contentView.getMeasuredHeight();
             }
         }
 
         super.setMeasuredDimension(
-                View.resolveSize(super.getSuggestedMinimumWidth(), widthMeasureSpec),
-                View.resolveSize(minimumHeight, heightMeasureSpec));
+                View.resolveSize(Math.max(minimumWidth, super.getSuggestedMinimumWidth()), widthMeasureSpec),
+                View.resolveSize(Math.max(minimumHeight, super.getSuggestedMinimumHeight()), heightMeasureSpec));
 
         mLastTouchX = thisView.getMeasuredWidth() / 2f;
     }
