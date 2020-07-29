@@ -71,7 +71,7 @@ github 由于你懂的原因，下载速度缓慢，图片也无法查看，可�
 
 |BezierRadar|BezierCircle|
 |:---:|:---:|
-|![](art/gif_BezierRadar.gif)|![](art/gif_BezierCircle.gif)|
+|![](https://gitee.com/scwang90/SmartRefreshLayout/raw/9307f6af64a353fae90d84051467d989e7c6b713/art/gif_BezierRadar.gif)|![](art/gif_BezierCircle.gif)|
 |[Pull To Refresh](https://dribbble.com/shots/1936194-Pull-To-Refresh)|[Pull Down To Refresh](https://dribbble.com/shots/1797373-Pull-Down-To-Refresh)|
 
 |FlyRefresh|Classics|
