@@ -6,10 +6,7 @@
 [![MinSdk](https://img.shields.io/badge/%20MinSdk%20-%2012%2B%20-f0ad4e.svg)](https://android-arsenal.com/api?level=12)
 [![Methods](https://img.shields.io/badge/Methods%20%7C%20Size%20-%20784%20%7C%20121%20KB-d9534f.svg)](http://www.methodscount.com/?lib=com.scwang.smartrefresh%3ASmartRefreshLayout%3A1.0.4)
 
-<!-- [![Platform](https://img.shields.io/badge/Platform-Android-f0ad4e.svg)](https://www.android.com) -->
-<!-- [![Author](https://img.shields.io/badge/Author-scwang90-11bbff.svg)](https://github.com/scwang90) -->
-
-## [English](https://github.com/scwang90/SmartRefreshLayout/blob/master/README_EN.md) | 中文
+## [English](README_EN.md) | 中文
 
 SmartRefreshLayout以打造一个强大，稳定，成熟的下拉刷新框架为目标，并集成各种的炫酷、多样、实用、美观的Header和Footer。
 正如名字所说，SmartRefreshLayout是一个“聪明”或者“智能”的下拉刷新布局，由于它的“智能”，它不只是支持所有的View，还支持多层嵌套的视图结构。
@@ -18,6 +15,9 @@ SmartRefreshLayout以打造一个强大，稳定，成熟的下拉刷新框架�
 其他第三方的 [Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)、[TwinklingRefreshLayout](https://github.com/lcodecorex/TwinklingRefreshLayout) 。
 还集成了各种炫酷的 Header 和 Footer。
 
+## 国内加速
+
+github 由于你懂的原因，下载速度缓慢，图片也无法查看，可以跳转 [国内镜像](https://gitee.com/scwang90/SmartRefreshLayout) 
 
 ## 特点功能:
 
@@ -36,29 +36,21 @@ SmartRefreshLayout以打造一个强大，稳定，成熟的下拉刷新框架�
  - 支持 AndroidX
  - 支持[横向刷新](https://github.com/scwang90/SmartRefreshHorizontal)
 
-## 每天领红包
-
-最近开通了支付宝商家，生成了个红包二维码，经常用支付宝的童鞋可有扫码领优惠红包，扫码只会拿红包，不会有任何损失，每天都可以扫码哦！
-
-![支付宝红包](https://github.com/scwang90/MultiWaveHeader/blob/master/art/pay_alipay_red_packet.png?raw=true)
-
-> 你也可以在支付宝中直接搜索 **553866294** 来获取红包。如果得到的是花呗红包，也不用失望。如果你经常使用信用卡的话那么使用花呗红包非常适合你，它也和信用卡一样先消费后还款，关键是每天都能扫红包省钱！
-
 ## 传送门
 
- - [属性文档](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_property.md)
- - [常见问题](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_faq.md)
- - [智能之处](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_smart.md)
- - [更新日志](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_update.md)
+ - [属性文档](art/md_property.md)
+ - [常见问题](art/md_faq.md)
+ - [智能之处](art/md_smart.md)
+ - [更新日志](art/md_update.md)
  - [博客文章](https://segmentfault.com/a/1190000010066071)
  - [源码下载](https://github.com/scwang90/SmartRefreshLayout/releases)
- - [多点触摸](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_multitouch.md)
- - [自定义Header](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_custom.md)
+ - [多点触摸](art/md_multitouch.md)
+ - [自定义Header](art/md_custom.md)
 
 ## Demo
-[下载 APK-Demo](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/app-debug.apk)
+[下载 APK-Demo](art/app-debug.apk)
 
-![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/png_apk_rqcode.png)
+![](art/png_apk_rqcode.png)
 
 #### 项目演示
 |个人首页|微博列表|
@@ -67,44 +59,44 @@ SmartRefreshLayout以打造一个强大，稳定，成熟的下拉刷新框架�
 
 |餐饮美食|个人中心|
 |:---:|:---:|
-|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_practive_repast.gif)|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_practive_profile.gif)|
+|![](art/gif_practive_repast.gif)|![](art/gif_practive_profile.gif)|
 
 #### 样式演示 Style
 |Delivery|DropBox|
 |:---:|:---:|
-|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_Delivery.gif)|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_Dropbox.gif)|
+|![](art/gif_Delivery.gif)|![](art/gif_Dropbox.gif)|
 |[Refresh-your-delivery](https://dribbble.com/shots/2753803-Refresh-your-delivery)|[Dropbox-Refresh](https://dribbble.com/shots/3470499-DropBox-Refresh)|
 
 上面这两个是我自己实现的，下面的是我把github上其它优秀的Header进行的整理和集合还有优化：
 
 |BezierRadar|BezierCircle|
 |:---:|:---:|
-|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_BezierRadar.gif)|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_BezierCircle.gif)|
+|![](art/gif_BezierRadar.gif)|![](art/gif_BezierCircle.gif)|
 |[Pull To Refresh](https://dribbble.com/shots/1936194-Pull-To-Refresh)|[Pull Down To Refresh](https://dribbble.com/shots/1797373-Pull-Down-To-Refresh)|
 
 |FlyRefresh|Classics|
 |:---:|:---:|
-|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_FlyRefresh.gif)|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_Classics.gif)|
+|![](art/gif_FlyRefresh.gif)|![](art/gif_Classics.gif)|
 |[FlyRefresh](https://github.com/race604/FlyRefresh)|[ClassicsHeader](#1)|
 
 |Phoenix|Taurus|
 |:---:|:---:|
-|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_Phoenix.gif)|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_Taurus.gif)|
+|![](art/gif_Phoenix.gif)|![](art/gif_Taurus.gif)|
 |[Yalantis/Phoenix](https://github.com/Yalantis/Phoenix)|[Yalantis/Taurus](https://github.com/Yalantis/Taurus)
 
 |BattleCity|HitBlock|
 |:---:|:---:|
-|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_BattleCity.gif)|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_HitBlock.gif)|
+|![](art/gif_BattleCity.gif)|![](art/gif_HitBlock.gif)|
 |[FunGame/BattleCity](https://github.com/Hitomis/FunGameRefresh)|[FunGame/HitBlock](https://github.com/Hitomis/FunGameRefresh)
 
 |WaveSwipe|Material|
 |:---:|:---:|
-|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_WaveSwipe.gif)|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_Material.gif)|
+|![](art/gif_WaveSwipe.gif)|![](art/gif_Material.gif)|
 |[WaveSwipeRefreshLayout](https://github.com/recruit-lifestyle/WaveSwipeRefreshLayout)|[MaterialHeader](https://developer.android.com/reference/android/support/v4/widget/SwipeRefreshLayout.html)
 
 |StoreHouse|WaterDrop|
 |:---:|:---:|
-|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_StoreHouse.gif)|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_WaterDrop.gif)|
+|![](art/gif_StoreHouse.gif)|![](art/gif_WaterDrop.gif)|
 |[CRefreshLayout](https://github.com/cloay/CRefreshLayout)|[WaterDrop](https://github.com/THEONE10211024/WaterDropListView)
 
 
@@ -119,12 +111,6 @@ V2.x 版本已经把依赖库拆分成8个包啦，用到的时候自行引用�
  - refresh-header-two-level     二级刷新头
  - refresh-footer-ball          球脉冲加载
  - refresh-footer-classics      经典加载
-
-<!-- V2.x 中对包名进行迁移，为了兼容 1.x 下面三个包依然保留，可以自行选择使用 -->
-
- <!-- - SmartRefreshLayout 刷新布局核心实现，自带ClassicsHeader（经典）、BezierRadarHeader（贝塞尔雷达）两个 Header. -->
- <!-- - SmartRefreshHeader 各种Header的集成，除了Layout自带的Header，其它都在这个包中. -->
- <!-- - SmartRefreshFooter 各种Footer的集成，除了Layout自带的Footer，其它都在这个包中. -->
 
 ## 简单用例
 #### 1.在 build.gradle 中添加依赖
@@ -153,23 +139,7 @@ implementation  'com.scwang.smart:refresh-footer-classics:2.0.1'    //经典加�
 
 ```
 
-如果使用 AndroidX 需要依赖 androidx.appcompat
-
-```
-    implementation 'androidx.appcompat:appcompat:1.0.0'                 //必须 1.0.0 以上
-
-    implementation  'com.scwang.smart:refresh-layout-kernel:2.0.1'      //核心必须依赖
-    implementation  'com.scwang.smart:refresh-header-classics:2.0.1'    //经典刷新头
-    implementation  'com.scwang.smart:refresh-header-radar:2.0.1'       //雷达刷新头
-    implementation  'com.scwang.smart:refresh-header-falsify:2.0.1'     //虚拟刷新头
-    implementation  'com.scwang.smart:refresh-header-material:2.0.1'    //谷歌刷新头
-    implementation  'com.scwang.smart:refresh-header-two-level:2.0.1'   //二级刷新头
-    implementation  'com.scwang.smart:refresh-footer-ball:2.0.1'        //球脉冲加载
-    implementation  'com.scwang.smart:refresh-footer-classics:2.0.1'    //经典加载
-
-```
-
-并在 gradle.properties 中添加
+如果使用 AndroidX 先在 gradle.properties 中添加，两行都不能少噢~
 
 ```
 android.useAndroidX=true
@@ -177,7 +147,20 @@ android.enableJetifier=true
 
 ```
 
+需要依赖 androidx.appcompat
+```
+implementation 'androidx.appcompat:appcompat:1.0.0'                 //必须 1.0.0 以上
 
+implementation  'com.scwang.smart:refresh-layout-kernel:2.0.1'      //核心必须依赖
+implementation  'com.scwang.smart:refresh-header-classics:2.0.1'    //经典刷新头
+implementation  'com.scwang.smart:refresh-header-radar:2.0.1'       //雷达刷新头
+implementation  'com.scwang.smart:refresh-header-falsify:2.0.1'     //虚拟刷新头
+implementation  'com.scwang.smart:refresh-header-material:2.0.1'    //谷歌刷新头
+implementation  'com.scwang.smart:refresh-header-two-level:2.0.1'   //二级刷新头
+implementation  'com.scwang.smart:refresh-footer-ball:2.0.1'        //球脉冲加载
+implementation  'com.scwang.smart:refresh-footer-classics:2.0.1'    //经典加载
+
+```
 
 #### 2.在XML布局文件中添加 SmartRefreshLayout
 ```xml
@@ -280,7 +263,7 @@ public class App extends Application {
 
 注意：方法二 XML设置的Header和Footer的优先级是中等的，会被方法三覆盖。而且使用本方法的时候，Android Studio 会有预览效果，如下图：
 
-![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/jpg_preview_xml_define.jpg)
+![](art/jpg_preview_xml_define.jpg)
 
 不过不用担心，只是预览效果，运行的时候只有下拉才会出现~
 
@@ -295,9 +278,9 @@ refreshLayout.setRefreshFooter(new BallPulseFooter(this).setSpinnerStyle(Spinner
 
 #### 4.更多使用说明
 
- - [属性文档](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_property.md)
- - [常见问题](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_faq.md)
- - [自定义Header](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_custom.md)
+ - [属性文档](art/md_property.md)
+ - [常见问题](art/md_faq.md)
+ - [自定义Header](art/md_custom.md)
 
 ## 混淆
 
@@ -308,12 +291,12 @@ SmartRefreshLayout 不需要添加混淆过滤代码，并且已经混淆测试�
 如果你喜欢 SmartRefreshLayout 的设计，感觉 SmartRefreshLayout 帮助到了你，可以点右上角 "Star" 支持一下 谢谢！ ^_^
 你也还可以扫描下面的二维码~ 请作者喝一杯咖啡。
 
-![](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/pay_alipay.jpg?raw=true) ![](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/pay_wxpay.jpg?raw=true) ![](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/pay_tencent.jpg?raw=true)
+![](art/pay_alipay.jpg?raw=true) ![](art/pay_wxpay.jpg?raw=true) ![](art/pay_tencent.jpg?raw=true)
 
 > 如果希望捐赠之后能获得相关的帮助，可以选择加入下面的付费群来取代普通捐赠，付费群可以直接获得作者的直接帮助，与问题反馈。
 
 如果在捐赠留言中备注名称，将会被记录到列表中~ 如果你也是github开源作者，捐赠时可以留下github项目地址或者个人主页地址，链接将会被添加到列表中起到互相推广的作用
-[捐赠列表](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_donationlist.md)
+[捐赠列表](art/md_donationlist.md)
 
 #### 友情链接
 [github/Loror](https://github.com/Loror)  
