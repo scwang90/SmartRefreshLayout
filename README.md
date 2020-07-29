@@ -63,7 +63,7 @@ SmartRefreshLayout以打造一个强大，稳定，成熟的下拉刷新框架�
 #### 项目演示
 |个人首页|微博列表|
 |:---:|:---:|
-|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_practive_weibo.gif)|![](https://github.com/scwang90/SmartRefreshLayout/raw/master/art/gif_practive_feedlist.gif)|
+|![](https://upload-images.jianshu.io/upload_images/6771408-736178e660e94e82.gif)|![](https://upload-images.jianshu.io/upload_images/6771408-6b4577599ebbfe21.gif)|
 
 |餐饮美食|个人中心|
 |:---:|:---:|
