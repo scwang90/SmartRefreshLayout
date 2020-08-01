@@ -1,5 +1,6 @@
 package com.scwang.refreshlayout.activity;
 
+import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
@@ -16,6 +17,8 @@ import com.scwang.refreshlayout.fragment.index.RefreshExampleFragment;
 import com.scwang.refreshlayout.fragment.index.RefreshPracticeFragment;
 import com.scwang.refreshlayout.fragment.index.RefreshStylesFragment;
 import com.scwang.refreshlayout.util.StatusBarUtil;
+
+import java.lang.reflect.Field;
 
 public class IndexMainActivity extends AppCompatActivity implements OnNavigationItemSelectedListener {
 
@@ -91,6 +94,17 @@ public class IndexMainActivity extends AppCompatActivity implements OnNavigation
 
         //状态栏透明和间距处理
         StatusBarUtil.immersive(this, 0xff000000, 0.1f);
+
+        try {
+            /*重置动画倍率-防止部分模拟器对动画速度的控制*/
+            Field field = ValueAnimator.class.getDeclaredField("sDurationScale");
+            field.setAccessible(true);
+            field.set(ValueAnimator.class, 1);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

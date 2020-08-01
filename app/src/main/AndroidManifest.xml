@@ -26,6 +26,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.IndexMainActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_index_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
