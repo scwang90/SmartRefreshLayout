@@ -7,7 +7,6 @@ import android.view.View;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.header.BezierRadarHeader;
 
 /**
  * 微博列表
@@ -34,8 +33,6 @@ public class FeedListPracticeActivity extends AppCompatActivity {
             isFirstEnter = false;
             refreshLayout.autoRefresh();
         }
-        refreshLayout.setRefreshHeader(new BezierRadarHeader(this));
-
     }
 
 }
