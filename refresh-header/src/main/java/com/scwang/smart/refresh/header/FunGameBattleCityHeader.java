@@ -19,7 +19,6 @@ import java.util.Random;
 
 /**
  * Created by scwang on 2018/3/09.
- * email:196425254@qq.com
  * from https://github.com/Hitomis/FunGameRefresh
  */
 public class FunGameBattleCityHeader extends FunGameView {
