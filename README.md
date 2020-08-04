@@ -55,11 +55,11 @@ github 由于你懂的原因，下载速度缓慢，图片也无法查看，可�
 #### 项目演示
 |个人首页|微博列表|
 |:---:|:---:|
-|![](https://scwang90.github.io/assets/refresh-layout/gif_practive_weibo_1.gif)|![](https://scwang90.github.io/assets/refresh-layout/gif_practive_feedlist_1.gif)|
+|![](https://scwang90.github.io/assets/refresh-layout/gif_practive_weibo.gif)|![](https://scwang90.github.io/assets/refresh-layout/gif_practive_feedlist.gif)|
 
 |餐饮美食|个人中心|
 |:---:|:---:|
-|![](https://scwang90.github.io/assets/refresh-layout/gif_practive_repast_1.gif)|![](https://scwang90.github.io/assets/refresh-layout/gif_practive_profile_1.gif)|
+|![](https://scwang90.github.io/assets/refresh-layout/gif_practive_repast.gif)|![](https://scwang90.github.io/assets/refresh-layout/gif_practive_profile.gif)|
 
 #### 样式演示 Style
 |Delivery|DropBox|
@@ -86,7 +86,7 @@ github 由于你懂的原因，下载速度缓慢，图片也无法查看，可�
 
 |BattleCity|HitBlock|
 |:---:|:---:|
-|![](https://scwang90.github.io/assets/refresh-layout/gif_BattleCity_1.gif)|![](https://scwang90.github.io/assets/refresh-layout/gif_HitBlock_1.gif)|
+|![](https://scwang90.github.io/assets/refresh-layout/gif_BattleCity.gif)|![](https://scwang90.github.io/assets/refresh-layout/gif_HitBlock.gif)|
 |[FunGame/BattleCity](https://github.com/Hitomis/FunGameRefresh)|[FunGame/HitBlock](https://github.com/Hitomis/FunGameRefresh)
 
 |WaveSwipe|Material|
