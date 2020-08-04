@@ -38,65 +38,65 @@ github 由于你懂的原因，下载速度缓慢，图片也无法查看，可�
 
 ## 传送门
 
- - [属性文档](https://gitee.com/scwang90/SmartRefreshLayout/raw/V-ART/art/md_property.md)
- - [常见问题](https://gitee.com/scwang90/SmartRefreshLayout/raw/V-ART/art/md_faq.md)
- - [智能之处](https://gitee.com/scwang90/SmartRefreshLayout/raw/V-ART/art/md_smart.md)
- - [更新日志](https://gitee.com/scwang90/SmartRefreshLayout/raw/V-ART/art/md_update.md)
+ - [属性文档](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_property.md)
+ - [常见问题](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_faq.md)
+ - [智能之处](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_smart.md)
+ - [更新日志](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_update.md)
  - [博客文章](https://segmentfault.com/a/1190000010066071)
  - [源码下载](https://github.com/scwang90/SmartRefreshLayout/releases)
- - [多点触摸](https://gitee.com/scwang90/SmartRefreshLayout/raw/V-ART/art/md_multitouch.md)
- - [自定义Header](https://gitee.com/scwang90/SmartRefreshLayout/raw/V-ART/art/md_custom.md)
+ - [多点触摸](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_multitouch.md)
+ - [自定义Header](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_custom.md)
 
 ## Demo
-[下载 APK-Demo](https://gitee.com/scwang90/SmartRefreshLayout/raw/V-ART/art/app-debug.apk)
+[下载 APK-Demo](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/app-debug.apk)
 
-![](https://gitee.com/scwang90/SmartRefreshLayout/raw/V-ART/art/png_apk_rqcode.png)
+![](https://scwang90.github.io/assets/refresh-layout/png_apk_rqcode.png)
 
 #### 项目演示
 |个人首页|微博列表|
 |:---:|:---:|
-|![](https://gitee.com/scwang90/SmartRefreshLayout/raw/V-ART/art/gif_practive_weibo_1.gif)|![](https://gitee.com/scwang90/SmartRefreshLayout/raw/V-ART/art/gif_practive_feedlist_1.gif)|
+|![](https://scwang90.github.io/assets/refresh-layout/gif_practive_weibo_1.gif)|![](https://scwang90.github.io/assets/refresh-layout/gif_practive_feedlist_1.gif)|
 
 |餐饮美食|个人中心|
 |:---:|:---:|
-|![](https://gitee.com/scwang90/SmartRefreshLayout/raw/V-ART/art/gif_practive_repast_1.gif)|![](https://gitee.com/scwang90/SmartRefreshLayout/raw/V-ART/art/gif_practive_profile_1.gif)|
+|![](https://scwang90.github.io/assets/refresh-layout/gif_practive_repast_1.gif)|![](https://scwang90.github.io/assets/refresh-layout/gif_practive_profile_1.gif)|
 
 #### 样式演示 Style
 |Delivery|DropBox|
 |:---:|:---:|
-|![](https://gitee.com/scwang90/SmartRefreshLayout/raw/V-ART/art/gif_Delivery.gif)|![](https://gitee.com/scwang90/SmartRefreshLayout/raw/V-ART/art/gif_Dropbox.gif)|
+|![](https://scwang90.github.io/assets/refresh-layout/gif_Delivery.gif)|![](https://scwang90.github.io/assets/refresh-layout/gif_Dropbox.gif)|
 |[Refresh-your-delivery](https://dribbble.com/shots/2753803-Refresh-your-delivery)|[Dropbox-Refresh](https://dribbble.com/shots/3470499-DropBox-Refresh)|
 
 上面这两个是我自己实现的，下面的是我把github上其它优秀的Header进行的整理和集合还有优化：
 
 |BezierRadar|BezierCircle|
 |:---:|:---:|
-|![](https://gitee.com/scwang90/SmartRefreshLayout/raw/V-ART/art/gif_BezierRadar.gif)|![](https://gitee.com/scwang90/SmartRefreshLayout/raw/V-ART/art/gif_BezierCircle.gif)|
+|![](https://scwang90.github.io/assets/refresh-layout/gif_BezierRadar.gif)|![](https://scwang90.github.io/assets/refresh-layout/gif_BezierCircle.gif)|
 |[Pull To Refresh](https://dribbble.com/shots/1936194-Pull-To-Refresh)|[Pull Down To Refresh](https://dribbble.com/shots/1797373-Pull-Down-To-Refresh)|
 
 |FlyRefresh|Classics|
 |:---:|:---:|
-|![](https://gitee.com/scwang90/SmartRefreshLayout/raw/V-ART/art/gif_FlyRefresh.gif)|![](https://gitee.com/scwang90/SmartRefreshLayout/raw/V-ART/art/gif_Classics.gif)|
+|![](https://scwang90.github.io/assets/refresh-layout/gif_FlyRefresh.gif)|![](https://scwang90.github.io/assets/refresh-layout/gif_Classics.gif)|
 |[FlyRefresh](https://github.com/race604/FlyRefresh)|[ClassicsHeader](#1)|
 
 |Phoenix|Taurus|
 |:---:|:---:|
-|![](https://gitee.com/scwang90/SmartRefreshLayout/raw/V-ART/art/gif_Phoenix.gif)|![](https://gitee.com/scwang90/SmartRefreshLayout/raw/V-ART/art/gif_Taurus.gif)|
+|![](https://scwang90.github.io/assets/refresh-layout/gif_Phoenix.gif)|![](https://scwang90.github.io/assets/refresh-layout/gif_Taurus.gif)|
 |[Yalantis/Phoenix](https://github.com/Yalantis/Phoenix)|[Yalantis/Taurus](https://github.com/Yalantis/Taurus)
 
 |BattleCity|HitBlock|
 |:---:|:---:|
-|![](https://gitee.com/scwang90/SmartRefreshLayout/raw/V-ART/art/gif_BattleCity_1.gif)|![](https://gitee.com/scwang90/SmartRefreshLayout/raw/V-ART/art/gif_HitBlock_1.gif)|
+|![](https://scwang90.github.io/assets/refresh-layout/gif_BattleCity_1.gif)|![](https://scwang90.github.io/assets/refresh-layout/gif_HitBlock_1.gif)|
 |[FunGame/BattleCity](https://github.com/Hitomis/FunGameRefresh)|[FunGame/HitBlock](https://github.com/Hitomis/FunGameRefresh)
 
 |WaveSwipe|Material|
 |:---:|:---:|
-|![](https://gitee.com/scwang90/SmartRefreshLayout/raw/V-ART/art/gif_WaveSwipe.gif)|![](https://gitee.com/scwang90/SmartRefreshLayout/raw/V-ART/art/gif_Material.gif)|
+|![](https://scwang90.github.io/assets/refresh-layout/gif_WaveSwipe.gif)|![](https://scwang90.github.io/assets/refresh-layout/gif_Material.gif)|
 |[WaveSwipeRefreshLayout](https://github.com/recruit-lifestyle/WaveSwipeRefreshLayout)|[MaterialHeader](https://developer.android.com/reference/android/support/v4/widget/SwipeRefreshLayout.html)
 
 |StoreHouse|WaterDrop|
 |:---:|:---:|
-|![](https://gitee.com/scwang90/SmartRefreshLayout/raw/V-ART/art/gif_StoreHouse.gif)|![](https://gitee.com/scwang90/SmartRefreshLayout/raw/V-ART/art/gif_WaterDrop.gif)|
+|![](https://scwang90.github.io/assets/refresh-layout/gif_StoreHouse.gif)|![](https://scwang90.github.io/assets/refresh-layout/gif_WaterDrop.gif)|
 |[CRefreshLayout](https://github.com/cloay/CRefreshLayout)|[WaterDrop](https://github.com/THEONE10211024/WaterDropListView)
 
 
@@ -263,7 +263,7 @@ public class App extends Application {
 
 注意：方法二 XML设置的Header和Footer的优先级是中等的，会被方法三覆盖。而且使用本方法的时候，Android Studio 会有预览效果，如下图：
 
-![](https://gitee.com/scwang90/SmartRefreshLayout/raw/V-ART/art/jpg_preview_xml_define.jpg)
+![](https://scwang90.github.io/assets/refresh-layout/jpg_preview_xml_define.jpg)
 
 不过不用担心，只是预览效果，运行的时候只有下拉才会出现~
 
@@ -278,9 +278,9 @@ refreshLayout.setRefreshFooter(new BallPulseFooter(this).setSpinnerStyle(Spinner
 
 #### 4.更多使用说明
 
- - [属性文档](https://gitee.com/scwang90/SmartRefreshLayout/raw/V-ART/art/md_property.md)
- - [常见问题](https://gitee.com/scwang90/SmartRefreshLayout/raw/V-ART/art/md_faq.md)
- - [自定义Header](https://gitee.com/scwang90/SmartRefreshLayout/raw/V-ART/art/md_custom.md)
+ - [属性文档](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_property.md)
+ - [常见问题](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_faq.md)
+ - [自定义Header](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_custom.md)
 
 ## 混淆
 
@@ -291,12 +291,12 @@ SmartRefreshLayout 不需要添加混淆过滤代码，并且已经混淆测试�
 如果你喜欢 SmartRefreshLayout 的设计，感觉 SmartRefreshLayout 帮助到了你，可以点右上角 "Star" 支持一下 谢谢！ ^_^
 你也还可以扫描下面的二维码~ 请作者喝一杯咖啡。
 
-![](https://gitee.com/scwang90/SmartRefreshLayout/raw/V-ART/art/pay_alipay.jpg?raw=true) ![](https://gitee.com/scwang90/SmartRefreshLayout/raw/V-ART/art/pay_wxpay.jpg?raw=true) ![](https://gitee.com/scwang90/SmartRefreshLayout/raw/V-ART/art/pay_tencent.jpg?raw=true)
+![](https://scwang90.github.io/assets/refresh-layout/pay_alipay.jpg?raw=true) ![](https://scwang90.github.io/assets/refresh-layout/pay_wxpay.jpg?raw=true) ![](https://scwang90.github.io/assets/refresh-layout/pay_tencent.jpg?raw=true)
 
 > 如果希望捐赠之后能获得相关的帮助，可以选择加入下面的付费群来取代普通捐赠，付费群可以直接获得作者的直接帮助，与问题反馈。
 
 如果在捐赠留言中备注名称，将会被记录到列表中~ 如果你也是github开源作者，捐赠时可以留下github项目地址或者个人主页地址，链接将会被添加到列表中起到互相推广的作用
-[捐赠列表](https://gitee.com/scwang90/SmartRefreshLayout/raw/V-ART/art/md_donationlist.md)
+[捐赠列表](https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_donationlist.md)
 
 #### 友情链接
 [github/Loror](https://github.com/Loror)  
