@@ -167,9 +167,9 @@ public class RefreshStylesFragment extends Fragment implements AdapterView.OnIte
                         } else if (oldState == RefreshState.RefreshFinish) {
                             RefreshHeader refreshHeader = refreshLayout.getRefreshHeader();
                             if (refreshHeader instanceof RefreshHeaderWrapper) {
-                                refreshLayout.setRefreshHeader(new PhoenixHeader(getContext()), ViewGroup.LayoutParams.MATCH_PARENT, SmartUtil.dp2px(200));
+                                refreshLayout.setRefreshHeader(new PhoenixHeader(getContext()), ViewGroup.LayoutParams.MATCH_PARENT, SmartUtil.dp2px(100));
                             } else if (refreshHeader instanceof PhoenixHeader) {
-                                refreshLayout.setRefreshHeader(new DropBoxHeader(getContext()), ViewGroup.LayoutParams.MATCH_PARENT, SmartUtil.dp2px(300));
+                                refreshLayout.setRefreshHeader(new DropBoxHeader(getContext()), ViewGroup.LayoutParams.MATCH_PARENT, SmartUtil.dp2px(150));
                             } else if (refreshHeader instanceof DropBoxHeader) {
                                 refreshLayout.setRefreshHeader(new FunGameHitBlockHeader(getContext()));
                             } else if (refreshHeader instanceof FunGameHitBlockHeader) {

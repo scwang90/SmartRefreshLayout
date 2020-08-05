@@ -16,9 +16,9 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
 import com.scwang.smart.refresh.header.flyrefresh.MountainSceneView;
+import com.scwang.smart.refresh.layout.api.RefreshHeader;
 import com.scwang.smart.refresh.layout.api.RefreshKernel;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
-import com.scwang.smart.refresh.layout.api.RefreshHeader;
 import com.scwang.smart.refresh.layout.util.SmartUtil;
 
 /**
@@ -37,6 +37,7 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
     protected int mOffset = 0;
     protected float mCurrentPercent;
     protected boolean mIsRefreshing = false;
+    protected int mMeasureHeight = 0;
     //</editor-fold>
 
     //<editor-fold desc="View">
@@ -47,9 +48,32 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
     public FlyRefreshHeader(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        if (mMeasureHeight == 0) {
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+            mMeasureHeight = super.getMeasuredHeight();
+        }
+        super.setMeasuredDimension(
+                View.resolveSize(MeasureSpec.getSize(widthMeasureSpec), widthMeasureSpec),0);
+    }
+
     //</editor-fold>
 
     //<editor-fold desc="RefreshHeader">
+    @Override
+    public void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight) {
+        if (mRefreshKernel == null) {
+            mRefreshKernel = kernel;
+            mRefreshLayout = kernel.getRefreshLayout();
+            mRefreshLayout.setEnableOverScrollDrag(false);
+            mRefreshLayout.setHeaderHeightPx(0);
+            mRefreshLayout.setHeaderTriggerRate(mMeasureHeight);
+            mRefreshLayout.setHeaderMaxDragRate(mMeasureHeight * 2.5f);
+        }
+    }
+
     @Override
     public void onMoving(boolean isDragging, float percent, int offset, int height, int maxDragHeight) {
         if (isDragging || !mIsRefreshing) {
@@ -80,10 +104,8 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
 
     @Override
     public void onReleased(@NonNull RefreshLayout layout, int height, int maxDragHeight) {
-        /*
-         * 提前关闭 下拉视图偏移
-         */
-        mRefreshKernel.animSpinner(0);
+        ///* 提前关闭 下拉视图偏移 */
+        //mRefreshKernel.animSpinner(0); // 新版改成设置 HeaderHeight=0 来自动回到原始位置
 
         if (mCurrentPercent > 0) {
             ValueAnimator valueAnimator = ValueAnimator.ofFloat(mCurrentPercent, 0);
@@ -142,13 +164,6 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
                 mSceneView.setPrimaryColor(colors[0]);
             }
         }
-    }
-
-    @Override
-    public void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight) {
-        mRefreshKernel = kernel;
-        mRefreshLayout = kernel.getRefreshLayout();
-        mRefreshLayout.setEnableOverScrollDrag(false);
     }
 
     @Override
