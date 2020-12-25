@@ -45,7 +45,7 @@ if (new File(file).exists()) {
     properties.load(new FileInputStream(file))
     if ('true' == properties['SMART_PUBLISH']) {
         subprojects {
-            if (name.startsWith("refresh-")) {
+            if (name.startsWith("refresh-") && !name.contains("drawable")) {
                 group = SMART_GROUP
                 version = SMART_VERSION
                 if (name.split('-').length > 2) {
