@@ -18,6 +18,7 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.ScrollView;
 
+import com.scwang.smart.refresh.layout.api.RefreshComponent;
 import com.scwang.smart.refresh.layout.kernel.R;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
@@ -81,6 +82,9 @@ public class SmartUtil implements Interpolator {
     }
 
     public static boolean isScrollableView(View view) {
+        if (view instanceof RefreshComponent) {
+            return false;
+        }
         return view instanceof AbsListView
                 || view instanceof ScrollView
                 || view instanceof ScrollingView
@@ -89,6 +93,9 @@ public class SmartUtil implements Interpolator {
     }
 
     public static boolean isContentView(View view) {
+        if (view instanceof RefreshComponent) {
+            return false;
+        }
         return isScrollableView(view)
                 || view instanceof ViewPager
                 || view instanceof NestedScrollingParent;
