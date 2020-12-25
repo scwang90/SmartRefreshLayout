@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/badge/License%20-Apache%202-337ab7.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Arsenal](https://img.shields.io/badge/Arsenal%20-%20SmartRefresh-4cae4c.svg)](https://android-arsenal.com/details/1/6001)
-[![JCenter](https://img.shields.io/badge/%20JCenter%20-2.0.0-5bc0de.svg)](https://bintray.com/scwang90/maven/refresh-layout-kernel/_latestVersion)
+[![JCenter](https://img.shields.io/badge/%20JCenter%20-2.0.2-5bc0de.svg)](https://bintray.com/scwang90/maven/refresh-layout-kernel/_latestVersion)
 [![MinSdk](https://img.shields.io/badge/%20MinSdk%20-%2012%2B%20-f0ad4e.svg)](https://android-arsenal.com/api?level=12)
 [![Methods](https://img.shields.io/badge/Methods%20%7C%20Size%20-%20784%20%7C%20121%20KB-d9534f.svg)](http://www.methodscount.com/?lib=com.scwang.smartrefresh%3ASmartRefreshLayout%3A1.0.4)
 
@@ -127,14 +127,14 @@ V2.x 相对于 V1.x 对包名做了修改如：com.scwang.smartrefresh 改为 co
 compile 'com.android.support:appcompat-v7:25.3.1'                   //必须 25.3.1 以上
 
 // 注意：分包之后不会有默认的Header和Footer需要手动添加！还是原来的三种方法！
-implementation  'com.scwang.smart:refresh-layout-kernel:2.0.1'      //核心必须依赖
-implementation  'com.scwang.smart:refresh-header-classics:2.0.1'    //经典刷新头
-implementation  'com.scwang.smart:refresh-header-radar:2.0.1'       //雷达刷新头
-implementation  'com.scwang.smart:refresh-header-falsify:2.0.1'     //虚拟刷新头
-implementation  'com.scwang.smart:refresh-header-material:2.0.1'    //谷歌刷新头
-implementation  'com.scwang.smart:refresh-header-two-level:2.0.1'   //二级刷新头
-implementation  'com.scwang.smart:refresh-footer-ball:2.0.1'        //球脉冲加载
-implementation  'com.scwang.smart:refresh-footer-classics:2.0.1'    //经典加载
+implementation  'com.scwang.smart:refresh-layout-kernel:2.0.2'      //核心必须依赖
+implementation  'com.scwang.smart:refresh-header-classics:2.0.2'    //经典刷新头
+implementation  'com.scwang.smart:refresh-header-radar:2.0.2'       //雷达刷新头
+implementation  'com.scwang.smart:refresh-header-falsify:2.0.2'     //虚拟刷新头
+implementation  'com.scwang.smart:refresh-header-material:2.0.2'    //谷歌刷新头
+implementation  'com.scwang.smart:refresh-header-two-level:2.0.2'   //二级刷新头
+implementation  'com.scwang.smart:refresh-footer-ball:2.0.2'        //球脉冲加载
+implementation  'com.scwang.smart:refresh-footer-classics:2.0.2'    //经典加载
 
 
 ```
@@ -151,14 +151,14 @@ android.enableJetifier=true
 ```
 implementation 'androidx.appcompat:appcompat:1.0.0'                 //必须 1.0.0 以上
 
-implementation  'com.scwang.smart:refresh-layout-kernel:2.0.1'      //核心必须依赖
-implementation  'com.scwang.smart:refresh-header-classics:2.0.1'    //经典刷新头
-implementation  'com.scwang.smart:refresh-header-radar:2.0.1'       //雷达刷新头
-implementation  'com.scwang.smart:refresh-header-falsify:2.0.1'     //虚拟刷新头
-implementation  'com.scwang.smart:refresh-header-material:2.0.1'    //谷歌刷新头
-implementation  'com.scwang.smart:refresh-header-two-level:2.0.1'   //二级刷新头
-implementation  'com.scwang.smart:refresh-footer-ball:2.0.1'        //球脉冲加载
-implementation  'com.scwang.smart:refresh-footer-classics:2.0.1'    //经典加载
+implementation  'com.scwang.smart:refresh-layout-kernel:2.0.2'      //核心必须依赖
+implementation  'com.scwang.smart:refresh-header-classics:2.0.2'    //经典刷新头
+implementation  'com.scwang.smart:refresh-header-radar:2.0.2'       //雷达刷新头
+implementation  'com.scwang.smart:refresh-header-falsify:2.0.2'     //虚拟刷新头
+implementation  'com.scwang.smart:refresh-header-material:2.0.2'    //谷歌刷新头
+implementation  'com.scwang.smart:refresh-header-two-level:2.0.2'   //二级刷新头
+implementation  'com.scwang.smart:refresh-footer-ball:2.0.2'        //球脉冲加载
+implementation  'com.scwang.smart:refresh-footer-classics:2.0.2'    //经典加载
 
 ```
 

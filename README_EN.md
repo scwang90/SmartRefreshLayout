@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/badge/License%20-Apache%202-337ab7.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Arsenal](https://img.shields.io/badge/Arsenal%20-%20SmartRefresh-4cae4c.svg)](https://android-arsenal.com/details/1/6001)
-[![JCenter](https://img.shields.io/badge/%20Jcenter%20-2.0.0-5bc0de.svg)](https://bintray.com/scwang90/maven/refresh-layout-kernel/_latestVersion)
+[![JCenter](https://img.shields.io/badge/%20Jcenter%20-2.0.2-5bc0de.svg)](https://bintray.com/scwang90/maven/refresh-layout-kernel/_latestVersion)
 [![MinSdk](https://img.shields.io/badge/%20MinSdk%20-%2012%2B%20-f0ad4e.svg)](https://android-arsenal.com/api?level=12)
 [![Methods](https://img.shields.io/badge/Methods%20%7C%20Size%20-%20784%20%7C%20122%20KB-d9534f.svg)](http://www.methodscount.com/?lib=com.scwang.smartrefresh%3ASmartRefreshLayout%3A1.1.0)
 
@@ -114,20 +114,20 @@ It is recommended that you copy the source code into the project whenever you ne
 
 ```
 // Note: There will be no default Header and Footer after subcontracting. It needs to be added manually!
-implementation  'com.scwang.smart:refresh-layout-kernel:2.0.1'      //core
-implementation  'com.scwang.smart:refresh-header-classics:2.0.1'    //ClassicsHeader
-implementation  'com.scwang.smart:refresh-header-radar:2.0.1'       //BezierRadarHeader
-implementation  'com.scwang.smart:refresh-header-falsify:2.0.1'     //FalsifyHeader
-implementation  'com.scwang.smart:refresh-header-material:2.0.1'    //MaterialHeader
-implementation  'com.scwang.smart:refresh-header-two-level:2.0.1'   //TwoLevelHeader
-implementation  'com.scwang.smart:refresh-footer-ball:2.0.1'        //BallPulseFooter
-implementation  'com.scwang.smart:refresh-footer-classics:2.0.1'    //ClassicsFooter
+implementation  'com.scwang.smart:refresh-layout-kernel:2.0.2'      //core
+implementation  'com.scwang.smart:refresh-header-classics:2.0.2'    //ClassicsHeader
+implementation  'com.scwang.smart:refresh-header-radar:2.0.2'       //BezierRadarHeader
+implementation  'com.scwang.smart:refresh-header-falsify:2.0.2'     //FalsifyHeader
+implementation  'com.scwang.smart:refresh-header-material:2.0.2'    //MaterialHeader
+implementation  'com.scwang.smart:refresh-header-two-level:2.0.2'   //TwoLevelHeader
+implementation  'com.scwang.smart:refresh-footer-ball:2.0.2'        //BallPulseFooter
+implementation  'com.scwang.smart:refresh-footer-classics:2.0.2'    //ClassicsFooter
 
 ```
 <!-- // The package name of `com.scwang.smartrefresh` is retained, but not subcontracted. -->
-<!-- implementation 'com.scwang.smartrefresh:SmartRefreshHeader:2.0.1'   //Headers -->
-<!-- implementation 'com.scwang.smartrefresh:SmartRefreshFooter:2.0.1'   //Footers -->
-<!-- implementation 'com.scwang.smartrefresh:SmartRefreshLayout:2.0.1'   //core、 default Header and Footer -->
+<!-- implementation 'com.scwang.smartrefresh:SmartRefreshHeader:2.0.2'   //Headers -->
+<!-- implementation 'com.scwang.smartrefresh:SmartRefreshFooter:2.0.2'   //Footers -->
+<!-- implementation 'com.scwang.smartrefresh:SmartRefreshLayout:2.0.2'   //core、 default Header and Footer -->
 
 If you use AndroidX, add it to gradle.properties
 
