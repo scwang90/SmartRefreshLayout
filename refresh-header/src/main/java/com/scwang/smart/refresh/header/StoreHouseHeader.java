@@ -7,13 +7,14 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.PointF;
-import android.support.annotation.ColorInt;
-import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
 
 import com.scwang.smart.refresh.header.storehouse.StoreHouseBarItem;
 import com.scwang.smart.refresh.header.storehouse.StoreHousePath;

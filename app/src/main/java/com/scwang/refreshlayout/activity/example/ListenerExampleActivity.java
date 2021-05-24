@@ -1,12 +1,13 @@
 package com.scwang.refreshlayout.activity.example;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.smartrefresh.layout.api.RefreshFooter;
@@ -25,7 +26,7 @@ import java.util.Locale;
  */
 public class ListenerExampleActivity extends AppCompatActivity {
 
-    private static DateFormat FORMAT = new SimpleDateFormat("HH:mm sss", Locale.CHINA);
+    private static final DateFormat FORMAT = new SimpleDateFormat("HH:mm sss", Locale.CHINA);
 
     private TextView mTvContent;
     private String mHeaderMoving;

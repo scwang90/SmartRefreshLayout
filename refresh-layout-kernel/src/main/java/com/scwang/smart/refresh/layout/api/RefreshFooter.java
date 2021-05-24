@@ -1,10 +1,10 @@
 package com.scwang.smart.refresh.layout.api;
 
-import android.support.annotation.RestrictTo;
+import static androidx.annotation.RestrictTo.Scope.LIBRARY;
+import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP;
+import static androidx.annotation.RestrictTo.Scope.SUBCLASSES;
 
-import static android.support.annotation.RestrictTo.Scope.LIBRARY;
-import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
-import static android.support.annotation.RestrictTo.Scope.SUBCLASSES;
+import androidx.annotation.RestrictTo;
 
 /**
  * 刷新底部

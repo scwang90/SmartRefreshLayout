@@ -1,17 +1,20 @@
 package com.scwang.refreshlayout.activity.style;
 
+import static com.scwang.refreshlayout.R.layout.item_style_delivery;
+
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.StringRes;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
+
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
@@ -21,8 +24,6 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static com.scwang.refreshlayout.R.layout.item_style_delivery;
 
 public class DeliveryStyleActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 

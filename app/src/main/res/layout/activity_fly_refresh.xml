@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -17,7 +17,7 @@
     <!--AppBarLayout.Height + RefreshHeader.Height-->
     <!--效果最佳-->
 
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_bar_height"
@@ -25,7 +25,7 @@
         android:background="@android:color/transparent"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <android.support.design.widget.CollapsingToolbarLayout
+        <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/toolbarLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -33,7 +33,8 @@
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
+            <androidx.appcompat.widget.Toolbar
+                style="@style/AppTheme.Toolbar"
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
@@ -42,8 +43,8 @@
                 app:navigationIcon="?attr/homeAsUpIndicator"
                 app:layout_collapseMode="pin" />
 
-        </android.support.design.widget.CollapsingToolbarLayout>
-    </android.support.design.widget.AppBarLayout>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
@@ -60,7 +61,8 @@
             android:id="@+id/flyRefresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-        <android.support.v7.widget.RecyclerView
+
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -68,10 +70,10 @@
             android:clipToPadding="false"
             android:background="@android:color/white"
             android:overScrollMode="never"
-            tools:listitem="@layout/activity_fly_refresh_item"/>
+            tools:listitem="@layout/activity_fly_refresh_item" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -79,7 +81,7 @@
         app:fabSize="normal"
         app:layout_anchor="@id/recyclerView"
         app:layout_anchorGravity="top"
-        app:elevation="0dp"  />
+        app:elevation="0dp" />
 
     <com.scwang.smart.refresh.header.flyrefresh.FlyView
         android:id="@+id/flyView"
@@ -89,4 +91,4 @@
         app:layout_anchorGravity="center"
         app:elevation="3dp" />
 
-</android.support.design.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

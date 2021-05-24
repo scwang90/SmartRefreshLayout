@@ -1,13 +1,14 @@
 package com.scwang.refreshlayout.widget;
 
+import static com.scwang.smartrefresh.layout.util.SmartUtil.scrollListBy;
+
 import android.animation.ValueAnimator;
-import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.AbsListView;
 
-import com.scwang.smart.refresh.layout.wrapper.RefreshContentWrapper;
+import androidx.annotation.NonNull;
 
-import static com.scwang.smartrefresh.layout.util.SmartUtil.scrollListBy;
+import com.scwang.smart.refresh.layout.wrapper.RefreshContentWrapper;
 
 public class RefreshContentHorizontal extends RefreshContentWrapper {
 

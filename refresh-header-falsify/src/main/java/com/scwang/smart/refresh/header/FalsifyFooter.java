@@ -1,8 +1,9 @@
 package com.scwang.smart.refresh.header;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+
+import androidx.annotation.NonNull;
 
 import com.scwang.smart.refresh.header.falsify.FalsifyAbstract;
 import com.scwang.smart.refresh.layout.api.RefreshFooter;

@@ -1,15 +1,11 @@
 package com.scwang.smart.refresh.layout.util;
 
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+
 import android.content.res.Resources;
 import android.graphics.PointF;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.v4.view.NestedScrollingChild;
-import android.support.v4.view.NestedScrollingParent;
-import android.support.v4.view.ScrollingView;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
@@ -18,11 +14,16 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.ScrollView;
 
+import androidx.annotation.NonNull;
+import androidx.core.view.NestedScrollingChild;
+import androidx.core.view.NestedScrollingParent;
+import androidx.core.view.ScrollingView;
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
+
 import com.scwang.smart.refresh.layout.api.RefreshComponent;
 import com.scwang.smart.refresh.layout.kernel.R;
-
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 /**
  * SmartUtil
@@ -33,7 +34,8 @@ public class SmartUtil implements Interpolator {
     public static int INTERPOLATOR_VISCOUS_FLUID = 0;
     public static int INTERPOLATOR_DECELERATE = 1;
 
-    private int type;
+    //<editor-fold desc="像素密度">
+    private static final float density = Resources.getSystem().getDisplayMetrics().density;
 
     public SmartUtil(int type) {
         this.type = type;
@@ -43,7 +45,7 @@ public class SmartUtil implements Interpolator {
     public static int measureViewHeight(View view) {
         ViewGroup.LayoutParams p = view.getLayoutParams();
         if (p == null) {
-            p = new ViewGroup.LayoutParams(MATCH_PARENT,WRAP_CONTENT);
+            p = new ViewGroup.LayoutParams(MATCH_PARENT, WRAP_CONTENT);
         }
         int childHeightSpec;
         int childWidthSpec = ViewGroup.getChildMeasureSpec(0, 0, p.width);
@@ -56,30 +58,7 @@ public class SmartUtil implements Interpolator {
         return view.getMeasuredHeight();
     }
 
-    public static void scrollListBy(@NonNull AbsListView listView, int y) {
-        if (Build.VERSION.SDK_INT >= 19) {
-            // Call the framework version directly
-            listView.scrollListBy(y);
-        } else if (listView instanceof ListView) {
-            // provide backport on earlier versions
-            final int firstPosition = listView.getFirstVisiblePosition();
-            if (firstPosition == ListView.INVALID_POSITION) {
-                return;
-            }
-
-            //noinspection UnnecessaryLocalVariable
-            final ViewGroup listGroup = listView;
-            final View firstView = listGroup.getChildAt(0);
-            if (firstView == null) {
-                return;
-            }
-
-            final int newTop = firstView.getTop() - y;
-            ((ListView) listView).setSelectionFromTop(firstPosition, newTop);
-        } else {
-            listView.smoothScrollBy(y, 0);
-        }
-    }
+    private final int type;
 
     public static boolean isScrollableView(View view) {
         if (view instanceof RefreshComponent) {
@@ -203,17 +182,40 @@ public class SmartUtil implements Interpolator {
                 && point[0] < (child.getWidth())
                 && point[1] < ((child.getHeight()));
         if (isInView && outLocalPoint != null) {
-            outLocalPoint.set(point[0]-x, point[1]-y);
+            outLocalPoint.set(point[0] - x, point[1] - y);
         }
         return isInView;
     }
     //</editor-fold>
 
-    //<editor-fold desc="像素密度">
-    private static float density = Resources.getSystem().getDisplayMetrics().density;
+    public static void scrollListBy(@NonNull AbsListView listView, int y) {
+        if (Build.VERSION.SDK_INT >= 19) {
+            // Call the framework version directly
+            listView.scrollListBy(y);
+        } else if (listView instanceof ListView) {
+            // provide backport on earlier versions
+            final int firstPosition = listView.getFirstVisiblePosition();
+            if (firstPosition == ListView.INVALID_POSITION) {
+                return;
+            }
+
+            //noinspection UnnecessaryLocalVariable
+            final ViewGroup listGroup = listView;
+            final View firstView = listGroup.getChildAt(0);
+            if (firstView == null) {
+                return;
+            }
+
+            final int newTop = firstView.getTop() - y;
+            listView.setSelectionFromTop(firstPosition, newTop);
+        } else {
+            listView.smoothScrollBy(y, 0);
+        }
+    }
 
     /**
      * 根据手机的分辨率从 dp 的单位 转成为 px(像素)
+     *
      * @param dpValue 虚拟像素
      * @return 像素
      */

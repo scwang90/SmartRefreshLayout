@@ -1,6 +1,6 @@
 package com.scwang.refreshlayout.util;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import java.text.FieldPosition;
 import java.text.SimpleDateFormat;
@@ -14,9 +14,9 @@ import java.util.Locale;
  */
 public class DynamicTimeFormat extends SimpleDateFormat {
 
-    private static Locale locale = Locale.CHINA;
-    private static String weeks[] = {"周日", "周一", "周二", "周三", "周四", "周五", "周六"};
-    private static String moments[] = {"中午", "凌晨", "早上", "下午", "晚上"};
+    private static final Locale locale = Locale.CHINA;
+    private static final String[] weeks = {"周日", "周一", "周二", "周三", "周四", "周五", "周六"};
+    private static final String[] moments = {"中午", "凌晨", "早上", "下午", "晚上"};
 
     private String mFormat = "%s";
 

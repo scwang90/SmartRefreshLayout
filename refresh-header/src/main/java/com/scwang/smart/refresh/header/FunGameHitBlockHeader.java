@@ -5,10 +5,11 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
-import android.support.annotation.NonNull;
-import android.support.v4.graphics.ColorUtils;
 import android.util.AttributeSet;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.core.graphics.ColorUtils;
 
 import com.scwang.smart.refresh.header.fungame.FunGameView;
 import com.scwang.smart.refresh.layout.api.RefreshKernel;

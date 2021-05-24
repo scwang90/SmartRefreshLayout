@@ -6,10 +6,11 @@
     android:orientation="vertical"
     tools:context="com.scwang.refreshlayout.fragment.example.PureScrollExampleFragmentHeader">
 
-    <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
+    <androidx.appcompat.widget.Toolbar
+        style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"
         app:navigationIcon="?attr/homeAsUpIndicator"
-        app:title="@string/fragment_example_pure_scroll_header"/>
+        app:title="@string/fragment_example_pure_scroll_header" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
@@ -20,13 +21,14 @@
         <com.scwang.smartrefresh.layout.header.FalsifyHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-        <android.support.v7.widget.RecyclerView
+
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/white"
             android:overScrollMode="never"
-            tools:listitem="@android:layout/simple_list_item_2"/>
+            tools:listitem="@android:layout/simple_list_item_2" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

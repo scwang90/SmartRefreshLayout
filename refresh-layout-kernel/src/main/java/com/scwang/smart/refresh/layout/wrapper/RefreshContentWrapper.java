@@ -1,12 +1,14 @@
 package com.scwang.smart.refresh.layout.wrapper;
 
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static com.scwang.smart.refresh.layout.util.SmartUtil.isContentView;
+import static com.scwang.smart.refresh.layout.util.SmartUtil.isTransformedTouchPointInView;
+import static com.scwang.smart.refresh.layout.util.SmartUtil.measureViewHeight;
+import static com.scwang.smart.refresh.layout.util.SmartUtil.scrollListBy;
+
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.graphics.PointF;
-import android.support.annotation.NonNull;
-import android.support.v4.view.NestedScrollingChild;
-import android.support.v4.view.NestedScrollingParent;
-import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,6 +16,11 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.FrameLayout;
 import android.widget.Space;
+
+import androidx.annotation.NonNull;
+import androidx.core.view.NestedScrollingChild;
+import androidx.core.view.NestedScrollingParent;
+import androidx.viewpager.widget.ViewPager;
 
 import com.scwang.smart.refresh.layout.api.RefreshContent;
 import com.scwang.smart.refresh.layout.api.RefreshKernel;
@@ -26,12 +33,6 @@ import com.scwang.smart.refresh.layout.util.DesignUtil;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static com.scwang.smart.refresh.layout.util.SmartUtil.isContentView;
-import static com.scwang.smart.refresh.layout.util.SmartUtil.isTransformedTouchPointInView;
-import static com.scwang.smart.refresh.layout.util.SmartUtil.measureViewHeight;
-import static com.scwang.smart.refresh.layout.util.SmartUtil.scrollListBy;
 
 /**
  * 刷新内容包装

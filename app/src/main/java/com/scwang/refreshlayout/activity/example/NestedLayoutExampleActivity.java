@@ -1,16 +1,17 @@
 package com.scwang.refreshlayout.activity.example;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
@@ -25,11 +26,11 @@ import java.util.Locale;
 
 public class NestedLayoutExampleActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
-    private static String[] provinces = new String[]{
-            "北京","天津","上海","重庆",
-            "黑龙江","吉林","辽宁","河北","河南","山东","江苏","山西","陕西","甘肃","四川","青海","湖南","湖北","江西","安徽","浙江","福建","广东","广西","贵州","云南","海南",
-            "内蒙古","新疆维吾尔族自治区","宁夏回族自治区","西藏","宁夏回族自治区",
-            "香港","澳门"
+    private static final String[] provinces = new String[]{
+            "北京", "天津", "上海", "重庆",
+            "黑龙江", "吉林", "辽宁", "河北", "河南", "山东", "江苏", "山西", "陕西", "甘肃", "四川", "青海", "湖南", "湖北", "江西", "安徽", "浙江", "福建", "广东", "广西", "贵州", "云南", "海南",
+            "内蒙古", "新疆维吾尔族自治区", "宁夏回族自治区", "西藏", "宁夏回族自治区",
+            "香港", "澳门"
     };
 
     private static boolean isFirstEnter = true;
@@ -62,7 +63,7 @@ public class NestedLayoutExampleActivity extends AppCompatActivity implements Ad
                 }
             }.setOnItemClickListener(this));
             recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                DateFormat dateFormat = new SimpleDateFormat("hh:mm:ss SSS", Locale.CHINA);
+                final DateFormat dateFormat = new SimpleDateFormat("hh:mm:ss SSS", Locale.CHINA);
                 @Override
                 public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                     Log.e("recyclerView", dateFormat.format(new Date()) + " - onScrollStateChanged - " + newState);

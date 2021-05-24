@@ -6,12 +6,13 @@
     android:orientation="vertical"
     tools:context="com.scwang.refreshlayout.fragment.example.HorizontalExampleFragment">
 
-    <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
+    <androidx.appcompat.widget.Toolbar
+        style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"
         android:fitsSystemWindows="true"
         android:layout_height="wrap_content"
         app:navigationIcon="?attr/homeAsUpIndicator"
-        app:title="@string/fragment_example_horizontal"/>
+        app:title="@string/fragment_example_horizontal" />
 
     <com.scwang.refreshlayout.widget.SmartRefreshHorizontal
         android:id="@+id/refreshLayout"
@@ -21,15 +22,16 @@
         app:srlEnablePreviewInEditMode="true"
         app:srlEnableHeaderTranslationContent="true"
         app:srlEnableFooterTranslationContent="true">
-        <android.support.v7.widget.RecyclerView
+
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/white"
             android:overScrollMode="never"
             android:orientation="horizontal"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-            tools:listitem="@android:layout/simple_list_item_2"/>
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@android:layout/simple_list_item_2" />
         <com.scwang.smartrefresh.header.MaterialHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

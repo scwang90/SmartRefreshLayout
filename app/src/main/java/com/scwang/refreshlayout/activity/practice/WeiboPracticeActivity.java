@@ -1,13 +1,15 @@
 package com.scwang.refreshlayout.activity.practice;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.ButtonBarLayout;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.core.widget.NestedScrollView;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.util.StatusBarUtil;
@@ -43,7 +45,7 @@ public class WeiboPracticeActivity extends AppCompatActivity {
         StatusBarUtil.setMargin(this, findViewById(R.id.header));
 
         final View parallax = findViewById(R.id.parallax);
-        final View buttonBar = findViewById(R.id.buttonBarLayout);
+        final ButtonBarLayout buttonBar = findViewById(R.id.buttonBarLayout);
         final NestedScrollView scrollView = findViewById(R.id.scrollView);
         final RefreshLayout refreshLayout = findViewById(R.id.refreshLayout);
 
@@ -91,8 +93,9 @@ public class WeiboPracticeActivity extends AppCompatActivity {
         });
         scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             private int lastScrollY = 0;
-            private int h = SmartUtil.dp2px(170);
-            private int color = ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary)&0x00ffffff;
+            private final int h = SmartUtil.dp2px(170);
+            private final int color = ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary) & 0x00ffffff;
+
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 if (lastScrollY < h) {

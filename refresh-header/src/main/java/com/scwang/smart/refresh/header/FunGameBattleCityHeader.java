@@ -4,10 +4,11 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.RectF;
-import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.view.View;
+
+import androidx.annotation.NonNull;
 
 import com.scwang.smart.refresh.header.fungame.FunGameView;
 import com.scwang.smart.refresh.layout.api.RefreshKernel;

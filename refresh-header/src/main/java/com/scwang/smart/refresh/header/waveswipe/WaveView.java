@@ -24,16 +24,17 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.os.Build;
-import android.support.annotation.ColorInt;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.BounceInterpolator;
 
+import androidx.annotation.ColorInt;
+
 /**
  * @author amyu
- *         <p>
- *         波と落ちる円を描画するView
+ * <p>
+ * 波と落ちる円を描画するView
  */
 public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener {
 

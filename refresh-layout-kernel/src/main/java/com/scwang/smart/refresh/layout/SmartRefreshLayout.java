@@ -1,5 +1,17 @@
 package com.scwang.smart.refresh.layout;
 
+import static android.view.MotionEvent.obtain;
+import static android.view.View.MeasureSpec.AT_MOST;
+import static android.view.View.MeasureSpec.EXACTLY;
+import static android.view.View.MeasureSpec.getSize;
+import static android.view.View.MeasureSpec.makeMeasureSpec;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+import static com.scwang.smart.refresh.layout.util.SmartUtil.dp2px;
+import static com.scwang.smart.refresh.layout.util.SmartUtil.fling;
+import static com.scwang.smart.refresh.layout.util.SmartUtil.isContentView;
+import static java.lang.System.currentTimeMillis;
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
@@ -12,15 +24,6 @@ import android.graphics.Paint;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.ColorInt;
-import android.support.annotation.ColorRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.NestedScrollingChildHelper;
-import android.support.v4.view.NestedScrollingParent;
-import android.support.v4.view.NestedScrollingParentHelper;
-import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -35,6 +38,16 @@ import android.widget.AbsListView;
 import android.widget.Scroller;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.NestedScrollingChildHelper;
+import androidx.core.view.NestedScrollingParent;
+import androidx.core.view.NestedScrollingParentHelper;
+import androidx.core.view.ViewCompat;
 
 import com.scwang.smart.refresh.layout.api.RefreshComponent;
 import com.scwang.smart.refresh.layout.api.RefreshContent;
@@ -60,18 +73,6 @@ import com.scwang.smart.refresh.layout.util.SmartUtil;
 import com.scwang.smart.refresh.layout.wrapper.RefreshContentWrapper;
 import com.scwang.smart.refresh.layout.wrapper.RefreshFooterWrapper;
 import com.scwang.smart.refresh.layout.wrapper.RefreshHeaderWrapper;
-
-import static android.view.MotionEvent.obtain;
-import static android.view.View.MeasureSpec.AT_MOST;
-import static android.view.View.MeasureSpec.EXACTLY;
-import static android.view.View.MeasureSpec.getSize;
-import static android.view.View.MeasureSpec.makeMeasureSpec;
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-import static com.scwang.smart.refresh.layout.util.SmartUtil.dp2px;
-import static com.scwang.smart.refresh.layout.util.SmartUtil.fling;
-import static com.scwang.smart.refresh.layout.util.SmartUtil.isContentView;
-import static java.lang.System.currentTimeMillis;
 
 /**
  * 智能刷新布局

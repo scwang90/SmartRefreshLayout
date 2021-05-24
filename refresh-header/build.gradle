@@ -10,7 +10,7 @@ android {
         versionCode 1
         versionName SMART_VERSION
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
     buildTypes {
         release {
@@ -25,13 +25,13 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testImplementation 'junit:junit:4.12'
 
-    compileOnly 'com.android.support:support-annotations:28.0.0'
-    compileOnly 'com.android.support:support-v4:28.0.0'
+    compileOnly 'androidx.annotation:annotation:1.0.0'
+    compileOnly 'androidx.legacy:legacy-support-v4:1.0.0'
     compileOnly project(':refresh-layout')
     compileOnly project(':refresh-drawable-path')
     compileOnly project(':refresh-header-material')

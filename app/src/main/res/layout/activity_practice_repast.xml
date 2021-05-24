@@ -27,14 +27,14 @@
             android:src="@mipmap/gif_header_repast"
             app:layout_srlSpinnerStyle="Scale"
             app:layout_srlBackgroundColor="@android:color/transparent"/>
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingTop="?attr/actionBarSize"
             android:clipToPadding="false"
             android:overScrollMode="never"
-            tools:listitem="@layout/item_practice_repast"/>
+            tools:listitem="@layout/item_practice_repast" />
         <com.scwang.smartrefresh.layout.footer.ClassicsFooter
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -49,10 +49,11 @@
         android:layout_height="?attr/actionBarSize"
         android:visibility="visible"/>
 
-    <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar.Light"
+    <androidx.appcompat.widget.Toolbar
+        style="@style/AppTheme.Toolbar.Light"
         android:id="@+id/toolbar"
         android:background="@android:color/transparent"
         app:navigationIcon="@drawable/ic_arrow_back_dark_24dp"
-        app:title="@string/title_activity_practice_repast"/>
+        app:title="@string/title_activity_practice_repast" />
 
 </FrameLayout>

@@ -7,35 +7,40 @@
     android:orientation="vertical"
     tools:context="com.scwang.refreshlayout.activity.example.SnapHelperExampleActivity">
 
-    <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
+        style="@style/AppTheme.Toolbar"
         app:contentInsetStart="0dp"
-        app:titleMarginStart="0dp"
         app:contentInsetStartWithNavigation="0dp"
         app:navigationIcon="?attr/homeAsUpIndicator"
-        app:subtitle="@string/title_activity_example_snap_helper">
-        <Switch
+        app:subtitle="@string/title_activity_example_snap_helper"
+        app:titleMarginStart="0dp">
+
+        <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_scroll_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:textSize="12sp"
+            android:checked="true"
             android:text="@string/switch_scroll_content_when_loaded"
-            android:checked="true"/>
-    </android.support.v7.widget.Toolbar>
+            android:textSize="12sp" />
+    </androidx.appcompat.widget.Toolbar>
+
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <android.support.v7.widget.RecyclerView
+
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:overScrollMode="never"
-            tools:listitem="@android:layout/simple_list_item_2"/>
+            tools:listitem="@android:layout/simple_list_item_2" />
+
         <com.scwang.smartrefresh.layout.footer.ClassicsFooter
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

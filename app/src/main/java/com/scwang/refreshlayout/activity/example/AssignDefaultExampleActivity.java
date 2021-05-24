@@ -2,10 +2,11 @@ package com.scwang.refreshlayout.activity.example;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.util.DynamicTimeFormat;
