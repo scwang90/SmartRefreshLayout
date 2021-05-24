@@ -2,37 +2,8 @@ apply plugin: 'com.android.library'
 
 description = 'path drawables for refresh animations'
 
-android {
-
-    compileSdkVersion 28
-
-    defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
-
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-    lintOptions {
-        abortOnError false
-    }
-}
+apply from: "${rootDir.path}/gradle/base.gradle"
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    testImplementation 'junit:junit:4.12'
-
     api project(':refresh-drawable-paint')
-    compileOnly 'androidx.legacy:legacy-support-v4:1.0.0'
 }

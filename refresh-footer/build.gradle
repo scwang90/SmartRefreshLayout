@@ -1,47 +1,9 @@
 apply plugin: 'com.android.library'
-//apply plugin: 'com.novoda.bintray-release'
 
-android {
-
-    compileSdkVersion 28
-
-    defaultConfig {
-
-        minSdkVersion 16
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-    lintOptions {
-        abortOnError false
-    }
-}
+apply from: "${rootDir.path}/gradle/base.gradle"
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    testImplementation 'junit:junit:4.12'
-
     compileOnly project(':refresh-footer-ball')
     compileOnly project(':refresh-footer-classics')
     compileOnly project(':refresh-layout')
 }
-
-//publish {
-//    userOrg = SMART_USER
-//    groupId = 'com.scwang.smartrefresh'
-//    artifactId = 'SmartRefreshFooter'
-//    publishVersion = SMART_VERSION
-//    desc = 'Some delicate footers of SmartRefreshLayout'
-//    website = "https://github.com/scwang90/${rootProject.name}"
-//}
