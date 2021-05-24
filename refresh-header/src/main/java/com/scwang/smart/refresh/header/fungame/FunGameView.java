@@ -43,7 +43,7 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
     /**
      * 分割线默认宽度大小
      */
-    protected float DIVIDING_LINE_SIZE = 1.f;
+    protected float DIVIDING_LINE_SIZE;
 
     protected View mShadowView;
     protected TextView mMaskViewTop;

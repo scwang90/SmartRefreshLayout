@@ -1559,12 +1559,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     }
                 }
             });
-            reboundAnimator.addUpdateListener(new AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    mKernel.moveSpinner((int) animation.getAnimatedValue(), false);
-                }
-            });
+            reboundAnimator.addUpdateListener(animation -> mKernel.moveSpinner((int) animation.getAnimatedValue(), false));
             reboundAnimator.setStartDelay(startDelay);
 //            reboundAnimator.setDuration(20000);
             reboundAnimator.start();
@@ -1738,18 +1733,15 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             /*
              * 自动加载模式时，延迟触发 onLoadMore ，mReboundDuration 保证动画能顺利执行
              */
-            mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if (mLoadMoreListener != null) {
-                        mLoadMoreListener.onLoadMore(SmartRefreshLayout.this);
-                    } else if (mOnMultiListener == null) {
-                        finishLoadMore(2000);//如果没有任何加载监听器，两秒之后自动关闭
-                    }
-                    final OnLoadMoreListener listener = mOnMultiListener;
-                    if (listener != null) {
-                        listener.onLoadMore(SmartRefreshLayout.this);
-                    }
+            mHandler.postDelayed(() -> {
+                if (mLoadMoreListener != null) {
+                    mLoadMoreListener.onLoadMore(SmartRefreshLayout.this);
+                } else if (mOnMultiListener == null) {
+                    finishLoadMore(2000);//如果没有任何加载监听器，两秒之后自动关闭
+                }
+                final OnLoadMoreListener listener = mOnMultiListener;
+                if (listener != null) {
+                    listener.onLoadMore(SmartRefreshLayout.this);
                 }
             }, mReboundDuration);
         }
@@ -3159,59 +3151,56 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                             }
                         }
                         //准备：偏移并结束状态
-                        mHandler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                AnimatorUpdateListener updateListener = null;
-                                if (mEnableScrollContentWhenLoaded && offset < 0) {
-                                    updateListener = mRefreshContent.scrollContentWhenFinished(mSpinner);
-                                    if (updateListener != null) {//如果内容需要滚动显示新数据
-                                        updateListener.onAnimationUpdate(ValueAnimator.ofInt(0, 0));//直接滚动, Footer 的距离
+                        mHandler.postDelayed(() -> {
+                            AnimatorUpdateListener updateListener = null;
+                            if (mEnableScrollContentWhenLoaded && offset < 0) {
+                                updateListener = mRefreshContent.scrollContentWhenFinished(mSpinner);
+                                if (updateListener != null) {//如果内容需要滚动显示新数据
+                                    updateListener.onAnimationUpdate(ValueAnimator.ofInt(0, 0));//直接滚动, Footer 的距离
+                                }
+                            }
+                            ValueAnimator animator = null;//动议动画和动画结束回调
+                            AnimatorListenerAdapter listenerAdapter = new AnimatorListenerAdapter() {
+                                @Override
+                                public void onAnimationEnd(Animator animation) {
+                                    if (animation != null && animation.getDuration() == 0) {
+                                        return;//0 表示被取消
+                                    }
+                                    mFooterLocked = false;
+                                    if (noMoreData) {
+                                        setNoMoreData(true);
+                                    }
+                                    if (mState == RefreshState.LoadFinish) {
+                                        notifyStateChanged(RefreshState.None);
                                     }
                                 }
-                                ValueAnimator animator = null;//动议动画和动画结束回调
-                                AnimatorListenerAdapter listenerAdapter = new AnimatorListenerAdapter() {
-                                    @Override
-                                    public void onAnimationEnd(Animator animation) {
-                                        if (animation != null && animation.getDuration() == 0) {
-                                            return;//0 表示被取消
-                                        }
-                                        mFooterLocked = false;
-                                        if (noMoreData) {
-                                            setNoMoreData(true);
-                                        }
-                                        if (mState == RefreshState.LoadFinish) {
-                                            notifyStateChanged(RefreshState.None);
-                                        }
-                                    }
-                                };
-                                if (mSpinner > 0) { //大于0表示下拉, 这是 Header 可见, Footer 不可见
-                                    animator = mKernel.animSpinner(0);//关闭 Header 回到原始状态
-                                } else if (updateListener != null || mSpinner == 0) {//如果 Header 和 Footer 都不可见 或者内容需要滚动显示新内容
-                                    if (reboundAnimator != null) {
-                                        reboundAnimator.setDuration(0);//cancel会触发End调用，可以判断0来确定是否被cancel
-                                        reboundAnimator.cancel();//会触发 cancel 和 end 调用
-                                        reboundAnimator = null;//取消之前的任何动画
-                                    }
-                                    //直接关闭 Header 或者 Header 到原始状态
-                                    mKernel.moveSpinner(0, false);
-                                    mKernel.setState(RefreshState.None);
-                                } else {//准备按正常逻辑关闭Footer
-                                    if (noMoreData && mEnableFooterFollowWhenNoMoreData) {//如果需要显示没有更多数据
-                                        if (mSpinner >= -mFooterHeight) {//如果 Footer 的位置再可见范围内
-                                            notifyStateChanged(RefreshState.None);//直接通知重置状态,不关闭 Footer
-                                        } else {//如果 Footer 的位置超出 Footer 显示高度 (这个情况的概率应该很低, 手指故意拖拽 Footer 向上超出原位置时会触发)
-                                            animator = mKernel.animSpinner(-mFooterHeight);//通过动画让 Footer 回到全显示状态位置
-                                        }
-                                    } else {
-                                        animator = mKernel.animSpinner(0);//动画正常关闭 Footer
-                                    }
+                            };
+                            if (mSpinner > 0) { //大于0表示下拉, 这是 Header 可见, Footer 不可见
+                                animator = mKernel.animSpinner(0);//关闭 Header 回到原始状态
+                            } else if (updateListener != null || mSpinner == 0) {//如果 Header 和 Footer 都不可见 或者内容需要滚动显示新内容
+                                if (reboundAnimator != null) {
+                                    reboundAnimator.setDuration(0);//cancel会触发End调用，可以判断0来确定是否被cancel
+                                    reboundAnimator.cancel();//会触发 cancel 和 end 调用
+                                    reboundAnimator = null;//取消之前的任何动画
                                 }
-                                if (animator != null) {
-                                    animator.addListener(listenerAdapter);//如果通过动画关闭,绑定动画结束回调
+                                //直接关闭 Header 或者 Header 到原始状态
+                                mKernel.moveSpinner(0, false);
+                                mKernel.setState(RefreshState.None);
+                            } else {//准备按正常逻辑关闭Footer
+                                if (noMoreData && mEnableFooterFollowWhenNoMoreData) {//如果需要显示没有更多数据
+                                    if (mSpinner >= -mFooterHeight) {//如果 Footer 的位置再可见范围内
+                                        notifyStateChanged(RefreshState.None);//直接通知重置状态,不关闭 Footer
+                                    } else {//如果 Footer 的位置超出 Footer 显示高度 (这个情况的概率应该很低, 手指故意拖拽 Footer 向上超出原位置时会触发)
+                                        animator = mKernel.animSpinner(-mFooterHeight);//通过动画让 Footer 回到全显示状态位置
+                                    }
                                 } else {
-                                    listenerAdapter.onAnimationEnd(null);//如果没有动画,立即执行结束回调(必须逻辑)
+                                    animator = mKernel.animSpinner(0);//动画正常关闭 Footer
                                 }
+                            }
+                            if (animator != null) {
+                                animator.addListener(listenerAdapter);//如果通过动画关闭,绑定动画结束回调
+                            } else {
+                                listenerAdapter.onAnimationEnd(null);//如果没有动画,立即执行结束回调(必须逻辑)
                             }
                         }, mSpinner < 0 ? startDelay : 0);
                     }
@@ -3322,55 +3311,49 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     @Override
     public boolean autoRefresh(int delayed, final int duration, final float dragRate,final boolean animationOnly) {
         if (mState == RefreshState.None && isEnableRefreshOrLoadMore(mEnableRefresh)) {
-            Runnable runnable = new Runnable() {
-                @Override
-                public void run() {
-                    if (mViceState != RefreshState.Refreshing) return;
-                    if (reboundAnimator != null) {
-                        reboundAnimator.setDuration(0);//cancel会触发End调用，可以判断0来确定是否被cancel
-                        reboundAnimator.cancel();//会触发 cancel 和 end 调用
-                        reboundAnimator = null;
-                    }
-
-                    final View thisView = SmartRefreshLayout.this;
-                    mLastTouchX = thisView.getMeasuredWidth() / 2f;
-                    mKernel.setState(RefreshState.PullDownToRefresh);
-
-                    final float height = mHeaderHeight == 0 ? mHeaderTriggerRate : mHeaderHeight;
-                    final float dragHeight = dragRate < 10 ? height * dragRate : dragRate;
-                    reboundAnimator = ValueAnimator.ofInt(mSpinner, (int) (dragHeight));
-                    reboundAnimator.setDuration(duration);
-                    reboundAnimator.setInterpolator(new SmartUtil(SmartUtil.INTERPOLATOR_VISCOUS_FLUID));
-                    reboundAnimator.addUpdateListener(new AnimatorUpdateListener() {
-                        @Override
-                        public void onAnimationUpdate(ValueAnimator animation) {
-                            if (reboundAnimator != null && mRefreshHeader != null) {
-                                mKernel.moveSpinner((int) animation.getAnimatedValue(), true);
-                            }
-                        }
-                    });
-                    reboundAnimator.addListener(new AnimatorListenerAdapter() {
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            if (animation != null && animation.getDuration() == 0) {
-                                return;//0 表示被取消
-                            }
-                            reboundAnimator = null;
-                            if (mRefreshHeader != null) {
-                                if (mState != RefreshState.ReleaseToRefresh) {
-                                    mKernel.setState(RefreshState.ReleaseToRefresh);
-                                }
-                                setStateRefreshing(!animationOnly);
-                            } else {
-                                /*
-                                 * 2019-12-24 修复 mRefreshHeader=null 时状态错乱问题
-                                 */
-                                mKernel.setState(RefreshState.None);
-                            }
-                        }
-                    });
-                    reboundAnimator.start();
+            Runnable runnable = () -> {
+                if (mViceState != RefreshState.Refreshing) return;
+                if (reboundAnimator != null) {
+                    reboundAnimator.setDuration(0);//cancel会触发End调用，可以判断0来确定是否被cancel
+                    reboundAnimator.cancel();//会触发 cancel 和 end 调用
+                    reboundAnimator = null;
                 }
+
+                final View thisView = SmartRefreshLayout.this;
+                mLastTouchX = thisView.getMeasuredWidth() / 2f;
+                mKernel.setState(RefreshState.PullDownToRefresh);
+
+                final float height = mHeaderHeight == 0 ? mHeaderTriggerRate : mHeaderHeight;
+                final float dragHeight = dragRate < 10 ? height * dragRate : dragRate;
+                reboundAnimator = ValueAnimator.ofInt(mSpinner, (int) (dragHeight));
+                reboundAnimator.setDuration(duration);
+                reboundAnimator.setInterpolator(new SmartUtil(SmartUtil.INTERPOLATOR_VISCOUS_FLUID));
+                reboundAnimator.addUpdateListener(animation -> {
+                    if (reboundAnimator != null && mRefreshHeader != null) {
+                        mKernel.moveSpinner((int) animation.getAnimatedValue(), true);
+                    }
+                });
+                reboundAnimator.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        if (animation != null && animation.getDuration() == 0) {
+                            return;//0 表示被取消
+                        }
+                        reboundAnimator = null;
+                        if (mRefreshHeader != null) {
+                            if (mState != RefreshState.ReleaseToRefresh) {
+                                mKernel.setState(RefreshState.ReleaseToRefresh);
+                            }
+                            setStateRefreshing(!animationOnly);
+                        } else {
+                            /*
+                             * 2019-12-24 修复 mRefreshHeader=null 时状态错乱问题
+                             */
+                            mKernel.setState(RefreshState.None);
+                        }
+                    }
+                });
+                reboundAnimator.start();
             };
             setViceState(RefreshState.Refreshing);
             if (delayed > 0) {
@@ -3430,55 +3413,49 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     @Override
     public boolean autoLoadMore(int delayed, final int duration, final float dragRate, final boolean animationOnly) {
         if (mState == RefreshState.None && (isEnableRefreshOrLoadMore(mEnableLoadMore) && !mFooterNoMoreData)) {
-            Runnable runnable = new Runnable() {
-                @Override
-                public void run() {
-                    if (mViceState != RefreshState.Loading)return;
-                    if (reboundAnimator != null) {
-                        reboundAnimator.setDuration(0);//cancel会触发End调用，可以判断0来确定是否被cancel
-                        reboundAnimator.cancel();//会触发 cancel 和 end 调用
-                        reboundAnimator = null;
-                    }
-
-                    final View thisView = SmartRefreshLayout.this;
-                    mLastTouchX = thisView.getMeasuredWidth() / 2f;
-                    mKernel.setState(RefreshState.PullUpToLoad);
-
-                    final float height = mFooterHeight == 0 ? mFooterTriggerRate : mFooterHeight;
-                    final float dragHeight = dragRate < 10 ? dragRate * height : dragRate;
-                    reboundAnimator = ValueAnimator.ofInt(mSpinner, - (int) (dragHeight));
-                    reboundAnimator.setDuration(duration);
-                    reboundAnimator.setInterpolator(new SmartUtil(SmartUtil.INTERPOLATOR_VISCOUS_FLUID));
-                    reboundAnimator.addUpdateListener(new AnimatorUpdateListener() {
-                        @Override
-                        public void onAnimationUpdate(ValueAnimator animation) {
-                            if (reboundAnimator != null && mRefreshFooter != null) {
-                                mKernel.moveSpinner((int) animation.getAnimatedValue(), true);
-                            }
-                        }
-                    });
-                    reboundAnimator.addListener(new AnimatorListenerAdapter() {
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            if (animation != null && animation.getDuration() == 0) {
-                                return;//0 表示被取消
-                            }
-                            reboundAnimator = null;
-                            if (mRefreshFooter != null) {
-                                if (mState != RefreshState.ReleaseToLoad) {
-                                    mKernel.setState(RefreshState.ReleaseToLoad);
-                                }
-                                setStateLoading(!animationOnly);
-                            } else {
-                                /*
-                                 * 2019-12-24 修复 mRefreshFooter=null 时状态错乱问题
-                                 */
-                                mKernel.setState(RefreshState.None);
-                            }
-                        }
-                    });
-                    reboundAnimator.start();
+            Runnable runnable = () -> {
+                if (mViceState != RefreshState.Loading) return;
+                if (reboundAnimator != null) {
+                    reboundAnimator.setDuration(0);//cancel会触发End调用，可以判断0来确定是否被cancel
+                    reboundAnimator.cancel();//会触发 cancel 和 end 调用
+                    reboundAnimator = null;
                 }
+
+                final View thisView = SmartRefreshLayout.this;
+                mLastTouchX = thisView.getMeasuredWidth() / 2f;
+                mKernel.setState(RefreshState.PullUpToLoad);
+
+                final float height = mFooterHeight == 0 ? mFooterTriggerRate : mFooterHeight;
+                final float dragHeight = dragRate < 10 ? dragRate * height : dragRate;
+                reboundAnimator = ValueAnimator.ofInt(mSpinner, -(int) (dragHeight));
+                reboundAnimator.setDuration(duration);
+                reboundAnimator.setInterpolator(new SmartUtil(SmartUtil.INTERPOLATOR_VISCOUS_FLUID));
+                reboundAnimator.addUpdateListener(animation -> {
+                    if (reboundAnimator != null && mRefreshFooter != null) {
+                        mKernel.moveSpinner((int) animation.getAnimatedValue(), true);
+                    }
+                });
+                reboundAnimator.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        if (animation != null && animation.getDuration() == 0) {
+                            return;//0 表示被取消
+                        }
+                        reboundAnimator = null;
+                        if (mRefreshFooter != null) {
+                            if (mState != RefreshState.ReleaseToLoad) {
+                                mKernel.setState(RefreshState.ReleaseToLoad);
+                            }
+                            setStateLoading(!animationOnly);
+                        } else {
+                            /*
+                             * 2019-12-24 修复 mRefreshFooter=null 时状态错乱问题
+                             */
+                            mKernel.setState(RefreshState.None);
+                        }
+                    }
+                });
+                reboundAnimator.start();
             };
             setViceState(RefreshState.Loading);
             if (delayed > 0) {

@@ -15,15 +15,15 @@ import java.util.Random;
 @SuppressWarnings("WeakerAccess")
 public class StoreHouseBarItem extends Animation {
 
-    public PointF midPoint;
+    public final PointF midPoint;
     public float translationX;
-    public int index;
+    public final int index;
 
     protected final Paint mPaint = new Paint();
     protected float mFromAlpha = 1.0f;
     protected float mToAlpha = 0.4f;
-    protected PointF mCStartPoint;
-    protected PointF mCEndPoint;
+    protected final PointF mCStartPoint;
+    protected final PointF mCEndPoint;
 
     public StoreHouseBarItem(int index, PointF start, PointF end, int color, int lineWidth) {
         this.index = index;

@@ -74,9 +74,9 @@ public class FunGameHitBlockHeader extends FunGameView {
     /**
      * 小球半径
      */
-    protected float BALL_RADIUS;
+    protected final float BALL_RADIUS;
 
-    protected Paint blockPaint;
+    protected final Paint blockPaint;
 
     protected float blockLeft, racketLeft;
 

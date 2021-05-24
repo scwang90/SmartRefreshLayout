@@ -42,24 +42,24 @@ public class MountainSceneView extends View {
     protected static final int TREE_WIDTH = 100;
     protected static final int TREE_HEIGHT = 200;
 
-    protected Paint mMountPaint = new Paint();
-    protected Paint mTrunkPaint = new Paint();
-    protected Paint mBranchPaint = new Paint();
-    protected Paint mBoarderPaint = new Paint();
+    protected final Paint mMountPaint = new Paint();
+    protected final Paint mTrunkPaint = new Paint();
+    protected final Paint mBranchPaint = new Paint();
+    protected final Paint mBoarderPaint = new Paint();
 
-    protected Path mMount1 = new Path();
-    protected Path mMount2 = new Path();
-    protected Path mMount3 = new Path();
-    protected Path mTrunk = new Path();
-    protected Path mBranch = new Path();
-    protected Matrix mTransMatrix = new Matrix();
+    protected final Path mMount1 = new Path();
+    protected final Path mMount2 = new Path();
+    protected final Path mMount3 = new Path();
+    protected final Path mTrunk = new Path();
+    protected final Path mBranch = new Path();
+    protected final Matrix mTransMatrix = new Matrix();
 
     protected float mScaleX = 5f;
     protected float mScaleY = 5f;
     protected float mMoveFactor = 0;
     protected float mBounceMax = 1;
-    protected float mTreeBendFactor = Float.MAX_VALUE;
-    protected int mViewportHeight = 0;
+    protected final float mTreeBendFactor = Float.MAX_VALUE;
+    protected int mViewportHeight;
 
     //<editor-fold desc="MountainSceneView">
     public MountainSceneView(Context context) {

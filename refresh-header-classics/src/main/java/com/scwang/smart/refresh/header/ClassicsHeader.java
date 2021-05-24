@@ -2,7 +2,6 @@ package com.scwang.smart.refresh.header;
 
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
@@ -16,7 +15,6 @@ import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
@@ -33,7 +31,6 @@ import com.scwang.smart.refresh.layout.util.SmartUtil;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 /**
@@ -110,11 +107,11 @@ public class ClassicsHeader extends ClassicsAbstract<ClassicsHeader> implements 
 
         mFinishDuration = ta.getInt(R.styleable.ClassicsHeader_srlFinishDuration, mFinishDuration);
         mEnableLastTime = ta.getBoolean(R.styleable.ClassicsHeader_srlEnableLastTime, mEnableLastTime);
-        mSpinnerStyle = SpinnerStyle.values[ta.getInt(R.styleable.ClassicsHeader_srlClassicsSpinnerStyle,mSpinnerStyle.ordinal)];
+        mSpinnerStyle = SpinnerStyle.values[ta.getInt(R.styleable.ClassicsHeader_srlClassicsSpinnerStyle, mSpinnerStyle.ordinal)];
 
         if (ta.hasValue(R.styleable.ClassicsHeader_srlDrawableArrow)) {
             mArrowView.setImageDrawable(ta.getDrawable(R.styleable.ClassicsHeader_srlDrawableArrow));
-        } else if (mArrowView.getDrawable() == null){
+        } else if (mArrowView.getDrawable() == null) {
             mArrowDrawable = new ArrowDrawable();
             mArrowDrawable.setColor(0xff666666);
             mArrowView.setImageDrawable(mArrowDrawable);
@@ -147,58 +144,58 @@ public class ClassicsHeader extends ClassicsAbstract<ClassicsHeader> implements 
             setAccentColor(ta.getColor(R.styleable.ClassicsHeader_srlAccentColor, 0));
         }
 
-        if(ta.hasValue(R.styleable.ClassicsHeader_srlTextPulling)){
+        if (ta.hasValue(R.styleable.ClassicsHeader_srlTextPulling)) {
             mTextPulling = ta.getString(R.styleable.ClassicsHeader_srlTextPulling);
-        } else if(REFRESH_HEADER_PULLING != null) {
+        } else if (REFRESH_HEADER_PULLING != null) {
             mTextPulling = REFRESH_HEADER_PULLING;
         } else {
             mTextPulling = context.getString(R.string.srl_header_pulling);
         }
-        if(ta.hasValue(R.styleable.ClassicsHeader_srlTextLoading)){
+        if (ta.hasValue(R.styleable.ClassicsHeader_srlTextLoading)) {
             mTextLoading = ta.getString(R.styleable.ClassicsHeader_srlTextLoading);
-        } else if(REFRESH_HEADER_LOADING != null) {
+        } else if (REFRESH_HEADER_LOADING != null) {
             mTextLoading = REFRESH_HEADER_LOADING;
         } else {
             mTextLoading = context.getString(R.string.srl_header_loading);
         }
-        if(ta.hasValue(R.styleable.ClassicsHeader_srlTextRelease)){
+        if (ta.hasValue(R.styleable.ClassicsHeader_srlTextRelease)) {
             mTextRelease = ta.getString(R.styleable.ClassicsHeader_srlTextRelease);
-        } else if(REFRESH_HEADER_RELEASE != null) {
+        } else if (REFRESH_HEADER_RELEASE != null) {
             mTextRelease = REFRESH_HEADER_RELEASE;
         } else {
             mTextRelease = context.getString(R.string.srl_header_release);
         }
-        if(ta.hasValue(R.styleable.ClassicsHeader_srlTextFinish)){
+        if (ta.hasValue(R.styleable.ClassicsHeader_srlTextFinish)) {
             mTextFinish = ta.getString(R.styleable.ClassicsHeader_srlTextFinish);
-        } else if(REFRESH_HEADER_FINISH != null) {
+        } else if (REFRESH_HEADER_FINISH != null) {
             mTextFinish = REFRESH_HEADER_FINISH;
         } else {
             mTextFinish = context.getString(R.string.srl_header_finish);
         }
-        if(ta.hasValue(R.styleable.ClassicsHeader_srlTextFailed)){
+        if (ta.hasValue(R.styleable.ClassicsHeader_srlTextFailed)) {
             mTextFailed = ta.getString(R.styleable.ClassicsHeader_srlTextFailed);
-        } else if(REFRESH_HEADER_FAILED != null) {
+        } else if (REFRESH_HEADER_FAILED != null) {
             mTextFailed = REFRESH_HEADER_FAILED;
         } else {
             mTextFailed = context.getString(R.string.srl_header_failed);
         }
-        if(ta.hasValue(R.styleable.ClassicsHeader_srlTextSecondary)){
+        if (ta.hasValue(R.styleable.ClassicsHeader_srlTextSecondary)) {
             mTextSecondary = ta.getString(R.styleable.ClassicsHeader_srlTextSecondary);
-        } else if(REFRESH_HEADER_SECONDARY != null) {
+        } else if (REFRESH_HEADER_SECONDARY != null) {
             mTextSecondary = REFRESH_HEADER_SECONDARY;
         } else {
             mTextSecondary = context.getString(R.string.srl_header_secondary);
         }
-        if(ta.hasValue(R.styleable.ClassicsHeader_srlTextRefreshing)){
+        if (ta.hasValue(R.styleable.ClassicsHeader_srlTextRefreshing)) {
             mTextRefreshing = ta.getString(R.styleable.ClassicsHeader_srlTextRefreshing);
-        } else if(REFRESH_HEADER_REFRESHING != null) {
+        } else if (REFRESH_HEADER_REFRESHING != null) {
             mTextRefreshing = REFRESH_HEADER_REFRESHING;
         } else {
             mTextRefreshing = context.getString(R.string.srl_header_refreshing);
         }
-        if(ta.hasValue(R.styleable.ClassicsHeader_srlTextUpdate)){
+        if (ta.hasValue(R.styleable.ClassicsHeader_srlTextUpdate)) {
             mTextUpdate = ta.getString(R.styleable.ClassicsHeader_srlTextUpdate);
-        } else if(REFRESH_HEADER_UPDATE != null) {
+        } else if (REFRESH_HEADER_UPDATE != null) {
             mTextUpdate = REFRESH_HEADER_UPDATE;
         } else {
             mTextUpdate = context.getString(R.string.srl_header_update);
@@ -219,14 +216,10 @@ public class ClassicsHeader extends ClassicsAbstract<ClassicsHeader> implements 
 
         try {//try 不能删除-否则会出现兼容性问题
             if (context instanceof FragmentActivity) {
-                FragmentManager manager = ((FragmentActivity) context).getSupportFragmentManager();
-                if (manager != null) {
-                    @SuppressLint("RestrictedApi")
-                    List<Fragment> fragments = manager.getFragments();
-                    if (fragments.size() > 0) {
-                        setLastUpdateTime(new Date());
-                        return;
-                    }
+                final FragmentManager manager = ((FragmentActivity) context).getSupportFragmentManager();
+                if (!manager.getFragments().isEmpty()) {
+                    setLastUpdateTime(new Date());
+                    return;
                 }
             }
         } catch (Throwable e) {
@@ -314,7 +307,7 @@ public class ClassicsHeader extends ClassicsAbstract<ClassicsHeader> implements 
     }
 
     public ClassicsHeader setAccentColor(@ColorInt int accentColor) {
-        mLastUpdateText.setTextColor(accentColor&0x00ffffff|0xcc000000);
+        mLastUpdateText.setTextColor(accentColor & 0x00ffffff | 0xcc000000);
         return super.setAccentColor(accentColor);
     }
 
@@ -346,14 +339,14 @@ public class ClassicsHeader extends ClassicsAbstract<ClassicsHeader> implements 
 
     public ClassicsHeader setTextTimeMarginTop(float dp) {
         final View updateView = mLastUpdateText;
-        ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams)updateView.getLayoutParams();
+        ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) updateView.getLayoutParams();
         lp.topMargin = SmartUtil.dp2px(dp);
         updateView.setLayoutParams(lp);
         return this;
     }
 
     public ClassicsHeader setTextTimeMarginTopPx(int px) {
-        MarginLayoutParams lp = (MarginLayoutParams)mLastUpdateText.getLayoutParams();
+        MarginLayoutParams lp = (MarginLayoutParams) mLastUpdateText.getLayoutParams();
         lp.topMargin = px;
         mLastUpdateText.setLayoutParams(lp);
         return this;

@@ -40,9 +40,9 @@ public class StoreHouseHeader extends SimpleComponent implements RefreshHeader {
     public List<StoreHouseBarItem> mItemList = new ArrayList<>();
 
     protected float mScale = 1;
-    protected int mLineWidth = -1;
-    protected int mDropHeight = -1;
-    protected int mHorizontalRandomness = -1;
+    protected int mLineWidth;
+    protected int mDropHeight;
+    protected int mHorizontalRandomness;
     protected static final float mInternalAnimationFactor = 0.7f;
 
     protected float mProgress = 0;
@@ -60,7 +60,7 @@ public class StoreHouseHeader extends SimpleComponent implements RefreshHeader {
     protected static final int mLoadingAniItemDuration = 400;
 
     protected int mTextColor = Color.WHITE;
-    protected int mBackgroundColor = 0;
+    protected int mBackgroundColor;
     protected boolean mIsInLoading = false;
     protected boolean mEnableFadeAnimation = false;
     protected Matrix mMatrix = new Matrix();

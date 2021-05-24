@@ -96,8 +96,8 @@ public class BallPulseFooter extends SimpleComponent implements RefreshFooter {
 
         for (int i = 0; i < 3; i++) {
 
-            long time = now - mStartTime - 120 * (i + 1);
-            float percent = time > 0 ? ((time%750)/750f) : 0;
+            long time = now - mStartTime - 120L * (i + 1);
+            float percent = time > 0 ? ((time % 750) / 750f) : 0;
             percent = mInterpolator.getInterpolation(percent);
 
             canvas.save();
@@ -105,13 +105,13 @@ public class BallPulseFooter extends SimpleComponent implements RefreshFooter {
             float translateX = x + (radius * 2) * i + mCircleSpacing * i;
             canvas.translate(translateX, y);
 
+            float scale;
             if (percent < 0.5) {
-                float scale = 1 - percent * 2 * 0.7f;
-                canvas.scale(scale, scale);
+                scale = 1 - percent * 2 * 0.7f;
             } else {
-                float scale = percent * 2 * 0.7f - 0.4f;
-                canvas.scale(scale, scale);
+                scale = percent * 2 * 0.7f - 0.4f;
             }
+            canvas.scale(scale, scale);
 
             canvas.drawCircle(0, 0, radius, mPaint);
             canvas.restore();

@@ -40,10 +40,10 @@ public class WaterDropHeader extends SimpleComponent implements RefreshHeader {
     protected static final float MAX_PROGRESS_ANGLE = 0.8f;
 
     protected RefreshState mState;
-    protected ImageView mImageView;
-    protected WaterDropView mWaterDropView;
-    protected ProgressDrawable mProgressDrawable;
-    protected MaterialProgressDrawable mProgress;
+    protected final ImageView mImageView;
+    protected final WaterDropView mWaterDropView;
+    protected final ProgressDrawable mProgressDrawable;
+    protected final MaterialProgressDrawable mProgress;
     //</editor-fold>
 
     //<editor-fold desc="ViewGroup">
@@ -190,19 +190,12 @@ public class WaterDropHeader extends SimpleComponent implements RefreshHeader {
         mState = newState;
         switch (newState) {
             case None:
-                dropView.setVisibility(View.VISIBLE);
-                imageView.setVisibility(View.VISIBLE);
-                break;
+            case ReleaseToRefresh:
             case PullDownToRefresh:
                 dropView.setVisibility(View.VISIBLE);
                 imageView.setVisibility(View.VISIBLE);
                 break;
             case PullDownCanceled:
-                break;
-            case ReleaseToRefresh:
-                dropView.setVisibility(View.VISIBLE);
-                imageView.setVisibility(View.VISIBLE);
-                break;
             case Refreshing:
                 break;
             case RefreshFinish:

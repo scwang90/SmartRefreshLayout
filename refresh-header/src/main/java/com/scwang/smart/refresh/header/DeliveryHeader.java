@@ -28,7 +28,7 @@ import com.scwang.smart.refresh.layout.util.SmartUtil;
 public class DeliveryHeader extends SimpleComponent implements RefreshHeader {
 
     //<editor-fold desc="static">
-    protected static String[] umbrellaPaths = new String[]{
+    protected static final String[] umbrellaPaths = new String[]{
             "M113.91,328.86 L119.02,331.02 134.86,359.02 133.99,359.02ZM2.18,144.52c-3.67,-76.84 49.96,-122.23 96.3,-134.98 6.03,0.21 7.57,0.59 13.23,3.9 0.19,1.7 0.25,2.17 -0.41,3.98 -47.88,37.64 -55.13,79.65 -68.07,137.22C37.56,194.8 16.18,191.4 2.18,144.52Z",
             "m133.99,359.02 l-0.71,-26.66 2.6,0.26 -1.02,26.4zM119.02,331.02c-3.39,-0.99 -8.53,-3.03 -8.72,-6.61 0,-0.81 -2.02,-3.63 -4.49,-6.27C88.05,299.71 7.29,218.46 2.18,144.52c17.67,43.57 33.35,45.33 41.05,10.12 0.13,-70.78 33.78,-125.48 68.07,-137.22 2.34,3.33 4.11,4.81 8.14,7.8 -22.02,65.69 -23.25,84.11 -24.14,150.23 -8.68,29.57 -37.44,32.81 -52.07,-20.81 14.12,64.06 31.66,101.57 60.64,147.13 6.2,8.38 14.74,18.4 15.15,29.25zM98.48,9.54c4.59,-1.5 17.8,-4.6 33.87,-5.07 0.95,0.95 1.38,1.91 1.14,2.91 -8.81,1.34 -16.36,3.1 -21.78,6.06 -2.53,-1.27 -7.82,-3.26 -13.23,-3.9z",
             "m119.02,331.02c-1.29,-7.57 -4.22,-12.31 -6.54,-15.79 -36.86,-54.89 -63.48,-98.79 -69.25,-160.59 19.89,45.9 41.27,48.65 52.07,20.81 -1.95,-52.55 -8.04,-91.2 24.14,-150.23 10.47,-0.28 16.85,0.17 30.66,-0.34 40.19,60.54 24.92,135.95 22.16,149.57 -13.9,53.18 -66.91,34.12 -76.96,1 11.54,50.55 20.28,89.27 30,135.97 4.12,10.03 5.37,10.37 5.06,21.35 -2.82,-0.22 -8.22,-1.01 -11.35,-1.75z",
@@ -39,7 +39,7 @@ public class DeliveryHeader extends SimpleComponent implements RefreshHeader {
             "M130.37,332.77C129.51,321.51 128.56,320.77 125.3,311.42 113.97,281.37 101.34,222.24 95.3,175.45c16.48,38.98 60.02,33.39 76.96,-1 -5.91,58.92 -10.85,88.45 -27.42,138.74 -1.67,6.75 -2.67,11.63 -3.7,19.46 -2.94,0.45 -6.48,0.45 -10.78,0.12zM119.44,25.22c-3.52,-1.25 -6.98,-3.72 -8.14,-7.8 -0.44,-1.53 -0.24,-2.79 0.41,-3.98 2.48,-4.55 14.53,-6.26 21.78,-6.06 5.29,0.15 14.87,0.72 20.87,6.01 1.82,1.61 2.74,3.95 2.34,5.44 -0.76,2.83 -4.21,5.19 -6.59,6.04 -7.49,2.68 -22.62,3.2 -30.66,0.34z"
     };
 
-    protected static int[] umbrellaColors = new int[]{
+    protected static final int[] umbrellaColors = new int[]{
             0xff92dfeb,
             0xff6dd0e9,
             0xff4fc3e7,
@@ -50,15 +50,15 @@ public class DeliveryHeader extends SimpleComponent implements RefreshHeader {
             0xff40b7e1
     };
 
-    protected static String[] cloudPaths = new String[]{
+    protected static final String[] cloudPaths = new String[]{
             "M63,0.1A22.6,22.4 0,0 0,42.1 14.2,17.3 17.3,0 0,0 30.9,10.2 17.3,17.3 0,0 0,13.7 25.8,8.8 8.8,0 0,0 8.7,24.2 8.8,8.8 0,0 0,0 32h99a7.9,7.9 0,0 0,0 -0.6,7.9 7.9,0 0,0 -7.9,-7.9 7.9,7.9 0,0 0,-5.8 2.6,22.6 22.4,0 0,0 0.3,-3.6A22.6,22.4 0,0 0,63 0.1Z"
     };
 
-    protected static int[] cloudColors = new int[]{
+    protected static final int[] cloudColors = new int[]{
             0xffffffff
     };
 
-    protected static String[] boxPaths = new String[]{
+    protected static final String[] boxPaths = new String[]{
             "M0,17.5 L3.1,29.8 2.9,76.4 47.5,93 92.8,76.2V29.9L94.9,18.1 47.4,0.5Z",
             "M3.1,29.8 L47.8,46.4 47.5,93 2.9,76.4ZM0,17.5 L47.9,35.4 47.8,46.4 0.2,28.8Z",
             "m56.5,17.8c0,2.1 -3.8,3.8 -8.5,3.8 -4.7,0 -8.5,-1.7 -8.5,-3.8 0,-2.1 3.8,-3.8 8.5,-3.8 4.7,0 8.5,1.7 8.5,3.8zM3.1,29.8 L3.1,34.7l44.7,16.9 0,-5.1z",
@@ -66,7 +66,7 @@ public class DeliveryHeader extends SimpleComponent implements RefreshHeader {
             "M82.6,80 L92.8,62.4 92.8,76.2ZM47.6,79.8 L59.8,88.4 47.5,93ZM47.8,46.4 L92.8,29.9 92.8,34.2 47.8,51.6Z"
     };
 
-    protected static int[] boxColors = new int[]{
+    protected static final int[] boxColors = new int[]{
             0xfff8b147,
             0xfff2973c,
             0xffed8030,
@@ -84,9 +84,9 @@ public class DeliveryHeader extends SimpleComponent implements RefreshHeader {
     protected int mBackgroundColor;
     protected float mAppreciation;
     protected RefreshState mState;
-    protected Drawable mCloudDrawable;
-    protected Drawable mUmbrellaDrawable;
-    protected Drawable mBoxDrawable;
+    protected final Drawable mCloudDrawable;
+    protected final Drawable mUmbrellaDrawable;
+    protected final Drawable mBoxDrawable;
     protected RefreshKernel mKernel;
     //</editor-fold>
 

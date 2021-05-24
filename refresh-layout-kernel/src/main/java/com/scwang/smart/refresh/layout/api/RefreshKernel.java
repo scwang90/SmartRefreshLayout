@@ -3,6 +3,7 @@ package com.scwang.smart.refresh.layout.api;
 import android.animation.ValueAnimator;
 
 import androidx.annotation.NonNull;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.scwang.smart.refresh.layout.constant.RefreshState;
 
@@ -38,7 +39,7 @@ public interface RefreshKernel {
 
     /**
      * 移动视图到指定位置
-     * moveSpinner 的取名来自 谷歌官方的 {@link androidx.core.widget.SwipeRefreshLayout}
+     * moveSpinner 的取名来自 谷歌官方的 {@link SwipeRefreshLayout}
      *
      * @param spinner    位置 (px)
      * @param isDragging true 手指正在拖动 false 回弹动画执行
@@ -48,7 +49,8 @@ public interface RefreshKernel {
 
     /**
      * 执行动画使视图位移到指定的 位置
-     * moveSpinner 的取名来自 谷歌官方的 {@link androidx.core.widget.SwipeRefreshLayout}
+     * moveSpinner 的取名来自 谷歌官方的 {@link SwipeRefreshLayout}
+     *
      * @param endSpinner 指定的结束位置 (px)
      * @return ValueAnimator 如果没有执行动画 null
      */

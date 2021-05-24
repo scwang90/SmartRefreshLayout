@@ -28,7 +28,7 @@ public class FunGameBattleCityHeader extends FunGameView {
     /**
      * 轨道数量
      */
-    protected static int TANK_ROW_NUM = 3;
+    protected static final int TANK_ROW_NUM = 3;
 
     /**
      * 炮管尺寸所在tank尺寸的比率
@@ -186,7 +186,7 @@ public class FunGameBattleCityHeader extends FunGameView {
     protected int getTrackIndex(int y) {
         int index = y / (mHeaderHeight / TANK_ROW_NUM);
         index = index >= TANK_ROW_NUM ? TANK_ROW_NUM - 1 : index;
-        index = index < 0 ? 0 : index;
+        index = Math.max(index, 0);
         return  index;
     }
 

@@ -31,8 +31,8 @@ import com.scwang.smart.refresh.layout.kernel.R;
  */
 public class SmartUtil implements Interpolator {
 
-    public static int INTERPOLATOR_VISCOUS_FLUID = 0;
-    public static int INTERPOLATOR_DECELERATE = 1;
+    public static final int INTERPOLATOR_VISCOUS_FLUID = 0;
+    public static final int INTERPOLATOR_DECELERATE = 1;
 
     //<editor-fold desc="像素密度">
     private static final float density = Resources.getSystem().getDisplayMetrics().density;

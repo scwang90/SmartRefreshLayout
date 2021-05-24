@@ -288,13 +288,12 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
         if (mRing.mEndTrim != mRing.mStartTrim) {
             mFinishing = true;
             mAnimation.setDuration(ANIMATION_DURATION / 2);
-            mParent.startAnimation(mAnimation);
         } else {
             mRing.setColorIndex(0);
             mRing.resetOriginals();
             mAnimation.setDuration(ANIMATION_DURATION);
-            mParent.startAnimation(mAnimation);
         }
+        mParent.startAnimation(mAnimation);
     }
 
     @Override
@@ -448,7 +447,7 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
         mAnimation = animation;
     }
 
-    private class Ring {
+    private static class Ring {
         final RectF mTempBounds = new RectF();
         final Paint mPaint = new Paint();
         final Paint mArrowPaint = new Paint();

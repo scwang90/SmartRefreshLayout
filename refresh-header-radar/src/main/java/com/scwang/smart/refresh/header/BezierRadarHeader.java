@@ -55,17 +55,17 @@ public class BezierRadarHeader extends SimpleComponent implements RefreshHeader 
     protected float mRippleRadius;
 
     protected int mRadarAngle = 0;
-    protected float mRadarRadius = 0;
-    protected float mRadarCircle = 0;
-    protected float mRadarScale = 0;
+    protected float mRadarRadius;
+    protected float mRadarCircle;
+    protected float mRadarScale;
     protected Animator mAnimatorSet;
-//    protected ValueAnimator mRadarAnimator;
-    protected RectF mRadarRect = new RectF(0,0,0,0);
+    //    protected ValueAnimator mRadarAnimator;
+    protected RectF mRadarRect = new RectF(0, 0, 0, 0);
     //</editor-fold>
 
     //<editor-fold desc="FrameLayout">
     public BezierRadarHeader(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public BezierRadarHeader(Context context, AttributeSet attrs) {

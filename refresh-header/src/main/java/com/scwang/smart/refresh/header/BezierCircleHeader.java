@@ -30,10 +30,10 @@ import com.scwang.smart.refresh.layout.util.SmartUtil;
 public class BezierCircleHeader extends SimpleComponent implements RefreshHeader {
 
     //<editor-fold desc="Field">
-    protected Path mPath;
-    protected Paint mBackPaint;
-    protected Paint mFrontPaint;
-    protected Paint mOuterPaint;
+    protected final Path mPath;
+    protected final Paint mBackPaint;
+    protected final Paint mFrontPaint;
+    protected final Paint mOuterPaint;
     protected int mHeight;
     protected float mWaveHeight;
     protected float mHeadHeight;
@@ -260,8 +260,8 @@ public class BezierCircleHeader extends SimpleComponent implements RefreshHeader
         final float reboundHeight = Math.min(mWaveHeight * 0.8f, mHeadHeight / 2);
         ValueAnimator waveAnimator = ValueAnimator.ofFloat(
                 mWaveHeight, 0,
-                -(reboundHeight*1.0f),0,
-                -(reboundHeight*0.4f),0
+                -(reboundHeight), 0,
+                -(reboundHeight * 0.4f), 0
         );
         waveAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             float speed = 0;
@@ -323,13 +323,10 @@ public class BezierCircleHeader extends SimpleComponent implements RefreshHeader
         mShowOuter = false;
         final int DURATION_FINISH = 800; //动画时长
         ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                final View thisView = BezierCircleHeader.this;
-                mFinishRatio = (float) animation.getAnimatedValue();
-                thisView.invalidate();
-            }
+        animator.addUpdateListener(animation -> {
+            final View thisView = BezierCircleHeader.this;
+            mFinishRatio = (float) animation.getAnimatedValue();
+            thisView.invalidate();
         });
         animator.setInterpolator(new AccelerateInterpolator());
         animator.setDuration(DURATION_FINISH);

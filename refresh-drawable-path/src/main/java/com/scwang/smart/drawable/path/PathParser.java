@@ -59,7 +59,7 @@ public class PathParser {
         return result;
     }
 
-    public static List<Path> transformScale(float ratioWidth, float ratioHeight, List<Path> originPaths, List<String> orginSvgs) {
+    public static List<Path> transformScale(float ratioWidth, float ratioHeight, List<Path> originPaths, List<String> originSvgs) {
         Matrix matrix = new Matrix();
         matrix.setScale(ratioWidth, ratioHeight);
         List<Path> paths = new ArrayList<>();
@@ -70,7 +70,7 @@ public class PathParser {
                 paths.add(nPath);
             }
         } else {
-            for (String svgPath : orginSvgs) {
+            for (String svgPath : originSvgs) {
                 Path path = new Path();
                 PathDataNode[] nodes = createNodesFromPathData(svgPath);
                 transformScaleNodes(ratioWidth, ratioHeight, nodes);
@@ -407,8 +407,8 @@ public class PathParser {
     @SuppressWarnings({"PointlessArithmeticExpression", "WeakerAccess"})
     public static class PathDataNode {
         /*package*/
-        char type;
-        float[] params;
+        final char type;
+        final float[] params;
 
         PathDataNode(char type, float[] params) {
             this.type = type;

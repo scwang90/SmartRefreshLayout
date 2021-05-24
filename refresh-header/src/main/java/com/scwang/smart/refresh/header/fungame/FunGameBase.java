@@ -30,7 +30,7 @@ public abstract class FunGameBase extends SimpleComponent implements RefreshHead
     //<editor-fold desc="Field">
     protected int mOffset;
     protected int mHeaderHeight;
-    protected int mScreenHeightPixels;
+    protected final int mScreenHeightPixels;
     protected float mTouchY;
     protected boolean mIsFinish;
     protected boolean mLastFinish;

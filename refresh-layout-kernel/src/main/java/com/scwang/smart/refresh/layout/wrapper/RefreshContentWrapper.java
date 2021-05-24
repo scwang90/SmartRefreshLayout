@@ -42,7 +42,7 @@ import java.util.Queue;
 public class RefreshContentWrapper implements RefreshContent, CoordinatorLayoutListener, AnimatorUpdateListener {
 
     protected View mContentView;//直接内容视图
-    protected View mOriginalContentView;//被包裹的原真实视图
+    protected final View mOriginalContentView;//被包裹的原真实视图
     protected View mScrollableView;
     protected View mFixedHeader;
     protected View mFixedFooter;
