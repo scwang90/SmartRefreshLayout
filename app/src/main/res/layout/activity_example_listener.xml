@@ -7,10 +7,11 @@
     android:orientation="vertical"
     tools:context="com.scwang.refreshlayout.activity.example.ListenerExampleActivity">
 
-    <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
+    <androidx.appcompat.widget.Toolbar
+        style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"
         app:navigationIcon="?attr/homeAsUpIndicator"
-        app:title="@string/title_activity_example_listener"/>
+        app:title="@string/title_activity_example_listener" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"

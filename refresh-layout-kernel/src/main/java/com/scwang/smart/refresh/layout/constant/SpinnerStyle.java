@@ -4,7 +4,6 @@ package com.scwang.smart.refresh.layout.constant;
  * 顶部和底部的组件在拖动时候的变换方式
  * Created by scwang on 2017/5/26.
  */
-@SuppressWarnings("DeprecatedIsStillUsed")
 public class SpinnerStyle {
 
     public static final SpinnerStyle Translate = new SpinnerStyle(0, true, false);

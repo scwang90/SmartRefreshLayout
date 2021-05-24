@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="?attr/actionBarSize"/>
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -30,7 +30,7 @@
             android:paddingTop="?attr/actionBarSize"
             android:background="@android:color/white"
             android:overScrollMode="never"
-            tools:listitem="@layout/item_movie_item"/>
+            tools:listitem="@layout/item_movie_item" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <com.github.mmin18.widget.RealtimeBlurView
@@ -40,10 +40,11 @@
         app:realtimeBlurRadius="10dp"
         app:realtimeOverlayColor="@color/colorPrimaryOverlay"/>
 
-    <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
+    <androidx.appcompat.widget.Toolbar
+        style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"
         android:background="@android:color/transparent"
         app:navigationIcon="@drawable/ic_arrow_back_white_24dp"
-        app:title="@string/title_activity_practice_banner"/>
+        app:title="@string/title_activity_practice_banner" />
 
 </FrameLayout>

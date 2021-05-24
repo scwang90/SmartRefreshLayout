@@ -1,14 +1,15 @@
 package com.scwang.refreshlayout.adapter;
 
 import android.content.res.Resources;
-import android.support.annotation.StringRes;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.StringRes;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class SmartViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 

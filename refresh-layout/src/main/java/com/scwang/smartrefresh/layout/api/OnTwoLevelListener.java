@@ -1,6 +1,6 @@
 package com.scwang.smartrefresh.layout.api;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 /**
  * 二级刷新监听器

@@ -6,13 +6,14 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.support.annotation.ColorInt;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.graphics.ColorUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.graphics.ColorUtils;
 
 import com.scwang.smart.refresh.footer.ball.R;
 import com.scwang.smart.refresh.layout.api.RefreshFooter;
@@ -95,8 +96,8 @@ public class BallPulseFooter extends SimpleComponent implements RefreshFooter {
 
         for (int i = 0; i < 3; i++) {
 
-            long time = now - mStartTime - 120 * (i + 1);
-            float percent = time > 0 ? ((time%750)/750f) : 0;
+            long time = now - mStartTime - 120L * (i + 1);
+            float percent = time > 0 ? ((time % 750) / 750f) : 0;
             percent = mInterpolator.getInterpolation(percent);
 
             canvas.save();
@@ -104,13 +105,13 @@ public class BallPulseFooter extends SimpleComponent implements RefreshFooter {
             float translateX = x + (radius * 2) * i + mCircleSpacing * i;
             canvas.translate(translateX, y);
 
+            float scale;
             if (percent < 0.5) {
-                float scale = 1 - percent * 2 * 0.7f;
-                canvas.scale(scale, scale);
+                scale = 1 - percent * 2 * 0.7f;
             } else {
-                float scale = percent * 2 * 0.7f - 0.4f;
-                canvas.scale(scale, scale);
+                scale = percent * 2 * 0.7f - 0.4f;
             }
+            canvas.scale(scale, scale);
 
             canvas.drawCircle(0, 0, radius, mPaint);
             canvas.restore();

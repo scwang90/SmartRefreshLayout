@@ -1,21 +1,25 @@
 package com.scwang.refreshlayout.fragment.index;
 
 
+import static android.R.layout.simple_list_item_2;
+import static androidx.recyclerview.widget.DividerItemDecoration.VERTICAL;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.activity.FragmentActivity;
@@ -27,13 +31,20 @@ import com.scwang.refreshlayout.activity.example.NestedLayoutExampleActivity;
 import com.scwang.refreshlayout.activity.example.SnapHelperExampleActivity;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
-import com.scwang.refreshlayout.fragment.example.*;
+import com.scwang.refreshlayout.fragment.example.BottomSheetExampleFragment;
+import com.scwang.refreshlayout.fragment.example.DisallowInterceptExampleFragment;
+import com.scwang.refreshlayout.fragment.example.EmptyLayoutExampleFragment;
+import com.scwang.refreshlayout.fragment.example.FlexBoxLayoutManagerFragment;
+import com.scwang.refreshlayout.fragment.example.HorizontalExampleFragment;
+import com.scwang.refreshlayout.fragment.example.NestedScrollExampleFragment;
+import com.scwang.refreshlayout.fragment.example.NoMoreDataExampleFragment;
+import com.scwang.refreshlayout.fragment.example.PureScrollExampleFragment;
+import com.scwang.refreshlayout.fragment.example.SpecifyStyleExampleFragment;
+import com.scwang.refreshlayout.fragment.example.StaggeredGridExampleFragment;
+import com.scwang.refreshlayout.fragment.example.ViewPagerExampleFragment;
 import com.scwang.refreshlayout.util.StatusBarUtil;
 
 import java.util.Arrays;
-
-import static android.R.layout.simple_list_item_2;
-import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 
 /**
  * 使用示例

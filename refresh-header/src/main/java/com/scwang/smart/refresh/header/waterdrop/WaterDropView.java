@@ -6,9 +6,10 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.support.annotation.ColorInt;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
+
+import androidx.annotation.ColorInt;
 
 import com.scwang.smartrefresh.layout.util.SmartUtil;
 
@@ -165,13 +166,10 @@ public class WaterDropView extends View {
     public ValueAnimator createAnimator() {
         ValueAnimator valueAnimator = ValueAnimator.ofFloat(1, 0.001f).setDuration(BACK_ANIM_DURATION);
         valueAnimator.setInterpolator(new DecelerateInterpolator());
-        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator1) {
-                WaterDropView.this.updateCompleteState((float) valueAnimator1.getAnimatedValue());
-                final View thisView = WaterDropView.this;
-                thisView.postInvalidate();
-            }
+        valueAnimator.addUpdateListener(valueAnimator1 -> {
+            WaterDropView.this.updateCompleteState((float) valueAnimator1.getAnimatedValue());
+            final View thisView = WaterDropView.this;
+            thisView.postInvalidate();
         });
         return valueAnimator;
     }

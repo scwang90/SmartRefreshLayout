@@ -11,7 +11,7 @@ import android.graphics.drawable.Drawable;
  */
 public abstract class PaintDrawable extends Drawable {
 
-    protected Paint mPaint = new Paint();
+    protected final Paint mPaint = new Paint();
 
     protected PaintDrawable() {
         mPaint.setStyle(Paint.Style.FILL);

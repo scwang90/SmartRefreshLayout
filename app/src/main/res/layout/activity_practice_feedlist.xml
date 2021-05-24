@@ -8,10 +8,11 @@
     android:background="@android:color/white"
     tools:context="com.scwang.refreshlayout.activity.practice.FeedListPracticeActivity">
 
-    <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
+    <androidx.appcompat.widget.Toolbar
+        style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"
         app:navigationIcon="@drawable/ic_arrow_back_white_24dp"
-        app:title="@string/title_activity_practice_feed_list"/>
+        app:title="@string/title_activity_practice_feed_list" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
@@ -33,7 +34,7 @@
             android:orientation="vertical"
             android:gravity="center_horizontal">
 
-            <android.support.v4.widget.NestedScrollView
+            <androidx.core.widget.NestedScrollView
                 android:id="@+id/scrollView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -842,16 +843,18 @@
                                 android:textColor="@android:color/white"
                                 android:adjustViewBounds="true"
                                 android:contentDescription="@string/app_name"
-                                android:src="@mipmap/image_practice_repast_1"/>
-                            <TextView style="@style/AppTheme.Label.Title"
+                                android:src="@mipmap/image_practice_repast_1" />
+
+                            <TextView
+                                style="@style/AppTheme.Label.Title"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginTop="@dimen/dimenPaddingDiminutive"
                                 android:textColor="@android:color/white"
-                                android:text="winter farewell"/>
+                                android:text="winter farewell" />
                         </com.flyco.roundview.RoundLinearLayout>
                     </LinearLayout>
                 </LinearLayout>
-            </android.support.v4.widget.NestedScrollView>
+            </androidx.core.widget.NestedScrollView>
 
             <FrameLayout
                 android:id="@+id/profile"

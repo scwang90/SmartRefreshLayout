@@ -1,16 +1,19 @@
 package com.scwang.refreshlayout.activity.example;
 
+import static android.R.layout.simple_list_item_2;
+
 import android.os.Bundle;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
@@ -24,15 +27,13 @@ import java.util.Random;
 
 import ezy.ui.layout.LoadingLayout;
 
-import static android.R.layout.simple_list_item_2;
-
 /**
  * 基本的功能使用
  */
 public class BasicExampleActivity extends AppCompatActivity {
 
 
-    private Random random = new Random();
+    private final Random random = new Random();
     private BaseRecyclerAdapter<Void> mAdapter;
     private LoadingLayout mLoadingLayout;
     private com.scwang.smartrefresh.layout.api.RefreshLayout mRefreshLayout;
@@ -56,9 +57,10 @@ public class BasicExampleActivity extends AppCompatActivity {
         });
         //todo SCROLL_STATE_IDLE
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
-            int SCROLL_STATE_IDLE = 0;
-            int SCROLL_STATE_TOUCH_SCROLL = 1;
-            int SCROLL_STATE_FLING = 2;
+            final int SCROLL_STATE_IDLE = 0;
+            final int SCROLL_STATE_TOUCH_SCROLL = 1;
+            final int SCROLL_STATE_FLING = 2;
+
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
                 if (scrollState == SCROLL_STATE_IDLE) {

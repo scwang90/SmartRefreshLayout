@@ -11,15 +11,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,11 +21,21 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.util.StatusBarUtil;
-import com.scwang.smartrefresh.header.FlyRefreshHeader;
 import com.scwang.smart.refresh.header.flyrefresh.FlyView;
 import com.scwang.smart.refresh.header.flyrefresh.MountainSceneView;
+import com.scwang.smartrefresh.header.FlyRefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -58,7 +59,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
     private ItemAdapter mAdapter;
 
     private FlyView mFlyView;
-    private ArrayList<ItemData> mDataSet = new ArrayList<>();
+    private final ArrayList<ItemData> mDataSet = new ArrayList<>();
     private LinearLayoutManager mLayoutManager;
     private FlyRefreshHeader mFlyRefreshHeader;
     private CollapsingToolbarLayout mToolbarLayout;
@@ -212,7 +213,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
         if (mThemeListener == null) {
             mThemeListener = new View.OnClickListener() {
                 int index = 0;
-                int[] ids = new int[]{
+                final int[] ids = new int[]{
                         R.color.colorPrimary,
                         android.R.color.holo_green_light,
                         android.R.color.holo_red_light,
@@ -262,16 +263,31 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
         swing.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                view.setRotationX((float)animation.getAnimatedValue());
+                view.setRotationX((float) animation.getAnimatedValue());
             }
         });
         swing.start();
     }
 
+    private static class ItemViewHolder extends RecyclerView.ViewHolder {
+
+        ImageView icon;
+        TextView title;
+        TextView subTitle;
+
+        ItemViewHolder(View itemView) {
+            super(itemView);
+            icon = itemView.findViewById(R.id.icon);
+            title = itemView.findViewById(R.id.title);
+            subTitle = itemView.findViewById(R.id.subtitle);
+        }
+
+    }
+
     private class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
 
-        private LayoutInflater mInflater;
-        private DateFormat dateFormat;
+        private final LayoutInflater mInflater;
+        private final DateFormat dateFormat;
 
         ItemAdapter(Context context) {
             mInflater = LayoutInflater.from(context);
@@ -300,21 +316,6 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
         public int getItemCount() {
             return mDataSet.size();
         }
-    }
-
-    private static class ItemViewHolder extends RecyclerView.ViewHolder {
-
-        ImageView icon;
-        TextView title;
-        TextView subTitle;
-
-        ItemViewHolder(View itemView) {
-            super(itemView);
-            icon = (ImageView) itemView.findViewById(R.id.icon);
-            title = (TextView) itemView.findViewById(R.id.title);
-            subTitle = (TextView) itemView.findViewById(R.id.subtitle);
-        }
-
     }
 
     public class ItemData {

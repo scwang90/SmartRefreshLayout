@@ -1,6 +1,6 @@
 package com.scwang.smartrefresh.layout.api;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.scwang.smart.refresh.layout.api.RefreshComponent;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;

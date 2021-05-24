@@ -1,31 +1,33 @@
-<Linear xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context="com.scwang.refreshlayout.fragment.example.DisallowInterceptExampleFragment">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.scwang.refreshlayout.fragment.example.DisallowInterceptExampleFragment">
 
-    <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
-            android:id="@+id/toolbar"
-            app:navigationIcon="?attr/homeAsUpIndicator"
-            app:title="@string/fragment_example_disallow_intercept"/>
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/AppTheme.Toolbar"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:title="@string/fragment_example_disallow_intercept" />
 
     <TextView
-            android:layout_width="match_parent"
-            android:text="需求是内容控件长按后显示当前手指移动的坐标,比如股票分时k线图"
-            android:layout_height="wrap_content" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="需求是内容控件长按后显示当前手指移动的坐标,比如股票分时k线图" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <view class="com.scwang.refreshlayout.fragment.example.DisallowInterceptExampleFragment$MoveView"
-                android:layout_width="match_parent"
-                android:background="#33000000"
-                android:layout_height="match_parent"
-                android:nestedScrollingEnabled="true"/>
+        <view
+            class="com.scwang.refreshlayout.fragment.example.DisallowInterceptExampleFragment$MoveView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#33000000"
+            android:nestedScrollingEnabled="true" />
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
-</Linear>
+</LinearLayout>

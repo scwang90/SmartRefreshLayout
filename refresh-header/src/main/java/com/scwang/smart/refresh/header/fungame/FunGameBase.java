@@ -1,23 +1,24 @@
 package com.scwang.smart.refresh.header.fungame;
 
+import static android.view.MotionEvent.ACTION_MASK;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.scwang.smart.refresh.layout.api.RefreshContent;
 import com.scwang.smart.refresh.layout.api.RefreshHeader;
 import com.scwang.smart.refresh.layout.api.RefreshKernel;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.constant.RefreshState;
-import com.scwang.smart.refresh.layout.simple.SimpleComponent;
 import com.scwang.smart.refresh.layout.constant.SpinnerStyle;
+import com.scwang.smart.refresh.layout.simple.SimpleComponent;
 import com.scwang.smart.refresh.layout.util.SmartUtil;
-
-import static android.view.MotionEvent.ACTION_MASK;
 
 /**
  * 游戏 header
@@ -29,7 +30,7 @@ public abstract class FunGameBase extends SimpleComponent implements RefreshHead
     //<editor-fold desc="Field">
     protected int mOffset;
     protected int mHeaderHeight;
-    protected int mScreenHeightPixels;
+    protected final int mScreenHeightPixels;
     protected float mTouchY;
     protected boolean mIsFinish;
     protected boolean mLastFinish;

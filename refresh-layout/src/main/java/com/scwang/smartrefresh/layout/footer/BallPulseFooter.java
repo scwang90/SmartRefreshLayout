@@ -1,8 +1,9 @@
 package com.scwang.smartrefresh.layout.footer;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+
+import androidx.annotation.Nullable;
 
 import com.scwang.smart.refresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.api.RefreshFooter;

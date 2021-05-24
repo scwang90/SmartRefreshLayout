@@ -7,20 +7,21 @@ import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 /**
  * 旋转动画
  * Created by scwang on 2017/6/16.
  */
 @SuppressWarnings("WeakerAccess")
-public class ProgressDrawable extends PaintDrawable implements Animatable , ValueAnimator.AnimatorUpdateListener{
+public class ProgressDrawable extends PaintDrawable implements Animatable, ValueAnimator.AnimatorUpdateListener {
 
     protected int mWidth = 0;
     protected int mHeight = 0;
     protected int mProgressDegree = 0;
-    protected ValueAnimator mValueAnimator;
-    protected Path mPath = new Path();
+    protected final ValueAnimator mValueAnimator;
+    protected final Path mPath = new Path();
 
     public ProgressDrawable() {
         mValueAnimator = ValueAnimator.ofInt(30, 3600);

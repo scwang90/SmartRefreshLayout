@@ -8,12 +8,13 @@
     tools:context="com.scwang.refreshlayout.activity.style.DeliveryStyleActivity"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
+    <androidx.appcompat.widget.Toolbar
+        style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"
         android:background="#fff"
         app:titleTextColor="#fbbb"
         app:navigationIcon="@drawable/ic_arrow_back_gray_24dp"
-        app:title="@string/title_activity_style_delivery"/>
+        app:title="@string/title_activity_style_delivery" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
@@ -27,14 +28,15 @@
         <com.scwang.smartrefresh.header.DeliveryHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-        <android.support.v7.widget.RecyclerView
+
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:padding="@dimen/dimenPaddingDiminutive"
             android:overScrollMode="never"
-            tools:listitem="@layout/item_style_delivery"/>
+            tools:listitem="@layout/item_style_delivery" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

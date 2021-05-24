@@ -7,12 +7,13 @@
     android:orientation="vertical"
     tools:context="com.scwang.refreshlayout.fragment.example.NestedScrollExampleFragmentIntegral">
 
-    <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
+    <androidx.appcompat.widget.Toolbar
+        style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"
         app:navigationIcon="?attr/homeAsUpIndicator"
         app:contentInsetStart="0dp"
         app:contentInsetStartWithNavigation="0dp"
-        app:title="@string/fragment_example_nested_scroll_integral"/>
+        app:title="@string/fragment_example_nested_scroll_integral" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
@@ -26,39 +27,41 @@
             app:srlClassicsSpinnerStyle="Scale"
             app:srlPrimaryColor="#444"
             app:srlAccentColor="@android:color/white"/>
-        <android.support.design.widget.CoordinatorLayout
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <!--<android.support.v7.widget.RecyclerView-->
-                <!--android:id="@+id/recyclerView"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:background="@color/colorBackgroundDark"-->
-                <!--android:overScrollMode="never"-->
-                <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+            <!--<androidx.recyclerview.widget.RecyclerView-->
+            <!--android:id="@+id/recyclerView"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="@color/colorBackgroundDark"-->
+            <!--android:overScrollMode="never"-->
+            <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
                 <!--tools:listitem="@android:layout/simple_list_item_2"/>-->
 
-            <android.support.v4.view.ViewPager
+            <androidx.viewpager.widget.ViewPager
                 android:id="@+id/viewPager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-            <android.support.design.widget.AppBarLayout
+            <com.google.android.material.appbar.AppBarLayout
                 android:id="@+id/appbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorBackgroundDark"
                 app:elevation="0dp">
 
-                <android.support.design.widget.CollapsingToolbarLayout
+                <com.google.android.material.appbar.CollapsingToolbarLayout
                     android:id="@+id/toolbarLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="@dimen/dimenPaddingCommon"
                     android:fitsSystemWindows="true"
                     app:layout_scrollFlags="scroll">
+
                     <com.youth.banner.Banner
                         android:id="@+id/banner"
                         android:layout_width="match_parent"
@@ -66,8 +69,8 @@
                         android:background="@color/colorDivision"
                         tools:background="@mipmap/gif_header_repast"
                         app:layout_collapseMode="parallax"
-                        app:is_auto_play="true"/>
-                </android.support.design.widget.CollapsingToolbarLayout>
+                        app:is_auto_play="true" />
+                </com.google.android.material.appbar.CollapsingToolbarLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -202,17 +205,20 @@
                         <Space
                             android:layout_width="@dimen/dimenPaddingCommon"
                             android:layout_height="wrap_content" />
-                        <TextView style="@style/AppTheme.Label"
+
+                        <TextView
+                            style="@style/AppTheme.Label"
                             android:id="@+id/target"
                             android:layout_gravity="center_vertical"
                             android:textColor="@color/colorPrimary"
-                            android:text="菜单列表"/>
+                            android:text="菜单列表" />
                     </LinearLayout>
-                    <View style="@style/AppTheme.Division"/>
-                </LinearLayout>
-            </android.support.design.widget.AppBarLayout>
 
-        </android.support.design.widget.CoordinatorLayout>
+                    <View style="@style/AppTheme.Division" />
+                </LinearLayout>
+            </com.google.android.material.appbar.AppBarLayout>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

@@ -8,10 +8,11 @@
     android:background="@color/colorBackgroundDark"
     tools:context="com.scwang.refreshlayout.activity.practice.QQBrowserPracticeActivity">
 
-    <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
+    <androidx.appcompat.widget.Toolbar
+        style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"
         app:navigationIcon="?attr/homeAsUpIndicator"
-        app:title="@string/title_activity_practice_web_view"/>
+        app:title="@string/title_activity_practice_web_view" />
 
     <ezy.ui.layout.LoadingLayout
         android:id="@+id/loading"

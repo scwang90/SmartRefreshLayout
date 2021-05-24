@@ -7,21 +7,23 @@
     android:orientation="vertical"
     tools:context="com.scwang.refreshlayout.activity.example.AssignDefaultExampleActivity">
 
-    <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
+        style="@style/AppTheme.Toolbar"
         app:navigationIcon="?attr/homeAsUpIndicator"
-        app:title="@string/title_activity_example_assign_default"/>
+        app:title="@string/title_activity_example_assign_default" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/dimenPaddingCommon"
             android:background="@android:color/white"
-            android:text="@string/description_set_default_creator"/>
+            android:padding="@dimen/dimenPaddingCommon"
+            android:text="@string/description_set_default_creator" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

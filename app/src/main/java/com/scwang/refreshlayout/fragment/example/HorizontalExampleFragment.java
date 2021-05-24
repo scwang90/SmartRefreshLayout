@@ -1,16 +1,19 @@
 package com.scwang.refreshlayout.fragment.example;
 
 
+import static android.R.layout.simple_list_item_2;
+
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
@@ -21,8 +24,6 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
-
-import static android.R.layout.simple_list_item_2;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,7 +59,7 @@ public class HorizontalExampleFragment extends Fragment {
 
         recyclerView.setAdapter(mAdapter = new BaseRecyclerAdapter<Void>(simple_list_item_2) {
 
-            int[] colorIds = {
+            final int[] colorIds = {
                     android.R.color.holo_blue_dark,
                     android.R.color.holo_green_dark,
                     android.R.color.holo_red_dark,

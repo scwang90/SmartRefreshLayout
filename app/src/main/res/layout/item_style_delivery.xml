@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     app:cardUseCompatPadding="true"
@@ -35,14 +35,15 @@
                 android:layout_width="100dp"
                 android:layout_height="10dp"
                 android:background="#fff0f0f0"
-                android:layout_marginTop="30dp"/>
+                android:layout_marginTop="30dp" />
+
             <View
                 android:layout_width="100dp"
                 android:layout_height="10dp"
                 android:background="#fff0f0f0"
-                android:layout_marginTop="@dimen/dimenPaddingCommon"/>
+                android:layout_marginTop="@dimen/dimenPaddingCommon" />
         </LinearLayout>
 
     </LinearLayout>
 
-</android.support.v7.widget.CardView>
+</androidx.cardview.widget.CardView>

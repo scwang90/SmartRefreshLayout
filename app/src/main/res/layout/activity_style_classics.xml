@@ -8,10 +8,11 @@
     tools:context="com.scwang.refreshlayout.activity.style.ClassicsStyleActivity"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
+    <androidx.appcompat.widget.Toolbar
+        style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"
         app:navigationIcon="?attr/homeAsUpIndicator"
-        app:title="@string/title_activity_style_classics"/>
+        app:title="@string/title_activity_style_classics" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
@@ -34,13 +35,14 @@
             app:srlDrawableProgressSize="20dp"
             app:srlDrawableMarginRight="20dp"
             app:srlDrawableProgress="@drawable/ic_progress_puzzle"/>
-        <android.support.v7.widget.RecyclerView
+
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/white"
             android:overScrollMode="never"
-            tools:listitem="@android:layout/simple_list_item_2"/>
+            tools:listitem="@android:layout/simple_list_item_2" />
         <com.scwang.smartrefresh.layout.footer.ClassicsFooter
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

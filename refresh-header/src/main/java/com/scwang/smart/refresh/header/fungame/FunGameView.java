@@ -1,5 +1,7 @@
 package com.scwang.smart.refresh.header.fungame;
 
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
@@ -9,9 +11,6 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.support.annotation.ColorInt;
-import android.support.annotation.NonNull;
-import android.support.v4.graphics.ColorUtils;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -22,13 +21,15 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
+import androidx.core.graphics.ColorUtils;
+
 import com.scwang.smart.refresh.layout.api.RefreshKernel;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.constant.RefreshState;
 import com.scwang.smart.refresh.layout.util.SmartUtil;
 import com.scwang.smartrefresh.header.R;
-
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 
 /**
@@ -42,7 +43,7 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
     /**
      * 分割线默认宽度大小
      */
-    protected float DIVIDING_LINE_SIZE = 1.f;
+    protected float DIVIDING_LINE_SIZE;
 
     protected View mShadowView;
     protected TextView mMaskViewTop;

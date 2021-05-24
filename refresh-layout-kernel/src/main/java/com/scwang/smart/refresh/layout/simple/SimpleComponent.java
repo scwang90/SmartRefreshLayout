@@ -1,14 +1,17 @@
 package com.scwang.smart.refresh.layout.simple;
 
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.annotation.ColorInt;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshComponent;
@@ -19,8 +22,6 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.constant.RefreshState;
 import com.scwang.smart.refresh.layout.constant.SpinnerStyle;
 import com.scwang.smart.refresh.layout.listener.OnStateChangedListener;
-
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 /**
  * Component 初步实现

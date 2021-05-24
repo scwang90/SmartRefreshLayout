@@ -1,20 +1,23 @@
 package com.scwang.smart.refresh.header;
 
+import static android.view.View.MeasureSpec.getSize;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.support.annotation.ColorInt;
-import android.support.annotation.ColorRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.VisibleForTesting;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
+import androidx.core.content.ContextCompat;
 
 import com.scwang.smart.refresh.header.material.CircleImageView;
 import com.scwang.smart.refresh.header.material.MaterialProgressDrawable;
@@ -26,8 +29,6 @@ import com.scwang.smart.refresh.layout.constant.RefreshState;
 import com.scwang.smart.refresh.layout.constant.SpinnerStyle;
 import com.scwang.smart.refresh.layout.simple.SimpleComponent;
 import com.scwang.smart.refresh.layout.util.SmartUtil;
-
-import static android.view.View.MeasureSpec.getSize;
 
 /**
  * Material 主题下拉头

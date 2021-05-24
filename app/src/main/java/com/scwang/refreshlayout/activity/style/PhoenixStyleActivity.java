@@ -1,22 +1,26 @@
 package com.scwang.refreshlayout.activity.style;
 
+import static android.R.layout.simple_list_item_2;
+import static androidx.recyclerview.widget.DividerItemDecoration.VERTICAL;
+
 import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.StringRes;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
@@ -25,9 +29,6 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static android.R.layout.simple_list_item_2;
-import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 
 public class PhoenixStyleActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
@@ -101,7 +102,7 @@ public class PhoenixStyleActivity extends AppCompatActivity implements AdapterVi
         mActionButton = findViewById(R.id.fab);
         mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean misAppbarExpand = true;
-            View fab = findViewById(R.id.fab);
+            final View fab = findViewById(R.id.fab);
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 int scrollRange = appBarLayout.getTotalScrollRange();

@@ -1,9 +1,10 @@
 package com.scwang.refreshlayout;
 
-import android.app.Application;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatDelegate;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.multidex.MultiDexApplication;
 
 import com.scwang.refreshlayout.util.DynamicTimeFormat;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -15,13 +16,11 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
-import com.squareup.leakcanary.LeakCanary;
 
 /**
- *
  * Created by scwang on 2017/6/11.
  */
-public class App extends Application {
+public class App extends MultiDexApplication {
 
     static {
         //启用矢量图兼容
@@ -57,16 +56,5 @@ public class App extends Application {
                 return new ClassicsFooter(context);
             }
         });
-    }
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            // This process is dedicated to LeakCanary for heap analysis.
-            // You should not init your app in this process.
-            return;
-        }
-        LeakCanary.install(this);
     }
 }

@@ -9,14 +9,15 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
-import android.support.annotation.ColorInt;
-import android.support.annotation.ColorRes;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
 import com.scwang.smart.refresh.header.radar.R;
 import com.scwang.smart.refresh.layout.api.RefreshHeader;
@@ -54,17 +55,17 @@ public class BezierRadarHeader extends SimpleComponent implements RefreshHeader 
     protected float mRippleRadius;
 
     protected int mRadarAngle = 0;
-    protected float mRadarRadius = 0;
-    protected float mRadarCircle = 0;
-    protected float mRadarScale = 0;
+    protected float mRadarRadius;
+    protected float mRadarCircle;
+    protected float mRadarScale;
     protected Animator mAnimatorSet;
-//    protected ValueAnimator mRadarAnimator;
-    protected RectF mRadarRect = new RectF(0,0,0,0);
+    //    protected ValueAnimator mRadarAnimator;
+    protected RectF mRadarRect = new RectF(0, 0, 0, 0);
     //</editor-fold>
 
     //<editor-fold desc="FrameLayout">
     public BezierRadarHeader(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public BezierRadarHeader(Context context, AttributeSet attrs) {

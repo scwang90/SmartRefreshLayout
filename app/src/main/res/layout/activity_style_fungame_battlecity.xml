@@ -7,10 +7,11 @@
     tools:context="com.scwang.refreshlayout.activity.style.BezierRadarStyleActivity"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
+    <androidx.appcompat.widget.Toolbar
+        style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"
         app:navigationIcon="?attr/homeAsUpIndicator"
-        app:title="@string/title_activity_style_battle_city"/>
+        app:title="@string/title_activity_style_battle_city" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
@@ -23,12 +24,13 @@
         <com.scwang.smartrefresh.header.FunGameBattleCityHeader
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-        <android.support.v7.widget.RecyclerView
+
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:overScrollMode="never"
-            tools:listitem="@android:layout/simple_list_item_2"/>
+            tools:listitem="@android:layout/simple_list_item_2" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

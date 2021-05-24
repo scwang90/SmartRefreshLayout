@@ -25,9 +25,10 @@ import android.graphics.Shader;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Build;
-import android.support.annotation.ColorInt;
 import android.view.View;
 import android.widget.ImageView;
+
+import androidx.annotation.ColorInt;
 
 
 /**
@@ -132,7 +133,7 @@ public class CircleImageView extends ImageView {
 
     private class OvalShadow extends OvalShape {
         private RadialGradient mRadialGradient;
-        private Paint mShadowPaint;
+        private final Paint mShadowPaint;
 
         OvalShadow(int shadowRadius) {
             super();

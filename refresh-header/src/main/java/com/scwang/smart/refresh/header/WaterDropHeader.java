@@ -1,16 +1,23 @@
 package com.scwang.smart.refresh.header;
 
+import static android.view.View.MeasureSpec.AT_MOST;
+import static android.view.View.MeasureSpec.EXACTLY;
+import static android.view.View.MeasureSpec.getSize;
+import static android.view.View.MeasureSpec.makeMeasureSpec;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.ColorInt;
-import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
 
 import com.scwang.smart.drawable.ProgressDrawable;
 import com.scwang.smart.refresh.header.material.MaterialProgressDrawable;
@@ -21,12 +28,6 @@ import com.scwang.smart.refresh.layout.constant.RefreshState;
 import com.scwang.smart.refresh.layout.constant.SpinnerStyle;
 import com.scwang.smart.refresh.layout.simple.SimpleComponent;
 import com.scwang.smart.refresh.layout.util.SmartUtil;
-
-import static android.view.View.MeasureSpec.AT_MOST;
-import static android.view.View.MeasureSpec.EXACTLY;
-import static android.view.View.MeasureSpec.getSize;
-import static android.view.View.MeasureSpec.makeMeasureSpec;
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 /**
  * WaterDropHeader
@@ -39,10 +40,10 @@ public class WaterDropHeader extends SimpleComponent implements RefreshHeader {
     protected static final float MAX_PROGRESS_ANGLE = 0.8f;
 
     protected RefreshState mState;
-    protected ImageView mImageView;
-    protected WaterDropView mWaterDropView;
-    protected ProgressDrawable mProgressDrawable;
-    protected MaterialProgressDrawable mProgress;
+    protected final ImageView mImageView;
+    protected final WaterDropView mWaterDropView;
+    protected final ProgressDrawable mProgressDrawable;
+    protected final MaterialProgressDrawable mProgress;
     //</editor-fold>
 
     //<editor-fold desc="ViewGroup">
@@ -189,19 +190,12 @@ public class WaterDropHeader extends SimpleComponent implements RefreshHeader {
         mState = newState;
         switch (newState) {
             case None:
-                dropView.setVisibility(View.VISIBLE);
-                imageView.setVisibility(View.VISIBLE);
-                break;
+            case ReleaseToRefresh:
             case PullDownToRefresh:
                 dropView.setVisibility(View.VISIBLE);
                 imageView.setVisibility(View.VISIBLE);
                 break;
             case PullDownCanceled:
-                break;
-            case ReleaseToRefresh:
-                dropView.setVisibility(View.VISIBLE);
-                imageView.setVisibility(View.VISIBLE);
-                break;
             case Refreshing:
                 break;
             case RefreshFinish:

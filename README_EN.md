@@ -145,8 +145,8 @@ android.enableJetifier=true
     android:layout_height="match_parent">
     <com.scwang.smart.refresh.header.ClassicsHeader
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <android.support.v7.widget.RecyclerView
+        android:layout_height="wrap_content" />
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

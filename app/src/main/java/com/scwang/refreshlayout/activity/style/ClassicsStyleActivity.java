@@ -1,21 +1,25 @@
 package com.scwang.refreshlayout.activity.style;
 
+import static android.R.layout.simple_list_item_2;
+import static androidx.recyclerview.widget.DividerItemDecoration.VERTICAL;
+
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.StringRes;
-import android.support.graphics.drawable.VectorDrawableCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
@@ -32,9 +36,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
-
-import static android.R.layout.simple_list_item_2;
-import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 
 public class ClassicsStyleActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
@@ -130,7 +131,7 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
                 if (Build.VERSION.SDK_INT >= 21) {
                     mDrawableProgress.setTint(0xffffffff);
                 } else if (mDrawableProgress instanceof VectorDrawableCompat) {
-                    ((VectorDrawableCompat) mDrawableProgress).setTint(0xffffffff);
+                    mDrawableProgress.setTint(0xffffffff);
                 }
                 /*
                  * 由于是后面才设置，需要手动更改视图的位置
@@ -157,7 +158,7 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
                 if (Build.VERSION.SDK_INT >= 21) {
                     mDrawableProgress.setTint(0xff666666);
                 } else if (mDrawableProgress instanceof VectorDrawableCompat) {
-                    ((VectorDrawableCompat) mDrawableProgress).setTint(0xff666666);
+                    mDrawableProgress.setTint(0xff666666);
                 }
                 break;
             case 蓝色主题:
@@ -186,7 +187,7 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
             getWindow().setStatusBarColor(ContextCompat.getColor(this, colorPrimaryDark));
             mDrawableProgress.setTint(0xffffffff);
         } else if (mDrawableProgress instanceof VectorDrawableCompat) {
-            ((VectorDrawableCompat) mDrawableProgress).setTint(0xffffffff);
+            mDrawableProgress.setTint(0xffffffff);
         }
     }
 

@@ -6,13 +6,13 @@
     android:orientation="vertical"
     tools:context="com.scwang.refreshlayout.fragment.practice.InstantPracticeFragment">
 
-    <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
+    <androidx.appcompat.widget.Toolbar
+        style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:navigationIcon="?attr/homeAsUpIndicator"
-        app:title="@string/fragment_practice_instant">
-    </android.support.v7.widget.Toolbar>
+        app:title="@string/fragment_practice_instant"></androidx.appcompat.widget.Toolbar>
 
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
@@ -24,7 +24,8 @@
         app:srlEnableRefresh="false"
         app:srlEnableAutoLoadMore="false"
         app:srlEnableNestedScrolling="false">
-        <android.support.v7.widget.RecyclerView
+
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -35,7 +36,7 @@
             android:divider="@android:color/transparent"
             tools:itemCount="1"
             android:scaleY="-1"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_practice_instant"/>
         <com.scwang.smartrefresh.layout.footer.ClassicsFooter
             android:id="@+id/footer"
