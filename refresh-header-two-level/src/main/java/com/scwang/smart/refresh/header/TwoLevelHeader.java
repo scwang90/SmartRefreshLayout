@@ -207,14 +207,17 @@ public class TwoLevelHeader extends SimpleComponent implements RefreshHeader, Ne
             refreshHeader.onMoving(isDragging, percent, offset, height, maxDragHeight);
         }
         if (isDragging) {
-            if (mPercent < mFloorRate && percent >= mFloorRate && mEnableTwoLevel) {
-                refreshKernel.setState(RefreshState.ReleaseToTwoLevel);
-            } else if (mPercent >= mFloorRate && percent < mRefreshRate) {
-                refreshKernel.setState(RefreshState.PullDownToRefresh);
-            } else if (mPercent >= mFloorRate && percent < mFloorRate && mEnableRefresh) {
-                refreshKernel.setState(RefreshState.ReleaseToRefresh);
-            } else if (!mEnableRefresh && refreshKernel.getRefreshLayout().getState() != RefreshState.ReleaseToTwoLevel) {
-                refreshKernel.setState(RefreshState.PullDownToRefresh);
+            if (refreshKernel != null) {
+                //https://github.com/scwang90/SmartRefreshLayout/issues/1388 反应此处会出现空指针
+                if (mPercent < mFloorRate && percent >= mFloorRate && mEnableTwoLevel) {
+                    refreshKernel.setState(RefreshState.ReleaseToTwoLevel);
+                } else if (mPercent >= mFloorRate && percent < mRefreshRate) {
+                    refreshKernel.setState(RefreshState.PullDownToRefresh);
+                } else if (mPercent >= mFloorRate && percent < mFloorRate && mEnableRefresh) {
+                    refreshKernel.setState(RefreshState.ReleaseToRefresh);
+                } else if (!mEnableRefresh && refreshKernel.getRefreshLayout().getState() != RefreshState.ReleaseToTwoLevel) {
+                    refreshKernel.setState(RefreshState.PullDownToRefresh);
+                }
             }
             mPercent = percent;
         }

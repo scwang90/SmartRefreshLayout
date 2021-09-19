@@ -210,10 +210,13 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
     protected boolean mFooterLocked = false;//Footer 正在loading 的时候是否锁住 列表不能向上滚动
 
-
+    //全局默认 Footer 构造器
     protected static DefaultRefreshFooterCreator sFooterCreator = null;
+    //全局默认 Header 构造器
     protected static DefaultRefreshHeaderCreator sHeaderCreator = null;
+    //全局默认 控件 初始化器
     protected static DefaultRefreshInitializer sRefreshInitializer = null;
+    //默认全局 布局 Margin
     protected static MarginLayoutParams sDefaultMarginLP = new MarginLayoutParams(-1,-1);
     //</editor-fold>
 

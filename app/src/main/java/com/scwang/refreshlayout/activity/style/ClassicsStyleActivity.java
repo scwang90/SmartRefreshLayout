@@ -119,6 +119,25 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
             mRefreshLayout.autoRefresh();
         }
 
+//        mRefreshLayout.autoRefresh();//开始刷新数据时无数据
+//        mClassicsHeader.setFinishDuration(0);//关闭Header的完成延时
+//        mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+//            @Override
+//            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+//                //刷新启动一秒后 关闭刷新
+//                refreshLayout.getLayout().postDelayed(()->{
+//                    refreshLayout.finishRefresh();
+//                }, 1000);
+//                //启动刷新两秒后 添加数据
+//                refreshLayout.getLayout().postDelayed(()->{
+//                    List<Item> items = new ArrayList<>();
+//                    items.addAll(Arrays.asList(Item.values()));
+//                    items.addAll(Arrays.asList(Item.values()));
+//                    mAdpater.refresh(items);
+//                }, 2000);
+//            }
+//        });
+
     }
 
     @Override
