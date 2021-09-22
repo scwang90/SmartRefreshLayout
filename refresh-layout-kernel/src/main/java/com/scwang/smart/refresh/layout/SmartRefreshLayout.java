@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.ColorInt;
@@ -1096,17 +1095,18 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      */
     protected boolean startFlingIfNeed(float flingVelocity) {
         float velocity = flingVelocity == 0 ? mCurrentVelocity : flingVelocity;
-        if (Build.VERSION.SDK_INT > 27 && mRefreshContent != null) {
-            /*
-             * 修复 API 27 以上【上下颠倒模式】没有回弹效果的bug
-             */
-            float scaleY = getScaleY();
-            final View thisView = this;
-            final View contentView = mRefreshContent.getView();
-            if (thisView.getScaleY() == -1 && contentView.getScaleY() == -1) {
-                velocity = -velocity;
-            }
-        }
+//        //现在去掉了这个修复，反而有了回弹
+//        if (Build.VERSION.SDK_INT > 27 && mRefreshContent != null) {
+//            /*
+//             * 修复 API 27 以上【上下颠倒模式】没有回弹效果的bug
+//             */
+//            float scaleY = getScaleY();
+//            final View thisView = this;
+//            final View contentView = mRefreshContent.getView();
+//            if (thisView.getScaleY() == -1 && contentView.getScaleY() == -1) {
+//                velocity = -velocity;
+//            }
+//        }
         if (Math.abs(velocity) > mMinimumVelocity) {
             if (velocity * mSpinner < 0) {
                 /*

@@ -37,14 +37,14 @@ public class TwoLevelHeader extends SimpleComponent implements RefreshHeader, Ne
     protected float mFloorRate = 1.9f;
     protected float mRefreshRate = 1f;
     protected float mBottomPullUpToCloseRate = 1/6f;
+    protected int mHeaderHeight;
+    protected int mFloorDuration = 1000;
     protected boolean mEnableRefresh = true;
     protected boolean mEnableTwoLevel = true;
     protected boolean mEnablePullToCloseTwoLevel = true;
-    protected int mFloorDuration = 1000;
-    protected int mHeaderHeight;
 
-    protected RefreshComponent mRefreshHeader;
     protected RefreshKernel mRefreshKernel;
+    protected RefreshComponent mRefreshHeader;
     protected OnTwoLevelListener mTwoLevelListener;
     //</editor-fold>
 
@@ -137,6 +137,8 @@ public class TwoLevelHeader extends SimpleComponent implements RefreshHeader, Ne
         final View thisView = this;
         final RefreshComponent refreshHeader = mRefreshHeader;
         if (refreshHeader == null) {
+            // 下面的 setHeaderMaxDragRate 内部也会调用 onInitialized
+            // 但是提前 mRefreshHeader = null 直接返回 忽略
             return;
         }
         if (1f * (maxDragHeight + height) / height != mMaxRate && mHeaderHeight == 0) {

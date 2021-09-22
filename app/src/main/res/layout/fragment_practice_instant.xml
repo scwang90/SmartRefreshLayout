@@ -14,7 +14,6 @@
         app:title="@string/fragment_practice_instant">
     </android.support.v7.widget.Toolbar>
 
-
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
