@@ -73,6 +73,15 @@ public class NoMoreDataExampleFragment extends Fragment {
 
         RefreshLayout refreshLayout = root.findViewById(R.id.refreshLayout);
         if (refreshLayout != null) {
+
+            ArrayList<View> views = new ArrayList<>(1);
+            toolbar.findViewsWithText(views, toolbar.getTitle(), View.FIND_VIEWS_WITH_CONTENT_DESCRIPTION|View.FIND_VIEWS_WITH_TEXT);
+            if (views.size() > 0) {
+                views.get(0).setOnClickListener(v->{
+                    refreshLayout.autoRefresh();
+                });
+            }
+
             refreshLayout.autoRefresh();
             refreshLayout.setEnableLoadMoreWhenContentNotFull(false);
             refreshLayout.setOnRefreshListener(new OnRefreshListener() {
