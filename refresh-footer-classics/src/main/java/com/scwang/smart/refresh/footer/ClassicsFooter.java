@@ -193,9 +193,12 @@ public class ClassicsFooter extends ClassicsAbstract<ClassicsFooter> implements 
     }
 
     /**
-     * ClassicsFooter 在(SpinnerStyle.FixedBehind)时才有主题色
+     * @param colors 对应Xml中配置的 srlPrimaryColor srlAccentColor
+     * @deprecated 只由框架调用
+     * 使用者使用 {@link RefreshLayout#setPrimaryColorsId(int...)}
      */
-    @Override@Deprecated
+    @Override
+    @Deprecated
     public void setPrimaryColors(@ColorInt int ... colors) {
         if (mSpinnerStyle == SpinnerStyle.FixedBehind) {
             super.setPrimaryColors(colors);

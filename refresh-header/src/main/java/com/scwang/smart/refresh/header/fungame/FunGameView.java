@@ -348,7 +348,13 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
         postStatus(STATUS_GAME_PREPARE);
     }
 
-    @Override@Deprecated
+    /**
+     * @param colors 对应Xml中配置的 srlPrimaryColor srlAccentColor
+     * @deprecated 只由框架调用
+     * 使用者使用 {@link RefreshLayout#setPrimaryColorsId(int...)}
+     */
+    @Override
+    @Deprecated
     public void setPrimaryColors(@ColorInt int ... colors) {
         super.setPrimaryColors(colors);
         if (colors.length > 0) {

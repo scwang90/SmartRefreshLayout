@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 
@@ -80,7 +81,13 @@ public class ClassicsHeader extends com.scwang.smart.refresh.header.ClassicsHead
         return this;
     }
 
+    /**
+     * @param colors 对应Xml中配置的 srlPrimaryColor srlAccentColor
+     * @deprecated 只由框架调用
+     * 使用者使用 {@link RefreshLayout#setPrimaryColorsId(int...)}
+     */
     @Override
+    @Deprecated
     public void setPrimaryColors(int... colors) {
         super.setPrimaryColors(colors);
     }

@@ -54,9 +54,9 @@ public class BezierRadarHeader extends SimpleComponent implements RefreshHeader 
     protected float mRippleRadius;
 
     protected int mRadarAngle = 0;
-    protected float mRadarRadius = 0;
-    protected float mRadarCircle = 0;
-    protected float mRadarScale = 0;
+    protected float mRadarRadius;
+    protected float mRadarCircle;
+    protected float mRadarScale;
     protected Animator mAnimatorSet;
 //    protected ValueAnimator mRadarAnimator;
     protected RectF mRadarRect = new RectF(0,0,0,0);
@@ -216,8 +216,6 @@ public class BezierRadarHeader extends SimpleComponent implements RefreshHeader 
     //</editor-fold>
 
     //<editor-fold desc="刷新接口 - RefreshHeader">
-
-
     @Override
     public void onMoving(boolean isDragging, float percent, int offset, int height, int maxDragHeight) {
         mWaveOffsetY = offset;
@@ -301,7 +299,13 @@ public class BezierRadarHeader extends SimpleComponent implements RefreshHeader 
         }
     }
 
-    @Override@Deprecated
+    /**
+     * @param colors 对应Xml中配置的 srlPrimaryColor srlAccentColor
+     * @deprecated 只由框架调用
+     * 使用者使用 {@link RefreshLayout#setPrimaryColorsId(int...)}
+     */
+    @Override
+    @Deprecated
     public void setPrimaryColors(@ColorInt int ... colors) {
         if (colors.length > 0 && !mManualPrimaryColor) {
             setPrimaryColor(colors[0]);

@@ -239,9 +239,11 @@ public class TaurusHeader extends SimpleComponent implements RefreshHeader {
 
     /**
      * @param colors 对应Xml中配置的 srlPrimaryColor srlAccentColor
-     * @deprecated 请使用 {@link RefreshLayout#setPrimaryColorsId(int...)}
+     * @deprecated 只由框架调用
+     * 使用者使用 {@link RefreshLayout#setPrimaryColorsId(int...)}
      */
-    @Override@Deprecated
+    @Override
+    @Deprecated
     public void setPrimaryColors(@ColorInt int ... colors) {
 //        final View thisView = this;
 //        thisView.setBackgroundColor(colors[0]);

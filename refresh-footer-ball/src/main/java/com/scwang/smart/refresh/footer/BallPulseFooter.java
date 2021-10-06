@@ -144,7 +144,13 @@ public class BallPulseFooter extends SimpleComponent implements RefreshFooter {
         return 0;
     }
 
-    @Override@Deprecated
+    /**
+     * @param colors 对应Xml中配置的 srlPrimaryColor srlAccentColor
+     * @deprecated 只由框架调用
+     * 使用者使用 {@link RefreshLayout#setPrimaryColorsId(int...)}
+     */
+    @Override
+    @Deprecated
     public void setPrimaryColors(@ColorInt int... colors) {
         if (!mManualAnimationColor && colors.length > 1) {
             setAnimatingColor(colors[0]);

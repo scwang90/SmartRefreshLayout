@@ -27,7 +27,7 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
  * 二级刷新
  * Created by scwang on 2017/5/26.
  */
-@SuppressWarnings({"unused", "UnusedReturnValue"})
+@SuppressWarnings({"UnusedReturnValue", "unused"})
 public class TwoLevelHeader extends SimpleComponent implements RefreshHeader, NestedScrollingParent2 {
 
     //<editor-fold desc="属性字段">
