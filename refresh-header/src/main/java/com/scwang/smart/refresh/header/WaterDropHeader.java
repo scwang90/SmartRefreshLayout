@@ -189,19 +189,12 @@ public class WaterDropHeader extends SimpleComponent implements RefreshHeader {
         mState = newState;
         switch (newState) {
             case None:
-                dropView.setVisibility(View.VISIBLE);
-                imageView.setVisibility(View.VISIBLE);
-                break;
             case PullDownToRefresh:
-                dropView.setVisibility(View.VISIBLE);
-                imageView.setVisibility(View.VISIBLE);
-                break;
-            case PullDownCanceled:
-                break;
             case ReleaseToRefresh:
                 dropView.setVisibility(View.VISIBLE);
                 imageView.setVisibility(View.VISIBLE);
                 break;
+            case PullDownCanceled:
             case Refreshing:
                 break;
             case RefreshFinish:
