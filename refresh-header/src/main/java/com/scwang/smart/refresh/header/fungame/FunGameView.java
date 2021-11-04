@@ -36,7 +36,7 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
  * https://github.com/Hitomis/FunGameRefresh
  */
 @SuppressWarnings("unused")
-public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
+public abstract class FunGameView extends FunGameBase {
 
     //<editor-fold desc="Field - Curtain">
     /**
