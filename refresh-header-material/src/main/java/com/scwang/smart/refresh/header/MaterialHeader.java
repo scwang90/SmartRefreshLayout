@@ -33,7 +33,7 @@ import static android.view.View.MeasureSpec.getSize;
  * Material 主题下拉头
  * Created by scwang on 2017/6/2.
  */
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "UnusedReturnValue"})
 public class MaterialHeader extends SimpleComponent implements RefreshHeader {
 
     // Maps to ProgressBar.Large style

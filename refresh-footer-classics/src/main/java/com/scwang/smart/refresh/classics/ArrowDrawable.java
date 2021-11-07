@@ -16,7 +16,7 @@ public class ArrowDrawable extends PaintDrawable {
 
     private int mWidth = 0;
     private int mHeight = 0;
-    private Path mPath = new Path();
+    private final Path mPath = new Path();
 
     @Override
     public void draw(@NonNull Canvas canvas) {

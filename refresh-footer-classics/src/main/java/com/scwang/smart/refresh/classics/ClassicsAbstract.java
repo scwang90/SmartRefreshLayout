@@ -28,7 +28,7 @@ import com.scwang.smart.refresh.layout.util.SmartUtil;
 import static android.view.View.MeasureSpec.EXACTLY;
 
 @SuppressWarnings({"unused", "UnusedReturnValue"})
-public abstract class ClassicsAbstract<T extends ClassicsAbstract> extends SimpleComponent implements RefreshComponent {
+public abstract class ClassicsAbstract<T extends ClassicsAbstract<?>> extends SimpleComponent implements RefreshComponent {
 
     public static final int ID_TEXT_TITLE = R.id.srl_classics_title;
     public static final int ID_IMAGE_ARROW = R.id.srl_classics_arrow;

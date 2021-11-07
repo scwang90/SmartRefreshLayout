@@ -12,7 +12,7 @@ import com.scwang.smart.drawable.PathsDrawable;
  * 路径视图
  * Created by scwang on 2017/5/29.
  */
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "UnusedReturnValue"})
 public class PathsView extends View {
 
     protected PathsDrawable mPathsDrawable;
