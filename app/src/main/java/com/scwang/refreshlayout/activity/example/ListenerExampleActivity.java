@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
-import android.view.View;
 import android.widget.TextView;
 
 import com.scwang.refreshlayout.R;
@@ -25,7 +24,7 @@ import java.util.Locale;
  */
 public class ListenerExampleActivity extends AppCompatActivity {
 
-    private static DateFormat FORMAT = new SimpleDateFormat("HH:mm sss", Locale.CHINA);
+    private static final DateFormat FORMAT = new SimpleDateFormat("HH:mm sss", Locale.CHINA);
 
     private TextView mTvContent;
     private String mHeaderMoving;
@@ -50,12 +49,7 @@ public class ListenerExampleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_example_listener);
 
         final Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> finish());
 
         mTvContent = findViewById(R.id.content);
         mTvContent.setMovementMethod(ScrollingMovementMethod.getInstance());

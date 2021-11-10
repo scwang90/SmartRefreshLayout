@@ -32,7 +32,7 @@ import static android.R.layout.simple_list_item_2;
 public class BasicExampleActivity extends AppCompatActivity {
 
 
-    private Random random = new Random();
+    private final Random random = new Random();
     private BaseRecyclerAdapter<Void> mAdapter;
     private LoadingLayout mLoadingLayout;
     private com.scwang.smartrefresh.layout.api.RefreshLayout mRefreshLayout;
@@ -56,9 +56,9 @@ public class BasicExampleActivity extends AppCompatActivity {
         });
         //todo SCROLL_STATE_IDLE
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
-            int SCROLL_STATE_IDLE = 0;
-            int SCROLL_STATE_TOUCH_SCROLL = 1;
-            int SCROLL_STATE_FLING = 2;
+            final int SCROLL_STATE_IDLE = 0;
+            final int SCROLL_STATE_TOUCH_SCROLL = 1;
+            final int SCROLL_STATE_FLING = 2;
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
                 if (scrollState == SCROLL_STATE_IDLE) {
@@ -106,12 +106,7 @@ public class BasicExampleActivity extends AppCompatActivity {
         //点击测试
         RefreshFooter footer = mRefreshLayout.getRefreshFooter();
         if (footer instanceof com.scwang.smartrefresh.layout.footer.ClassicsFooter) {
-            mRefreshLayout.getRefreshFooter().getView().findViewById(ClassicsFooter.ID_TEXT_TITLE).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(getBaseContext(), "点击测试", Toast.LENGTH_SHORT).show();
-                }
-            });
+            mRefreshLayout.getRefreshFooter().getView().findViewById(ClassicsFooter.ID_TEXT_TITLE).setOnClickListener(v -> Toast.makeText(getBaseContext(), "点击测试", Toast.LENGTH_SHORT).show());
         }
     }
 

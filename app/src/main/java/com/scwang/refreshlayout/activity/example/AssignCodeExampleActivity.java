@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.smartrefresh.header.MaterialHeader;
@@ -27,12 +26,7 @@ public class AssignCodeExampleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_example_assign_code);
 
         final Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> finish());
 
 
         final RefreshLayout refreshLayout = findViewById(R.id.refreshLayout);

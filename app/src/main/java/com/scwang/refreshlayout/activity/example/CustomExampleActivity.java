@@ -24,7 +24,6 @@ import com.scwang.smart.refresh.layout.api.RefreshKernel;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.constant.RefreshState;
 import com.scwang.smart.refresh.layout.constant.SpinnerStyle;
-import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 import com.scwang.smart.refresh.layout.util.SmartUtil;
 
 import java.util.Arrays;
@@ -47,12 +46,7 @@ public class CustomExampleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_example_custom);
 
         final Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> finish());
 
         ListView listView = findViewById(R.id.listView);
         listView.setAdapter(mAdapter = new BaseRecyclerAdapter<Void>(simple_list_item_2) {
@@ -65,18 +59,10 @@ public class CustomExampleActivity extends AppCompatActivity {
         });
 
         final RefreshLayout refreshLayout = findViewById(R.id.refreshLayout);
-        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(@NonNull final RefreshLayout refreshLayout) {
-                refreshLayout.getLayout().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mAdapter.refresh(initData());
-                        refreshLayout.finishRefresh();
-                    }
-                }, 2000);
-            }
-        });
+        refreshLayout.setOnRefreshListener(refreshLayout1 -> refreshLayout1.getLayout().postDelayed(() -> {
+            mAdapter.refresh(initData());
+            refreshLayout1.finishRefresh();
+        }, 2000));
 
         refreshLayout.setRefreshHeader(new ClassicsHeader(this));
         refreshLayout.setHeaderHeight(60);
@@ -97,10 +83,10 @@ public class CustomExampleActivity extends AppCompatActivity {
 
     public static class ClassicsHeader extends LinearLayout implements RefreshHeader {
 
-        private TextView mHeaderText;//标题文本
-        private ImageView mArrowView;//下拉箭头
-        private ImageView mProgressView;//刷新动画视图
-        private ProgressDrawable mProgressDrawable;//刷新动画
+        private final TextView mHeaderText;//标题文本
+        private final ImageView mArrowView;//下拉箭头
+        private final ImageView mProgressView;//刷新动画视图
+        private final ProgressDrawable mProgressDrawable;//刷新动画
 
         public ClassicsHeader(Context context) {
             this(context, null);

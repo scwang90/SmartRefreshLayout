@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.util.DynamicTimeFormat;
@@ -36,12 +35,7 @@ public class AssignDefaultExampleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_example_assign_default);
 
         final Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> finish());
 
         /*
          * 以下代码仅仅为了演示效果而已，不是必须的

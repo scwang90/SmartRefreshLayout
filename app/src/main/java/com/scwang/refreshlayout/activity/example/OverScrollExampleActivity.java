@@ -1,10 +1,8 @@
 package com.scwang.refreshlayout.activity.example;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -23,27 +21,16 @@ public class OverScrollExampleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_example_overscroll);
 
         final Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> finish());
 
         final WebView webView = findViewById(R.id.webView);
         final RefreshLayout refreshLayout = findViewById(R.id.refreshLayout);
-        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                webView.loadUrl("http://github.com");
-            }
-        });
+        refreshLayout.setOnRefreshListener((OnRefreshListener) refreshLayout1 -> webView.loadUrl("http://github.com"));
         refreshLayout.autoRefresh();
 
 
         webView.setWebViewClient(new WebViewClient(){
             @Override
-            @SuppressWarnings("deprecation")
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
                 return true;

@@ -1,6 +1,7 @@
 package com.scwang.refreshlayout.activity.example;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -25,7 +26,7 @@ import java.util.Locale;
 
 public class NestedLayoutExampleActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
-    private static String[] provinces = new String[]{
+    private static final String[] provinces = new String[]{
             "北京","天津","上海","重庆",
             "黑龙江","吉林","辽宁","河北","河南","山东","江苏","山西","陕西","甘肃","四川","青海","湖南","湖北","江西","安徽","浙江","福建","广东","广西","贵州","云南","海南",
             "内蒙古","新疆维吾尔族自治区","宁夏回族自治区","西藏","宁夏回族自治区",
@@ -41,12 +42,7 @@ public class NestedLayoutExampleActivity extends AppCompatActivity implements Ad
 
         final Toolbar toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    finish();
-                }
-            });
+            toolbar.setNavigationOnClickListener(v -> finish());
         }
 
         View view = findViewById(R.id.recyclerView);
@@ -62,15 +58,15 @@ public class NestedLayoutExampleActivity extends AppCompatActivity implements Ad
                 }
             }.setOnItemClickListener(this));
             recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                DateFormat dateFormat = new SimpleDateFormat("hh:mm:ss SSS", Locale.CHINA);
+                final DateFormat dateFormat = new SimpleDateFormat("hh:mm:ss SSS", Locale.CHINA);
                 @Override
-                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                     Log.e("recyclerView", dateFormat.format(new Date()) + " - onScrollStateChanged - " + newState);
                     super.onScrollStateChanged(recyclerView, newState);
                 }
 
                 @Override
-                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                     super.onScrolled(recyclerView, dx, dy);
                 }
             });
