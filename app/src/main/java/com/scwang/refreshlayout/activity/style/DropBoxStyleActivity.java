@@ -62,12 +62,7 @@ public class DropBoxStyleActivity extends AppCompatActivity implements AdapterVi
         setContentView(R.layout.activity_style_dropbox);
 
         mToolbar = findViewById(R.id.toolbar);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        mToolbar.setNavigationOnClickListener(v -> finish());
 
         mRefreshLayout = findViewById(R.id.refreshLayout);
         if (isFirstEnter) {

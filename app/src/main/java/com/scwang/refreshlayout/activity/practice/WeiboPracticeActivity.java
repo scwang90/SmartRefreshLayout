@@ -30,12 +30,7 @@ public class WeiboPracticeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_practice_weibo);
 
         final Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> finish());
 
         //状态栏透明和间距处理
         StatusBarUtil.immersive(this);
@@ -47,18 +42,8 @@ public class WeiboPracticeActivity extends AppCompatActivity {
         final NestedScrollView scrollView = findViewById(R.id.scrollView);
         final RefreshLayout refreshLayout = findViewById(R.id.refreshLayout);
 
-        findViewById(R.id.attention).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(view.getContext(),"点击了关注",Toast.LENGTH_SHORT).show();
-            }
-        });
-        findViewById(R.id.leaveword).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(view.getContext(),"点击了留言",Toast.LENGTH_SHORT).show();
-            }
-        });
+        findViewById(R.id.attention).setOnClickListener(view -> Toast.makeText(view.getContext(),"点击了关注",Toast.LENGTH_SHORT).show());
+        findViewById(R.id.leaveword).setOnClickListener(view -> Toast.makeText(view.getContext(),"点击了留言",Toast.LENGTH_SHORT).show());
 
         refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
             @Override
@@ -97,7 +82,7 @@ public class WeiboPracticeActivity extends AppCompatActivity {
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 if (lastScrollY < h) {
                     scrollY = Math.min(h, scrollY);
-                    mScrollY = scrollY > h ? h : scrollY;
+                    mScrollY = Math.min(scrollY, h);
                     buttonBar.setAlpha(1f * mScrollY / h);
                     toolbar.setBackgroundColor(((255 * mScrollY / h) << 24) | color);
                     parallax.setTranslationY(mOffset - mScrollY);

@@ -55,12 +55,7 @@ public class BezierRadarStyleActivity extends AppCompatActivity implements Adapt
         setContentView(R.layout.activity_style_bezier);
 
         mToolbar = findViewById(R.id.toolbar);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        mToolbar.setNavigationOnClickListener(v -> finish());
 
         mRefreshLayout = findViewById(R.id.refreshLayout);
         mRefreshHeader = findViewById(R.id.header);

@@ -51,12 +51,7 @@ public class WaveSwipeStyleActivity extends AppCompatActivity implements Adapter
         setContentView(R.layout.activity_style_wave_swipe);
 
         mToolbar = findViewById(R.id.toolbar);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        mToolbar.setNavigationOnClickListener(v -> finish());
 
         mRefreshLayout = findViewById(R.id.refreshLayout);
         if (isFirstEnter) {

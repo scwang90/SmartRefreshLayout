@@ -51,12 +51,7 @@ public class BezierCircleStyleActivity extends AppCompatActivity implements Adap
         setContentView(R.layout.activity_style_circle);
 
         mToolbar = findViewById(R.id.toolbar);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        mToolbar.setNavigationOnClickListener(v -> finish());
 
         mRefreshLayout = findViewById(R.id.refreshLayout);
         if (isFirstEnter) {

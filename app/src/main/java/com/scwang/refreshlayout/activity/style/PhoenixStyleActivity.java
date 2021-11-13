@@ -59,12 +59,7 @@ public class PhoenixStyleActivity extends AppCompatActivity implements AdapterVi
         setContentView(R.layout.activity_style_phoenix);
 
         mToolbar = findViewById(R.id.toolbar);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        mToolbar.setNavigationOnClickListener(v -> finish());
 
         mRefreshLayout = findViewById(R.id.refreshLayout);
         if (isFirstEnter) {
@@ -101,7 +96,7 @@ public class PhoenixStyleActivity extends AppCompatActivity implements AdapterVi
         mActionButton = findViewById(R.id.fab);
         mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean misAppbarExpand = true;
-            View fab = findViewById(R.id.fab);
+            final View fab = findViewById(R.id.fab);
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 int scrollRange = appBarLayout.getTotalScrollRange();

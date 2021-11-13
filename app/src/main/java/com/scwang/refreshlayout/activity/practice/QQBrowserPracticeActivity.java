@@ -25,12 +25,7 @@ public class QQBrowserPracticeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_practice_qqbrowser);
 
         final Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> finish());
 
         final LoadingLayout loading = findViewById(R.id.loading);
 

@@ -26,7 +26,7 @@ import java.util.Collection;
  */
 public class RepastPracticeActivity extends AppCompatActivity {
 
-    private class Model {
+    private static class Model {
         int imageId;
         int avatarId;
         String name;
@@ -42,12 +42,7 @@ public class RepastPracticeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_practice_repast);
 
         final Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> finish());
 
         final RefreshLayout refreshLayout = findViewById(R.id.refreshLayout);
         refreshLayout.setEnableFooterFollowWhenNoMoreData(true);
@@ -77,37 +72,26 @@ public class RepastPracticeActivity extends AppCompatActivity {
             refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
                 @Override
                 public void onRefresh(@NonNull final RefreshLayout refreshLayout) {
-                    refreshLayout.getLayout().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            refreshLayout.finishRefresh();
-                            refreshLayout.resetNoMoreData();//setNoMoreData(false);//恢复上拉状态
-                        }
+                    refreshLayout.getLayout().postDelayed(() -> {
+                        refreshLayout.finishRefresh();
+                        refreshLayout.resetNoMoreData();//setNoMoreData(false);//恢复上拉状态
                     }, 2000);
                 }
                 @Override
                 public void onLoadMore(@NonNull final RefreshLayout refreshLayout) {
-                    refreshLayout.getLayout().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (mAdapter.getCount() > 12) {
-                                Toast.makeText(getBaseContext(), "数据全部加载完毕", Toast.LENGTH_SHORT).show();
-                                refreshLayout.finishLoadMoreWithNoMoreData();//设置之后，将不会再触发加载事件
-                            } else {
-                                mAdapter.loadMore(loadModels());
-                                refreshLayout.finishLoadMore();
-                            }
+                    refreshLayout.getLayout().postDelayed(() -> {
+                        if (mAdapter.getCount() > 12) {
+                            Toast.makeText(getBaseContext(), "数据全部加载完毕", Toast.LENGTH_SHORT).show();
+                            refreshLayout.finishLoadMoreWithNoMoreData();//设置之后，将不会再触发加载事件
+                        } else {
+                            mAdapter.loadMore(loadModels());
+                            refreshLayout.finishLoadMore();
                         }
                     }, 1000);
                 }
             });
 
-            refreshLayout.getLayout().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    refreshLayout.setHeaderInsetStart(SmartUtil.px2dp(toolbar.getHeight()));
-                }
-            }, 500);
+            refreshLayout.getLayout().postDelayed(() -> refreshLayout.setHeaderInsetStart(SmartUtil.px2dp(toolbar.getHeight())), 500);
         }
 
         //状态栏透明和间距处理

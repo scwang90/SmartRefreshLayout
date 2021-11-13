@@ -50,12 +50,7 @@ public class FunGameBattleCityStyleActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_style_fungame_battlecity);
 
         mToolbar = findViewById(R.id.toolbar);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        mToolbar.setNavigationOnClickListener(v -> finish());
 
         mRefreshLayout = findViewById(R.id.refreshLayout);
         if (isFirstEnter) {

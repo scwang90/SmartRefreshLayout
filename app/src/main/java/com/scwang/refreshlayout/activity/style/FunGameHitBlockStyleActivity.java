@@ -50,12 +50,7 @@ public class FunGameHitBlockStyleActivity extends AppCompatActivity implements A
         setContentView(R.layout.activity_style_fungame_hitblock);
 
         mToolbar = findViewById(R.id.toolbar);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        mToolbar.setNavigationOnClickListener(v -> finish());
 
         mRefreshLayout = findViewById(R.id.refreshLayout);
         if (isFirstEnter) {

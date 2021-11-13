@@ -58,7 +58,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
     private ItemAdapter mAdapter;
 
     private FlyView mFlyView;
-    private ArrayList<ItemData> mDataSet = new ArrayList<>();
+    private final ArrayList<ItemData> mDataSet = new ArrayList<>();
     private LinearLayoutManager mLayoutManager;
     private FlyRefreshHeader mFlyRefreshHeader;
     private CollapsingToolbarLayout mToolbarLayout;
@@ -90,27 +90,21 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
         mRefreshLayout = findViewById(R.id.refreshLayout);
         mRefreshLayout.setReboundInterpolator(new ElasticOutInterpolator());//设置回弹插值器，会带有弹簧震动效果
         mRefreshLayout.setReboundDuration(800);//设置回弹动画时长
-        mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                View child = mListView.getChildAt(0);
-                if (child != null) {
-                    //开始刷新的时候个第一个item设置动画效果
-                    bounceAnimateView(child.findViewById(R.id.icon));
-                }
-                updateTheme();//改变主题颜色
-                mRefreshLayout.getLayout().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        //通知刷新完成，这里改为通知Header，让纸飞机飞回来
-                        mFlyRefreshHeader.finishRefresh(new AnimatorListenerAdapter() {
-                            public void onAnimationEnd(Animator animation) {
-                                addItemData();//在纸飞机回到原位之后添加数据效果更真实
-                            }
-                        });
-                    }
-                }, 2000);//模拟两秒的后台数据加载
+        mRefreshLayout.setOnRefreshListener((OnRefreshListener) refreshLayout -> {
+            View child = mListView.getChildAt(0);
+            if (child != null) {
+                //开始刷新的时候个第一个item设置动画效果
+                bounceAnimateView(child.findViewById(R.id.icon));
             }
+            updateTheme();//改变主题颜色
+            mRefreshLayout.getLayout().postDelayed(() -> {
+                //通知刷新完成，这里改为通知Header，让纸飞机飞回来
+                mFlyRefreshHeader.finishRefresh(new AnimatorListenerAdapter() {
+                    public void onAnimationEnd(Animator animation) {
+                        addItemData();//在纸飞机回到原位之后添加数据效果更真实
+                    }
+                });
+            }, 2000);//模拟两秒的后台数据加载
         });
         //设置 让 AppBarLayout 和 RefreshLayout 的滚动同步 并不保持 toolbar 位置不变
         final AppBarLayout appBar = findViewById(R.id.appbar);
@@ -155,12 +149,9 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
         /*
          * 设置点击 ActionButton 时候触发自动刷新 并改变主题颜色
          */
-        mActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateTheme();
-                mRefreshLayout.autoRefresh();
-            }
+        mActionButton.setOnClickListener(v -> {
+            updateTheme();
+            mRefreshLayout.autoRefresh();
         });
         /*
          * 监听 AppBarLayout 的关闭和开启 给 FlyView（纸飞机） 和 ActionButton 设置关闭隐藏动画
@@ -177,12 +168,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
                     mFlyView.animate().scaleX(0).scaleY(0);
                     ValueAnimator animator = ValueAnimator.ofInt(mListView.getPaddingTop(), 0);
                     animator.setDuration(300);
-                    animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                        @Override
-                        public void onAnimationUpdate(ValueAnimator animation) {
-                            mListView.setPadding(0, (int) animation.getAnimatedValue(), 0, 0);
-                        }
-                    });
+                    animator.addUpdateListener(animation -> mListView.setPadding(0, (int) animation.getAnimatedValue(), 0, 0));
                     animator.start();
                 }
                 if (fraction > 0.8 && !misAppbarExpand) {
@@ -191,12 +177,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
                     mFlyView.animate().scaleX(1).scaleY(1);
                     ValueAnimator animator = ValueAnimator.ofInt(mListView.getPaddingTop(), SmartUtil.dp2px(25));
                     animator.setDuration(300);
-                    animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                        @Override
-                        public void onAnimationUpdate(ValueAnimator animation) {
-                            mListView.setPadding(0, (int) animation.getAnimatedValue(), 0, 0);
-                        }
-                    });
+                    animator.addUpdateListener(animation -> mListView.setPadding(0, (int) animation.getAnimatedValue(), 0, 0));
                     animator.start();
                 }
             }
@@ -212,7 +193,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
         if (mThemeListener == null) {
             mThemeListener = new View.OnClickListener() {
                 int index = 0;
-                int[] ids = new int[]{
+                final int[] ids = new int[]{
                         R.color.colorPrimary,
                         android.R.color.holo_green_light,
                         android.R.color.holo_red_light,
@@ -259,19 +240,14 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
         ValueAnimator swing = ValueAnimator.ofFloat(0, 60, -40, 0);
         swing.setDuration(400);
         swing.setInterpolator(new AccelerateInterpolator());
-        swing.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                view.setRotationX((float)animation.getAnimatedValue());
-            }
-        });
+        swing.addUpdateListener(animation -> view.setRotationX((float)animation.getAnimatedValue()));
         swing.start();
     }
 
     private class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
 
-        private LayoutInflater mInflater;
-        private DateFormat dateFormat;
+        private final LayoutInflater mInflater;
+        private final DateFormat dateFormat;
 
         ItemAdapter(Context context) {
             mInflater = LayoutInflater.from(context);
@@ -310,14 +286,14 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
 
         ItemViewHolder(View itemView) {
             super(itemView);
-            icon = (ImageView) itemView.findViewById(R.id.icon);
-            title = (TextView) itemView.findViewById(R.id.title);
-            subTitle = (TextView) itemView.findViewById(R.id.subtitle);
+            icon = itemView.findViewById(R.id.icon);
+            title = itemView.findViewById(R.id.title);
+            subTitle = itemView.findViewById(R.id.subtitle);
         }
 
     }
 
-    public class ItemData {
+    public static class ItemData {
         int color;
         int icon;
         Date time;
@@ -331,7 +307,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
         }
     }
 
-    public class SampleItemAnimator extends BaseItemAnimator {
+    public static class SampleItemAnimator extends BaseItemAnimator {
 
         @Override
         protected void preAnimateAddImpl(RecyclerView.ViewHolder holder) {
@@ -367,7 +343,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
 
     }
 
-    public class ElasticOutInterpolator implements Interpolator {
+    public static class ElasticOutInterpolator implements Interpolator {
 
         @Override
         public float getInterpolation(float t) {
