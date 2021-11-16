@@ -3,6 +3,7 @@ package com.scwang.refreshlayout.adapter;
 import android.database.DataSetObservable;
 import android.database.DataSetObserver;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,13 +59,14 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<SmartV
     }
 
     //<editor-fold desc="RecyclerAdapter">
+    @NonNull
     @Override
     public SmartViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new SmartViewHolder(LayoutInflater.from(parent.getContext()).inflate(mLayoutId, parent, false),mListener);
     }
 
     @Override
-    public void onBindViewHolder(SmartViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SmartViewHolder holder, int position) {
         onBindViewHolder(holder, position < mList.size() ? mList.get(position) : null, position);
     }
 
@@ -76,7 +78,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<SmartV
     }
 
     @Override
-    public void onViewAttachedToWindow(SmartViewHolder holder) {
+    public void onViewAttachedToWindow(@NonNull SmartViewHolder holder) {
         super.onViewAttachedToWindow(holder);
         addAnimate(holder, holder.getLayoutPosition());
     }

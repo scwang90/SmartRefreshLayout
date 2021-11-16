@@ -68,12 +68,7 @@ public class NestedScrollExampleFragment extends Fragment implements AdapterView
         super.onViewCreated(root, savedInstanceState);
 
         Toolbar toolbar = root.findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> getActivity().finish());
 
         final BaseRecyclerAdapter<Item> adapter;
         RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
@@ -89,35 +84,26 @@ public class NestedScrollExampleFragment extends Fragment implements AdapterView
             }
         });
         if (mNestedPager) {
-            final Runnable loadMore = new Runnable() {
-                @Override
-                public void run() {
-                    adapter.loadMore(Arrays.asList(Item.values()));
-                    adapter.loadMore(Arrays.asList(Item.values()));
-                    adapter.loadMore(Arrays.asList(Item.values()));
-                    adapter.loadMore(Arrays.asList(Item.values()));
-                    adapter.loadMore(Arrays.asList(Item.values()));
-                    adapter.loadMore(Arrays.asList(Item.values()));
-                    adapter.loadMore(Arrays.asList(Item.values()));
-                }
+            final Runnable loadMore = () -> {
+                adapter.loadMore(Arrays.asList(Item.values()));
+                adapter.loadMore(Arrays.asList(Item.values()));
+                adapter.loadMore(Arrays.asList(Item.values()));
+                adapter.loadMore(Arrays.asList(Item.values()));
+                adapter.loadMore(Arrays.asList(Item.values()));
+                adapter.loadMore(Arrays.asList(Item.values()));
+                adapter.loadMore(Arrays.asList(Item.values()));
             };
             final RefreshLayout refreshLayout = root.findViewById(R.id.refreshLayout);
             refreshLayout.setEnableFooterFollowWhenNoMoreData(true);
             refreshLayout.setRefreshFooter(new ClassicsFooter(getContext()));
-            refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-                @Override
-                public void onLoadMore(@NonNull final RefreshLayout refreshLayout) {
-                    if (adapter.getItemCount() < 100) {
-                        refreshLayout.getLayout().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                loadMore.run();
-                                refreshLayout.finishLoadMore();
-                            }
-                        }, 2000);
-                    } else {
-                        refreshLayout.finishLoadMoreWithNoMoreData();
-                    }
+            refreshLayout.setOnLoadMoreListener((OnLoadMoreListener) refreshLayout1 -> {
+                if (adapter.getItemCount() < 100) {
+                    refreshLayout1.getLayout().postDelayed(() -> {
+                        loadMore.run();
+                        refreshLayout1.finishLoadMore();
+                    }, 2000);
+                } else {
+                    refreshLayout1.finishLoadMoreWithNoMoreData();
                 }
             });
             loadMore.run();
@@ -129,7 +115,7 @@ public class NestedScrollExampleFragment extends Fragment implements AdapterView
         AppBarLayout appBarLayout = root.findViewById(R.id.appbar);
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean misAppbarExpand = true;
-            View fab = root.findViewById(R.id.fab);
+            final View fab = root.findViewById(R.id.fab);
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 int scrollRange = appBarLayout.getTotalScrollRange();

@@ -40,12 +40,7 @@ public class FlexBoxLayoutManagerFragment extends Fragment {
 
 
         final Toolbar toolbar = root.findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> getActivity().finish());
 
         FlexboxLayoutManager manager = new FlexboxLayoutManager(root.getContext());
         //设置主轴排列方式
@@ -61,7 +56,7 @@ public class FlexBoxLayoutManagerFragment extends Fragment {
 
         recyclerView.setAdapter(new BaseRecyclerAdapter<Object>(Arrays.asList(new Object[100]),0) {
 
-            Random random = new Random();
+            final Random random = new Random();
 
             @Override
             protected void onBindViewHolder(SmartViewHolder holder, Object model, int position) {

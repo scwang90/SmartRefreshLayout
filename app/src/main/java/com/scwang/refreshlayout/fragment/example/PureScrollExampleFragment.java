@@ -56,12 +56,7 @@ public class PureScrollExampleFragment extends Fragment implements AdapterView.O
         super.onViewCreated(root, savedInstanceState);
 
         final Toolbar toolbar = root.findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> getActivity().finish());
 
         View view = root.findViewById(R.id.recyclerView);
         if (view instanceof RecyclerView) {

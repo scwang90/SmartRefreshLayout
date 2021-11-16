@@ -50,12 +50,7 @@ public class NoMoreDataExampleFragment extends Fragment {
         super.onViewCreated(root, savedInstanceState);
 
         final Toolbar toolbar = root.findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> getActivity().finish());
 
         RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
         if (recyclerView != null) {
@@ -77,51 +72,33 @@ public class NoMoreDataExampleFragment extends Fragment {
             ArrayList<View> views = new ArrayList<>(1);
             toolbar.findViewsWithText(views, toolbar.getTitle(), View.FIND_VIEWS_WITH_CONTENT_DESCRIPTION|View.FIND_VIEWS_WITH_TEXT);
             if (views.size() > 0) {
-                views.get(0).setOnClickListener(v->{
-                    refreshLayout.autoRefresh();
-                });
+                views.get(0).setOnClickListener(v-> refreshLayout.autoRefresh());
             }
 
             refreshLayout.autoRefresh();
             refreshLayout.setEnableLoadMoreWhenContentNotFull(false);
-            refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-                @Override
-                public void onRefresh(@NonNull final RefreshLayout refreshLayout) {
-                    refreshLayout.getLayout().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            Collection<Void> data = loadData();
-                            mAdapter.refresh(data);
-                            if (data.size() < 9) {
-                                refreshLayout.finishRefreshWithNoMoreData();
-                            } else {
-                                refreshLayout.finishRefresh();
-                            }
-                        }
-                    }, 1000);
+            refreshLayout.setOnRefreshListener((OnRefreshListener) refreshLayout1 -> refreshLayout1.getLayout().postDelayed((Runnable) () -> {
+                Collection<Void> data = loadData();
+                mAdapter.refresh(data);
+                if (data.size() < 9) {
+                    refreshLayout1.finishRefreshWithNoMoreData();
+                } else {
+                    refreshLayout1.finishRefresh();
                 }
-            });
-            refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-                @Override
-                public void onLoadMore(@NonNull final RefreshLayout refreshLayout) {
-                    refreshLayout.getLayout().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            Collection<Void> list = loadData();
-                            mAdapter.loadMore(list);
-                            if (list.size() < 10) {
-                                refreshLayout.finishLoadMoreWithNoMoreData();
-                            } else {
-                                refreshLayout.finishLoadMore();
-                            }
-                        }
-                    }, 1000);
+            }, 1000));
+            refreshLayout.setOnLoadMoreListener((OnLoadMoreListener) refreshLayout12 -> refreshLayout12.getLayout().postDelayed((Runnable) () -> {
+                Collection<Void> list = loadData();
+                mAdapter.loadMore(list);
+                if (list.size() < 10) {
+                    refreshLayout12.finishLoadMoreWithNoMoreData();
+                } else {
+                    refreshLayout12.finishLoadMore();
                 }
-            });
+            }, 1000));
         }
     }
 
-    private Random random = new Random();
+    private final Random random = new Random();
 
     private Collection<Void> loadData() {
         int count = 3 + random.nextInt(10);

@@ -56,12 +56,7 @@ public class EmptyLayoutExampleFragmentOuter extends Fragment implements Adapter
         super.onViewCreated(root, savedInstanceState);
 
         final Toolbar toolbar = root.findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> getActivity().finish());
 
         mRefreshLayout = root.findViewById(refreshLayout);
         mRefreshLayout.setRefreshHeader(new ClassicsHeader(getContext()).setSpinnerStyle(SpinnerStyle.FixedBehind).setPrimaryColorId(R.color.colorPrimary).setAccentColorId(android.R.color.white));
@@ -80,12 +75,7 @@ public class EmptyLayoutExampleFragmentOuter extends Fragment implements Adapter
         TextView empty = root.findViewById(R.id.empty_text);
         empty.setText("暂无数据点击刷新");
 
-        ((View)empty.getParent()).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                doRefresh(0);
-            }
-        });
+        ((View)empty.getParent()).setOnClickListener(v -> doRefresh(0));
 
     }
 
@@ -95,20 +85,17 @@ public class EmptyLayoutExampleFragmentOuter extends Fragment implements Adapter
     }
 
     protected void doRefresh(int delayed) {
-        mRefreshLayout.getLayout().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mRecyclerView.setAdapter(new BaseRecyclerAdapter<Item>(Arrays.asList(Item.values()), simple_list_item_2, EmptyLayoutExampleFragmentOuter.this) {
-                    @Override
-                    protected void onBindViewHolder(SmartViewHolder holder, Item model, int position) {
-                        holder.text(android.R.id.text1, model.name());
-                        holder.text(android.R.id.text2, model.name);
-                        holder.textColorId(android.R.id.text2, R.color.colorTextAssistant);
-                    }
-                });
-                mRefreshLayout.finishRefresh();
-                mEmptyLayout.setVisibility(View.GONE);
-            }
+        mRefreshLayout.getLayout().postDelayed(() -> {
+            mRecyclerView.setAdapter(new BaseRecyclerAdapter<Item>(Arrays.asList(Item.values()), simple_list_item_2, EmptyLayoutExampleFragmentOuter.this) {
+                @Override
+                protected void onBindViewHolder(SmartViewHolder holder, Item model, int position) {
+                    holder.text(android.R.id.text1, model.name());
+                    holder.text(android.R.id.text2, model.name);
+                    holder.textColorId(android.R.id.text2, R.color.colorTextAssistant);
+                }
+            });
+            mRefreshLayout.finishRefresh();
+            mEmptyLayout.setVisibility(View.GONE);
         }, delayed);
     }
 

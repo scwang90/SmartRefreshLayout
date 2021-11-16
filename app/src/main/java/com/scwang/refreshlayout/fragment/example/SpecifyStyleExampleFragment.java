@@ -59,12 +59,7 @@ public class SpecifyStyleExampleFragment extends Fragment implements AdapterView
         super.onViewCreated(root, savedInstanceState);
 
         final Toolbar toolbar = root.findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> getActivity().finish());
         toolbar.setTitle("指定样式");
 
         View view = root.findViewById(R.id.recyclerView);

@@ -61,12 +61,7 @@ public class NestedScrollExampleFragmentIntegral extends Fragment implements Ada
         super.onViewCreated(root, savedInstanceState);
 
         Toolbar toolbar = root.findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().finish();
-           }
-        });
+        toolbar.setNavigationOnClickListener(v -> getActivity().finish());
 
         Banner banner = root.findViewById(R.id.banner);
         banner.setImageLoader(new BannerImageLoader());
@@ -104,12 +99,7 @@ public class NestedScrollExampleFragmentIntegral extends Fragment implements Ada
 //        });
 
         TextView textView = root.findViewById(R.id.target);
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), "点击测试", Toast.LENGTH_SHORT).show();
-            }
-        });
+        textView.setOnClickListener(v -> Toast.makeText(getContext(), "点击测试", Toast.LENGTH_SHORT).show());
     }
 
     @Override
@@ -126,7 +116,7 @@ public class NestedScrollExampleFragmentIntegral extends Fragment implements Ada
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
     }
 
-    private class BannerImageLoader extends ImageLoader {
+    private static class BannerImageLoader extends ImageLoader {
         @Override
         public void displayImage(Context context, Object path, ImageView imageView) {
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -193,27 +183,21 @@ public class NestedScrollExampleFragmentIntegral extends Fragment implements Ada
 
 
         public void onRefresh(final RefreshLayout refreshLayout) {
-            refreshLayout.getLayout().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mAdapter.refresh(buildItems());
-                    refreshLayout.finishRefresh();
-                    refreshLayout.resetNoMoreData();//setNoMoreData(false);
-                }
+            refreshLayout.getLayout().postDelayed(() -> {
+                mAdapter.refresh(buildItems());
+                refreshLayout.finishRefresh();
+                refreshLayout.resetNoMoreData();//setNoMoreData(false);
             }, 2000);
         }
 
         public void onLoadMore(final RefreshLayout refreshLayout) {
-            refreshLayout.getLayout().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mAdapter.loadMore(buildItems());
-                    if (mAdapter.getItemCount() > 60) {
-                        Toast.makeText(getContext(), "数据全部加载完毕", Toast.LENGTH_SHORT).show();
-                        refreshLayout.finishLoadMoreWithNoMoreData();//将不会再次触发加载更多事件
-                    } else {
-                        refreshLayout.finishLoadMore();
-                    }
+            refreshLayout.getLayout().postDelayed(() -> {
+                mAdapter.loadMore(buildItems());
+                if (mAdapter.getItemCount() > 60) {
+                    Toast.makeText(getContext(), "数据全部加载完毕", Toast.LENGTH_SHORT).show();
+                    refreshLayout.finishLoadMoreWithNoMoreData();//将不会再次触发加载更多事件
+                } else {
+                    refreshLayout.finishLoadMore();
                 }
             }, 2000);
         }

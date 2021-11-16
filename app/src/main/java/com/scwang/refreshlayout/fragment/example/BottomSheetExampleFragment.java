@@ -1,7 +1,6 @@
 package com.scwang.refreshlayout.fragment.example;
 
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -50,27 +49,14 @@ public class BottomSheetExampleFragment extends Fragment {
         root = onCreateView(LayoutInflater.from(getContext()), null, null);
 
         final Toolbar toolbar = root.findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> getActivity().finish());
 
         RefreshLayout refreshLayout = root.findViewById(R.id.refreshLayout);
         refreshLayout.setRefreshHeader(new ClassicsHeader(getContext()).setSpinnerStyle(SpinnerStyle.FixedBehind).setPrimaryColorId(R.color.colorPrimary).setAccentColorId(android.R.color.white));
-        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull final RefreshLayout refreshLayout) {
-                refreshLayout.getLayout().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mAdapter.loadMore(initData());
-                        refreshLayout.finishLoadMore();
-                    }
-                },2000);
-            }
-        });
+        refreshLayout.setOnLoadMoreListener((OnLoadMoreListener) refreshLayout1 -> refreshLayout1.getLayout().postDelayed((Runnable) () -> {
+            mAdapter.loadMore(initData());
+            refreshLayout1.finishLoadMore();
+        },2000));
 
         RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -87,12 +73,7 @@ public class BottomSheetExampleFragment extends Fragment {
         });
 
         BottomSheetDialog dialog = new BottomSheetDialog(getContext());
-        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                getActivity().finish();
-            }
-        });
+        dialog.setOnDismissListener(dialog1 -> getActivity().finish());
         dialog.setContentView(root);
         dialog.setCancelable(false);
         dialog.show();

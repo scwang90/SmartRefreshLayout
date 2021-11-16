@@ -32,7 +32,6 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import static android.R.layout.simple_list_item_2;
-import static com.scwang.refreshlayout.R.id.refreshLayout;
 
 /**
  * 使用示例-ViewPager页面
@@ -53,9 +52,7 @@ public class ViewPagerExampleFragment extends Fragment implements OnRefreshListe
         }
     }
 
-    private TabLayout mTabLayout;
     private ViewPager mViewPager;
-    private RefreshLayout mRefreshLayout;
     private SmartPagerAdapter mAdapter;
 
     @Override
@@ -68,20 +65,15 @@ public class ViewPagerExampleFragment extends Fragment implements OnRefreshListe
         super.onViewCreated(root, savedInstanceState);
 
         final Toolbar toolbar = root.findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> getActivity().finish());
 
-        mRefreshLayout = root.findViewById(refreshLayout);
-        mRefreshLayout.setOnRefreshLoadMoreListener(this);
-        mRefreshLayout.setRefreshHeader(new ClassicsHeader(getContext()));
-        mRefreshLayout.setRefreshFooter(new ClassicsFooter(getContext()));
+        RefreshLayout refreshLayout = root.findViewById(R.id.refreshLayout);
+        refreshLayout.setOnRefreshLoadMoreListener(this);
+        refreshLayout.setRefreshHeader(new ClassicsHeader(getContext()));
+        refreshLayout.setRefreshFooter(new ClassicsFooter(getContext()));
 
         mViewPager = root.findViewById(R.id.viewPager);
-        mTabLayout = root.findViewById(R.id.tableLayout);
+        TabLayout mTabLayout = root.findViewById(R.id.tableLayout);
 
         mViewPager.setAdapter(mAdapter = new SmartPagerAdapter(Item.values()));
         mTabLayout.setupWithViewPager(mViewPager, true);
@@ -130,7 +122,6 @@ public class ViewPagerExampleFragment extends Fragment implements OnRefreshListe
 
     public static class SmartFragment extends Fragment {
 
-        private RecyclerView mRecyclerView;
         private BaseRecyclerAdapter<Void> mAdapter;
 
         @Override
@@ -139,14 +130,14 @@ public class ViewPagerExampleFragment extends Fragment implements OnRefreshListe
         }
 
         @Override
-        public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
             super.onViewCreated(view, savedInstanceState);
-            mRecyclerView = (RecyclerView) view;
+            RecyclerView recyclerView = (RecyclerView) view;
 
-            mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-            mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
-            mRecyclerView.setAdapter(mAdapter = new BaseRecyclerAdapter<Void>(initData(), simple_list_item_2) {
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
+            recyclerView.setAdapter(mAdapter = new BaseRecyclerAdapter<Void>(initData(), simple_list_item_2) {
                 @Override
                 protected void onBindViewHolder(SmartViewHolder holder, Void model, int position) {
                     holder.text(android.R.id.text1, getString(R.string.item_example_number_title, position));
@@ -161,27 +152,21 @@ public class ViewPagerExampleFragment extends Fragment implements OnRefreshListe
         }
 
         public void onRefresh(final RefreshLayout refreshLayout) {
-            refreshLayout.getLayout().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mAdapter.refresh(initData());
-                    refreshLayout.finishRefresh();
-                    refreshLayout.resetNoMoreData();//setNoMoreData(false);
-                }
+            refreshLayout.getLayout().postDelayed(() -> {
+                mAdapter.refresh(initData());
+                refreshLayout.finishRefresh();
+                refreshLayout.resetNoMoreData();//setNoMoreData(false);
             }, 2000);
         }
 
         public void onLoadMore(final RefreshLayout refreshLayout) {
-            refreshLayout.getLayout().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mAdapter.loadMore(initData());
-                    if (mAdapter.getItemCount() > 60) {
-                        Toast.makeText(getContext(), "数据全部加载完毕", Toast.LENGTH_SHORT).show();
-                        refreshLayout.finishLoadMoreWithNoMoreData();//将不会再次触发加载更多事件
-                    } else {
-                        refreshLayout.finishLoadMore();
-                    }
+            refreshLayout.getLayout().postDelayed(() -> {
+                mAdapter.loadMore(initData());
+                if (mAdapter.getItemCount() > 60) {
+                    Toast.makeText(getContext(), "数据全部加载完毕", Toast.LENGTH_SHORT).show();
+                    refreshLayout.finishLoadMoreWithNoMoreData();//将不会再次触发加载更多事件
+                } else {
+                    refreshLayout.finishLoadMore();
                 }
             }, 2000);
         }

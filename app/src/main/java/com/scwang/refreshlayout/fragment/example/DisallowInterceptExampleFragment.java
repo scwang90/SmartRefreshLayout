@@ -1,5 +1,6 @@
 package com.scwang.refreshlayout.fragment.example;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -29,12 +30,7 @@ public class DisallowInterceptExampleFragment extends Fragment {
         super.onViewCreated(root, savedInstanceState);
 
         final Toolbar toolbar = root.findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> getActivity().finish());
     }
 
     public static class MoveView extends AppCompatTextView {
@@ -61,7 +57,7 @@ public class DisallowInterceptExampleFragment extends Fragment {
         /**
          * 长按的runnable
          */
-        private Runnable mLongPressRunnable = new Runnable() {
+        private final Runnable mLongPressRunnable = new Runnable() {
             @Override
             public void run() {
                 isLongPress = true;
@@ -75,6 +71,7 @@ public class DisallowInterceptExampleFragment extends Fragment {
         }
 
         @Override
+        @SuppressLint({"ClickableViewAccessibility", "SetTextI18n"})
         public boolean onTouchEvent(MotionEvent event) {
             float x = event.getX();
             float y = event.getY();

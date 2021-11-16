@@ -47,18 +47,13 @@ public class HorizontalExampleFragment extends Fragment {
         }
 
         final Toolbar toolbar = root.findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> getActivity().finish());
 
         final RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
 
         recyclerView.setAdapter(mAdapter = new BaseRecyclerAdapter<Void>(simple_list_item_2) {
 
-            int[] colorIds = {
+            final int[] colorIds = {
                     android.R.color.holo_blue_dark,
                     android.R.color.holo_green_dark,
                     android.R.color.holo_red_dark,
@@ -88,12 +83,9 @@ public class HorizontalExampleFragment extends Fragment {
         refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onRefresh(@NonNull final RefreshLayout refreshLayout) {
-                refreshLayout.getLayout().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mAdapter.refresh(initData());
-                        refreshLayout.finishRefresh();
-                    }
+                refreshLayout.getLayout().postDelayed(() -> {
+                    mAdapter.refresh(initData());
+                    refreshLayout.finishRefresh();
                 }, 2000);
             }
 
@@ -101,12 +93,9 @@ public class HorizontalExampleFragment extends Fragment {
             public void onLoadMore(@NonNull final RefreshLayout refreshLayout) {
                 recyclerView.stopScroll();
                 recyclerView.stopNestedScroll();
-                refreshLayout.getLayout().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mAdapter.loadMore(initData());
-                        refreshLayout.finishLoadMore();
-                    }
+                refreshLayout.getLayout().postDelayed(() -> {
+                    mAdapter.loadMore(initData());
+                    refreshLayout.finishLoadMore();
                 }, 2000);
             }
         });

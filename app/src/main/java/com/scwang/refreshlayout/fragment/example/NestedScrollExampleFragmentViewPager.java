@@ -47,12 +47,7 @@ public class NestedScrollExampleFragmentViewPager extends Fragment {
         super.onViewCreated(root, savedInstanceState);
 
         Toolbar toolbar = root.findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> getActivity().finish());
 
         ViewPager viewPager = root.findViewById(R.id.viewPager);
         viewPager.setAdapter(new SmartPagerAdapter(getChildFragmentManager()));
@@ -63,7 +58,7 @@ public class NestedScrollExampleFragmentViewPager extends Fragment {
         AppBarLayout appBarLayout = root.findViewById(R.id.appbar);
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean misAppbarExpand = true;
-            View fab = root.findViewById(R.id.fab);
+            final View fab = root.findViewById(R.id.fab);
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 int scrollRange = appBarLayout.getTotalScrollRange();
@@ -119,7 +114,7 @@ public class NestedScrollExampleFragmentViewPager extends Fragment {
         }
 
         @Override
-        public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
             super.onViewCreated(view, savedInstanceState);
             mRecyclerView.setItemAnimator(new DefaultItemAnimator());
             mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -139,27 +134,21 @@ public class NestedScrollExampleFragmentViewPager extends Fragment {
         }
 
         public void onRefresh(final RefreshLayout refreshLayout) {
-            refreshLayout.getLayout().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mAdapter.refresh(initData());
-                    refreshLayout.finishRefresh();
-                    refreshLayout.resetNoMoreData();//setNoMoreData(false);
-                }
+            refreshLayout.getLayout().postDelayed(() -> {
+                mAdapter.refresh(initData());
+                refreshLayout.finishRefresh();
+                refreshLayout.resetNoMoreData();//setNoMoreData(false);
             }, 2000);
         }
 
         public void onLoadMore(final RefreshLayout refreshLayout) {
-            refreshLayout.getLayout().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mAdapter.loadMore(initData());
-                    if (mAdapter.getItemCount() > 60) {
-                        Toast.makeText(getContext(), "数据全部加载完毕", Toast.LENGTH_SHORT).show();
-                        refreshLayout.finishLoadMoreWithNoMoreData();//将不会再次触发加载更多事件
-                    } else {
-                        refreshLayout.finishLoadMore();
-                    }
+            refreshLayout.getLayout().postDelayed(() -> {
+                mAdapter.loadMore(initData());
+                if (mAdapter.getItemCount() > 60) {
+                    Toast.makeText(getContext(), "数据全部加载完毕", Toast.LENGTH_SHORT).show();
+                    refreshLayout.finishLoadMoreWithNoMoreData();//将不会再次触发加载更多事件
+                } else {
+                    refreshLayout.finishLoadMore();
                 }
             }, 2000);
         }

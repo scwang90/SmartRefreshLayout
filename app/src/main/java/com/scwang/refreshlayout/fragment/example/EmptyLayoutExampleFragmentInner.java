@@ -36,8 +36,6 @@ import java.util.Arrays;
 
 import static android.R.layout.simple_list_item_2;
 import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
-import static com.scwang.refreshlayout.R.id.recyclerView;
-import static com.scwang.refreshlayout.R.id.refreshLayout;
 
 /**
  * 使用示例-空布页面
@@ -46,7 +44,6 @@ import static com.scwang.refreshlayout.R.id.refreshLayout;
 public class EmptyLayoutExampleFragmentInner extends Fragment implements AdapterView.OnItemClickListener, OnRefreshListener {
 
     private View mEmptyLayout;
-    private RecyclerView mRecyclerView;
     private RefreshLayout mRefreshLayout;
     private static boolean mIsNeedDemo = true;
     private BaseRecyclerAdapter<Item> mAdapter;
@@ -61,22 +58,17 @@ public class EmptyLayoutExampleFragmentInner extends Fragment implements Adapter
         super.onViewCreated(root, savedInstanceState);
 
         final Toolbar toolbar = root.findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> getActivity().finish());
 
-        mRefreshLayout = root.findViewById(refreshLayout);
+        mRefreshLayout = root.findViewById(R.id.refreshLayout);
         mRefreshLayout.setRefreshHeader(new ClassicsHeader(getContext()).setSpinnerStyle(SpinnerStyle.FixedBehind).setPrimaryColorId(R.color.colorPrimary).setAccentColorId(android.R.color.white));
         mRefreshLayout.setOnRefreshListener(this);
 
-        mRecyclerView = root.findViewById(recyclerView);
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), VERTICAL));
-        mRecyclerView.setAdapter(mAdapter = new BaseRecyclerAdapter<Item>(new ArrayList<Item>(), simple_list_item_2,EmptyLayoutExampleFragmentInner.this) {
+        RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), VERTICAL));
+        recyclerView.setAdapter(mAdapter = new BaseRecyclerAdapter<Item>(new ArrayList<>(), simple_list_item_2,EmptyLayoutExampleFragmentInner.this) {
             @Override
             protected void onBindViewHolder(SmartViewHolder holder, Item model, int position) {
                 holder.text(android.R.id.text1, model.name());
@@ -95,12 +87,9 @@ public class EmptyLayoutExampleFragmentInner extends Fragment implements Adapter
 
         /*主动演示刷新*/
         if (mIsNeedDemo) {
-            mRefreshLayout.getLayout().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if (mIsNeedDemo) {
-                        mRefreshLayout.autoRefresh();
-                    }
+            mRefreshLayout.getLayout().postDelayed(() -> {
+                if (mIsNeedDemo) {
+                    mRefreshLayout.autoRefresh();
                 }
             }, 3000);
             mRefreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
@@ -118,13 +107,10 @@ public class EmptyLayoutExampleFragmentInner extends Fragment implements Adapter
 
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-        mRefreshLayout.getLayout().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mAdapter.refresh(Arrays.asList(Item.values()));
-                mRefreshLayout.finishRefresh();
-                mEmptyLayout.setVisibility(View.GONE);
-            }
+        mRefreshLayout.getLayout().postDelayed(() -> {
+            mAdapter.refresh(Arrays.asList(Item.values()));
+            mRefreshLayout.finishRefresh();
+            mEmptyLayout.setVisibility(View.GONE);
         }, 2000);
     }
 

@@ -36,16 +36,11 @@ public class ThreeLevelExampleFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         final Toolbar toolbar = view.findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> getActivity().finish());
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         if (recyclerView != null) {
@@ -62,22 +57,12 @@ public class ThreeLevelExampleFragment extends Fragment {
 
         RefreshLayout refreshLayout1 = view.findViewById(R.id.refreshLayout1);
         if (refreshLayout1 != null) {
-            refreshLayout1.setOnRefreshListener(new OnRefreshListener() {
-                @Override
-                public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                    refreshLayout.finishRefresh(1000);
-                }
-            });
+            refreshLayout1.setOnRefreshListener((OnRefreshListener) refreshLayout -> refreshLayout.finishRefresh(1000));
         }
         RefreshLayout refreshLayout2 = view.findViewById(R.id.refreshLayout2);
         if (refreshLayout2 != null) {
             refreshLayout2.getLayout().setEnabled(false);
-            refreshLayout2.setOnRefreshListener(new OnRefreshListener() {
-                @Override
-                public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                    refreshLayout.finishRefresh(2000);
-                }
-            });
+            refreshLayout2.setOnRefreshListener((OnRefreshListener) refreshLayout -> refreshLayout.finishRefresh(2000));
         }
     }
 

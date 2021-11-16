@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+@SuppressWarnings("UnusedReturnValue")
 public class SmartViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private final AdapterView.OnItemClickListener mListener;
