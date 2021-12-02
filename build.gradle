@@ -49,19 +49,118 @@ if (new File(file).exists()) {
                 group = SMART_GROUP
                 version = SMART_VERSION
                 if (name.split('-').length > 2) {
+//                    afterEvaluate {
+//                        publish {
+//                            userOrg = SMART_USER
+//                            groupId = group
+//                            artifactId = name
+//                            desc = description
+//                            publishVersion = version
+//                            website = "https://github.com/scwang90/${rootProject.name}"
+//                        }
+//                    }
+//                    apply plugin: 'com.novoda.bintray-release'
+
+                    apply plugin: 'maven-publish'
+                    apply plugin: 'signing'
+
                     afterEvaluate {
-                        publish {
-                            userOrg = SMART_USER
-                            groupId = group
-                            artifactId = name
-                            desc = description
-                            publishVersion = version
-                            website = "https://github.com/scwang90/${rootProject.name}"
+
+                        task androidSourcesJar(type: Jar) {
+                            archiveClassifier.set("sources")
+                            from android.sourceSets.main.java.source
+                            exclude "**/R.class"
+                            exclude "**/BuildConfig.class"
+                        }
+
+                        def projectName = name
+                        def projectDescription = description
+                        publishing {
+                            publications {
+                                mavenJava(MavenPublication) {
+                                    // group id，发布后引用的依赖的 group id
+                                    groupId SMART_GROUP_MVN
+                                    // 发布后引用的依赖的 artifact id
+                                    artifactId projectName
+                                    // 发布的版本
+                                    version SMART_VERSION
+                                    // 发布的 arr 的文件和源码文件
+                                    artifact("$buildDir/outputs/aar/${projectName}-release.aar")
+                                    artifact androidSourcesJar
+                                    pom {
+                                        // 构件名称，可以自定义
+                                        name = projectName
+                                        // 构件描述
+                                        description = projectDescription
+                                        // 构件主页
+                                        url = "https://github.com/scwang90/${rootProject.name}"
+                                        // 许可证名称和地址
+                                        licenses {
+                                            license {
+                                                name = 'The Apache License, Version 2.0'
+                                                url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                                            }
+                                        }
+                                        // 开发者信息
+                                        developers {
+                                            developer {
+                                                name = SMART_USER
+                                                email = SMART_EMAIL
+                                            }
+                                        }
+                                        // 版本控制仓库地址
+                                        scm {
+                                            url = "https://github.com/scwang90/${rootProject.name}"
+                                            connection = "scm:git:github.com/scwang90/${rootProject.name}.git"
+                                            developerConnection = "scm:git:ssh://git@github.com/scwang90/${rootProject.name}.git"
+                                        }
+                                        // 解决依赖关系
+                                        withXml {
+                                            def dependenciesNode = asNode().appendNode('dependencies')
+                                            project.configurations.all { configuration ->
+                                                def name = configuration.name
+                                                if (name != "implementation" && name != "compile" && name != "api") {
+                                                    return
+                                                }
+                                                configuration.dependencies.each {
+                                                    if (it.name == "unspecified") {
+                                                        // 忽略无法识别的
+                                                        return
+                                                    }
+                                                    def dependencyNode = dependenciesNode.appendNode('dependency')
+                                                    dependencyNode.appendNode('groupId', it.group)
+                                                    dependencyNode.appendNode('artifactId', it.name)
+                                                    dependencyNode.appendNode('version', it.version)
+                                                    if (name == "api" || name == "compile") {
+                                                        dependencyNode.appendNode("scope", "compile")
+                                                    } else { // implementation
+                                                        dependencyNode.appendNode("scope", "runtime")
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            repositories {
+                                maven {
+                                    // 发布的位置，这里根据发布的版本区分了 SNAPSHOT 和最终版本两种情况
+                                    def releasesRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+                                    def snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+                                    url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+                                    credentials {
+                                        // 这里就是之前在 issues.sonatype.org 注册的账号
+                                        username "${properties["sonatype.username"]}"
+                                        password new String(Base64.mimeDecoder.decode("${properties["sonatype.password"]}"), "UTF-8")
+                                    }
+                                }
+                            }
+                        }
+                        signing {
+                            sign publishing.publications
                         }
                     }
-                    apply plugin: 'com.novoda.bintray-release'
                 }
-
             }
         }
     }
