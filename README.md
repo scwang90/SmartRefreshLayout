@@ -119,14 +119,14 @@ V2.x 版本已经把依赖库拆分成8个包啦，用到的时候自行引用�
 ```gradle
 implementation 'androidx.appcompat:appcompat:1.0.0'                 //必须 1.0.0 以上
 
-implementation  'io.github.scwang90:refresh-layout-kernel:2.0.3'      //核心必须依赖
-implementation  'io.github.scwang90:refresh-header-classics:2.0.3'    //经典刷新头
-implementation  'io.github.scwang90:refresh-header-radar:2.0.3'       //雷达刷新头
-implementation  'io.github.scwang90:refresh-header-falsify:2.0.3'     //虚拟刷新头
-implementation  'io.github.scwang90:refresh-header-material:2.0.3'    //谷歌刷新头
-implementation  'io.github.scwang90:refresh-header-two-level:2.0.3'   //二级刷新头
-implementation  'io.github.scwang90:refresh-footer-ball:2.0.3'        //球脉冲加载
-implementation  'io.github.scwang90:refresh-footer-classics:2.0.3'    //经典加载
+implementation  'io.github.scwang90:refresh-layout-kernel:2.0.5'      //核心必须依赖
+implementation  'io.github.scwang90:refresh-header-classics:2.0.5'    //经典刷新头
+implementation  'io.github.scwang90:refresh-header-radar:2.0.5'       //雷达刷新头
+implementation  'io.github.scwang90:refresh-header-falsify:2.0.5'     //虚拟刷新头
+implementation  'io.github.scwang90:refresh-header-material:2.0.5'    //谷歌刷新头
+implementation  'io.github.scwang90:refresh-header-two-level:2.0.5'   //二级刷新头
+implementation  'io.github.scwang90:refresh-footer-ball:2.0.5'        //球脉冲加载
+implementation  'io.github.scwang90:refresh-footer-classics:2.0.5'    //经典加载
 
 
 ```
