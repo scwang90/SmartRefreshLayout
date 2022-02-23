@@ -4,7 +4,7 @@
 [![Arsenal](https://img.shields.io/badge/Arsenal%20-%20SmartRefresh-4cae4c.svg)](https://android-arsenal.com/details/1/6001)
 [![Maven](https://img.shields.io/badge/%20Maven%20-2.0.5-5bc0de.svg)](https://s01.oss.sonatype.org/#nexus-search;quick~refresh-layout-kernel)
 [![MinSdk](https://img.shields.io/badge/%20MinSdk%20-%2012%2B%20-f0ad4e.svg)](https://android-arsenal.com/api?level=12)
-[![Methods](https://img.shields.io/badge/Methods%20%7C%20Size%20-%20784%20%7C%20121%20KB-d9534f.svg)](http://www.methodscount.com/?lib=com.scwang.smartrefresh%3ASmartRefreshLayout%3A1.0.4)
+[![Methods](https://img.shields.io/badge/Methods%20%7C%20Size%20-%20784%20%7C%20121%20KB-d9534f.svg)](http://www.methodscount.com/?lib=io.github.scwang90:refresh%3ASmartRefreshLayout%3A1.0.4)
 
 ## [English](README_EN.md) | 中文
 
