@@ -114,14 +114,14 @@ It is recommended that you copy the source code into the project whenever you ne
 
 ```
 // Note: There will be no default Header and Footer after subcontracting. It needs to be added manually!
-implementation  'com.scwang.smart:refresh-layout-kernel:2.0.3'      //core
-implementation  'com.scwang.smart:refresh-header-classics:2.0.3'    //ClassicsHeader
-implementation  'com.scwang.smart:refresh-header-radar:2.0.3'       //BezierRadarHeader
-implementation  'com.scwang.smart:refresh-header-falsify:2.0.3'     //FalsifyHeader
-implementation  'com.scwang.smart:refresh-header-material:2.0.3'    //MaterialHeader
-implementation  'com.scwang.smart:refresh-header-two-level:2.0.3'   //TwoLevelHeader
-implementation  'com.scwang.smart:refresh-footer-ball:2.0.3'        //BallPulseFooter
-implementation  'com.scwang.smart:refresh-footer-classics:2.0.3'    //ClassicsFooter
+implementation  'com.scwang.smart:refresh-layout-kernel:2.0.5'      //core
+implementation  'com.scwang.smart:refresh-header-classics:2.0.5'    //ClassicsHeader
+implementation  'com.scwang.smart:refresh-header-radar:2.0.5'       //BezierRadarHeader
+implementation  'com.scwang.smart:refresh-header-falsify:2.0.5'     //FalsifyHeader
+implementation  'com.scwang.smart:refresh-header-material:2.0.5'    //MaterialHeader
+implementation  'com.scwang.smart:refresh-header-two-level:2.0.5'   //TwoLevelHeader
+implementation  'com.scwang.smart:refresh-footer-ball:2.0.5'        //BallPulseFooter
+implementation  'com.scwang.smart:refresh-footer-classics:2.0.5'    //ClassicsFooter
 
 ```
 <!-- // The package name of `com.scwang.smartrefresh` is retained, but not subcontracted. -->
