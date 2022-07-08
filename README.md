@@ -15,6 +15,10 @@ SmartRefreshLayout以打造一个强大，稳定，成熟的下拉刷新框架�
 其他第三方的 [Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)、[TwinklingRefreshLayout](https://github.com/lcodecorex/TwinklingRefreshLayout) 。
 还集成了各种炫酷的 Header 和 Footer。
 
+## IOS版本
+
+IOS版本：[链接](https://github.com/scwang90/SmartRefreshControl)
+
 ## 国内加速
 
 github 由于你懂的原因，下载速度缓慢，图片也无法查看，可以跳转 [国内镜像](https://gitee.com/scwang90/SmartRefreshLayout) 
@@ -35,6 +39,7 @@ github 由于你懂的原因，下载速度缓慢，图片也无法查看，可�
  - 支持 Header 和 Footer 交换混用
  - 支持 AndroidX
  - 支持[横向刷新](https://github.com/scwang90/SmartRefreshHorizontal)
+ - 支持[IOS](https://github.com/scwang90/SmartRefreshControl)
 
 ## 传送门
 
