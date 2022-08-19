@@ -114,6 +114,7 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
     private float mWidth;
     private float mHeight;
     boolean mFinishing;
+    boolean mIsRunning;
 
     public MaterialProgressDrawable(View parent) {
         mParent = parent;
@@ -268,41 +269,48 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
 
     @Override
     public boolean isRunning() {
-        final List<Animation> animators = mAnimators;
-        final int N = animators.size();
-        for (int i = 0; i < N; i++) {
-            final Animation animator = animators.get(i);
-            if (animator.hasStarted() && !animator.hasEnded()) {
-                return true;
-            }
-        }
-        return false;
+        return mIsRunning;
+//        final List<Animation> animators = mAnimators;
+//        final int N = animators.size();
+//        for (int i = 0; i < N; i++) {
+//            final Animation animator = animators.get(i);
+//            if (animator.hasStarted() && !animator.hasEnded()) {
+//                return true;
+//            }
+//        }
+//        return false;
     }
 
     @Override
     public void start() {
-        mAnimation.reset();
-        mRing.storeOriginals();
-        // Already showing some part of the ring
-        if (mRing.mEndTrim != mRing.mStartTrim) {
-            mFinishing = true;
-            mAnimation.setDuration(ANIMATION_DURATION / 2);
-            mParent.startAnimation(mAnimation);
-        } else {
-            mRing.setColorIndex(0);
-            mRing.resetOriginals();
-            mAnimation.setDuration(ANIMATION_DURATION);
-            mParent.startAnimation(mAnimation);
+        if (!mIsRunning) {
+            mAnimation.reset();
+            mRing.storeOriginals();
+            // Already showing some part of the ring
+            if (mRing.mEndTrim != mRing.mStartTrim) {
+                mFinishing = true;
+                mAnimation.setDuration(ANIMATION_DURATION / 2);
+                mParent.startAnimation(mAnimation);
+            } else {
+                mRing.setColorIndex(0);
+                mRing.resetOriginals();
+                mAnimation.setDuration(ANIMATION_DURATION);
+                mParent.startAnimation(mAnimation);
+            }
+            mIsRunning = true;
         }
     }
 
     @Override
     public void stop() {
-        mParent.clearAnimation();
-        mRing.setColorIndex(0);
-        mRing.resetOriginals();
-        showArrow(false);
-        setRotation(0);
+        if (mIsRunning) {
+            mParent.clearAnimation();
+            mRing.setColorIndex(0);
+            mRing.resetOriginals();
+            showArrow(false);
+            setRotation(0);
+            mIsRunning = false;
+        }
     }
 
     float getMinProgressArc(Ring ring) {
