@@ -188,4 +188,9 @@ public abstract class SimpleComponent extends RelativeLayout implements RefreshC
     public boolean setNoMoreData(boolean noMoreData) {
         return mWrappedInternal instanceof RefreshFooter && ((RefreshFooter) mWrappedInternal).setNoMoreData(noMoreData);
     }
+
+    @Override
+    public boolean autoRefresh(int delayed, int duration, float dragRate, boolean animationOnly) {
+        return false;
+    }
 }
