@@ -193,5 +193,10 @@ public class CustomExampleActivity extends AppCompatActivity {
         public boolean isSupportHorizontalDrag() {
             return false;
         }
+
+        @Override
+        public boolean autoRefresh(int delayed, int duration, float dragRate, boolean animationOnly) {
+            return false;
+        }
     }
 }
