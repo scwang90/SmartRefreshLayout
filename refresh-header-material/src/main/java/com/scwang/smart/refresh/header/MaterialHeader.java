@@ -230,7 +230,7 @@ public class MaterialHeader extends SimpleComponent implements RefreshHeader {
 
 
     @Override
-    public void onReleased(@NonNull RefreshLayout layout, int height, int maxDragHeight) {
+    public void onStartAnimator(@NonNull RefreshLayout refreshLayout, int height, int maxDragHeight) {
         mProgress.start();
     }
 
