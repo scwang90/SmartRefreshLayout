@@ -1,5 +1,7 @@
 package com.scwang.smart.refresh.header;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -58,6 +60,7 @@ public class MaterialHeader extends SimpleComponent implements RefreshHeader {
      */
     protected int mWaveHeight;
     protected int mHeadHeight;
+    protected int mInitHeight;
     protected Path mBezierPath;
     protected Paint mBezierPaint;
     protected RefreshState mState;
@@ -184,6 +187,7 @@ public class MaterialHeader extends SimpleComponent implements RefreshHeader {
         if (thisView.isInEditMode()) {
             mWaveHeight = mHeadHeight = height / 2;
         }
+        mInitHeight = height;
     }
 
     @Override
@@ -372,4 +376,24 @@ public class MaterialHeader extends SimpleComponent implements RefreshHeader {
         return this;
     }
     //</editor-fold>
+    @Override
+    public boolean autoRefresh(int delayed, int duration, float dragRate, final boolean animationOnly) {
+        if (mShowBezierWave) {
+            //如果显示背景，使用旧版的 autoRefresh 动画
+            return false;
+        }
+        final View circleView = mCircleView;
+        circleView.setAlpha(1);
+        circleView.setScaleX(0);
+        circleView.setScaleY(0);
+        circleView.setTranslationY(mInitHeight / 2f + mCircleDiameter / 2f);
+        circleView.animate().scaleX(1).scaleY(1).setStartDelay(delayed).setDuration(duration).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mProgress.showArrow(false);
+                mProgress.start();
+            }
+        });
+        return true;
+    }
 }
