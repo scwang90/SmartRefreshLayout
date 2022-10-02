@@ -53,6 +53,7 @@ public class MaterialHeader extends SimpleComponent implements RefreshHeader {
     protected boolean mFinished;
     protected int mCircleDiameter;
     protected ImageView mCircleView;
+    protected RefreshKernel mKernel;
     protected MaterialProgressDrawable mProgress;
 
     /**
@@ -187,6 +188,7 @@ public class MaterialHeader extends SimpleComponent implements RefreshHeader {
         if (thisView.isInEditMode()) {
             mWaveHeight = mHeadHeight = height / 2;
         }
+        mKernel = kernel;
         mInitHeight = height;
     }
 
@@ -390,8 +392,9 @@ public class MaterialHeader extends SimpleComponent implements RefreshHeader {
         circleView.animate().scaleX(1).scaleY(1).setStartDelay(delayed).setDuration(duration).setListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                mProgress.showArrow(false);
+//                mProgress.showArrow(false);
                 mProgress.start();
+                mKernel.onAutoRefreshAnimationEnd(animation, animationOnly);
             }
         });
         return true;

@@ -3960,6 +3960,27 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             mTwoLevelBottomPullUpToCloseRate = rate;
             return this;
         }
+
+        @Override
+        public RefreshKernel onAutoRefreshAnimationEnd(Animator animation, boolean animationOnly) {
+            if (animation != null && animation.getDuration() == 0) {
+                return this;//0 表示被取消
+            }
+            reboundAnimator = null;
+            if (mRefreshHeader != null) {
+                if (mState != RefreshState.ReleaseToRefresh) {
+                    this.setState(RefreshState.ReleaseToRefresh);
+                }
+                SmartRefreshLayout.this.setStateRefreshing(!animationOnly);
+            } else {
+                /*
+                 * 2019-12-24 修复 mRefreshHeader=null 时状态错乱问题
+                 */
+                this.setState(RefreshState.None);
+            }
+            return this;
+        }
+
         //</editor-fold>
     }
     //</editor-fold>
