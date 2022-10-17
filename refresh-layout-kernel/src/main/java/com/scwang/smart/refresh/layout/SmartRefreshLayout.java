@@ -3361,21 +3361,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     reboundAnimator.addListener(new AnimatorListenerAdapter() {
                         @Override
                         public void onAnimationEnd(Animator animation) {
-                            if (animation != null && animation.getDuration() == 0) {
-                                return;//0 表示被取消
-                            }
-                            reboundAnimator = null;
-                            if (mRefreshHeader != null) {
-                                if (mState != RefreshState.ReleaseToRefresh) {
-                                    mKernel.setState(RefreshState.ReleaseToRefresh);
-                                }
-                                setStateRefreshing(!animationOnly);
-                            } else {
-                                /*
-                                 * 2019-12-24 修复 mRefreshHeader=null 时状态错乱问题
-                                 */
-                                mKernel.setState(RefreshState.None);
-                            }
+                            mKernel.onAutoRefreshAnimationEnd(animation, animationOnly);
                         }
                     });
                     reboundAnimator.start();
