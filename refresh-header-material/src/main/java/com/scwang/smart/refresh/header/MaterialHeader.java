@@ -379,7 +379,7 @@ public class MaterialHeader extends SimpleComponent implements RefreshHeader {
     }
     //</editor-fold>
     @Override
-    public boolean autoRefresh(int delayed, int duration, float dragRate, final boolean animationOnly) {
+    public boolean autoOpen(int delayed, int duration, float dragRate, final boolean animationOnly) {
         if (mShowBezierWave) {
             //如果显示背景，使用旧版的 autoRefresh 动画
             return false;

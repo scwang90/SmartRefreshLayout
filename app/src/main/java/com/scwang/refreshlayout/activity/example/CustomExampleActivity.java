@@ -195,7 +195,7 @@ public class CustomExampleActivity extends AppCompatActivity {
         }
 
         @Override
-        public boolean autoRefresh(int delayed, int duration, float dragRate, boolean animationOnly) {
+        public boolean autoOpen(int delayed, int duration, float dragRate, boolean animationOnly) {
             return false;
         }
     }
