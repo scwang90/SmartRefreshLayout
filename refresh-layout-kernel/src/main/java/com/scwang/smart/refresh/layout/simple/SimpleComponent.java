@@ -190,7 +190,7 @@ public abstract class SimpleComponent extends RelativeLayout implements RefreshC
     }
 
     @Override
-    public boolean autoOpen(int delayed, int duration, float dragRate, boolean animationOnly) {
+    public boolean autoOpen(int duration, float dragRate, boolean animationOnly) {
         return false;
     }
 }

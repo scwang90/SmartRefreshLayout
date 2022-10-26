@@ -110,6 +110,6 @@ public interface RefreshComponent extends OnStateChangedListener {
      * @return If False is returned, this header does not support automatic refresh
      *         返回 False 代表本Header不支持自动刷新
      */
-    boolean autoOpen(int delayed, int duration, float dragRate, boolean animationOnly);
+    boolean autoOpen(int duration, float dragRate, boolean animationOnly);
 
 }
