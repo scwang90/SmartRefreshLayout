@@ -103,7 +103,6 @@ public interface RefreshComponent extends OnStateChangedListener {
     /**
      * Display refresh animation, Multifunction.
      * 显示刷新动画并且触发刷新事件
-     * @param delayed 开始延时
      * @param duration 拖拽动画持续时间
      * @param dragRate 拉拽的高度比率
      * @param animationOnly animation only 只有动画
