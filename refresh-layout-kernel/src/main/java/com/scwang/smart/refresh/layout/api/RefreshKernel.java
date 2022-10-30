@@ -101,5 +101,12 @@ public interface RefreshKernel {
      * @return RefreshKernel
      */
     RefreshKernel onAutoRefreshAnimationEnd(Animator animation, boolean animationOnly);
+    /**
+     * 当 autoLoadMore 动画结束时，处理刷新状态的事件
+     * @param animation 动画对象
+     * @param animationOnly 是否只播放动画，不通知事件
+     * @return RefreshKernel
+     */
+    RefreshKernel onAutoLoadMoreAnimationEnd(Animator animation, boolean animationOnly);
     //</editor-fold>
 }

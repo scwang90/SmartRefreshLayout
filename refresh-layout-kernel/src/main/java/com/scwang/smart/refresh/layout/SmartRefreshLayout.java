@@ -3454,21 +3454,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     reboundAnimator.addListener(new AnimatorListenerAdapter() {
                         @Override
                         public void onAnimationEnd(Animator animation) {
-                            if (animation != null && animation.getDuration() == 0) {
-                                return;//0 表示被取消
-                            }
-                            reboundAnimator = null;
-                            if (mRefreshFooter != null) {
-                                if (mState != RefreshState.ReleaseToLoad) {
-                                    mKernel.setState(RefreshState.ReleaseToLoad);
-                                }
-                                setStateLoading(!animationOnly);
-                            } else {
-                                /*
-                                 * 2019-12-24 修复 mRefreshFooter=null 时状态错乱问题
-                                 */
-                                mKernel.setState(RefreshState.None);
-                            }
+                            mKernel.onAutoLoadMoreAnimationEnd(animation, animationOnly);
                         }
                     });
                     reboundAnimator.start();
@@ -3967,6 +3953,26 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             } else {
                 /*
                  * 2019-12-24 修复 mRefreshHeader=null 时状态错乱问题
+                 */
+                this.setState(RefreshState.None);
+            }
+            return this;
+        }
+
+        @Override
+        public RefreshKernel onAutoLoadMoreAnimationEnd(Animator animation, boolean animationOnly) {
+            if (animation != null && animation.getDuration() == 0) {
+                return this;//0 表示被取消
+            }
+            reboundAnimator = null;
+            if (mRefreshFooter != null) {
+                if (mState != RefreshState.ReleaseToLoad) {
+                    this.setState(RefreshState.ReleaseToLoad);
+                }
+                SmartRefreshLayout.this.setStateLoading(!animationOnly);
+            } else {
+                /*
+                 * 2019-12-24 修复 mRefreshFooter=null 时状态错乱问题
                  */
                 this.setState(RefreshState.None);
             }
