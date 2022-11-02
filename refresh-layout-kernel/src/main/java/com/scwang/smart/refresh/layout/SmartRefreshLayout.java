@@ -3324,13 +3324,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     @Override
     public boolean autoRefresh(int delayed, final int duration, final float dragRate,final boolean animationOnly) {
         if (mState == RefreshState.None && isEnableRefreshOrLoadMore(mEnableRefresh)) {
-            setViceState(RefreshState.Refreshing);
-            if (mRefreshHeader.autoOpen(delayed, duration, dragRate, animationOnly)) {
-                /*
-                 * 2022-11-03 添加Header可以自己实现 autoRefresh ，返回true表示支持，返回False表示不支持，使用老版本的 autoRefresh
-                 */
-                return true;
-            }
             Runnable runnable = new Runnable() {
                 @Override
                 public void run() {
@@ -3344,6 +3337,13 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     final View thisView = SmartRefreshLayout.this;
                     mLastTouchX = thisView.getMeasuredWidth() / 2f;
                     mKernel.setState(RefreshState.PullDownToRefresh);
+
+                    if (mRefreshHeader != null && mRefreshHeader.autoOpen(duration, dragRate, animationOnly)) {
+                        /*
+                         * 2022-11-03 添加Header可以自己实现 autoOpen ，返回true表示支持，返回False表示不支持，使用老版本的 autoOpen
+                         */
+                        return;
+                    }
 
                     final float height = mHeaderHeight == 0 ? mHeaderTriggerRate : mHeaderHeight;
                     final float dragHeight = dragRate < 10 ? height * dragRate : dragRate;
@@ -3367,6 +3367,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     reboundAnimator.start();
                 }
             };
+            setViceState(RefreshState.Refreshing);
             if (delayed > 0) {
                 mHandler.postDelayed(runnable, delayed);
             } else {
