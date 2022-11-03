@@ -190,4 +190,9 @@ public abstract class InternalAbstract extends RelativeLayout implements Refresh
     public boolean setNoMoreData(boolean noMoreData) {
         return mWrappedInternal instanceof RefreshFooter && ((RefreshFooter) mWrappedInternal).setNoMoreData(noMoreData);
     }
+
+    @Override
+    public boolean autoRefresh(int delayed, int duration, float dragRate, boolean animationOnly) {
+        return false;
+    }
 }
