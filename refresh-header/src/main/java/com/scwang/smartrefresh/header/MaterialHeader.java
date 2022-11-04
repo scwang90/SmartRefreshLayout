@@ -365,7 +365,7 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
 
 
     @Override
-    public boolean autoRefresh(int delayed, int duration, float dragRate, final boolean animationOnly) {
+    public boolean autoOpen(int duration, float dragRate, final boolean animationOnly) {
         if (mShowBezierWave) {
             //如果显示背景，使用旧版的 autoRefresh 动画
             return false;
@@ -375,10 +375,10 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
         circleView.setScaleX(0);
         circleView.setScaleY(0);
         circleView.setTranslationY(mInitHeight / 2f + mCircleDiameter / 2f);
-        circleView.animate().scaleX(1).scaleY(1).setStartDelay(delayed).setDuration(duration).setListener(new AnimatorListenerAdapter() {
+        circleView.animate().scaleX(1).scaleY(1).setDuration(duration).setListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-//                mProgress.showArrow(false);
+                circleView.animate().setListener(null);
                 mProgress.start();
                 mKernel.onAutoRefreshAnimationEnd(animation, animationOnly);
             }

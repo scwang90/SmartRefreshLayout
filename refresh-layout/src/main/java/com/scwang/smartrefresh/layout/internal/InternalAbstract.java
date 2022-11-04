@@ -192,7 +192,7 @@ public abstract class InternalAbstract extends RelativeLayout implements Refresh
     }
 
     @Override
-    public boolean autoRefresh(int delayed, int duration, float dragRate, boolean animationOnly) {
+    public boolean autoOpen(int duration, float dragRate, boolean animationOnly) {
         return false;
     }
 }
