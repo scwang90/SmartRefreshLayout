@@ -3439,6 +3439,13 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     mLastTouchX = thisView.getMeasuredWidth() / 2f;
                     mKernel.setState(RefreshState.PullUpToLoad);
 
+                    if (mRefreshFooter != null && mRefreshFooter.autoOpen(duration, dragRate, animationOnly)) {
+                        /*
+                         * 2022-11-03 添加Header可以自己实现 autoOpen ，返回true表示支持，返回False表示不支持，使用老版本的 autoOpen
+                         */
+                        return;
+                    }
+
                     final float height = mFooterHeight == 0 ? mFooterTriggerRate : mFooterHeight;
                     final float dragHeight = dragRate < 10 ? dragRate * height : dragRate;
                     reboundAnimator = ValueAnimator.ofInt(mSpinner, - (int) (dragHeight));
