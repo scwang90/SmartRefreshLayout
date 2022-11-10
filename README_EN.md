@@ -10,6 +10,10 @@
 
 SmartRefreshLayout's goal is to build a strong, stable and mature pull-down refresh layout framework, and to integrate all kinds of cool, diverse, practical and beautiful Headers and Footers.
 
+## For IOS
+
+SmartRefreshControl：[Link](https://github.com/scwang90/SmartRefreshControl)
+
 ## Features
 
  - Support multi-touch.
