@@ -1,6 +1,6 @@
 package com.scwang.smartrefresh.layout.listener;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.scwang.smart.refresh.layout.listener.OnMultiListener;
 import com.scwang.smartrefresh.layout.api.RefreshFooter;

@@ -3,12 +3,12 @@ apply plugin: 'com.android.library'
 
 android {
 
-    compileSdkVersion 28
+    compileSdkVersion 33
 
     defaultConfig {
 
-        minSdkVersion 16
-        targetSdkVersion 28
+        minSdkVersion 21
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
 
@@ -27,11 +27,6 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    testImplementation 'junit:junit:4.12'
-
     compileOnly project(':refresh-footer-ball')
     compileOnly project(':refresh-footer-classics')
     compileOnly project(':refresh-layout')

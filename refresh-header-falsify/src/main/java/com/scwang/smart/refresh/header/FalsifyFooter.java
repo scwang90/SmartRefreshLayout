@@ -1,7 +1,7 @@
 package com.scwang.smart.refresh.header;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.AttributeSet;
 
 import com.scwang.smart.refresh.header.falsify.FalsifyAbstract;

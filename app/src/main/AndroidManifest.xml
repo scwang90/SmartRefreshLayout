@@ -27,7 +27,8 @@
         <activity
             android:name=".activity.IndexMainActivity"
             android:screenOrientation="portrait"
-            android:label="@string/title_activity_index_main">
+            android:label="@string/title_activity_index_main"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW"/>

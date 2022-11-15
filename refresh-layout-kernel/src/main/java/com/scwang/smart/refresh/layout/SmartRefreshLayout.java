@@ -11,15 +11,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.ColorInt;
-import android.support.annotation.ColorRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.NestedScrollingChildHelper;
-import android.support.v4.view.NestedScrollingParent;
-import android.support.v4.view.NestedScrollingParentHelper;
-import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -71,6 +62,16 @@ import static com.scwang.smart.refresh.layout.util.SmartUtil.dp2px;
 import static com.scwang.smart.refresh.layout.util.SmartUtil.fling;
 import static com.scwang.smart.refresh.layout.util.SmartUtil.isContentView;
 import static java.lang.System.currentTimeMillis;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.NestedScrollingChildHelper;
+import androidx.core.view.NestedScrollingParent;
+import androidx.core.view.NestedScrollingParentHelper;
+import androidx.core.view.ViewCompat;
 
 /**
  * 智能刷新布局
@@ -243,10 +244,10 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.SmartRefreshLayout);
 
-        if (!ta.hasValue(R.styleable.SmartRefreshLayout_android_clipToPadding)) {
+        if (!ta.hasValue(R.styleable.SmartRefreshLayout_srlClipToPadding)) {
             super.setClipToPadding(false);
         }
-        if (!ta.hasValue(R.styleable.SmartRefreshLayout_android_clipChildren)) {
+        if (!ta.hasValue(R.styleable.SmartRefreshLayout_srlClipChildren)) {
             super.setClipChildren(false);
         }
 

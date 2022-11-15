@@ -3,11 +3,12 @@ package com.scwang.refreshlayout.fragment.example;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.AppCompatTextView;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.fragment.app.Fragment;
+
+import androidx.appcompat.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.*;
 import com.scwang.refreshlayout.R;

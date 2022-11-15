@@ -180,7 +180,7 @@
         android:visibility="visible"
         app:realtimeOverlayColor="@android:color/transparent"/>
 
-    <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
+    <androidx.appcompat.widget.Toolbar style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"
         android:background="@android:color/transparent"
         app:navigationIcon="@drawable/ic_arrow_back_white_24dp"

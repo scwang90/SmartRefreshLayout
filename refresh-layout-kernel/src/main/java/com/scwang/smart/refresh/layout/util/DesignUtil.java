@@ -1,9 +1,10 @@
 package com.scwang.smart.refresh.layout.util;
 
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
+import com.google.android.material.appbar.AppBarLayout;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import com.scwang.smart.refresh.layout.api.RefreshKernel;
 import com.scwang.smart.refresh.layout.listener.CoordinatorLayoutListener;
