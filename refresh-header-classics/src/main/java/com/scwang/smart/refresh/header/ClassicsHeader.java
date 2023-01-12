@@ -29,9 +29,11 @@ import com.scwang.smart.refresh.layout.util.SmartUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
@@ -291,6 +293,7 @@ public class ClassicsHeader extends ClassicsAbstract<ClassicsHeader> implements 
     public ClassicsHeader setLastUpdateTime(Date time) {
         final View thisView = this;
         mLastTime = time;
+        mLastUpdateFormat.setCalendar(Calendar.getInstance(TimeZone.getDefault(),  Locale.getDefault()));
         mLastUpdateText.setText(mLastUpdateFormat.format(time));
         if (mShared != null && !thisView.isInEditMode()) {
             mShared.edit().putLong(KEY_LAST_UPDATE_TIME, time.getTime()).apply();
