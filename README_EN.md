@@ -2,9 +2,9 @@
 
 [![License](https://img.shields.io/badge/License%20-Apache%202-337ab7.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Arsenal](https://img.shields.io/badge/Arsenal%20-%20SmartRefresh-4cae4c.svg)](https://android-arsenal.com/details/1/6001)
-[![JCenter](https://img.shields.io/badge/%20Jcenter%20-2.0.3-5bc0de.svg)](https://bintray.com/scwang90/maven/refresh-layout-kernel/_latestVersion)
+[![JCenter](https://img.shields.io/badge/%20Jcenter%20-2.0.5-5bc0de.svg)](https://bintray.com/scwang90/maven/refresh-layout-kernel/_latestVersion)
 [![MinSdk](https://img.shields.io/badge/%20MinSdk%20-%2012%2B%20-f0ad4e.svg)](https://android-arsenal.com/api?level=12)
-[![Methods](https://img.shields.io/badge/Methods%20%7C%20Size%20-%20784%20%7C%20122%20KB-d9534f.svg)](http://www.methodscount.com/?lib=com.scwang.smartrefresh%3ASmartRefreshLayout%3A1.1.0)
+[![Methods](https://img.shields.io/badge/Methods%20%7C%20Size%20-%20784%20%7C%20122%20KB-d9534f.svg)](http://www.methodscount.com/?lib=io.github.scwang90:refresh%3ASmartRefreshLayout%3A1.1.0)
 
 ## English | [中文](README.md)
 
@@ -118,20 +118,23 @@ It is recommended that you copy the source code into the project whenever you ne
 
 ```
 // Note: There will be no default Header and Footer after subcontracting. It needs to be added manually!
-implementation  'com.scwang.smart:refresh-layout-kernel:2.0.5'      //core
-implementation  'com.scwang.smart:refresh-header-classics:2.0.5'    //ClassicsHeader
-implementation  'com.scwang.smart:refresh-header-radar:2.0.5'       //BezierRadarHeader
-implementation  'com.scwang.smart:refresh-header-falsify:2.0.5'     //FalsifyHeader
-implementation  'com.scwang.smart:refresh-header-material:2.0.5'    //MaterialHeader
-implementation  'com.scwang.smart:refresh-header-two-level:2.0.5'   //TwoLevelHeader
-implementation  'com.scwang.smart:refresh-footer-ball:2.0.5'        //BallPulseFooter
-implementation  'com.scwang.smart:refresh-footer-classics:2.0.5'    //ClassicsFooter
+
+// To search lastest version by https://search.maven.org/search?q=g:io.github.scwang90    
+implementation 'io.github.scwang90:refresh-layout-kernel:2.0.5'     //core
+implementation 'io.github.scwang90:refresh-header-classics:2.0.5'   //ClassicsHeader
+implementation 'io.github.scwang90:refresh-header-radar:2.0.5'      //BezierRadarHeader
+implementation 'io.github.scwang90:refresh-header-falsify:2.0.5'    //FalsifyHeader
+implementation 'io.github.scwang90:refresh-header-material:2.0.5'   //MaterialHeader
+implementation 'io.github.scwang90:refresh-header-two-level:2.0.5'  //TwoLevelHeader
+implementation 'io.github.scwang90:refresh-footer-ball:2.0.5'       //BallPulseFooter
+implementation 'io.github.scwang90:refresh-footer-classics:2.0.5'   //ClassicsFooter
+
 
 ```
-<!-- // The package name of `com.scwang.smartrefresh` is retained, but not subcontracted. -->
-<!-- implementation 'com.scwang.smartrefresh:SmartRefreshHeader:2.0.3'   //Headers -->
-<!-- implementation 'com.scwang.smartrefresh:SmartRefreshFooter:2.0.3'   //Footers -->
-<!-- implementation 'com.scwang.smartrefresh:SmartRefreshLayout:2.0.3'   //core、 default Header and Footer -->
+<!-- // The package name of `io.github.scwang90:refresh` is retained, but not subcontracted. -->
+<!-- implementation 'io.github.scwang90:refresh:SmartRefreshHeader:2.0.5'   //Headers -->
+<!-- implementation 'io.github.scwang90:refresh:SmartRefreshFooter:2.0.5'   //Footers -->
+<!-- implementation 'io.github.scwang90:refresh:SmartRefreshLayout:2.0.5'   //core、 default Header and Footer -->
 
 If you use AndroidX, add it to gradle.properties
 
