@@ -11,15 +11,13 @@ import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.NonNull;
+
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +28,9 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.util.StatusBarUtil;
 import com.scwang.smartrefresh.header.FlyRefreshHeader;
@@ -48,7 +49,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-import jp.wasabeef.recyclerview.animators.BaseItemAnimator;
+// import jp.wasabeef.recyclerview.animators.BaseItemAnimator;
 
 public class FlyRefreshStyleActivity extends AppCompatActivity {
 
@@ -143,7 +144,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
         mListView = findViewById(R.id.recyclerView);
         mListView.setLayoutManager(mLayoutManager);
         mListView.setAdapter(mAdapter);
-        mListView.setItemAnimator(new SampleItemAnimator());
+        // mListView.setItemAnimator(new SampleItemAnimator());
         mToolbarLayout = findViewById(R.id.toolbarLayout);
         mActionButton = findViewById(R.id.fab);
         /*
@@ -307,7 +308,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
         }
     }
 
-    public static class SampleItemAnimator extends BaseItemAnimator {
+    /*public static class SampleItemAnimator extends BaseItemAnimator {
 
         @Override
         protected void preAnimateAddImpl(RecyclerView.ViewHolder holder) {
@@ -341,7 +342,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
             animator.start();
         }
 
-    }
+    }*/
 
     public static class ElasticOutInterpolator implements Interpolator {
 

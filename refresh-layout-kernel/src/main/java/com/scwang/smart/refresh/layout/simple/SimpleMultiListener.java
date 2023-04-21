@@ -1,6 +1,6 @@
 package com.scwang.smart.refresh.layout.simple;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.scwang.smart.refresh.layout.api.RefreshFooter;
 import com.scwang.smart.refresh.layout.api.RefreshHeader;

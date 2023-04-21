@@ -1,7 +1,7 @@
 package com.scwang.smartrefresh.header;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 
 import com.scwang.smartrefresh.layout.api.RefreshHeader;

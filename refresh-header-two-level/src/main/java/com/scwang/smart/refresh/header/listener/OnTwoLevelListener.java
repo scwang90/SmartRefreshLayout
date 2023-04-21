@@ -1,6 +1,6 @@
 package com.scwang.smart.refresh.header.listener;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 

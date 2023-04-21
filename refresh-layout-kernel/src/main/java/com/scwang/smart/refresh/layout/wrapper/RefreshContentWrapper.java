@@ -3,10 +3,11 @@ package com.scwang.smart.refresh.layout.wrapper;
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.graphics.PointF;
-import android.support.annotation.NonNull;
-import android.support.v4.view.NestedScrollingChild;
-import android.support.v4.view.NestedScrollingParent;
-import android.support.v4.view.ViewPager;
+import androidx.annotation.NonNull;
+
+import androidx.core.view.NestedScrollingChild;
+import androidx.core.view.NestedScrollingParent;
+import androidx.viewpager.widget.ViewPager;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;

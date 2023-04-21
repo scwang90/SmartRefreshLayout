@@ -8,7 +8,7 @@
     tools:context="com.scwang.refreshlayout.activity.style.DeliveryStyleActivity"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
+    <androidx.appcompat.widget.Toolbar style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"
         android:background="#fff"
         app:titleTextColor="#fbbb"
@@ -27,7 +27,7 @@
         <com.scwang.smartrefresh.header.DeliveryHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

@@ -31,7 +31,7 @@
             app:srlPrimaryColor="@android:color/transparent"
             app:srlAccentColor="@android:color/white"/>
 
-        <android.support.v4.widget.NestedScrollView
+        <androidx.core.widget.NestedScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -45,7 +45,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-                    <android.support.design.widget.CollapsingToolbarLayout
+                    <com.google.android.material.appbar.CollapsingToolbarLayout
                         android:id="@+id/collapse"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -165,7 +165,7 @@
                                 android:layout_alignParentBottom="true"/>
                         </RelativeLayout>
 
-                    </android.support.design.widget.CollapsingToolbarLayout>
+                    </com.google.android.material.appbar.CollapsingToolbarLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -224,7 +224,7 @@
                                     android:layout_height="match_parent"
                                     android:layout_margin="@dimen/dimenPaddingCommon"
                                     android:contentDescription="@string/app_name"
-                                    android:tint="#cccccc"
+                                    app:tint="#cccccc"
                                     app:srcCompat="@drawable/ic_feed_list_mail"/>
                             </com.flyco.roundview.RoundFrameLayout>
                             <View
@@ -286,7 +286,7 @@
                                     android:layout_height="match_parent"
                                     android:layout_margin="@dimen/dimenPaddingCommon"
                                     android:contentDescription="@string/app_name"
-                                    android:tint="#cccccc"
+                                    app:tint="#cccccc"
                                     app:srcCompat="@drawable/ic_feed_list_photo"/>
                             </com.flyco.roundview.RoundFrameLayout>
                             <View
@@ -349,7 +349,7 @@
                                     android:layout_height="match_parent"
                                     android:layout_margin="@dimen/dimenPaddingCommon"
                                     android:contentDescription="@string/app_name"
-                                    android:tint="#cccccc"
+                                    app:tint="#cccccc"
                                     app:srcCompat="@drawable/ic_feed_list_favorite"/>
                             </com.flyco.roundview.RoundFrameLayout>
                             <View
@@ -413,7 +413,7 @@
                                     android:layout_height="match_parent"
                                     android:layout_margin="@dimen/dimenPaddingCommon"
                                     android:contentDescription="@string/app_name"
-                                    android:tint="#cccccc"
+                                    app:tint="#cccccc"
                                     app:srcCompat="@drawable/ic_feed_list_photo"/>
                             </com.flyco.roundview.RoundFrameLayout>
                             <View
@@ -476,7 +476,7 @@
                                     android:layout_height="match_parent"
                                     android:layout_margin="@dimen/dimenPaddingCommon"
                                     android:contentDescription="@string/app_name"
-                                    android:tint="#cccccc"
+                                    app:tint="#cccccc"
                                     app:srcCompat="@drawable/ic_feed_list_favorite"/>
                             </com.flyco.roundview.RoundFrameLayout>
                             <View
@@ -540,7 +540,7 @@
                                     android:layout_height="match_parent"
                                     android:layout_margin="@dimen/dimenPaddingCommon"
                                     android:contentDescription="@string/app_name"
-                                    android:tint="#cccccc"
+                                    app:tint="#cccccc"
                                     app:srcCompat="@drawable/ic_feed_list_mail"/>
                             </com.flyco.roundview.RoundFrameLayout>
                             <View
@@ -602,7 +602,7 @@
                                     android:layout_height="match_parent"
                                     android:layout_margin="@dimen/dimenPaddingCommon"
                                     android:contentDescription="@string/app_name"
-                                    android:tint="#cccccc"
+                                    app:tint="#cccccc"
                                     app:srcCompat="@drawable/ic_feed_list_photo"/>
                             </com.flyco.roundview.RoundFrameLayout>
                             <View
@@ -665,7 +665,7 @@
                                     android:layout_height="match_parent"
                                     android:layout_margin="@dimen/dimenPaddingCommon"
                                     android:contentDescription="@string/app_name"
-                                    android:tint="#cccccc"
+                                    app:tint="#cccccc"
                                     app:srcCompat="@drawable/ic_feed_list_favorite"/>
                             </com.flyco.roundview.RoundFrameLayout>
                             <View
@@ -729,7 +729,7 @@
                                     android:layout_height="match_parent"
                                     android:layout_margin="@dimen/dimenPaddingCommon"
                                     android:contentDescription="@string/app_name"
-                                    android:tint="#cccccc"
+                                    app:tint="#cccccc"
                                     app:srcCompat="@drawable/ic_feed_list_mail"/>
                             </com.flyco.roundview.RoundFrameLayout>
                             <View
@@ -791,7 +791,7 @@
                                     android:layout_height="match_parent"
                                     android:layout_margin="@dimen/dimenPaddingCommon"
                                     android:contentDescription="@string/app_name"
-                                    android:tint="#cccccc"
+                                    app:tint="#cccccc"
                                     app:srcCompat="@drawable/ic_feed_list_photo"/>
                             </com.flyco.roundview.RoundFrameLayout>
                             <View
@@ -854,7 +854,7 @@
                                     android:layout_height="match_parent"
                                     android:layout_margin="@dimen/dimenPaddingCommon"
                                     android:contentDescription="@string/app_name"
-                                    android:tint="#cccccc"
+                                    app:tint="#cccccc"
                                     app:srcCompat="@drawable/ic_feed_list_favorite"/>
                             </com.flyco.roundview.RoundFrameLayout>
                             <View
@@ -918,7 +918,7 @@
                                     android:layout_height="match_parent"
                                     android:layout_margin="@dimen/dimenPaddingCommon"
                                     android:contentDescription="@string/app_name"
-                                    android:tint="#cccccc"
+                                    app:tint="#cccccc"
                                     app:srcCompat="@drawable/ic_feed_list_mail"/>
                             </com.flyco.roundview.RoundFrameLayout>
                             <View
@@ -980,7 +980,7 @@
                                     android:layout_height="match_parent"
                                     android:layout_margin="@dimen/dimenPaddingCommon"
                                     android:contentDescription="@string/app_name"
-                                    android:tint="#cccccc"
+                                    app:tint="#cccccc"
                                     app:srcCompat="@drawable/ic_feed_list_photo"/>
                             </com.flyco.roundview.RoundFrameLayout>
                             <View
@@ -1012,17 +1012,17 @@
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-        </android.support.v4.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
-    <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
+    <androidx.appcompat.widget.Toolbar style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"
         android:background="@android:color/transparent"
         android:layout_marginBottom="0dp"
         app:navigationIcon="?attr/homeAsUpIndicator"
         app:layout_collapseMode="pin">
-        <android.support.v7.widget.ButtonBarLayout
+        <LinearLayout
             android:id="@+id/buttonBarLayout"
             android:layout_gravity="center"
             android:layout_height="wrap_content"
@@ -1044,6 +1044,6 @@
                 android:layout_width="wrap_content"
                 android:textSize="16sp"
                 android:text="一醉方休"/>
-        </android.support.v7.widget.ButtonBarLayout>
-    </android.support.v7.widget.Toolbar>
+        </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
 </FrameLayout>

@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context="com.scwang.refreshlayout.fragment.example.NestedScrollExampleFragmentIntegral">
 
-    <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
+    <androidx.appcompat.widget.Toolbar style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"
         app:navigationIcon="?attr/homeAsUpIndicator"
         app:contentInsetStart="0dp"
@@ -26,11 +26,11 @@
             app:srlClassicsSpinnerStyle="Scale"
             app:srlPrimaryColor="#444"
             app:srlAccentColor="@android:color/white"/>
-        <android.support.design.widget.CoordinatorLayout
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <!--<android.support.v7.widget.RecyclerView-->
+            <!--<androidx.recyclerview.widget.RecyclerView-->
                 <!--android:id="@+id/recyclerView"-->
                 <!--android:layout_width="match_parent"-->
                 <!--android:layout_height="match_parent"-->
@@ -39,20 +39,20 @@
                 <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
                 <!--tools:listitem="@android:layout/simple_list_item_2"/>-->
 
-            <android.support.v4.view.ViewPager
+            <androidx.viewpager.widget.ViewPager
                 android:id="@+id/viewPager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-            <android.support.design.widget.AppBarLayout
+            <com.google.android.material.appbar.AppBarLayout
                 android:id="@+id/appbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorBackgroundDark"
                 app:elevation="0dp">
 
-                <android.support.design.widget.CollapsingToolbarLayout
+                <com.google.android.material.appbar.CollapsingToolbarLayout
                     android:id="@+id/toolbarLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
                         tools:background="@mipmap/gif_header_repast"
                         app:layout_collapseMode="parallax"
                         app:is_auto_play="true"/>
-                </android.support.design.widget.CollapsingToolbarLayout>
+                </com.google.android.material.appbar.CollapsingToolbarLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -89,7 +89,7 @@
                             android:layout_width="2dp"
                             android:layout_height="18dp"
                             android:background="@color/colorPrimary"/>
-                        <Space
+                        <androidx.legacy.widget.Space
                             android:layout_width="@dimen/dimenPaddingCommon"
                             android:layout_height="wrap_content" />
                         <TextView style="@style/AppTheme.Label"
@@ -121,7 +121,7 @@
                                     android:textColor="@android:color/white"
                                     android:background="#44000000"/>
                             </FrameLayout>
-                            <Space
+                            <androidx.legacy.widget.Space
                                 android:layout_width="@dimen/dimenPaddingDiminutive"
                                 android:layout_height="wrap_content" />
                             <FrameLayout
@@ -140,7 +140,7 @@
                             </FrameLayout>
 
                         </LinearLayout>
-                        <Space
+                        <androidx.legacy.widget.Space
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/dimenPaddingDiminutive"/>
                         <LinearLayout
@@ -160,7 +160,7 @@
                                     android:textColor="@android:color/white"
                                     android:background="#44000000"/>
                             </FrameLayout>
-                            <Space
+                            <androidx.legacy.widget.Space
                                 android:layout_width="@dimen/dimenPaddingDiminutive"
                                 android:layout_height="wrap_content" />
                             <FrameLayout
@@ -199,7 +199,7 @@
                             android:layout_width="2dp"
                             android:layout_height="18dp"
                             android:background="@color/colorPrimary"/>
-                        <Space
+                        <androidx.legacy.widget.Space
                             android:layout_width="@dimen/dimenPaddingCommon"
                             android:layout_height="wrap_content" />
                         <TextView style="@style/AppTheme.Label"
@@ -210,9 +210,9 @@
                     </LinearLayout>
                     <View style="@style/AppTheme.Division"/>
                 </LinearLayout>
-            </android.support.design.widget.AppBarLayout>
+            </com.google.android.material.appbar.AppBarLayout>
 
-        </android.support.design.widget.CoordinatorLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>
