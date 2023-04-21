@@ -10,6 +10,10 @@
 
 SmartRefreshLayout's goal is to build a strong, stable and mature pull-down refresh layout framework, and to integrate all kinds of cool, diverse, practical and beautiful Headers and Footers.
 
+## For IOS
+
+SmartRefreshControl：[Link](https://github.com/scwang90/SmartRefreshControl)
+
 ## Features
 
  - Support multi-touch.
@@ -114,6 +118,7 @@ It is recommended that you copy the source code into the project whenever you ne
 
 ```
 // Note: There will be no default Header and Footer after subcontracting. It needs to be added manually!
+
 // To search lastest version by https://search.maven.org/search?q=g:io.github.scwang90    
 implementation 'io.github.scwang90:refresh-layout-kernel:2.0.5'     //core
 implementation 'io.github.scwang90:refresh-header-classics:2.0.5'   //ClassicsHeader
@@ -123,6 +128,7 @@ implementation 'io.github.scwang90:refresh-header-material:2.0.5'   //MaterialHe
 implementation 'io.github.scwang90:refresh-header-two-level:2.0.5'  //TwoLevelHeader
 implementation 'io.github.scwang90:refresh-footer-ball:2.0.5'       //BallPulseFooter
 implementation 'io.github.scwang90:refresh-footer-classics:2.0.5'   //ClassicsFooter
+
 
 ```
 <!-- // The package name of `io.github.scwang90:refresh` is retained, but not subcontracted. -->

@@ -24,7 +24,7 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 /**
  * Component 初步实现
- * 实现 Header 和 Footer 时，继承 ComponentAbstract 的话可以少写很多接口方法
+ * 实现 Header 和 Footer 时，继承 SimpleComponent 的话可以少写很多接口方法
  * Created by scwang on 2018/2/6.
  */
 public abstract class SimpleComponent extends RelativeLayout implements RefreshComponent {
@@ -187,5 +187,10 @@ public abstract class SimpleComponent extends RelativeLayout implements RefreshC
     @SuppressLint("RestrictedApi")
     public boolean setNoMoreData(boolean noMoreData) {
         return mWrappedInternal instanceof RefreshFooter && ((RefreshFooter) mWrappedInternal).setNoMoreData(noMoreData);
+    }
+
+    @Override
+    public boolean autoOpen(int duration, float dragRate, boolean animationOnly) {
+        return false;
     }
 }

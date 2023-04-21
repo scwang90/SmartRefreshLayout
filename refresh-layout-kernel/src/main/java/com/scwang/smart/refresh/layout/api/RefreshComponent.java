@@ -14,7 +14,7 @@ import static android.support.annotation.RestrictTo.Scope.SUBCLASSES;
 
 
 /**
- * 刷新内部组件
+ * 刷新组件
  * Created by scwang on 2017/5/26.
  */
 public interface RefreshComponent extends OnStateChangedListener {
@@ -99,4 +99,16 @@ public interface RefreshComponent extends OnStateChangedListener {
      * @return 水平拖动需要消耗更多的时间和资源，所以如果不支持请返回false
      */
     boolean isSupportHorizontalDrag();
+
+    /**
+     * Display refresh animation, Multifunction.
+     * 显示刷新动画并且触发刷新事件
+     * @param duration 拖拽动画持续时间
+     * @param dragRate 拉拽的高度比率
+     * @param animationOnly animation only 只有动画
+     * @return If False is returned, this header does not support automatic refresh
+     *         返回 False 代表本Header不支持自动刷新
+     */
+    boolean autoOpen(int duration, float dragRate, boolean animationOnly);
+
 }

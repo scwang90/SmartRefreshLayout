@@ -3338,6 +3338,13 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     mLastTouchX = thisView.getMeasuredWidth() / 2f;
                     mKernel.setState(RefreshState.PullDownToRefresh);
 
+                    if (mRefreshHeader != null && mRefreshHeader.autoOpen(duration, dragRate, animationOnly)) {
+                        /*
+                         * 2022-11-03 添加Header可以自己实现 autoOpen ，返回true表示支持，返回False表示不支持，使用老版本的 autoOpen
+                         */
+                        return;
+                    }
+
                     final float height = mHeaderHeight == 0 ? mHeaderTriggerRate : mHeaderHeight;
                     final float dragHeight = dragRate < 10 ? height * dragRate : dragRate;
                     reboundAnimator = ValueAnimator.ofInt(mSpinner, (int) (dragHeight));
@@ -3354,21 +3361,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     reboundAnimator.addListener(new AnimatorListenerAdapter() {
                         @Override
                         public void onAnimationEnd(Animator animation) {
-                            if (animation != null && animation.getDuration() == 0) {
-                                return;//0 表示被取消
-                            }
-                            reboundAnimator = null;
-                            if (mRefreshHeader != null) {
-                                if (mState != RefreshState.ReleaseToRefresh) {
-                                    mKernel.setState(RefreshState.ReleaseToRefresh);
-                                }
-                                setStateRefreshing(!animationOnly);
-                            } else {
-                                /*
-                                 * 2019-12-24 修复 mRefreshHeader=null 时状态错乱问题
-                                 */
-                                mKernel.setState(RefreshState.None);
-                            }
+                            mKernel.onAutoRefreshAnimationEnd(animation, animationOnly);
                         }
                     });
                     reboundAnimator.start();
@@ -3446,6 +3439,13 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     mLastTouchX = thisView.getMeasuredWidth() / 2f;
                     mKernel.setState(RefreshState.PullUpToLoad);
 
+                    if (mRefreshFooter != null && mRefreshFooter.autoOpen(duration, dragRate, animationOnly)) {
+                        /*
+                         * 2022-11-03 添加Header可以自己实现 autoOpen ，返回true表示支持，返回False表示不支持，使用老版本的 autoOpen
+                         */
+                        return;
+                    }
+
                     final float height = mFooterHeight == 0 ? mFooterTriggerRate : mFooterHeight;
                     final float dragHeight = dragRate < 10 ? dragRate * height : dragRate;
                     reboundAnimator = ValueAnimator.ofInt(mSpinner, - (int) (dragHeight));
@@ -3462,21 +3462,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     reboundAnimator.addListener(new AnimatorListenerAdapter() {
                         @Override
                         public void onAnimationEnd(Animator animation) {
-                            if (animation != null && animation.getDuration() == 0) {
-                                return;//0 表示被取消
-                            }
-                            reboundAnimator = null;
-                            if (mRefreshFooter != null) {
-                                if (mState != RefreshState.ReleaseToLoad) {
-                                    mKernel.setState(RefreshState.ReleaseToLoad);
-                                }
-                                setStateLoading(!animationOnly);
-                            } else {
-                                /*
-                                 * 2019-12-24 修复 mRefreshFooter=null 时状态错乱问题
-                                 */
-                                mKernel.setState(RefreshState.None);
-                            }
+                            mKernel.onAutoLoadMoreAnimationEnd(animation, animationOnly);
                         }
                     });
                     reboundAnimator.start();
@@ -3960,6 +3946,47 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             mTwoLevelBottomPullUpToCloseRate = rate;
             return this;
         }
+
+        @Override
+        public RefreshKernel onAutoRefreshAnimationEnd(Animator animation, boolean animationOnly) {
+            if (animation != null && animation.getDuration() == 0) {
+                return this;//0 表示被取消
+            }
+            reboundAnimator = null;
+            if (mRefreshHeader != null) {
+                if (mState != RefreshState.ReleaseToRefresh) {
+                    this.setState(RefreshState.ReleaseToRefresh);
+                }
+                SmartRefreshLayout.this.setStateRefreshing(!animationOnly);
+            } else {
+                /*
+                 * 2019-12-24 修复 mRefreshHeader=null 时状态错乱问题
+                 */
+                this.setState(RefreshState.None);
+            }
+            return this;
+        }
+
+        @Override
+        public RefreshKernel onAutoLoadMoreAnimationEnd(Animator animation, boolean animationOnly) {
+            if (animation != null && animation.getDuration() == 0) {
+                return this;//0 表示被取消
+            }
+            reboundAnimator = null;
+            if (mRefreshFooter != null) {
+                if (mState != RefreshState.ReleaseToLoad) {
+                    this.setState(RefreshState.ReleaseToLoad);
+                }
+                SmartRefreshLayout.this.setStateLoading(!animationOnly);
+            } else {
+                /*
+                 * 2019-12-24 修复 mRefreshFooter=null 时状态错乱问题
+                 */
+                this.setState(RefreshState.None);
+            }
+            return this;
+        }
+
         //</editor-fold>
     }
     //</editor-fold>
