@@ -17,10 +17,10 @@ public class RefreshActivity extends Activity {
         refreshLayout.setFooterHeight(100);//Footer标准高度（显示上拉高度>=标准高度 触发加载）
         refreshLayout.setFooterHeightPx(100);//同上-像素为单位 （V1.1.0删除）
 
-        refreshLayout.setFooterHeaderInsetStart(0);//设置 Header 起始位置偏移量 1.0.5
-        refreshLayout.setFooterHeaderInsetStartPx(0);//同上-像素为单位 1.0.5 （V1.1.0删除）
-        refreshLayout.setFooterFooterInsetStart(0);//设置 Footer 起始位置偏移量 1.0.5
-        refreshLayout.setFooterFooterInsetStartPx(0);//同上-像素为单位 1.0.5 （V1.1.0删除）
+        refreshLayout.setHeaderInsetStart(0);//设置 Header 起始位置偏移量 1.0.5
+        refreshLayout.setHeaderInsetStartPx(0);//同上-像素为单位 1.0.5 （V1.1.0删除）
+        refreshLayout.setFooterInsetStart(0);//设置 Footer 起始位置偏移量 1.0.5
+        refreshLayout.setFooterInsetStartPx(0);//同上-像素为单位 1.0.5 （V1.1.0删除）
 
         refreshLayout.setHeaderMaxDragRate(2);//最大显示下拉高度/Header标准高度
         refreshLayout.setFooterMaxDragRate(2);//最大显示下拉高度/Footer标准高度
