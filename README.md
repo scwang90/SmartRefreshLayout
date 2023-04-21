@@ -285,7 +285,7 @@ SmartRefreshLayout 不需要添加混淆过滤代码，并且已经混淆测试�
 [github/Loror](https://github.com/Loror)  
 [github/faith-hb/WidgetCase](https://github.com/faith-hb/WidgetCase)  
 [github/Bamboy120315/Freedom](https://github.com/Bamboy120315/Freedom)  
-[github/TommyLemon/APIJSON](https://github.com/TommyLemon/APIJSON)  
+[github/Tencent/APIJSON](https://github.com/Tencent/APIJSON)  
 [github/dengyuhan](https://github.com/dengyuhan)  
 [github/zrp2017](https://github.com/zrp2017)  
 [github/fly803/BaseProject](https://github.com/fly803/BaseProject)  
