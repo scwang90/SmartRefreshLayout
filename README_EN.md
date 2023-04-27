@@ -2,9 +2,9 @@
 
 [![License](https://img.shields.io/badge/License%20-Apache%202-337ab7.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Arsenal](https://img.shields.io/badge/Arsenal%20-%20SmartRefresh-4cae4c.svg)](https://android-arsenal.com/details/1/6001)
-[![JCenter](https://img.shields.io/badge/%20Jcenter%20-2.0.5-5bc0de.svg)](https://bintray.com/scwang90/maven/refresh-layout-kernel/_latestVersion)
+[![Maven](https://img.shields.io/badge/%20Maven%20-2.0.6-5bc0de.svg)](https://s01.oss.sonatype.org/#nexus-search;quick~refresh-layout-kernel)
 [![MinSdk](https://img.shields.io/badge/%20MinSdk%20-%2012%2B%20-f0ad4e.svg)](https://android-arsenal.com/api?level=12)
-[![Methods](https://img.shields.io/badge/Methods%20%7C%20Size%20-%20784%20%7C%20122%20KB-d9534f.svg)](http://www.methodscount.com/?lib=io.github.scwang90:refresh%3ASmartRefreshLayout%3A1.1.0)
+[![Methods](https://img.shields.io/badge/Methods%20%7C%20Size%20-%20784%20%7C%20121%20KB-d9534f.svg)](http://www.methodscount.com/?lib=io.github.scwang90:refresh%3ASmartRefreshLayout%3A1.0.4)
 
 ## English | [中文](README.md)
 
@@ -120,14 +120,14 @@ It is recommended that you copy the source code into the project whenever you ne
 // Note: There will be no default Header and Footer after subcontracting. It needs to be added manually!
 
 // To search lastest version by https://search.maven.org/search?q=g:io.github.scwang90    
-implementation 'io.github.scwang90:refresh-layout-kernel:2.0.5'     //core
-implementation 'io.github.scwang90:refresh-header-classics:2.0.5'   //ClassicsHeader
-implementation 'io.github.scwang90:refresh-header-radar:2.0.5'      //BezierRadarHeader
-implementation 'io.github.scwang90:refresh-header-falsify:2.0.5'    //FalsifyHeader
-implementation 'io.github.scwang90:refresh-header-material:2.0.5'   //MaterialHeader
-implementation 'io.github.scwang90:refresh-header-two-level:2.0.5'  //TwoLevelHeader
-implementation 'io.github.scwang90:refresh-footer-ball:2.0.5'       //BallPulseFooter
-implementation 'io.github.scwang90:refresh-footer-classics:2.0.5'   //ClassicsFooter
+implementation 'io.github.scwang90:refresh-layout-kernel:2.0.6'     //core
+implementation 'io.github.scwang90:refresh-header-classics:2.0.6'   //ClassicsHeader
+implementation 'io.github.scwang90:refresh-header-radar:2.0.6'      //BezierRadarHeader
+implementation 'io.github.scwang90:refresh-header-falsify:2.0.6'    //FalsifyHeader
+implementation 'io.github.scwang90:refresh-header-material:2.0.6'   //MaterialHeader
+implementation 'io.github.scwang90:refresh-header-two-level:2.0.6'  //TwoLevelHeader
+implementation 'io.github.scwang90:refresh-footer-ball:2.0.6'       //BallPulseFooter
+implementation 'io.github.scwang90:refresh-footer-classics:2.0.6'   //ClassicsFooter
 
 
 ```
