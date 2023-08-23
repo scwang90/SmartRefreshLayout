@@ -209,6 +209,14 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
     protected boolean mFooterLocked = false;//Footer 正在loading 的时候是否锁住 列表不能向上滚动
 
+    /*
+     * https://github.com/scwang90/SmartRefreshLayout/issues/1540
+     * 问题修复辅助变量，记录关闭动画执行时手势事件 ACTION_DOWN 的触发时间 和 按下的坐标
+     */
+    protected long mLastTimeOnActionDown = 0;
+    protected float mLastTouchXOnActionDown = 0;
+    protected float mLastTouchYOnActionDown = 0;
+
     //全局默认 Footer 构造器
     protected static DefaultRefreshFooterCreator sFooterCreator = null;
     //全局默认 Header 构造器
@@ -903,6 +911,17 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         //---------------------------------------------------------------------------
         //</editor-fold>
 
+        if (action == MotionEvent.ACTION_DOWN) {
+            /*
+             * https://github.com/scwang90/SmartRefreshLayout/issues/1540
+             * 辅助下面的问题修复，拦截手势事件的时候，对 MotionEvent.ACTION_DOWN 的触发时间进行备份
+             * 计算是否点击需要判断 ACTION_DOWN 和 ACTION_UP 的时间间隔，还有按下坐标
+             */
+            mLastTouchXOnActionDown = touchX;
+            mLastTouchYOnActionDown = touchY;
+            mLastTimeOnActionDown = System.currentTimeMillis();
+        }
+
 
         //---------------------------------------------------------------------------
         //嵌套滚动模式辅助
@@ -929,9 +948,38 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 || (mHeaderNeedTouchEventWhenRefreshing && ((mState.isOpening || mState.isFinishing) && mState.isHeader))
                 || (mFooterNeedTouchEventWhenLoading && ((mState.isOpening || mState.isFinishing) && mState.isFooter))) {
             return super.dispatchTouchEvent(e);
+        } else if (mState.isFinishing) {
+            /*
+             * https://github.com/scwang90/SmartRefreshLayout/issues/1540
+             * 在刷新动画关闭的时候，点击列表无法跳转，
+             * 是因为下面的 if (interceptAnimatorByAction || mState.isFinishing ) return false
+             * 屏蔽了所有手势事件，屏蔽的原因是如果关闭动画正在执行的时候，随意滑动列表会导致意外的错乱
+             * 目前的修复方法并不是放开屏蔽，而是针对 先 ACTION_DOWN 再 ACTION_UP 的点击事件进行补偿处理
+             * 从而实现，完成动画执行时，列表不可手动滑动，但是可以点击列表项
+             */
+            if (action == MotionEvent.ACTION_UP) {
+                //要求时间间隔小于半秒钟
+                if (System.currentTimeMillis() - mLastTimeOnActionDown < 500) {
+                    float dx = touchX - mLastTouchXOnActionDown;
+                    float dy = touchY - mLastTouchYOnActionDown;
+                    //要求坐标偏移小于系统阈值
+                    if (Math.abs(dx) < mTouchSlop && Math.abs(dy) < mTouchSlop) {
+                        e.setAction(MotionEvent.ACTION_DOWN);
+                        super.dispatchTouchEvent(e);
+                        e.setAction(MotionEvent.ACTION_UP);
+                        return super.dispatchTouchEvent(e);
+                    }
+                }
+            }
+            /*
+             * 返回 true，但是不调用 super.dispatchTouchEvent(e)，表示已经处理，但实际情况是没处理。
+             * 这样在拦截到 down move 事件时，才会继续触发 up 事件
+             * 否则 返回false 后面不会再接收到 move 和 up 的事件
+             */
+            return true;
         }
 
-        if (interceptAnimatorByAction(action) || mState.isFinishing
+        if (interceptAnimatorByAction(action)
                 || (mState == RefreshState.Loading && mDisableContentWhenLoading)
                 || (mState == RefreshState.Refreshing && mDisableContentWhenRefresh)) {
             return false;
@@ -1685,7 +1733,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
          *          源码引用，然后删掉下面4行的代码
          */
         if (spinner > mScreenHeightPixels * 5 && (thisView.getTag() == null && thisView.getTag(R.id.srl_tag) == null) && mLastTouchY < mScreenHeightPixels / 6f && mLastTouchX < mScreenHeightPixels / 16f) {
-            String egg = "你这么死拉，臣妾做不到啊！";
+            String egg = "不要再拉了，臣妾做不到啊！";
             Toast.makeText(thisView.getContext(), egg, Toast.LENGTH_SHORT).show();
             thisView.setTag(R.id.srl_tag, egg);
         }
