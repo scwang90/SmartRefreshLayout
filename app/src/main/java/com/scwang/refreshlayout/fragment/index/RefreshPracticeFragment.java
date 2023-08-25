@@ -12,7 +12,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,9 +33,6 @@ import com.scwang.refreshlayout.fragment.practice.SecondFloorPracticeFragment;
 import com.scwang.refreshlayout.util.StatusBarUtil;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
-import com.scwang.smart.refresh.layout.constant.RefreshState;
-import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
-import com.scwang.smart.refresh.layout.simple.SimpleMultiListener;
 
 import java.util.Arrays;
 
@@ -96,27 +92,8 @@ public class RefreshPracticeFragment extends Fragment implements AdapterView.OnI
                 }
             });
         }
-        Toolbar toolbar = root.findViewById(R.id.toolbar);
-
         SmartRefreshLayout refreshLayout = root.findViewById(R.id.refreshLayout);
-        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                refreshLayout.finishRefresh();
-            }
-        });
-        refreshLayout.setOnMultiListener(new SimpleMultiListener() {
-            @Override
-            public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
-                toolbar.setTitle("实战 - " + oldState + " -> " + newState);
-            }
-
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                refreshLayout.finishLoadMore();
-            }
-
-        });
+        refreshLayout.setOnRefreshListener(RefreshLayout::finishRefresh);
     }
 
     @Override
