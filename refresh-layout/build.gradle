@@ -1,18 +1,16 @@
 apply plugin: 'com.android.library'
-//apply plugin: 'com.novoda.bintray-release'
 
 android {
 
-    compileSdkVersion 33
+    compileSdkVersion 34
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 33
+        targetSdkVersion 34
         versionCode 1
-        versionName "1.0"
+        versionName SMART_VERSION
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
     buildTypes {
         release {
@@ -28,7 +26,8 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.google.android.material:material:1.7.0'
+    implementation 'com.google.android.material:material:1.10.0'
+
     compileOnly project(':refresh-layout-kernel')
     compileOnly project(':refresh-footer-ball')
     compileOnly project(':refresh-header-falsify')
@@ -36,12 +35,3 @@ dependencies {
     compileOnly project(':refresh-header-two-level')
 
 }
-//
-//publish {
-//    userOrg = SMART_USER
-//    groupId = 'com.scwang.smartrefresh'
-//    artifactId = 'SmartRefreshLayout'
-//    publishVersion = SMART_VERSION
-//    desc = 'An intelligent refresh layout'
-//    website = "https://github.com/scwang90/${rootProject.name}"
-//}

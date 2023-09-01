@@ -4,16 +4,15 @@ description = 'the kernel of SmartRefreshLayout'
 
 android {
 
-    compileSdkVersion 33
+    compileSdkVersion 34
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 33
+        targetSdkVersion 34
         versionCode 1
-        versionName "1.0"
+        versionName SMART_VERSION
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
     buildTypes {
         release {
@@ -29,77 +28,5 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.google.android.material:material:1.7.0'
+    implementation 'com.google.android.material:material:1.10.0'
 }
-
-//apply plugin: 'maven-publish'
-//apply plugin: 'signing'
-//
-//task androidSourcesJar(type: Jar) {
-//    archiveClassifier.set("sources")
-//    from android.sourceSets.main.java.source
-//    exclude "**/R.class"
-//    exclude "**/BuildConfig.class"
-//}
-//
-//def projectName = name
-//def projectDescription = description
-//publishing {
-//    publications {
-//        mavenJava(MavenPublication) {
-//            // group id，发布后引用的依赖的 group id
-//            groupId SMART_GROUP_MVN
-//            // 发布后引用的依赖的 artifact id
-//            artifactId projectName
-//            // 发布的版本
-//            version SMART_VERSION
-//            // 发布的 arr 的文件和源码文件
-//            artifact("$buildDir/outputs/aar/${projectName}-release.aar")
-//            artifact androidSourcesJar
-//            pom {
-//                // 构件名称，可以自定义
-//                name = projectName
-//                // 构件描述
-//                description = projectDescription
-//                // 构件主页
-//                url = "https://github.com/scwang90/${rootProject.name}"
-//                // 许可证名称和地址
-//                licenses {
-//                    license {
-//                        name = 'The Apache License, Version 2.0'
-//                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-//                    }
-//                }
-//                // 开发者信息
-//                developers {
-//                    developer {
-//                        name = SMART_USER
-//                        email = SMART_EMAIL
-//                    }
-//                }
-//                // 版本控制仓库地址
-//                scm {
-//                    url = "https://github.com/scwang90/${rootProject.name}"
-//                    connection = "scm:git:github.com/scwang90/${rootProject.name}.git"
-//                    developerConnection = "scm:git:ssh://git@github.com/scwang90/${rootProject.name}.git"
-//                }
-//            }
-//        }
-//    }
-//    repositories {
-//        maven {
-//            // 发布的位置，这里根据发布的版本区分了 SNAPSHOT 和最终版本两种情况
-//            def releasesRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
-//            def snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
-//            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
-//            credentials {
-//                // 这里就是之前在 issues.sonatype.org 注册的账号
-//                username "${properties["sonatype.username"]}"
-//                password new String(Base64.mimeDecoder.decode("${properties["sonatype.password"]}"), "UTF-8")
-//            }
-//        }
-//    }
-//}
-//signing {
-//    sign publishing.publications
-//}
