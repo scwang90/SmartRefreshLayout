@@ -41,8 +41,8 @@ public class SpecifyStyleExampleFragment extends Fragment implements AdapterView
         Code("代码指定", AssignCodeExampleActivity.class),
         Xml("XML指定", AssignXmlExampleActivity.class),
         ;
-        public String name;
-        public Class<?> clazz;
+        public final String name;
+        public final Class<?> clazz;
         Item(String name, Class<?> clazz) {
             this.name = name;
             this.clazz = clazz;

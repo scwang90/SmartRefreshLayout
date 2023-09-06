@@ -79,8 +79,8 @@ public class RefreshStylesFragment extends Fragment implements AdapterView.OnIte
         StoreHouse(R.string.title_activity_style_storehouse, StoreHouseStyleActivity.class),
         Classics(R.string.title_activity_style_classics, ClassicsStyleActivity.class),
         ;
-        public int nameId;
-        public Class<?> clazz;
+        public final int nameId;
+        public final Class<?> clazz;
         Item(@StringRes int nameId, Class<?> clazz) {
             this.nameId = nameId;
             this.clazz = clazz;

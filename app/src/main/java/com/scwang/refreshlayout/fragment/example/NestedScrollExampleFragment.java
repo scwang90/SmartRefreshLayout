@@ -42,8 +42,8 @@ public class NestedScrollExampleFragment extends Fragment implements AdapterView
         NestedIntegral("整体嵌套", NestedScrollExampleFragmentIntegral.class),
         NestedViewPager("ViewPager", NestedScrollExampleFragmentViewPager.class),
         ;
-        public String name;
-        public Class<?> clazz;
+        public final String name;
+        public final Class<?> clazz;
         Item(String name, Class<?> clazz) {
             this.name = name;
             this.clazz = clazz;

@@ -51,13 +51,12 @@ public class RefreshPracticeFragment extends Fragment implements AdapterView.OnI
         Weibo(R.string.index_practice_weibo, WeiboPracticeActivity.class),
         Banner(R.string.index_practice_banner, BannerPracticeActivity.class),
         QQBrowser(R.string.index_practice_qq_browser, QQBrowserPracticeActivity.class),
-//        TwoLevel("二级刷新", SecondFloorPracticeFragment.class),
         SecondFloor(R.string.index_practice_second_floor, SecondFloorPracticeFragment.class),
         Instant(R.string.index_practice_instant, InstantPracticeFragment.class)
         ;
         @StringRes
-        public int name;
-        public Class<?> clazz;
+        public final int name;
+        public final Class<?> clazz;
         Item(@StringRes int name, Class<?> clazz) {
             this.name = name;
             this.clazz = clazz;

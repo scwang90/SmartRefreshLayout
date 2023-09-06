@@ -36,7 +36,7 @@ public class I18nExampleActivity extends AppCompatActivity implements AdapterVie
         i2(R.string.item_example_i18n_chinese),
         i3(R.string.item_example_i18n_english),
         ;
-        public int nameId;
+        public final int nameId;
         Item(@StringRes int nameId) {
             this.nameId = nameId;
         }

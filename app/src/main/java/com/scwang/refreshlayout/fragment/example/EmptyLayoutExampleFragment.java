@@ -48,8 +48,8 @@ public class EmptyLayoutExampleFragment extends Fragment implements AdapterView.
         NestedInner("内部嵌套", EmptyLayoutExampleFragmentInner.class),
         NestedOuter("外部嵌套", EmptyLayoutExampleFragmentOuter.class),
         ;
-        public String name;
-        public Class<?> clazz;
+        public final String name;
+        public final Class<?> clazz;
         Item(String name, Class<?> clazz) {
             this.name = name;
             this.clazz = clazz;

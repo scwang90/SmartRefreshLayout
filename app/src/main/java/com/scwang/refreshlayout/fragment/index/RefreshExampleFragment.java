@@ -61,8 +61,8 @@ public class RefreshExampleFragment extends Fragment implements AdapterView.OnIt
         StaggeredGrid(R.string.index_example_disallow_intercept, StaggeredGridExampleFragment.class),
 //        ThreeLevel(R.string.index_example_level, ThreeLevelExampleFragment.class),
         ;
-        public int nameId;
-        public Class<?> clazz;
+        public final int nameId;
+        public final Class<?> clazz;
 
         Item(@StringRes int nameId, Class<?> clazz) {
             this.nameId = nameId;

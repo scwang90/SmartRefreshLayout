@@ -41,12 +41,12 @@ import static android.R.layout.simple_list_item_2;
 public class ViewPagerExampleFragment extends Fragment implements OnRefreshListener, OnRefreshLoadMoreListener {
 
 
-    public enum Item {
+    private enum Item {
         NestedInner(R.string.item_example_pager_left, SmartFragment.class),
         NestedOuter(R.string.item_example_pager_right, SmartFragment.class),
         ;
-        public int nameId;
-        public Class<? extends Fragment> clazz;
+        public final int nameId;
+        public final Class<? extends Fragment> clazz;
         Item(@StringRes int nameId, Class<? extends Fragment> clazz) {
             this.nameId = nameId;
             this.clazz = clazz;

@@ -46,7 +46,7 @@ public class DropBoxStyleActivity extends AppCompatActivity implements AdapterVi
         绿色2主题(R.string.item_style_theme_green_abstract),
         蓝色2主题(R.string.item_style_theme_blue_abstract),
         ;
-        public int nameId;
+        public final int nameId;
         Item(@StringRes int nameId) {
             this.nameId = nameId;
         }

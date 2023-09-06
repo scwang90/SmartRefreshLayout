@@ -40,7 +40,7 @@ public class StoreHouseStyleActivity extends AppCompatActivity implements Adapte
         绿色主题(R.string.item_style_theme_green_abstract),
         蓝色主题(R.string.item_style_theme_blue_abstract),
         ;
-        public int nameId;
+        public final int nameId;
         Item(@StringRes int nameId) {
             this.nameId = nameId;
         }

@@ -38,8 +38,8 @@ public class PureScrollExampleFragment extends Fragment implements AdapterView.O
         HeaderOnly("代码中单独指定Header", PureScrollExampleFragmentHeader.class),
         FooterOnly("XML中单独指定Footer", PureScrollExampleFragmentFooter.class),
         ;
-        public String name;
-        public Class<?> clazz;
+        public final String name;
+        public final Class<?> clazz;
         Item(String name, Class<?> clazz) {
             this.name = name;
             this.clazz = clazz;
