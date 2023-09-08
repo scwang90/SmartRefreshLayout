@@ -294,6 +294,12 @@ public class ClassicsHeader extends ClassicsAbstract<ClassicsHeader> implements 
     public ClassicsHeader setLastUpdateTime(Date time) {
         final View thisView = this;
         mLastTime = time;
+        /*
+         * 时区修改后需要及时更新下拉刷新的时间否则出现下拉刷新的时间与系统时间不一致问题
+         * 需要及时设置：mLastUpdateFormat.setCalendar
+         * 感谢：github 用户 findviewbyid 贡献的代码
+         * 贡献日期：2023-01-12
+         */
         mLastUpdateFormat.setCalendar(Calendar.getInstance(TimeZone.getDefault(),  Locale.getDefault()));
         mLastUpdateText.setText(mLastUpdateFormat.format(time));
         if (mShared != null && !thisView.isInEditMode()) {
