@@ -59,7 +59,6 @@ public class RefreshExampleFragment extends Fragment implements AdapterView.OnIt
         Horizontal(R.string.index_example_horizontal, HorizontalExampleFragment.class),
         DisallowIntercept(R.string.index_example_disallow_intercept, DisallowInterceptExampleFragment.class),
         StaggeredGrid(R.string.index_example_disallow_intercept, StaggeredGridExampleFragment.class),
-//        ThreeLevel(R.string.index_example_level, ThreeLevelExampleFragment.class),
         ;
         public final int nameId;
         public final Class<?> clazz;
