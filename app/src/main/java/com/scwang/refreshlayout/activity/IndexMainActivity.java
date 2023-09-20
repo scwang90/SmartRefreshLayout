@@ -7,8 +7,8 @@ import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.MenuItem;
 
@@ -23,6 +23,8 @@ import com.scwang.refreshlayout.util.StatusBarUtil;
 import java.lang.reflect.Field;
 
 public class IndexMainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
+
+    private FragmentStateAdapter mPageAdapter;
 
     private enum TabFragment {
         practice(R.id.navigation_practice, RefreshPracticeFragment.class),
@@ -68,6 +70,9 @@ public class IndexMainActivity extends AppCompatActivity implements NavigationBa
         }
     }
 
+    private ViewPager2 mViewPager;
+    private ViewPager2.OnPageChangeCallback mPageChangedCallback;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,23 +81,27 @@ public class IndexMainActivity extends AppCompatActivity implements NavigationBa
         final BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnItemSelectedListener(this);
 
-        ViewPager viewPager = findViewById(R.id.content);
-        viewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
-            @Override
-            public int getCount() {
-                return TabFragment.values().length;
-            }
-            @Override
-            public Fragment getItem(int position) {
-                return TabFragment.values()[position].fragment();
-            }
-        });
-        viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
+        this.mPageChangedCallback = new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 navigation.setSelectedItemId(TabFragment.values()[position].menuId);
             }
-        });
+        };
+        this.mPageAdapter = new FragmentStateAdapter(this) {
+            @Override
+            public int getItemCount() {
+                return TabFragment.values().length;
+            }
+            @NonNull
+            @Override
+            public Fragment createFragment(int position) {
+                return TabFragment.values()[position].fragment();
+            }
+        };
+
+        this.mViewPager = findViewById(R.id.content);
+        this.mViewPager.setAdapter(this.mPageAdapter);
+        this.mViewPager.registerOnPageChangeCallback(this.mPageChangedCallback);
 
         //状态栏透明和间距处理
         StatusBarUtil.immersive(this, 0xff000000, 0.1f);
@@ -102,9 +111,7 @@ public class IndexMainActivity extends AppCompatActivity implements NavigationBa
             Field field = ValueAnimator.class.getDeclaredField("sDurationScale");
             field.setAccessible(true);
             field.set(ValueAnimator.class, 1);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
         }
     }
@@ -112,12 +119,13 @@ public class IndexMainActivity extends AppCompatActivity implements NavigationBa
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mViewPager.unregisterOnPageChangeCallback(mPageChangedCallback);
         TabFragment.onDestroy();
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        ((ViewPager)findViewById(R.id.content)).setCurrentItem(TabFragment.from(item.getItemId()).ordinal());
+        mViewPager.setCurrentItem(TabFragment.from(item.getItemId()).ordinal());
 //        getSupportFragmentManager()
 //                .beginTransaction()
 //                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)

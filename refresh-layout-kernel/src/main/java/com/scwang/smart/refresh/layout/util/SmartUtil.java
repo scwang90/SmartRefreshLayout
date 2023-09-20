@@ -9,6 +9,7 @@ import androidx.core.view.NestedScrollingChild;
 import androidx.core.view.NestedScrollingParent;
 import androidx.core.view.ScrollingView;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
@@ -99,6 +100,7 @@ public class SmartUtil implements Interpolator {
         }
         return isScrollableView(view)
                 || view instanceof ViewPager
+                || view instanceof ViewPager2
                 || view instanceof NestedScrollingParent;
     }
 

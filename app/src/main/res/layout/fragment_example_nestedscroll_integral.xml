@@ -39,7 +39,7 @@
                 <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
                 <!--tools:listitem="@android:layout/simple_list_item_2"/>-->
 
-            <androidx.viewpager.widget.ViewPager
+            <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/viewPager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

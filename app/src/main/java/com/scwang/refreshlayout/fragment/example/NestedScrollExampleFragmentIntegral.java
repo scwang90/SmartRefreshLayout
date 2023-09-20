@@ -7,8 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -46,10 +46,8 @@ import static com.scwang.refreshlayout.R.mipmap.image_weibo_home_2;
  */
 public class NestedScrollExampleFragmentIntegral extends Fragment implements AdapterView.OnItemClickListener, OnRefreshLoadMoreListener {
 
-    private ViewPager mViewPager;
+    private ViewPager2 mViewPager;
     private SmartPagerAdapter mAdapter;
-
-//    private BaseRecyclerAdapter<Item> mAdapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -69,34 +67,10 @@ public class NestedScrollExampleFragmentIntegral extends Fragment implements Ada
         banner.start();
 
         mViewPager = root.findViewById(R.id.viewPager);
-        mViewPager.setAdapter(mAdapter = new SmartPagerAdapter(getChildFragmentManager()));
-//        RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
-//        recyclerView.setItemAnimator(new DefaultItemAnimator());
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), VERTICAL));
-//        recyclerView.setAdapter(mAdapter = new BaseRecyclerAdapter<Item>(buildItems(), simple_list_item_2, NestedScrollExampleFragmentIntegral.this) {
-//            @Override
-//            protected void onBindViewHolder(SmartViewHolder holder, Item model, int position) {
-//                holder.text(android.R.id.text1, model.name());
-//                holder.text(android.R.id.text2, model.name);
-//                holder.textColorId(android.R.id.text2, R.color.colorTextAssistant);
-//            }
-//        });
+        mViewPager.setAdapter(mAdapter = new SmartPagerAdapter(this));
 
         RefreshLayout refreshLayout = root.findViewById(R.id.refreshLayout);
         refreshLayout.setOnRefreshLoadMoreListener(this);
-//        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-//            @Override
-//            public void onLoadMore(@NonNull final RefreshLayout refreshLayout) {
-//                refreshLayout.getLayout().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        mAdapter.loadMore(buildItems());
-//                        refreshLayout.finishLoadMore();
-//                    }
-//                }, 2000);
-//            }
-//        });
 
         TextView textView = root.findViewById(R.id.target);
         textView.setOnClickListener(v -> Toast.makeText(getContext(), "点击测试", Toast.LENGTH_SHORT).show());
@@ -125,25 +99,26 @@ public class NestedScrollExampleFragmentIntegral extends Fragment implements Ada
     }
 
 
-    public static class SmartPagerAdapter extends FragmentStatePagerAdapter {
+    public static class SmartPagerAdapter extends FragmentStateAdapter {
 
         private final SmartFragment[] fragments;
 
-        SmartPagerAdapter(FragmentManager fm) {
+        SmartPagerAdapter(Fragment fm) {
             super(fm);
             this.fragments = new SmartFragment[]{
                     new SmartFragment(),new SmartFragment()
             };
         }
 
+        @NonNull
         @Override
-        public int getCount() {
-            return fragments.length;
+        public Fragment createFragment(int position) {
+            return fragments[position];
         }
 
         @Override
-        public Fragment getItem(int position) {
-            return fragments[position];
+        public int getItemCount() {
+            return fragments.length;
         }
     }
 
@@ -186,7 +161,7 @@ public class NestedScrollExampleFragmentIntegral extends Fragment implements Ada
             refreshLayout.getLayout().postDelayed(() -> {
                 mAdapter.refresh(buildItems());
                 refreshLayout.finishRefresh();
-                refreshLayout.resetNoMoreData();//setNoMoreData(false);
+                refreshLayout.resetNoMoreData();
             }, 2000);
         }
 

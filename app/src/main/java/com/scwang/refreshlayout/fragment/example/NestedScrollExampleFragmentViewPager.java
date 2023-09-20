@@ -7,8 +7,8 @@ import androidx.annotation.Nullable;
 import com.google.android.material.appbar.AppBarLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -49,8 +49,8 @@ public class NestedScrollExampleFragmentViewPager extends Fragment {
         Toolbar toolbar = root.findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(v -> getActivity().finish());
 
-        ViewPager viewPager = root.findViewById(R.id.viewPager);
-        viewPager.setAdapter(new SmartPagerAdapter(getChildFragmentManager()));
+        ViewPager2 viewPager = root.findViewById(R.id.viewPager);
+        viewPager.setAdapter(new SmartPagerAdapter(this));
 
         /*
          * 监听 AppBarLayout 的关闭和开启 ActionButton 设置关闭隐藏动画
@@ -76,25 +76,26 @@ public class NestedScrollExampleFragmentViewPager extends Fragment {
 
     }
 
-    public static class SmartPagerAdapter extends FragmentStatePagerAdapter {
+    public static class SmartPagerAdapter extends FragmentStateAdapter {
 
         private final SmartFragment[] fragments;
 
-        SmartPagerAdapter(FragmentManager fm) {
+        SmartPagerAdapter(Fragment fm) {
             super(fm);
             this.fragments = new SmartFragment[]{
                     new SmartFragment(),new SmartFragment()
             };
         }
 
+        @NonNull
         @Override
-        public int getCount() {
-            return fragments.length;
+        public Fragment createFragment(int position) {
+            return fragments[position];
         }
 
         @Override
-        public Fragment getItem(int position) {
-            return fragments[position];
+        public int getItemCount() {
+            return fragments.length;
         }
     }
 

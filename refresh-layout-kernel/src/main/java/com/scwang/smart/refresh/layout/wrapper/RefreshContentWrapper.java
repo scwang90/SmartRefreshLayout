@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.core.view.NestedScrollingChild;
 import androidx.core.view.NestedScrollingParent;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -111,7 +112,7 @@ public class RefreshContentWrapper implements RefreshContent, CoordinatorLayoutL
             for (int i = childCount; i > 0; i--) {
                 View child = viewGroup.getChildAt(i - 1);
                 if (isTransformedTouchPointInView(viewGroup, child, event.x, event.y, point)) {
-                    if (child instanceof ViewPager || !isContentView(child)) {
+                    if (child instanceof ViewPager || child instanceof ViewPager2 || !isContentView(child)) {
                         event.offset(point.x, point.y);
                         child = findScrollableViewByPoint(child, event, orgScrollableView);
                         event.offset(-point.x, -point.y);

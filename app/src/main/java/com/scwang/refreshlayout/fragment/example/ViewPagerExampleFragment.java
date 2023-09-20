@@ -7,19 +7,21 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager2.widget.ViewPager2;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
@@ -40,7 +42,6 @@ import static android.R.layout.simple_list_item_2;
  */
 public class ViewPagerExampleFragment extends Fragment implements OnRefreshListener, OnRefreshLoadMoreListener {
 
-
     private enum Item {
         NestedInner(R.string.item_example_pager_left, SmartFragment.class),
         NestedOuter(R.string.item_example_pager_right, SmartFragment.class),
@@ -53,8 +54,9 @@ public class ViewPagerExampleFragment extends Fragment implements OnRefreshListe
         }
     }
 
-    private ViewPager mViewPager;
+    private ViewPager2 mViewPager;
     private SmartPagerAdapter mAdapter;
+    private TabLayoutMediator mTabLayoutMediator;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -76,8 +78,15 @@ public class ViewPagerExampleFragment extends Fragment implements OnRefreshListe
         mViewPager = root.findViewById(R.id.viewPager);
         TabLayout mTabLayout = root.findViewById(R.id.tableLayout);
 
-        mViewPager.setAdapter(mAdapter = new SmartPagerAdapter(Item.values()));
-        mTabLayout.setupWithViewPager(mViewPager, true);
+        mViewPager.setAdapter(mAdapter = new SmartPagerAdapter(this, Item.values()));
+
+        this.mTabLayoutMediator = new TabLayoutMediator(mTabLayout, mViewPager, true, true, new TabLayoutMediator.TabConfigurationStrategy() {
+            @Override
+            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                tab.setText(getString(Item.values()[position].nameId));
+            }
+        });
+        this.mTabLayoutMediator.attach();
     }
 
     @Override
@@ -91,33 +100,29 @@ public class ViewPagerExampleFragment extends Fragment implements OnRefreshListe
     }
 
 
-    private class SmartPagerAdapter extends FragmentStatePagerAdapter {
+    private static class SmartPagerAdapter extends FragmentStateAdapter {
 
         private final Item[] items;
         private final SmartFragment[] fragments;
 
-        SmartPagerAdapter(Item... items) {
-            super(getChildFragmentManager());
+        SmartPagerAdapter(Fragment fragment, Item... items) {
+            super(fragment);
             this.items = items;
             this.fragments = new SmartFragment[items.length];
         }
 
+        @NonNull
         @Override
-        public int getCount() {
-            return items.length;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return getString(items[position].nameId);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
+        public Fragment createFragment(int position) {
             if (fragments[position] == null) {
                 fragments[position] = new SmartFragment();
             }
             return fragments[position];
+        }
+
+        @Override
+        public int getItemCount() {
+            return items.length;
         }
     }
 
