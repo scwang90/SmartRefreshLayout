@@ -24,8 +24,6 @@ import java.lang.reflect.Field;
 
 public class IndexMainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
 
-    private FragmentStateAdapter mPageAdapter;
-
     private enum TabFragment {
         practice(R.id.navigation_practice, RefreshPracticeFragment.class),
         styles(R.id.navigation_style, RefreshStylesFragment.class),
@@ -71,6 +69,7 @@ public class IndexMainActivity extends AppCompatActivity implements NavigationBa
     }
 
     private ViewPager2 mViewPager;
+    private FragmentStateAdapter mPageAdapter;
     private ViewPager2.OnPageChangeCallback mPageChangedCallback;
 
     @Override

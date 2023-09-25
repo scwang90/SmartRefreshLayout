@@ -78,8 +78,8 @@ import androidx.core.view.ViewCompat;
  * Intelligent RefreshLayout
  * Created by scwang on 2017/5/26.
  */
-@SuppressLint("RestrictedApi")
 @SuppressWarnings({"unused"})
+@SuppressLint("RestrictedApi")
 public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, NestedScrollingParent/*, NestedScrollingChild*/ {
 
     //<editor-fold desc="属性变量 property and variable">
@@ -244,10 +244,15 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.SmartRefreshLayout);
 
-        if (!ta.hasValue(R.styleable.SmartRefreshLayout_srlClipToPadding)) {
+        /**
+         * SmartRefreshLayout 继承 ViewGroup 后即使不设置 android:clipToPadding，也等效于 android:clipToPadding=true
+         * 特意添加 android:clipToPadding 来在 Java 代码中 判断是否设置过，没有设置强制 setClipToPadding(false)
+         * android:clipChildren 也是同样
+         */
+        if (!ta.hasValue(R.styleable.SmartRefreshLayout_android_clipToPadding)) {
             super.setClipToPadding(false);
         }
-        if (!ta.hasValue(R.styleable.SmartRefreshLayout_srlClipChildren)) {
+        if (!ta.hasValue(R.styleable.SmartRefreshLayout_android_clipChildren)) {
             super.setClipChildren(false);
         }
 
