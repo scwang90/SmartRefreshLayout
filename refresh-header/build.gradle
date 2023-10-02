@@ -26,12 +26,15 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'androidx.annotation:annotation:1.7.0'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-
     compileOnly project(':refresh-layout')
     compileOnly project(':refresh-drawable-path')
     compileOnly project(':refresh-header-material')
     compileOnly project(':refresh-layout-kernel')
     compileOnly project(':refresh-header-falsify')
+
+    compileOnly 'androidx.appcompat:appcompat:1.6.1'
+
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }
