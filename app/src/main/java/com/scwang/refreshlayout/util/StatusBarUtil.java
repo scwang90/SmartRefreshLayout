@@ -52,33 +52,21 @@ public class StatusBarUtil {
     }
 
     public static void immersive(Window window, int color, @FloatRange(from = 0.0, to = 1.0) float alpha) {
-        if (Build.VERSION.SDK_INT >= 21) {
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(mixtureColor(color, alpha));
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(mixtureColor(color, alpha));
 
-            int systemUiVisibility = window.getDecorView().getSystemUiVisibility();
-            systemUiVisibility |= View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
-            systemUiVisibility |= View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-            window.getDecorView().setSystemUiVisibility(systemUiVisibility);
-        } else if (Build.VERSION.SDK_INT >= 19) {
-            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            setTranslucentView((ViewGroup) window.getDecorView(), color, alpha);
-        } else if (Build.VERSION.SDK_INT >= MIN_API && Build.VERSION.SDK_INT > 16) {
-            int systemUiVisibility = window.getDecorView().getSystemUiVisibility();
-            systemUiVisibility |= View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
-            systemUiVisibility |= View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-            window.getDecorView().setSystemUiVisibility(systemUiVisibility);
-        }
+        int systemUiVisibility = window.getDecorView().getSystemUiVisibility();
+        systemUiVisibility |= View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
+        systemUiVisibility |= View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+        window.getDecorView().setSystemUiVisibility(systemUiVisibility);
     }
 
     public static void color(Activity activity, int color) {
-        if (Build.VERSION.SDK_INT >= 21) {
-            Window window = activity.getWindow();
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(color);
-        }
+        Window window = activity.getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(color);
     }
     //</editor-fold>
 
@@ -135,11 +123,9 @@ public class StatusBarUtil {
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             darkModeForM(window, true);
             immersive(window, color, alpha);
-        } else if (Build.VERSION.SDK_INT >= 19) {
+        } else {
             window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             setTranslucentView((ViewGroup) window.getDecorView(), color, alpha);
-        } else {
-            immersive(window, color, alpha);
         }
 //        if (Build.VERSION.SDK_INT >= 21) {
 //            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -172,7 +158,7 @@ public class StatusBarUtil {
 
     /**
      * 设置Flyme4+的darkMode,darkMode时候字体颜色及icon变黑
-     * http://open-wiki.flyme.cn/index.php?title=Flyme%E7%B3%BB%E7%BB%9FAPI
+     * <a href="http://open-wiki.flyme.cn/index.php?title=Flyme%E7%B3%BB%E7%BB%9FAPI">...</a>
      */
     public static boolean darkModeForFlyme4(Window window, boolean dark) {
         boolean result = false;

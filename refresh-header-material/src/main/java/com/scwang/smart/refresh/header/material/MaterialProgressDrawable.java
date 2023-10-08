@@ -265,6 +265,7 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
     }
 
     @Override
+    @Deprecated
     public int getOpacity() {
         return PixelFormat.TRANSLUCENT;
     }

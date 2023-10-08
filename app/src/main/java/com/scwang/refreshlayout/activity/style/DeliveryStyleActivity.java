@@ -47,9 +47,7 @@ public class DeliveryStyleActivity extends AppCompatActivity implements AdapterV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_style_delivery);
-        if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().setStatusBarColor(0xfff0f0f0);
-        }
+        getWindow().setStatusBarColor(0xfff0f0f0);
         if (Build.VERSION.SDK_INT >= 23) {
             Window window = getWindow();
             int systemUiVisibility = window.getDecorView().getSystemUiVisibility();
@@ -90,9 +88,7 @@ public class DeliveryStyleActivity extends AppCompatActivity implements AdapterV
                 mToolbar.setTitleTextColor(0xffbbbbbb);
                 mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_gray_24dp);
                 mRefreshLayout.setPrimaryColors(0xfff0f0f0, 0xffffffff);
-                if (Build.VERSION.SDK_INT >= 21) {
-                    getWindow().setStatusBarColor(0xfff0f0f0);
-                }
+                getWindow().setStatusBarColor(0xfff0f0f0);
                 if (Build.VERSION.SDK_INT >= 23) {
                     Window window = getWindow();
                     int systemUiVisibility = window.getDecorView().getSystemUiVisibility();
@@ -121,9 +117,7 @@ public class DeliveryStyleActivity extends AppCompatActivity implements AdapterV
         mToolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white));
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         mRefreshLayout.setPrimaryColorsId(colorPrimary, android.R.color.white);
-        if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().setStatusBarColor(ContextCompat.getColor(this, colorPrimaryDark));
-        }
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, colorPrimaryDark));
         if (Build.VERSION.SDK_INT >= 23) {
             Window window = getWindow();
             int systemUiVisibility = window.getDecorView().getSystemUiVisibility();

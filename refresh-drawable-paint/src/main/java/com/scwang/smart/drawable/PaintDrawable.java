@@ -34,6 +34,7 @@ public abstract class PaintDrawable extends Drawable {
     }
 
     @Override
+    @Deprecated
     public int getOpacity() {
         return PixelFormat.TRANSLUCENT;
     }

@@ -42,12 +42,10 @@ public class HorizontalExampleFragment extends Fragment {
         super.onViewCreated(root, savedInstanceState);
 
         root.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Objects.requireNonNull(getActivity()).getWindow().setStatusBarColor(0);
-        }
+        requireActivity().getWindow().setStatusBarColor(0);
 
         final Toolbar toolbar = root.findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(v -> getActivity().finish());
+        toolbar.setNavigationOnClickListener(v -> requireActivity().finish());
 
         final RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
 
