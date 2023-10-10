@@ -1657,54 +1657,8 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     }
 
     /**
-     * 给出阻尼计算的距离，计算原始滑动距离
-     * @param originSpinner 阻尼计算过后的距离
-     * @return Float, 原始滑动距离
-     */
-    protected int reverseCompute(float originSpinner) {
-        final View thisView = this;
-        double result = originSpinner;
-        if (mState == RefreshState.TwoLevel && originSpinner > 0) {
-            result = originSpinner;
-        } else if (mState == RefreshState.Refreshing && originSpinner >= 0) {
-            if (originSpinner < mHeaderHeight) {
-                result = originSpinner;
-            } else {
-                final float maxDragHeight = mHeaderMaxDragRate < 10 ? mHeaderHeight * mHeaderMaxDragRate : mHeaderMaxDragRate;
-                final double M = maxDragHeight - mHeaderHeight;
-                final double H = Math.max(mScreenHeightPixels * 4 / 3, thisView.getHeight()) - mHeaderHeight;
-                final double y = originSpinner;
-                result = ((-H * (Math.log(1 - y / M) / Math.log(100f))) + mHeaderHeight) / mDragRate;
-            }
-        } else if (originSpinner < 0 && (mState == RefreshState.Loading
-                || (mEnableFooterFollowWhenNoMoreData && mFooterNoMoreData && mFooterNoMoreDataEffective && isEnableRefreshOrLoadMore(mEnableLoadMore))
-                || (mEnableAutoLoadMore && !mFooterNoMoreData && isEnableRefreshOrLoadMore(mEnableLoadMore)))) {
-            if (originSpinner > -mFooterHeight) {
-                result = originSpinner;
-            } else {
-                final float maxDragHeight = mFooterMaxDragRate < 10 ? mFooterHeight * mFooterMaxDragRate : mFooterMaxDragRate;
-                final double M = maxDragHeight - mFooterHeight;
-                final double H = Math.max(mScreenHeightPixels * 4 / 3, thisView.getHeight()) - mFooterHeight;
-                final double y = -originSpinner;
-                result = -((-H * (Math.log(1 - y / M) / Math.log(100f))) - mFooterHeight) / mDragRate;
-            }
-        } else if (originSpinner >= 0) {
-            final double M = mHeaderMaxDragRate < 10 ? mHeaderHeight * mHeaderMaxDragRate : mHeaderMaxDragRate;
-            final double H = Math.max(mScreenHeightPixels / 2, thisView.getHeight());
-            final double y = originSpinner;
-            result = (-H * (Math.log(1 - y / M) / Math.log(100f))) / mDragRate;
-        } else {
-            final double M = mFooterMaxDragRate < 10 ? mFooterHeight * mFooterMaxDragRate : mFooterMaxDragRate;
-            final double H = Math.max(mScreenHeightPixels / 2, thisView.getHeight());
-            final double y = -originSpinner;
-            result = -((-H * (Math.log(1 - y / M) / Math.log(100f))) - mFooterHeight) / mDragRate;
-        }
-
-        return Math.round(Float.parseFloat(String.valueOf(result)));
-    }
-
-    /**
      * 黏性移动 spinner
+     * 阻尼计算，根据原始华东距离，计算出阻尼后的距离
      * @param spinner 偏移量
      */
     protected void moveSpinnerInfinitely(float spinner) {
@@ -1809,9 +1763,60 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             }, mReboundDuration);
         }
     }
+
+    /**
+     * 感谢 jamgudev <826630153@qq.com> 2022-03-22 贡献的代码 （贡献原始函数：reverseCompute）
+     * 给出阻尼计算的距离，计算原始滑动距离
+     * 与 moveSpinnerInfinitely 函数为反向计算
+     * @param spinnerConvergence 阻尼计算过后的距离
+     * @return 原始滑动距离
+     */
+    protected int reverseInfinitely(float spinnerConvergence) {
+        final View thisView = this;
+        double originSpinner;
+        if (mState == RefreshState.TwoLevel && spinnerConvergence > 0) {
+            originSpinner = spinnerConvergence;
+        } else if (mState == RefreshState.Refreshing && spinnerConvergence >= 0) {
+            if (spinnerConvergence < mHeaderHeight) {
+                originSpinner = spinnerConvergence;
+            } else {
+                final float maxDragHeight = mHeaderMaxDragRate < 10 ? mHeaderHeight * mHeaderMaxDragRate : mHeaderMaxDragRate;
+                final double M = maxDragHeight - mHeaderHeight;
+                final double H = Math.max(mScreenHeightPixels * 4 / 3, thisView.getHeight()) - mHeaderHeight;
+                final double y = spinnerConvergence;
+                originSpinner = ((-H * (Math.log(1 - y / M) / Math.log(100f))) + mHeaderHeight) / mDragRate;
+            }
+        } else if (spinnerConvergence < 0 && (mState == RefreshState.Loading
+                || (mEnableFooterFollowWhenNoMoreData && mFooterNoMoreData && mFooterNoMoreDataEffective && isEnableRefreshOrLoadMore(mEnableLoadMore))
+                || (mEnableAutoLoadMore && !mFooterNoMoreData && isEnableRefreshOrLoadMore(mEnableLoadMore)))) {
+            if (spinnerConvergence > -mFooterHeight) {
+                originSpinner = spinnerConvergence;
+            } else {
+                final float maxDragHeight = mFooterMaxDragRate < 10 ? mFooterHeight * mFooterMaxDragRate : mFooterMaxDragRate;
+                final double M = maxDragHeight - mFooterHeight;
+                final double H = Math.max(mScreenHeightPixels * 4 / 3, thisView.getHeight()) - mFooterHeight;
+                final double y = -spinnerConvergence;
+                originSpinner = -((-H * (Math.log(1 - y / M) / Math.log(100f))) - mFooterHeight) / mDragRate;
+            }
+        } else if (spinnerConvergence >= 0) {
+            final double M = mHeaderMaxDragRate < 10 ? mHeaderHeight * mHeaderMaxDragRate : mHeaderMaxDragRate;
+            final double H = Math.max(mScreenHeightPixels / 2, thisView.getHeight());
+            final double y = spinnerConvergence;
+            originSpinner = (-H * (Math.log(1 - y / M) / Math.log(100f))) / mDragRate;
+        } else {
+            final double M = mFooterMaxDragRate < 10 ? mFooterHeight * mFooterMaxDragRate : mFooterMaxDragRate;
+            final double H = Math.max(mScreenHeightPixels / 2, thisView.getHeight());
+            final double y = -spinnerConvergence;
+            originSpinner = -((-H * (Math.log(1 - y / M) / Math.log(100f))) - mFooterHeight) / mDragRate;
+        }
+
+        return Math.round((float)originSpinner);
+    }
+
     //</editor-fold>
 
     //<editor-fold desc="布局参数 LayoutParams">
+
 //    protected boolean checkLayoutParams(ViewGroup.LayoutParams p) {
 //        return p instanceof LayoutParams;
 //    }
@@ -1884,7 +1889,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         // Dispatch up to the nested parent
         mNestedChild.startNestedScroll(axes & ViewCompat.SCROLL_AXIS_VERTICAL);
 
-        mTotalUnconsumed = reverseCompute(mSpinner);//0;
+        mTotalUnconsumed = reverseInfinitely(mSpinner);
         mNestedInProgress = true;
 
         interceptAnimatorByAction(MotionEvent.ACTION_DOWN);
@@ -3627,7 +3632,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 case PullDownCanceled:
                     if (!mState.isOpening && isEnableRefreshOrLoadMore(mEnableRefresh)) {
                         notifyStateChanged(RefreshState.PullDownCanceled);
-//                        resetStatus();
                         setState(RefreshState.None);
                     } else {
                         setViceState(RefreshState.PullDownCanceled);
@@ -3636,7 +3640,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 case PullUpCanceled:
                     if (isEnableRefreshOrLoadMore(mEnableLoadMore) && !mState.isOpening && !(mFooterNoMoreData && mEnableFooterFollowWhenNoMoreData && mFooterNoMoreDataEffective)) {
                         notifyStateChanged(RefreshState.PullUpCanceled);
-//                        resetStatus();
                         setState(RefreshState.None);
                     } else {
                         setViceState(RefreshState.PullUpCanceled);
@@ -3689,27 +3692,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 default:
                     notifyStateChanged(state);
                     break;
-//                case RefreshFinish: {
-//                    if (mState == RefreshState.Refreshing) {
-//                        notifyStateChanged(RefreshState.RefreshFinish);
-//                    }
-//                    break;
-//                }
-//                case LoadFinish:{
-//                    if (mState == RefreshState.Loading) {
-//                        notifyStateChanged(RefreshState.LoadFinish);
-//                    }
-//                    break;
-//                }
-//                case TwoLevelReleased:
-//                    notifyStateChanged(RefreshState.TwoLevelReleased);
-//                    break;
-//                case TwoLevelFinish:
-//                    notifyStateChanged(RefreshState.TwoLevelFinish);
-//                    break;
-//                case TwoLevel:
-//                    notifyStateChanged(RefreshState.TwoLevel);
-//                    break;
             }
             return null;
         }
