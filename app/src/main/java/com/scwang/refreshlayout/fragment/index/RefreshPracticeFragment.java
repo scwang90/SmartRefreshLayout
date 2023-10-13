@@ -31,6 +31,8 @@ import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.refreshlayout.fragment.practice.InstantPracticeFragment;
 import com.scwang.refreshlayout.fragment.practice.SecondFloorPracticeFragment;
 import com.scwang.refreshlayout.util.StatusBarUtil;
+import com.scwang.smart.refresh.layout.SmartRefreshLayout;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
 
 import java.util.Arrays;
 
@@ -89,6 +91,8 @@ public class RefreshPracticeFragment extends Fragment implements AdapterView.OnI
                 }
             });
         }
+        SmartRefreshLayout refreshLayout = root.findViewById(R.id.refreshLayout);
+        refreshLayout.setOnRefreshListener(RefreshLayout::finishRefresh);
     }
 
     @Override
