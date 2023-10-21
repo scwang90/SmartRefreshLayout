@@ -8,7 +8,7 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 /**
  * Taurus
  * Created by scwang on 2017/5/31.
- * from https://github.com/Yalantis/Taurus
+ * from <a href="https://github.com/Yalantis/Taurus">...</a>
  */
 public class TaurusHeader extends com.scwang.smart.refresh.header.TaurusHeader implements RefreshHeader {
 

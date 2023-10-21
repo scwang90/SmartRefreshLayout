@@ -32,7 +32,7 @@ public class ProgressDrawable extends PaintDrawable implements Animatable , Valu
     }
 
     @Override
-    public void onAnimationUpdate(ValueAnimator animation) {
+    public void onAnimationUpdate(@NonNull ValueAnimator animation) {
         int value = (int) animation.getAnimatedValue();
         mProgressDegree = 30 * (value / 30);
         final Drawable drawable = ProgressDrawable.this;

@@ -22,7 +22,7 @@ import com.scwang.smart.refresh.layout.util.SmartUtil;
 /**
  * Refresh your delivery!
  * Created by scwang on 2017/6/25.
- * design https://dribbble.com/shots/2753803-Refresh-your-delivery
+ * design <a href="https://dribbble.com/shots/2753803-Refresh-your-delivery">...</a>
  */
 public class DeliveryHeader extends SimpleComponent implements RefreshHeader {
 
@@ -140,7 +140,7 @@ public class DeliveryHeader extends SimpleComponent implements RefreshHeader {
 
     //<editor-fold desc="draw">
     @Override
-    protected void dispatchDraw(Canvas canvas) {
+    protected void dispatchDraw(@NonNull Canvas canvas) {
         final View thisView = this;
         final int width = thisView.getWidth();
         final int height = mHeight;//thisView.getHeight();

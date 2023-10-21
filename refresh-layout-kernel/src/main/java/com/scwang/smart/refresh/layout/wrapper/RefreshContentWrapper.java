@@ -268,7 +268,7 @@ public class RefreshContentWrapper implements RefreshContent, CoordinatorLayoutL
     }
 
     @Override
-    public void onAnimationUpdate(ValueAnimator animation) {
+    public void onAnimationUpdate(@NonNull ValueAnimator animation) {
         int value = (int) animation.getAnimatedValue();
         try {
             float dy = (value - mLastSpinner) * mScrollableView.getScaleY();

@@ -28,7 +28,7 @@ import com.scwang.smartrefresh.header.R;
 /**
  * Phoenix
  * Created by scwang on 2017/5/31.
- * from https://github.com/Yalantis/Phoenix
+ * from <a href="https://github.com/Yalantis/Phoenix">...</a>
  */
 public class PhoenixHeader extends SimpleComponent implements RefreshHeader {
 
@@ -258,7 +258,7 @@ public class PhoenixHeader extends SimpleComponent implements RefreshHeader {
 
     //<editor-fold desc="draw">
     @Override
-    protected void dispatchDraw(Canvas canvas) {
+    protected void dispatchDraw(@NonNull Canvas canvas) {
 
         final View thisView = this;
         final int width = thisView.getWidth();

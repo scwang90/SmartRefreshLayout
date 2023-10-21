@@ -23,8 +23,9 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
-import android.os.Build;
 import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
+
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -216,7 +217,7 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
     protected ValueAnimator.AnimatorUpdateListener mAnimatorUpdateListener =
             new ValueAnimator.AnimatorUpdateListener() {
                 @Override
-                public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                public void onAnimationUpdate(@NonNull ValueAnimator valueAnimator) {
                     final View thisView = WaveView.this;
                     thisView.postInvalidate();
                 }
@@ -278,7 +279,7 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected void onDraw(@NonNull Canvas canvas) {
         super.onDraw(canvas);
         //引っ張ってる最中の波と終わったあとの波
 //    canvas.drawPath(mWavePath, mShadowPaint);
@@ -439,11 +440,7 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
                 BEGIN_PHASE_POINTS[0][1], mWidth, 0);
 
         final View thisView = this;
-        if (Build.VERSION.SDK_INT >= 16) {
-            thisView.postInvalidateOnAnimation();
-        } else {
-            thisView.invalidate();
-        }
+        thisView.postInvalidateOnAnimation();
     }
 
 
@@ -480,11 +477,7 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
                         + mDropCircleRadius;
 
         final View thisView = this;
-        if (Build.VERSION.SDK_INT >= 16) {
-            thisView.postInvalidateOnAnimation();
-        } else {
-            thisView.invalidate();
-        }
+        thisView.postInvalidateOnAnimation();
     }
 
     public void expandPhase(float move1, float move2, float move3) {
@@ -538,11 +531,7 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
                 EXPAND_PHASE_POINTS[3][1]) + mDropCircleRadius;
 
         final View thisView = this;
-        if (Build.VERSION.SDK_INT >= 16) {
-            thisView.postInvalidateOnAnimation();
-        } else {
-            thisView.invalidate();
-        }
+        thisView.postInvalidateOnAnimation();
     }
 
     /**
@@ -571,14 +560,10 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
         mDropCircleAnimator.setDuration(DROP_CIRCLE_ANIMATOR_DURATION);
         mDropCircleAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
+            public void onAnimationUpdate(@NonNull ValueAnimator animation) {
                 mCurrentCircleCenterY = (float) animation.getAnimatedValue();
                 final View thisView = WaveView.this;
-                if (Build.VERSION.SDK_INT >= 16) {
-                    thisView.postInvalidateOnAnimation();
-                } else {
-                    thisView.invalidate();
-                }
+                thisView.postInvalidateOnAnimation();
             }
         });
         mDropCircleAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
@@ -629,7 +614,7 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
         mWaveReverseAnimator.setDuration(WAVE_ANIMATOR_DURATION);
         mWaveReverseAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+            public void onAnimationUpdate(@NonNull ValueAnimator valueAnimator) {
                 float h = (Float) valueAnimator.getAnimatedValue();
                 mWavePath.moveTo(0, 0);
                 mWavePath.quadTo(0.25f * mWidth, 0, 0.333f * mWidth, h * 0.5f);

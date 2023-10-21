@@ -31,7 +31,7 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 /**
  * WaterDropHeader
  * Created by scwang on 2017/5/31.
- * from https://github.com/THEONE10211024/WaterDropListView
+ * from <a href="https://github.com/THEONE10211024/WaterDropListView">...</a>
  */
 public class WaterDropHeader extends SimpleComponent implements RefreshHeader {
 
@@ -124,7 +124,7 @@ public class WaterDropHeader extends SimpleComponent implements RefreshHeader {
 
     //<editor-fold desc="Draw">
     @Override
-    protected void dispatchDraw(Canvas canvas) {
+    protected void dispatchDraw(@NonNull Canvas canvas) {
         super.dispatchDraw(canvas);
         final View thisView = this;
         final View dropView = mWaterDropView;

@@ -8,7 +8,7 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 /**
  * WaterDropHeader
  * Created by scwang on 2017/5/31.
- * from https://github.com/THEONE10211024/WaterDropListView
+ * from <a href="https://github.com/THEONE10211024/WaterDropListView">...</a>
  */
 public class WaterDropHeader extends com.scwang.smart.refresh.header.WaterDropHeader implements RefreshHeader {
 

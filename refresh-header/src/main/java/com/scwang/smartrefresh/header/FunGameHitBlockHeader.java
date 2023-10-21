@@ -7,7 +7,7 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 
 /**
  * Created by scwang on 2018/2/29.
- * from https://github.com/Hitomis/FunGameRefresh
+ * from <a href="https://github.com/Hitomis/FunGameRefresh">...</a>
  */
 public class FunGameHitBlockHeader extends com.scwang.smart.refresh.header.FunGameHitBlockHeader implements RefreshHeader {
 

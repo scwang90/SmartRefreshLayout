@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import androidx.annotation.ColorInt;
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -16,7 +17,6 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
-import android.widget.ImageView;
 
 import com.scwang.smart.refresh.header.material.MaterialProgressDrawable;
 import com.scwang.smart.refresh.header.waveswipe.WaveView;
@@ -35,7 +35,7 @@ import static android.view.View.MeasureSpec.makeMeasureSpec;
 /**
  * 全屏水滴下拉头
  * Created by scwang on 2017/6/4.
- * from https://github.com/recruit-lifestyle/WaveSwipeRefreshLayout
+ * from <a href="https://github.com/recruit-lifestyle/WaveSwipeRefreshLayout">...</a>
  */
 @SuppressWarnings("unused")
 public class WaveSwipeHeader extends SimpleComponent implements RefreshHeader {
@@ -273,7 +273,7 @@ public class WaveSwipeHeader extends SimpleComponent implements RefreshHeader {
         animator.setInterpolator(new AccelerateDecelerateInterpolator());
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+            public void onAnimationUpdate(@NonNull ValueAnimator valueAnimator) {
                 final View circleView = mCircleView;
                 circleView.setTranslationY(
                         mWaveView.getCurrentCircleCenterY() + circleView.getHeight() / 2.f);
@@ -372,7 +372,7 @@ public class WaveSwipeHeader extends SimpleComponent implements RefreshHeader {
      *
      * @author jmatsu
      */
-    protected class ProgressAnimationImageView extends ImageView {
+    protected class ProgressAnimationImageView extends AppCompatImageView {
 
         /**
          * AnimationのStartとEnd時にListenerにアレする

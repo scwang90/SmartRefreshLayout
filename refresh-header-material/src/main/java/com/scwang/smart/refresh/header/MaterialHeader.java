@@ -164,7 +164,7 @@ public class MaterialHeader extends SimpleComponent implements RefreshHeader {
     }
 
     @Override
-    protected void dispatchDraw(Canvas canvas) {
+    protected void dispatchDraw(@NonNull Canvas canvas) {
         if (mShowBezierWave) {
             //重置画笔
             mBezierPath.reset();

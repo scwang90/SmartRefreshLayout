@@ -118,7 +118,7 @@ public class BezierRadarHeader extends SimpleComponent implements RefreshHeader 
 
     //<editor-fold desc="绘制方法 - draw">
     @Override
-    protected void dispatchDraw(Canvas canvas) {
+    protected void dispatchDraw(@NonNull Canvas canvas) {
         final View thisView = this;
         final int width = thisView.getWidth();
         final int height = thisView.isInEditMode() ? thisView.getHeight() : mWaveOffsetY;
@@ -378,7 +378,7 @@ public class BezierRadarHeader extends SimpleComponent implements RefreshHeader 
             this.propertyName = name;
         }
         @Override
-        public void onAnimationUpdate(ValueAnimator animation) {
+        public void onAnimationUpdate(@NonNull ValueAnimator animation) {
             if (PROPERTY_RADAR_SCALE == propertyName) {
                 mRadarScale = (float) animation.getAnimatedValue();
             } else if (PROPERTY_WAVE_HEIGHT == propertyName) {

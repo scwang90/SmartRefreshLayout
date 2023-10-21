@@ -24,7 +24,7 @@ import com.scwang.smart.refresh.layout.util.SmartUtil;
 /**
  * CircleRefresh
  * Created by scwang on 2018/7/18.
- * from https://github.com/tuesda/CircleRefreshLayout
+ * from <a href="https://github.com/tuesda/CircleRefreshLayout">...</a>
  */
 public class BezierCircleHeader extends SimpleComponent implements RefreshHeader {
 
@@ -82,7 +82,7 @@ public class BezierCircleHeader extends SimpleComponent implements RefreshHeader
 
     //<editor-fold desc="Draw">
     @Override
-    protected void dispatchDraw(Canvas canvas) {
+    protected void dispatchDraw(@NonNull Canvas canvas) {
         final View thisView = this;
         final int viewWidth = thisView.getWidth();
         final int viewHeight = mHeight;//thisView.getHeight();
@@ -268,7 +268,7 @@ public class BezierCircleHeader extends SimpleComponent implements RefreshHeader
             float springRatio = 0;
             int status = 0;//0 还没开始弹起 1 向上弹起 2 在弹起的最高点停住
             @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
+            public void onAnimationUpdate(@NonNull ValueAnimator animation) {
                 float curValue = (float) animation.getAnimatedValue();
                 if (status == 0 && curValue <= 0) {
                     status = 1;
@@ -324,7 +324,7 @@ public class BezierCircleHeader extends SimpleComponent implements RefreshHeader
         ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
+            public void onAnimationUpdate(@NonNull ValueAnimator animation) {
                 final View thisView = BezierCircleHeader.this;
                 mFinishRatio = (float) animation.getAnimatedValue();
                 thisView.invalidate();

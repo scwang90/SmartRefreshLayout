@@ -85,7 +85,7 @@ public class BallPulseFooter extends SimpleComponent implements RefreshFooter {
     //</editor-fold>
 
     @Override
-    protected void dispatchDraw(Canvas canvas) {
+    protected void dispatchDraw(@NonNull Canvas canvas) {
         final View thisView = this;
         final int width = thisView.getWidth();
         final int height = thisView.getHeight();

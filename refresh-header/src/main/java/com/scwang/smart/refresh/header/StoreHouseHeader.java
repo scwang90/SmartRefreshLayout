@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * StoreHouseHeader
  * Created by scwang on 2017/5/31.
- * from https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh
+ * from <a href="https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh">...</a>
  */
 @SuppressWarnings({"unused", "UnusedReturnValue", "SameParameterValue"})
 public class StoreHouseHeader extends SimpleComponent implements RefreshHeader {
@@ -119,7 +119,7 @@ public class StoreHouseHeader extends SimpleComponent implements RefreshHeader {
     }
 
     @Override
-    protected void dispatchDraw(Canvas canvas) {
+    protected void dispatchDraw(@NonNull Canvas canvas) {
 
         final View thisView = this;
         final int c1 = canvas.save();

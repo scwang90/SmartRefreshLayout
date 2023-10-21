@@ -33,7 +33,7 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 /**
  * Created by scwang on 2018/2/29.
- * https://github.com/Hitomis/FunGameRefresh
+ * from <a href="https://github.com/Hitomis/FunGameRefresh">...</a>
  */
 @SuppressWarnings("unused")
 public abstract class FunGameView extends FunGameBase {
@@ -235,7 +235,7 @@ public abstract class FunGameView extends FunGameBase {
     protected abstract void drawGame(Canvas canvas, int width, int height);
 
     @Override
-    protected void dispatchDraw(Canvas canvas) {
+    protected void dispatchDraw(@NonNull Canvas canvas) {
         final View thisView = this;
         final int width = thisView.getWidth();
         final int height = mHeaderHeight;

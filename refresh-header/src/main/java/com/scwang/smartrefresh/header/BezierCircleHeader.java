@@ -8,7 +8,7 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 /**
  * CircleRefresh
  * Created by scwang on 2018/7/18.
- * from https://github.com/tuesda/CircleRefreshLayout
+ * from <a href="https://github.com/tuesda/CircleRefreshLayout">...</a>
  */
 public class BezierCircleHeader extends com.scwang.smart.refresh.header.BezierCircleHeader implements RefreshHeader {
 

@@ -19,7 +19,7 @@ import java.util.Random;
 
 /**
  * Created by scwang on 2018/3/09.
- * from https://github.com/Hitomis/FunGameRefresh
+ * from <a href="https://github.com/Hitomis/FunGameRefresh">...</a>
  */
 public class FunGameBattleCityHeader extends FunGameView {
 
@@ -185,7 +185,7 @@ public class FunGameBattleCityHeader extends FunGameView {
     protected int getTrackIndex(int y) {
         int index = y / (mHeaderHeight / TANK_ROW_NUM);
         index = index >= TANK_ROW_NUM ? TANK_ROW_NUM - 1 : index;
-        index = index < 0 ? 0 : index;
+        index = Math.max(index, 0);
         return  index;
     }
 
@@ -217,11 +217,13 @@ public class FunGameBattleCityHeader extends FunGameView {
         bulletSpeed += SmartUtil.dp2px(1);
         wipeOutNum = 0;
 
-        if (enemyTankSpace > 12)
-        enemyTankSpace -= 12;
+        if (enemyTankSpace > 12) {
+            enemyTankSpace -= 12;
+        }
 
-        if (bulletSpace > 30)
-        bulletSpace -= 30;
+        if (bulletSpace > 30) {
+            bulletSpace -= 30;
+        }
     }
 
     /**

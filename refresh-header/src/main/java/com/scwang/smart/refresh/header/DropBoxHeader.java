@@ -31,7 +31,7 @@ import com.scwang.smartrefresh.header.R;
 /**
  * DropBoxRefresh
  * Created by scwang on 2017/6/24.
- * design https://dribbble.com/shots/3470499-DropBox-Refresh
+ * design <a href="https://dribbble.com/shots/3470499-DropBox-Refresh">...</a>
  */
 public class DropBoxHeader extends SimpleComponent implements RefreshHeader {
 
@@ -156,7 +156,7 @@ public class DropBoxHeader extends SimpleComponent implements RefreshHeader {
         mReboundAnimator.setDuration(300);
         mReboundAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
+            public void onAnimationUpdate(@NonNull ValueAnimator animation) {
                 final View thisView = DropBoxHeader.this;
                 mReboundPercent = (float) animation.getAnimatedValue();
                 thisView.invalidate();
@@ -180,7 +180,7 @@ public class DropBoxHeader extends SimpleComponent implements RefreshHeader {
         mDropOutAnimator.setDuration(300);
         mDropOutAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
+            public void onAnimationUpdate(@NonNull ValueAnimator animation) {
                 if (mDropOutPercent < 1 || mDropOutPercent >= 3) {
                     mDropOutPercent = (float) animation.getAnimatedValue();
                 } else if (mDropOutPercent < 2) {
@@ -221,7 +221,7 @@ public class DropBoxHeader extends SimpleComponent implements RefreshHeader {
     }
 
     @Override
-    protected void dispatchDraw(Canvas canvas) {
+    protected void dispatchDraw(@NonNull Canvas canvas) {
 
         final View thisView = this;
         final int width = thisView.getWidth();

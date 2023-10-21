@@ -8,7 +8,7 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 /**
  * Phoenix
  * Created by scwang on 2017/5/31.
- * from https://github.com/Yalantis/Phoenix
+ * from <a href="https://github.com/Yalantis/Phoenix">...</a>
  */
 public class PhoenixHeader extends com.scwang.smart.refresh.header.PhoenixHeader implements RefreshHeader {
 

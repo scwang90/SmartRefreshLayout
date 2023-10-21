@@ -8,7 +8,7 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 /**
  * 全屏水滴下拉头
  * Created by scwang on 2017/6/4.
- * from https://github.com/recruit-lifestyle/WaveSwipeRefreshLayout
+ * from <a href="https://github.com/recruit-lifestyle/WaveSwipeRefreshLayout">...</a>
  */
 public class WaveSwipeHeader extends com.scwang.smart.refresh.header.WaveSwipeHeader implements RefreshHeader {
 

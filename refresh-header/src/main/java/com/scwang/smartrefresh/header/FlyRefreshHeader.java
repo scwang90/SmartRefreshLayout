@@ -8,7 +8,7 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 /**
  * 纸飞机和山丘
  * Created by scwang on 2017/6/6.
- * from https://github.com/race604/FlyRefresh
+ * from <a href="https://github.com/race604/FlyRefresh">...</a>
  */
 public class FlyRefreshHeader extends com.scwang.smart.refresh.header.FlyRefreshHeader implements RefreshHeader {
 

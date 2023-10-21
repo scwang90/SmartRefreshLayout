@@ -9,7 +9,7 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 /**
  * Refresh your delivery!
  * Created by scwang on 2017/6/25.
- * design https://dribbble.com/shots/2753803-Refresh-your-delivery
+ * design <a href="https://dribbble.com/shots/2753803-Refresh-your-delivery">...</a>
  */
 public class DeliveryHeader extends com.scwang.smart.refresh.header.DeliveryHeader implements RefreshHeader {
 

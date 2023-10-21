@@ -7,6 +7,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
+
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
@@ -16,7 +18,7 @@ import com.scwang.smartrefresh.layout.util.SmartUtil;
 /**
  * 下拉头中间的 “水滴”
  * Created by scwang on 2018/6/23.
- * from https://github.com/THEONE10211024/WaterDropListView
+ * from <a href="https://github.com/THEONE10211024/WaterDropListView">...</a>
  */
 @SuppressWarnings("unused")
 public class WaterDropView extends View {
@@ -85,7 +87,7 @@ public class WaterDropView extends View {
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected void onDraw(@NonNull Canvas canvas) {
         super.onDraw(canvas);
 
         final View thisView = this;
@@ -119,13 +121,13 @@ public class WaterDropView extends View {
             float top_y1 = (float) (topCircle.y + topCircle.radius * Math.sin(angle));
 
             float top_x2 = (float) (topCircle.x + topCircle.radius * Math.cos(angle));
-            float top_y2 = top_y1;
+            float top_y2 = top_y1 * 1;
 
             float bottom_x1 = (float) (bottomCircle.x - bottomCircle.radius * Math.cos(angle));
             float bottom_y1 = (float) (bottomCircle.y + bottomCircle.radius * Math.sin(angle));
 
             float bottom_x2 = (float) (bottomCircle.x + bottomCircle.radius * Math.cos(angle));
-            float bottom_y2 = bottom_y1;
+            float bottom_y2 = bottom_y1 * 1;
 
             mPath.moveTo(topCircle.x, topCircle.y);
 
@@ -167,8 +169,8 @@ public class WaterDropView extends View {
         valueAnimator.setInterpolator(new DecelerateInterpolator());
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator1) {
-                WaterDropView.this.updateCompleteState((float) valueAnimator1.getAnimatedValue());
+            public void onAnimationUpdate(@NonNull ValueAnimator valueAnimator) {
+                WaterDropView.this.updateCompleteState((float) valueAnimator.getAnimatedValue());
                 final View thisView = WaterDropView.this;
                 thisView.postInvalidate();
             }

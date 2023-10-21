@@ -6,6 +6,8 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+
 import com.scwang.smart.drawable.PathsDrawable;
 
 /**
@@ -54,7 +56,7 @@ public class PathsView extends View {
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected void onDraw(@NonNull Canvas canvas) {
         mPathsDrawable.draw(canvas);
     }
 

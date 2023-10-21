@@ -32,7 +32,7 @@ import java.util.Random;
 /**
  * Taurus
  * Created by scwang on 2017/5/31.
- * from https://github.com/Yalantis/Taurus
+ * from <a href="https://github.com/Yalantis/Taurus">...</a>
  */
 public class TaurusHeader extends SimpleComponent implements RefreshHeader {
 
@@ -257,7 +257,7 @@ public class TaurusHeader extends SimpleComponent implements RefreshHeader {
 
     //<editor-fold desc="draw">
     @Override
-    protected void dispatchDraw(Canvas canvas) {
+    protected void dispatchDraw(@NonNull Canvas canvas) {
 
         final View thisView = this;
         final int width = thisView.getWidth();
@@ -297,7 +297,7 @@ public class TaurusHeader extends SimpleComponent implements RefreshHeader {
 
                         for (Map.Entry<Float, Float> wind : mWinds.entrySet()) {
                             // We want that interval will be greater than fifth part of draggable distance
-                            if (Math.abs(wind.getKey() - tmp) > mHeaderHeight / RANDOM_Y_COEFFICIENT) {
+                            if (Math.abs(wind.getKey() - tmp) > 1f * mHeaderHeight / RANDOM_Y_COEFFICIENT) {
                                 y = tmp;
                             } else {
                                 y = 0;

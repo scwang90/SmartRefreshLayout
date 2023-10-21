@@ -9,6 +9,7 @@ import android.graphics.Path;
 import android.graphics.RectF;
 
 import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
 import androidx.core.graphics.ColorUtils;
 import androidx.core.view.animation.PathInterpolatorCompat;
 
@@ -21,7 +22,7 @@ import com.scwang.smartrefresh.header.R;
 /**
  * 山丘树木场景视图
  * Created by scwang on 2018/5/28.
- * from https://github.com/race604/FlyRefresh
+ * from <a href="https://github.com/race604/FlyRefresh">...</a>
  */
 @SuppressWarnings("UnnecessaryLocalVariable")
 public class MountainSceneView extends View {
@@ -234,7 +235,7 @@ public class MountainSceneView extends View {
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected void onDraw(@NonNull Canvas canvas) {
         super.onDraw(canvas);
         final View thisView = this;
         canvas.drawColor(COLOR_BACKGROUND);

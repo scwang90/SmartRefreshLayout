@@ -27,7 +27,7 @@ public class RefreshContentHorizontal extends RefreshContentWrapper {
     }
 
     @Override
-    public void onAnimationUpdate(ValueAnimator animation) {
+    public void onAnimationUpdate(@NonNull ValueAnimator animation) {
         int value = (int) animation.getAnimatedValue();
         try {
             if (mScrollableView instanceof AbsListView) {

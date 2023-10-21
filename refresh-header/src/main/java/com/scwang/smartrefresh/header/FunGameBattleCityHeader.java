@@ -9,7 +9,7 @@ import java.util.Random;
 
 /**
  * Created by scwang on 2018/3/09.
- * from https://github.com/Hitomis/FunGameRefresh
+ * from <a href="https://github.com/Hitomis/FunGameRefresh">...</a>
  */
 public class FunGameBattleCityHeader extends com.scwang.smart.refresh.header.FunGameBattleCityHeader implements RefreshHeader {
 
