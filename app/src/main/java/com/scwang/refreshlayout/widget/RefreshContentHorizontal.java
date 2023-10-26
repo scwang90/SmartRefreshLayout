@@ -1,9 +1,10 @@
 package com.scwang.refreshlayout.widget;
 
 import android.animation.ValueAnimator;
-import androidx.annotation.NonNull;
 import android.view.View;
 import android.widget.AbsListView;
+
+import androidx.annotation.NonNull;
 
 import com.scwang.smart.refresh.layout.wrapper.RefreshContentWrapper;
 

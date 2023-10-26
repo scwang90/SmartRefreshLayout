@@ -2,16 +2,16 @@ package com.scwang.refreshlayout.fragment.example;
 
 
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.flexbox.AlignItems;
 import com.google.android.flexbox.FlexDirection;
@@ -41,7 +41,7 @@ public class FlexBoxLayoutManagerFragment extends Fragment {
 
 
         final Toolbar toolbar = root.findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(v -> getActivity().finish());
+        toolbar.setNavigationOnClickListener(v -> requireActivity().finish());
 
         FlexboxLayoutManager manager = new FlexboxLayoutManager(root.getContext());
         //设置主轴排列方式

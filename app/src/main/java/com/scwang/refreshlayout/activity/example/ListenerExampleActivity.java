@@ -1,11 +1,12 @@
 package com.scwang.refreshlayout.activity.example;
 
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import android.text.method.ScrollingMovementMethod;
-import android.widget.TextView;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.smartrefresh.layout.api.RefreshFooter;

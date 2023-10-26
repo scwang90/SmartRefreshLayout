@@ -3,14 +3,19 @@ package com.scwang.refreshlayout.fragment.example;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewConfiguration;
+import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
-import androidx.appcompat.widget.Toolbar;
-import android.util.AttributeSet;
-import android.view.*;
 import com.scwang.refreshlayout.R;
 
 /**
@@ -31,7 +36,7 @@ public class DisallowInterceptExampleFragment extends Fragment {
         super.onViewCreated(root, savedInstanceState);
 
         final Toolbar toolbar = root.findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(v -> getActivity().finish());
+        toolbar.setNavigationOnClickListener(v -> requireActivity().finish());
     }
 
     public static class MoveView extends AppCompatTextView {

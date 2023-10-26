@@ -1,6 +1,7 @@
 package com.scwang.refreshlayout.activity.practice;
 
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 

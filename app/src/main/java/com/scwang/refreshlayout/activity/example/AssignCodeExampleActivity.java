@@ -1,11 +1,10 @@
 package com.scwang.refreshlayout.activity.example;
 
 import android.os.Bundle;
-import androidx.appcompat.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.appcompat.widget.Toolbar;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.smartrefresh.header.MaterialHeader;
