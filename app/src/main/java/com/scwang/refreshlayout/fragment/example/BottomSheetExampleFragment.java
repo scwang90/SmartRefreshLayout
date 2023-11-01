@@ -63,7 +63,7 @@ public class BottomSheetExampleFragment extends Fragment {
         RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), VERTICAL));
+        recyclerView.addItemDecoration(new DividerItemDecoration(root.getContext(), VERTICAL));
 
         recyclerView.setAdapter(mAdapter = new BaseRecyclerAdapter<Void>(initData(),simple_list_item_2) {
             @Override

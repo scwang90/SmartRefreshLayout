@@ -68,7 +68,7 @@ public class EmptyLayoutExampleFragmentInner extends Fragment implements Adapter
         RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), VERTICAL));
+        recyclerView.addItemDecoration(new DividerItemDecoration(root.getContext(), VERTICAL));
         recyclerView.setAdapter(mAdapter = new BaseRecyclerAdapter<Item>(new ArrayList<>(), simple_list_item_2,EmptyLayoutExampleFragmentInner.this) {
             @Override
             protected void onBindViewHolder(SmartViewHolder holder, Item model, int position) {

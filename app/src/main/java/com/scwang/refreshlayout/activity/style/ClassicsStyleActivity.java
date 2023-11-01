@@ -39,8 +39,6 @@ import static androidx.recyclerview.widget.DividerItemDecoration.VERTICAL;
 
 public class ClassicsStyleActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
-    private BaseRecyclerAdapter<Item> mAdpater;
-
     private enum Item {
         尺寸拉伸(R.string.item_style_spinner_scale),
         位置平移(R.string.item_style_spinner_translation),
@@ -79,6 +77,7 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
 
         int delta = new Random().nextInt(7 * 24 * 60 * 60 * 1000);
         mClassicsHeader = (ClassicsHeader)mRefreshLayout.getRefreshHeader();
+        assert mClassicsHeader != null;
         mClassicsHeader.setLastUpdateTime(new Date(System.currentTimeMillis()-delta));
         mClassicsHeader.setTimeFormat(new SimpleDateFormat("更新于 MM-dd HH:mm", Locale.CHINA));
         mClassicsHeader.setTimeFormat(new DynamicTimeFormat("更新于 %s"));
@@ -98,6 +97,7 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
             List<Item> items = new ArrayList<>();
             items.addAll(Arrays.asList(Item.values()));
             items.addAll(Arrays.asList(Item.values()));
+            BaseRecyclerAdapter<Item> mAdpater;
             recyclerView.setAdapter(mAdpater = new BaseRecyclerAdapter<Item>(items, simple_list_item_2,this) {
                 @Override
                 protected void onBindViewHolder(SmartViewHolder holder, Item model, int position) {
@@ -142,11 +142,7 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
             case 背后固定:
                 mClassicsHeader.setSpinnerStyle(SpinnerStyle.FixedBehind);
                 mRefreshLayout.setPrimaryColors(0xff444444, 0xffffffff);
-                if (Build.VERSION.SDK_INT >= 21) {
-                    mDrawableProgress.setTint(0xffffffff);
-                } else if (mDrawableProgress instanceof VectorDrawableCompat) {
-                    ((VectorDrawableCompat) mDrawableProgress).setTint(0xffffffff);
-                }
+                mDrawableProgress.setTint(0xffffffff);
                 /*
                  * 由于是后面才设置，需要手动更改视图的位置
                  * 如果在 onCreate 或者 xml 中设置好[SpinnerStyle] 就不用手动调整位置了
@@ -169,11 +165,7 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
                 setThemeColor(R.color.colorPrimary, R.color.colorPrimaryDark);
                 mRefreshLayout.getLayout().setBackgroundResource(android.R.color.transparent);
                 mRefreshLayout.setPrimaryColors(0, 0xff666666);
-                if (Build.VERSION.SDK_INT >= 21) {
-                    mDrawableProgress.setTint(0xff666666);
-                } else if (mDrawableProgress instanceof VectorDrawableCompat) {
-                    ((VectorDrawableCompat) mDrawableProgress).setTint(0xff666666);
-                }
+                mDrawableProgress.setTint(0xff666666);
                 break;
             case 蓝色主题:
                 setThemeColor(R.color.colorPrimary, R.color.colorPrimaryDark);
@@ -197,12 +189,8 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
     private void setThemeColor(int colorPrimary, int colorPrimaryDark) {
         mToolbar.setBackgroundResource(colorPrimary);
         mRefreshLayout.setPrimaryColorsId(colorPrimary, android.R.color.white);
-        if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().setStatusBarColor(ContextCompat.getColor(this, colorPrimaryDark));
-            mDrawableProgress.setTint(0xffffffff);
-        } else if (mDrawableProgress instanceof VectorDrawableCompat) {
-            ((VectorDrawableCompat) mDrawableProgress).setTint(0xffffffff);
-        }
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, colorPrimaryDark));
+        mDrawableProgress.setTint(0xffffffff);
     }
 
 

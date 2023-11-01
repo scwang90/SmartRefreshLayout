@@ -139,9 +139,9 @@ public class ViewPagerExampleFragment extends Fragment implements OnRefreshListe
             super.onViewCreated(view, savedInstanceState);
             RecyclerView recyclerView = (RecyclerView) view;
 
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
             recyclerView.setItemAnimator(new DefaultItemAnimator());
-            recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
+            recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(),DividerItemDecoration.VERTICAL));
             recyclerView.setAdapter(mAdapter = new BaseRecyclerAdapter<Void>(initData(), simple_list_item_2) {
                 @Override
                 protected void onBindViewHolder(SmartViewHolder holder, Void model, int position) {

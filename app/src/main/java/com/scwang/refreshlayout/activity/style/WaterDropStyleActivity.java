@@ -113,9 +113,7 @@ public class WaterDropStyleActivity extends AppCompatActivity implements Adapter
     private void setThemeColor(int colorPrimary, int colorPrimaryDark) {
         mToolbar.setBackgroundResource(colorPrimary);
         mRefreshLayout.setPrimaryColorsId(colorPrimary, android.R.color.white);
-        if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().setStatusBarColor(ContextCompat.getColor(this, colorPrimaryDark));
-        }
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, colorPrimaryDark));
     }
 
 }

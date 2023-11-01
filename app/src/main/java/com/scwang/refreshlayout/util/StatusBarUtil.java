@@ -71,8 +71,8 @@ public class StatusBarUtil {
 
     //<editor-fold desc="DarkMode">
     public static void darkMode(Activity activity, boolean dark) {
-        if (isFlyme4Later()) {
-            darkModeForFlyme4(activity.getWindow(), dark);
+        if (isFlyMe4Later()) {
+            darkModeForFlyMe4(activity.getWindow(), dark);
         } else if (isMIUI6Later()) {
             darkModeForMIUI6(activity.getWindow(), dark);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -82,8 +82,8 @@ public class StatusBarUtil {
 
     public static void darkModeCancel(Activity activity) {
         Window window = activity.getWindow();
-        if (isFlyme4Later()) {
-            darkModeForFlyme4(window, false);
+        if (isFlyMe4Later()) {
+            darkModeForFlyMe4(window, false);
         } else if (isMIUI6Later()) {
             darkModeForMIUI6(window, false);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -102,8 +102,8 @@ public class StatusBarUtil {
 
     public static void darkOnly(Activity activity) {
         Window window = activity.getWindow();
-        if (isFlyme4Later()) {
-            darkModeForFlyme4(window, true);
+        if (isFlyMe4Later()) {
+            darkModeForFlyMe4(window, true);
         } else if (isMIUI6Later()) {
             darkModeForMIUI6(window, true);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -113,8 +113,8 @@ public class StatusBarUtil {
 
     /** 设置状态栏darkMode,字体颜色及icon变黑(目前支持MIUI6以上,Flyme4以上,Android M以上) */
     public static void darkMode(Window window, int color, @FloatRange(from = 0.0, to = 1.0) float alpha) {
-        if (isFlyme4Later()) {
-            darkModeForFlyme4(window, true);
+        if (isFlyMe4Later()) {
+            darkModeForFlyMe4(window, true);
             immersive(window,color,alpha);
         } else if (isMIUI6Later()) {
             darkModeForMIUI6(window, true);
@@ -159,24 +159,24 @@ public class StatusBarUtil {
      * 设置Flyme4+的darkMode,darkMode时候字体颜色及icon变黑
      * <a href="http://open-wiki.flyme.cn/index.php?title=Flyme%E7%B3%BB%E7%BB%9FAPI">...</a>
      */
-    public static boolean darkModeForFlyme4(Window window, boolean dark) {
+    public static boolean darkModeForFlyMe4(Window window, boolean dark) {
         boolean result = false;
         if (window != null) {
             try {
                 WindowManager.LayoutParams e = window.getAttributes();
                 Field darkFlag = WindowManager.LayoutParams.class.getDeclaredField("MEIZU_FLAG_DARK_STATUS_BAR_ICON");
-                Field meizuFlags = WindowManager.LayoutParams.class.getDeclaredField("meizuFlags");
+                Field flyMeFlags = WindowManager.LayoutParams.class.getDeclaredField("meizuFlags");
                 darkFlag.setAccessible(true);
-                meizuFlags.setAccessible(true);
+                flyMeFlags.setAccessible(true);
                 int bit = darkFlag.getInt(null);
-                int value = meizuFlags.getInt(e);
+                int value = flyMeFlags.getInt(e);
                 if (dark) {
                     value |= bit;
                 } else {
                     value &= ~bit;
                 }
 
-                meizuFlags.setInt(e, value);
+                flyMeFlags.setInt(e, value);
                 window.setAttributes(e);
                 result = true;
             } catch (Exception var8) {
@@ -189,7 +189,7 @@ public class StatusBarUtil {
 
     /**
      * 设置MIUI6+的状态栏是否为darkMode,darkMode时候字体颜色及icon变黑
-     * http://dev.xiaomi.com/doc/p=4769/
+     * <a href="http://dev.xiaomi.com/doc/p=4769/">...</a>
      */
     public static boolean darkModeForMIUI6(Window window, boolean dark) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -211,7 +211,7 @@ public class StatusBarUtil {
     }
 
     /** 判断是否Flyme4以上 */
-    public static boolean isFlyme4Later() {
+    public static boolean isFlyMe4Later() {
         return Build.FINGERPRINT.contains("Flyme_OS_4")
                 || Build.VERSION.INCREMENTAL.contains("Flyme_OS_4")
                 || Pattern.compile("Flyme OS [4|5]", Pattern.CASE_INSENSITIVE).matcher(Build.DISPLAY).find();
@@ -223,6 +223,7 @@ public class StatusBarUtil {
             Class<?> clz = Class.forName("android.os.SystemProperties");
             Method mtd = clz.getMethod("get", String.class);
             String val = (String) mtd.invoke(null, "ro.miui.ui.version.name");
+            assert val != null;
             val = val.replaceAll("[vV]", "");
             int version = Integer.parseInt(val);
             return version >= 6;
@@ -235,59 +236,49 @@ public class StatusBarUtil {
 
     /** 增加View的paddingTop,增加的值为状态栏高度 */
     public static void setPadding(Context context, View view) {
-        if (Build.VERSION.SDK_INT >= MIN_API) {
-            view.setPadding(view.getPaddingLeft(), view.getPaddingTop() + getStatusBarHeight(context),
-                    view.getPaddingRight(), view.getPaddingBottom());
-        }
+        view.setPadding(view.getPaddingLeft(), view.getPaddingTop() + getStatusBarHeight(context),
+                view.getPaddingRight(), view.getPaddingBottom());
     }
     /** 增加View的paddingTop,增加的值为状态栏高度 (智能判断，并设置高度)*/
     public static void setPaddingSmart(Context context, View view) {
-        if (Build.VERSION.SDK_INT >= MIN_API) {
-            ViewGroup.LayoutParams lp = view.getLayoutParams();
-            if (lp != null && lp.height > 0) {
-                lp.height += getStatusBarHeight(context);//增高
-            }
-            view.setPadding(view.getPaddingLeft(), view.getPaddingTop() + getStatusBarHeight(context),
-                    view.getPaddingRight(), view.getPaddingBottom());
+        ViewGroup.LayoutParams lp = view.getLayoutParams();
+        if (lp != null && lp.height > 0) {
+            lp.height += getStatusBarHeight(context);//增高
         }
+        view.setPadding(view.getPaddingLeft(), view.getPaddingTop() + getStatusBarHeight(context),
+                view.getPaddingRight(), view.getPaddingBottom());
     }
 
     /** 增加View的高度以及paddingTop,增加的值为状态栏高度.一般是在沉浸式全屏给ToolBar用的 */
     public static void setHeightAndPadding(Context context, View view) {
-        if (Build.VERSION.SDK_INT >= MIN_API) {
-            ViewGroup.LayoutParams lp = view.getLayoutParams();
-            lp.height += getStatusBarHeight(context);//增高
-            view.setPadding(view.getPaddingLeft(), view.getPaddingTop() + getStatusBarHeight(context),
-                    view.getPaddingRight(), view.getPaddingBottom());
-        }
+        ViewGroup.LayoutParams lp = view.getLayoutParams();
+        lp.height += getStatusBarHeight(context);//增高
+        view.setPadding(view.getPaddingLeft(), view.getPaddingTop() + getStatusBarHeight(context),
+                view.getPaddingRight(), view.getPaddingBottom());
     }
     /** 增加View上边距（MarginTop）一般是给高度为 WARP_CONTENT 的小控件用的*/
     public static void setMargin(Context context, View view) {
-        if (Build.VERSION.SDK_INT >= MIN_API) {
-            ViewGroup.LayoutParams lp = view.getLayoutParams();
-            if (lp instanceof ViewGroup.MarginLayoutParams) {
-                ((ViewGroup.MarginLayoutParams) lp).topMargin += getStatusBarHeight(context);//增高
-            }
-            view.setLayoutParams(lp);
+        ViewGroup.LayoutParams lp = view.getLayoutParams();
+        if (lp instanceof ViewGroup.MarginLayoutParams) {
+            ((ViewGroup.MarginLayoutParams) lp).topMargin += getStatusBarHeight(context);//增高
         }
+        view.setLayoutParams(lp);
     }
     /**
      * 创建假的透明栏
      */
     public static void setTranslucentView(ViewGroup container, int color, @FloatRange(from = 0.0, to = 1.0) float alpha) {
-        if (Build.VERSION.SDK_INT >= 19) {
-            int mixtureColor = mixtureColor(color, alpha);
-            View translucentView = container.findViewById(android.R.id.custom);
-            if (translucentView == null && mixtureColor != 0) {
-                translucentView = new View(container.getContext());
-                translucentView.setId(android.R.id.custom);
-                ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT, getStatusBarHeight(container.getContext()));
-                container.addView(translucentView, lp);
-            }
-            if (translucentView != null) {
-                translucentView.setBackgroundColor(mixtureColor);
-            }
+        int mixtureColor = mixtureColor(color, alpha);
+        View translucentView = container.findViewById(android.R.id.custom);
+        if (translucentView == null && mixtureColor != 0) {
+            translucentView = new View(container.getContext());
+            translucentView.setId(android.R.id.custom);
+            ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, getStatusBarHeight(container.getContext()));
+            container.addView(translucentView, lp);
+        }
+        if (translucentView != null) {
+            translucentView.setBackgroundColor(mixtureColor);
         }
     }
 

@@ -137,7 +137,7 @@ public class NestedScrollExampleFragmentIntegral extends Fragment implements Ada
             super.onViewCreated(view, savedInstanceState);
             mRecyclerView.setItemAnimator(new DefaultItemAnimator());
             mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
+            mRecyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(),DividerItemDecoration.VERTICAL));
             mRecyclerView.setAdapter(mAdapter = new BaseRecyclerAdapter<Item>(buildItems(), simple_list_item_2) {
                 @Override
                 protected void onBindViewHolder(SmartViewHolder holder, Item model, int position) {

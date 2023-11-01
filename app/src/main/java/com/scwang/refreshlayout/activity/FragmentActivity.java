@@ -80,9 +80,9 @@ public class FragmentActivity extends AppCompatActivity {
     }
 
     //<editor-fold desc="反射缓存">
-    private static Map<String, Class> typeCache = new HashMap<>();
+    private static final Map<String, Class<?>> typeCache = new HashMap<>();
     private Class<?> getFragmentClass() throws ClassNotFoundException {
-        Class type = typeCache.get(mFragmentClazz);
+        Class<?> type = typeCache.get(mFragmentClazz);
         if (type == null) {
             typeCache.put(mFragmentClazz, type = Class.forName(mFragmentClazz));
         }

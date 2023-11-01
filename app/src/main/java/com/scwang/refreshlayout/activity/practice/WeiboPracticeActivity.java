@@ -77,10 +77,10 @@ public class WeiboPracticeActivity extends AppCompatActivity {
         });
         scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             private int lastScrollY = 0;
-            private int h = SmartUtil.dp2px(170);
-            private int color = ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary)&0x00ffffff;
+            private final int h = SmartUtil.dp2px(170);
+            private final int color = ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary)&0x00ffffff;
             @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+            public void onScrollChange(@NonNull NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 if (lastScrollY < h) {
                     scrollY = Math.min(h, scrollY);
                     mScrollY = Math.min(scrollY, h);

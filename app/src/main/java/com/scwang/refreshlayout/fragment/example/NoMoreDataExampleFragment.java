@@ -56,7 +56,7 @@ public class NoMoreDataExampleFragment extends Fragment {
         RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
         if (recyclerView != null) {
             recyclerView.setNestedScrollingEnabled(false);
-            recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), VERTICAL));
+            recyclerView.addItemDecoration(new DividerItemDecoration(root.getContext(), VERTICAL));
             recyclerView.setAdapter(mAdapter = new BaseRecyclerAdapter<Void>(simple_list_item_2) {
                 @Override
                 protected void onBindViewHolder(SmartViewHolder holder, Void model, int position) {

@@ -122,9 +122,7 @@ public class MaterialStyleActivity extends AppCompatActivity implements AdapterV
         mRefreshLayout.setPrimaryColorsId(colorPrimary, android.R.color.white);
         mMaterialHeader.setProgressBackgroundColorSchemeResource(colorPrimary);
         mMaterialHeader.setColorSchemeResources(android.R.color.white);
-        if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().setStatusBarColor(ContextCompat.getColor(this, colorPrimaryDark));
-        }
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, colorPrimaryDark));
     }
 
 }

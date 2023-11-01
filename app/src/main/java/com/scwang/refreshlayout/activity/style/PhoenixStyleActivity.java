@@ -150,9 +150,7 @@ public class PhoenixStyleActivity extends AppCompatActivity implements AdapterVi
         mRefreshLayout.setPrimaryColorsId(colorPrimary, android.R.color.white);
         mActionButton.setBackgroundColor(ContextCompat.getColor(this, colorPrimaryDark));
         mActionButton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, colorPrimaryDark)));
-        if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().setStatusBarColor(ContextCompat.getColor(this, colorPrimaryDark));
-        }
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, colorPrimaryDark));
     }
 
 }

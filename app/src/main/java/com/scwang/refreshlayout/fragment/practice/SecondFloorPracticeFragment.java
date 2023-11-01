@@ -50,7 +50,7 @@ public class SecondFloorPracticeFragment extends Fragment {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().finish();
+                requireActivity().finish();
             }
         });
 

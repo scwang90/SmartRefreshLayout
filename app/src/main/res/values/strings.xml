@@ -178,6 +178,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="experiment_content">Content</string>
+    <string name="experiment_footer">Footer</string>
 
 
 </resources>

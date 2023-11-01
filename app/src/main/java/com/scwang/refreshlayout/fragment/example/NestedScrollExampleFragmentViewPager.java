@@ -119,7 +119,7 @@ public class NestedScrollExampleFragmentViewPager extends Fragment {
             super.onViewCreated(view, savedInstanceState);
             mRecyclerView.setItemAnimator(new DefaultItemAnimator());
             mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
+            mRecyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(),DividerItemDecoration.VERTICAL));
             mRecyclerView.setAdapter(mAdapter = new BaseRecyclerAdapter<Void>(initData(), simple_list_item_2) {
                 @Override
                 protected void onBindViewHolder(SmartViewHolder holder, Void model, int position) {

@@ -68,7 +68,7 @@ public class SpecifyStyleExampleFragment extends Fragment implements AdapterView
             RecyclerView recyclerView = (RecyclerView) view;
             recyclerView.setItemAnimator(new DefaultItemAnimator());
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), VERTICAL));
+            recyclerView.addItemDecoration(new DividerItemDecoration(root.getContext(), VERTICAL));
             recyclerView.setAdapter(new BaseRecyclerAdapter<Item>(Arrays.asList(Item.values()), simple_list_item_2,this) {
                 @Override
                 protected void onBindViewHolder(SmartViewHolder holder, Item model, int position) {

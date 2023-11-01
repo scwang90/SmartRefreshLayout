@@ -81,7 +81,7 @@ public class EmptyLayoutExampleFragment extends Fragment implements AdapterView.
         mRecyclerView = root.findViewById(recyclerView);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), VERTICAL));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(root.getContext(), VERTICAL));
 
         mLoadingLayout = root.findViewById(R.id.loading);
         mLoadingLayout.showEmpty();

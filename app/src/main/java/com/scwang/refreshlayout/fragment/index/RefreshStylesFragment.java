@@ -104,7 +104,7 @@ public class RefreshStylesFragment extends Fragment implements AdapterView.OnIte
             RecyclerView recyclerView = (RecyclerView) view;
             recyclerView.setItemAnimator(new DefaultItemAnimator());
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), VERTICAL));
+            recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), VERTICAL));
             recyclerView.setAdapter(new BaseRecyclerAdapter<Item>(Arrays.asList(Item.values()), simple_list_item_2,this) {
                 @NonNull
                 @Override
