@@ -2,7 +2,6 @@ package com.scwang.refreshlayout.activity.style;
 
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,7 +15,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
@@ -40,20 +38,22 @@ import static androidx.recyclerview.widget.DividerItemDecoration.VERTICAL;
 public class ClassicsStyleActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private enum Item {
-        尺寸拉伸(R.string.item_style_spinner_scale),
-        位置平移(R.string.item_style_spinner_translation),
-        背后固定(R.string.item_style_spinner_behind),
-        显示时间(R.string.item_style_spinner_update_on),
-        隐藏时间(R.string.item_style_spinner_update_off),
-//        加载更多(R.string.item_style_load_more),
-        默认主题(R.string.item_style_theme_default_abstract),
-        橙色主题(R.string.item_style_theme_orange_abstract),
-        红色主题(R.string.item_style_theme_red_abstract),
-        绿色主题(R.string.item_style_theme_green_abstract),
-        蓝色主题(R.string.item_style_theme_blue_abstract),
+        SizeScale("尺寸拉伸", R.string.item_style_spinner_scale),
+        PlaceMove("位置平移", R.string.item_style_spinner_translation),
+        FixedBehind("背后固定", R.string.item_style_spinner_behind),
+        TimeShow("显示时间", R.string.item_style_spinner_update_on),
+        TimeHide("隐藏时间", R.string.item_style_spinner_update_off),
+//        LoadMore("加载更多", R.string.item_style_load_more),
+        ThemeDefault("默认主题", R.string.item_style_theme_default_abstract),
+        ThemeOrange("橙色主题", R.string.item_style_theme_orange_abstract),
+        ThemeRed("红色主题", R.string.item_style_theme_red_abstract),
+        ThemeGreen("绿色主题", R.string.item_style_theme_green_abstract),
+        ThemeBlue("蓝色主题", R.string.item_style_theme_blue_abstract),
         ;
+        public final String remark;
         public final int nameId;
-        Item(@StringRes int nameId) {
+        Item(String remark, @StringRes int nameId) {
+            this.remark = remark;
             this.nameId = nameId;
         }
     }
@@ -97,8 +97,7 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
             List<Item> items = new ArrayList<>();
             items.addAll(Arrays.asList(Item.values()));
             items.addAll(Arrays.asList(Item.values()));
-            BaseRecyclerAdapter<Item> mAdpater;
-            recyclerView.setAdapter(mAdpater = new BaseRecyclerAdapter<Item>(items, simple_list_item_2,this) {
+            recyclerView.setAdapter(new BaseRecyclerAdapter<Item>(items, simple_list_item_2,this) {
                 @Override
                 protected void onBindViewHolder(SmartViewHolder holder, Item model, int position) {
                     holder.text(android.R.id.text1, model.name());
@@ -139,7 +138,7 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         switch (Item.values()[position % Item.values().length]) {
-            case 背后固定:
+            case FixedBehind:
                 mClassicsHeader.setSpinnerStyle(SpinnerStyle.FixedBehind);
                 mRefreshLayout.setPrimaryColors(0xff444444, 0xffffffff);
                 mDrawableProgress.setTint(0xffffffff);
@@ -149,37 +148,37 @@ public class ClassicsStyleActivity extends AppCompatActivity implements AdapterV
                  */
                 mRefreshLayout.getLayout().bringChildToFront(mRecyclerView);
                 break;
-            case 尺寸拉伸:
+            case SizeScale:
                 mClassicsHeader.setSpinnerStyle(SpinnerStyle.values[1]);
                 break;
-            case 位置平移:
+            case PlaceMove:
                 mClassicsHeader.setSpinnerStyle(SpinnerStyle.Translate);
                 break;
-            case 显示时间:
+            case TimeShow:
                 mClassicsHeader.setEnableLastTime(true);
                 break;
-            case 隐藏时间:
+            case TimeHide:
                 mClassicsHeader.setEnableLastTime(false);
                 break;
-            case 默认主题:
+            case ThemeDefault:
                 setThemeColor(R.color.colorPrimary, R.color.colorPrimaryDark);
                 mRefreshLayout.getLayout().setBackgroundResource(android.R.color.transparent);
                 mRefreshLayout.setPrimaryColors(0, 0xff666666);
                 mDrawableProgress.setTint(0xff666666);
                 break;
-            case 蓝色主题:
+            case ThemeBlue:
                 setThemeColor(R.color.colorPrimary, R.color.colorPrimaryDark);
                 break;
-            case 绿色主题:
+            case ThemeGreen:
                 setThemeColor(android.R.color.holo_green_light, android.R.color.holo_green_dark);
                 break;
-            case 红色主题:
+            case ThemeRed:
                 setThemeColor(android.R.color.holo_red_light, android.R.color.holo_red_dark);
                 break;
-            case 橙色主题:
+            case ThemeOrange:
                 setThemeColor(android.R.color.holo_orange_light, android.R.color.holo_orange_dark);
                 break;
-//            case 加载更多:
+//            case LoadMore:
 //                mRefreshLayout.autoLoadMore();
 //                return;
         }

@@ -31,9 +31,9 @@ import static android.R.layout.simple_list_item_2;
 public class I18nExampleActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private enum Item {
-        i1(R.string.item_example_i18n_system),
-        i2(R.string.item_example_i18n_chinese),
-        i3(R.string.item_example_i18n_english),
+        LanguageSystem(R.string.item_example_i18n_system),
+        LanguageChinese(R.string.item_example_i18n_chinese),
+        LanguageEnglish(R.string.item_example_i18n_english),
         ;
         public final int nameId;
         Item(@StringRes int nameId) {
@@ -76,14 +76,14 @@ public class I18nExampleActivity extends AppCompatActivity implements AdapterVie
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        switch (Item.values()[position % Item.values().length].nameId) {
-            case R.string.item_example_i18n_system:
+        switch (Item.values()[position % Item.values().length]) {
+            case LanguageSystem:
                 changeAppLanguage(Locale.getDefault());
                 break;
-            case R.string.item_example_i18n_chinese:
+            case LanguageChinese:
                 changeAppLanguage(Locale.CHINESE);
                 break;
-            case R.string.item_example_i18n_english:
+            case LanguageEnglish:
                 changeAppLanguage(Locale.ENGLISH);
                 break;
         }

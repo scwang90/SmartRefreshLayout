@@ -1,7 +1,6 @@
 package com.scwang.refreshlayout.activity.style;
 
 import android.content.res.ColorStateList;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -33,15 +32,17 @@ import static androidx.recyclerview.widget.DividerItemDecoration.VERTICAL;
 public class PhoenixStyleActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private enum Item {
-        折叠(R.string.item_style_app_bar_collapse),
-        展开(R.string.item_style_app_bar_expand),
-        橙色主题(R.string.item_style_theme_orange_abstract),
-        红色主题(R.string.item_style_theme_red_abstract),
-        绿色主题(R.string.item_style_theme_green_abstract),
-        蓝色主题(R.string.item_style_theme_blue_abstract),
+        Collapse("折叠", R.string.item_style_app_bar_collapse),
+        Expend("展开", R.string.item_style_app_bar_expand),
+        ThemeOrange("橙色主题", R.string.item_style_theme_orange_abstract),
+        ThemeRed("红色主题", R.string.item_style_theme_red_abstract),
+        ThemeGreen("绿色主题", R.string.item_style_theme_green_abstract),
+        ThemeBlue("蓝色主题", R.string.item_style_theme_blue_abstract),
         ;
+        public final String remark;
         public final int nameId;
-        Item(@StringRes int nameId) {
+        Item(String remark, @StringRes int nameId) {
+            this.remark = remark;
             this.nameId = nameId;
         }
     }
@@ -117,26 +118,26 @@ public class PhoenixStyleActivity extends AppCompatActivity implements AdapterVi
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         switch (Item.values()[position % Item.values().length]) {
-            case 折叠:
+            case Collapse:
                 mAppBarLayout.setExpanded(false, true);
                 mAppBarLayout.setEnabled(false);
                 mRecyclerView.setNestedScrollingEnabled(false);
                 break;
-            case 展开:
+            case Expend:
                 mAppBarLayout.setEnabled(true);
                 mAppBarLayout.setExpanded(true, true);
                 mRecyclerView.setNestedScrollingEnabled(true);
                 break;
-            case 蓝色主题:
+            case ThemeBlue:
                 setThemeColor(R.color.colorPrimary, R.color.colorPrimaryDark);
                 break;
-            case 绿色主题:
+            case ThemeGreen:
                 setThemeColor(android.R.color.holo_green_light, android.R.color.holo_green_dark);
                 break;
-            case 红色主题:
+            case ThemeRed:
                 setThemeColor(android.R.color.holo_red_light, android.R.color.holo_red_dark);
                 break;
-            case 橙色主题:
+            case ThemeOrange:
                 setThemeColor(android.R.color.holo_orange_light, android.R.color.holo_orange_dark);
                 break;
         }

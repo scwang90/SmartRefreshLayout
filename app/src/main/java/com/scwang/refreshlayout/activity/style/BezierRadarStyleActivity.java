@@ -1,6 +1,5 @@
 package com.scwang.refreshlayout.activity.style;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -30,17 +29,19 @@ import static androidx.recyclerview.widget.DividerItemDecoration.VERTICAL;
 public class BezierRadarStyleActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private enum Item {
-        打开左右拖动(R.string.item_style_horizontal_drag_on),
-        关闭左右拖动(R.string.item_style_horizontal_drag_off),
-        内容不偏移(R.string.item_style_content_translation_off),
-        内容跟随偏移(R.string.item_style_content_translation_on),
-        橙色主题(R.string.item_style_theme_orange_abstract),
-        红色主题(R.string.item_style_theme_red_abstract),
-        绿色主题(R.string.item_style_theme_green_abstract),
-        蓝色主题(R.string.item_style_theme_blue_abstract),
+        DragLeftRight("打开左右拖动", R.string.item_style_horizontal_drag_on),
+        DragUpDown("关闭左右拖动", R.string.item_style_horizontal_drag_off),
+        ContentNoOffset("内容不偏移", R.string.item_style_content_translation_off),
+        ContentOffset("内容跟随偏移", R.string.item_style_content_translation_on),
+        ThemeOrange("橙色主题", R.string.item_style_theme_orange_abstract),
+        ThemeRed("红色主题", R.string.item_style_theme_red_abstract),
+        ThemeGreen("绿色主题", R.string.item_style_theme_green_abstract),
+        ThemeBlue("蓝色主题", R.string.item_style_theme_blue_abstract),
         ;
+        public final String remark;
         public final int nameId;
-        Item(@StringRes int nameId) {
+        Item(String remark, @StringRes int nameId) {
+            this.remark = remark;
             this.nameId = nameId;
         }
     }
@@ -88,28 +89,28 @@ public class BezierRadarStyleActivity extends AppCompatActivity implements Adapt
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         switch (Item.values()[position % Item.values().length]) {
-            case 内容不偏移:
+            case ContentNoOffset:
                 mRefreshLayout.setEnableHeaderTranslationContent(false);
                 break;
-            case 内容跟随偏移:
+            case ContentOffset:
                 mRefreshLayout.setEnableHeaderTranslationContent(true);
                 break;
-            case 蓝色主题:
+            case ThemeBlue:
                 setThemeColor(R.color.colorPrimary, R.color.colorPrimaryDark);
                 break;
-            case 绿色主题:
+            case ThemeGreen:
                 setThemeColor(android.R.color.holo_green_light, android.R.color.holo_green_dark);
                 break;
-            case 红色主题:
+            case ThemeRed:
                 setThemeColor(android.R.color.holo_red_light, android.R.color.holo_red_dark);
                 break;
-            case 橙色主题:
+            case ThemeOrange:
                 setThemeColor(android.R.color.holo_orange_light, android.R.color.holo_orange_dark);
                 break;
-            case 打开左右拖动:
+            case DragLeftRight:
                 mRefreshHeader.setEnableHorizontalDrag(true);
                 break;
-            case 关闭左右拖动:
+            case DragUpDown:
                 mRefreshHeader.setEnableHorizontalDrag(false);
                 break;
         }

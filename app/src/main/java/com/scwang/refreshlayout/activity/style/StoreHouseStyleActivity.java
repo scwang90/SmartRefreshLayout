@@ -1,7 +1,6 @@
 package com.scwang.refreshlayout.activity.style;
 
 import android.graphics.Point;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -32,17 +31,19 @@ import static androidx.recyclerview.widget.DividerItemDecoration.VERTICAL;
 public class StoreHouseStyleActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private enum Item {
-        显示商标(R.string.item_style_store_house_brand),
-        显示图标(R.string.item_style_store_house_icon),
-        显示中文(R.string.item_style_store_house_chinese),
-        显示英文(R.string.item_style_store_house_english),
-        橙色主题(R.string.item_style_theme_orange_abstract),
-        红色主题(R.string.item_style_theme_red_abstract),
-        绿色主题(R.string.item_style_theme_green_abstract),
-        蓝色主题(R.string.item_style_theme_blue_abstract),
+        ShowSymbol("显示商标", R.string.item_style_store_house_brand),
+        ShowIcon("显示图标", R.string.item_style_store_house_icon),
+        ShowChinese("显示中文", R.string.item_style_store_house_chinese),
+        ShowEnglish("显示英文", R.string.item_style_store_house_english),
+        ThemeOrange("橙色主题", R.string.item_style_theme_orange_abstract),
+        ThemeRed("红色主题", R.string.item_style_theme_red_abstract),
+        ThemeGreen("绿色主题", R.string.item_style_theme_green_abstract),
+        ThemeBlue("蓝色主题", R.string.item_style_theme_blue_abstract),
         ;
+        public final String remark;
         public final int nameId;
-        Item(@StringRes int nameId) {
+        Item(String remark, @StringRes int nameId) {
+            this.remark = remark;
             this.nameId = nameId;
         }
     }
@@ -88,44 +89,44 @@ public class StoreHouseStyleActivity extends AppCompatActivity implements Adapte
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         switch (Item.values()[position % Item.values().length]) {
-            case 显示中文: {
+            case ShowChinese: {
                 RefreshHeader refreshHeader = mRefreshLayout.getRefreshHeader();
                 if (refreshHeader instanceof StoreHouseHeader) {
                     ((StoreHouseHeader) refreshHeader).initWithPointList(getPointList());
                 }
                 break;
             }
-            case 显示英文: {
+            case ShowEnglish: {
                 RefreshHeader refreshHeader = mRefreshLayout.getRefreshHeader();
                 if (refreshHeader instanceof StoreHouseHeader) {
                     ((StoreHouseHeader) refreshHeader).initWithString("SmartRefresh");
                 }
                 break;
             }
-            case 显示图标: {
+            case ShowIcon: {
                 RefreshHeader refreshHeader = mRefreshLayout.getRefreshHeader();
                 if (refreshHeader instanceof StoreHouseHeader) {
                     ((StoreHouseHeader) refreshHeader).initWithStringArray(R.array.storehouse);
                 }
                 break;
             }
-            case 显示商标: {
+            case ShowSymbol: {
                 RefreshHeader refreshHeader = mRefreshLayout.getRefreshHeader();
                 if (refreshHeader instanceof StoreHouseHeader) {
                     ((StoreHouseHeader) refreshHeader).initWithStringArray(R.array.akta);
                 }
                 break;
             }
-            case 蓝色主题:
+            case ThemeBlue:
                 setThemeColor(R.color.colorPrimary, R.color.colorPrimaryDark);
                 break;
-            case 绿色主题:
+            case ThemeGreen:
                 setThemeColor(android.R.color.holo_green_light, android.R.color.holo_green_dark);
                 break;
-            case 红色主题:
+            case ThemeRed:
                 setThemeColor(android.R.color.holo_red_light, android.R.color.holo_red_dark);
                 break;
-            case 橙色主题:
+            case ThemeOrange:
                 setThemeColor(android.R.color.holo_orange_light, android.R.color.holo_orange_dark);
                 break;
         }
