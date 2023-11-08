@@ -1,9 +1,10 @@
 package com.scwang.smart.refresh.layout.api;
 
 import android.animation.ValueAnimator.AnimatorUpdateListener;
-import androidx.annotation.NonNull;
 import android.view.MotionEvent;
 import android.view.View;
+
+import androidx.annotation.NonNull;
 
 import com.scwang.smart.refresh.layout.listener.ScrollBoundaryDecider;
 

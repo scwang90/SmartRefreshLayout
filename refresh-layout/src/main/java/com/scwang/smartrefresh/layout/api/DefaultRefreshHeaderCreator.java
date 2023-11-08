@@ -1,6 +1,7 @@
 package com.scwang.smartrefresh.layout.api;
 
 import android.content.Context;
+
 import androidx.annotation.NonNull;
 
 /**

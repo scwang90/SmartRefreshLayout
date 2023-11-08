@@ -1,8 +1,8 @@
-package com.scwang.smartrefreshfooter;
+package com.scwang.smartrefresh.footer;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Example local unit test, which will execute on the development machine (host).

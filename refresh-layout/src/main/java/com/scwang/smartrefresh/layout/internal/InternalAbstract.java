@@ -1,10 +1,11 @@
 package com.scwang.smartrefresh.layout.internal;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.scwang.smart.refresh.layout.simple.SimpleComponent;
 import com.scwang.smartrefresh.layout.api.RefreshInternal;

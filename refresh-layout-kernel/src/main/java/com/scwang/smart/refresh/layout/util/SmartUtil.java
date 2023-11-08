@@ -3,15 +3,6 @@ package com.scwang.smart.refresh.layout.util;
 import android.content.res.Resources;
 import android.graphics.PointF;
 import android.os.Build;
-import androidx.annotation.NonNull;
-
-import androidx.core.view.NestedScrollingChild;
-import androidx.core.view.NestedScrollingParent;
-import androidx.core.view.ScrollingView;
-import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager2.widget.ViewPager2;
-import androidx.core.widget.NestedScrollView;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
@@ -19,6 +10,15 @@ import android.webkit.WebView;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.ScrollView;
+
+import androidx.annotation.NonNull;
+import androidx.core.view.NestedScrollingChild;
+import androidx.core.view.NestedScrollingParent;
+import androidx.core.view.ScrollingView;
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.scwang.smart.refresh.layout.api.RefreshComponent;
 import com.scwang.smart.refresh.layout.kernel.R;

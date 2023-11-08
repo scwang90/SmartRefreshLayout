@@ -2,12 +2,12 @@ package com.scwang.smartrefresh.layout;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.scwang.smart.refresh.header.ClassicsHeader;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshInitializer;

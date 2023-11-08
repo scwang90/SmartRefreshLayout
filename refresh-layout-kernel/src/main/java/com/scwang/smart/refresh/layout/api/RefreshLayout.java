@@ -1,14 +1,15 @@
 package com.scwang.smart.refresh.layout.api;
 
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.Interpolator;
+
 import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
 import androidx.annotation.FloatRange;
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.Interpolator;
 
 import com.scwang.smart.refresh.layout.constant.RefreshState;
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;

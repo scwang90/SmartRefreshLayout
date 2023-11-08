@@ -1,6 +1,7 @@
 package com.scwang.smart.refresh.layout.listener;
 
 import android.content.Context;
+
 import androidx.annotation.NonNull;
 
 import com.scwang.smart.refresh.layout.api.RefreshHeader;
