@@ -29,12 +29,7 @@ public class TwoLevelHeader extends com.scwang.smart.refresh.header.TwoLevelHead
     //</editor-fold>
 
     public TwoLevelHeader setOnTwoLevelListener(final OnTwoLevelListener listener) {
-        super.setOnTwoLevelListener(new com.scwang.smart.refresh.header.listener.OnTwoLevelListener() {
-            @Override
-            public boolean onTwoLevel(@NonNull com.scwang.smart.refresh.layout.api.RefreshLayout refreshLayout) {
-                return listener.onTwoLevel((RefreshLayout) refreshLayout);
-            }
-        });
+        super.setOnTwoLevelListener(layout -> listener.onTwoLevel((RefreshLayout) layout));
         return this;
     }
 

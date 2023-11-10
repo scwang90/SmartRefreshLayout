@@ -155,13 +155,10 @@ public class DropBoxHeader extends SimpleComponent implements RefreshHeader {
         mReboundAnimator = ValueAnimator.ofFloat(0, 1, 0);
         mReboundAnimator.setInterpolator(interpolator);
         mReboundAnimator.setDuration(300);
-        mReboundAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(@NonNull ValueAnimator animation) {
-                final View thisView = DropBoxHeader.this;
-                mReboundPercent = (float) animation.getAnimatedValue();
-                thisView.invalidate();
-            }
+        mReboundAnimator.addUpdateListener(animation -> {
+            final View thisView = DropBoxHeader.this;
+            mReboundPercent = (float) animation.getAnimatedValue();
+            thisView.invalidate();
         });
         mReboundAnimator.addListener(new AnimatorListenerAdapter() {
             @Override
@@ -179,22 +176,19 @@ public class DropBoxHeader extends SimpleComponent implements RefreshHeader {
         mDropOutAnimator = ValueAnimator.ofFloat(0, 1);
         mDropOutAnimator.setInterpolator(interpolator);
         mDropOutAnimator.setDuration(300);
-        mDropOutAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(@NonNull ValueAnimator animation) {
-                if (mDropOutPercent < 1 || mDropOutPercent >= 3) {
-                    mDropOutPercent = (float) animation.getAnimatedValue();
-                } else if (mDropOutPercent < 2) {
-                    mDropOutPercent = 1 + (float) animation.getAnimatedValue();
-                } else if (mDropOutPercent < 3) {
-                    mDropOutPercent = 2 + (float) animation.getAnimatedValue();
-                    if (mDropOutPercent == 3) {
-                        mDropOutOverFlow = true;
-                    }
+        mDropOutAnimator.addUpdateListener(animation -> {
+            if (mDropOutPercent < 1 || mDropOutPercent >= 3) {
+                mDropOutPercent = (float) animation.getAnimatedValue();
+            } else if (mDropOutPercent < 2) {
+                mDropOutPercent = 1 + (float) animation.getAnimatedValue();
+            } else if (mDropOutPercent < 3) {
+                mDropOutPercent = 2 + (float) animation.getAnimatedValue();
+                if (mDropOutPercent == 3) {
+                    mDropOutOverFlow = true;
                 }
-                final View thisView = DropBoxHeader.this;
-                thisView.invalidate();
             }
+            final View thisView = DropBoxHeader.this;
+            thisView.invalidate();
         });
         mDropOutAnimator.addListener(new AnimatorListenerAdapter() {
             @Override

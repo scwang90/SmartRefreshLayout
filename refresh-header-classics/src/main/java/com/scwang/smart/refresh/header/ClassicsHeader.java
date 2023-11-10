@@ -222,13 +222,11 @@ public class ClassicsHeader extends ClassicsAbstract<ClassicsHeader> implements 
         try {//try 不能删除-否则会出现兼容性问题
             if (context instanceof FragmentActivity) {
                 FragmentManager manager = ((FragmentActivity) context).getSupportFragmentManager();
-                if (manager != null) {
-                    @SuppressLint("RestrictedApi")
-                    List<Fragment> fragments = manager.getFragments();
-                    if (fragments.size() > 0) {
-                        setLastUpdateTime(new Date());
-                        return;
-                    }
+                @SuppressLint("RestrictedApi")
+                List<Fragment> fragments = manager.getFragments();
+                if (fragments.size() > 0) {
+                    setLastUpdateTime(new Date());
+                    return;
                 }
             }
         } catch (Throwable e) {

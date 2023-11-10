@@ -41,8 +41,6 @@ import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Fancy progress indicator for Material theme.
@@ -90,9 +88,6 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
 
     /** The number of points in the progress "star". */
     private static final byte NUM_POINTS = 5;
-    /** The list of animators operating on this drawable. */
-    private final List<Animation> mAnimators = new ArrayList<>();
-
     /** The indicator ring, used to manage animation state. */
     private final Ring mRing = new Ring();
 
@@ -109,7 +104,7 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
     private static final byte ARROW_HEIGHT_LARGE = 6;
     private static final float MAX_PROGRESS_ARC = .8f;
 
-    private View mParent;
+    private final View mParent;
     private Animation mAnimation;
     float mRotationCount;
     private float mWidth;
@@ -321,7 +316,6 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
     }
 
     // Adapted from ArgbEvaluator.java
-    @SuppressWarnings("RedundantCast")
     private int evaluateColorChange(float fraction, int startValue, int endValue) {
         int startA = (startValue >> 24) & 0xff;
         int startR = (startValue >> 16) & 0xff;
@@ -457,7 +451,7 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
         mAnimation = animation;
     }
 
-    private class Ring {
+    private static class Ring {
         final RectF mTempBounds = new RectF();
         final Paint mPaint = new Paint();
         final Paint mArrowPaint = new Paint();
@@ -482,9 +476,6 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
         double mRingCenterRadius;
         int mArrowWidth;
         int mArrowHeight;
-//        int mAlpha;
-//        final Paint mCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-//        int mBackgroundColor;
         int mCurrentColor;
 
         Ring() {

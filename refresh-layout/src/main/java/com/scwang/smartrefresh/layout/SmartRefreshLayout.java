@@ -143,12 +143,7 @@ public class SmartRefreshLayout extends com.scwang.smart.refresh.layout.SmartRef
      */
     @Override
     public RefreshLayout setOnRefreshListener(final OnRefreshListener listener) {
-        super.setOnRefreshListener(new com.scwang.smart.refresh.layout.listener.OnRefreshListener() {
-            @Override
-            public void onRefresh(@NonNull com.scwang.smart.refresh.layout.api.RefreshLayout refreshLayout) {
-                listener.onRefresh(SmartRefreshLayout.this);
-            }
-        });
+        super.setOnRefreshListener(refreshLayout -> listener.onRefresh(SmartRefreshLayout.this));
         return this;
     }
 
@@ -160,12 +155,7 @@ public class SmartRefreshLayout extends com.scwang.smart.refresh.layout.SmartRef
      */
     @Override
     public RefreshLayout setOnLoadMoreListener(final OnLoadMoreListener listener) {
-        super.setOnLoadMoreListener(new com.scwang.smart.refresh.layout.listener.OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull com.scwang.smart.refresh.layout.api.RefreshLayout refreshLayout) {
-                listener.onLoadMore(SmartRefreshLayout.this);
-            }
-        });
+        super.setOnLoadMoreListener(refreshLayout -> listener.onLoadMore(SmartRefreshLayout.this));
         return this;
     }
 
@@ -234,15 +224,11 @@ public class SmartRefreshLayout extends com.scwang.smart.refresh.layout.SmartRef
      * @param creator Header构建器
      */
     public static void setDefaultRefreshHeaderCreator(@NonNull final DefaultRefreshHeaderCreator creator) {
-        com.scwang.smart.refresh.layout.SmartRefreshLayout.setDefaultRefreshHeaderCreator(new com.scwang.smart.refresh.layout.listener.DefaultRefreshHeaderCreator() {
-            @NonNull
-            @Override
-            public com.scwang.smart.refresh.layout.api.RefreshHeader createRefreshHeader(@NonNull Context context, @NonNull com.scwang.smart.refresh.layout.api.RefreshLayout layout) {
-                if (layout instanceof RefreshLayout) {
-                    return creator.createRefreshHeader(context, (RefreshLayout) layout);
-                } else {
-                    return new BezierRadarHeader(context);
-                }
+        com.scwang.smart.refresh.layout.SmartRefreshLayout.setDefaultRefreshHeaderCreator((context, layout) -> {
+            if (layout instanceof RefreshLayout) {
+                return creator.createRefreshHeader(context, (RefreshLayout) layout);
+            } else {
+                return new BezierRadarHeader(context);
             }
         });
     }
@@ -252,15 +238,11 @@ public class SmartRefreshLayout extends com.scwang.smart.refresh.layout.SmartRef
      * @param creator Footer构建器
      */
     public static void setDefaultRefreshFooterCreator(@NonNull final DefaultRefreshFooterCreator creator) {
-        com.scwang.smart.refresh.layout.SmartRefreshLayout.setDefaultRefreshFooterCreator(new com.scwang.smart.refresh.layout.listener.DefaultRefreshFooterCreator() {
-            @NonNull
-            @Override
-            public com.scwang.smart.refresh.layout.api.RefreshFooter createRefreshFooter(@NonNull Context context, @NonNull com.scwang.smart.refresh.layout.api.RefreshLayout layout) {
-                if (layout instanceof RefreshLayout) {
-                    return creator.createRefreshFooter(context, (RefreshLayout) layout);
-                } else {
-                    return new BallPulseFooter(context);
-                }
+        com.scwang.smart.refresh.layout.SmartRefreshLayout.setDefaultRefreshFooterCreator((context, layout) -> {
+            if (layout instanceof RefreshLayout) {
+                return creator.createRefreshFooter(context, (RefreshLayout) layout);
+            } else {
+                return new BallPulseFooter(context);
             }
         });
     }
@@ -270,12 +252,9 @@ public class SmartRefreshLayout extends com.scwang.smart.refresh.layout.SmartRef
      * @param initializer 全局初始化器
      */
     public static void setDefaultRefreshInitializer(@NonNull final DefaultRefreshInitializer initializer) {
-        com.scwang.smart.refresh.layout.SmartRefreshLayout.setDefaultRefreshInitializer(new com.scwang.smart.refresh.layout.listener.DefaultRefreshInitializer() {
-            @Override
-            public void initialize(@NonNull Context context, @NonNull com.scwang.smart.refresh.layout.api.RefreshLayout layout) {
-                if (layout instanceof RefreshLayout) {
-                    initializer.initialize(context, (RefreshLayout)layout);
-                }
+        com.scwang.smart.refresh.layout.SmartRefreshLayout.setDefaultRefreshInitializer((context, layout) -> {
+            if (layout instanceof RefreshLayout) {
+                initializer.initialize(context, (RefreshLayout)layout);
             }
         });
     }

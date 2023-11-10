@@ -323,13 +323,10 @@ public class BezierCircleHeader extends SimpleComponent implements RefreshHeader
         mShowOuter = false;
         final int DURATION_FINISH = 800; //动画时长
         ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(@NonNull ValueAnimator animation) {
-                final View thisView = BezierCircleHeader.this;
-                mFinishRatio = (float) animation.getAnimatedValue();
-                thisView.invalidate();
-            }
+        animator.addUpdateListener(animation -> {
+            final View thisView = BezierCircleHeader.this;
+            mFinishRatio = (float) animation.getAnimatedValue();
+            thisView.invalidate();
         });
         animator.setInterpolator(new AccelerateInterpolator());
         animator.setDuration(DURATION_FINISH);

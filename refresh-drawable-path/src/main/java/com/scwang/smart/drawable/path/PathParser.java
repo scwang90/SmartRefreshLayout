@@ -13,6 +13,7 @@
  */
 package com.scwang.smart.drawable.path;
 
+import android.annotation.SuppressLint;
 import android.graphics.Matrix;
 import android.graphics.Path;
 import android.os.Build;
@@ -59,6 +60,7 @@ public class PathParser {
         return result;
     }
 
+    @SuppressLint("ObsoleteSdkInt")
     public static List<Path> transformScale(float ratioWidth, float ratioHeight, List<Path> originPaths, List<String> orginSvgs) {
         Matrix matrix = new Matrix();
         matrix.setScale(ratioWidth, ratioHeight);

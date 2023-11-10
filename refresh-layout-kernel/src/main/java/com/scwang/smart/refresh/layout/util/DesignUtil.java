@@ -23,14 +23,9 @@ public class DesignUtil {
                 for (int i = layout.getChildCount() - 1; i >= 0; i--) {
                     View view = layout.getChildAt(i);
                     if (view instanceof AppBarLayout) {
-                        ((AppBarLayout) view).addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-                            @Override
-                            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                                listener.onCoordinatorUpdate(
-                                        verticalOffset >= 0,
-                                        (appBarLayout.getTotalScrollRange() + verticalOffset) <= 0);
-                            }
-                        });
+                        ((AppBarLayout) view).addOnOffsetChangedListener((appBarLayout, verticalOffset) -> listener.onCoordinatorUpdate(
+                                verticalOffset >= 0,
+                                (appBarLayout.getTotalScrollRange() + verticalOffset) <= 0));
                     }
                 }
             }

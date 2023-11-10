@@ -272,13 +272,10 @@ public class WaveSwipeHeader extends SimpleComponent implements RefreshHeader {
         ValueAnimator animator = ValueAnimator.ofFloat(0, 0);
         animator.setDuration(500);
         animator.setInterpolator(new AccelerateDecelerateInterpolator());
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(@NonNull ValueAnimator valueAnimator) {
-                final View circleView = mCircleView;
-                circleView.setTranslationY(
-                        mWaveView.getCurrentCircleCenterY() + circleView.getHeight() / 2.f);
-            }
+        animator.addUpdateListener(valueAnimator -> {
+            final View circleView = mCircleView;
+            circleView.setTranslationY(
+                    mWaveView.getCurrentCircleCenterY() + circleView.getHeight() / 2.f);
         });
         animator.start();
     }

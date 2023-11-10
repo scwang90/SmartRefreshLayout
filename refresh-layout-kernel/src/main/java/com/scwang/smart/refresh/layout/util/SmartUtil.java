@@ -1,5 +1,6 @@
 package com.scwang.smart.refresh.layout.util;
 
+import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.graphics.PointF;
 import android.os.Build;
@@ -35,7 +36,7 @@ public class SmartUtil implements Interpolator {
     public static int INTERPOLATOR_VISCOUS_FLUID = 0;
     public static int INTERPOLATOR_DECELERATE = 1;
 
-    private int type;
+    private final int type;
 
     public SmartUtil(int type) {
         this.type = type;
@@ -58,6 +59,7 @@ public class SmartUtil implements Interpolator {
         return view.getMeasuredHeight();
     }
 
+    @SuppressLint("ObsoleteSdkInt")
     public static void scrollListBy(@NonNull AbsListView listView, int y) {
         if (Build.VERSION.SDK_INT >= 19) {
             // Call the framework version directly
@@ -108,9 +110,7 @@ public class SmartUtil implements Interpolator {
         if (scrollableView instanceof ScrollView) {
             ((ScrollView) scrollableView).fling(velocity);
         } else if (scrollableView instanceof AbsListView) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                ((AbsListView) scrollableView).fling(velocity);
-            }
+            ((AbsListView) scrollableView).fling(velocity);
         } else if (scrollableView instanceof WebView) {
             ((WebView) scrollableView).flingScroll(0, velocity);
         } else if (scrollableView instanceof NestedScrollView) {
@@ -213,7 +213,7 @@ public class SmartUtil implements Interpolator {
     //</editor-fold>
 
     //<editor-fold desc="像素密度">
-    private static float density = Resources.getSystem().getDisplayMetrics().density;
+    private static final float density = Resources.getSystem().getDisplayMetrics().density;
 
     /**
      * 根据手机的分辨率从 dp 的单位 转成为 px(像素)

@@ -214,14 +214,10 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
     /**
      * 各AnimatorのAnimatorUpdateListener
      */
-    protected ValueAnimator.AnimatorUpdateListener mAnimatorUpdateListener =
-            new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(@NonNull ValueAnimator valueAnimator) {
-                    final View thisView = WaveView.this;
-                    thisView.postInvalidate();
-                }
-            };
+    protected ValueAnimator.AnimatorUpdateListener mAnimatorUpdateListener = valueAnimator -> {
+        final View thisView = WaveView.this;
+        thisView.postInvalidate();
+    };
 
     /**
      * Constructor
@@ -558,13 +554,10 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
 
         mDropCircleAnimator = ValueAnimator.ofFloat(500 * (mWidth / 1440.f), mMaxDropHeight);
         mDropCircleAnimator.setDuration(DROP_CIRCLE_ANIMATOR_DURATION);
-        mDropCircleAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(@NonNull ValueAnimator animation) {
-                mCurrentCircleCenterY = (float) animation.getAnimatedValue();
-                final View thisView = WaveView.this;
-                thisView.postInvalidateOnAnimation();
-            }
+        mDropCircleAnimator.addUpdateListener(animation -> {
+            mCurrentCircleCenterY = (float) animation.getAnimatedValue();
+            final View thisView = WaveView.this;
+            thisView.postInvalidateOnAnimation();
         });
         mDropCircleAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
         mDropCircleAnimator.start();
@@ -612,17 +605,14 @@ public class WaveView extends View implements ViewTreeObserver.OnPreDrawListener
         h = Math.min(h, MAX_WAVE_HEIGHT) * mWidth;
         mWaveReverseAnimator = ValueAnimator.ofFloat(h, 0.f);
         mWaveReverseAnimator.setDuration(WAVE_ANIMATOR_DURATION);
-        mWaveReverseAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(@NonNull ValueAnimator valueAnimator) {
-                float h = (Float) valueAnimator.getAnimatedValue();
-                mWavePath.moveTo(0, 0);
-                mWavePath.quadTo(0.25f * mWidth, 0, 0.333f * mWidth, h * 0.5f);
-                mWavePath.quadTo(mWidth * 0.5f, h * 1.4f, 0.666f * mWidth, h * 0.5f);
-                mWavePath.quadTo(0.75f * mWidth, 0, mWidth, 0);
-                final View thisView = WaveView.this;
-                thisView.postInvalidate();
-            }
+        mWaveReverseAnimator.addUpdateListener(valueAnimator -> {
+            float h1 = (Float) valueAnimator.getAnimatedValue();
+            mWavePath.moveTo(0, 0);
+            mWavePath.quadTo(0.25f * mWidth, 0, 0.333f * mWidth, h1 * 0.5f);
+            mWavePath.quadTo(mWidth * 0.5f, h1 * 1.4f, 0.666f * mWidth, h1 * 0.5f);
+            mWavePath.quadTo(0.75f * mWidth, 0, mWidth, 0);
+            final View thisView = WaveView.this;
+            thisView.postInvalidate();
         });
         mWaveReverseAnimator.setInterpolator(new BounceInterpolator());
         mWaveReverseAnimator.start();
