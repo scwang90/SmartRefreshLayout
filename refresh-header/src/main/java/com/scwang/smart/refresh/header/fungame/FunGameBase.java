@@ -207,11 +207,5 @@ public abstract class FunGameBase extends SimpleComponent implements RefreshHead
         }
         return 0;
     }
-//
-//    @NonNull
-//    @Override
-//    public SpinnerStyle getSpinnerStyle() {
-//        return SpinnerStyle.MatchLayout;
-//    }
     //</editor-fold>
 }

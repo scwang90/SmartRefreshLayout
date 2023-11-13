@@ -351,10 +351,5 @@ public class BezierCircleHeader extends SimpleComponent implements RefreshHeader
         }
     }
 
-//    @NonNull
-//    @Override
-//    public SpinnerStyle getSpinnerStyle() {
-//        return SpinnerStyle.Scale;
-//    }
     //</editor-fold>
 }

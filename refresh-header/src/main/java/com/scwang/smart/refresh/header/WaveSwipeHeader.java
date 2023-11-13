@@ -345,12 +345,6 @@ public class WaveSwipeHeader extends SimpleComponent implements RefreshHeader {
             }
         }
     }
-//
-//    @NonNull
-//    @Override
-//    public SpinnerStyle getSpinnerStyle() {
-//        return SpinnerStyle.MatchLayout;
-//    }
     //</editor-fold>
 
     //<editor-fold desc="ProgressAnimationImageView">
