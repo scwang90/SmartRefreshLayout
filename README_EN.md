@@ -16,35 +16,38 @@ SmartRefreshControl：[Link](https://github.com/scwang90/SmartRefreshControl)
 
 ## Features
 
- - Support multi-touch.
- - Support multi-layered nested view structures.
- - Support all the Views（AbsListView、RecyclerView、WebView....View）
- - Support customizing Headers and Footers, and has integrated a lot of cool Headers and Footers.
- - Support synchronous scrolling with ListView and NestedScrolling with CoordinatorLayout.
- - Support automatically refresh, automatically pull-up loading (automatically detect list inertance and scroll to the bottom without having to manually pull).
- - Support customizing rebound animation interpolator, to achieve a variety of cool animation effects.
- - Support setting a theme to fit any scene of App, it won't appear a cool but very awkward situation.
- - Support setting a variety of transformations (Translation, stretching, behind fixed, top fixed, full screen view) for Headers and Footers.
- - Support rewrite and extension, internal implementation without private methods and fields.
- - Support automatically cross-border rebound for all rolling Views (ListView、RecyclerView、ScrollView、WebView...View).
- - Support the interchange of Header and Footer
- - Support AndroidX
- - Support [HorizontalRefresh](https://github.com/scwang90/SmartRefreshHorizontal)
- 
+- Support multi-touch.
+- Support multi-layered nested view structures.
+- Support all the Views（AbsListView、RecyclerView、WebView....View）
+- Support customizing Headers and Footers, and has integrated a lot of cool Headers and Footers.
+- Support synchronous scrolling with ListView and NestedScrolling with CoordinatorLayout.
+- Support automatically refresh, automatically pull-up loading (automatically detect list inertance and scroll to the bottom without having to manually pull).
+- Support customizing rebound animation interpolator, to achieve a variety of cool animation effects.
+- Support setting a theme to fit any scene of App, it won't appear a cool but very awkward situation.
+- Support setting a variety of transformations (Translation, stretching, behind fixed, top fixed, full screen view) for Headers and Footers.
+- Support rewrite and extension, internal implementation without private methods and fields.
+- Support automatically cross-border rebound for all rolling Views (ListView、RecyclerView、ScrollView、WebView...View).
+- Support the interchange of Header and Footer
+- Support AndroidX
+- Support [HorizontalRefresh](https://github.com/scwang90/SmartRefreshHorizontal)
+
 ## Gateway
 
- - [Smart place](art/md_smart.md)
- - [Update log](art/md_update.md)
- - [Attribute method](art/md_property.md)
- - [Blog posts](https://segmentfault.com/a/1190000010066071) 
- - [Download the source code](https://github.com/scwang90/SmartRefreshLayout/releases) 
- - [Multi-touch](art/md_multitouch.md) 
+- [Smart place](art/md_smart.md)
+- [Update log](art/md_update.md)
+- [Attribute method](art/md_property.md)
+- [Blog posts](https://segmentfault.com/a/1190000010066071)
+- [Download the source code](https://github.com/scwang90/SmartRefreshLayout/releases)
+- [Multi-touch](art/md_multitouch.md)
+
 ## Demo
+
 [Download APK-Demo](art/app-debug.apk)
 
 ![](art/png_apk_rqcode.png)
 
 #### Practical
+
 |Weibo|FeedList|
 |:---:|:---:|
 |![](art/gif_practive_weibo.gif)|![](art/gif_practive_feedlist.gif)|
@@ -92,21 +95,21 @@ The two above headers are implemented by myself, The following headers are colle
 |Demo|![](art/gif_StoreHouse.gif)|![](art/gif_WaterDrop.gif)|
 |From|[Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)|[WaterDrop](https://github.com/THEONE10211024/WaterDropListView)
 
-
-See so many cool headers, is not it feel great? At this point you may be worried that so many headers together, but usually only use one, is not to introduce a lot of useless code and resources?    
+See so many cool headers, is not it feel great? At this point you may be worried that so many headers together, but usually only use one, is not to introduce a lot of useless code and resources?
 Please rest assured that I have divided it into eight packages, when used to reference their own it!
 
- - refresh-layout-kernel        core
- - refresh-header-classics      ClassicsHeader
- - refresh-header-radar         BezierRadarHeader
- - refresh-header-falsify       FalsifyHeader
- - refresh-header-material      MaterialHeader
- - refresh-header-two-level     TwoLevelHeader
- - refresh-footer-ball          BallPulseFooter
- - refresh-footer-classics      ClassicsFooter
+- refresh-layout-kernel        core
+- refresh-header-classics      ClassicsHeader
+- refresh-header-radar         BezierRadarHeader
+- refresh-header-falsify       FalsifyHeader
+- refresh-header-material      MaterialHeader
+- refresh-header-two-level     TwoLevelHeader
+- refresh-footer-ball          BallPulseFooter
+- refresh-footer-classics      ClassicsFooter
 
 ## Usage
-#### 1.Add a gradle dependency.
+
+#### 1.Add a gradle dependency
 
 V 2.x changed the package name relative to 1.x, such as `com.scwang.smartrefresh` to `com.scwang.smart.refresh`.
 It is suggested that in the new project, if the old project is upgraded,
@@ -143,7 +146,8 @@ android.useAndroidX=true
 android.enableJetifier=true
 ```
 
-#### 2.Add SmartRefreshLayout in the layout xml.
+#### 2.Add SmartRefreshLayout in the layout xml
+
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <com.scwang.smart.refresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -165,7 +169,10 @@ android.enableJetifier=true
 </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 ```
 
-#### 3.Coding in the Activity or Fragment.
+#### 3.Coding in the Activity or Fragment
+
+#### Java
+
 ```java
 RefreshLayout refreshLayout = (RefreshLayout)findViewById(R.id.refreshLayout);
 refreshLayout.setRefreshHeader(new ClassicsHeader(this));
@@ -173,20 +180,38 @@ refreshLayout.setRefreshFooter(new ClassicsFooter(this));
 refreshLayout.setOnRefreshListener(new OnRefreshListener() {
     @Override
     public void onRefresh(RefreshLayout refreshlayout) {
-        refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
-    }
+        refreshlayout.finishRefresh(2000/*,false*/);
 });
 refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
     @Override
     public void onLoadMore(RefreshLayout refreshlayout) {
-        refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
+        refreshlayout.finishLoadMore(2000/*,false*/);
     }
 });
+```
+
+#### Kotlin
+
+```kotlin
+val refreshLayout: RefreshLayout = findViewById(R.id.refreshLayout)
+refreshLayout.setRefreshHeader(ClassicsHeader(this))
+refreshLayout.setRefreshFooter(ClassicsFooter(this))
+refreshLayout.setOnRefreshListener {
+    refreshlayout ->
+    refreshlayout.finishRefresh(2000/*,false*/) 
+}
+refreshLayout.setOnLoadMoreListener {
+    refreshlayout ->
+    refreshlayout.finishLoadMore(2000/*,false*/) 
+}
 ```
 
 ## Use the specified Header and Footer
 
 #### 1.Global settings
+
+##### Java
+
 ```java
 public class App extends Application {
     public void onCreate() {
@@ -207,10 +232,30 @@ public class App extends Application {
 }
 ```
 
+##### Kotlin
+
+```kotlin
+class App : Application() {
+    init {
+        SmartRefreshLayout.setDefaultRefreshHeaderCreator(object : DefaultRefreshHeaderCreator() {
+            override fun createRefreshHeader(context: Context, layout: RefreshLayout): RefreshHeader {
+                layout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white) 
+                return ClassicsHeader(context) 
+            }
+        })
+        SmartRefreshLayout.setDefaultRefreshFooterCreator(object : DefaultRefreshFooterCreator() {
+            override fun createRefreshFooter(context: Context, layout: RefreshLayout): RefreshFooter {
+                return ClassicsFooter(context).setDrawableSize(20)
+            }
+        })
+    }
+}
+```
+
 Note: this method is the lowest priority.
 
-
 #### 2.Specified in the XML layout file
+
 ```xml
 <com.scwang.smart.refresh.layout.SmartRefreshLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -245,6 +290,7 @@ Note: this method of priority is medium。When using this method, the Android St
 But don't worry, just a preview effect, run only the drop-down will appear.
 
 #### 3.Specified in the java code
+
 ```java
 final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
 refreshLayout.setRefreshHeader(new MaterialHeader(this).setShowBezierWave(true));
@@ -266,6 +312,7 @@ If in the donation message note name, it will be record to the list
 [Donation list](art/md_donationlist.md)
 
 #### blogroll
+
 [github/Loror](https://github.com/Loror)  
 [github/faith-hb/WidgetCase](https://github.com/faith-hb/WidgetCase)  
 [github/Bamboy120315/Freedom](https://github.com/Bamboy120315/Freedom)  
@@ -285,15 +332,17 @@ If in the donation message note name, it will be record to the list
 
 ## Discuss
 
-Contact me: scwang90@hotmail.com 
+Contact me: <scwang90@hotmail.com>
 
 ## Thanks
+
 [SwipeRefreshLayout](https://developer.android.com/reference/android/support/v4/widget/SwipeRefreshLayout.html)  
 [Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)  
 [TwinklingRefreshLayout](https://github.com/lcodecorex/TwinklingRefreshLayout)  
 [BeautifulRefreshLayout](https://github.com/android-cjj/BeautifulRefreshLayout)
 
 ## Other Works
+
 [MultiWaveHeader](https://github.com/scwang90/MultiWaveHeader)  
 [SmartRefreshHorizontal](https://github.com/scwang90/SmartRefreshHorizontal)  
 
