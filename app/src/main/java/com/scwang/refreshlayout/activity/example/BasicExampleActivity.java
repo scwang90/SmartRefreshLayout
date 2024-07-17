@@ -127,6 +127,7 @@ public class BasicExampleActivity extends AppCompatActivity {
             } else {
                 //刷新失败
                 layout.finishLoadMore(false);
+                Toast.makeText(getApplication(), "演示加载失败", Toast.LENGTH_SHORT).show();
             }
         }, 2000);
     }

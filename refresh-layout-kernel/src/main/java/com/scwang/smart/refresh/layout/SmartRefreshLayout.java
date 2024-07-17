@@ -22,20 +22,9 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
-import android.widget.AbsListView;
 import android.widget.Scroller;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.ColorInt;
-import androidx.annotation.ColorRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.NestedScrollingChildHelper;
-import androidx.core.view.NestedScrollingParent;
-import androidx.core.view.NestedScrollingParentHelper;
-import androidx.core.view.ViewCompat;
 
 import com.scwang.smart.refresh.layout.api.RefreshComponent;
 import com.scwang.smart.refresh.layout.api.RefreshContent;
@@ -73,6 +62,16 @@ import static com.scwang.smart.refresh.layout.util.SmartUtil.dp2px;
 import static com.scwang.smart.refresh.layout.util.SmartUtil.fling;
 import static com.scwang.smart.refresh.layout.util.SmartUtil.isContentView;
 import static java.lang.System.currentTimeMillis;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.NestedScrollingChildHelper;
+import androidx.core.view.NestedScrollingParent;
+import androidx.core.view.NestedScrollingParentHelper;
+import androidx.core.view.ViewCompat;
 
 /**
  * 智能刷新布局
@@ -959,7 +958,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             /*
              * https://github.com/scwang90/SmartRefreshLayout/issues/1540
              * 在刷新动画关闭的时候，点击列表无法跳转，
-             * 是因为下面的 if (interceptAnimatorByAction || mState.isFinishing) return false
+             * 是因为下面的 if (interceptAnimatorByAction || mState.isFinishing ) return false
              * 屏蔽了所有手势事件，屏蔽的原因是如果关闭动画正在执行的时候，随意滑动列表会导致意外的错乱
              * 目前的修复方法并不是放开屏蔽，而是针对 先 ACTION_DOWN 再 ACTION_UP 的点击事件进行补偿处理
              * 从而实现，完成动画执行时，列表不可手动滑动，但是可以点击列表项
@@ -1049,6 +1048,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                             final ViewParent parent = thisView.getParent();
                             if (parent instanceof ViewGroup) {
                                 //修复问题 https://github.com/scwang90/SmartRefreshLayout/issues/580
+                                //noinspection RedundantCast
                                 ((ViewGroup)parent).requestDisallowInterceptTouchEvent(true);//通知父控件不要拦截事件
                             }
                         }
@@ -1130,14 +1130,12 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      * 应用场景已经在英文注释中解释清楚，大部分第三方下拉刷新库都保留了这段代码，本库也不例外
      */
     @Override
-    @SuppressLint("ObsoleteSdkInt")
     public void requestDisallowInterceptTouchEvent(boolean disallowIntercept) {
         // if this is a List < L or another view that doesn't support nested
         // scrolling, ignore this request so that the vertical scroll event
         // isn't stolen
         View target = mRefreshContent.getScrollableView();
-        if ((android.os.Build.VERSION.SDK_INT >= 21 || !(target instanceof AbsListView))
-                && (/*target == null || */ViewCompat.isNestedScrollingEnabled(target))) {
+        if (ViewCompat.isNestedScrollingEnabled(target)) {
             mEnableDisallowIntercept = disallowIntercept;
             super.requestDisallowInterceptTouchEvent(disallowIntercept);
         }
@@ -1848,7 +1846,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         } else {
             final double M = mFooterMaxDragRate < 10 ? mFooterHeight * mFooterMaxDragRate : mFooterMaxDragRate;
             final double H = Math.max(mScreenHeightPixels / 2, thisView.getHeight());
-            final double y = -spinnerConvergence;
+            final double y = -spinnerConvergence * 1;
             originSpinner = -((-H * (Math.log(1 - y / M) / Math.log(100f))) - mFooterHeight) / mDragRate;
         }
 
