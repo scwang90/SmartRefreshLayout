@@ -24,7 +24,7 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.constant.SpinnerStyle;
 import com.scwang.smart.refresh.layout.simple.SimpleComponent;
 import com.scwang.smart.refresh.layout.util.SmartUtil;
-import com.scwang.smartrefresh.header.R;
+import com.scwang.smart.refresh.header.R;
 
 import java.util.HashMap;
 import java.util.Map;

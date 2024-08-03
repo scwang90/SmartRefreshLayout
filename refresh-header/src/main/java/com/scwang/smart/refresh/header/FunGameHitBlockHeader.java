@@ -13,8 +13,8 @@ import androidx.core.graphics.ColorUtils;
 
 import com.scwang.smart.refresh.header.fungame.FunGameView;
 import com.scwang.smart.refresh.layout.api.RefreshKernel;
-import com.scwang.smartrefresh.header.R;
-import com.scwang.smartrefresh.layout.util.SmartUtil;
+import com.scwang.smart.refresh.layout.util.SmartUtil;
+import com.scwang.smart.refresh.header.R;
 
 import java.util.ArrayList;
 import java.util.List;

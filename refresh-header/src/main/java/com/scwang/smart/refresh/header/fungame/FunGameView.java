@@ -27,7 +27,7 @@ import com.scwang.smart.refresh.layout.api.RefreshKernel;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.constant.RefreshState;
 import com.scwang.smart.refresh.layout.util.SmartUtil;
-import com.scwang.smartrefresh.header.R;
+import com.scwang.smart.refresh.header.R;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 

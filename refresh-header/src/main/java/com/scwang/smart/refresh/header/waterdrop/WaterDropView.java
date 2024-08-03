@@ -12,8 +12,7 @@ import android.view.animation.DecelerateInterpolator;
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 
-import com.scwang.smartrefresh.layout.util.SmartUtil;
-
+import com.scwang.smart.refresh.layout.util.SmartUtil;
 
 /**
  * 下拉头中间的 “水滴”

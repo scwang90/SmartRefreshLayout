@@ -27,7 +27,7 @@ import com.scwang.smart.refresh.layout.constant.RefreshState;
 import com.scwang.smart.refresh.layout.constant.SpinnerStyle;
 import com.scwang.smart.refresh.layout.simple.SimpleComponent;
 import com.scwang.smart.refresh.layout.util.SmartUtil;
-import com.scwang.smartrefresh.header.R;
+import com.scwang.smart.refresh.header.R;
 
 /**
  * DropBoxRefresh

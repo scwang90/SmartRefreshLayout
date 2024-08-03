@@ -16,7 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.core.graphics.ColorUtils;
 import androidx.core.view.animation.PathInterpolatorCompat;
 
-import com.scwang.smartrefresh.header.R;
+import com.scwang.smart.refresh.header.R;
 
 /**
  * 山丘树木场景视图

@@ -5,6 +5,8 @@ buildscript {
         google()
         mavenCentral()
         gradlePluginPortal()
+//        jcenter()
+//        maven { url 'https://maven.aliyun.com/repository/jcenter' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.2.2'
