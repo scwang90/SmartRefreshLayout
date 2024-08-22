@@ -60,7 +60,6 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static com.scwang.smart.refresh.layout.util.SmartUtil.dp2px;
 import static com.scwang.smart.refresh.layout.util.SmartUtil.fling;
-import static com.scwang.smart.refresh.layout.util.SmartUtil.isContentView;
 import static java.lang.System.currentTimeMillis;
 
 import androidx.annotation.ColorInt;
@@ -176,7 +175,12 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
 
     protected RefreshComponent mRefreshHeader;     //下拉头部视图
     protected RefreshComponent mRefreshFooter;     //上拉底部视图
-    protected RefreshContent mRefreshContent;   //显示内容视图
+    /**
+     * 显示内容视图
+     * 根据开发设计，本变量最终不可能为空，因为在 onAttachedToWindow 中判断如果未设置内容视图
+     * 会自动创建一个 TextView 提示必须创建，并且 TextView 会变为 内容视图
+     */
+    protected RefreshContent mRefreshContent;
     //</editor-fold>
 
     protected Paint mPaint;
@@ -343,16 +347,18 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             throw new RuntimeException("最多只支持3个子View，Most only support three sub view");
         }
 
-        int contentLevel = 0;
-        int indexContent = -1;
+        int contentLevel = 0; // 当前找到内容布局的级别（0还没找到 1普通内容 2可滚动内容）
+        int indexContent = -1; // 内容布局所在的序号
         for (int i = 0; i < count; i++) {
             View view = super.getChildAt(i);
-            if (isContentView(view) && (contentLevel < 2 || i == 1)) {
+            if (SmartUtil.isContentView(view) && (contentLevel < 2 || i == 1)) {
+                // 可滚动内容
                 indexContent = i;
-                contentLevel = 2;
+                contentLevel = 2; // 标记为可滚动内容，不会再被替换
             } else if (!(view instanceof RefreshComponent) && contentLevel < 1) {
+                // 普通内容
                 indexContent = i;
-                contentLevel = i > 0 ? 1 : 0;
+                contentLevel = i > 0 ? 1 : 0; // 如果是第一个标记为：未找到（第一个有可能是自定义Header），否则标记为：普通内容
             }
         }
 
@@ -383,7 +389,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     }
 
     /**
-     * 重写 onAttachedToWindow 来完成 smart 的特定功能
+     * 重写 onAttachedToWindow 来完成 smart 的特定功能 （在 onFinishInflate 之后执行）
      * 1.添加默认或者全局设置的 Header 和 Footer （缺省情况下才会）
      * 2.做 Content 为空时的 TextView 提示
      * 3.智能开启 嵌套滚动 NestedScrollingEnabled
@@ -395,6 +401,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         mAttachedToWindow = true;
 
         final View thisView = this;
+        // 在非编辑模式下，如果 onFinishInflate 初始化组件未成功，onAttachedToWindow 可以进行补充处理
         if (!thisView.isInEditMode()) {
 
             if (mRefreshHeader == null) {
@@ -3079,7 +3086,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                             notifyStateChanged(RefreshState.PullDownCanceled);
                         }
 //                      mKernel.setState(RefreshState.None);
-                    } else if (mState == RefreshState.Refreshing && mRefreshHeader != null && mRefreshContent != null) {
+                    } else if (mState == RefreshState.Refreshing && mRefreshHeader != null) {
                         count++;
                         mHandler.postDelayed(this, more);
                         //提前设置 状态为 RefreshFinish 防止 postDelayed 导致 finishRefresh 过后，外部判断 state 还是 Refreshing
@@ -3092,6 +3099,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                         setNoMoreData(true);
                     }
                 } else {
+                    // 本else 分支的触发是的代码是上面的：count++;mHandler.postDelayed(this, more);
                     int startDelay = mRefreshHeader.onFinish(SmartRefreshLayout.this, success);
                     if (mOnMultiListener != null && mRefreshHeader instanceof RefreshHeader) {
                         mOnMultiListener.onHeaderFinish((RefreshHeader) mRefreshHeader, success);
@@ -3444,7 +3452,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 reboundAnimator.setDuration(duration);
                 reboundAnimator.setInterpolator(new SmartUtil(SmartUtil.INTERPOLATOR_VISCOUS_FLUID));
                 reboundAnimator.addUpdateListener(animation -> {
-                    if (reboundAnimator != null && mRefreshHeader != null) {
+                    if (reboundAnimator != null) {
                         mKernel.moveSpinner((int) animation.getAnimatedValue(), true);
                     }
                 });
@@ -4011,17 +4019,17 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 return this;//0 表示被取消
             }
             reboundAnimator = null;
-            if (mRefreshHeader != null) {
+//            if (mRefreshHeader != null) {
                 if (mState != RefreshState.ReleaseToRefresh) {
                     this.setState(RefreshState.ReleaseToRefresh);
                 }
                 SmartRefreshLayout.this.setStateRefreshing(!animationOnly);
-            } else {
-                /*
-                 * 2019-12-24 修复 mRefreshHeader=null 时状态错乱问题
-                 */
-                this.setState(RefreshState.None);
-            }
+//            } else {
+//                /*
+//                 * 2019-12-24 修复 mRefreshHeader=null 时状态错乱问题
+//                 */
+//                this.setState(RefreshState.None);
+//            }
             return this;
         }
 

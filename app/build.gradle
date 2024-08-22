@@ -67,25 +67,25 @@ dependencies {
     implementation project(':refresh-footer')
     implementation project(':refresh-header')
     implementation project(':refresh-layout')
-//
-//    implementation project(':refresh-drawable-path')
-//    implementation project(':refresh-layout-kernel')
-//    implementation project(':refresh-header-classics')
-//    implementation project(':refresh-header-radar')
-//    implementation project(':refresh-header-falsify')
-//    implementation project(':refresh-header-material')
-//    implementation project(':refresh-header-two-level')
-//    implementation project(':refresh-footer-ball')
 
-    implementation  'io.github.scwang90:refresh-drawable-path:2.1.0'      //矢量路径
-    implementation  'io.github.scwang90:refresh-layout-kernel:2.1.0'      //核心必须依赖
-    implementation  'io.github.scwang90:refresh-header-classics:2.1.0'    //经典刷新头
-    implementation  'io.github.scwang90:refresh-header-radar:2.1.0'       //雷达刷新头
-    implementation  'io.github.scwang90:refresh-header-falsify:2.1.0'     //虚拟刷新头
-    implementation  'io.github.scwang90:refresh-header-material:2.1.0'    //谷歌刷新头
-    implementation  'io.github.scwang90:refresh-header-two-level:2.1.0'   //二级刷新头
-    implementation  'io.github.scwang90:refresh-footer-ball:2.1.0'        //球脉冲加载
-    implementation  'io.github.scwang90:refresh-footer-classics:2.1.0'    //经典加载
+    implementation project(':refresh-drawable-path')
+    implementation project(':refresh-layout-kernel')
+    implementation project(':refresh-header-classics')
+    implementation project(':refresh-header-radar')
+    implementation project(':refresh-header-falsify')
+    implementation project(':refresh-header-material')
+    implementation project(':refresh-header-two-level')
+    implementation project(':refresh-footer-ball')
+
+//    implementation  'io.github.scwang90:refresh-drawable-path:2.1.0'      //矢量路径
+//    implementation  'io.github.scwang90:refresh-layout-kernel:2.1.0'      //核心必须依赖
+//    implementation  'io.github.scwang90:refresh-header-classics:2.1.0'    //经典刷新头
+//    implementation  'io.github.scwang90:refresh-header-radar:2.1.0'       //雷达刷新头
+//    implementation  'io.github.scwang90:refresh-header-falsify:2.1.0'     //虚拟刷新头
+//    implementation  'io.github.scwang90:refresh-header-material:2.1.0'    //谷歌刷新头
+//    implementation  'io.github.scwang90:refresh-header-two-level:2.1.0'   //二级刷新头
+//    implementation  'io.github.scwang90:refresh-footer-ball:2.1.0'        //球脉冲加载
+//    implementation  'io.github.scwang90:refresh-footer-classics:2.1.0'    //经典加载
 
     implementation 'com.flyco.roundview:FlycoRoundView_Lib:1.1.4@aar'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.50'
