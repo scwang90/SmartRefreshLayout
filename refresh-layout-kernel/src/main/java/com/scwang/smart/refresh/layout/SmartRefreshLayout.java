@@ -3086,7 +3086,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                             notifyStateChanged(RefreshState.PullDownCanceled);
                         }
 //                      mKernel.setState(RefreshState.None);
-                    } else if (mState == RefreshState.Refreshing && mRefreshHeader != null) {
+                    } else if (mState == RefreshState.Refreshing) {
                         count++;
                         mHandler.postDelayed(this, more);
                         //提前设置 状态为 RefreshFinish 防止 postDelayed 导致 finishRefresh 过后，外部判断 state 还是 Refreshing
@@ -3100,9 +3100,12 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     }
                 } else {
                     // 本else 分支的触发是的代码是上面的：count++;mHandler.postDelayed(this, more);
-                    int startDelay = mRefreshHeader.onFinish(SmartRefreshLayout.this, success);
-                    if (mOnMultiListener != null && mRefreshHeader instanceof RefreshHeader) {
-                        mOnMultiListener.onHeaderFinish((RefreshHeader) mRefreshHeader, success);
+                    int startDelay = 0;
+                    if (mRefreshHeader != null) {
+                        startDelay = mRefreshHeader.onFinish(SmartRefreshLayout.this, success);
+                        if (mOnMultiListener != null && mRefreshHeader instanceof RefreshHeader) {
+                            mOnMultiListener.onHeaderFinish((RefreshHeader) mRefreshHeader, success);
+                        }
                     }
                     //startDelay < Integer.MAX_VALUE 表示 延时 startDelay 毫秒之后，回弹关闭刷新
                     if (startDelay < Integer.MAX_VALUE) {
@@ -4019,17 +4022,10 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 return this;//0 表示被取消
             }
             reboundAnimator = null;
-//            if (mRefreshHeader != null) {
-                if (mState != RefreshState.ReleaseToRefresh) {
-                    this.setState(RefreshState.ReleaseToRefresh);
-                }
-                SmartRefreshLayout.this.setStateRefreshing(!animationOnly);
-//            } else {
-//                /*
-//                 * 2019-12-24 修复 mRefreshHeader=null 时状态错乱问题
-//                 */
-//                this.setState(RefreshState.None);
-//            }
+            if (mState != RefreshState.ReleaseToRefresh) {
+                this.setState(RefreshState.ReleaseToRefresh);
+            }
+            SmartRefreshLayout.this.setStateRefreshing(!animationOnly);
             return this;
         }
 
