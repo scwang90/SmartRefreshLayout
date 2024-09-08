@@ -41,6 +41,9 @@
     </attr>
 
     <declare-styleable name="SmartRefreshLayout">
+        <!--  SmartRefreshLayout 继承 ViewGroup 后即使不设置 android:clipToPadding，也等效于 android:clipToPadding=true -->
+        <!--  特意添加 android:clipToPadding 来在 Java 代码中 判断是否设置过，没有设置强制 setClipToPadding(false) -->
+        <!--  android:clipChildren 也是同样  -->
         <attr name="android:clipChildren"/>
         <attr name="android:clipToPadding"/>
         <attr name="srlPrimaryColor"/>

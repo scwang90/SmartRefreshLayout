@@ -1,16 +1,15 @@
 apply plugin: 'com.android.library'
-//apply plugin: 'com.novoda.bintray-release'
 
 android {
 
-    compileSdkVersion 28
+    compileSdkVersion 34
 
     defaultConfig {
 
-        minSdkVersion 16
-        targetSdkVersion 28
+        minSdkVersion 21
+        targetSdkVersion 34
         versionCode 1
-        versionName "1.0"
+        versionName SMART_VERSION
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -36,12 +35,3 @@ dependencies {
     compileOnly project(':refresh-footer-classics')
     compileOnly project(':refresh-layout')
 }
-
-//publish {
-//    userOrg = SMART_USER
-//    groupId = 'com.scwang.smartrefresh'
-//    artifactId = 'SmartRefreshFooter'
-//    publishVersion = SMART_VERSION
-//    desc = 'Some delicate footers of SmartRefreshLayout'
-//    website = "https://github.com/scwang90/${rootProject.name}"
-//}

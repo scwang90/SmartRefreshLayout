@@ -54,26 +54,6 @@ public class BasicExampleActivity extends AppCompatActivity {
                 holder.textColorId(android.R.id.text2, R.color.colorTextAssistant);
             }
         });
-        //todo SCROLL_STATE_IDLE
-        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
-            final int SCROLL_STATE_IDLE = 0;
-            final int SCROLL_STATE_TOUCH_SCROLL = 1;
-            final int SCROLL_STATE_FLING = 2;
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-                if (scrollState == SCROLL_STATE_IDLE) {
-                    System.out.println("SCROLL_STATE_IDLE");
-                } else if (scrollState == SCROLL_STATE_TOUCH_SCROLL) {
-                    System.out.println("SCROLL_STATE_TOUCH_SCROLL");
-                } else if (scrollState == SCROLL_STATE_FLING) {
-                    System.out.println("SCROLL_STATE_FLING");
-                }
-            }
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
-            }
-        });
 
         mLoadingLayout = findViewById(R.id.loading);
         mRefreshLayout = findViewById(R.id.refreshLayout);
@@ -110,26 +90,6 @@ public class BasicExampleActivity extends AppCompatActivity {
         }
     }
 
-    private void loadMore(com.scwang.smartrefresh.layout.api.RefreshLayout layout) {
-        layout.getLayout().postDelayed(() -> {
-            if (random.nextBoolean()) {
-                //如果刷新成功
-                mAdapter.loadMore(initData(10));
-                if (mAdapter.getItemCount() <= 30) {
-                    //还有多的数据
-                    layout.finishLoadMore();
-                } else {
-                    //没有更多数据（上拉加载功能将显示没有更多数据）
-                    Toast.makeText(getApplication(), "数据全部加载完毕", Toast.LENGTH_SHORT).show();
-                    layout.finishLoadMoreWithNoMoreData();//将不会再次触发加载更多事件
-                }
-            } else {
-                //刷新失败
-                layout.finishLoadMore(false);
-            }
-        }, 2000);
-    }
-
     private void refresh(RefreshLayout refresh) {
         refresh.getLayout().postDelayed(() -> {
             if (random.nextBoolean()) {
@@ -149,6 +109,26 @@ public class BasicExampleActivity extends AppCompatActivity {
                     mLoadingLayout.showError();
                     mLoadingLayout.setErrorText("随机触发刷新失败演示！");
                 }
+            }
+        }, 2000);
+    }
+
+    private void loadMore(com.scwang.smartrefresh.layout.api.RefreshLayout layout) {
+        layout.getLayout().postDelayed(() -> {
+            if (random.nextBoolean()) {
+                //如果刷新成功
+                mAdapter.loadMore(initData(10));
+                if (mAdapter.getItemCount() <= 30) {
+                    //还有多的数据
+                    layout.finishLoadMore();
+                } else {
+                    //没有更多数据（上拉加载功能将显示没有更多数据）
+                    Toast.makeText(getApplication(), "数据全部加载完毕", Toast.LENGTH_SHORT).show();
+                    layout.finishLoadMoreWithNoMoreData();//将不会再次触发加载更多事件
+                }
+            } else {
+                //刷新失败
+                layout.finishLoadMore(false);
             }
         }, 2000);
     }

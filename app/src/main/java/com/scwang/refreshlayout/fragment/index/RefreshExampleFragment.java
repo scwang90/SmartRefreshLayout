@@ -55,7 +55,6 @@ public class RefreshExampleFragment extends Fragment implements AdapterView.OnIt
         SnapHelper(R.string.index_example_snap_helper, SnapHelperExampleActivity.class),
         ViewPager(R.string.index_example_pager, ViewPagerExampleFragment.class),
         BottomSheet(R.string.index_example_bottom_sheet,BottomSheetExampleFragment.class),
-        FlexBoxLayout(R.string.index_example_flex_box, FlexBoxLayoutManagerFragment.class),
         Horizontal(R.string.index_example_horizontal, HorizontalExampleFragment.class),
         DisallowIntercept(R.string.index_example_disallow_intercept, DisallowInterceptExampleFragment.class),
         StaggeredGrid(R.string.index_example_disallow_intercept, StaggeredGridExampleFragment.class),

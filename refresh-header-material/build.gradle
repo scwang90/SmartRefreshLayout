@@ -3,16 +3,16 @@ apply plugin: 'com.android.library'
 description = 'the header MaterialHeader of SmartRefreshLayout'
 
 android {
-    compileSdkVersion 28
+
+    compileSdkVersion 34
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 28
+        minSdkVersion 21
+        targetSdkVersion 34
         versionCode 1
-        versionName "1.0"
+        versionName SMART_VERSION
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
 
     buildTypes {
