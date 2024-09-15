@@ -385,6 +385,10 @@ public class MaterialHeader extends SimpleComponent implements RefreshHeader {
             //如果显示背景，使用旧版的 autoRefresh 动画
             return false;
         }
+        if (mKernel == null) {
+            //如果必要的组件没有初始化，也使用旧版动画 autoRefresh 动画
+            return false;
+        }
         final View circleView = mCircleView;
         circleView.setAlpha(1);
         circleView.setScaleX(0);
