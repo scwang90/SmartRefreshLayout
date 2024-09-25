@@ -1756,7 +1756,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 final double M = maxDragHeight - mHeaderHeight;
                 final double H = Math.max(mScreenHeightPixels * 4 / 3, thisView.getHeight()) - mHeaderHeight;
                 final double x = Math.max(0, (spinner - mHeaderHeight) * mDragRate);
-                final double y = M * (1 - Math.pow(100, -x / (H == 0 ? 1 : H)));// 公式 y = M(1-100^(-x/H))
+                final double y = Math.min(M * (1 - Math.pow(100, -x / (H == 0 ? 1 : H))), x);// 公式 y = M(1-100^(-x/H))
                 mKernel.moveSpinner((int) y + mHeaderHeight, true);
             }
         } else if (spinner < 0 && (mState == RefreshState.Loading
@@ -1769,20 +1769,20 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 final double M = maxDragHeight - mFooterHeight;
                 final double H = Math.max(mScreenHeightPixels * 4 / 3, thisView.getHeight()) - mFooterHeight;
                 final double x = -Math.min(0, (spinner + mFooterHeight) * mDragRate);
-                final double y = -M * (1 - Math.pow(100, -x / (H == 0 ? 1 : H)));// 公式 y = M(1-100^(-x/H))
+                final double y = -Math.min(M * (1 - Math.pow(100, -x / (H == 0 ? 1 : H))), x);// 公式 y = M(1-100^(-x/H))
                 mKernel.moveSpinner((int) y - mFooterHeight, true);
             }
         } else if (spinner >= 0) {
             final double M = mHeaderMaxDragRate < 10 ? mHeaderHeight * mHeaderMaxDragRate : mHeaderMaxDragRate;
             final double H = Math.max(mScreenHeightPixels / 2, thisView.getHeight());
             final double x = Math.max(0, spinner * mDragRate);
-            final double y = M * (1 - Math.pow(100, -x / (H == 0 ? 1 : H)));// 公式 y = M(1-100^(-x/H))
+            final double y = Math.min(M * (1 - Math.pow(100, -x / (H == 0 ? 1 : H))), x);// 公式 y = M(1-100^(-x/H))
             mKernel.moveSpinner((int) y, true);
         } else {
             final double M = mFooterMaxDragRate < 10 ? mFooterHeight * mFooterMaxDragRate : mFooterMaxDragRate;
             final double H = Math.max(mScreenHeightPixels / 2, thisView.getHeight());
             final double x = -Math.min(0, spinner * mDragRate);
-            final double y = -M * (1 - Math.pow(100, -x / (H == 0 ? 1 : H)));// 公式 y = M(1-100^(-x/H))
+            final double y = -Math.min(M * (1 - Math.pow(100, -x / (H == 0 ? 1 : H))), x);// 公式 y = M(1-100^(-x/H))
             mKernel.moveSpinner((int) y, true);
         }
         if (mEnableAutoLoadMore && !mFooterNoMoreData && isEnableRefreshOrLoadMore(mEnableLoadMore) && spinner < 0
@@ -1809,55 +1809,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 }
             }, mReboundDuration);
         }
-    }
-
-    /**
-     * 感谢 jamgudev <826630153@qq.com> 2022-03-22 贡献的代码 （贡献原始函数：reverseCompute）
-     * 给出阻尼计算的距离，计算原始滑动距离
-     * 与 moveSpinnerInfinitely 函数为反向计算
-     * @param spinnerConvergence 阻尼计算过后的距离
-     * @return 原始滑动距离
-     */
-    protected int reverseInfinitely(float spinnerConvergence) {
-        final View thisView = this;
-        double originSpinner;
-        if (mState == RefreshState.TwoLevel && spinnerConvergence > 0) {
-            originSpinner = spinnerConvergence;
-        } else if (mState == RefreshState.Refreshing && spinnerConvergence >= 0) {
-            if (spinnerConvergence < mHeaderHeight) {
-                originSpinner = spinnerConvergence;
-            } else {
-                final float maxDragHeight = mHeaderMaxDragRate < 10 ? mHeaderHeight * mHeaderMaxDragRate : mHeaderMaxDragRate;
-                final double M = maxDragHeight - mHeaderHeight;
-                final double H = Math.max(mScreenHeightPixels * 4 / 3, thisView.getHeight()) - mHeaderHeight;
-                final double y = spinnerConvergence * 1;
-                originSpinner = ((-H * (Math.log(1 - y / M) / Math.log(100f))) + mHeaderHeight) / mDragRate;
-            }
-        } else if (spinnerConvergence < 0 && (mState == RefreshState.Loading
-                || (mEnableFooterFollowWhenNoMoreData && mFooterNoMoreData && mFooterNoMoreDataEffective && isEnableRefreshOrLoadMore(mEnableLoadMore))
-                || (mEnableAutoLoadMore && !mFooterNoMoreData && isEnableRefreshOrLoadMore(mEnableLoadMore)))) {
-            if (spinnerConvergence > -mFooterHeight) {
-                originSpinner = spinnerConvergence;
-            } else {
-                final float maxDragHeight = mFooterMaxDragRate < 10 ? mFooterHeight * mFooterMaxDragRate : mFooterMaxDragRate;
-                final double M = maxDragHeight - mFooterHeight;
-                final double H = Math.max(mScreenHeightPixels * 4 / 3, thisView.getHeight()) - mFooterHeight;
-                final double y = -spinnerConvergence;
-                originSpinner = -((-H * (Math.log(1 - y / M) / Math.log(100f))) - mFooterHeight) / mDragRate;
-            }
-        } else if (spinnerConvergence >= 0) {
-            final double M = mHeaderMaxDragRate < 10 ? mHeaderHeight * mHeaderMaxDragRate : mHeaderMaxDragRate;
-            final double H = Math.max(mScreenHeightPixels / 2, thisView.getHeight());
-            final double y = spinnerConvergence * 1;
-            originSpinner = (-H * (Math.log(1 - y / M) / Math.log(100f))) / mDragRate;
-        } else {
-            final double M = mFooterMaxDragRate < 10 ? mFooterHeight * mFooterMaxDragRate : mFooterMaxDragRate;
-            final double H = Math.max(mScreenHeightPixels / 2, thisView.getHeight());
-            final double y = -spinnerConvergence * 1;
-            originSpinner = -((-H * (Math.log(1 - y / M) / Math.log(100f))) - mFooterHeight) / mDragRate;
-        }
-
-        return Math.round((float)originSpinner);
     }
 
     //</editor-fold>
@@ -1936,7 +1887,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         // Dispatch up to the nested parent
         mNestedChild.startNestedScroll(axes & ViewCompat.SCROLL_AXIS_VERTICAL);
 
-        mTotalUnconsumed = reverseInfinitely(mSpinner);
+        mTotalUnconsumed = mSpinner;
         mNestedInProgress = true;
 
         interceptAnimatorByAction(MotionEvent.ACTION_DOWN);
