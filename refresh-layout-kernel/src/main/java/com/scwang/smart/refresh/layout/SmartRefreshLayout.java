@@ -2315,6 +2315,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     /**
      * Set whether to enable pull-up loading more (enabled by default).
      * 设置是否启用上拉加载更多（默认启用）
+     * 注意：本方法仅仅支持初始化的时候调用，如过没有数据的时候，需要关闭请使用: finishLoadMoreWithNoMoreData 或者 finishRefreshWithNoMoreData
      * @param enabled 是否启用
      * @return RefreshLayout
      */
@@ -3360,6 +3361,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     /**
      * Display refresh animation without triggering events.
      * 显示刷新动画，不触发事件
+     * 注意：本方法只会开启动画，不会触发刷新事件。所以需要自己在外部适当的时机调用 finishRefresh 来关闭刷新动画
      * @return true or false, Status non-compliance will fail.
      *         是否成功（状态不符合会失败）
      */
