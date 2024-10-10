@@ -31,7 +31,10 @@ dependencies {
     })
     testImplementation 'junit:junit:4.12'
 
-    compileOnly project(':refresh-footer-ball')
-    compileOnly project(':refresh-footer-classics')
     compileOnly project(':refresh-layout')
+//    compileOnly project(':refresh-footer-ball')
+//    compileOnly project(':refresh-footer-classics')
+
+    compileOnly  'io.github.scwang90:refresh-footer-ball:2.1.1'        //球脉冲加载
+    compileOnly  'io.github.scwang90:refresh-footer-classics:2.1.1'    //经典加载
 }

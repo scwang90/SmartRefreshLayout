@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+./gradlew build publish
+
+#./gradlew :refresh-layout-kernel:publish
+
+#./gradlew :refresh-drawable-paint:publish
+#./gradlew :refresh-drawable-path:publish
+
+#./gradlew :refresh-footer-ball:publish
+#./gradlew :refresh-footer-classics:publish
+
+#./gradlew :refresh-header-classics:publish
+#./gradlew :refresh-header-falsify:publish
+#./gradlew :refresh-header-material:publish
+#./gradlew :refresh-header-radar:publish
+#./gradlew :refresh-header-two-level:publish

@@ -93,11 +93,7 @@ public class I18nExampleActivity extends AppCompatActivity implements AdapterVie
         Resources res = getResources();
         DisplayMetrics dm = res.getDisplayMetrics();
         Configuration conf = res.getConfiguration();
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            conf.locale = locale;
-        } else {
-            conf.setLocale(locale);
-        }
+        conf.setLocale(locale);
         res.updateConfiguration(conf, dm);
         startActivity(new Intent(this, getClass()));
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);

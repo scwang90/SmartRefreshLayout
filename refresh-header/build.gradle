@@ -30,12 +30,18 @@ dependencies {
     })
     testImplementation 'junit:junit:4.12'
 
-    compileOnly 'com.android.support:support-annotations:28.0.0'
     compileOnly 'com.android.support:support-v4:28.0.0'
+    compileOnly 'com.android.support:support-annotations:28.0.0'
+    
     compileOnly project(':refresh-layout')
-    compileOnly project(':refresh-drawable-path')
-    compileOnly project(':refresh-header-material')
+    
+//    compileOnly project(':refresh-drawable-path')
+//    compileOnly project(':refresh-header-material')
+//    compileOnly project(':refresh-layout-kernel')
+//    compileOnly project(':refresh-header-falsify')
 
-    compileOnly project(':refresh-layout-kernel')
-    compileOnly project(':refresh-header-falsify')
+    compileOnly  'io.github.scwang90:refresh-drawable-path:2.1.1'      //矢量路径
+    compileOnly  'io.github.scwang90:refresh-layout-kernel:2.1.1'      //核心必须依赖
+    compileOnly  'io.github.scwang90:refresh-header-falsify:2.1.1'     //虚拟刷新头
+    compileOnly  'io.github.scwang90:refresh-header-material:2.1.1'    //谷歌刷新头
 }
