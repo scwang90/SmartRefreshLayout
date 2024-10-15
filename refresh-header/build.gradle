@@ -27,19 +27,19 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     compileOnly project(':refresh-layout')
-    compileOnly project(':refresh-drawable-path')
-    compileOnly project(':refresh-header-material')
-    compileOnly project(':refresh-layout-kernel')
-    compileOnly project(':refresh-header-falsify')
+//    compileOnly project(':refresh-drawable-path')
+//    compileOnly project(':refresh-header-material')
+//    compileOnly project(':refresh-layout-kernel')
+//    compileOnly project(':refresh-header-falsify')
 
-//    implementation  'io.github.scwang90:refresh-drawable-path:2.1.0'      //矢量路径
-//    implementation  'io.github.scwang90:refresh-layout-kernel:2.1.0'      //核心必须依赖
-//    implementation  'io.github.scwang90:refresh-header-falsify:2.1.0'     //虚拟刷新头
-//    implementation  'io.github.scwang90:refresh-header-material:2.1.0'    //谷歌刷新头
+    compileOnly  'io.github.scwang90:refresh-drawable-path:3.0.0-alpha'      //矢量路径
+    compileOnly  'io.github.scwang90:refresh-layout-kernel:3.0.0-alpha'      //核心必须依赖
+    compileOnly  'io.github.scwang90:refresh-header-falsify:3.0.0-alpha'     //虚拟刷新头
+    compileOnly  'io.github.scwang90:refresh-header-material:3.0.0-alpha'    //谷歌刷新头
 
-    compileOnly 'androidx.appcompat:appcompat:1.6.1'
+    compileOnly 'androidx.appcompat:appcompat:1.7.0'
 
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
 }

@@ -5,8 +5,6 @@ buildscript {
         google()
         mavenCentral()
         gradlePluginPortal()
-//        jcenter()
-//        maven { url 'https://maven.aliyun.com/repository/jcenter' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.2.2'
@@ -40,7 +38,7 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-def file = 'local.properties'
+def file = "${rootProject.projectDir}\\local.properties"
 if (new File(file).exists()) {
     Properties properties = new Properties()
     properties.load(new FileInputStream(file))
@@ -140,8 +138,14 @@ if (new File(file).exists()) {
                                     url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
                                     credentials {
                                         // 这里就是之前在 issues.sonatype.org 注册的账号
-                                        username "${properties["sonatype.username"]}"
-                                        password new String(Base64.mimeDecoder.decode("${properties["sonatype.password"]}"), "UTF-8")
+                                        // username "${properties["sonatype.username"]}"
+                                        // password new String(Base64.mimeDecoder.decode("${properties["sonatype.password"]}"), "UTF-8")
+                                        // 后期改用 Token 认证
+                                        def tokenUsername = "${System.getenv('ossrhUsername')}"
+                                        def tokenPassword = "${System.getenv('ossrhPassword')}"
+                                        println "tokenUsername=\u001B[32m$tokenUsername\u001B[0m;tokenPassword=\u001B[32m$tokenPassword\u001B[0m"
+                                        username tokenUsername
+                                        password tokenPassword
                                     }
                                 }
                             }

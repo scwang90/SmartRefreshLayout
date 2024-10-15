@@ -28,15 +28,15 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     compileOnly project(':refresh-layout')
-    compileOnly project(':refresh-footer-ball')
-    compileOnly project(':refresh-footer-classics')
+//    compileOnly project(':refresh-footer-ball')
+//    compileOnly project(':refresh-footer-classics')
 
-//    implementation  'io.github.scwang90:refresh-footer-ball:2.1.0'        //球脉冲加载
-//    implementation  'io.github.scwang90:refresh-footer-classics:2.1.0'    //经典加载
+    compileOnly  'io.github.scwang90:refresh-footer-ball:3.0.0-alpha'        //球脉冲加载
+    compileOnly  'io.github.scwang90:refresh-footer-classics:3.0.0-alpha'    //经典加载
 
-    compileOnly 'androidx.appcompat:appcompat:1.6.1'
+    compileOnly 'androidx.appcompat:appcompat:1.7.0'
 
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
 }
