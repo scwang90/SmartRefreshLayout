@@ -21,7 +21,7 @@
         app:srlEnablePreviewInEditMode="true"
         app:srlEnableLoadMoreWhenContentNotFull="true">
         <!--srlAccentColor srlPrimaryColor 将会改变 Header 和 Footer 的主题颜色-->
-        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+        <com.scwang.smart.refresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srlClassicsSpinnerStyle="FixedBehind"/>

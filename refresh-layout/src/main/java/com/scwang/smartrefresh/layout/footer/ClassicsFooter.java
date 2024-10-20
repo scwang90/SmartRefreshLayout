@@ -4,14 +4,13 @@ import android.content.Context;
 import android.util.AttributeSet;
 
 import com.scwang.smart.refresh.layout.constant.SpinnerStyle;
-import com.scwang.smartrefresh.layout.api.RefreshFooter;
 
 /**
  * 经典上拉底部-兼容【1.x】版本-包名位置
  * Created by scwang on 2017/5/28.
  */
 @SuppressWarnings({"unused", "UnusedReturnValue"})
-public class ClassicsFooter extends com.scwang.smart.refresh.footer.ClassicsFooter implements RefreshFooter {
+public class ClassicsFooter extends com.scwang.smart.refresh.footer.ClassicsFooter implements com.scwang.smart.refresh.layout.api.RefreshFooter {
 
     public ClassicsFooter(Context context) {
         super(context);

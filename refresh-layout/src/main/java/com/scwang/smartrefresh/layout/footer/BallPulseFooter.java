@@ -6,7 +6,6 @@ import android.util.AttributeSet;
 import androidx.annotation.Nullable;
 
 import com.scwang.smart.refresh.layout.constant.SpinnerStyle;
-import com.scwang.smartrefresh.layout.api.RefreshFooter;
 
 
 /**
@@ -14,7 +13,7 @@ import com.scwang.smartrefresh.layout.api.RefreshFooter;
  * Created by scwang on 2017/5/30.
  */
 @SuppressWarnings({"unused", "UnusedReturnValue"})
-public class BallPulseFooter extends com.scwang.smart.refresh.footer.BallPulseFooter implements RefreshFooter {
+public class BallPulseFooter extends com.scwang.smart.refresh.footer.BallPulseFooter implements com.scwang.smart.refresh.layout.api.RefreshFooter {
 
     //<editor-fold desc="构造方法">
     public BallPulseFooter(Context context) {

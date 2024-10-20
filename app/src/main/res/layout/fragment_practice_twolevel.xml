@@ -18,15 +18,15 @@
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <com.scwang.smartrefresh.layout.header.TwoLevelHeader
+        <com.scwang.smart.refresh.layout.header.TwoLevelHeader
             android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            <com.scwang.smart.refresh.layout.header.ClassicsHeader
                 android:id="@+id/classics"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-        </com.scwang.smartrefresh.layout.header.TwoLevelHeader>
+        </com.scwang.smart.refresh.layout.header.TwoLevelHeader>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"

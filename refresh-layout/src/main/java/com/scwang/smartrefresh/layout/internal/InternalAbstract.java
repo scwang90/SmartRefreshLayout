@@ -7,8 +7,8 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.scwang.smart.refresh.layout.api.RefreshComponent;
 import com.scwang.smart.refresh.layout.simple.SimpleComponent;
-import com.scwang.smartrefresh.layout.api.RefreshInternal;
 
 /**
  * Internal 初步实现
@@ -23,7 +23,7 @@ public abstract class InternalAbstract extends SimpleComponent {
         super(wrapped);
     }
 
-    protected InternalAbstract(@NonNull View wrappedView, @Nullable RefreshInternal wrappedInternal) {
+    protected InternalAbstract(@NonNull View wrappedView, @Nullable RefreshComponent wrappedInternal) {
         super(wrappedView, wrappedInternal);
     }
 

@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.scwang.refreshlayout.R;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
 
 /**
  * 微博列表

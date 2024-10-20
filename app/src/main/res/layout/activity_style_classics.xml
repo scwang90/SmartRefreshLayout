@@ -21,7 +21,7 @@
         app:srlPrimaryColor="@android:color/transparent"
         app:srlEnableLoadMore="true"
         app:srlEnableAutoLoadMore="false">
-        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+        <com.scwang.smart.refresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srlFinishDuration="500"

@@ -8,20 +8,20 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;
-import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
-import com.scwang.smartrefresh.layout.api.DefaultRefreshInitializer;
-import com.scwang.smartrefresh.layout.api.RefreshFooter;
-import com.scwang.smartrefresh.layout.api.RefreshHeader;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.api.ScrollBoundaryDecider;
+import com.scwang.smart.refresh.layout.api.RefreshFooter;
+import com.scwang.smart.refresh.layout.api.RefreshHeader;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.listener.DefaultRefreshFooterCreator;
+import com.scwang.smart.refresh.layout.listener.DefaultRefreshHeaderCreator;
+import com.scwang.smart.refresh.layout.listener.DefaultRefreshInitializer;
+import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smart.refresh.layout.listener.OnMultiListener;
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
+import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
+import com.scwang.smart.refresh.layout.listener.ScrollBoundaryDecider;
+import com.scwang.smart.refresh.layout.simple.SimpleMultiListener;
 import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
-import com.scwang.smartrefresh.layout.header.BezierRadarHeader;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
-import com.scwang.smartrefresh.layout.listener.OnMultiPurposeListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
-import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
+import com.scwang.smart.refresh.layout.header.BezierRadarHeader;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
@@ -183,15 +183,15 @@ public class SmartRefreshLayout extends com.scwang.smart.refresh.layout.SmartRef
 
     /**
      * Set up a multi-function listener.
-     * Recommended {@link com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener}
+     * Recommended {@link OnMultiListener}
      * 设置多功能监听器
-     * 建议使用 {@link com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener}
+     * 建议使用 {@link SimpleMultiListener}
      * @param listener OnMultiPurposeListener 多功能监听器
      * @return RefreshLayout
      */
     @Override
-    public RefreshLayout setOnMultiPurposeListener(OnMultiPurposeListener listener) {
-        super.setOnMultiListener(new SimpleMultiPurposeListener(listener, this));
+    public RefreshLayout setOnMultiListener(OnMultiListener listener) {
+        super.setOnMultiListener(listener);
         return this;
     }
 
@@ -205,17 +205,7 @@ public class SmartRefreshLayout extends com.scwang.smart.refresh.layout.SmartRef
      */
     @Override
     public RefreshLayout setScrollBoundaryDecider(final ScrollBoundaryDecider boundary) {
-        super.setScrollBoundaryDecider(new ScrollBoundaryDecider() {
-            @Override
-            public boolean canRefresh(View content) {
-                return boundary.canRefresh(content);
-            }
-
-            @Override
-            public boolean canLoadMore(View content) {
-                return boundary.canLoadMore(content);
-            }
-        });
+        super.setScrollBoundaryDecider(boundary);
         return this;
     }
 
@@ -224,13 +214,7 @@ public class SmartRefreshLayout extends com.scwang.smart.refresh.layout.SmartRef
      * @param creator Header构建器
      */
     public static void setDefaultRefreshHeaderCreator(@NonNull final DefaultRefreshHeaderCreator creator) {
-        com.scwang.smart.refresh.layout.SmartRefreshLayout.setDefaultRefreshHeaderCreator((context, layout) -> {
-            if (layout instanceof RefreshLayout) {
-                return creator.createRefreshHeader(context, (RefreshLayout) layout);
-            } else {
-                return new BezierRadarHeader(context);
-            }
-        });
+        com.scwang.smart.refresh.layout.SmartRefreshLayout.setDefaultRefreshHeaderCreator(creator);
     }
 
     /**
@@ -238,13 +222,7 @@ public class SmartRefreshLayout extends com.scwang.smart.refresh.layout.SmartRef
      * @param creator Footer构建器
      */
     public static void setDefaultRefreshFooterCreator(@NonNull final DefaultRefreshFooterCreator creator) {
-        com.scwang.smart.refresh.layout.SmartRefreshLayout.setDefaultRefreshFooterCreator((context, layout) -> {
-            if (layout instanceof RefreshLayout) {
-                return creator.createRefreshFooter(context, (RefreshLayout) layout);
-            } else {
-                return new BallPulseFooter(context);
-            }
-        });
+        com.scwang.smart.refresh.layout.SmartRefreshLayout.setDefaultRefreshFooterCreator(creator);
     }
 
     /**
@@ -252,11 +230,7 @@ public class SmartRefreshLayout extends com.scwang.smart.refresh.layout.SmartRef
      * @param initializer 全局初始化器
      */
     public static void setDefaultRefreshInitializer(@NonNull final DefaultRefreshInitializer initializer) {
-        com.scwang.smart.refresh.layout.SmartRefreshLayout.setDefaultRefreshInitializer((context, layout) -> {
-            if (layout instanceof RefreshLayout) {
-                initializer.initialize(context, (RefreshLayout)layout);
-            }
-        });
+        com.scwang.smart.refresh.layout.SmartRefreshLayout.setDefaultRefreshInitializer(initializer);
     }
     //</editor-fold>
 

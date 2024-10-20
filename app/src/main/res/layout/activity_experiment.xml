@@ -22,13 +22,13 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="@string/experiment_footer"/>
-        <!--<com.scwang.smartrefresh.layout.header.ClassicsHeader-->
+        <!--<com.scwang.smart.refresh.layout.header.ClassicsHeader-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="match_parent"-->
             <!--android:gravity="center"-->
             <!--android:text="Header"/>-->
 
-        <!--<com.scwang.smartrefresh.layout.header.ClassicsHeader-->
+        <!--<com.scwang.smart.refresh.layout.header.ClassicsHeader-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="wrap_content"-->
             <!--app:srlPrimaryColor="#444"-->

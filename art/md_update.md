@@ -1,12 +1,19 @@
 # 更新日志
 
-## V 2.0.0 (开发中)
+## V 3.0.0-alpha
+>抛弃 support 使用 androidx
+>修复问题：复制kernel代码另外起包名后,加载更多时候recyclerview无法流畅滚动
+>修复问题：V2.1.0版本，demo案例，使用官方主题下拉刷新操作的时候，视图不可以滑动，但是响应点击，v2.0.6，v2.0.5没有这样的问题
+>修复问题：NullPointerException: Attempt to invoke interface method 'onAutoRefreshAnimationEnd()' on a null object reference
+>修复问题：当场递归死循环， java.lang.StackOverflowError
+
+## V 2.0.0
 >添加：srlStyle 主题支持  
 >分包：layout = kernel + two-level + header-classics + header-radar + header-falsify + footer-classics + footer-ball  
 >修改：方法 OnMultiPurposeListener -> setOnMultiListener
 >修改：包名 com.scwang.smartrefresh -> com.scwang.smart.refresh  
 >修改：类名 smartrefresh.layout.listener.OnMultiPurposeListener -> smart.refresh.layout.listener.OnMultiListener  
->修改：类名 smartrefresh.layout.listener.SimpleMultiPurposeListener -> smart.refresh.layout.simple.SimpleMultiListener
+>修改：类名 smartrefresh.layout.listener.SimpleMultiListener -> smart.refresh.layout.simple.SimpleMultiListener
 >添加：属性 srlBottomPullUpToCloseRate setBottomPullUpToCloseRate
 >回归：回归部分被去掉的API如：isRefreshing isLoading  
 

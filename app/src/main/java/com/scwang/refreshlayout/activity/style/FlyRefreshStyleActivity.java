@@ -31,11 +31,12 @@ import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.util.StatusBarUtil;
 import com.scwang.smart.refresh.header.flyrefresh.FlyView;
 import com.scwang.smart.refresh.header.flyrefresh.MountainSceneView;
+import com.scwang.smart.refresh.layout.api.RefreshHeader;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
+import com.scwang.smart.refresh.layout.simple.SimpleMultiListener;
 import com.scwang.smartrefresh.header.FlyRefreshHeader;
-import com.scwang.smartrefresh.layout.api.RefreshHeader;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
+import com.scwang.smart.refresh.layout.listener.OnMultiListener;
 import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 import java.text.DateFormat;
@@ -105,7 +106,7 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
         });
         //设置 让 AppBarLayout 和 RefreshLayout 的滚动同步 并不保持 toolbar 位置不变
         final AppBarLayout appBar = findViewById(R.id.appbar);
-        mRefreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
+        mRefreshLayout.setOnMultiListener(new SimpleMultiListener() {
             @Override
             public void onHeaderMoving(RefreshHeader header, boolean isDragging, float percent, int offset, int headerHeight, int maxDragHeight) {
                 appBar.setTranslationY(offset);

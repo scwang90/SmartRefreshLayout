@@ -1,20 +1,19 @@
-package com.scwang.smartrefresh.layout.header;
+package com.scwang.smart.refresh.layout.header;
 
 import android.content.Context;
 import android.util.AttributeSet;
 
 import androidx.annotation.Nullable;
 
-import com.scwang.smartrefresh.layout.api.OnTwoLevelListener;
-import com.scwang.smartrefresh.layout.api.RefreshHeader;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.header.listener.OnTwoLevelListener;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
 
 /**
  * 二级刷新
  * Created by scwang on 2017/5/26.
  */
 @SuppressWarnings("UnusedReturnValue")
-public class TwoLevelHeader extends com.scwang.smart.refresh.header.TwoLevelHeader implements RefreshHeader {
+public class TwoLevelHeader extends com.scwang.smart.refresh.header.TwoLevelHeader implements com.scwang.smart.refresh.layout.api.RefreshHeader {
 
 
     //<editor-fold desc="构造方法">
@@ -28,7 +27,7 @@ public class TwoLevelHeader extends com.scwang.smart.refresh.header.TwoLevelHead
     //</editor-fold>
 
     public TwoLevelHeader setOnTwoLevelListener(final OnTwoLevelListener listener) {
-        super.setOnTwoLevelListener(layout -> listener.onTwoLevel((RefreshLayout) layout));
+        super.setOnTwoLevelListener(listener);
         return this;
     }
 

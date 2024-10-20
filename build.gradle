@@ -5,6 +5,8 @@ buildscript {
         google()
         mavenCentral()
         gradlePluginPortal()
+        maven { url 'https://maven.aliyun.com/repository/google' } // 兼容旧版 google
+        maven { url 'https://maven.aliyun.com/repository/jcenter' } // 兼容旧版 jcenter
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.2.2'

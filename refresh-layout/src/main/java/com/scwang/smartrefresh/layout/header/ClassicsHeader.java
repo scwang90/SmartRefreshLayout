@@ -1,4 +1,4 @@
-package com.scwang.smartrefresh.layout.header;
+package com.scwang.smart.refresh.layout.header;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -7,7 +7,6 @@ import android.util.AttributeSet;
 
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.constant.SpinnerStyle;
-import com.scwang.smartrefresh.layout.api.RefreshHeader;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -17,7 +16,7 @@ import java.util.Date;
  * Created by scwang on 2017/5/28.
  */
 @SuppressWarnings({"unused", "UnusedReturnValue"})
-public class ClassicsHeader extends com.scwang.smart.refresh.header.ClassicsHeader implements RefreshHeader {
+public class ClassicsHeader extends com.scwang.smart.refresh.header.ClassicsHeader implements com.scwang.smart.refresh.layout.api.RefreshHeader {
 
     public ClassicsHeader(Context context) {
         super(context);

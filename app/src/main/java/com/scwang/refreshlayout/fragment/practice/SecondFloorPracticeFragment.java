@@ -16,13 +16,14 @@ import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.refreshlayout.util.StatusBarUtil;
-import com.scwang.smartrefresh.layout.api.OnTwoLevelListener;
-import com.scwang.smartrefresh.layout.api.RefreshHeader;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.constant.RefreshState;
-import com.scwang.smartrefresh.layout.header.TwoLevelHeader;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
+import com.scwang.smart.refresh.header.listener.OnTwoLevelListener;
+import com.scwang.smart.refresh.layout.api.RefreshHeader;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.constant.RefreshState;
+import com.scwang.smart.refresh.layout.header.TwoLevelHeader;
+import com.scwang.smart.refresh.layout.listener.OnMultiListener;
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
+import com.scwang.smart.refresh.layout.simple.SimpleMultiListener;
 
 import java.util.Arrays;
 import java.util.List;
@@ -55,7 +56,7 @@ public class SecondFloorPracticeFragment extends Fragment {
         });
 
         final RefreshLayout refreshLayout = root.findViewById(R.id.refreshLayout);
-        refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
+        refreshLayout.setOnMultiListener(new SimpleMultiListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 refreshLayout.finishLoadMore(2000);

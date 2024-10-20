@@ -15,8 +15,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
-import com.scwang.smartrefresh.layout.api.RefreshFooter;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.api.RefreshFooter;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 
 import java.util.Arrays;
@@ -36,7 +36,7 @@ public class BasicExampleActivity extends AppCompatActivity {
     private final Random random = new Random();
     private BaseRecyclerAdapter<Void> mAdapter;
     private LoadingLayout mLoadingLayout;
-    private com.scwang.smartrefresh.layout.api.RefreshLayout mRefreshLayout;
+    private RefreshLayout mRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +93,7 @@ public class BasicExampleActivity extends AppCompatActivity {
         mAdapter.setOnItemClickListener((parent, view, position, id) -> {
             BottomSheetDialog dialog=new BottomSheetDialog(BasicExampleActivity.this);
             View dialogView = View.inflate(getBaseContext(), R.layout.activity_example_basic, null);
-            com.scwang.smartrefresh.layout.api.RefreshLayout refreshLayout1 = dialogView.findViewById(R.id.refreshLayout);
+            RefreshLayout refreshLayout1 = dialogView.findViewById(R.id.refreshLayout);
             RecyclerView recyclerView = new RecyclerView(getBaseContext());
             recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext()));
             recyclerView.setAdapter(mAdapter);
@@ -106,12 +106,12 @@ public class BasicExampleActivity extends AppCompatActivity {
 
         //点击测试
         RefreshFooter footer = mRefreshLayout.getRefreshFooter();
-        if (footer instanceof com.scwang.smartrefresh.layout.footer.ClassicsFooter) {
+        if (footer instanceof ClassicsFooter) {
             mRefreshLayout.getRefreshFooter().getView().findViewById(ClassicsFooter.ID_TEXT_TITLE).setOnClickListener(v -> Toast.makeText(getBaseContext(), "点击测试", Toast.LENGTH_SHORT).show());
         }
     }
 
-    private void loadMore(com.scwang.smartrefresh.layout.api.RefreshLayout layout) {
+    private void loadMore(RefreshLayout layout) {
         layout.getLayout().postDelayed(() -> {
             if (random.nextBoolean()) {
                 //如果刷新成功

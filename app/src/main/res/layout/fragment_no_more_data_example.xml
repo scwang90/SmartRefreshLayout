@@ -21,7 +21,7 @@
         app:srlAccentColor="@android:color/white"
         app:srlPrimaryColor="@color/colorPrimary"
         app:srlEnableFooterFollowWhenNoMoreData="true">
-        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+        <com.scwang.smart.refresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srlAccentColor="#aaa"

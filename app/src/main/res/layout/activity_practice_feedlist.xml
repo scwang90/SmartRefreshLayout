@@ -23,7 +23,7 @@
         app:srlFooterTranslationViewId="@+id/scrollView"
         app:srlEnableLoadMoreWhenContentNotFull="false">
 
-        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+        <com.scwang.smart.refresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

@@ -3,14 +3,12 @@ package com.scwang.smartrefresh.header;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import com.scwang.smartrefresh.layout.api.RefreshHeader;
-
 /**
  * Phoenix
  * Created by scwang on 2017/5/31.
  * from <a href="https://github.com/Yalantis/Phoenix">...</a>
  */
-public class PhoenixHeader extends com.scwang.smart.refresh.header.PhoenixHeader implements RefreshHeader {
+public class PhoenixHeader extends com.scwang.smart.refresh.header.PhoenixHeader implements com.scwang.smart.refresh.layout.api.RefreshHeader {
 
     //<editor-fold desc="View">
     public PhoenixHeader(Context context) {

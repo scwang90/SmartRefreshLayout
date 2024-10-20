@@ -21,7 +21,7 @@ IOS版本：[链接](https://github.com/scwang90/SmartRefreshControl)
 
 ## 国内加速
 
-github 由于你懂的原因，下载速度缓慢，图片也无法查看，可以跳转 [国内镜像](https://gitee.com/scwang90/SmartRefreshLayout) 
+github 由于你懂的原因，下载速度缓慢，图片也无法查看，可以跳转 [Gitee镜像](https://gitee.com/scwang90/SmartRefreshLayout)
 
 ## 特点功能:
 
@@ -117,9 +117,28 @@ V2.x 版本已经把依赖库拆分成8个包啦，用到的时候自行引用�
  - refresh-footer-ball          球脉冲加载
  - refresh-footer-classics      经典加载
 
+> 注：在`Demo`中有些炫酷的 `Header`，他们并不具有实用性，所以没有打包上传仓库，所以无法直接添加依赖。
+如果你确实想要在`App`中集成它们，请自行找到对应个 `tag` 的分支，把对应版本的`Header`源码拷贝到自己的项目中，作为自定义Header来使用。
+
+> 需要源码引用的`Header`如下：
+
+> [BezierCircleHeader](refresh-header/src/main/java/com/scwang/smart/refresh/header/BezierCircleHeader.java)
+[DeliveryHeader](refresh-header/src/main/java/com/scwang/smart/refresh/header/DeliveryHeader.java)
+[DropBoxHeader](refresh-header/src/main/java/com/scwang/smart/refresh/header/DropBoxHeader.java)
+[FlyRefreshHeader](refresh-header/src/main/java/com/scwang/smart/refresh/header/FlyRefreshHeader.java)
+[FunGameBattleCityHeader](refresh-header/src/main/java/com/scwang/smart/refresh/header/FunGameBattleCityHeader.java)
+[FunGameHitBlockHeader](refresh-header/src/main/java/com/scwang/smart/refresh/header/FunGameHitBlockHeader.java)
+[PhoenixHeader](refresh-header/src/main/java/com/scwang/smart/refresh/header/PhoenixHeader.java)
+[StoreHouseHeader](refresh-header/src/main/java/com/scwang/smart/refresh/header/StoreHouseHeader.java)
+[TaurusHeader](refresh-header/src/main/java/com/scwang/smart/refresh/header/TaurusHeader.java)
+[WaterDropHeader](refresh-header/src/main/java/com/scwang/smart/refresh/header/WaterDropHeader.java)
+[WaveSwipeHeader](refresh-header/src/main/java/com/scwang/smart/refresh/header/WaveSwipeHeader.java)
+
+
 ## 简单用例
 #### 1.在 build.gradle 中添加依赖
 
+> 注：3.x 版本已经发布，主要升级为使用 `androidx` 替换 `support`, 并且目前尚未添加新功能, 如果你还需要使用 support 请使用 2.x 版本。
 
 ```gradle
 implementation 'androidx.appcompat:appcompat:1.0.0'                 //必须 1.0.0 以上

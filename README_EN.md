@@ -105,16 +105,16 @@ Please rest assured that I have divided it into eight packages, when used to ref
  - refresh-footer-ball          BallPulseFooter
  - refresh-footer-classics      ClassicsFooter
 
+> Please note that in the `Demo`, there are some cool `Headers` that are not practical, so they have not been packaged and uploaded to the repository, and thus cannot be directly added as dependencies.
+If you indeed want to integrate them into your `App`, please find the corresponding branch for each `tag`, copy the source code of the corresponding version of the `Header` into your own project, and use it as a custom `Header`.
+
+> The `Headers` that require source code reference are as follows:
+
 ## Usage
 #### 1.Add a gradle dependency.
 
-V 2.x changed the package name relative to 1.x, such as `com.scwang.smartrefresh` to `com.scwang.smart.refresh`.
-It is suggested that in the new project, if the old project is upgraded,
-the package name should be replaced, which is more troublesome.
-But the main change is to subcontract SmartRefreshLayout to reduce unnecessary dependencies and avoid code redundancy.
-However, there is no subcontracting to SmartRefreshHeader.
-There are more than ten headers in it.
-It is recommended that you copy the source code into the project whenever you need to use it.
+> Please note: Version 3.x has been released, with the main upgrade being the replacement of `support` with `androidx`, and no new features have been added at this time. If you still need to use `support`, please use version 2.x.
+
 
 ```
 // Note: There will be no default Header and Footer after subcontracting. It needs to be added manually!

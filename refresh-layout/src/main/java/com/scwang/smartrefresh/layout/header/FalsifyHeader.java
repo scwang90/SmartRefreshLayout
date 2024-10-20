@@ -1,9 +1,7 @@
-package com.scwang.smartrefresh.layout.header;
+package com.scwang.smart.refresh.layout.header;
 
 import android.content.Context;
 import android.util.AttributeSet;
-
-import com.scwang.smartrefresh.layout.api.RefreshHeader;
 
 /**
  * 虚假的 Header
@@ -12,7 +10,7 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
  * 具体使用方法 参考 纸飞机（FlyRefreshHeader）
  * Created by scwang on 2017/6/14.
  */
-public class FalsifyHeader extends com.scwang.smart.refresh.header.FalsifyHeader implements RefreshHeader {
+public class FalsifyHeader extends com.scwang.smart.refresh.header.FalsifyHeader implements com.scwang.smart.refresh.layout.api.RefreshHeader {
 
     //<editor-fold desc="FalsifyHeader">
     public FalsifyHeader(Context context) {
