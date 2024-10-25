@@ -17,7 +17,7 @@ import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.refreshlayout.util.StatusBarUtil;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
-import com.scwang.smartrefresh.layout.util.SmartUtil;
+import com.scwang.smart.refresh.layout.util.SmartUtil;
 
 import java.util.Arrays;
 import java.util.Collection;

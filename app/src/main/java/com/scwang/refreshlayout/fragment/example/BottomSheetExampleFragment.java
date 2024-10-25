@@ -21,7 +21,7 @@ import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.constant.SpinnerStyle;
-import com.scwang.smart.refresh.layout.header.ClassicsHeader;
+import com.scwang.smart.refresh.header.ClassicsHeader;
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 
 import java.util.Arrays;

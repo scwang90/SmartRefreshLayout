@@ -12,7 +12,7 @@ import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.util.StatusBarUtil;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
-import com.scwang.smartrefresh.layout.util.SmartUtil;
+import com.scwang.smart.refresh.layout.util.SmartUtil;
 
 import java.util.Locale;
 

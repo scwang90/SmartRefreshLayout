@@ -17,11 +17,10 @@ import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.refreshlayout.util.StatusBarUtil;
 import com.scwang.smart.refresh.header.listener.OnTwoLevelListener;
+import com.scwang.smart.refresh.header.TwoLevelHeader;
 import com.scwang.smart.refresh.layout.api.RefreshHeader;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.constant.RefreshState;
-import com.scwang.smart.refresh.layout.header.TwoLevelHeader;
-import com.scwang.smart.refresh.layout.listener.OnMultiListener;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 import com.scwang.smart.refresh.layout.simple.SimpleMultiListener;
 

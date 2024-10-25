@@ -37,7 +37,7 @@ import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 import com.scwang.smart.refresh.layout.simple.SimpleMultiListener;
 import com.scwang.smartrefresh.header.FlyRefreshHeader;
 import com.scwang.smart.refresh.layout.listener.OnMultiListener;
-import com.scwang.smartrefresh.layout.util.SmartUtil;
+import com.scwang.smart.refresh.layout.util.SmartUtil;
 
 import java.text.DateFormat;
 import java.text.ParseException;

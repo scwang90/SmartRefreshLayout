@@ -7,8 +7,9 @@ import android.view.ViewGroup;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.smart.refresh.layout.api.RefreshComponent;
+import com.scwang.smart.refresh.layout.listener.ScrollBoundaryDecider;
+import com.scwang.smart.refresh.layout.simple.SimpleBoundaryDecider;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.impl.ScrollBoundaryDeciderAdapter;
 
 public class SmartRefreshHorizontal extends SmartRefreshLayout {
 
@@ -21,7 +22,7 @@ public class SmartRefreshHorizontal extends SmartRefreshLayout {
     public SmartRefreshHorizontal(Context context, AttributeSet attrs) {
         super(context, attrs);
         setEnableAutoLoadMore(false);
-        setScrollBoundaryDecider(new ScrollBoundaryDeciderAdapter(){
+        setScrollBoundaryDecider(new SimpleBoundaryDecider(){
             @Override
             public boolean canRefresh(View content) {
                 return ScrollBoundaryHorizontal.canRefresh(content, mActionEvent);

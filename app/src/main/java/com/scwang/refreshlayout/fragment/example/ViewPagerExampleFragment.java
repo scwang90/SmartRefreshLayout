@@ -26,8 +26,8 @@ import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
-import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
-import com.scwang.smart.refresh.layout.header.ClassicsHeader;
+import com.scwang.smart.refresh.footer.ClassicsFooter;
+import com.scwang.smart.refresh.header.ClassicsHeader;
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.Arrays;

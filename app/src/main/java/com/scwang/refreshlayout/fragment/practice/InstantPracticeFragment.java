@@ -18,8 +18,8 @@ import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.refreshlayout.util.DynamicTimeFormat;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
-import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
-import com.scwang.smartrefresh.layout.impl.ScrollBoundaryDeciderAdapter;
+import com.scwang.smart.refresh.footer.ClassicsFooter;
+import com.scwang.smart.refresh.layout.simple.SimpleBoundaryDecider;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -65,7 +65,7 @@ public class InstantPracticeFragment extends Fragment {
         refreshLayout.setEnableNestedScroll(false);//必须关闭
         refreshLayout.setEnableScrollContentWhenLoaded(true);//必须关闭
         refreshLayout.getLayout().setScaleY(-1);//必须设置
-        refreshLayout.setScrollBoundaryDecider(new ScrollBoundaryDeciderAdapter() {
+        refreshLayout.setScrollBoundaryDecider(new SimpleBoundaryDecider() {
             @Override
             public boolean canLoadMore(View content) {
                 return super.canRefresh(content);//必须替换

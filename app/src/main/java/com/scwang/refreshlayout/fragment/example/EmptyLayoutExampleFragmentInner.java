@@ -29,7 +29,7 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 import com.scwang.smart.refresh.layout.constant.RefreshState;
 import com.scwang.smart.refresh.layout.constant.SpinnerStyle;
-import com.scwang.smart.refresh.layout.header.ClassicsHeader;
+import com.scwang.smart.refresh.header.ClassicsHeader;
 import com.scwang.smart.refresh.layout.listener.OnMultiListener;
 import com.scwang.smart.refresh.layout.simple.SimpleMultiListener;
 

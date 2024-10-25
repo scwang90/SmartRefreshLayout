@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 
-import com.scwang.smartrefresh.layout.util.SmartUtil;
+import com.scwang.smart.refresh.layout.util.SmartUtil;
 
 /**
  * 滚动边界

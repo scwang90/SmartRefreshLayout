@@ -22,7 +22,7 @@ import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.refreshlayout.util.DynamicTimeFormat;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.constant.SpinnerStyle;
-import com.scwang.smart.refresh.layout.header.ClassicsHeader;
+import com.scwang.smart.refresh.header.ClassicsHeader;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

@@ -21,7 +21,7 @@
         app:srlAccentColor="@android:color/white"
         app:srlEnableHeaderTranslationContent="true"
         app:srlEnableLoadMore="false">
-        <com.scwang.smart.refresh.layout.header.BezierRadarHeader
+        <com.scwang.smart.refresh.header.BezierRadarHeader
             android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

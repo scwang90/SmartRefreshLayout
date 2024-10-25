@@ -3,7 +3,6 @@ package com.scwang.smartrefresh.layout;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,9 +18,8 @@ import com.scwang.smart.refresh.layout.listener.OnMultiListener;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
 import com.scwang.smart.refresh.layout.listener.ScrollBoundaryDecider;
+import com.scwang.smart.refresh.layout.simple.SimpleBoundaryDecider;
 import com.scwang.smart.refresh.layout.simple.SimpleMultiListener;
-import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
-import com.scwang.smart.refresh.layout.header.BezierRadarHeader;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
@@ -197,9 +195,9 @@ public class SmartRefreshLayout extends com.scwang.smart.refresh.layout.SmartRef
 
     /**
      * Set the scroll boundary Decider, Can customize when you can refresh.
-     * Recommended {@link com.scwang.smartrefresh.layout.impl.ScrollBoundaryDeciderAdapter}
+     * Recommended {@link SimpleBoundaryDecider}
      * 设置滚动边界判断器
-     * 建议使用 {@link com.scwang.smartrefresh.layout.impl.ScrollBoundaryDeciderAdapter}
+     * 建议使用 {@link SimpleBoundaryDecider}
      * @param boundary ScrollBoundaryDecider 判断器
      * @return RefreshLayout
      */

@@ -15,7 +15,7 @@ import com.scwang.refreshlayout.util.StatusBarUtil;
 import com.scwang.smart.refresh.layout.api.RefreshHeader;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.simple.SimpleMultiListener;
-import com.scwang.smartrefresh.layout.util.SmartUtil;
+import com.scwang.smart.refresh.layout.util.SmartUtil;
 
 /**
  * 微博主页

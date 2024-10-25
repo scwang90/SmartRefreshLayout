@@ -6,9 +6,9 @@ import android.widget.AbsListView;
 
 import androidx.annotation.NonNull;
 
+import com.scwang.smart.refresh.layout.util.SmartUtil;
 import com.scwang.smart.refresh.layout.wrapper.RefreshContentWrapper;
 
-import static com.scwang.smartrefresh.layout.util.SmartUtil.scrollListBy;
 
 public class RefreshContentHorizontal extends RefreshContentWrapper {
 
@@ -32,7 +32,7 @@ public class RefreshContentHorizontal extends RefreshContentWrapper {
         int value = (int) animation.getAnimatedValue();
         try {
             if (mScrollableView instanceof AbsListView) {
-                scrollListBy((AbsListView) mScrollableView, value - mLastSpinner);
+                SmartUtil.scrollListBy((AbsListView) mScrollableView, value - mLastSpinner);
             } else {
                 mScrollableView.scrollBy(value - mLastSpinner, 0);
             }

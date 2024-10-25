@@ -24,7 +24,7 @@ import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.refreshlayout.fragment.example.PureScrollExampleFragment.Item;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
-import com.scwang.smart.refresh.layout.header.FalsifyHeader;
+import com.scwang.smart.refresh.header.FalsifyHeader;
 
 import java.util.Arrays;
 
