@@ -7,7 +7,7 @@
     android:background="@color/colorBackgroundDark"
     tools:context="com.scwang.refreshlayout.activity.practice.BannerPracticeActivity">
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -31,7 +31,7 @@
             android:background="@android:color/white"
             android:overScrollMode="never"
             tools:listitem="@layout/item_movie_item"/>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
     <com.github.mmin18.widget.RealtimeBlurView
         android:id="@+id/blurView"

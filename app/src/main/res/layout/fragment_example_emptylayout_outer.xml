@@ -14,7 +14,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        <com.scwang.smart.refresh.layout.SmartRefreshLayout
             android:id="@+id/refreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -25,7 +25,7 @@
                 android:background="@android:color/white"
                 android:overScrollMode="never"
                 tools:listitem="@android:layout/simple_list_item_2"/>
-        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+        </com.scwang.smart.refresh.layout.SmartRefreshLayout>
         <include layout="@layout/_loading_layout_empty"
             android:id="@+id/empty"/>
     </FrameLayout>

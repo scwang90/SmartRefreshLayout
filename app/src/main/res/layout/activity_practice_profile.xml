@@ -8,7 +8,7 @@
     android:background="@color/colorPrimary"
     tools:context="com.scwang.refreshlayout.activity.practice.ProfilePracticeActivity">
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -171,7 +171,7 @@
             </LinearLayout>
 
         </LinearLayout>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
     <com.github.mmin18.widget.RealtimeBlurView
         android:id="@+id/blurView"

@@ -15,7 +15,7 @@
         app:navigationIcon="@drawable/ic_arrow_back_gray_24dp"
         app:title="@string/title_activity_style_delivery"/>
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -35,6 +35,6 @@
             android:padding="@dimen/dimenPaddingDiminutive"
             android:overScrollMode="never"
             tools:listitem="@layout/item_style_delivery"/>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

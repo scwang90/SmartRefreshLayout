@@ -24,7 +24,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:background="@android:color/white">
-        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        <com.scwang.smart.refresh.layout.SmartRefreshLayout
             android:id="@+id/refreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 app:srlFinishDuration="0"
                 app:srlClassicsSpinnerStyle="Translate"/>
-        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+        </com.scwang.smart.refresh.layout.SmartRefreshLayout>
     </ezy.ui.layout.LoadingLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

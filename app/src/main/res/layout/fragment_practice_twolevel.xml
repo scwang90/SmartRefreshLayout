@@ -14,7 +14,7 @@
         app:title="二级刷新">
     </androidx.appcompat.widget.Toolbar>
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -33,6 +33,6 @@
             android:layout_height="match_parent"
             android:overScrollMode="never"
             tools:listitem="@layout/item_movie_item"/>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

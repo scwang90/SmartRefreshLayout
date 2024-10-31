@@ -12,7 +12,7 @@
         app:navigationIcon="?attr/homeAsUpIndicator"
         app:title="@string/title_activity_example_over_scroll"/>
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -38,6 +38,6 @@
             android:id="@+id/webView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

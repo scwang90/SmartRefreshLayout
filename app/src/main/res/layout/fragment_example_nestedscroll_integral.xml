@@ -14,7 +14,7 @@
         app:contentInsetStartWithNavigation="0dp"
         app:title="@string/fragment_example_nested_scroll_integral"/>
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -213,6 +213,6 @@
             </com.google.android.material.appbar.AppBarLayout>
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

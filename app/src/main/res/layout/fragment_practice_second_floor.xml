@@ -6,7 +6,7 @@
     android:orientation="vertical"
     tools:context="com.scwang.refreshlayout.fragment.practice.SecondFloorPracticeFragment">
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -68,7 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srlPrimaryColor="@android:color/white"/>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
     <androidx.appcompat.widget.Toolbar style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"

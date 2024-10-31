@@ -16,7 +16,7 @@
             android:text="需求是内容控件长按后显示当前手指移动的坐标,比如股票分时k线图"
             android:layout_height="wrap_content" />
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -26,6 +26,6 @@
                 android:layout_height="match_parent"
                 android:nestedScrollingEnabled="true"/>
 
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

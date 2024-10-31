@@ -18,7 +18,7 @@
         android:src="@mipmap/image_weibo_home_2"
         app:layout_collapseMode="parallax"/>
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -1014,7 +1014,7 @@
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
     <androidx.appcompat.widget.Toolbar style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"

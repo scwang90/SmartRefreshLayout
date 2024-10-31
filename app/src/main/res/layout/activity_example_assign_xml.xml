@@ -12,7 +12,7 @@
         app:navigationIcon="?attr/homeAsUpIndicator"
         app:title="@string/title_activity_example_assign_xml"/>
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -37,6 +37,6 @@
             android:layout_height="wrap_content"
             app:srlClassicsSpinnerStyle="FixedBehind"/>
         <!--FixedBehind可以让Footer固定在内容的背后，下拉的时候效果同微信浏览器的效果-->
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

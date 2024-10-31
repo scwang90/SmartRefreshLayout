@@ -12,7 +12,7 @@
         app:navigationIcon="?attr/homeAsUpIndicator"
         app:title="@string/title_activity_example_listener"/>
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -36,6 +36,6 @@
                     tools:text="@string/description_define_in_xml"/>
             </FrameLayout>
         </ScrollView>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

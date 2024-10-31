@@ -38,7 +38,7 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-    <!--<com.scwang.smartrefresh.layout.SmartRefreshLayout-->
+    <!--<com.scwang.smart.refresh.layout.SmartRefreshLayout-->
         <!--android:id="@+id/mRefreshLayout"-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="match_parent"-->
@@ -55,7 +55,7 @@
             <!--android:layout_height="match_parent"-->
             <!--android:overScrollMode="never"-->
             <!--tools:listitem="@android:layout/simple_list_item_2"/>-->
-    <!--</com.scwang.smartrefresh.layout.SmartRefreshLayout>-->
+    <!--</com.scwang.smart.refresh.layout.SmartRefreshLayout>-->
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"

@@ -12,7 +12,7 @@
         app:navigationIcon="?attr/homeAsUpIndicator"
         app:title="@string/title_activity_style_bezier"/>
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -31,6 +31,6 @@
             android:layout_height="match_parent"
             android:overScrollMode="never"
             tools:listitem="@android:layout/simple_list_item_2"/>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

@@ -9,7 +9,7 @@ import com.scwang.refreshlayout.R;
 import com.scwang.smart.refresh.layout.api.RefreshComponent;
 import com.scwang.smart.refresh.layout.listener.ScrollBoundaryDecider;
 import com.scwang.smart.refresh.layout.simple.SimpleBoundaryDecider;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 
 public class SmartRefreshHorizontal extends SmartRefreshLayout {
 

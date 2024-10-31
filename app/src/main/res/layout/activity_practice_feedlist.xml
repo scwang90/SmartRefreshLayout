@@ -13,7 +13,7 @@
         app:navigationIcon="@drawable/ic_arrow_back_white_24dp"
         app:title="@string/title_activity_practice_feed_list"/>
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -956,6 +956,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srlClassicsSpinnerStyle="FixedBehind"/>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

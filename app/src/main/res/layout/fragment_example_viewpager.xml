@@ -11,7 +11,7 @@
         app:navigationIcon="?attr/homeAsUpIndicator"
         app:title="@string/fragment_example_viewpager"/>
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -34,6 +34,6 @@
                 android:layout_height="match_parent"
                 android:background="@android:color/white"/>
         </LinearLayout>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

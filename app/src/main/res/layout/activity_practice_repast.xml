@@ -7,7 +7,7 @@
     android:background="@color/colorBackgroundDark"
     tools:context="com.scwang.refreshlayout.activity.practice.RepastPracticeActivity">
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -41,7 +41,7 @@
             app:srlAccentColor="#888"
             app:srlClassicsSpinnerStyle="Translate"
             app:srlDrawableProgress="@drawable/ic_progress_puzzle"/>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
     <com.github.mmin18.widget.RealtimeBlurView
         android:id="@+id/blurView"
