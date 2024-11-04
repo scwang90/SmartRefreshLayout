@@ -30,7 +30,7 @@
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@android:layout/simple_list_item_2"/>
-        <com.scwang.smartrefresh.header.MaterialHeader
+        <com.scwang.smart.refresh.header.MaterialHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.scwang.refreshlayout.widget.SmartRefreshHorizontal>

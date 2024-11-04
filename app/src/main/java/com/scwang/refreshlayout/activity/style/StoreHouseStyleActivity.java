@@ -19,7 +19,7 @@ import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.smart.refresh.layout.api.RefreshHeader;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.header.StoreHouseHeader;
+import com.scwang.smart.refresh.header.StoreHouseHeader;
 
 import java.util.ArrayList;
 import java.util.Arrays;

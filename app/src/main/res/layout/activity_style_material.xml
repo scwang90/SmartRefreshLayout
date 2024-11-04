@@ -21,7 +21,7 @@
         app:srlAccentColor="@android:color/white"
         app:srlEnableHeaderTranslationContent="false"
         app:srlEnableLoadMore="false">
-        <com.scwang.smartrefresh.header.MaterialHeader
+        <com.scwang.smart.refresh.header.MaterialHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <androidx.recyclerview.widget.RecyclerView

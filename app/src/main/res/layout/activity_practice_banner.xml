@@ -17,7 +17,7 @@
         app:srlEnableHeaderTranslationContent="false"
         app:srlEnablePreviewInEditMode="false"
         app:srlEnableNestedScrolling="true">
-        <com.scwang.smartrefresh.header.MaterialHeader
+        <com.scwang.smart.refresh.header.MaterialHeader
             android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

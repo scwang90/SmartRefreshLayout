@@ -22,7 +22,7 @@
         app:srlAccentColor="@android:color/white"
         app:srlEnableLoadMore="false">
         <!--srlHeaderMaxDragRate=2.5时候WaterDropHeader的下拉效果最好-->
-        <com.scwang.smartrefresh.header.WaterDropHeader
+        <com.scwang.smart.refresh.header.WaterDropHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <androidx.recyclerview.widget.RecyclerView

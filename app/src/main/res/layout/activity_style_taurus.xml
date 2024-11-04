@@ -41,7 +41,7 @@
         app:srlPrimaryColor="@color/colorPrimary"
         app:srlAccentColor="@android:color/white"
         app:srlEnableLoadMore="false">
-        <com.scwang.smartrefresh.header.TaurusHeader
+        <com.scwang.smart.refresh.header.TaurusHeader
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
         <androidx.recyclerview.widget.RecyclerView

@@ -23,7 +23,7 @@
         app:srlAccentColor="@android:color/white"
         app:srlEnableHeaderTranslationContent="true"
         app:srlEnableLoadMore="false">
-        <com.scwang.smartrefresh.header.DropBoxHeader
+        <com.scwang.smart.refresh.header.DropBoxHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <androidx.recyclerview.widget.RecyclerView

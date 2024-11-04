@@ -56,7 +56,7 @@
         app:srlEnablePreviewInEditMode="true"
         app:srlEnableOverScrollBounce="false"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        <com.scwang.smartrefresh.header.FlyRefreshHeader
+        <com.scwang.smart.refresh.header.FlyRefreshHeader
             android:id="@+id/flyRefresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

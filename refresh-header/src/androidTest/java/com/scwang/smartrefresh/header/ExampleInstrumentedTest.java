@@ -1,4 +1,4 @@
-package com.scwang.smartrefresh.header;
+package com.scwang.smart.refresh.header;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.scwang.smartrefresh.header.test", appContext.getPackageName());
+        assertEquals("com.scwang.smart.refresh.header.test", appContext.getPackageName());
     }
 }

@@ -35,8 +35,7 @@ import com.scwang.smart.refresh.layout.api.RefreshHeader;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 import com.scwang.smart.refresh.layout.simple.SimpleMultiListener;
-import com.scwang.smartrefresh.header.FlyRefreshHeader;
-import com.scwang.smart.refresh.layout.listener.OnMultiListener;
+import com.scwang.smart.refresh.header.FlyRefreshHeader;
 import com.scwang.smart.refresh.layout.util.SmartUtil;
 
 import java.text.DateFormat;

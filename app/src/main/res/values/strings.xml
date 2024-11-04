@@ -154,7 +154,7 @@
         <com.scwang.smartrefresh.SmartRefreshLayout\n
             \t\tandroid:layout_width="match_parent"\n
             \t\tandroid:layout_height="match_parent">\n
-            \t<com.scwang.smartrefresh.header.ClassicsHeader\n
+            \t<com.scwang.smart.refresh.header.ClassicsHeader\n
                 \t\tandroid:layout_width="match_parent"\n
                 \t\tandroid:layout_height="wrap_content"/>\n
             \t<TextView\n

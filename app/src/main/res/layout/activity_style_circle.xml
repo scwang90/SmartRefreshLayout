@@ -21,7 +21,7 @@
         app:srlAccentColor="@android:color/white"
         app:srlEnableHeaderTranslationContent="true"
         app:srlEnableLoadMore="false">
-        <com.scwang.smartrefresh.header.BezierCircleHeader
+        <com.scwang.smart.refresh.header.BezierCircleHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <androidx.recyclerview.widget.RecyclerView
