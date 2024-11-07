@@ -155,7 +155,7 @@
         1.可以在Android Studio中的预览窗口预览效果\n
         2.优先级高于 【全局默认】但是低于 【JavaCode】\n\n
         代码示例：\n
-        <com.scwang.smartrefresh.SmartRefreshLayout\n
+        <com.scwang.smart.refresh.SmartRefreshLayout\n
             \t\tandroid:layout_width="match_parent"\n
             \t\tandroid:layout_height="match_parent">\n
             \t<com.scwang.smart.refresh.header.ClassicsHeader\n
@@ -164,10 +164,10 @@
             \t<TextView\n
                 \t\tandroid:layout_width="match_parent"\n
                 \t\tandroid:layout_height="match_parent"/>\n
-            \t<com.scwang.smartrefresh.footer.ClassicsFooter\n
+            \t<com.scwang.smart.refresh.footer.ClassicsFooter\n
                 \t\tandroid:layout_width="match_parent"\n
                 \t\tandroid:layout_height="wrap_content"/>\n
-        </com.scwang.smartrefresh.SmartRefreshLayout>\n
+        </com.scwang.smart.refresh.SmartRefreshLayout>\n
     ]]></string>
     <string name="description_define_in_code">这是使用定制Header和Footer的第三种方法-代码设置\n\n
         本方法是实际项目中比较少用的方法，其特点有：\n\n

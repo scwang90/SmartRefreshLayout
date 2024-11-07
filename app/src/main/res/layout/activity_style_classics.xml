@@ -21,7 +21,7 @@
         app:srlPrimaryColor="@android:color/transparent"
         app:srlEnableLoadMore="true"
         app:srlEnableAutoLoadMore="false">
-        <com.scwang.smart.refresh.layout.header.ClassicsHeader
+        <com.scwang.smart.refresh.header.ClassicsHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srlFinishDuration="500"
@@ -41,7 +41,7 @@
             android:background="@android:color/white"
             android:overScrollMode="never"
             tools:listitem="@android:layout/simple_list_item_2"/>
-        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+        <com.scwang.smart.refresh.footer.ClassicsFooter
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>

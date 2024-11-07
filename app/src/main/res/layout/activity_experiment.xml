@@ -22,13 +22,13 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="@string/experiment_footer"/>
-        <!--<com.scwang.smart.refresh.layout.header.ClassicsHeader-->
+        <!--<com.scwang.smart.refresh.header.ClassicsHeader-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="match_parent"-->
             <!--android:gravity="center"-->
             <!--android:text="Header"/>-->
 
-        <!--<com.scwang.smart.refresh.layout.header.ClassicsHeader-->
+        <!--<com.scwang.smart.refresh.header.ClassicsHeader-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="wrap_content"-->
             <!--app:srlPrimaryColor="#444"-->
@@ -40,7 +40,7 @@
             <!--android:background="#1bf"-->
             <!--android:overScrollMode="never"-->
             <!--tools:listitem="@android:layout/simple_list_item_2"/>-->
-        <!--<com.scwang.smartrefresh.layout.footer.ClassicsFooter-->
+        <!--<com.scwang.smart.refresh.footer.ClassicsFooter-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="wrap_content"-->
             <!--app:srlPrimaryColor="#444"-->

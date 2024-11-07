@@ -20,7 +20,7 @@
         android:layout_height="match_parent"
         app:srlFooterTranslationViewId="@+id/viewPager">
         <!--app:srlFooterTranslationViewId="@+id/recyclerView"-->
-        <com.scwang.smart.refresh.layout.header.ClassicsHeader
+        <com.scwang.smart.refresh.header.ClassicsHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srlClassicsSpinnerStyle="Scale"

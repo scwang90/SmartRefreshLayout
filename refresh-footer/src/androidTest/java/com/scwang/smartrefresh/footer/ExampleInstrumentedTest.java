@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.scwang.smartrefresh.footer.test", appContext.getPackageName());
+        assertEquals("com.scwang.smart.refresh.footer.test", appContext.getPackageName());
     }
 }

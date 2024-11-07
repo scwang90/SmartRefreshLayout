@@ -23,7 +23,7 @@
         app:srlFooterTranslationViewId="@+id/scrollView"
         app:srlEnableLoadMoreWhenContentNotFull="false">
 
-        <com.scwang.smart.refresh.layout.header.ClassicsHeader
+        <com.scwang.smart.refresh.header.ClassicsHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -952,7 +952,7 @@
             </FrameLayout>
         </FrameLayout>
 
-        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+        <com.scwang.smart.refresh.footer.ClassicsFooter
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srlClassicsSpinnerStyle="FixedBehind"/>

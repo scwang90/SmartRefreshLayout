@@ -17,7 +17,7 @@
         android:layout_height="match_parent"
         app:srlEnablePureScrollMode="false"
         app:srlEnableOverScrollDrag="false">
-        <com.scwang.smart.refresh.layout.header.FalsifyHeader
+        <com.scwang.smart.refresh.header.FalsifyHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <androidx.recyclerview.widget.RecyclerView
