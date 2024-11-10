@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.scwang.refreshlayout.activity.style.BezierRadarStyleActivity"
+    tools:context="com.scwang.refresh.layout.activity.style.BezierRadarStyleActivity"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar style="@style/AppTheme.Toolbar"

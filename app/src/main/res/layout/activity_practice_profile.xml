@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/colorPrimary"
-    tools:context="com.scwang.refreshlayout.activity.practice.ProfilePracticeActivity">
+    tools:context="com.scwang.refresh.layout.activity.practice.ProfilePracticeActivity">
 
     <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"

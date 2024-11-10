@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.scwang.refreshlayout.fragment.example.FlexBoxLayoutManagerFragment">
+    tools:context="com.scwang.refresh.layout.fragment.example.FlexBoxLayoutManagerFragment">
 
     <androidx.appcompat.widget.Toolbar style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"

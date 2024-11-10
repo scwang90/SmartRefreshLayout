@@ -4,7 +4,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context="com.scwang.refreshlayout.fragment.example.DisallowInterceptExampleFragment">
+        tools:context="com.scwang.refresh.layout.fragment.example.DisallowInterceptExampleFragment">
 
     <androidx.appcompat.widget.Toolbar style="@style/AppTheme.Toolbar"
             android:id="@+id/toolbar"
@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <view class="com.scwang.refreshlayout.fragment.example.DisallowInterceptExampleFragment$MoveView"
+        <view class="com.scwang.refresh.layout.fragment.example.DisallowInterceptExampleFragment$MoveView"
                 android:layout_width="match_parent"
                 android:background="#33000000"
                 android:layout_height="match_parent"

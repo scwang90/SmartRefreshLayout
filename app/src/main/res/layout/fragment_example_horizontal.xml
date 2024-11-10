@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.scwang.refreshlayout.fragment.example.HorizontalExampleFragment">
+    tools:context="com.scwang.refresh.layout.fragment.example.HorizontalExampleFragment">
 
     <androidx.appcompat.widget.Toolbar style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"
@@ -13,7 +13,7 @@
         app:navigationIcon="?attr/homeAsUpIndicator"
         app:title="@string/fragment_example_horizontal"/>
 
-    <com.scwang.refreshlayout.widget.SmartRefreshHorizontal
+    <com.scwang.refresh.layout.widget.SmartRefreshHorizontal
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -33,7 +33,7 @@
         <com.scwang.smart.refresh.header.MaterialHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-    </com.scwang.refreshlayout.widget.SmartRefreshHorizontal>
+    </com.scwang.refresh.layout.widget.SmartRefreshHorizontal>
 
 </LinearLayout>
 

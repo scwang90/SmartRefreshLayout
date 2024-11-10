@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackgroundDark"
-    tools:context="com.scwang.refreshlayout.activity.practice.BannerPracticeActivity">
+    tools:context="com.scwang.refresh.layout.activity.practice.BannerPracticeActivity">
 
     <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"

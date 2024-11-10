@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/colorBackgroundDark"
-    tools:context="com.scwang.refreshlayout.activity.practice.QQBrowserPracticeActivity">
+    tools:context="com.scwang.refresh.layout.activity.practice.QQBrowserPracticeActivity">
 
     <androidx.appcompat.widget.Toolbar style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"

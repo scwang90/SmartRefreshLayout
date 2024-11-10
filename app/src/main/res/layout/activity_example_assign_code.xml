@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.scwang.refreshlayout.activity.example.AssignCodeExampleActivity">
+    tools:context="com.scwang.refresh.layout.activity.example.AssignCodeExampleActivity">
 
     <androidx.appcompat.widget.Toolbar style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"

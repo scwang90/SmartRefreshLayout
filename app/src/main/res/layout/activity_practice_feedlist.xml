@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@android:color/white"
-    tools:context="com.scwang.refreshlayout.activity.practice.FeedListPracticeActivity">
+    tools:context="com.scwang.refresh.layout.activity.practice.FeedListPracticeActivity">
 
     <androidx.appcompat.widget.Toolbar style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"

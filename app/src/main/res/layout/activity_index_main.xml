@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.scwang.refreshlayout.activity.IndexMainActivity">
+    tools:context="com.scwang.refresh.layout.activity.IndexMainActivity">
 
     <androidx.appcompat.widget.Toolbar
         style="@style/AppTheme.Toolbar"

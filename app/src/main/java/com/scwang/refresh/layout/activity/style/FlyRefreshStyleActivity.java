@@ -1,0 +1,355 @@
+package com.scwang.refresh.layout.activity.style;
+
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
+import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Interpolator;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.scwang.refresh.layout.R;
+import com.scwang.refresh.layout.util.StatusBarUtil;
+import com.scwang.smart.refresh.header.flyrefresh.FlyView;
+import com.scwang.smart.refresh.header.flyrefresh.MountainSceneView;
+import com.scwang.smart.refresh.layout.api.RefreshHeader;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
+import com.scwang.smart.refresh.layout.simple.SimpleMultiListener;
+import com.scwang.smart.refresh.header.FlyRefreshHeader;
+import com.scwang.smart.refresh.layout.util.SmartUtil;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+
+// import jp.wasabeef.recyclerview.animators.BaseItemAnimator;
+
+public class FlyRefreshStyleActivity extends AppCompatActivity {
+
+    private RecyclerView mListView;
+    private RefreshLayout mRefreshLayout;
+
+    private ItemAdapter mAdapter;
+
+    private FlyView mFlyView;
+    private final ArrayList<ItemData> mDataSet = new ArrayList<>();
+    private LinearLayoutManager mLayoutManager;
+    private FlyRefreshHeader mFlyRefreshHeader;
+    private CollapsingToolbarLayout mToolbarLayout;
+    private FloatingActionButton mActionButton;
+    private View.OnClickListener mThemeListener;
+    private static boolean isFirstEnter = true;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_fly_refresh);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        /*-----------------------------------------------------------
+         * 关键代码-开始
+         *----------------------------------------------------------*/
+
+        MountainSceneView mSceneView = findViewById(R.id.mountain);
+        mFlyView = findViewById(R.id.flyView);
+        mFlyRefreshHeader = findViewById(R.id.flyRefresh);
+        mFlyRefreshHeader.setUp(mSceneView, mFlyView);//绑定场景和纸飞机
+        mRefreshLayout = findViewById(R.id.refreshLayout);
+        mRefreshLayout.setReboundInterpolator(new ElasticOutInterpolator());//设置回弹插值器，会带有弹簧震动效果
+        mRefreshLayout.setReboundDuration(800);//设置回弹动画时长
+        mRefreshLayout.setOnRefreshListener((OnRefreshListener) refreshLayout -> {
+            View child = mListView.getChildAt(0);
+            if (child != null) {
+                //开始刷新的时候个第一个item设置动画效果
+                bounceAnimateView(child.findViewById(R.id.icon));
+            }
+            updateTheme();//改变主题颜色
+            mRefreshLayout.getLayout().postDelayed(() -> {
+                //通知刷新完成，这里改为通知Header，让纸飞机飞回来
+                mFlyRefreshHeader.finishRefresh(new AnimatorListenerAdapter() {
+                    public void onAnimationEnd(Animator animation) {
+                        addItemData();//在纸飞机回到原位之后添加数据效果更真实
+                    }
+                });
+            }, 2000);//模拟两秒的后台数据加载
+        });
+        //设置 让 AppBarLayout 和 RefreshLayout 的滚动同步 并不保持 toolbar 位置不变
+        final AppBarLayout appBar = findViewById(R.id.appbar);
+        mRefreshLayout.setOnMultiListener(new SimpleMultiListener() {
+            @Override
+            public void onHeaderMoving(RefreshHeader header, boolean isDragging, float percent, int offset, int headerHeight, int maxDragHeight) {
+                appBar.setTranslationY(offset);
+                toolbar.setTranslationY(-offset);
+            }
+//            @Override
+//            public void onHeaderPulling(@NonNull RefreshHeader header, float percent, int offset, int footerHeight, int maxDragHeight) {
+//                appBar.setTranslationY(offset);
+//                toolbar.setTranslationY(-offset);
+//            }
+//            @Override
+//            public void onHeaderReleasing(@NonNull RefreshHeader header, float percent, int offset, int footerHeight, int maxDragHeight) {
+//                appBar.setTranslationY(offset);
+//                toolbar.setTranslationY(-offset);
+//            }
+        });
+        /*-----------------------------------------------------------
+         * 关键代码-结束
+         *----------------------------------------------------------*/
+
+        if (isFirstEnter) {
+            isFirstEnter = false;
+            mRefreshLayout.autoRefresh();//第一次进入触发自动刷新，演示效果
+        }
+
+        /*
+         * 初始化列表数据
+         */
+        initDataSet();
+        mAdapter = new ItemAdapter(this);
+        mLayoutManager = new LinearLayoutManager(this);
+        mListView = findViewById(R.id.recyclerView);
+        mListView.setLayoutManager(mLayoutManager);
+        mListView.setAdapter(mAdapter);
+        // mListView.setItemAnimator(new SampleItemAnimator());
+        mToolbarLayout = findViewById(R.id.toolbarLayout);
+        mActionButton = findViewById(R.id.fab);
+        /*
+         * 设置点击 ActionButton 时候触发自动刷新 并改变主题颜色
+         */
+        mActionButton.setOnClickListener(v -> {
+            updateTheme();
+            mRefreshLayout.autoRefresh();
+        });
+        /*
+         * 监听 AppBarLayout 的关闭和开启 给 FlyView（纸飞机） 和 ActionButton 设置关闭隐藏动画
+         */
+        appBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            boolean misAppbarExpand = true;
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                int scrollRange = appBarLayout.getTotalScrollRange();
+                float fraction = 1f * (scrollRange + verticalOffset) / scrollRange;
+                if (fraction < 0.1 && misAppbarExpand) {
+                    misAppbarExpand = false;
+                    mActionButton.animate().scaleX(0).scaleY(0);
+                    mFlyView.animate().scaleX(0).scaleY(0);
+                    ValueAnimator animator = ValueAnimator.ofInt(mListView.getPaddingTop(), 0);
+                    animator.setDuration(300);
+                    animator.addUpdateListener(animation -> mListView.setPadding(0, (int) animation.getAnimatedValue(), 0, 0));
+                    animator.start();
+                }
+                if (fraction > 0.8 && !misAppbarExpand) {
+                    misAppbarExpand = true;
+                    mActionButton.animate().scaleX(1).scaleY(1);
+                    mFlyView.animate().scaleX(1).scaleY(1);
+                    ValueAnimator animator = ValueAnimator.ofInt(mListView.getPaddingTop(), SmartUtil.dp2px(25));
+                    animator.setDuration(300);
+                    animator.addUpdateListener(animation -> mListView.setPadding(0, (int) animation.getAnimatedValue(), 0, 0));
+                    animator.start();
+                }
+            }
+        });
+
+
+        //状态栏透明和间距处理
+        StatusBarUtil.immersive(this);
+        StatusBarUtil.setPaddingSmart(this, toolbar);
+    }
+
+    private void updateTheme() {
+        if (mThemeListener == null) {
+            mThemeListener = new View.OnClickListener() {
+                int index = 0;
+                final int[] ids = new int[]{
+                        R.color.colorPrimary,
+                        android.R.color.holo_green_light,
+                        android.R.color.holo_red_light,
+                        android.R.color.holo_orange_light,
+                        android.R.color.holo_blue_bright,
+                };
+                @Override
+                public void onClick(View v) {
+                    int color = ContextCompat.getColor(getApplication(), ids[index % ids.length]);
+                    mRefreshLayout.setPrimaryColors(color);
+                    mActionButton.setBackgroundColor(color);
+                    mActionButton.setBackgroundTintList(ColorStateList.valueOf(color));
+                    mToolbarLayout.setContentScrimColor(color);
+                    index++;
+                }
+            };
+        }
+        mThemeListener.onClick(null);
+    }
+
+    private void initDataSet() {
+        try {
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
+            mDataSet.add(new ItemData(0xFF76A9FC, R.drawable.ic_fly_refresh_poll, "Meeting Minutes", format.parse("2014-03-09")));
+            mDataSet.add(new ItemData(Color.GRAY, R.drawable.ic_fly_refresh_folder, "Favorites Photos", format.parse("2014-02-03")));
+            mDataSet.add(new ItemData(Color.GRAY, R.drawable.ic_fly_refresh_folder, "Photos", format.parse("2014-01-09")));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void addItemData() {
+        ItemData itemData = new ItemData(0xFFFFC970, R.drawable.ic_fly_refresh_phone, "Magic Cube Show", new Date());
+        mDataSet.add(0, itemData);
+        mAdapter.notifyItemInserted(0);
+        mLayoutManager.scrollToPosition(0);
+    }
+
+    private void bounceAnimateView(final View view) {
+        if (view == null) {
+            return;
+        }
+
+        ValueAnimator swing = ValueAnimator.ofFloat(0, 60, -40, 0);
+        swing.setDuration(400);
+        swing.setInterpolator(new AccelerateInterpolator());
+        swing.addUpdateListener(animation -> view.setRotationX((float)animation.getAnimatedValue()));
+        swing.start();
+    }
+
+    private class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
+
+        private final LayoutInflater mInflater;
+        private final DateFormat dateFormat;
+
+        ItemAdapter(Context context) {
+            mInflater = LayoutInflater.from(context);
+            dateFormat = SimpleDateFormat.getDateInstance(DateFormat.DEFAULT, Locale.ENGLISH);
+        }
+
+        @NonNull
+        @Override
+        public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+            View view = mInflater.inflate(R.layout.activity_fly_refresh_item, viewGroup, false);
+            return new ItemViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull ItemViewHolder itemViewHolder, int i) {
+            final ItemData data = mDataSet.get(i);
+            ShapeDrawable drawable = new ShapeDrawable(new OvalShape());
+            drawable.getPaint().setColor(data.color);
+            itemViewHolder.icon.setBackground(drawable);
+            itemViewHolder.icon.setImageResource(data.icon);
+            itemViewHolder.title.setText(data.title);
+            itemViewHolder.subTitle.setText(dateFormat.format(data.time));
+        }
+
+        @Override
+        public int getItemCount() {
+            return mDataSet.size();
+        }
+    }
+
+    private static class ItemViewHolder extends RecyclerView.ViewHolder {
+
+        ImageView icon;
+        TextView title;
+        TextView subTitle;
+
+        ItemViewHolder(View itemView) {
+            super(itemView);
+            icon = itemView.findViewById(R.id.icon);
+            title = itemView.findViewById(R.id.title);
+            subTitle = itemView.findViewById(R.id.subtitle);
+        }
+
+    }
+
+    public static class ItemData {
+        int color;
+        int icon;
+        Date time;
+        public String title;
+
+        ItemData(int color, int icon, String title, Date time) {
+            this.color = color;
+            this.icon = icon;
+            this.title = title;
+            this.time = time;
+        }
+    }
+
+    /*public static class SampleItemAnimator extends BaseItemAnimator {
+
+        @Override
+        protected void preAnimateAddImpl(RecyclerView.ViewHolder holder) {
+            View icon = holder.itemView.findViewById(R.id.icon);
+            icon.setRotationX(30);
+            View right = holder.itemView.findViewById(R.id.right);
+            right.setPivotX(0);
+            right.setPivotY(0);
+            right.setRotationY(90);
+        }
+
+        @Override
+        protected void animateRemoveImpl(RecyclerView.ViewHolder viewHolder) {
+        }
+
+        @Override
+        protected void animateAddImpl(final RecyclerView.ViewHolder holder) {
+            View target = holder.itemView;
+            View icon = target.findViewById(R.id.icon);
+            Animator swing = ObjectAnimator.ofFloat(icon, "rotationX", 45, 0);
+            swing.setInterpolator(new OvershootInterpolator(5));
+
+            View right = holder.itemView.findViewById(R.id.right);
+            Animator rotateIn = ObjectAnimator.ofFloat(right, "rotationY", 90, 0);
+            rotateIn.setInterpolator(new DecelerateInterpolator());
+
+            AnimatorSet animator = new AnimatorSet();
+            animator.setDuration(getAddDuration());
+            animator.playTogether(swing, rotateIn);
+
+            animator.start();
+        }
+
+    }*/
+
+    public static class ElasticOutInterpolator implements Interpolator {
+
+        @Override
+        public float getInterpolation(float t) {
+            if (t == 0) return 0;
+            if (t >= 1) return 1;
+            float p=.3f;
+            float s=p/4;
+            return ((float)Math.pow(2,-10*t) * (float)Math.sin( (t-s)*(2*(float)Math.PI)/p) + 1);
+        }
+    }
+
+}

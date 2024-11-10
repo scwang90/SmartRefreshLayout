@@ -5,7 +5,7 @@ android {
     compileSdkVersion 34
 
     defaultConfig {
-        applicationId "com.scwang.refreshlayout.app"
+        applicationId "com.scwang.refresh.layout.app"
         minSdkVersion 21
         targetSdkVersion 34
         versionCode 1
