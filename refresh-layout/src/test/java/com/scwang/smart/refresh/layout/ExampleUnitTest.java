@@ -1,4 +1,4 @@
-package com.scwang.smartrefresh.layout;
+package com.scwang.smart.refresh.layout;
 
 import org.junit.Test;
 

@@ -393,7 +393,7 @@ public abstract class FunGameView extends FunGameBase {
                 mMaskViewTop.setText(mMaskTextTopRelease);
                 break;
 //            case ReleaseToTwoLevel:
-//                mMaskViewTop.setText(com.scwang.smartrefresh.layout.R.string.srl_header_secondary);
+//                mMaskViewTop.setText(com.scwang.smart.refresh.layout.R.string.srl_header_secondary);
 //                break;
         }
     }

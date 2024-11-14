@@ -1,4 +1,4 @@
-package com.scwang.smartrefresh.footer;
+package com.scwang.smart.refresh.footer;
 
 import org.junit.Test;
 
