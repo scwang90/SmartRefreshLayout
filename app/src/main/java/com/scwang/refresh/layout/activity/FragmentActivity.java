@@ -75,7 +75,6 @@ public class FragmentActivity extends AppCompatActivity {
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
-//            AfExceptionHandler.handle(e, "AfFragmentActivity Fragment 类型错误：" + mFragmentClazz);
         }
     }
 

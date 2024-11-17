@@ -62,18 +62,6 @@ public class WeiboPracticeActivity extends AppCompatActivity {
                 parallax.setTranslationY(mOffset - mScrollY);
                 toolbar.setAlpha(1 - Math.min(percent, 1));
             }
-//            @Override
-//            public void onHeaderPulling(@NonNull RefreshHeader header, float percent, int offset, int bottomHeight, int maxDragHeight) {
-//                mOffset = offset / 2;
-//                parallax.setTranslationY(mOffset - mScrollY);
-//                toolbar.setAlpha(1 - Math.min(percent, 1));
-//            }
-//            @Override
-//            public void onHeaderReleasing(@NonNull RefreshHeader header, float percent, int offset, int bottomHeight, int maxDragHeight) {
-//                mOffset = offset / 2;
-//                parallax.setTranslationY(mOffset - mScrollY);
-//                toolbar.setAlpha(1 - Math.min(percent, 1));
-//            }
         });
         scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             private int lastScrollY = 0;

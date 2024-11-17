@@ -171,15 +171,6 @@ public class CustomExampleActivity extends AppCompatActivity {
 
         }
 
-//        @Override
-//        public void onPulling(float percent, int offset, int height, int maxDragHeight) {
-//
-//        }
-//        @Override
-//        public void onReleasing(float percent, int offset, int height, int maxDragHeight) {
-//
-//        }
-
         @Override
         public void onReleased(@NonNull RefreshLayout refreshLayout, int height, int maxDragHeight) {
 

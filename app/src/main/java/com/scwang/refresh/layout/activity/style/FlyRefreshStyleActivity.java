@@ -45,8 +45,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-// import jp.wasabeef.recyclerview.animators.BaseItemAnimator;
-
 public class FlyRefreshStyleActivity extends AppCompatActivity {
 
     private RecyclerView mListView;
@@ -111,16 +109,6 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
                 appBar.setTranslationY(offset);
                 toolbar.setTranslationY(-offset);
             }
-//            @Override
-//            public void onHeaderPulling(@NonNull RefreshHeader header, float percent, int offset, int footerHeight, int maxDragHeight) {
-//                appBar.setTranslationY(offset);
-//                toolbar.setTranslationY(-offset);
-//            }
-//            @Override
-//            public void onHeaderReleasing(@NonNull RefreshHeader header, float percent, int offset, int footerHeight, int maxDragHeight) {
-//                appBar.setTranslationY(offset);
-//                toolbar.setTranslationY(-offset);
-//            }
         });
         /*-----------------------------------------------------------
          * 关键代码-结束

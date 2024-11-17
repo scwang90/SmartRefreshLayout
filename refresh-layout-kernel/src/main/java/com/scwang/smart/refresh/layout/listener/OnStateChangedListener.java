@@ -23,6 +23,6 @@ public interface OnStateChangedListener {
      * @param oldState 改变之前的状态
      * @param newState 改变之后的状态
      */
-    @RestrictTo({LIBRARY,LIBRARY_GROUP,SUBCLASSES})
+//    @RestrictTo({LIBRARY,LIBRARY_GROUP,SUBCLASSES})
     void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState);
 }

@@ -93,13 +93,6 @@ public class SecondFloorPracticeFragment extends Fragment {
             public boolean onTwoLevel(@NonNull RefreshLayout refreshLayout) {
                 Toast.makeText(getContext(),"触发二楼事件",Toast.LENGTH_SHORT).show();
                 root.findViewById(R.id.second_floor_content).animate().alpha(1).setDuration(2000);
-//                refreshLayout.getLayout().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        header.finishTwoLevel();
-//                        root.findViewById(R.id.second_floor_content).animate().alpha(0).setDuration(1000);
-//                    }
-//                },5000);
                 return true;//true 将会展开二楼状态 false 关闭刷新
             }
         });

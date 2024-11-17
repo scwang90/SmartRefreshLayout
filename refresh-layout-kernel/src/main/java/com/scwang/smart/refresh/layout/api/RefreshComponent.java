@@ -37,7 +37,7 @@ public interface RefreshComponent extends OnStateChangedListener {
      * 【仅限框架内调用】设置主题颜色
      * @param colors 对应Xml中配置的 srlPrimaryColor srlAccentColor
      */
-    @RestrictTo({LIBRARY,LIBRARY_GROUP,SUBCLASSES})
+//    @RestrictTo({LIBRARY,LIBRARY_GROUP,SUBCLASSES})
     void setPrimaryColors(@ColorInt int... colors);
 
     /**
@@ -46,7 +46,7 @@ public interface RefreshComponent extends OnStateChangedListener {
      * @param height HeaderHeight or FooterHeight
      * @param maxDragHeight 最大拖动高度
      */
-    @RestrictTo({LIBRARY,LIBRARY_GROUP,SUBCLASSES})
+//    @RestrictTo({LIBRARY,LIBRARY_GROUP,SUBCLASSES})
     void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight);
     /**
      * 【仅限框架内调用】手指拖动下拉（会连续多次调用，添加isDragging并取代之前的onPulling、onReleasing）
@@ -56,7 +56,7 @@ public interface RefreshComponent extends OnStateChangedListener {
      * @param height 高度 HeaderHeight or FooterHeight (offset 可以超过 height 此时 percent 大于 1)
      * @param maxDragHeight 最大拖动高度 offset 可以超过 height 参数 但是不会超过 maxDragHeight
      */
-    @RestrictTo({LIBRARY,LIBRARY_GROUP,SUBCLASSES})
+//    @RestrictTo({LIBRARY,LIBRARY_GROUP,SUBCLASSES})
     void onMoving(boolean isDragging, float percent, int offset, int height, int maxDragHeight);
 
     /**
@@ -65,7 +65,7 @@ public interface RefreshComponent extends OnStateChangedListener {
      * @param height 高度 HeaderHeight or FooterHeight
      * @param maxDragHeight 最大拖动高度
      */
-    @RestrictTo({LIBRARY,LIBRARY_GROUP,SUBCLASSES})
+//    @RestrictTo({LIBRARY,LIBRARY_GROUP,SUBCLASSES})
     void onReleased(@NonNull RefreshLayout refreshLayout, int height, int maxDragHeight);
 
     /**
@@ -74,7 +74,7 @@ public interface RefreshComponent extends OnStateChangedListener {
      * @param height HeaderHeight or FooterHeight
      * @param maxDragHeight 最大拖动高度
      */
-    @RestrictTo({LIBRARY,LIBRARY_GROUP,SUBCLASSES})
+//    @RestrictTo({LIBRARY,LIBRARY_GROUP,SUBCLASSES})
     void onStartAnimator(@NonNull RefreshLayout refreshLayout, int height, int maxDragHeight);
 
     /**
@@ -83,7 +83,7 @@ public interface RefreshComponent extends OnStateChangedListener {
      * @param success 数据是否成功刷新或加载
      * @return 完成动画所需时间 如果返回 Integer.MAX_VALUE 将取消本次完成事件，继续保持原有状态
      */
-    @RestrictTo({LIBRARY,LIBRARY_GROUP,SUBCLASSES})
+//    @RestrictTo({LIBRARY,LIBRARY_GROUP,SUBCLASSES})
     int onFinish(@NonNull RefreshLayout refreshLayout, boolean success);
 
     /**
@@ -92,7 +92,7 @@ public interface RefreshComponent extends OnStateChangedListener {
      * @param offsetX 下拉时，手指水平坐标对屏幕的偏移（0 - offsetX - LayoutWidth）
      * @param offsetMax 最大的偏移量
      */
-    @RestrictTo({LIBRARY,LIBRARY_GROUP,SUBCLASSES})
+//    @RestrictTo({LIBRARY,LIBRARY_GROUP,SUBCLASSES})
     void onHorizontalDrag(float percentX, int offsetX, int offsetMax);
 
     /**

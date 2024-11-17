@@ -18,6 +18,6 @@ public interface RefreshFooter extends RefreshComponent {
      * @param noMoreData 是否有更多数据
      * @return true 支持全部加载完成的状态显示 false 不支持
      */
-    @RestrictTo({LIBRARY,LIBRARY_GROUP,SUBCLASSES})
+//    @RestrictTo({LIBRARY,LIBRARY_GROUP,SUBCLASSES})
     boolean setNoMoreData(boolean noMoreData);
 }
