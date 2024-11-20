@@ -82,13 +82,6 @@ public class BannerPracticeActivity extends AppCompatActivity {
                 },2000);
             }
         });
-//        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-//            @Override
-//            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-//                mAdapter.addData(movies);
-//                refreshLayout.finishLoadMoreWithNoMoreData();
-//            }
-//        });
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout rl) {

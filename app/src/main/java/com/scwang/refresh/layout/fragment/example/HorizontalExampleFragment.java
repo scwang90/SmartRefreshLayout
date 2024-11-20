@@ -71,11 +71,6 @@ public class HorizontalExampleFragment extends Fragment {
         mAdapter.refresh(initData());
 
         RefreshLayout refreshLayout = root.findViewById(R.id.refreshLayout);
-////        refreshLayout.setRefreshHeader(new MaterialHeader(root.getContext()));
-//        refreshLayout.setRefreshFooter(new RefreshFooterWrapper(new MaterialHeader(root.getContext())), -1, -2);
-////        refreshLayout.setEnableHeaderTranslationContent(true);
-//        refreshLayout.setEnableFooterTranslationContent(true);
-//        refreshLayout.setEnableAutoLoadMore(false);
 
         refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override

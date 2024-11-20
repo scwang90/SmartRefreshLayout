@@ -128,7 +128,6 @@ public class FlyRefreshStyleActivity extends AppCompatActivity {
         mListView = findViewById(R.id.recyclerView);
         mListView.setLayoutManager(mLayoutManager);
         mListView.setAdapter(mAdapter);
-        // mListView.setItemAnimator(new SampleItemAnimator());
         mToolbarLayout = findViewById(R.id.toolbarLayout);
         mActionButton = findViewById(R.id.fab);
         /*

@@ -92,10 +92,6 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<SmartV
     //<editor-fold desc="ListAdapter">
     private final DataSetObservable mDataSetObservable = new DataSetObservable();
 
-//    public boolean hasStableIds() {
-//        return false;
-//    }
-
     public void registerDataSetObserver(DataSetObserver observer) {
         mDataSetObservable.registerObserver(observer);
     }

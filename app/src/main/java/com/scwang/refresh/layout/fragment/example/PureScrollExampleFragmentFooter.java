@@ -52,7 +52,6 @@ public class PureScrollExampleFragmentFooter extends Fragment implements Adapter
         refreshLayout.setEnablePureScrollMode(true);
         refreshLayout.setEnableRefresh(false);
         refreshLayout.setEnableLoadMore(true);
-//        refreshLayout.setRefreshFooter(new FalsifyFooter(getContext()));
 
         View view = root.findViewById(R.id.recyclerView);
         if (view instanceof RecyclerView) {

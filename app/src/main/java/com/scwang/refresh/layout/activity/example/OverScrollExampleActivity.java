@@ -42,8 +42,6 @@ public class OverScrollExampleActivity extends AppCompatActivity {
                 refreshLayout.finishRefresh();
             }
         });
-//        TextView textView = findViewById(R.id.textView);
-//        textView.setMovementMethod(new ScrollingMovementMethod());
     }
 
 }
