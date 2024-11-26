@@ -26,17 +26,17 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-//    compileOnly project(':refresh-layout-kernel')
-//    compileOnly project(':refresh-footer-ball')
-//    compileOnly project(':refresh-header-falsify')
-//    compileOnly project(':refresh-header-radar')
-//    compileOnly project(':refresh-header-two-level')
+    compileOnly project(':refresh-layout-kernel')
+    compileOnly project(':refresh-footer-ball')
+    compileOnly project(':refresh-header-falsify')
+    compileOnly project(':refresh-header-radar')
+    compileOnly project(':refresh-header-two-level')
 
-    compileOnly  'io.github.scwang90:refresh-layout-kernel:3.0.0-alpha'      //核心必须依赖
-    compileOnly  'io.github.scwang90:refresh-header-radar:3.0.0-alpha'       //雷达刷新头
-    compileOnly  'io.github.scwang90:refresh-header-falsify:3.0.0-alpha'     //虚拟刷新头
-    compileOnly  'io.github.scwang90:refresh-header-two-level:3.0.0-alpha'   //二级刷新头
-    compileOnly  'io.github.scwang90:refresh-footer-ball:3.0.0-alpha'        //球脉冲加载
+//    compileOnly  'io.github.scwang90:refresh-layout-kernel:3.0.0-alpha'      //核心必须依赖
+//    compileOnly  'io.github.scwang90:refresh-header-radar:3.0.0-alpha'       //雷达刷新头
+//    compileOnly  'io.github.scwang90:refresh-header-falsify:3.0.0-alpha'     //虚拟刷新头
+//    compileOnly  'io.github.scwang90:refresh-header-two-level:3.0.0-alpha'   //二级刷新头
+//    compileOnly  'io.github.scwang90:refresh-footer-ball:3.0.0-alpha'        //球脉冲加载
 
     compileOnly 'com.google.android.material:material:1.12.0'
 

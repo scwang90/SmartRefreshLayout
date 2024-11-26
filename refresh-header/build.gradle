@@ -27,15 +27,15 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     compileOnly project(':refresh-layout')
-//    compileOnly project(':refresh-drawable-path')
-//    compileOnly project(':refresh-header-material')
-//    compileOnly project(':refresh-layout-kernel')
-//    compileOnly project(':refresh-header-falsify')
+    compileOnly project(':refresh-drawable-path')
+    compileOnly project(':refresh-header-material')
+    compileOnly project(':refresh-layout-kernel')
+    compileOnly project(':refresh-header-falsify')
 
-    compileOnly  'io.github.scwang90:refresh-drawable-path:3.0.0-alpha'      //矢量路径
-    compileOnly  'io.github.scwang90:refresh-layout-kernel:3.0.0-alpha'      //核心必须依赖
-    compileOnly  'io.github.scwang90:refresh-header-falsify:3.0.0-alpha'     //虚拟刷新头
-    compileOnly  'io.github.scwang90:refresh-header-material:3.0.0-alpha'    //谷歌刷新头
+//    compileOnly  'io.github.scwang90:refresh-drawable-path:3.0.0-alpha'      //矢量路径
+//    compileOnly  'io.github.scwang90:refresh-layout-kernel:3.0.0-alpha'      //核心必须依赖
+//    compileOnly  'io.github.scwang90:refresh-header-falsify:3.0.0-alpha'     //虚拟刷新头
+//    compileOnly  'io.github.scwang90:refresh-header-material:3.0.0-alpha'    //谷歌刷新头
 
     compileOnly 'androidx.appcompat:appcompat:1.7.0'
 
