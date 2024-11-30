@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.constant.SpinnerStyle;
-import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smart.refresh.layout.api.RefreshHeader;
 
 import java.text.DateFormat;
 import java.util.Date;

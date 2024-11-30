@@ -7,15 +7,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
-import com.scwang.smartrefresh.layout.api.RefreshFooter;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.api.RefreshFooter;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 
 import java.util.Arrays;
@@ -35,7 +34,7 @@ public class BasicExampleActivity extends AppCompatActivity {
     private final Random random = new Random();
     private BaseRecyclerAdapter<Void> mAdapter;
     private LoadingLayout mLoadingLayout;
-    private com.scwang.smartrefresh.layout.api.RefreshLayout mRefreshLayout;
+    private com.scwang.smart.refresh.layout.api.RefreshLayout mRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +71,7 @@ public class BasicExampleActivity extends AppCompatActivity {
         mAdapter.setOnItemClickListener((parent, view, position, id) -> {
             BottomSheetDialog dialog=new BottomSheetDialog(BasicExampleActivity.this);
             View dialogView = View.inflate(getBaseContext(), R.layout.activity_example_basic, null);
-            com.scwang.smartrefresh.layout.api.RefreshLayout refreshLayout1 = dialogView.findViewById(R.id.refreshLayout);
+            com.scwang.smart.refresh.layout.api.RefreshLayout refreshLayout1 = dialogView.findViewById(R.id.refreshLayout);
             RecyclerView recyclerView = new RecyclerView(getBaseContext());
             recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext()));
             recyclerView.setAdapter(mAdapter);
@@ -113,7 +112,7 @@ public class BasicExampleActivity extends AppCompatActivity {
         }, 2000);
     }
 
-    private void loadMore(com.scwang.smartrefresh.layout.api.RefreshLayout layout) {
+    private void loadMore(com.scwang.smart.refresh.layout.api.RefreshLayout layout) {
         layout.getLayout().postDelayed(() -> {
             if (random.nextBoolean()) {
                 //如果刷新成功

@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

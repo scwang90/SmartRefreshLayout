@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 
 import com.scwang.smart.refresh.layout.constant.SpinnerStyle;
-import com.scwang.smartrefresh.layout.api.RefreshFooter;
+import com.scwang.smart.refresh.layout.api.RefreshFooter;
 
 /**
  * 经典上拉底部-兼容【1.x】版本-包名位置

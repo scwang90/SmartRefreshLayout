@@ -12,10 +12,10 @@ import android.widget.Toast;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.util.StatusBarUtil;
-import com.scwang.smartrefresh.layout.api.OnTwoLevelListener;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.header.listener.OnTwoLevelListener;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.TwoLevelHeader;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 
 /**
  * 二级刷新

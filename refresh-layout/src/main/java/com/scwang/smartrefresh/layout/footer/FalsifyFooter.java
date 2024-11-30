@@ -3,7 +3,7 @@ package com.scwang.smartrefresh.layout.footer;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import com.scwang.smartrefresh.layout.api.RefreshFooter;
+import com.scwang.smart.refresh.layout.api.RefreshFooter;
 
 /**
  * 虚假的 Footer

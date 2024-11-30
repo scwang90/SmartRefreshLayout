@@ -11,9 +11,9 @@ import android.widget.Toast;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.util.StatusBarUtil;
-import com.scwang.smartrefresh.layout.api.RefreshHeader;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
+import com.scwang.smart.refresh.layout.api.RefreshHeader;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.simple.SimpleMultiListener;
 import com.scwang.smartrefresh.layout.util.SmartUtil;
 
 /**
@@ -45,7 +45,7 @@ public class WeiboPracticeActivity extends AppCompatActivity {
         findViewById(R.id.attention).setOnClickListener(view -> Toast.makeText(view.getContext(),"点击了关注",Toast.LENGTH_SHORT).show());
         findViewById(R.id.leaveword).setOnClickListener(view -> Toast.makeText(view.getContext(),"点击了留言",Toast.LENGTH_SHORT).show());
 
-        refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
+        refreshLayout.setOnMultiListener(new SimpleMultiListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 refreshLayout.finishRefresh(3000);

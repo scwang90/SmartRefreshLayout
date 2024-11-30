@@ -3,7 +3,7 @@ package com.scwang.smartrefresh.layout.header;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smart.refresh.layout.api.RefreshHeader;
 
 /**
  * 虚假的 Header

@@ -22,7 +22,7 @@ import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
 import com.scwang.smart.refresh.layout.listener.ScrollBoundaryDecider;
 import com.scwang.smart.refresh.layout.util.SmartUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.impl.ScrollBoundaryDeciderAdapter;
+import com.scwang.smart.refresh.layout.simple.SimpleBoundaryDecider;
 
 public class SmartRefreshHorizontal extends SmartRefreshLayout {
 
@@ -35,7 +35,7 @@ public class SmartRefreshHorizontal extends SmartRefreshLayout {
     public SmartRefreshHorizontal(Context context, AttributeSet attrs) {
         super(context, attrs);
         setEnableAutoLoadMore(false);
-        setScrollBoundaryDecider(new ScrollBoundaryDeciderAdapter(){
+        setScrollBoundaryDecider(new SimpleBoundaryDecider(){
             @Override
             public boolean canRefresh(View content) {
                 return ScrollBoundaryHorizontal.canRefresh(content, mActionEvent);

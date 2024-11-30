@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
-import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smart.refresh.layout.api.RefreshHeader;
 
 /**
  * Refresh your delivery!

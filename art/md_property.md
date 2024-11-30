@@ -47,9 +47,9 @@ public class RefreshActivity extends Activity {
         refreshLayout.setDisableContentWhenRefresh(false);//是否在刷新的时候禁止列表的操作
         refreshLayout.setDisableContentWhenLoading(false);//是否在加载的时候禁止列表的操作
 
-        refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener());//设置多功能监听器
+        refreshLayout.setOnMultiListener(new SimpleMultiListener());//设置多功能监听器
         refreshLayout.setScrollBoundaryDecider(new ScrollBoundaryDecider());//设置滚动边界判断
-        refreshLayout.setScrollBoundaryDecider(new ScrollBoundaryDeciderAdapter());//自定义滚动边界
+        refreshLayout.setScrollBoundaryDecider(new SimpleBoundaryDecider());//自定义滚动边界
 
         refreshLayout.setRefreshHeader(new ClassicsHeader(context));//设置Header
         refreshLayout.setRefreshFooter(new ClassicsFooter(context));//设置Footer
@@ -410,7 +410,7 @@ xml代码设置
 |setOnRefreshListener|OnRefreshListener|设置刷新监听器（不设置，默认3秒后关刷新）|
 |setOnLoadMoreListener|OnLoadMoreListener|设置加载监听器（不设置，默认3秒后关加载）|
 |setOnRefreshLoadMoreListener|OnRefreshLoadMoreListener|同时设置上面两个监听器|
-|setOnMultiPurposeListener|OnMultiPurposeListener|设置多功能监听器|
+|setOnMultiListener|OnMultiPurposeListener|设置多功能监听器|
 |setLoadMoreFinished|boolean|设置全部数据加载完成，之后不会触发加载事件|
 |setScrollBoundaryDecider|boundary|设置滚动边界判断|
 |finishRefresh|(int delayed)|完成刷新，结束刷新动画|

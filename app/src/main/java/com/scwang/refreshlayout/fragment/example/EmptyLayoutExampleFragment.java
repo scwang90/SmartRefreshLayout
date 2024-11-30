@@ -21,12 +21,12 @@ import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.activity.FragmentActivity;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.constant.RefreshState;
-import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.constant.RefreshState;
+import com.scwang.smart.refresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
+import com.scwang.smart.refresh.layout.simple.SimpleMultiListener;
 
 import java.util.Arrays;
 
@@ -92,7 +92,7 @@ public class EmptyLayoutExampleFragment extends Fragment implements AdapterView.
                     mRefreshLayout.autoRefresh();
                 }
             }, 3000);
-            mRefreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
+            mRefreshLayout.setOnMultiListener(new SimpleMultiListener() {
                 @Override
                 public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
                     mIsNeedDemo = false;

@@ -9,16 +9,16 @@ import android.support.v7.widget.Toolbar;
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.util.DynamicTimeFormat;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;
-import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
-import com.scwang.smartrefresh.layout.api.RefreshFooter;
-import com.scwang.smartrefresh.layout.api.RefreshHeader;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.constant.RefreshState;
-import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smart.refresh.layout.listener.DefaultRefreshFooterCreator;
+import com.scwang.smart.refresh.layout.listener.DefaultRefreshHeaderCreator;
+import com.scwang.smart.refresh.layout.api.RefreshFooter;
+import com.scwang.smart.refresh.layout.api.RefreshHeader;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.constant.RefreshState;
+import com.scwang.smart.refresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
-import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
+import com.scwang.smart.refresh.layout.simple.SimpleMultiListener;
 
 /**
  * 全局指定默认的Header和Footer
@@ -44,16 +44,14 @@ public class AssignDefaultExampleActivity extends AppCompatActivity {
         final RefreshLayout refreshLayout = findViewById(R.id.refreshLayout);
         if (isFirstEnter) {
             isFirstEnter = false;
-//            //触发上拉加载
-//            mRefreshLayout.autoLoadMore();
             //通过多功能监听接口实现 在第一次加载完成之后 自动刷新
-            refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener(){
+            refreshLayout.setOnMultiListener(new SimpleMultiListener(){
                 @Override
                 public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
                     if (oldState == RefreshState.LoadFinish
                             && newState == RefreshState.None) {
                         refreshLayout.autoRefresh();
-                        refreshLayout.setOnMultiPurposeListener(null);
+                        refreshLayout.setOnMultiListener(null);
                     }
                 }
                 @Override

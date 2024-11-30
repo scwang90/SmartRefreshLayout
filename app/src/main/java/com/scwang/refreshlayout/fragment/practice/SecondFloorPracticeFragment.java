@@ -15,13 +15,13 @@ import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.refreshlayout.util.StatusBarUtil;
-import com.scwang.smartrefresh.layout.api.OnTwoLevelListener;
-import com.scwang.smartrefresh.layout.api.RefreshHeader;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.constant.RefreshState;
+import com.scwang.smart.refresh.header.listener.OnTwoLevelListener;
+import com.scwang.smart.refresh.layout.api.RefreshHeader;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.header.TwoLevelHeader;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
+import com.scwang.smart.refresh.layout.simple.SimpleMultiListener;
 
 import java.util.Arrays;
 import java.util.List;
@@ -54,7 +54,7 @@ public class SecondFloorPracticeFragment extends Fragment {
         });
 
         final RefreshLayout refreshLayout = root.findViewById(R.id.refreshLayout);
-        refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
+        refreshLayout.setOnMultiListener(new SimpleMultiListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 refreshLayout.finishLoadMore(2000);
@@ -92,13 +92,6 @@ public class SecondFloorPracticeFragment extends Fragment {
             public boolean onTwoLevel(@NonNull RefreshLayout refreshLayout) {
                 Toast.makeText(getContext(),"触发二楼事件",Toast.LENGTH_SHORT).show();
                 root.findViewById(R.id.second_floor_content).animate().alpha(1).setDuration(2000);
-//                refreshLayout.getLayout().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        header.finishTwoLevel();
-//                        root.findViewById(R.id.second_floor_content).animate().alpha(0).setDuration(1000);
-//                    }
-//                },5000);
                 return true;//true 将会展开二楼状态 false 关闭刷新
             }
         });
