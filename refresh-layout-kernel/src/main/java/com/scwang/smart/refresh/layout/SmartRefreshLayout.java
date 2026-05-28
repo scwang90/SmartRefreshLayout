@@ -1500,7 +1500,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             if (animationRunnable == this && !mState.isFinishing) {
 //                mVelocity *= Math.pow(mDamping, ++mFrame);
                 long now = AnimationUtils.currentAnimationTimeMillis();
-                long span = now - mLastTime;
+                long span = Math.max(0, now - mLastTime);
                 mVelocity *= Math.pow(mDamping, (now - mStartTime) / (1000f / mFrameDelay));
                 float velocity = (mVelocity * (1f * span / 1000));
                 if (Math.abs(velocity) > 1) {
@@ -1554,7 +1554,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     mVelocity *= Math.pow(0.95f, ++mFrame * 2);//平滑滚动数度衰减
                 }
                 long now = AnimationUtils.currentAnimationTimeMillis();
-                float t = 1f * (now - mLastTime) / 1000;
+                float t = Math.max(0, 1f * (now - mLastTime) / 1000);
                 float velocity = mVelocity * t;
                 if (Math.abs(velocity) >= 1) {
                     mLastTime = now;
